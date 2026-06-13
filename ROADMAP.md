@@ -75,9 +75,9 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
    a formal end-screen vs the current keep-playing sandbox), "Mời cựu SV về nói chuyện" verb.
 7. **S4 — Funding full:** contract types 🦜🎣🤝, renewal escalation, decks T/E/C, Quỹ Ứng Cứu.
 8. **S5/S6 — Pantheon pack + content:** ~~dedications~~ STARTED (iter 33: 3 buildable Vườn Tưởng
-   Niệm memorial gardens — Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương — +Uy Tín, dedication
-   modal, on-campus stele; a late-game cash sink + prestige goal). Next: more figures (Nguyễn
-   Trường Tộ, Chu Văn An), Giải
+   Niệm memorial gardens — now FIVE: Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương + iter 39's
+   Nguyễn Trường Tộ / Chu Văn An — +Uy Tín, dedication modal, on-campus stele; a late-game cash
+   sink + "honour the whole grove" goal). Next: Giải
    Giọng Riêng + Lễ Vinh Danh (trimmed), remaining 6 scholarships with pipeline effects,
    living-archetype event deck, uni teacher archetypes, khoa split.
 

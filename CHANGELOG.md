@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — Two more reformers to honour (loop iter 39)
+- Extended the memorial gardens with the two figures whose lives most directly *are* this game's
+  argument: **Nguyễn Trường Tộ** (dâng điều trần đòi dạy thực học — toán, máy móc, ngoại ngữ —
+  giữa thời chỉ học để thi; the court shelved it, and a century on we're still debating exactly
+  what he wrote) and **Chu Văn An** (treo ấn về quê dạy học rather than serve a court that ignored
+  his petition to behead seven corrupt officials). Both are one-time escalating builds (450/550tr,
+  +6 Uy Tín) with their own dedication reflection — a `GARDEN_FIGURES` map decoupled from the
+  scholarship Pantheon. Now five reformers can be honoured (1750tr of late-game cash sink + a
+  "build the whole grove" goal). Verified build/+Uy Tín/lines/once-gate/render; gates green.
+
 ## 2026-06-13 — "Mười năm sau" — the decade capstone (loop iter 38)
 - `RUN_CAP_YEARS: 12` had been defined but never used — the game had no ending or payoff, it just
   trailed off. Now when the school reaches its 12th year, the reflective epilogue essay (previously

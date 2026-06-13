@@ -19,7 +19,9 @@
     xuong:    { c: "#7a4a2f", e: "🔧", g: "#9c5f3d" },
     vuontdn:  { c: "#2f6b46", e: "🌳", g: "#3a875a" },
     vuontqb:  { c: "#2f5d8a", e: "📖", g: "#3d77ad" },
-    vuonhxh:  { c: "#8a2f5a", e: "🌸", g: "#ad3d77" }
+    vuonhxh:  { c: "#8a2f5a", e: "🌸", g: "#ad3d77" },
+    vuonntt:  { c: "#2f6b46", e: "🧭", g: "#3a875a" },
+    vuoncva:  { c: "#7a5a2f", e: "🪶", g: "#9c7a3d" }
   };
   var GRADE_C = { 1: "#3fb98e", 2: "#4a8fe0", 3: "#f0a838", 4: "#a86fe0" }; // year uniform colours (richer, pop on grass)
 
@@ -91,7 +93,9 @@
     xuong:    { wall: "#cca982", wallD: "#ad8a62", roof: "sawtooth", rc: "#9a7548", rcD: "#7d5d36", win: "warm",  short: "Xưởng" },
     vuontdn:  { garden: true, accent: "#6fcf97", short: "Trần Đại Nghĩa" },
     vuontqb:  { garden: true, accent: "#6aa9f0", short: "Tạ Quang Bửu" },
-    vuonhxh:  { garden: true, accent: "#f15a7a", short: "Hồ Xuân Hương" }
+    vuonhxh:  { garden: true, accent: "#f15a7a", short: "Hồ Xuân Hương" },
+    vuonntt:  { garden: true, accent: "#f2c14e", short: "Nguyễn Trường Tộ" },
+    vuoncva:  { garden: true, accent: "#b48ef0", short: "Chu Văn An" }
   };
   function mb(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function hashId(id) { return (Math.imul(id, 2654435761) >>> 0); }
@@ -838,6 +842,7 @@
   }
   function showDedication(dedKey) {
     var p = null; for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === dedKey) p = CONFIG.PANTHEON[i];
+    if (!p && CONFIG.GARDEN_FIGURES) p = CONFIG.GARDEN_FIGURES[dedKey];
     if (!p) { toast("Đã khánh thành khu vườn."); return; }
     var w = el("div");
     w.appendChild(el("div", "kic", "🏵️ Khánh thành vườn tưởng niệm"));
@@ -994,7 +999,7 @@
     wrap.appendChild(c3);
 
     // dedications — honour a real educator (late-game prestige + a question to put to the grounds)
-    var dedKeys = ["vuontdn", "vuontqb", "vuonhxh"].filter(function (k) { return !s.rooms.some(function (r) { return r.key === k; }); });
+    var dedKeys = ["vuontdn", "vuontqb", "vuonhxh", "vuonntt", "vuoncva"].filter(function (k) { return !s.rooms.some(function (r) { return r.key === k; }); });
     if (dedKeys.length) {
       var c3b = el("div", "card"); c3b.appendChild(el("h3", null, "Vinh danh nhà giáo dục"));
       c3b.appendChild(el("div", "tiny", "Dựng một khu vườn tưởng niệm — đặt câu hỏi của trường cạnh một người đã trả lời nó thật.")).style.marginBottom = "7px";

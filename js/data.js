@@ -52,7 +52,9 @@ var CONFIG = {
     // a place to put a question to. Costs escalate; each can be built once. (a cash sink with a soul)
     vuontdn:  { name: "Vườn Trần Đại Nghĩa", w: 2, h: 2, cost: 150, ded: "tdn", utBoost: 5, once: true, desc: "Tưởng niệm người tạo ra phương tiện từ sự thiếu thốn. +5 Uy Tín lâu dài." },
     vuontqb:  { name: "Vườn Tạ Quang Bửu", w: 2, h: 2, cost: 250, ded: "tqb", utBoost: 5, once: true, desc: "Tưởng niệm vị bộ trưởng tự học, mở cửa cho cả một thế hệ. +5 Uy Tín lâu dài." },
-    vuonhxh:  { name: "Vườn Hồ Xuân Hương", w: 2, h: 2, cost: 350, ded: "hxh", utBoost: 5, once: true, desc: "Tưởng niệm người viết bằng tiếng của chính mình giữa thời văn mẫu. +5 Uy Tín lâu dài." }
+    vuonhxh:  { name: "Vườn Hồ Xuân Hương", w: 2, h: 2, cost: 350, ded: "hxh", utBoost: 5, once: true, desc: "Tưởng niệm người viết bằng tiếng của chính mình giữa thời văn mẫu. +5 Uy Tín lâu dài." },
+    vuonntt:  { name: "Vườn Nguyễn Trường Tộ", w: 2, h: 2, cost: 450, ded: "ntt", utBoost: 6, once: true, desc: "Tưởng niệm người đòi dạy thực học giữa thời chỉ học để thi. +6 Uy Tín lâu dài." },
+    vuoncva:  { name: "Vườn Chu Văn An", w: 2, h: 2, cost: 550, ded: "cva", utBoost: 6, once: true, desc: "Tưởng niệm người thầy treo ấn về quê hơn là làm ngơ. +6 Uy Tín lâu dài." }
   },
 
   TEACH_SALARY: function (d, dd) { return 8 + 2.5 * (d + dd); },
@@ -146,6 +148,12 @@ var CONFIG = {
     { key: "hxh", name: "Học bổng Hồ Xuân Hương", eff: "vet", val: 0.5,
       line: "Bà chúa thơ Nôm — viết bằng tiếng của chính mình giữa một thời đại viết bằng điển cố đi mượn." }
   ],
+
+  // memorial-garden-only figures (not scholarships) — their idea, put to the school's question
+  GARDEN_FIGURES: {
+    ntt: { name: "Nguyễn Trường Tộ", line: "Người dâng điều trần đòi dạy thực học — toán, máy móc, ngoại ngữ — giữa một thời chỉ học để thi. Triều đình xếp xó. Một trăm năm sau, ta vẫn đang cãi nhau về đúng điều ông viết." },
+    cva: { name: "Chu Văn An", line: "Thầy của các vua. Dâng sớ xin chém bảy nịnh thần; vua không nghe, ông treo ấn về quê dạy học. Có những thứ không đánh đổi được bằng một cái chức." }
+  },
 
   ESSAY: { CAST_CAP: 4, STEVE_CAP: 2, BIBAT_CAP: 1, SAME_STATE_RATIO: 0.40, MAJOR_RATIO: 0.35, ENDOW_THIN: 20, HYPE_GAP: 30 }
 };
