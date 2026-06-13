@@ -252,7 +252,12 @@ var CONTENT = {
   arrestTPL: "Cựu sinh viên Trần Phi Lợi bị bắt — sàn coin XÔIĐỖ sập.",
   arrestNote: "khóa này tốt nghiệp thời chủ cũ",
   giftHead: "Cảm ơn thầy đã không bắt em học thuộc.",
-  giftVt: { tuaVit: "…vẫn nhớ chuyện cái tua vít.", phongmay: "…vẫn nhớ buổi tối được mượn phòng máy.", pccc: "…vẫn nhớ lần trường tự báo cáo vụ cháy." },
+  giftVt: {
+    tuaVit: "…vẫn nhớ chuyện cái tua vít.", phongmay: "…vẫn nhớ buổi tối được mượn phòng máy.",
+    pccc: "…vẫn nhớ lần trường tự báo cáo vụ cháy.", aiTay: "…vẫn nhớ thầy cầm tay chỉ từng đường nghề.",
+    damMe: "…vẫn nhớ lần thầy bảo cứ theo đam mê.", hocBong: "…vẫn nhớ suất học bổng giữ em ở lại trường.",
+    lamLai: "…vẫn nhớ lần bị bắt làm lại từ đầu — hoá ra là may.", nghiNgoi: "…vẫn nhớ tuần được cho nghỉ lấy lại sức."
+  },
   // short lines for a cựu SV who strolls back onto campus (the watchable layer; kept tiny to fit a bubble)
   visitLines: {
     STEVE: "Em về kể chuyện cho khoá dưới.",

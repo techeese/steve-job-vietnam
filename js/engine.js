@@ -899,7 +899,7 @@ function flushGifts() {
     if (!biggest || g.amt > biggest.amt) biggest = g;
     S.endow.log.push({ t: S.totalDays, gift: g.amt, ten: g.ten });
   }
-  S._giftFlush = { n: n, biggest: biggest, quote: biggest && biggest.vt ? CONTENT.giftVt[biggest.vt] : CONTENT.giftHead };
+  S._giftFlush = { n: n, biggest: biggest, quote: (biggest && biggest.vt && CONTENT.giftVt[biggest.vt]) || CONTENT.giftHead }; // never "undefined": fall back to giftHead for any uncovered virtue
   news("🎓 " + n + " phong bì từ cựu sinh viên (" + Math.round(cashSum + quySum) + "tr).");
   bacTamNod();
   S.endow.pending = [];

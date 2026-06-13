@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-14 — Bugfix: every good deed now has its thank-you line (loop iter 95)
+- A **coverage-gap audit** (the safe inverse of the dead-content sweep — checking where code indexes content
+  that may not exist) found a real one: `virtue()` is called with **8** keys (aiTay · damMe · hocBong · lamLai ·
+  nghiNgoi · phongmay · tuaVit · pccc) but `CONTENT.giftVt` defined only **3**. So:
+  - **BUG:** the alumni gift-flush quote is `CONTENT.giftVt[biggest.vt]` — for a graduate whose first good-deed
+    was one of the 5 uncovered virtues, that's `undefined`, which would render in the "thank-you" modal.
+  - The iter-85 biography card's "school's quiet good deeds" line silently dropped those 5 virtues.
+- Fixed both: added the **5 missing thank-you callbacks** (e.g. damMe → "…vẫn nhớ lần thầy bảo cứ theo đam mê";
+  hocBong → "…vẫn nhớ suất học bổng giữ em ở lại trường"; lamLai → "…vẫn nhớ lần bị bắt làm lại từ đầu — hoá
+  ra là may"), and **hardened the flush at the source** (`giftVt[vt] || giftHead`) so an uncovered virtue can
+  never render "undefined" again.
+- data.js (+5 giftVt lines) · engine.js (1-line defensive fallback). No balance/save change. Verified: parse ·
+  `./gate.sh` GREEN · `./bot.sh` BOTOK · probes confirming all 8 virtues covered, damMe yields its real line,
+  and an unknown key falls back to giftHead. Plateau-mode bugfix → `SMALL_SHIPS_SINCE_EPIC 2→3`. Bar: bugfix
+  (exempt).
+
 ## 2026-06-14 — Surface the last of the hidden ticker lines (loop iter 94)
 - Continuing the dead-content sweep from iter 93: audited every `ticker.*` key and found **3 more written but
   never surfaced**. Now all wired, and the ticker block has **no dead content left**:
