@@ -1060,6 +1060,17 @@ function loadGame() {
   freshState();
   if (data && data.v === 1) data = migrateV1(data);
   mergeInto(S, data);
+  // mergeInto only copies keys present in the FRESH base, so dynamic-key MAPS (fresh value {}) and null→value
+  // fields are dropped — restore them explicitly here, then sanitize() validates. (Bug found iter 103: khoaCup
+  // trophies/champ + khoaHead trưởng-khoa assignments were silently lost on every reload.)
+  if (data && typeof data === "object") {
+    if (data.khoaHead && typeof data.khoaHead === "object") S.khoaHead = data.khoaHead;
+    if (data.corpBlacklist && typeof data.corpBlacklist === "object") S.corpBlacklist = data.corpBlacklist;
+    if (data.khoaCup && typeof data.khoaCup === "object") {
+      if (data.khoaCup.trophies && typeof data.khoaCup.trophies === "object") S.khoaCup.trophies = data.khoaCup.trophies;
+      if (data.khoaCup.champ != null) S.khoaCup.champ = data.khoaCup.champ;
+    }
+  }
   // restore id counter above anything loaded
   var maxId = 0;
   S.students.concat(S.alumni).forEach(function (x) { if (x && x.id > maxId) maxId = x.id; });

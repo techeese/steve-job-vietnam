@@ -111,6 +111,20 @@ try {
   ok(!rbad.ok, 'overlap rejected');
 } catch(e){ FAILS.push('GATE_BUILD threw: '+e.message+'\\n'+e.stack); }
 
+/* GATE_SAVE — dynamic-key MAP fields must survive a save→load round-trip (regression guard for the iter-103
+   bug: mergeInto only copies fresh-base keys, so maps with a fresh {} base, and null→value fields, were dropped) */
+try {
+  __test.fresh(7);
+  if (S.teachers.length) setKhoaHead('code', S.teachers[0].id);
+  S.khoaCup.trophies = { biz: 3, code: 1 }; S.khoaCup.champ = 'biz'; S.khoaCup.lastYear = 4;
+  localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize()));
+  loadGame();
+  OUT.push('GATE_SAVE khoaHead='+JSON.stringify(S.khoaHead)+' trophies='+JSON.stringify(S.khoaCup.trophies)+' champ='+S.khoaCup.champ);
+  ok(S.khoaHead.code === S.teachers[0].id, 'khoaHead (trưởng-khoa) survives reload');
+  ok(S.khoaCup.trophies.biz === 3 && S.khoaCup.trophies.code === 1, 'khoaCup trophies survive reload');
+  ok(S.khoaCup.champ === 'biz', 'khoaCup champ survives reload');
+} catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
+
 OUT.push('');
 if (FAILS.length){ OUT.push('=== '+FAILS.length+' FAILURES ==='); OUT = OUT.concat(FAILS); }
 else OUT.push('=== ALL GATES GREEN ===');

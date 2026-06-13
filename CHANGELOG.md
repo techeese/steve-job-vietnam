@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-14 — BUGFIX: persistent records survive a reload again (loop iter 103)
+- A **robustness probe** (active bug-hunt, the right use of a plateau firing) caught a real **save-compat bug**:
+  dynamic-key MAP fields were silently dropped on every reload. `mergeInto` only copies keys present in the
+  *fresh base*, but maps start as `{}` (no keys to copy) and a `null`→string field fails its typeof check. So:
+  - **`khoaCup.trophies` + `champ`** — the whole Cúp Khoa pennant race (iter 80) reset to empty on reload.
+  - **`khoaHead`** — your trưởng-khoa assignments (the khoa head-bonus) vanished on reload.
+  - `corpBlacklist` likewise.
+- Fixed in `loadGame`: after the merge, explicitly restore the dynamic-key maps + the null→value `champ` from
+  the save, then `sanitize()` validates them. Added **`GATE_SAVE`** — a round-trip regression guard asserting
+  khoaHead/trophies/champ survive reload (the gates had no map-persistence test, which is why this slipped
+  through). Verified: parse · `./gate.sh` ALL GREEN (incl. new GATE_SAVE) · `./bot.sh` BOTOK · probe shows all
+  three persist + post-load play clean. Load-path only (no sim/balance change; sweep unaffected).
+- Bar: **bugfix** (exempt). `SMALL_SHIPS_SINCE_EPIC 1→2`.
+
 ## 2026-06-14 — Installable to the home screen (PWA) (loop iter 102)
 - Distribution (compass #12), the last clearly-new safe item: the game is now a **PWA** — add-to-home-screen
   on mobile (where the owner plays), launching **standalone** (no browser chrome). Added `manifest.webmanifest`
