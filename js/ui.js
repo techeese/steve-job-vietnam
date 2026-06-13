@@ -1091,19 +1091,46 @@
     var order = { STEVE: 0, BI_BAT: 1 };
     var sorted = alumni.slice().sort(function (a, b) { return (order[a.state] != null ? order[a.state] : 5) - (order[b.state] != null ? order[b.state] : 5) || b.gradYear - a.gradYear; });
     var c = el("div", "card"); c.appendChild(el("h3", null, "Sổ cựu sinh viên · " + alumni.length));
+    c.appendChild(el("div", "tiny", "Chạm vào một tên để đọc tiểu sử.")).style.marginBottom = "5px";
     var sl = el("div", "slist");
     sorted.slice(0, 40).forEach(function (a) {
-      var r = el("div", "srow");
+      var r = el("div", "srow"); r.style.cursor = "pointer";
       var chipCls = a.state === "STEVE" ? "schip gold-chip" : a.state === "BI_BAT" ? "schip red-chip" : "schip";
       var line = a.line || (CONTENT.alumLines[a.state] ? CONTENT.alumLines[a.state][0].replace(/\{ten\}/g, a.ten) : "");
       var traj = (a.history && a.history.length > 1) ? "<div class='tiny' style='color:var(--faint);margin-top:2px;letter-spacing:1px'>" + a.history.map(function (h) { return (CONFIG.ALUM.CHIPS[h] || "").split(" ")[0]; }).join(" → ") + "</div>" : "";
       r.innerHTML = "<div class='av' style='background:rgba(255,255,255,.06)'>🎓</div><div class='grow'><div class='nm'>" + esc(a.ten) + " <span class='tiny'>· K" + a.gradYear + "</span></div><div class='meta'>" + esc(line) + "</div>" + traj + "</div><div class='" + chipCls + "'>" + CONFIG.ALUM.CHIPS[a.state] + "</div>";
+      r.onclick = function () { showAlumnus(a.id); };
       sl.appendChild(r);
     });
     c.appendChild(sl);
     if (alumni.length > 40) c.appendChild(el("div", "tiny", "… và " + (alumni.length - 40) + " người nữa."));
     wrap.appendChild(c);
     return wrap;
+  }
+  function gratWord(g) { return g >= 70 ? "biết ơn sâu sắc" : g >= 45 ? "vẫn quý trường" : g >= 20 ? "thi thoảng nhớ" : "ít khi ngoảnh lại"; }
+  // tap an alumnus → their full biography: the journey (named states), final stats, the school's quiet good
+  // deeds toward them, gifts sent back. Surfaces the rich data the Sổ row only hints at (people, not scores).
+  function showAlumnus(id) {
+    var a = S().alumni.filter(function (x) { return x.id === id; })[0]; if (!a) return;
+    var seed = Math.max(0, Math.min(5, (a.fs && a.fs.seed) || 1));
+    var chipCls = a.state === "STEVE" ? "schip gold-chip" : a.state === "BI_BAT" ? "schip red-chip" : "schip";
+    var w = el("div");
+    w.appendChild(el("div", "kic", "Cựu sinh viên · K" + a.gradYear));
+    w.appendChild(el("div", "row", "<div class='av' style='background:rgba(255,255,255,.06);font-size:18px'>🎓</div><div class='grow'><div style='font-size:15px;font-weight:800'>" + esc(a.ten) + "</div><div class='tiny'>Tiềm năng (hạt giống): " + "★".repeat(seed) + "☆".repeat(5 - seed) + "</div></div><div class='" + chipCls + "'>" + CONFIG.ALUM.CHIPS[a.state] + "</div>"));
+    if (a.history && a.history.length > 1) w.appendChild(el("div", "lead", "<b>Hành trình:</b> " + a.history.map(function (h) { return CONFIG.ALUM.CHIPS[h] || h; }).join("  →  ")));
+    var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
+    w.appendChild(el("div", "lead", "“" + esc(line) + "”")).style.fontStyle = "italic";
+    if (a.fs) w.appendChild(el("div", "ibars", ibar("Kiến thức", a.fs.kt, "#bb6bd9") + ibar("Tay nghề", a.fs.tn, "#6fcf97") + ibar("Sáng tạo", a.fs.st, "#6aa9f0") + ibar("Cá mập", a.fs.cm, "#f2994a")));
+    var rel = "Tình cảm với trường: " + gratWord(a.grat || 0) + ".";
+    if (a.gifts > 0) rel += " Đã gửi về quỹ " + Math.round(a.gifts) + "tr.";
+    w.appendChild(el("div", "tiny", rel)).style.marginTop = "6px";
+    if (a.flags && a.flags.vt && a.flags.vt.length) {
+      var deeds = a.flags.vt.map(function (k) { return CONTENT.giftVt[k]; }).filter(Boolean);
+      if (deeds.length) w.appendChild(el("div", "tiny", "<span style='color:var(--green)'>" + esc(CONTENT.giftHead) + "</span> " + esc(deeds.join(" ")))).style.marginTop = "4px";
+    }
+    var btn = el("button", "btn", "Đóng sổ"); btn.style.width = "100%"; btn.style.marginTop = "10px"; btn.onclick = hideModal;
+    w.appendChild(btn);
+    openModal(w);
   }
 
   function panelFund() {

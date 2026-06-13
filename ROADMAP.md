@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (Reset iter 84: the sprite-bakery STRUCTURE epic shipped.)
+- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 85 = POLISH: tappable alumnus biography card.)
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 84: sprites.js extraction WAS the structure move — paid the debt the cadence was forcing.)
 - `LAST_EPIC: iter 84 — STRUCTURE: character sprite bakery → js/sprites.js (−156 lines ui.js; hash-proven byte-identical). Visual bake layer now whole (art.js + sprites.js).`
 - `LAST_MAINTENANCE: iter 78 — CLEAN bill of health. sweep green (0 bankrupt · pluralism holds) · NEW bot.sh full-game in-browser playthrough (11y, all 5 tabs + weather rendered each chunk) → BOTOK, zero JSERR, 84 grad/85 alumni · all 5 tabs 390px-audited (góp-quỹ + weather render live) · perf clean (2 intervals, 691 DOM nodes heaviest tab). No bugs found; no code changes beyond adding bot.sh.`

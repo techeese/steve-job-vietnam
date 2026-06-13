@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-14 — Tap a cựu sinh viên to read their biography (loop iter 85)
+- Serves the owner's deepest instinct (*"people and trajectories, not scores — outcomes that span years,
+  states that switch"*) where players actually meet the school's output: the **Sổ Cựu SV**. Alumni rows are
+  now **tappable** → a biography card that surfaces the rich data each alumnus already carried but the list
+  only hinted at:
+  - the **full journey** in named states (e.g. "🪙 Cá mập coin → 🚔 Bị bắt"), not just icons;
+  - their **potential** (seed stars) vs their **final stats** (Kiến thức/Tay nghề/Sáng tạo/Cá mập) — so you
+    see the gap between who they could have been and who they became;
+  - their **relationship with the school** (gratitude, in words) and any **gifts** sent back to the quỹ;
+  - the **school's quiet good deeds** toward them (the `flags.vt` virtues → the `giftVt` thank-you lines) —
+    "Cảm ơn thầy đã không bắt em học thuộc… vẫn nhớ buổi tối được mượn phòng máy."
+- Pure ui.js (a `showAlumnus(id)` modal + `gratWord` helper; rows get `cursor:pointer` + onclick). Reads
+  existing alumni state only — no engine/data/save change → gate & sweep untouched. Verified: parse ·
+  `./gate.sh` GREEN · `./bot.sh` **BOTOK** · 390px screenshot of a rendered biography (a ★★★★★ talent who
+  became a coin shark then was arrested — the tragedy made legible).
+- POLISH ship → `SMALL_SHIPS_SINCE_EPIC 0→1`, `EPICS_SINCE_STRUCTURE 0`. Bar: **THESIS/CHARM 4** (the
+  epilogue's "biographies" promise now reaches into the live Sổ Cựu SV).
+
 ## 2026-06-14 — STRUCTURE epic: the character sprite bakery → js/sprites.js (loop iter 84)
 - The cadence-forced STRUCTURE epic + the ~10-firing architecture review. **Swapped the queued ui.js→screens.js
   for a cleaner, lower-risk move (recorded):** the iter-73 review concluded ui.js's panels/modals have "no clean
