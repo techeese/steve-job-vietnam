@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — Twice the alumni one-liners (less repetition in the biographies) (loop iter 98)
+- Content depth on the game's **highest-repetition surface**: alumni one-liners (`alumLines`) drive the Sổ
+  Cựu SV feed, the tap-to-read biography card, and the closing essay's cast. Each fate had only **2** lines —
+  and the sweep shows ~64% of graduates end QUAN_VAN_MAU (plus heavy KY_SU/LUONG_ON/CA_MAP_COIN), so those 2
+  repeated hard across a school's worth of alumni. **Doubled the pool to 4 per state** (+16 fresh dry-satire
+  lines): the năm-tư who finished "khoá học online thứ bảy, chưa khoá nào ra việc"; the kỹ sư whose colleagues
+  call only "khi không hiểu sao nó lại chạy"; the quán-quân who "nộp báo cáo đúng mẫu… không ai nhớ nội dung";
+  the Steve whose open-source release makes "cả ngành lặng đi một nhịp."
+- data.js only (`alumLines` 2→4 per state; `pickLineIdx` already rotates via `% length` — no count hardcoded).
+  No balance/save change. Verified: parse · `./gate.sh` GREEN (**GATE_ALUM replay determinism held** under the
+  mod-4 line index) · `./bot.sh` BOTOK · a variety probe confirming the high-frequency states now draw from the
+  enriched pool. Plateau-mode safe value → `SMALL_SHIPS_SINCE_EPIC 0→1`. Bar: **content/charm 4**.
+
 ## 2026-06-14 — Maintenance sprint: clean (loop iter 97)
 - Due since iter 86 (11 firings, ~8 changes ago). Full health pass: `node sweep.js` bands GREEN (0 bankruptcy,
   pluralism holds, destiny distribution stable) · `./bot.sh` **BOTOK** (11y, zero JSERR) · perf clean (2
