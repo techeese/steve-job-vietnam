@@ -21,6 +21,31 @@ steers in broad strokes mid-flight ("design this as the university I guess", "wi
 outcomes", "people should walk around and do things") and expects those strokes developed
 into systems — so every owner message is DATA about the underlying instinct, not just a task.
 
+**Autonomy contract (owner directive 2026-06-13: "how can I guide you to be more autonomous on design choices?"):**
+The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owner vetoes by reaction.**
+- Live updates are reliable now (cache-bust) and every change is one `git revert` away, so a wrong
+  call is CHEAP — treat that as license to take real swings autonomously instead of asking.
+- ASK (AskUserQuestion) ONLY when ALL of: (a) the choice is expensive/hard to undo OR would destroy
+  owner-made work, AND (b) no taste signal in the north-star/ledger below resolves it, AND (c) a
+  wrong call wastes large effort. Otherwise DECIDE, ship, and surface it as an `OWNER:` line to veto.
+  (The two graphics-direction questions could have been one bold attempt + veto.)
+- Bias BOLD over safe-incremental on creative/visual work — the owner judges by reaction, and a
+  striking miss teaches the model more than a timid hit. Silence after a push = tacit accept.
+
+**Taste north-star (owner-seeded — the autonomy fuel; the ONE input only the owner can give):**
+- *(seeking — asked 2026-06-13)* concrete games/apps whose LOOK the owner loves, hard yes/no
+  aesthetic rules, and a one-line "how this game should FEEL." Until seeded, infer from distillation
+  + ledger. The richer this is, the fewer questions the loop needs.
+- VISUAL so far: DETAILED PIXEL-ART, bright/cute/faces/crafted buildings; NOT dark/moody/
+  programmer-art. Bar = "looks like a real cute game."
+
+**Reactions ledger (append-only — shipped call → owner reaction; makes asking rarer over time):**
+- Sơn Mài Diorama (dark lacquer) → REJECTED "still ugly." → not dark, not subtle, judged as ART.
+- Pixel-art v2 (bright, faces) + props/fountain → accepted; owner engaged positively.
+- "everything on one screen / press button" → tabs + tap-world → accepted.
+- Open-question epilogue · campus-life · BGM → shipped, no veto (tacit accept).
+- Cache staleness made an accepted change look unchanged → owner confusion; fixed (bump.sh).
+
 **Maintain this model actively:**
 - On EVERY owner interaction: extract the abstract intent behind the concrete ask and
   update the distillation below if it sharpened or shifted. Quote-worthy phrasings go in
