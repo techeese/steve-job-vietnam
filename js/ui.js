@@ -376,49 +376,61 @@
   // ambient props — all static, seeded, capped, kept off the walk lanes so the little people stay visible
   function drawProps(ctx, rng, rooms) {
     var rowY = GH >> 1, colX = GW >> 1, i, x, y;
-    // lamp posts along the path spine (the cozy warm points)
-    for (i = 2; i < GW; i += 4) lamp(ctx, i * T + T / 2, rowY * T + T / 2);
-    for (i = 3; i < GH; i += 4) lamp(ctx, colX * T + T / 2, i * T + T / 2);
-    // flagpole at a Phòng học corner — the quiet satirical đề/pantheon nod
+    for (i = 2; i < GW; i += 4) lamp(ctx, (i * T + T / 2) | 0, (rowY * T + T / 2 + 9) | 0);
+    for (i = 3; i < GH; i += 4) lamp(ctx, (colX * T + T / 2) | 0, (i * T + T / 2 + 9) | 0);
     var ph = rooms.filter(function (r) { return r.key === "phonghoc"; })[0];
     if (ph) flagpole(ctx, ph.x * T - 1, (ph.y + CONFIG.ROOMS.phonghoc.h) * T);
-    // free edge tiles for trees/marginalia (walkable, off path, near the border)
+    // gather free tiles (walkable, off the path spine), shuffle deterministically
     var free = [];
-    for (x = 0; x < GW; x++) for (y = 0; y < GH; y++) {
-      if (!(walk[x] && walk[x][y])) continue;
-      if (y === rowY || x === colX) continue;
-      if (x < 2 || x > GW - 3 || y < 2 || y > GH - 3) free.push([x, y]);
-    }
+    for (x = 0; x < GW; x++) for (y = 0; y < GH; y++) { if (!(walk[x] && walk[x][y])) continue; if (y === rowY || x === colX) continue; free.push([x, y]); }
     for (i = free.length - 1; i > 0; i--) { var j = (rng() * (i + 1)) | 0, t = free[i]; free[i] = free[j]; free[j] = t; }
-    var nT = 0;
-    for (i = 0; i < free.length && nT < 6; i++) { tree(ctx, free[i][0] * T + T / 2, free[i][1] * T + T / 2); nT++; }
-    var gly = ["bulb", "apple", "sigma"], nG = 0;
-    for (i = nT; i < free.length && nG < 3; i++) { marginalia(ctx, free[i][0] * T + T / 2, free[i][1] * T + T / 2, gly[nG]); nG++; }
+    var edge = function (t) { return t[0] < 2 || t[0] > GW - 3 || t[1] < 2 || t[1] > GH - 3; };
+    var nT = 0; for (i = 0; i < free.length && nT < 5; i++) { var f = free[i]; if (!f.u && edge(f)) { tree(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 5) | 0); f.u = 1; nT++; } }   // trees hug the border
+    var nB = 0; for (i = 0; i < free.length && nB < 5; i++) { f = free[i]; if (!f.u) { bush(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 4) | 0); f.u = 1; nB++; } }
+    var nF = 0; for (i = 0; i < free.length && nF < 9; i++) { f = free[i]; if (!f.u) { flowers(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 6) | 0, rng); f.u = 1; nF++; } }
   }
   function lamp(ctx, cx, cy) {
-    glow(ctx, cx, cy - 6, "rgba(240,198,116,.18)");
-    ctx.fillStyle = "#2a2f36"; ctx.fillRect(cx - 0.5, cy - 8, 1, 9);
-    ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.arc(cx, cy - 8, 1.8, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "rgba(30,40,20,.16)"; ctx.fillRect(cx - 2, cy, 4, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 1, cy - 10, 2, 10);
+    ctx.fillStyle = "#7b828c"; ctx.fillRect(cx, cy - 10, 1, 10);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 2, cy - 13, 4, 3);
+    ctx.fillStyle = "#ffe9a8"; ctx.fillRect(cx - 1, cy - 12, 2, 2);
+    ctx.fillStyle = PX.gold; ctx.fillRect(cx - 1, cy - 14, 2, 1);
   }
   function flagpole(ctx, x, y) {
-    ctx.fillStyle = "rgba(10,13,15,.3)"; ctx.beginPath(); ctx.ellipse(x, y - 1, 3, 1.4, 0, 0, 6.28); ctx.fill();
-    ctx.fillStyle = "#9aa0a6"; ctx.fillRect(x, y - 16, 1, 16);
-    ctx.fillStyle = "#7d1f12"; ctx.beginPath(); ctx.moveTo(x + 1, y - 16); ctx.lineTo(x + 8, y - 14.5); ctx.lineTo(x + 1, y - 12); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 0.6; ctx.stroke();
-    ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.arc(x + 0.5, y - 16, 1, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "rgba(30,40,20,.18)"; ctx.fillRect(x - 2, y - 1, 6, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y - 18, 2, 18);
+    ctx.fillStyle = "#c2c8ce"; ctx.fillRect(x, y - 18, 1, 18);
+    ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 19, 2, 2);
+    ctx.fillStyle = PX.out; ctx.fillRect(x + 1, y - 18, 8, 5);
+    ctx.fillStyle = "#e0584a"; ctx.fillRect(x + 1, y - 17, 6, 3);
+    ctx.fillStyle = "#f3b3aa"; ctx.fillRect(x + 1, y - 17, 1, 3);
   }
   function tree(ctx, cx, cy) {
-    ctx.fillStyle = "rgba(10,13,15,.3)"; ctx.beginPath(); ctx.ellipse(cx, cy + 5, 5, 2, 0, 0, 6.28); ctx.fill();
-    ctx.fillStyle = "#5a3a22"; ctx.fillRect(cx - 1, cy, 2, 6);
-    ctx.fillStyle = "#223a2b"; ctx.beginPath(); ctx.arc(cx - 2, cy - 2, 4, 0, 6.28); ctx.arc(cx + 2, cy - 2, 4, 0, 6.28); ctx.arc(cx, cy - 5, 5, 0, 6.28); ctx.fill();
-    ctx.fillStyle = "rgba(110,207,151,.25)"; ctx.beginPath(); ctx.arc(cx - 1, cy - 6, 2, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "rgba(28,48,18,.18)"; ctx.fillRect(cx - 5, cy + 4, 11, 2);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 2, cy - 2, 4, 8);          // trunk outline
+    ctx.fillStyle = "#7a4f2c"; ctx.fillRect(cx - 1, cy - 1, 2, 6);
+    // chunky pixel canopy (outline → mid → light → shade)
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 5, cy - 14, 10, 2); ctx.fillRect(cx - 7, cy - 12, 14, 6); ctx.fillRect(cx - 5, cy - 6, 10, 2);
+    ctx.fillStyle = "#3f8c4a"; ctx.fillRect(cx - 4, cy - 13, 8, 2); ctx.fillRect(cx - 6, cy - 11, 12, 4); ctx.fillRect(cx - 4, cy - 7, 8, 1);
+    ctx.fillStyle = "#55ab5d"; ctx.fillRect(cx - 5, cy - 13, 7, 2); ctx.fillRect(cx - 6, cy - 11, 5, 2);
+    ctx.fillStyle = "#2f6e3a"; ctx.fillRect(cx + 2, cy - 8, 4, 3);
   }
-  function marginalia(ctx, cx, cy, kind) {
-    ctx.globalAlpha = 0.4; ctx.strokeStyle = "#cdbf9c"; ctx.fillStyle = "#cdbf9c"; ctx.lineWidth = 1;
-    if (kind === "bulb") { ctx.beginPath(); ctx.arc(cx, cy - 1, 2.5, 0, 6.28); ctx.stroke(); ctx.fillRect(cx - 1, cy + 1.5, 2, 2); }
-    else if (kind === "apple") { ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, 6.28); ctx.fill(); ctx.strokeStyle = "#5a3a22"; ctx.beginPath(); ctx.moveTo(cx, cy - 2); ctx.lineTo(cx + 1.2, cy - 4); ctx.stroke(); }
-    else { ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.fillText("∑", cx, cy + 3); ctx.textAlign = "left"; }
-    ctx.globalAlpha = 1;
+  function bush(ctx, cx, cy) {
+    ctx.fillStyle = "rgba(28,48,18,.15)"; ctx.fillRect(cx - 4, cy + 2, 9, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 4, cy - 4, 10, 2); ctx.fillRect(cx - 5, cy - 2, 12, 4);
+    ctx.fillStyle = "#46974f"; ctx.fillRect(cx - 3, cy - 3, 8, 2); ctx.fillRect(cx - 4, cy - 1, 10, 2);
+    ctx.fillStyle = "#5cb863"; ctx.fillRect(cx - 4, cy - 1, 6, 1); ctx.fillRect(cx - 3, cy - 3, 4, 1);
+  }
+  function flowers(ctx, cx, cy, rng) {
+    var cols = ["#f15a7a", "#f2c14e", "#ffffff", "#e07ad6", "#6aa9f0"];
+    for (var k = 0; k < 3; k++) {
+      var fx = cx + (k - 1) * 4, fy = cy + ((k % 2) ? 1 : -1);
+      ctx.fillStyle = "#3f8c4a"; ctx.fillRect(fx, fy, 1, 3);
+      ctx.fillStyle = cols[(rng() * cols.length) | 0];
+      ctx.fillRect(fx - 1, fy - 2, 3, 2); ctx.fillRect(fx, fy - 3, 1, 1);
+      ctx.fillStyle = "#f2c14e"; ctx.fillRect(fx, fy - 1, 1, 1);
+    }
   }
 
   function mapPoint(ev) {

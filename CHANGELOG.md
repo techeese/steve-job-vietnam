@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-13 — Pixel-art props pass (loop iter 5): fill the campus
+- Redrew ambient props as pixel-art to match the new style: chunky pixel TREES (replacing the
+  old smooth circles that clashed), pixel LAMP posts with lit lanterns, a pixel flagpole.
+- Added cute detail to fill the world: scattered FLOWER clusters (multi-colour) + low BUSHES,
+  seeded so they never flicker. Removed the now-invisible eggshell marginalia. Gates green.
+
 ## 2026-06-13 — GRAPHICS OVERHAUL v2: detailed pixel-art (owner: "graphic still ugly")
 Full visual pivot after the owner rejected the dark Sơn Mài Diorama. Owner chose detailed
 pixel-art and flagged all four issues (tiny/plain characters, flat buildings, too dark,
