@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-14 — Harden sanitize against corrupted saves (loop iter 105)
+- Robustness probe #3: injected garbage (NaN/Infinity/wrong-type/out-of-range) across a save and loaded it.
+  sanitize recovered almost everything — but found a gap: **the three meters weren't clamped on load.**
+  `mergeInto` rejects non-finite values (keeps fresh) but **copies finite out-of-range ones**, and `gain*`
+  only clamps on change — so a tampered/legacy save with e.g. `uyTin: -999` loaded out of range (and a
+  negative reputation skews admissions math). Added defensive meter clamping in sanitize (TT∈[0,200],
+  UT/TC∈[0,100], matching `gainTT/gainUT/gainTC`; non-finite → boot value). Now a fully-corrupted save loads
+  clean and plays on.
+- engine.js (sanitize) + a `GATE_SAVE` corruption assertion. Verified: parse · `./gate.sh` ALL GREEN ·
+  corruption probe shows all meters recover (UT −999→0, TC 999→100, TT ∞→25) · `./bot.sh` BOTOK. Load-path
+  only. Bar: **bugfix/robustness** (exempt). Locked epic slot resolved via iter-92 review-defer →
+  `SMALL_SHIPS` reset. The robustness vein (103–105) is now thoroughly closed: save is lossless AND
+  corruption-resilient, both gate-guarded.
+
 ## 2026-06-14 — BUGFIX: the followed protégé survives reload — save is now lossless (loop iter 104)
 - A **comprehensive round-trip deep-diff** (the thorough follow-up to iter 103) compared the *entire* serialized
   state before/after a reload and found one more real drop: **`META.favId`** — the ⭐ followed protégé (a bond

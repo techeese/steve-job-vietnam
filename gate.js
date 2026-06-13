@@ -127,6 +127,10 @@ try {
   ok(S.khoaCup.champ === 'biz', 'khoaCup champ survives reload');
   ok(S.META.favId === favId, 'followed protégé (META.favId) survives reload');
   ok(!S._milestoneJustHit, 'transient _milestoneJustHit NOT persisted');
+  // corruption resilience: sanitize must clamp finite-but-out-of-range meters from a tampered/legacy save
+  var cor = JSON.parse(JSON.stringify(serialize())); cor.uyTin = -999; cor.thucChat = 999; cor.tiengTam = 9999;
+  localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(cor)); loadGame();
+  ok(S.uyTin >= 0 && S.uyTin <= 100 && S.thucChat >= 0 && S.thucChat <= 100 && S.tiengTam >= 0 && S.tiengTam <= 200, 'corrupted meters clamped on load');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
 OUT.push('');

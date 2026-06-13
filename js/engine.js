@@ -1126,6 +1126,11 @@ function sanitize() {
   }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP);
   if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;
   S.endow.milestonesClaimed = clamp(Math.round(S.endow.milestonesClaimed) || 0, 0, 3);
+  // meters: the recovery layer for a corrupted/out-of-range save (mergeInto rejects NaN but copies finite
+  // out-of-range numbers; gain* only clamps on change). TT∈[0,200], UT/TC∈[0,100] — match gainTT/gainUT/gainTC.
+  if (bad(S.tiengTam)) S.tiengTam = CONFIG.BOOT_TT; S.tiengTam = clamp(r1(S.tiengTam), 0, 200);
+  if (bad(S.uyTin)) S.uyTin = CONFIG.BOOT_UT; S.uyTin = clamp(r1(S.uyTin), 0, 100);
+  if (bad(S.thucChat)) S.thucChat = CONFIG.BOOT_TC; S.thucChat = clamp(r1(S.thucChat), 0, 100);
   S.admissions.lastCutoff = clamp(S.admissions.lastCutoff || 15, 12, 30.5);
   S.admissions.lastQuota = clamp(Math.round(S.admissions.lastQuota) || 12, 4, 14);
   S.admissions.poolSeed = (S.admissions.poolSeed || 0) >>> 0;
