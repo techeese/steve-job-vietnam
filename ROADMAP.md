@@ -10,9 +10,19 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
 - `LAST_EPIC: none yet (new scheme)`
 
+## Epic in progress
+**Epic: STRUCTURE — robustness + ui.js split** (started iter 56, backlog #1). Plan: (1) ✅ restore
+`window.onerror` production trap [iter 56 checkpoint — title=JSERR + reload banner, gate-verified];
+(2) split the 1693-line ui.js → `ui.js` (shell/HUD/panels/modals) + `art.js` (canvas: sprites, bake,
+buildings, campus-life draw) + `content.js` (any inline strings), in a git WORKTREE, proven
+behavior-neutral by BEFORE/AFTER gate byte-diff + identical 390px/`_renderLiveOnce` screenshots across
+tabs/periods. Coupling to handle: PX palette, `shade`, `roundRect`, `mb`, `hashId` are shared by the
+static-art drawers AND bakeChar/drawActor → move shared helpers to art.js and expose them. Epic
+COMPLETES (resets `EPICS_SINCE_STRUCTURE`) when the split ships green. ← next checkpoint.
+
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
-1. **[STRUCTURE] Restore `window.onerror` + split ui.js (1693 lines) → `ui.js` / `art.js` / `content.js`.** ← FORCED NEXT (structure due + top debt). Unblocks all graphics-iteration velocity (the owner's "iterability as a product" ask). Worktree + behavior-neutral byte/screenshot diff; ships autonomously.
+1. **[STRUCTURE] Restore `window.onerror` (✅ iter 56) + split ui.js (1693) → `ui.js`/`art.js`/`content.js`.** ← IN PROGRESS (see `## Epic in progress`). Unblocks all graphics-iteration velocity. Worktree + behavior-neutral diff; autonomous.
 2. **[FEATURE] Art step-change** — bigger 2.5D characters with real volume (visible side walls, shading), the owner's "3D but still pixel." BEAUTY — the #1 unmet bar. Phase 1 = a 3-up divergence workflow.
 3. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
 4. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
@@ -22,7 +32,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Debt
 <!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
-- [ ] `window.onerror` production trap MISSING from index.html (dropped in the multi-file split, ~50 iters unnoticed) — worst case is a silent white screen on the owner's phone. → epic #1.
+- [x] `window.onerror` production trap — RESTORED iter 56 (inline first script: JSERR title + gentle reload banner; gate-verified).
 - [ ] ui.js = 1693 lines, past the ~900 split threshold (flagged since iter 20, ~35 iters ago) → epic #1.
 - [ ] art.js / content.js layer split never shipped (queued iter 20) → epic #1.
 

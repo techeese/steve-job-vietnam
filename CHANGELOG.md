@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — STRUCTURE-epic checkpoint 1: production error trap restored (loop iter 56)
+- First firing of the **redesigned loop**, and it behaved exactly as the new `## Cadence` ledger forces:
+  hard-locked to the EPIC track (7 small ships → epic-only) and to a STRUCTURE-epic (structure overdue),
+  it dequeued backlog #1 and paid down the worst standing debt. The `window.onerror` **production error
+  trap** — dropped in the multi-file split and missing ~50 iterations — is back as the first inline
+  script in index.html: on any uncaught error it sets `document.title='JSERR: …'` (tests/telemetry) and
+  shows a gentle red "⚠ Có lỗi nhỏ — chạm để tải lại trường." reload bar. No more silent white screen on
+  a phone — the worst failure mode, now self-healing. Verified: thrown error → title+banner fire; normal
+  boot stays clean; gates green. Next checkpoint of this epic = the ui.js → ui.js/art.js/content.js split
+  (in a worktree, proven behavior-neutral). Bar: BEAUTY 3 / JUICE 3 / FUN 3 / CLARITY 4 / BITE 3
+  (debt-exempt; lifts CLARITY — a broken state now explains itself + offers a fix).
+
 ## 2026-06-13 — Campus life: the afternoon is now a khoa practicum (loop iter 55)
 - Completes the charm thread from iter 54 — **all three khoas now have a signature on-map activity**, so
   in the afternoon period you can read a student's major just by watching where they go and what they do:
