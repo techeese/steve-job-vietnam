@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Graduation walk-OUT + maintenance audit (loop iter 29)
+- **Walk-out:** at June, graduating (and any departing) students no longer blink out — their
+  actor stays and walks OUT through the cổng before being dropped, mirroring the matriculation
+  procession. After the ceremony modal you watch your cohort file out the gate with a 🎵 bubble,
+  often crossing the new tân-SV walking IN — a visible changing of the cohorts. UI-only; verified
+  (12 enrolled → remove 5 → all 5 walk out past the gate → dropped, 7 remain).
+- **Maintenance sprint** (overdue after ~10 feature iters): re-ran sweep (clean bar the two known
+  flags — money inflation + QUAN_VAN_MAU), error-checked boot → build → 2 intakes → save/load →
+  sim (no JS errors), and audited the 390px HUD/intro — measured the meters fit and the new
+  goal-banner/lore render correctly. No regressions found from the start-from-nothing/3D/milestone run.
+
 ## 2026-06-13 — Founding milestones (early-game guidance, loop iter 28)
 - Start-from-nothing left Years 1–4 (pre-first-graduation) thin on direction. Added a "Cột mốc"
   system: a gold HUD banner shows the next founding goal (build first Phòng học → first intake →

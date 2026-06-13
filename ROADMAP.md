@@ -20,9 +20,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - ~~**(B) Students walk IN from outside**~~ **SHIPPED (iter 25).** Each new matriculant spawns
   just outside the cổng (below the map at the gate's x) and walks up the central path to their
   spot; a whole intake files in as a staggered procession with a "!" welcome bubble. Boot/reload
-  places the existing roster in place. *Follow-ups:* a walk-OUT on graduation (cựu SV leave
-  through the gate at June); maybe a gather-at-cổng cluster on khai-giảng day before they
-  disperse; tune the column spacing if a 12-strong intake feels too long.
+  places the existing roster in place. *Follow-ups:* ~~walk-OUT on graduation~~ SHIPPED (iter 29:
+  grads file out the cổng before being dropped). Still open: a gather-at-cổng cluster on
+  khai-giảng day before they disperse; tune the column spacing if a 12-strong intake feels long.
 - ~~**(C) "3D but still pixel"** for houses AND people~~ **SHIPPED (iters 26–27).** Buildings
   render as extruded 3D blocks (dark side+roof depth, directional shadow, lit top/left edges);
   characters re-baked with upper-left light + lower-right shade (rounded faces/torsos, 2-tone

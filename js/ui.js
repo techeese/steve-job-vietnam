@@ -179,8 +179,9 @@
     return [GW >> 1, GH - 1];
   }
   function syncActors(initial) {
-    var st = S().students, byId = {};
+    var st = S().students, byId = {}, stId = {};
     for (var i = 0; i < actors.length; i++) byId[actors[i].id] = actors[i];
+    for (i = 0; i < st.length; i++) stId[st[i].id] = 1;
     var next = [], arriveN = 0;
     for (i = 0; i < st.length; i++) {
       var s = st[i], a = byId[s.id];
@@ -206,6 +207,16 @@
       a.skin = SKINS[VARIANTS[a.variantIdx].s][0]; a.glasses = ACC[VARIANTS[a.variantIdx].a] === "glasses";
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
+    }
+    // graduated / departed students: keep their actor and walk it OUT through the cổng (mirror of the
+    // arrival procession) until it exits the map, then drop it. No walk-out on a boot/reload rebuild.
+    if (!initial) {
+      for (i = 0; i < actors.length; i++) {
+        var old = actors[i];
+        if (stId[old.id] || old._gone) continue;           // still enrolled, or already off-map
+        if (!old._leaving) { old._leaving = true; old._leaveT = 0; old.emote = "music"; old.emoteUntil = 1e15; old._atDest = false; old.act = null; }
+        next.push(old);
+      }
     }
     actors = next;
   }
@@ -243,6 +254,14 @@
     a._atDest = false;
   }
   function updateActor(a, alive, ts, period) {
+    if (a._leaving) { // graduate heading out the cổng — ignore activity routing
+      var ggx = (GW >> 1) * T + T / 2 + a._ox, ggy = GH * T + 20;
+      var ldx = ggx - a.px, ldy = ggy - a.py, ld = Math.hypot(ldx, ldy);
+      if (alive) { var ls = 0.55; a.px += (ldx / ld) * ls; a.py += (ldy / ld) * ls; a.dir = ldx < 0 ? -1 : 1; a._moving = true; a._leaveT++; }
+      if (a.py > GH * T + 12 || a._leaveT > 1600) a._gone = true; // exited (or safety timeout) → dropped next sync
+      a.bob = Math.sin(ts / 180 + a.ph) * 1.2;
+      return;
+    }
     if (a._period !== period) { a._period = period; assignActivity(a, period); }
     var tgx = a.tx * T + T / 2 + a._ox, tgy = a.ty * T + T / 2 + a._oy;
     var dx = tgx - a.px, dy = tgy - a.py, dist = Math.hypot(dx, dy);
@@ -1263,7 +1282,7 @@
     rooms: function () { return S().rooms.map(function (r) { return { key: r.key, x: r.x, y: r.y }; }); },
     // test hooks (headless rAF is throttled, so drive sync/walk manually): inspect actor
     // positions, force a roster sync, and step the walk N frames under a pinned period.
-    _dbgActors: function () { return actors.map(function (a) { return { py: Math.round(a.py), arr: !!a._arriving }; }); },
+    _dbgActors: function () { return actors.map(function (a) { return { py: Math.round(a.py), arr: !!a._arriving, lv: !!a._leaving }; }); },
     _sync: function (init) { syncActors(init); },
     _bakeSheet: function () { var c = $("mapStatic"), X = c.getContext("2d"); X.imageSmoothingEnabled = false; X.fillStyle = "#79b34a"; X.fillRect(0, 0, c.width, c.height); var sc = 5, per = 5; for (var v = 0; v < ATLAS[0].length; v++) { var spr = ATLAS[0][v][0]; var col = v % per, row = (v / per) | 0; X.drawImage(spr, 8 + col * 76, 8 + row * 116, 16 * sc, 22 * sc); } },
     _steps: function (n, period) { var ts = 50000; for (var f = 0; f < (n || 60); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, period || 0); } },
