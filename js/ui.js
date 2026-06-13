@@ -98,6 +98,8 @@
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
+  // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
+  var TINTS = ["rgba(255,246,214,.045)", "rgba(255,251,224,.03)", "rgba(255,240,196,.06)", "rgba(255,214,148,.085)", "rgba(255,186,116,.12)"];
 
   function boot() {
     if (!HVS.loadGame()) { /* fresh already set */ }
@@ -207,6 +209,7 @@
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
     drawSmoke(ctx, ts);
+    ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
     requestAnimationFrame(liveLoop);
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
