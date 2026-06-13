@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-14 — The end-card is now actually shareable (loop iter 91)
+- **Finished an incomplete feature** rather than adding a new one: the epilogue's gold summary card (the
+  "shareable end-card" the owner valued, iter 68) only ever said *"📸 chụp để chia sẻ"* — i.e. screenshot it
+  yourself. Now there's a real **"💾 Lưu / chia sẻ ảnh tổng kết"** button: on mobile it opens the **native
+  share sheet** with the PNG (`navigator.share` + a `File`); on desktop it **downloads** the image; defensive
+  fallbacks throughout (toBlob → dataURL → a toast telling you to screenshot). The card's baked footer changed
+  from the now-redundant screenshot hint to a shareable **`#HọcViệnSteve · đề Văn 2026`** tag.
+- Pure ui.js (`saveShareCard` + a button in `essayDraft`). Reads the rendered canvas only — no engine/balance/
+  save change. Verified: parse · `./gate.sh` GREEN · `./bot.sh` BOTOK · 390px screenshot of the essay with
+  the button · the save click exercised headlessly (toBlob path, zero JSERR).
+- POLISH ship → **`SMALL_SHIPS_SINCE_EPIC 2→3` ⇒ next firing is hard-locked to the EPIC track.** The
+  taste-dependent feature epics stay queued for owner steer; the available autonomous epic is the long-queued
+  **ui.js→screens.js STRUCTURE** move (behavior-neutral, now de-riskable via bot.sh + a render hash). Bar:
+  **completeness 4** (a feature that claimed to be shareable now is).
+
 ## 2026-06-14 — Tap a meter to learn what it means (loop iter 90)
 - UX/onboarding (compass #6, barely touched): the three HUD meters — **Tiếng Tăm / Uy Tín / Thực Chất** —
   are the abstract heart of the game, but a new player ("a stranger who stops to play") had no way to learn

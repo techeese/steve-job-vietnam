@@ -1379,8 +1379,27 @@
     (function () { var words = V[1].split(" "), line = "", yy = 156; for (var i = 0; i < words.length; i++) { var t = line + words[i] + " "; if (x.measureText(t).width > W - 150 && line) { x.fillText(line.trim(), 116, yy); line = words[i] + " "; yy += 26; } else line = t; } x.fillText(line.trim(), 116, yy); })();
     F("600", 16, "#9aa4b2"); x.fillText("🎓 " + s.META.graduated + "    🍎 " + s.META.steves + "    🚔 " + s.META.arrested, 30, 244);
     F("500", 12, "#6b7484"); x.fillText("techeese.github.io/steve-job-vietnam", 30, 276);
-    F("600", 12, "#f0c674"); x.textAlign = "right"; x.fillText("📸 chụp để chia sẻ", W - 30, 276);
+    F("600", 12, "#f0c674"); x.textAlign = "right"; x.fillText("#HọcViệnSteve · đề Văn 2026", W - 30, 276);
     return cv;
+  }
+  // make the end-card actually shareable: native share sheet on mobile (with the PNG), download fallback on desktop
+  function saveShareCard(cv) {
+    try {
+      if (cv.toBlob) {
+        cv.toBlob(function (blob) {
+          if (!blob) { toast("Không tạo được ảnh — chụp màn hình nhé."); return; }
+          try {
+            if (navigator.share && navigator.canShare) {
+              var file = new File([blob], "hoc-vien-steve.png", { type: "image/png" });
+              if (navigator.canShare({ files: [file] })) { navigator.share({ files: [file], title: "Học viện Steve", text: "Câu trả lời của tôi cho đề Văn 2026." }).catch(function () {}); return; }
+            }
+          } catch (e) {}
+          var url = URL.createObjectURL(blob), a = document.createElement("a"); a.href = url; a.download = "hoc-vien-steve.png"; a.click();
+          setTimeout(function () { try { URL.revokeObjectURL(url); } catch (e) {} }, 1500);
+          toast("Đã lưu ảnh tổng kết.");
+        }, "image/png");
+      } else { var a2 = document.createElement("a"); a2.href = cv.toDataURL("image/png"); a2.download = "hoc-vien-steve.png"; a2.click(); toast("Đã lưu ảnh tổng kết."); }
+    } catch (e) { toast("Không lưu được — chụp màn hình nhé."); }
   }
   function essayDraft(capstone) {
     var s = S(), C = CONFIG.ESSAY, E = CONTENT.essay, w = el("div");
@@ -1408,7 +1427,10 @@
       if (s.thucChat >= 65 && s.tiengTam < 60) return "thuc";
       return "kind";
     })();
-    w.appendChild(shareCard(s, branchKey)); // a screenshot-able summary of the player's answer
+    var card = shareCard(s, branchKey); w.appendChild(card); // a summary of the player's answer…
+    var save = el("button", "btn", "💾 Lưu / chia sẻ ảnh tổng kết"); save.style.cssText = "width:100%;margin-bottom:11px;font-size:12px"; // …now actually saveable/shareable
+    save.onclick = function () { saveShareCard(card); };
+    w.appendChild(save);
     function P(cls, html, it) { var e = el("div", cls, html); if (it) e.style.fontStyle = "italic"; w.appendChild(e); }
     P("kic", esc(E.kic.replace("{year}", s.year)));
     var h = el("h2", null, esc(E.title)); w.appendChild(h);
