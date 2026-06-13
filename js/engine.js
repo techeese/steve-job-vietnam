@@ -313,7 +313,8 @@ function economyTick() {
   news(tpl(CONTENT.ticker.quyLai, { bal: Math.round(S.endow.bal), lai: lai }));
 
   // meters
-  S.tiengTam = clamp(r1(S.tiengTam - CONFIG.TT_DECAY), 0, 200);
+  var ttFloor = CONFIG.TT_FLOOR(S.uyTin);
+  if (S.tiengTam > ttFloor) S.tiengTam = clamp(r1(Math.max(ttFloor, S.tiengTam - CONFIG.TT_DECAY)), 0, 200);
   for (i = 0; i < S.teachers.length; i++) if (S.teachers[i].trait === "isi") gainTT(0.5);
   if (hasRoom("cangtin")) moodAll(1);
   // thực chất drifts toward (craft − cram) of student body

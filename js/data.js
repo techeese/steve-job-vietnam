@@ -22,7 +22,8 @@ var CONFIG = {
 
   // meters
   BOOT_TT: 25, BOOT_UT: 10, BOOT_TC: 30,
-  TT_DECAY: 1,                  // per month, flat
+  TT_DECAY: 1,                  // per month, flat — but only down to a floor (a working school keeps some hype)
+  TT_FLOOR: function (ut) { return 10 + 0.25 * ut; }, // baseline reputation, lifted by Uy Tín — keeps admissions/campus alive
   UT_YEAR_CAP: 3,               // net per year, two pierce events only
 
   // growth pipeline

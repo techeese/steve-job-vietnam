@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — Balance: Tiếng Tăm floor (loop iter 16, sweep-driven)
+- The sweep found TT bled to ~1 over a run → admissions pool shrank → the campus slowly
+  emptied (a liveliness bug, not just balance). Gave TT a FLOOR = 10 + 0.25×Uy-Tín: it still
+  decays −1/mo, but only down to a baseline a working/reputable school keeps. Now stabilizes
+  ~12; admissions stay healthy, the school stays full & lively. Hype-vs-uy-tín tension intact
+  (TT still erodes; honest reputation lifts the floor). Sweep confirms: collapse flag gone,
+  Y1 net still +12.3 (in band), pluralism/thesis unchanged. Gates green.
+
 ## 2026-06-13 — Gameplay simulator: sweep.js (owner directive)
 - `node sweep.js` drives the DOM-free engine through 40 seeds × 5 strategies × 11 years and
   reports economy band, alumni-destiny distribution per strategy, 🍎-rate, and DESIGN-§1
