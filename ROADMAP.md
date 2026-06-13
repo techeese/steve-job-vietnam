@@ -31,7 +31,7 @@ attracts new talent. Owner-confirmed design decisions: **students AUTO-JOIN** (n
   6th nav tab in V1 (the 5-tab nav is already tight at 390px). A dedicated Khoa-management screen is a
   *V2* only if the card proves too small — decide after seeing V1 on mobile.
 - **Phases (each ships green + verified):** ~~**P1** data+engine~~ DONE (iter 49: auto-join, synergy, prodigy-on-unlock, thesis holds).
-  **P2** UI (Khoa card + inspect chip) — verify via 390px screenshot. **P3** balance pass — `node sweep.js`
+  ~~**P2** UI (Khoa card + inspect chip)~~ DONE (iter 50, 390px-verified). **P3** balance pass — `node sweep.js`
   before/after; synergy growth shifts tn/st/cm so it can move destinies — confirm the craft→🍎 / cram→
   văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4 — DEEPEN (owner asked for more
   mechanic depth, iter 49):** khoa-vs-khoa rivalry/events, a khoa head (assign a teacher to boost a

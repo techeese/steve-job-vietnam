@@ -20,13 +20,13 @@ var CONFIG = {
   // KHOA / MAJORS (P1) — students auto-join by tell; a khoa unlocks when its building exists; each
   // khoa grows one stat and leans toward one destiny (the satirical hook). Prodigy joins on unlock.
   MAJORS: [
-    { key: "code", name: "Khoa Lập trình", icon: "💻", room: "phongmay", tell: "spark", stat: "tn",
+    { key: "code", name: "Khoa Lập trình", icon: "💻", room: "phongmay", tell: "spark", stat: "tn", dest: "👷 kỹ sư",
       line: "Học để cái máy chạy thật, không phải để qua môn.",
       prodigy: { ten: "Tú 'Compiler'", seed: 5, kt: 30, tn: 45, st: 32, cm: 18, vet: 8, mood: 76, tell: "spark" } },
-    { key: "make", name: "Khoa Thiết kế Chế tạo", icon: "🎨", room: "xuong", tell: "sky", stat: "st",
+    { key: "make", name: "Khoa Thiết kế Chế tạo", icon: "🎨", room: "xuong", tell: "sky", stat: "st", dest: "🍎 sáng tạo",
       line: "Cái đẹp không có văn mẫu — phải tự vẽ lấy.",
       prodigy: { ten: "Hà 'Maker'", seed: 5, kt: 26, tn: 35, st: 48, cm: 16, vet: 6, mood: 76, tell: "sky" } },
-    { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm",
+    { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", dest: "🪙 cá mập coin",
       line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.",
       prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } }
   ],

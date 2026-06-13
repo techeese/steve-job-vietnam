@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Khoa/Majors P2 (the UI) + Trần Phi Lợi hidden until arrested (loop iter 50)
+- **P2 — the Khoa system is now visible.** New "Khoa / Chuyên ngành" card in the **Sinh viên** tab:
+  each khoa shows its icon/name, whether it's unlocked (or "🔒 Xây [building] để mở"), member count,
+  synergy status (⚡ active vs "N/4 để cộng hưởng"), and the destiny it leans toward (👷 kỹ sư /
+  🍎 sáng tạo / 🪙 cá mập coin), plus an "Đại cương" line for unaffiliated students. The student
+  **inspect card** now shows a gold khoa chip. Verified at 390px: locked→unlocked transition, the
+  prodigy appears, counts correct. (P3 balance was already confirmed clean in iter 49; P4 depth next.)
+- **Fix (owner: "why Trần Phi Lợi appears too soon?"):** the founder's old cram-school star is seeded
+  for his scripted Y2-M3 arrest, but he was showing in the Cựu SV book from Year 1 — before the school
+  has any real graduate. He's not THIS school's alumnus; now he's **hidden from the Sổ (and the school
+  record) until he's actually arrested** ("lên báo"), matching the intro's "sắp lên báo". Gates green.
+
 ## 2026-06-13 — Khoa/Majors system P1: the engine (loop iter 49)
 - First phase of the owner-requested majors system (plan in ROADMAP, owner-approved). Three khoas,
   each unlocked by a building and steering a destiny: 💻 Lập trình (Phòng Máy → Tay nghề → kỹ-sư),

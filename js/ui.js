@@ -890,12 +890,14 @@
     selStudent = id; selRoom = null; // mark the selection on the map
     var ins = $("inspect");
     var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
+    var sjMajor = HVS.studentMajor ? HVS.studentMajor(st) : null; // the khoa this student belongs to (if any)
     var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
     var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < VARIANTS.length) ? st.look : hashId(st.id) % VARIANTS.length;
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='16' height='22' style='width:22px;height:30px;image-rendering:pixelated;background:" + (GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
       "<div class='grow'><input id='renameIn' value='" + esc(st.ten).replace(/'/g, "&#39;") + "' maxlength='18' style='width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 7px;font-family:inherit;font-weight:700;font-size:12px'/>" +
-      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + "</div></div>" +
+      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + "</div>" +
+      (sjMajor ? "<div class='imeta' style='color:var(--gold)'>" + sjMajor.icon + " " + esc(sjMajor.name) + "</div>" : "") + "</div>" +
       "<button class='ix' id='favBtn' title='Theo dõi'>" + (S().META.favId === st.id ? "⭐" : "☆") + "</button>" +
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
@@ -1117,6 +1119,23 @@
   }
   function panelStudents() {
     var s = S(), wrap = el("div");
+    // KHOA / majors — auto-join specializations; synergy when a khoa is full; unlocked by buildings
+    if (CONFIG.MAJORS && CONFIG.MAJORS.length) {
+      var counts = {}, general = 0;
+      s.students.forEach(function (st) { var m = HVS.studentMajor(st); if (m) counts[m.key] = (counts[m.key] || 0) + 1; else general++; });
+      var kc = el("div", "card"); kc.appendChild(el("h3", null, "Khoa / Chuyên ngành"));
+      CONFIG.MAJORS.forEach(function (m) {
+        var unlocked = s.rooms.some(function (r) { return r.key === m.room; });
+        var cnt = counts[m.key] || 0, syn = cnt >= (CONFIG.SYN_MIN || 4);
+        var status = !unlocked ? ("🔒 Xây " + CONFIG.ROOMS[m.room].name + " để mở")
+          : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + (CONFIG.SYN_MIN || 4) + " SV để cộng hưởng"));
+        var row = el("div", "row"); row.style.marginBottom = "6px"; if (!unlocked) row.style.opacity = ".5";
+        row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + "</div><div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip'>" + cnt + " SV</div>";
+        kc.appendChild(row);
+      });
+      if (general) kc.appendChild(el("div", "tiny", "Đại cương: " + general + " SV chưa thuộc khoa nào (xây phòng để mở khoa).")).style.marginTop = "3px";
+      wrap.appendChild(kc);
+    }
     for (var g = 1; g <= 4; g++) {
       var list = s.students.filter(function (x) { return x.grade === g; });
       if (!list.length) continue;
@@ -1136,12 +1155,15 @@
   }
   function seedFace(seed) { return ["·", "🙂", "🙂", "😀", "😎", "🤩"][seed] || "🙂"; }
 
+  // the founder's old cram-school star (Trần Phi Lợi) is seeded for his scripted arrest, but he isn't
+  // THIS school's graduate — keep him out of the Sổ until he's actually "lên báo" (arrested).
+  function visAlumni() { return S().alumni.filter(function (a) { return !(a._tpl && !a._arrested); }); }
   function panelAlumni() {
-    var s = S(), wrap = el("div");
-    if (!s.alumni.length) { wrap.appendChild(el("div", "empty", "Chưa có cựu sinh viên.<br>Khoá đầu tốt nghiệp vào Lễ Tốt Nghiệp tháng 6.")); return wrap; }
+    var s = S(), wrap = el("div"), alumni = visAlumni();
+    if (!alumni.length) { wrap.appendChild(el("div", "empty", "Chưa có cựu sinh viên.<br>Khoá đầu tốt nghiệp vào Lễ Tốt Nghiệp tháng 6.")); return wrap; }
     var order = { STEVE: 0, BI_BAT: 1 };
-    var sorted = s.alumni.slice().sort(function (a, b) { return (order[a.state] != null ? order[a.state] : 5) - (order[b.state] != null ? order[b.state] : 5) || b.gradYear - a.gradYear; });
-    var c = el("div", "card"); c.appendChild(el("h3", null, "Sổ cựu sinh viên · " + s.alumni.length));
+    var sorted = alumni.slice().sort(function (a, b) { return (order[a.state] != null ? order[a.state] : 5) - (order[b.state] != null ? order[b.state] : 5) || b.gradYear - a.gradYear; });
+    var c = el("div", "card"); c.appendChild(el("h3", null, "Sổ cựu sinh viên · " + alumni.length));
     var sl = el("div", "slist");
     sorted.slice(0, 40).forEach(function (a) {
       var r = el("div", "srow");
@@ -1152,7 +1174,7 @@
       sl.appendChild(r);
     });
     c.appendChild(sl);
-    if (s.alumni.length > 40) c.appendChild(el("div", "tiny", "… và " + (s.alumni.length - 40) + " người nữa."));
+    if (alumni.length > 40) c.appendChild(el("div", "tiny", "… và " + (alumni.length - 40) + " người nữa."));
     wrap.appendChild(c);
     return wrap;
   }
@@ -1208,9 +1230,10 @@
     var counts = { 1: 0, 2: 0, 3: 0, 4: 0 }; s.students.forEach(function (x) { counts[x.grade]++; });
     c.appendChild(el("div", "row muted", "Sinh viên: Năm1 " + counts[1] + " · Năm2 " + counts[2] + " · Năm3 " + counts[3] + " · Năm4 " + counts[4]));
     c.appendChild(el("div", "row muted", "Đã tốt nghiệp: <b style='color:var(--ink)'>" + s.META.graduated + "</b> · Steve: <b style='color:var(--gold)'>" + s.META.steves + "</b> · Bị bắt: <b style='color:var(--red)'>" + s.META.arrested + "</b>"));
-    // alumni states
-    if (s.alumni.length) {
-      var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
+    // alumni states (hide the not-yet-arrested shadow alumnus)
+    var alumni = visAlumni();
+    if (alumni.length) {
+      var byState = {}; alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
       var line = Object.keys(byState).map(function (k) { return CONFIG.ALUM.CHIPS[k] + " " + byState[k]; }).join(" · ");
       c.appendChild(el("div", "row muted", line));
     }
