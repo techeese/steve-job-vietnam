@@ -42,7 +42,9 @@
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
-  var actors = [], walk = null;
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1;
+  // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
+  var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
 
   function boot() {
     if (!HVS.loadGame()) { /* fresh already set */ }
@@ -92,7 +94,21 @@
         if (gx >= 0 && gx < GW && gy >= 0 && gy < GH) walk[gx][gy] = false;
       }
     }
+    buildRings(rooms);
     S()._mapDirty = false;
+  }
+  // door/edge ring tiles per room KEY (aggregated across instances), where students gather for activities
+  function buildRings(rooms) {
+    ringsByKey = {};
+    function add(ring, x, y) { if (x >= 0 && x < GW && y >= 0 && y < GH && walk[x] && walk[x][y]) ring.push([x, y]); }
+    for (var i = 0; i < rooms.length; i++) {
+      var r = rooms[i], d = CONFIG.ROOMS[r.key], ring = [], xx, yy;
+      for (xx = r.x; xx < r.x + d.w; xx++) add(ring, xx, r.y + d.h);   // door / bottom row
+      for (yy = r.y; yy < r.y + d.h; yy++) { add(ring, r.x - 1, yy); add(ring, r.x + d.w, yy); } // flanks
+      for (xx = r.x; xx < r.x + d.w; xx++) add(ring, xx, r.y - 1);     // top row
+      if (!ringsByKey[r.key]) ringsByKey[r.key] = [];
+      ringsByKey[r.key] = ringsByKey[r.key].concat(ring.slice(0, 8));
+    }
   }
   function randWalkTile() {
     for (var k = 0; k < 30; k++) { var x = (Math.random() * GW) | 0, y = (Math.random() * GH) | 0; if (walk[x] && walk[x][y]) return [x, y]; }
@@ -110,7 +126,9 @@
       }
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
       a.legC = shade(a.bodyC, -0.30);
+      a.tell = s.tell || ""; a.seed = s.seed;
       var hh = hashId(s.id); a.hairC = (hh & 1) ? "#241a14" : "#4a3528"; a.hairFlick = (hh % 5 === 0);
+      a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
     actors = next;
@@ -121,25 +139,70 @@
     ctx.clearRect(0, 0, GW * T, GH * T);
     if (S()._mapDirty) { rebuildWalk(); drawStatic(); }
     if (ts - lastSync > 500) { syncActors(); lastSync = ts; }
-    var moving = S().speed > 0 && !anyModal();
-    for (var i = 0; i < actors.length; i++) updateActor(actors[i], moving, ts);
+    var alive = !anyModal(); // campus stays alive at speed 0 (chill); freezes only for modals
+    var period = (forcePeriod >= 0) ? forcePeriod : (Math.floor(ts / PERIOD_MS) % N_PERIODS);
+    var i;
+    for (i = 0; i < actors.length; i++) updateActor(actors[i], alive, ts, period);
     actors.sort(function (a, b) { return a.py - b.py; });
-    for (i = 0; i < actors.length; i++) drawActor(ctx, actors[i], ts);
+    for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); }
+    if (period === 1 || period === 3) drawSanBall(ctx, ts); // ball out at recess / afternoon
     requestAnimationFrame(liveLoop);
   }
-  function updateActor(a, moving, ts) {
-    var tgx = a.tx * T + T / 2, tgy = a.ty * T + T / 2;
+  // schedule: students are routed to the right room's door-ring each period, then do the activity
+  function assignActivity(a, period) {
+    var roomKey = null, act = null, duAn = (S().month >= 2 && S().month <= 5);
+    if (period === 0) { roomKey = "phonghoc"; act = (a.tell === "sky") ? "daydream" : "study"; }
+    else if (period === 1) { roomKey = "san"; act = (a.tell === "hype") ? "perform" : "recess"; }
+    else if (period === 2) { roomKey = "cangtin"; act = "eat"; }
+    else if (period === 3) { if (a.grade === 4) { roomKey = duAn ? "xuong" : "phongmay"; act = "tinker"; } else { roomKey = "lab"; act = "study"; } }
+    else { roomKey = null; act = (((a.id + period) % 3) === 0) ? "zzz" : "home"; }
+    var ring = roomKey ? ringsByKey[roomKey] : null;
+    if (ring && ring.length) { var t = ring[(a.id + period) % ring.length]; a.tx = t[0]; a.ty = t[1]; a.act = act; }
+    else { var rt = randWalkTile(); a.tx = rt[0]; a.ty = rt[1]; a.act = (period === 4) ? act : null; } // graceful fallback when the room isn't built
+    a._atDest = false;
+  }
+  function updateActor(a, alive, ts, period) {
+    if (a._period !== period) { a._period = period; assignActivity(a, period); }
+    var tgx = a.tx * T + T / 2 + a._ox, tgy = a.ty * T + T / 2 + a._oy;
     var dx = tgx - a.px, dy = tgy - a.py, dist = Math.hypot(dx, dy);
-    if (dist < 1.5) {
-      if (a.wait > 0) { a.wait -= 1; }
-      else { var nt = randWalkTile(); a.tx = nt[0]; a.ty = nt[1]; a.wait = (Math.random() * 50) | 0; }
-      a._moving = false;
-    } else {
-      var sp = 0.45 + (a.grade === 1 ? 0.1 : 0); // gentle, slightly faster freshers
-      a.px += (dx / dist) * sp; a.py += (dy / dist) * sp;
-      a.dir = dx < 0 ? -1 : 1; a._moving = true;
+    if (dist < 1.5 || !alive) { a._moving = false; a._atDest = a._atDest || dist < 1.5; }
+    else {
+      var sp = 0.5 + (a.grade === 1 ? 0.1 : 0);
+      a.px += (dx / dist) * sp; a.py += (dy / dist) * sp; a.dir = dx < 0 ? -1 : 1; a._moving = true;
     }
-    a.bob = Math.sin(ts / 180 + a.ph) * (dist > 1.5 ? 1.4 : 0.4);
+    var amp = (a.act === "perform" && a._atDest) ? 2.6 : (a._moving ? 1.4 : 0.4);
+    a.bob = Math.sin(ts / 180 + a.ph) * amp;
+  }
+  // per-activity overlay — flat ops only, drawn for parked actors (≈ one room's worth at a time)
+  function drawActivity(ctx, a, ts) {
+    var x = a.px | 0, y = a.py + (a.bob || 0), ph = ts / 600 + a.ph, k;
+    if (a.act === "study") {
+      var bx = x + (a.dir < 0 ? -9 : 5);
+      ctx.fillStyle = "#e9e2cf"; ctx.fillRect(bx, y - 3, 4, 3);
+      ctx.fillStyle = "#9c8657"; ctx.fillRect(bx, y - 3 + (Math.sin(ts / 300) > 0 ? 0 : 1), 4, 1);
+    } else if (a.act === "daydream") {
+      var d = (Math.sin(ph) * 0.5 + 0.5); ctx.globalAlpha = 1 - d; ctx.fillStyle = "#bfe0ff"; ctx.fillRect(x + 2, (y - 9 - d * 5) | 0, 2, 2); ctx.globalAlpha = 1;
+    } else if (a.act === "eat") {
+      ctx.fillStyle = "#d8cdb5"; ctx.beginPath(); ctx.arc(x, y + 4, 3, 0, Math.PI); ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1;
+      for (k = 0; k < 2; k++) { var sx = x - 1 + k * 2; ctx.beginPath(); ctx.moveTo(sx, y + 1); ctx.lineTo(sx + Math.sin(ts / 200 + k) * 1.5, y - 2); ctx.stroke(); }
+    } else if (a.act === "tinker") {
+      if ((Math.floor(ts / 160) + a.id) % 3 === 0) { var n = (a.tell === "spark") ? 3 : 2; ctx.fillStyle = "#ffe9a8"; for (k = 0; k < n; k++) { var an = k * 2.2 + ts / 100; ctx.fillRect((x + Math.cos(an) * 4) | 0, (y - 2 + Math.sin(an) * 4) | 0, 1, 1); } }
+    } else if (a.act === "perform") {
+      ctx.strokeStyle = a.bodyC; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(x - 3, y + 1); ctx.lineTo(x - 5, y - 3); ctx.moveTo(x + 3, y + 1); ctx.lineTo(x + 5, y - 3); ctx.stroke();
+    } else if (a.act === "zzz") {
+      var zy = (y - 8 - (Math.sin(ph) * 0.5 + 0.5) * 4) | 0;
+      ctx.strokeStyle = "rgba(220,226,200,.7)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + 2, zy); ctx.lineTo(x + 5, zy); ctx.lineTo(x + 2, zy + 3); ctx.lineTo(x + 5, zy + 3); ctx.stroke();
+    }
+  }
+  function drawSanBall(ctx, ts) {
+    var san = null, rooms = S().rooms; for (var i = 0; i < rooms.length; i++) if (rooms[i].key === "san") { san = rooms[i]; break; }
+    if (!san) return;
+    var d = CONFIG.ROOMS.san, cx = (san.x + d.w / 2) * T, cy = (san.y + d.h / 2) * T;
+    var bx = cx + Math.sin(ts / 700) * (d.w * T * 0.3), by = cy + 4 - Math.abs(Math.sin(ts / 350)) * 8;
+    ctx.fillStyle = "rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(bx, cy + 8, 2.5, 1, 0, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(bx, by, 2.2, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "#333"; ctx.fillRect((bx - 1) | 0, (by - 1) | 0, 1, 1);
   }
   // chibi student — flat primitives only, no per-frame strings/gradients/save (60fps × 48)
   function drawActor(ctx, a, ts) {
@@ -850,7 +913,10 @@
   window.__ui = {
     inspectStudent: showInspectStudent, inspectRoom: showInspectRoom, hideInspect: hideInspect,
     firstStudentId: function () { return S().students[0] && S().students[0].id; },
-    setTab: function (t) { tab = t; render(); }
+    setTab: function (t) { tab = t; render(); },
+    setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
+    // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
+    _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } }
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();

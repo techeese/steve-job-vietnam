@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-13 — Campus life v1 (loop iteration 1): students keep a schedule
+Designed via a 4-lens → synthesis workflow. Pure view layer (no sim/state change).
+- **Day clock:** 5 real-time periods × 16s — class · recess · lunch · afternoon · tan học —
+  animating even at speed 0 (chill ambiance), freezing only for modals.
+- **Routing:** students walk to the right room's door-ring each period and DO the activity:
+  sit-and-study at Phòng học (sky-kid daydreams a rising dot), eat a steaming bowl at Căng
+  Tin, tinker with gold sparks at Xưởng (Năm-4 đồ-án-mode Tháng 2–5; spark-kids spark double),
+  gather on the Sân with one shared bouncing ball (hype-kids perform, arms up), zzz when idle.
+  Door-rings precomputed on map-dirty (cap 8/room, aggregated across instances); graceful
+  wander-fallback when a room isn't built yet — so unbuilt rooms just mean fewer activities.
+- **Perf:** base sprite unchanged; one duty-gated flat-op overlay per parked actor; the ball
+  drawn once/frame after the actor loop. No per-frame strings/gradients/save-restore.
+- Verified each period at 390px (class/recess/lunch all cluster + animate correctly).
+  `window.__ui.setPeriod/_settle` test hooks added for deterministic period screenshots.
+
 ## 2026-06-13 — Campus art overhaul: Sơn Mài Diorama
 Owner directive: "the graphic needs to be more detailed and more style." Replaced the flat
 rectangles with a full art direction (synthesized via a 6-direction explore → 3-judge →

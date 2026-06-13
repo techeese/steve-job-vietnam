@@ -6,12 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-1. **Campus life pass v1 (owner directive — feel-first):** students visibly DO things —
-   sit in class during periods, eat at căng tin (food bubbles), tinker in Xưởng (sparks),
-   kick a ball on the sân pitch, zzz period 1, celebrate after June. Activity by
-   schedule×room; pure view layer. Layers onto the new Sơn Mài Diorama art + tap-inspect
-   grammar. (Watch: keep walk-lane sightlines clear — props are already capped for this.)
-2. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
+1. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
    *"bản nháp bài luận của hiệu trưởng"* — a year-end / milestone epilogue assembled from
    the player's OWN school (which students became what, which choices recurred, the three
    ledgers, 🍎-or-absence), reflecting their answer to the đề back at them. The game holds
@@ -47,11 +42,12 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
   text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
   node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no
-  numbers) · `index.html` (shell). engine.js ~945 lines, ui.js ~760 (grew with the Sơn Mài
-  art renderer) — engine.js is now over the ~900 split threshold and ui.js is approaching it.
-  NEXT refactor (queue as S1.5): extract the art renderer (drawStatic/drawRoom/drawActor +
-  ROOM_STYLE + prop drawers) into `art.js`, and plan engine.js module-split
-  (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
+  numbers) · `index.html` (shell). engine.js ~940 lines, ui.js ~925 (grew with the Sơn Mài
+  art renderer + campus-life day-clock) — BOTH now over the ~900 split threshold. S1.5 art.js
+  extraction is now the priority refactor: pull the art renderer (drawStatic/drawRoom/
+  drawActor + ROOM_STYLE + prop drawers) AND the campus-life layer (period clock, buildRings,
+  assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
+  engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
 ## Salvaged from the retired /mvp/ build (worth keeping)
 - **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
@@ -63,6 +59,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 (empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
 
 ## Done (see CHANGELOG.md)
+- **Campus life v1 (loop iter 1)** — 5-period real-time day clock routes students to room
+  door-rings to study/eat/tinker/play-ball/zzz; đồ-án-mode Năm-4→Xưởng; shared Sân ball;
+  tell-driven (sky daydreams, hype performs, spark sparks). Pure view layer. Follow-ups
+  (campus-life v2): celebrate-after-June confetti, gather-at-cổng for tân SV in Tháng 9,
+  more activity variety, tune walk speed if 16s feels tight for cross-map treks.
 - **Campus art overhaul (Sơn Mài Diorama)** — lacquer-night ground, gold-framed fake-iso
   pavilions (6 distinct room types), lamplit windows, richer chibi, seeded props.
   Synthesized via explore→judge→synthesize art-direction workflow.
