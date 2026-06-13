@@ -6,6 +6,38 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
+★★★ **PLAN — KHOA / MAJORS SYSTEM (owner-requested 2026-06-13, "great idea I want to add"):**
+A specialization layer: students join a *khoa* (major), khoas give synergies, and unlocking a khoa
+attracts new talent. Owner-confirmed design decisions: **students AUTO-JOIN** (no manual assignment);
+**khoas unlock via buildings** (ties into the build/upgrade system). This is a multi-iteration feature
+— build it in the phases below, each shipping green, NOT in one shot.
+
+- **The three khoas** (each tied to a special building + a *tell* + a stat, and each steers a destiny —
+  this is the satirical hook):
+  - 💻 **Khoa Lập trình** — unlocked by **Phòng Máy** · joins *spark* (tinkerers) · grows **Tay nghề** → the *kỹ sư* path.
+  - 🎨 **Khoa Thiết kế Chế tạo** — unlocked by **Xưởng** · joins *sky* (dreamers) · grows **Sáng tạo** → the *Steve/creator* path.
+  - 🚀 **Khoa Khởi nghiệp (Sống Ảo)** — unlocked by **Lab "Sống Ảo"** · joins *hype* (showy) · grows **Cá mập** → the *cá-mập-coin* trap (the dark mirror).
+  - Students whose tell's khoa isn't unlocked (or with no tell) sit in **Đại cương** (general, no synergy).
+- **Mechanics:** (a) *unlock* — building the khoa's room opens it (one-time); (b) *auto-join* —
+  `studentMajor(s)` = the khoa matching `s.tell` if its room exists, else general (compute on the fly,
+  no stored field to keep save-compat trivial); (c) *synergy* — a khoa with ≥`SYN_MIN` (≈4) members gives
+  its members +`SYN_GROW` (≈0.35)/day growth on the khoa's stat, so a *focused* school out-develops a
+  scattered one (a real build decision); (d) *talent unlock* — when a khoa first opens, a **prodigy
+  "tuyển thẳng"** enrolls (a high-stat student of that khoa) + a news beat — the owner's "some students
+  only unlock after a major" point. Track opened khoas in `META.majorsUnlocked` so the prodigy fires once.
+- **UI plan (the part that may need rework — keep V1 light):** V1 = a **"Khoa" card in the Sinh viên
+  panel** (list each khoa: icon, name, unlocked/locked + which building unlocks it, member count, synergy
+  ON/OFF, the destiny it leans toward) + show the student's khoa chip in the **inspect card**. Do NOT add a
+  6th nav tab in V1 (the 5-tab nav is already tight at 390px). A dedicated Khoa-management screen is a
+  *V2* only if the card proves too small — decide after seeing V1 on mobile.
+- **Phases (each ships green + verified):** **P1** data+engine (MAJORS config, unlockedMajors,
+  studentMajor, synergy in growStudents, prodigy-on-unlock, META.majorsUnlocked) — verify via node probe.
+  **P2** UI (Khoa card + inspect chip) — verify via 390px screenshot. **P3** balance pass — `node sweep.js`
+  before/after; synergy growth shifts tn/st/cm so it can move destinies — confirm the craft→🍎 / cram→
+  văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4** (optional) deepen: khoa-vs-khoa
+  events, a khoa head (teacher), the dedicated screen if warranted.
+- **Risk:** synergy growth is a balance lever — it directly feeds the destiny cascade; do P3 carefully.
+
 ★ **Balance follow-ups (queue):** (1) ~~Uy Tín erosion~~ NOT A BUG (iter 35 check): the sweep shows
 UT is a working moral meter — honest (cân bằng) keeps UT ~43, cram sits ~18; my iter-34 audit's
 UT=1 was a single harsh-cram endpoint, not systemic. Gardens' one-time +5 is thematically right

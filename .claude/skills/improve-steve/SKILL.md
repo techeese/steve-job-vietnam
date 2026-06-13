@@ -195,6 +195,13 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
   > polish); pick the winner, bank the runner-up.
 - Scope control: one iteration = one shippable coherent change. Too big → split, name the
   parts in ROADMAP.
+- **PLAN-FIRST for major features (owner directive 2026-06-13):** when the owner proposes (or you
+  pick) a MAJOR feature — a new system/mechanic, anything multi-iteration, or anything that may need
+  **UI rework** — do NOT start coding it. First write a **named plan in ROADMAP `## Now`**: the design
+  decisions (ask the owner to confirm the load-bearing ones), the data/engine/UI changes, an explicit
+  **UI-rework call** (does it need a new screen/tab, or fit existing panels?), phased steps that each
+  ship green, and the balance/verification risk. Build only after the plan exists. Small/medium changes
+  (one coherent iteration) skip this — just build. Example: the Khoa/Majors system (ROADMAP "Now ★★★").
 - Maintenance sprint every ~5th iteration: **`node sweep.js`** (the gameplay simulator —
   see below), a 5-minute virtual-time bot playthrough (zero JSERR, no soft-locks, assert
   purchases AND alumni ticks actually happened — dead selectors pass silently), full-page
