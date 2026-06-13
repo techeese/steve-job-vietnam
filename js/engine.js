@@ -1050,7 +1050,7 @@ function saveGame() {
   try { localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize())); } catch (e) {}
 }
 function serialize() {
-  var o = {}; for (var k in S) { if (k === "_mapDirty" || k === "_lastNod" || k === "_giftFlush") continue; o[k] = S[k]; }
+  var o = {}; for (var k in S) { if (k === "_mapDirty" || k === "_lastNod" || k === "_giftFlush" || k === "_milestoneJustHit") continue; o[k] = S[k]; } // transient UI flags aren't persisted
   return o;
 }
 function loadGame() {
@@ -1070,6 +1070,7 @@ function loadGame() {
       if (data.khoaCup.trophies && typeof data.khoaCup.trophies === "object") S.khoaCup.trophies = data.khoaCup.trophies;
       if (data.khoaCup.champ != null) S.khoaCup.champ = data.khoaCup.champ;
     }
+    if (data.META && data.META.favId != null) S.META.favId = data.META.favId; // null→number: the followed protégé (⭐) — same drop-class as champ
   }
   // restore id counter above anything loaded
   var maxId = 0;
@@ -1151,6 +1152,7 @@ function sanitize() {
   if (!S.META) S.META = {};
   if (!Array.isArray(S.META.goalsHit)) S.META.goalsHit = [];
   if (!Array.isArray(S.META.majorsUnlocked)) S.META.majorsUnlocked = [];
+  if (S.META.favId != null && !S.students.some(function (s) { return s.id === S.META.favId; })) S.META.favId = null; // protégé gone (graduated/left) → clear
   // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
   if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};
   var seenT = {};

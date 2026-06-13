@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — BUGFIX: the followed protégé survives reload — save is now lossless (loop iter 104)
+- A **comprehensive round-trip deep-diff** (the thorough follow-up to iter 103) compared the *entire* serialized
+  state before/after a reload and found one more real drop: **`META.favId`** — the ⭐ followed protégé (a bond
+  the owner valued) reset to `null` on reload (same `null`→primitive class as `champ`: `mergeInto`'s typeof
+  check skips it). Fixed: restore `favId` on load + **sanitize-validate** it (cleared if that student has since
+  graduated/left). Also excluded the transient `_milestoneJustHit` from `serialize` (it was saved then dropped
+  — harmless but unclean).
+- With this, the **save round-trip is now LOSSLESS** — the deep-diff reports zero remaining field differences.
+  Extended **`GATE_SAVE`** to assert favId persists and the transient does not. Verified: parse · `./gate.sh`
+  ALL GREEN · deep-diff "ROUND-TRIP LOSSLESS ✓" · `./bot.sh` BOTOK. Load-path only (no sim/balance change).
+- Bar: **bugfix** (exempt). `SMALL_SHIPS_SINCE_EPIC 2→3`. The robustness vein (iters 103–104) has now hardened
+  save-compat to lossless + guarded it; that vein is closed.
+
 ## 2026-06-14 — BUGFIX: persistent records survive a reload again (loop iter 103)
 - A **robustness probe** (active bug-hunt, the right use of a plateau firing) caught a real **save-compat bug**:
   dynamic-key MAP fields were silently dropped on every reload. `mergeInto` only copies keys present in the

@@ -117,12 +117,16 @@ try {
   __test.fresh(7);
   if (S.teachers.length) setKhoaHead('code', S.teachers[0].id);
   S.khoaCup.trophies = { biz: 3, code: 1 }; S.khoaCup.champ = 'biz'; S.khoaCup.lastYear = 4;
+  __test.place('phonghoc', 1, 1); __test.days(400); var favId = S.students[0] && S.students[0].id; S.META.favId = favId; // a followed protégé
+  S._milestoneJustHit = 'TRANSIENT_SHOULD_NOT_PERSIST';
   localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize()));
   loadGame();
-  OUT.push('GATE_SAVE khoaHead='+JSON.stringify(S.khoaHead)+' trophies='+JSON.stringify(S.khoaCup.trophies)+' champ='+S.khoaCup.champ);
+  OUT.push('GATE_SAVE khoaHead='+JSON.stringify(S.khoaHead)+' trophies='+JSON.stringify(S.khoaCup.trophies)+' champ='+S.khoaCup.champ+' favId='+S.META.favId);
   ok(S.khoaHead.code === S.teachers[0].id, 'khoaHead (trưởng-khoa) survives reload');
   ok(S.khoaCup.trophies.biz === 3 && S.khoaCup.trophies.code === 1, 'khoaCup trophies survive reload');
   ok(S.khoaCup.champ === 'biz', 'khoaCup champ survives reload');
+  ok(S.META.favId === favId, 'followed protégé (META.favId) survives reload');
+  ok(!S._milestoneJustHit, 'transient _milestoneJustHit NOT persisted');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
 OUT.push('');
