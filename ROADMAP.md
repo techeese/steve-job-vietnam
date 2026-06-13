@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. **(At 2 — next polish forces an epic; a STRUCTURE-epic is due at EPICS_SINCE_STRUCTURE 1→ not yet, but the forced epic can be feature.)**
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
 - `LAST_EPIC: iter 66 — FEATURE: player-customizable students (per-axis look customizer)`
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
@@ -23,7 +23,7 @@ on owner reaction.)_
 3. ~~[FEATURE] Festivals (Tết petals + June confetti)~~ SHIPPED iter 63. ~~Scandal-day reaction~~ SHIPPED iter 67 (a TV news-van camps at the cổng when phốt pile up — phại choices made visible). Could deepen later (gathered onlooker crowd, a gloomy banner).
 4. ~~[FEATURE] Player-customizable students~~ SHIPPED iter 66 — per-axis look customizer (skin/hair/style/accessory + 🎲) in the inspect card, on-demand cached bake, persisted via optional `s.lookC`.
 5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
-6. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.
+6. ~~[FEATURE] Shareable end-card~~ SHIPPED iter 68 — a gold canvas summary card atop the epilogue (school, đề Văn, the player's answer icon+verdict, stats, share footer).
 7. **[FEATURE/tune] Map-scale harmony** — if the new 24×32 characters read too big vs buildings, bump TILE / zoom so the world feels proportionate. Decide on owner reaction.
 8. **[STRUCTURE] (if needed) further ui.js modularization** — extract the atlas/sprite layer if ui.js grows again. Not urgent.
 

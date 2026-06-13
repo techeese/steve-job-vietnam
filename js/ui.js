@@ -1195,7 +1195,7 @@
       c.appendChild(el("div", "row muted", line));
     }
     // open-question epilogue — a mirror the player PULLS (DESIGN §1), always available
-    var eb = el("button", "btn", CONTENT.essay.openBtn); eb.style.marginTop = "9px"; eb.style.width = "100%";
+    var eb = el("button", "btn", CONTENT.essay.openBtn); eb.id = "essayBtn"; eb.style.marginTop = "9px"; eb.style.width = "100%";
     eb.onclick = function () { openModal(essayDraft()); };
     c.appendChild(eb);
     wrap.appendChild(c);
@@ -1250,6 +1250,29 @@
     for (i = 0; i < order.length && cast.length < C.CAST_CAP; i++) { var ex = pick(s.alumni.filter(function (a) { return a.state === order[i] && !used[a.id]; }))[0]; if (ex) { cast.push(ex); used[ex.id] = 1; } }
     return cast;
   }
+  // a beautiful, screenshot-able summary card of the player's answer to the đề Văn (shareability + BITE)
+  function shareCard(s, branch) {
+    var V = { steve: ["🍎", "Có. Ít nhất một quả táo đã chín."], coin: ["🪙", "Có 'Steve' — nhưng là Steve chốt đơn hội nhóm."],
+      vanmau: ["📋", "Trường dạy giỏi. Đời cần bản sao đẹp."], that: ["🌧️", "Tiềm năng thì nhiều, chỗ đứng thì ít."],
+      kysu: ["👷", "Không phải Jobs. Nhưng nước cần kỹ sư thật."], hype: ["📣", "Nổi tiếng trước, thực chất tính sau."],
+      thuc: ["🛠️", "Thực chất đầy mình — chỉ đợi thời lên tiếng."], kind: ["🌱", "Một ngôi trường tử tế. Câu hỏi vẫn mở."] }[branch] || ["🌱", "Câu hỏi vẫn mở."];
+    var W = 600, H = 300, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    cv.style.cssText = "width:100%;border-radius:12px;display:block;margin-bottom:11px;border:1px solid var(--line)";
+    var x = cv.getContext("2d"), F = function (w, sz, c) { x.fillStyle = c; x.font = (w ? w + " " : "") + sz + "px 'Be Vietnam Pro',system-ui,sans-serif"; };
+    var bg = x.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, "#17212e"); bg.addColorStop(1, "#0b1018"); x.fillStyle = bg; x.fillRect(0, 0, W, H);
+    x.strokeStyle = "#f0c674"; x.lineWidth = 3; x.strokeRect(7, 7, W - 14, H - 14);
+    x.textAlign = "left";
+    F("800", 31, "#f0c674"); x.fillText("Học viện Steve", 30, 54);
+    F("600", 15, "#9aa4b2"); x.fillText("Bản tổng kết · Năm " + s.year, 30, 78);
+    F("italic 500", 13, "#6b7484"); x.fillText("“Làm thế nào để VN có những 'Steve Jobs Việt Nam'?”", 30, 106);
+    x.font = "62px system-ui,sans-serif"; x.fillText(V[0], 32, 184);
+    F("700", 19, "#eef1f5"); // wrap the verdict to the right of the icon
+    (function () { var words = V[1].split(" "), line = "", yy = 156; for (var i = 0; i < words.length; i++) { var t = line + words[i] + " "; if (x.measureText(t).width > W - 150 && line) { x.fillText(line.trim(), 116, yy); line = words[i] + " "; yy += 26; } else line = t; } x.fillText(line.trim(), 116, yy); })();
+    F("600", 16, "#9aa4b2"); x.fillText("🎓 " + s.META.graduated + "    🍎 " + s.META.steves + "    🚔 " + s.META.arrested, 30, 244);
+    F("500", 12, "#6b7484"); x.fillText("techeese.github.io/steve-job-vietnam", 30, 276);
+    F("600", 12, "#f0c674"); x.textAlign = "right"; x.fillText("📸 chụp để chia sẻ", W - 30, 276);
+    return cv;
+  }
   function essayDraft(capstone) {
     var s = S(), C = CONFIG.ESSAY, E = CONTENT.essay, w = el("div");
     if (capstone) {
@@ -1276,6 +1299,7 @@
       if (s.thucChat >= 65 && s.tiengTam < 60) return "thuc";
       return "kind";
     })();
+    w.appendChild(shareCard(s, branchKey)); // a screenshot-able summary of the player's answer
     function P(cls, html, it) { var e = el("div", cls, html); if (it) e.style.fontStyle = "italic"; w.appendChild(e); }
     P("kic", esc(E.kic.replace("{year}", s.year)));
     var h = el("h2", null, esc(E.title)); w.appendChild(h);

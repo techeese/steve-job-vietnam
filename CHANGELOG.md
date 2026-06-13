@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Shareable end-card: your answer to the đề Văn, made beautiful (loop iter 68)
+- The thesis payoff, now shareable. The epilogue ("Bản nháp bài luận của hiệu trưởng" — the reflection
+  that mirrors your school back at you) now opens with a **gold canvas summary card**: "Học viện Steve ·
+  Bản tổng kết · Năm N", the đề Văn question, and **your answer** — an icon + one-line verdict drawn from
+  the run's branch (🍎 a Steve / 🪙 coin-shark / 📋 văn-mẫu / 👷 kỹ sư / 🌧️ unemployment / 📣 hype /
+  🛠️ thực-chất / 🌱 a kind school, question still open), plus 🎓/🍎/🚔 stats and a "📸 chụp để chia sẻ"
+  footer. A screenshot-able artifact of the player's own essay — exactly the open-question climax the game
+  is built around (DESIGN §1: reflect, never verdict). Shown in both the pull-anytime epilogue and the
+  year-12 capstone. Pure ui.js; gates green; verified in-game. Bar: **BITE 4 / BEAUTY 4 / CLARITY 4**.
+  Cadence: SMALL_SHIPS_SINCE_EPIC 2.
+
 ## 2026-06-13 — Maintenance (clean) + scandal-day: the media camps out (loop iter 67)
 - **Maintenance sprint** after a 6-ship run: `node sweep.js` green (destiny thesis intact, only the known
   late-game money flag), no JSERR across every new system (customizer + custom-bake, festivals, day-arc,
