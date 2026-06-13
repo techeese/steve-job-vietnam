@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-14 — Installable to the home screen (PWA) (loop iter 102)
+- Distribution (compass #12), the last clearly-new safe item: the game is now a **PWA** — add-to-home-screen
+  on mobile (where the owner plays), launching **standalone** (no browser chrome). Added `manifest.webmanifest`
+  (name, standalone display, portrait, brand `#0d1014` theme, icons incl. a maskable variant), a hand-drawn
+  **pixel-apple icon** (the game's 🍎 = its answer symbol) at 512/192/180px, and the `<head>` wiring (manifest,
+  theme-color, apple-touch-icon + apple-mobile-web-app metas).
+- **Manifest-only — deliberately no service worker**, so the existing `?v=` cache-bust + `no-cache` index stay
+  honest (a SW could serve stale builds — not worth it for a Pages game). index.html `<head>` + new asset files;
+  **no JS/game change** (build byte-identical, no bump). Verified: boot clean (no JSERR) · `./gate.sh` GREEN ·
+  `./bot.sh` BOTOK · manifest valid JSON · icons + manifest tracked (not gitignored). `SMALL_SHIPS 0→1`.
+
 ## 2026-06-14 — A rich share preview for the live link (loop iter 101)
 - Distribution (compass #12, never touched): the live link had **no Open Graph / social meta tags**, so a
   shared link showed a bare URL. Added the full set (`description` + `og:*` + `twitter:card`) and rendered a
