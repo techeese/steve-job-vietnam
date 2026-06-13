@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-13 — First-time intro (loop iter 22): set the premise
+- New players landed in the school with zero context. Added a one-time intro modal that shows
+  the boot premise (the real 2026 đề Văn question → you bought a bankrupt university to MANUFACTURE
+  a Steve Jobs, or at least not breed more coin sharks) + a one-line how-to-play + the satire
+  disclaimer. Gated on META.tutorial (shown once, persisted). Uses the existing CONTENT.boot.
+
 ## 2026-06-13 — Alumni trajectories (loop iter 21): watch lives unfold
 - Each cựu sinh viên now records a STATE HISTORY as the FSM moves them year by year, shown in
   the Sổ as a trajectory of chips (e.g. 🚀 → 🪙 → 🚔, or 💼 → 👷). The owner's core instinct —

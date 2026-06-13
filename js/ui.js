@@ -123,6 +123,7 @@
     // autoplay-unlock: browsers block audio until a gesture; start (or resume persisted) music on first tap
     var unlock = function () { if (soundOn) startSound(); document.removeEventListener("pointerdown", unlock); };
     document.addEventListener("pointerdown", unlock, { once: true });
+    if (!S().META.tutorial) showIntro(); // first-time premise
   }
 
   /* ---------------- main loop ---------------- */
@@ -1125,6 +1126,19 @@
     w.appendChild(el("div", "nod", "Bác Tâm để chồng thư lên bàn, không nói gì."));
     var btn = el("button", "btn gold", "Cất vào ngăn kéo"); btn.style.width = "100%"; btn.style.marginTop = "10px";
     btn.onclick = function () { S()._giftFlush = null; lastSig = ""; checkModals(); render(); };
+    w.appendChild(btn);
+    openModal(w);
+  }
+  // first-time intro — sets the satirical premise (shown once)
+  function showIntro() {
+    var w = el("div");
+    w.appendChild(el("div", "kic", "Tháng 6, 2026 · đề Văn tốt nghiệp THPT"));
+    w.appendChild(el("h2", null, "Học viện Steve"));
+    CONTENT.boot.forEach(function (b) { w.appendChild(el("div", "lead", esc(b))); });
+    w.appendChild(el("div", "lead", "<span style='color:var(--gold)'>Cách chơi:</span> chọn hướng dạy mỗi khoá, công bố điểm chuẩn mỗi tháng 7, xây phòng, tuyển giảng viên. Chạm vào sinh viên để xem (và đặt tên). Rồi ngồi xem họ lớn lên — và thành gì."));
+    var foot = el("div", "tiny", CONTENT.disclaimer); foot.style.marginBottom = "10px"; w.appendChild(foot);
+    var btn = el("button", "btn gold", "Nhận trường · Bắt đầu →"); btn.style.width = "100%";
+    btn.onclick = function () { try { S().META.tutorial = true; HVS.saveGame(); } catch (e) {} hideModal(); };
     w.appendChild(btn);
     openModal(w);
   }
