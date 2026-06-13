@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-14 — Umbrellas in the rain — weather meets the little people (loop iter 82)
+- Closes the iter-77 weather follow-up: when it drizzles, the students out in it (walking between buildings, or
+  at recess on the sân) now **pop a cheerful umbrella** — varied colours (red/blue/gold/teal/purple/pink by id),
+  a little domed canopy with a glint, ~75% carry one and the rest scurry bare-headed. Ties the weather layer to
+  the people, so the rain reads as *happening to the campus*, not just over it ("a campus that breathes").
+- Pure ui.js draw in `drawActor` (reads the `weather` var + `a._moving`/`a.act`; gated to walking/outdoor-recess
+  actors so indoor folk stay dry). No engine/data/save change → gate & sweep untouched. Verified: parse ·
+  `./bot.sh` **BOTOK** (11y, zero JSERR, all weather states cycled) · zoom-overlay screenshot of the rainy sân
+  (colourful umbrellas + rain streaks).
+- POLISH ship → `SMALL_SHIPS_SINCE_EPIC 1→2`, `EPICS_SINCE_STRUCTURE 2` (unchanged; next *epic* is the forced
+  ui.js→screens.js STRUCTURE move — one more polish then the EPIC track locks). Bar: **CHARM 4**.
+
 ## 2026-06-14 — The champion flies its colours over campus (loop iter 81)
 - Weaves iter-80's Cúp Khoa into the **watchable campus layer** (the game's soul): the reigning champion khoa now
   flies a small **waving pennant in its own colour on its own building** — Khoa Lập trình winning means a blue

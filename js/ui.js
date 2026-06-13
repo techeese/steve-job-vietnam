@@ -212,6 +212,7 @@
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [], fest = [];
   var celebrateUntil = 0, _steveSeen = -1; // 🍎 Steve-emergence celebration (the đề Văn's answer, made a moment)
   var _cupSeen = -1; // 🏆 Cúp Khoa — fire a non-blocking celebration when a new year's cup is awarded
+  var UMB_COLS = ["#e0584a", "#4a8fe0", "#f2c14e", "#5fd0c5", "#b48ef0", "#ee7ab0"]; // rain umbrellas (cheerful, varied by id)
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
@@ -739,6 +740,16 @@
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
     var spr = a.lookC ? customSprite(a.grade, a.lookC, frame) : ATLAS[a.grade - 1][a.variantIdx][frame];
     if (spr) ctx.drawImage(spr, x - 12, y - 30 + bob); // 24×32 sprite; feet at (x,y)
+    // rain: the little people out in it (walking, or at recess on the sân) pop a cheerful umbrella; ~75% carry
+    // one, the rest scurry bare-headed. Pure draw, reads the weather layer (iter 77) — ties weather to people.
+    if (weather === "rain" && (a.id % 4 !== 0) && (a._moving || a.act === "recess" || a.act === "perform")) {
+      var uy = y - 34 + bob, uc = UMB_COLS[a.id % UMB_COLS.length];
+      ctx.fillStyle = PX.out;                                   // outline + pole
+      ctx.fillRect(x - 1, uy + 3, 2, 6); ctx.fillRect(x - 6, uy + 2, 13, 2); ctx.fillRect(x - 5, uy, 11, 2); ctx.fillRect(x - 3, uy - 2, 7, 2);
+      ctx.fillStyle = uc;                                       // colored canopy dome
+      ctx.fillRect(x - 5, uy + 2, 11, 1); ctx.fillRect(x - 4, uy + 1, 9, 1); ctx.fillRect(x - 3, uy, 7, 1); ctx.fillRect(x - 2, uy - 1, 5, 1);
+      ctx.fillStyle = "rgba(255,255,255,.32)"; ctx.fillRect(x - 3, uy, 2, 1); // glint
+    }
     // idle blink — eyes close briefly every few seconds when standing still (eyes at canvas y6-8 → screen y-24)
     if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 7.5, y - 30.5, 15, 14); } // Mai Sương — gold frame
