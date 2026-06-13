@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-13 — Background music v1 (loop iter 3): state-aware campus-lofi
+Owner directive ("background music… sound… a bit chill/relax"). Replaced the bare pentatonic
+stub with a calm generative 3-layer bed — all procedural WebAudio, no asset files, defensive.
+- **Layers:** a slow pad (triangle chord, long attack), a gentle pentatonic pluck melody, and
+  a soft sub-bass pulse — connected through a master gain.
+- **State-aware mood** (read live each note): `normal` warm major pentatonic · `tet` brighter +
+  busier (Tháng 2) · `june` slower swell during a Lễ Tốt Nghiệp · `scandal` minor undertone
+  when phốt seeds pile up / Tiếng Tăm collapses. Mood adapts within a cycle, no hard transition.
+- **🎵 toggle** persisted in META.sound; **autoplay-unlock** on first tap (browsers block audio
+  until a gesture). Verified: cycling all four moods headlessly throws no error; gates green.
+- (Refactor swap recorded: the planned S1.5 art.js extraction was deferred — a ~350-line
+  single-file split is mechanically risky to do *autonomously* with the owner away to catch a
+  subtle visual regression; it'll be done in smaller chunked moves. BGM was the safer,
+  explicitly-requested, owner-audible pick.)
+
 ## 2026-06-13 — The Player's Answer epilogue (loop iter 2): "Bản nháp bài luận của hiệu trưởng"
 The open-question law (DESIGN §1) made playable. A 📜 button in the Trường tab opens a
 draft-essay modal that holds up a MIRROR and never a verdict. Designed via a 3-lens

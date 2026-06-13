@@ -234,6 +234,17 @@ development flow itself to match — that feedback loop is the owner's core requ
 - This project: `.pantheon` content and honoree names in scandal strings — grep before
   ship (`grep -l 'Trần Đại Nghĩa\|Tạ Quang Bửu\|Hồ Xuân Hương'` against phốt/headline
   banks must return nothing).
+- AUTONOMOUS-REFACTOR RISK (loop iter 3): a big single-file split (≥~300 lines moved in/out of
+  a 1000+ line file) done autonomously with the owner away is the dangerous way — engine gates
+  don't catch UI/visual regressions and Write/Edit transcription errors hide easily. CHUNK it
+  (move one subsystem per iteration), prove behavior-neutrality with BEFORE/AFTER 390px
+  screenshots of the same seeded states, and when a risky refactor competes with a safe additive
+  owner-requested feature for an autonomous slot, prefer the safe feature and chunk the refactor.
+  Recording the swap in ROADMAP (with reasoning) is part of the discipline, not a cop-out.
+- AUDIO is owner-verified, not screenshot-verified: a BGM iteration can only assert "no JSERR
+  across all state-moods + init + persist + autoplay-unlock" headlessly; the aesthetic is judged
+  by the owner on the live link. Keep audio defensive (try/catch every scheduler; any failure
+  silently disables) so a bad AudioContext never breaks the game.
 
 ## Playbook changelog
 - 2026-06-13: skill created at owner's request, seeded from the Nuôi Anh improve-game

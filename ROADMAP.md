@@ -6,12 +6,15 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-1. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
-   `art.js` (all visual data + the Sơn Mài draw functions + atlas) / `content.js` (all
-   text/events/banks) / `index.html` (engine + UI + CONFIG); build `tools/gallery.html`
-   rendering every sprite/tile/room/animation for phone review at the live URL; add GATE_ART.
-   No behavior change — gates prove it. (ui.js is now ~760 lines incl. the art renderer — the
-   art layer is the natural first extraction; see Architecture log.)
+1. **S1.5 — Workshop refactor, CHUNKED (architecture for iterability, owner priority):** the
+   one-directional dep (ui→art→globals) makes this clean, but do it in SMALL safe moves, each
+   a behavior-neutral iteration proven by before/after 390px screenshots + gates (a 350-line
+   single-file split in one autonomous shot is the risky way — owner away to catch regressions):
+   (1a) extract the campus-life layer (period clock, buildRings, assignActivity, drawActivity,
+   drawSanBall) into `art.js`; (1b) extract the Sơn Mài renderer (drawStatic/drawRoom/drawActor
+   + ROOM_STYLE + prop drawers + helpers) into `art.js`, expose `ART.*`, rewire ui.js refs;
+   (1c) `tools/gallery.html` rendering every room/sprite/activity for phone review + GATE_ART.
+   Optionally (1d) split CONTENT→`content.js`. Each sub-step ships green or reverts.
 4. **Background music v1 (owner directive):** generative WebAudio campus-lofi — gentle
    pentatonic loop, state-aware layers (normal term / Tết flavor / June ceremony swell /
    scandal undertone), 🎵 toggle persisted in META, autoplay-unlock on first interaction.
@@ -53,6 +56,8 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 (empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
 
 ## Done (see CHANGELOG.md)
+- **Background music v1 (loop iter 3)** — state-aware generative campus-lofi (pad/pluck/bass),
+  moods: normal / Tết / June-swell / scandal-undertone; 🎵 toggle persisted; autoplay-unlock.
 - **The Player's Answer epilogue (loop iter 2)** — "Bản nháp bài luận của hiệu trưởng": the
   open-question law (DESIGN §1) as a pull-only mirror modal. 8 branch voices + empty guard;
   reflects the player's own school, crosses out every verdict, ends on the đề hanging.
