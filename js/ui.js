@@ -116,10 +116,13 @@
   function buyRoom(key) {
     var res = HVS.autoPlace(key);
     if (!res.ok) { toast(res.msg); return; }
-    var d = CONFIG.ROOMS[key], ded = d && d.ded, placed = S().rooms[S().rooms.length - 1];
+    var d = CONFIG.ROOMS[key], ded = d && d.ded;
+    var spot = null; for (var i = 0; i < S().rooms.length; i++) if (S().rooms[i].key === key) spot = S().rooms[i]; // the one on the map (built or upgraded)
     rebuildWalk(); drawStatic(); render();
-    if (placed) { selRoom = { x: placed.x, y: placed.y, key: placed.key }; selStudent = null; } // flash where it landed
-    if (ded) showDedication(ded); else toast("Đã xây " + d.name + ".");
+    if (spot) { selRoom = { x: spot.x, y: spot.y, key: spot.key }; selStudent = null; } // flash where it is
+    if (ded) { showDedication(ded); sfx("chime"); }
+    else if (res.upgrade) { toast("⬆️ Nâng cấp " + d.name + " lên Lv" + res.level + "."); sfx("chime"); }
+    else { toast("Đã xây " + d.name + "."); sfx("build"); }
   }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
@@ -660,6 +663,11 @@
     ctx.fillStyle = "#754827"; ctx.fillRect(dx + (dw >> 1), dy, 1, dh);
     ctx.fillStyle = PX.gold; ctx.fillRect(dx + 2, dy + (dh >> 1), 1, 1);
     roomLabel(ctx, sty.short, x, y, w, h);
+    if ((r.level || 1) >= 2) { // upgrade pip badge, top-right of the building
+      var bx = x + w - 3, by = wallTop + 1, lv = Math.min(3, r.level);
+      ctx.fillStyle = PX.out; ctx.fillRect(bx - lv * 3 - 1, by - 1, lv * 3 + 2, 5);
+      ctx.fillStyle = PX.gold; for (var lp = 0; lp < lv; lp++) ctx.fillRect(bx - lp * 3 - 2, by, 2, 3);
+    }
   }
   function roomLabel(ctx, name, x, y, w, h) {
     ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -977,10 +985,10 @@
     if (cur) { gb.innerHTML = "<span class='gt'>🎯 Cột mốc</span><span class='gl'>" + esc(cur.goal) + "</span>"; gb.classList.add("show"); }
     else gb.classList.remove("show");
     // celebrate a just-completed milestone (engine sets the flag; we toast + clear)
-    if (s._milestoneJustHit) { toast("🎉 " + s._milestoneJustHit); s._milestoneJustHit = null; }
+    if (s._milestoneJustHit) { toast("🎉 " + s._milestoneJustHit); sfx("milestone"); s._milestoneJustHit = null; }
     // campus glow-up: when the grounds reach a new prestige tier, celebrate + repaint (once per tier)
     var ct = campusTier();
-    if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }
+    if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; sfx("milestone"); toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }
     // ticker
     if (s.news.length) {
       var n = s.news[0];
@@ -1046,23 +1054,23 @@
     stp.appendChild(minus); stp.appendChild(val); stp.appendChild(plus); row.appendChild(stp); c2.appendChild(row);
     wrap.appendChild(c2);
 
-    // build — one of each; already-built rooms drop out of the menu so the campus stays tidy
-    var buildable = ["phonghoc", "cangtin", "lab", "phongmay", "xuong"].filter(function (key) { return !s.rooms.some(function (r) { return r.key === key; }); });
-    if (buildable.length) {
-      var c3 = el("div", "card"); c3.appendChild(el("h3", null, "Xây dựng"));
-      c3.appendChild(el("div", "tiny", "Chạm để xây — phòng tự hiện ra trong khuôn viên (mỗi loại một cái).")).style.marginBottom = "7px";
-      var grid = el("div", "buildgrid");
-      buildable.forEach(function (key) {
-        var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key];
-        var b = el("button", "build");
-        b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + (d.cost ? "−" + d.cost + "tr" : "Miễn phí") + "</div>";
-        if (d.cost > s.cash) b.disabled = true;
-        b.onclick = function () { buyRoom(key); };
-        grid.appendChild(b);
-      });
-      c3.appendChild(grid);
-      wrap.appendChild(c3);
-    }
+    // build & upgrade — one building per type on the map; buying more upgrades it in place
+    var c3 = el("div", "card"); c3.appendChild(el("h3", null, "Xây dựng & Nâng cấp"));
+    c3.appendChild(el("div", "tiny", "Chạm để xây — phòng tự hiện ra. Mua thêm = nâng cấp (vẫn một phòng trên sân).")).style.marginBottom = "7px";
+    var grid = el("div", "buildgrid"), maxLv = CONFIG.ROOM_MAX_LEVEL || 3;
+    ["phonghoc", "cangtin", "lab", "phongmay", "xuong"].forEach(function (key) {
+      var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key], r0 = s.rooms.filter(function (r) { return r.key === key; })[0];
+      var lvl = r0 ? (r0.level || 1) : 0, maxed = lvl >= maxLv;
+      var cost = lvl === 0 ? (d.cost || 0) : Math.max(50, d.cost || 0);
+      var pr = maxed ? "Tối đa" : (lvl === 0 ? (cost ? "Xây −" + cost + "tr" : "Xây · miễn phí") : "Nâng Lv" + (lvl + 1) + " −" + cost + "tr");
+      var b = el("button", "build");
+      b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (lvl ? " <span class='tiny' style='color:var(--gold)'>Lv" + lvl + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + pr + "</div>";
+      if (maxed || (cost > s.cash && lvl > 0) || (lvl === 0 && d.cost > s.cash)) b.disabled = true;
+      b.onclick = function () { buyRoom(key); };
+      grid.appendChild(b);
+    });
+    c3.appendChild(grid);
+    wrap.appendChild(c3);
 
     // dedications — honour a real educator (late-game prestige + a question to put to the grounds)
     var dedKeys = ["vuontdn", "vuontqb", "vuonhxh", "vuonntt", "vuoncva"].filter(function (k) { return !s.rooms.some(function (r) { return r.key === k; }); });
@@ -1366,6 +1374,7 @@
   function afterFinalize() { syncActors(); rebuildWalk(); drawStatic(); checkModals(); render(); }
   function showJuneResults() {
     var s = S(), pj = s.pendingJune, w = el("div");
+    sfx("grad");
     w.appendChild(el("div", "kic", "Kết quả · Năm " + (s.year - 1)));
     w.appendChild(el("h2", null, "Khoá vừa ra trường"));
     // followed student first, gently spotlit — the protégé you watched for years
@@ -1536,6 +1545,17 @@
     var m = MOODS[currentMood()];
     tone(freqOf(m.base, -24), 3.4, m.gain * 0.7, "sine", 0.8);
     sndTimers.push(setTimeout(schedBass, 4200 + Math.random() * 2200));
+  }
+  // gentle musical SFX (same timbre as the score) for key moments — opt-in via the 🎵 toggle
+  function sfx(kind) {
+    if (!soundOn || !actx) return;
+    var base = 523.25; // C5
+    function n(semi, delay, dur, gain, type) { sndTimers.push(setTimeout(function () { tone(freqOf(base, semi), dur || 0.18, gain || 0.13, type || "sine", 0.012); }, delay || 0)); }
+    if (kind === "build") { n(0, 0, 0.12, 0.12); n(7, 70, 0.16, 0.12); }                       // a confirming perfect-fifth
+    else if (kind === "milestone") { n(0, 0, 0.14); n(4, 90, 0.14); n(7, 180, 0.22, 0.15); }   // bright major arpeggio
+    else if (kind === "chime") { n(12, 0, 0.24, 0.12); }                                       // a soft high ding
+    else if (kind === "grad") { [0, 4, 7, 12].forEach(function (s, i) { n(s, i * 45, 0.55, 0.09, "triangle"); }); } // warm chord
+    else if (kind === "sparkle") { n(12, 0, 0.10, 0.10); n(19, 60, 0.13, 0.10); }              // a tiny shimmer
   }
   function clearSnd() { for (var i = 0; i < sndTimers.length; i++) clearTimeout(sndTimers[i]); sndTimers = []; }
   function startSound() {

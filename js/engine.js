@@ -68,7 +68,7 @@ function placeRoom(key, x, y) {
   if (cost > S.cash) return { ok: false, msg: "Không đủ tiền." };
   S.cash = r1(S.cash - cost);
   S.book = r1(S.book + cost);
-  S.rooms.push({ key: key, x: x, y: y });
+  S.rooms.push({ key: key, x: x, y: y, level: 1 });
   S._mapDirty = true;
   if (d.ded) { // a memorial garden — lasting prestige + a real educator's idea on the grounds
     gainUT(d.utBoost || 5, true); bacTamNod(); // pierce the yearly cap: a deliberate, paid-for honour
@@ -80,9 +80,24 @@ function placeRoom(key, x, y) {
 }
 // "buy → it just appears": find the first tidy spot (reading order, inside a border, off the central
 // path) and build there — no manual placement. Falls back to allowing the path if the grounds fill up.
+function roomLevel(key) { for (var i = 0; i < S.rooms.length; i++) if (S.rooms[i].key === key) return S.rooms[i].level || 1; return 0; }
+function upgradeCost(d, lvl) { return Math.max(50, d.cost || 0); } // flat per upgrade (decision + a small money sink)
 function autoPlace(key) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
   if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
+  // standard building already on the grounds → upgrade it IN PLACE (one on the map, leveled up)
+  if (!d.once) {
+    var ex = null; for (var j = 0; j < S.rooms.length; j++) if (S.rooms[j].key === key) { ex = S.rooms[j]; break; }
+    if (ex) {
+      var lvl = ex.level || 1;
+      if (lvl >= (CONFIG.ROOM_MAX_LEVEL || 3)) return { ok: false, msg: "Đã tối đa cấp." };
+      var uc = upgradeCost(d, lvl);
+      if (uc > S.cash) return { ok: false, msg: "Không đủ tiền nâng cấp." };
+      S.cash = r1(S.cash - uc); S.book = r1(S.book + uc); ex.level = lvl + 1; S._mapDirty = true;
+      news("Nâng cấp " + d.name + " → cấp " + (lvl + 1) + ". −" + uc + "tr.");
+      return { ok: true, upgrade: true, level: lvl + 1 };
+    }
+  }
   if ((d.cost || 0) > S.cash) return { ok: false, msg: "Không đủ tiền." };
   var px = CONFIG.GRID_W >> 1, py = CONFIG.GRID_H >> 1, best = null, pass, x, y;
   for (pass = 0; pass < 2 && !best; pass++) {
@@ -375,7 +390,10 @@ function economyTick() {
   if (S.tiengTam > ttFloor) S.tiengTam = clamp(r1(Math.max(ttFloor, S.tiengTam - CONFIG.TT_DECAY)), 0, 200);
   else S.tiengTam = clamp(r1(Math.min(ttFloor, S.tiengTam + 0.5)), 0, 200); // recover toward baseline after a scandal/arrest dip
   for (i = 0; i < S.teachers.length; i++) if (S.teachers[i].trait === "isi") gainTT(0.5);
-  if (hasRoom("cangtin")) moodAll(1);
+  // room effects scale with upgrade level (one building on the map, leveled up)
+  if (hasRoom("cangtin")) moodAll(roomLevel("cangtin"));        // +1 Mood/cấp
+  if (hasRoom("lab")) gainTT(0.5 * roomLevel("lab"));           // +0,5 Tiếng Tăm/cấp
+  var phLv = roomLevel("phonghoc"); if (phLv > 1) moodAll(phLv - 1); // extra classrooms ease the crowding
   // thực chất drifts toward (craft − cram) of student body
   if (n) {
     var tnSum = 0, vetSum = 0;

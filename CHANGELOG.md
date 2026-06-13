@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Buildings upgrade in place + gentle SFX (loop iter 48)
+- **Owner clarification ("buy more but show 1 — consider it upgrading"):** buildings are no longer
+  one-per-type. Buying the same building again now **upgrades it in place** — still one on the map
+  (no clutter), now with a gold Lv pip badge, up to Lv3. Each level scales the effect (Căng tin
+  +1 Mood/level, Lab +0.5 Tiếng Tăm/level, extra Phòng học eases crowding) and costs a flat upgrade
+  fee (a small money sink too). The build menu shows "Xây" → "Nâng Lv2/3" → "Tối đa". Verified:
+  3 buys of one room = 1 on the map at Lv3, 4th rejected, effects scale; gates green, sweep clean.
+- **Gentle SFX** (audio, untouched since iter 3): opt-in (🎵 toggle) musical cues in the score's
+  timbre — a perfect-fifth on build, a soft chime on upgrade/dedication, a bright arpeggio on
+  milestone/tier-up, a warm chord at graduation. Soft and short; no-ops when sound is off.
+
 ## 2026-06-13 — Three more moral-choice events (loop iter 47)
 - A pacing check confirmed the early game is well-paced (7–13 events/year + yearly admissions +
   milestones + graduations from ~Y4), but with ~11 events the deck repeats. Added a recurring moral
