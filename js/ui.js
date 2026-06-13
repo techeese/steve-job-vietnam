@@ -397,6 +397,8 @@
     for (i = 0; i < cats.length; i++) drawCat(ctx, cats[i], ts);
     drawFlyers(ctx, ts);
     drawSmoke(ctx, ts);
+    if (scandalMood()) drawNewsVan(ctx, ts); // the media camps out when the school's phốt pile up
+
     if (period >= 3) { // golden-hour: warm directional light from the low sun (upper-left), strongest at tan học
       var sunR = GW * T * 0.95, ga = (period === 4) ? 0.17 : 0.085;
       var gh = ctx.createRadialGradient(GW * T * 0.16, GH * T * 0.08, 0, GW * T * 0.16, GH * T * 0.08, sunR);
@@ -547,6 +549,24 @@
       if (p.conf) { var w = 1 + (Math.abs(Math.cos(p.rot)) * p.s | 0); ctx.fillRect(x, y, w, p.s); } // tumbling confetti (width flutters)
       else { ctx.fillRect(x, y, 2, 2); ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.fillRect(x + (Math.sin(p.rot) > 0 ? 2 : -1), y, 1, 1); } // soft petal + glint
     }
+  }
+  /* scandal-day — when phốt pile up, the media camps at the cổng (your moral choices, made visible) */
+  function scandalMood() { var s = S(); return !!(s.photSeeds && s.photSeeds.length >= 3) || (s.tiengTam < 14 && s.year > 2); }
+  function drawNewsVan(ctx, ts) {
+    var vx = (GW >> 1) * T + T / 2 - 40, vy = GH * T - 16; // parked just left of the cổng
+    ctx.fillStyle = "rgba(20,28,14,.18)"; ctx.fillRect(vx - 1, vy + 9, 24, 2);          // shadow
+    ctx.fillStyle = PX.out; ctx.fillRect(vx, vy - 9, 23, 18);                            // body outline
+    ctx.fillStyle = "#e8edf2"; ctx.fillRect(vx + 1, vy - 8, 21, 16);                     // white van
+    ctx.fillStyle = "#cdd6df"; ctx.fillRect(vx + 1, vy + 2, 21, 6);                      // lower panel shade
+    ctx.fillStyle = "#9fd0ff"; ctx.fillRect(vx + 14, vy - 6, 7, 5);                      // windshield
+    ctx.fillStyle = "rgba(255,255,255,.6)"; ctx.fillRect(vx + 15, vy - 6, 3, 2);         // glint
+    ctx.fillStyle = "#e0584a"; ctx.fillRect(vx + 3, vy - 5, 8, 5);                       // red logo block (a TV station)
+    ctx.fillStyle = "#fff"; ctx.fillRect(vx + 4, vy - 4, 1, 3); ctx.fillRect(vx + 6, vy - 4, 1, 3); ctx.fillRect(vx + 8, vy - 4, 1, 3); // "III" channel marks
+    ctx.fillStyle = PX.out; ctx.fillRect(vx + 4, vy + 9, 4, 3); ctx.fillRect(vx + 15, vy + 9, 4, 3); // wheels
+    // satellite dish on a mast + a blinking red LIVE dot
+    ctx.fillStyle = PX.out; ctx.fillRect(vx + 19, vy - 18, 1, 9);                        // mast
+    ctx.fillStyle = "#cdd6df"; ctx.fillRect(vx + 17, vy - 21, 6, 3); ctx.fillStyle = PX.out; ctx.fillRect(vx + 17, vy - 18, 6, 1); // dish
+    if (Math.floor(ts / 450) % 2) { ctx.fillStyle = "#ff3b30"; ctx.fillRect(vx + 20, vy - 22, 2, 2); } // LIVE blink
   }
   /* a wandering campus cat — pure "love watching" charm */
   function initCats() { var t = randWalkTile(); cats = [{ px: t[0] * T + 13, py: t[1] * T + 13, tx: t[0], ty: t[1], wait: 0 }]; }

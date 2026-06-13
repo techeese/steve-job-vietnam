@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Maintenance (clean) + scandal-day: the media camps out (loop iter 67)
+- **Maintenance sprint** after a 6-ship run: `node sweep.js` green (destiny thesis intact, only the known
+  late-game money flag), no JSERR across every new system (customizer + custom-bake, festivals, day-arc,
+  clouds, AI event, audio split, period/month transitions), both panel tabs clean at 390px, per-frame
+  render cost modest. The big autonomous run is healthy — no regressions.
+- The checks being clean, the firing also ships a bounded, on-thesis beat: a **scandal-day reaction**.
+  When the school's phốt pile up (≥3 seeds, or a sustained Tiếng-Tăm collapse), a **TV news-van camps at
+  the cổng** — white van, station logo, satellite dish, blinking red LIVE dot. Your moral choices, made
+  visible on the grounds (the Vietnamese-education-scandal satire, shown not told). Pure ui.js reading
+  existing state (no engine/balance change); gates green; verified in-game. Bar: **BITE 4** / JUICE 3.
+  Cadence: SMALL_SHIPS_SINCE_EPIC 1.
+
 ## 2026-06-13 — Customize your students (the "characters are customize" hint, loop iter 66)
 - Delivers the owner's verbatim north-star — *"the characters are customize."* The student inspect card
   now has a **per-axis look customizer**: 🎨 Da (skin) · 💇 Tóc (hair colour) · ✂️ Kiểu (hairstyle) ·
