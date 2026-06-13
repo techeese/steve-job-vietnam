@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 = POLISH ship: Góp quỹ late-game spend decision.)
+- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 Góp quỹ + iter 77 weather = 2 POLISH ships; one more then the EPIC track locks.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
@@ -19,7 +19,7 @@ divergence. OWNER veto options if you'd prefer: A = deeper-2.5D blocks, C = cozy
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
 1. ~~[FEATURE] Character art step-change~~ SHIPPED iter 59 (owner-picked Direction C: premium 24×32 volumetric chibis with separated arms, expressive faces, contact shadows).
-2. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
+2. ~~[FEATURE] Weather + time-of-day lighting~~ — time-of-day SHIPPED iter 62 (day-arc + golden hour); **weather SHIPPED iter 77** (god-ray sunbeams + gentle drizzle, cosmetic overlay). Could deepen later: actor reactions (umbrellas / scurrying under awnings), a rare heavier storm. OWNER may veto/redirect the aesthetic.
 3. ~~[FEATURE] Festivals (Tết petals + June confetti)~~ SHIPPED iter 63. ~~Scandal-day reaction~~ SHIPPED iter 67 (a TV news-van camps at the cổng when phốt pile up — phại choices made visible). Could deepen later (gathered onlooker crowd, a gloomy banner).
 4. ~~[FEATURE] Player-customizable students~~ SHIPPED iter 66 — per-axis look customizer (skin/hair/style/accessory + 🎲) in the inspect card, on-demand cached bake, persisted via optional `s.lookC`.
 5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).

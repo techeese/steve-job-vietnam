@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-13 — Weather: the campus gets sunbeams and rain (loop iter 77)
+- The top unbuilt graphics/charm item (VISION next-tier · backlog #2 · the **#1 dimension**): a **weather
+  layer** so the grounds feel like a *place*, not a board. A light, mostly-sunny cosmetic state cycles
+  every ~22–44s: usually **clear**, often soft **god-ray sunbeams** slanting down-right from the low
+  upper-left sun (warm gold, additive `lighter` blend, drifting), and the occasional gentle **drizzle** —
+  diagonal rain streaks + ground-splash ticks + a cool overcast wash (kept light; *never dark*, per VISION).
+  Suppressed during Tết/June so petals & confetti read clean.
+- Pure ui.js draw+step layer (mirrors the existing clouds/fest pattern): `tickWeather`/`updateWeather` in
+  `stepLive`, `drawRays`/`drawRain` in `drawLive` (sunbeams ride the warm light; drizzle is the front-most
+  layer). **Cosmetic → `Math.random`, never serialized → zero gate/sweep/save impact.** New `__ui.setWeather`
+  test hook (pins a state + freezes the cycle for screenshots). Verified: node-parse · `./gate.sh` ALL GREEN
+  (engine untouched) · JSERR-clean across rain/rays/clear (200 draw frames each) AND across a 4s live-loop
+  run (the step path) · desktop + **390px** screenshots of the rainy/sunbeamed campus (charming, readable,
+  nothing clipped). First pass strengthened after the first screenshots read too faint — denser rain +
+  brighter beams so it actually reads as weather (graphics is judged as ART).
+- Single-direction tasteful implementation (no divergence workflow this autonomous turn). **OWNER**: veto/
+  redirect the aesthetic freely — heavier storm vs the current drizzle, more/fewer sunbeams, or add actor
+  reactions (umbrellas / scurrying under awnings) as a follow-up. POLISH ship → `SMALL_SHIPS_SINCE_EPIC
+  1→2`, `EPICS_SINCE_STRUCTURE 1`. Bar: **JUICE 4** (atmosphere; the campus breathes more).
+
 ## 2026-06-13 — Góp quỹ: late-game money finally has a decision (loop iter 76)
 - The standing sweep flag — *late-game bank inflates to ~2,600tr with no spend sink* — gets its first
   answer, as a **player choice** rather than a balance nerf (so the auto-play destiny thesis is untouched).

@@ -386,6 +386,7 @@
     for (i = 0; i < cats.length; i++) if (alive) updateCat(cats[i], ts);
     if (alive) updateFlyers(ts);
     if (alive) updateClouds(ts);
+    if (alive) { tickWeather(ts); updateWeather(ts); }
     if (alive) updateFest(ts);
   }
   function drawLive(ctx, ts, period) {
@@ -408,7 +409,9 @@
       ctx.fillStyle = gh; ctx.fillRect(0, 0, GW * T, GH * T);
     }
     ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
+    if (weather === "rays") drawRays(ctx);  // sunbeams ride on top of the warm light
     drawFest(ctx, ts); // festive petals (Tết) / confetti (June) fall in front of everything
+    if (weather === "rain") drawRain(ctx);  // drizzle is the very front layer (between us and the campus)
     if (celebrateUntil && (typeof performance !== "undefined" ? performance.now() : ts) < celebrateUntil) drawCelebrate(ctx, ts); // 🍎 Steve burst
   }
   // a golden confetti burst + warm glow when a Steve emerges — over everything, for a few seconds
@@ -535,6 +538,49 @@
       g.addColorStop(0, "rgba(26,36,16,.13)"); g.addColorStop(1, "rgba(26,36,16,0)");
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r, c.r * 0.6, 0, 0, 6.2832); ctx.fill();
     }
+  }
+  /* weather — a LIGHT, mostly-sunny layer: drifting god-ray sunbeams from the upper-left sun, and the
+     occasional gentle drizzle. Cosmetic only (Math.random, never serialized → zero gate/sweep impact);
+     suppressed during festivals so Tết petals / June confetti read clean. Stays sunny per VISION. */
+  var weather = "clear", weatherT = 0, rain = [], rays = [], splash = [];
+  function spawnRain() { rain = []; for (var i = 0; i < 120; i++) rain.push({ x: Math.random() * (GW * T + 60) - 30, y: Math.random() * GH * T, vy: 6.0 + Math.random() * 3.0, len: 8 + Math.random() * 7 }); splash = []; }
+  function spawnRays() { rays = []; for (var i = 0; i < 6; i++) rays.push({ x: (0.02 + i * 0.17 + Math.random() * 0.04) * GW * T, w: 30 + Math.random() * 34, a: 0.10 + Math.random() * 0.06, v: 0.05 + Math.random() * 0.06 }); }
+  function setWeather(w) { weather = w; if (w === "rain") spawnRain(); else if (w === "rays") spawnRays(); }
+  function tickWeather(ts) {
+    if (ts < weatherT) return;
+    weatherT = ts + 22000 + Math.random() * 22000;                 // each spell lasts ~22–44s
+    if (festMode()) { setWeather("clear"); return; }               // never rain/glare on a festival
+    var r = Math.random();
+    setWeather(r < 0.15 ? "rain" : (r < 0.5 ? "rays" : "clear"));  // mostly sunny; sunbeams common; drizzle rare
+  }
+  function updateWeather(ts) {
+    var i;
+    if (weather === "rain") {
+      for (i = 0; i < rain.length; i++) { var d = rain[i]; d.y += d.vy; d.x += 1.3; if (d.y > GH * T) { if (Math.random() < 0.5) splash.push({ x: d.x - 2, y: GH * T - 1 + Math.random() * 2, t: 7 }); d.y = -8; d.x = Math.random() * (GW * T + 60) - 30; } }
+      for (i = splash.length - 1; i >= 0; i--) { if (--splash[i].t <= 0) splash.splice(i, 1); }
+    }
+    else if (weather === "rays") { for (i = 0; i < rays.length; i++) { var r = rays[i]; r.x += r.v; if (r.x - 100 > GW * T) r.x = -r.w - 60; } }
+  }
+  function drawRays(ctx) {                                          // sunbeams slanting down-right from the low upper-left sun
+    var H = GH * T, off = H * 0.5;
+    for (var i = 0; i < rays.length; i++) {
+      var r = rays[i];
+      ctx.save(); ctx.globalCompositeOperation = "lighter";
+      var g = ctx.createLinearGradient(r.x, 0, r.x + off, H);
+      g.addColorStop(0, "rgba(255,240,182," + r.a.toFixed(3) + ")"); g.addColorStop(0.65, "rgba(255,232,160," + (r.a * 0.5).toFixed(3) + ")"); g.addColorStop(1, "rgba(255,232,160,0)");
+      ctx.fillStyle = g; ctx.beginPath();
+      ctx.moveTo(r.x, 0); ctx.lineTo(r.x + r.w, 0); ctx.lineTo(r.x + r.w + off, H); ctx.lineTo(r.x + off, H); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
+  }
+  function drawRain(ctx) {                                          // drizzle: diagonal streaks + ground splashes + a cool wash
+    var W = GW * T, H = GH * T, i;
+    ctx.fillStyle = "rgba(140,160,200,.11)"; ctx.fillRect(0, 0, W, H);   // cool overcast wash (still light — never dark)
+    ctx.strokeStyle = "rgba(214,226,248,.62)"; ctx.lineWidth = 1; ctx.beginPath();
+    for (i = 0; i < rain.length; i++) { var d = rain[i]; ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - 3, d.y + d.len); }
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(220,230,250,.5)";                          // tiny splash ticks where drops land
+    for (i = 0; i < splash.length; i++) { var p = splash[i]; ctx.beginPath(); ctx.moveTo(p.x - 2, p.y); ctx.lineTo(p.x + 2, p.y); ctx.stroke(); }
   }
   /* festive falling particles — Tết blossom petals (đào/mai) and June graduation confetti; keyed to the calendar */
   var FEST_PETAL = ["#ffc0d0", "#ff9ec0", "#ffd24a", "#ffe07a"]; // đào pink + mai yellow
@@ -1564,6 +1610,7 @@
     firstStudentId: function () { return S().students[0] && S().students[0].id; },
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
+    setWeather: function (w) { setWeather(w); weatherT = 1e15; }, // test hook: pin weather (rays/rain/clear) + freeze auto-cycle
     tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
     _sel: function () { return { stu: selStudent, room: selRoom }; },
     _drawSel: function () { var ctx = $("mapLive").getContext("2d"); ctx.imageSmoothingEnabled = false; drawSelection(ctx, 800); },
