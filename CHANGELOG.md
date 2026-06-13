@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-13 — Character variety (loop iter 7): students as individuals
+- Expanded the sprite atlas from 3 hair colours to 12 baked VARIANTS per year — 3 skin tones,
+  6 hair colours × 3 styles (short/long/bun), and accessories (glasses/bow/cap, weighted to
+  none). Each student picks a stable variant by id-hash, so the 42-strong crowd reads as
+  individuals instead of clones. Still pre-baked → blitted (60fps). Gates green.
+
 ## 2026-06-13 — Pixel-art props pass (loop iter 5): fill the campus
 - Redrew ambient props as pixel-art to match the new style: chunky pixel TREES (replacing the
   old smooth circles that clashed), pixel LAMP posts with lit lanterns, a pixel flagpole.

@@ -28,39 +28,49 @@
     pants: "#46506a", pantsD: "#343c52", shoe: "#2c2535", mouth: "#a85248",
     gold: "#f5cd6a", roof: "#caa24a"
   };
-  var HAIRS = [["#3a2a1c", "#5a3f28"], ["#21201f", "#3a3433"], ["#6e4a26", "#8a6336"]]; // [base,hi] variants
-  var ATLAS = null; // ATLAS[grade0..3][hair0..2][frame0..1] = offscreen canvas
-  function px(x, w, h, c, X, gx, gy) { X.fillStyle = c; X.fillRect(gx, gy, w, h); } // unused helper placeholder
-  function bakeChar(shirt, shirtD, hair, hairHi, frame) {
+  // variety axes — students read as individuals, not clones
+  var SKINS = [["#f4c79c", "#e2a878"], ["#ecb888", "#d49a66"], ["#cf9a64", "#b07c4c"]]; // [skin, shadow]
+  var HAIRSET = [["#3a2a1c", "#5a3f28"], ["#21201f", "#3a3433"], ["#6e4a26", "#8a6336"], ["#a85a3a", "#c4724a"], ["#c9a14e", "#e0bb66"], ["#5b4a6e", "#74608c"]]; // [base, hi]
+  var HAIRSTYLE = ["short", "long", "bun"];
+  var ACC = ["none", "none", "glasses", "bow", "cap", "none"]; // weighted toward none
+  // baked variant list (skin × hair-colour × hair-style × accessory), capped
+  var VARIANTS = [];
+  (function () { var s = [0, 0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2], h = [0, 1, 2, 3, 1, 4, 0, 2, 5, 3, 1, 4], y = [0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0], a = [0, 2, 0, 3, 0, 1, 4, 0, 2, 0, 5, 1]; for (var i = 0; i < 12; i++) VARIANTS.push({ s: s[i], h: h[i], y: y[i], a: a[i] }); })();
+  var ATLAS = null; // ATLAS[grade0..3][variant0..11][frame0..1] = offscreen canvas
+  function bakeChar(shirt, shirtD, V, frame) {
+    var sk = SKINS[V.s][0], skD = SKINS[V.s][1], hair = HAIRSET[V.h][0], hairHi = HAIRSET[V.h][1], style = HAIRSTYLE[V.y], acc = ACC[V.a];
     var cv = document.createElement("canvas"); cv.width = 16; cv.height = 22;
     var X = cv.getContext("2d"); X.imageSmoothingEnabled = false;
     function R(x, y, w, h, c) { X.fillStyle = c; X.fillRect(x, y, w, h); }
-    // HEAD (big chibi) with 1px dark outline
-    R(3, 1, 10, 10, PX.out);          // head silhouette (dark base = outline)
-    R(4, 2, 8, 8, PX.skin);           // skin face inset → 1px outline shows
-    X.clearRect(3, 1, 1, 1); X.clearRect(12, 1, 1, 1); X.clearRect(3, 10, 1, 1); X.clearRect(12, 10, 1, 1); // round corners
-    // hair
-    R(4, 2, 8, 2, hair); R(4, 2, 1, 5, hair); R(11, 2, 1, 5, hair); R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair);
-    R(4, 2, 8, 1, hairHi);
-    // face: big cute eyes + shine, cheeks, mouth
+    // HEAD with 1px outline
+    R(3, 1, 10, 10, PX.out); R(4, 2, 8, 8, sk);
+    R(11, 7, 1, 2, skD); // cheek shadow
+    X.clearRect(3, 1, 1, 1); X.clearRect(12, 1, 1, 1); X.clearRect(3, 10, 1, 1); X.clearRect(12, 10, 1, 1);
+    // hair by style
+    R(4, 2, 8, 2, hair); R(4, 2, 1, 4, hair); R(11, 2, 1, 4, hair); R(4, 2, 8, 1, hairHi);
+    if (style === "short") { R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair); }
+    else if (style === "long") { R(4, 2, 1, 8, hair); R(11, 2, 1, 8, hair); R(3, 9, 1, 1, hair); R(12, 9, 1, 1, hair); }
+    else { R(7, 0, 2, 2, hair); R(6, 0, 4, 1, hairHi); R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair); } // bun
+    // face
     R(5, 6, 2, 2, PX.eye); R(9, 6, 2, 2, PX.eye); R(5, 6, 1, 1, "#ffffff"); R(9, 6, 1, 1, "#ffffff");
     R(4, 8, 1, 1, "#f2ad95"); R(11, 8, 1, 1, "#f2ad95"); R(7, 9, 2, 1, PX.mouth);
-    // BODY (shirt) with outline
-    R(3, 10, 10, 8, PX.out);          // body silhouette
-    R(4, 11, 8, 6, shirt);            // shirt
-    R(10, 11, 2, 6, shirtD);          // shirt shade (right)
-    R(4, 11, 8, 1, "rgba(255,255,255,.22)"); // collar highlight
-    R(3, 12, 1, 4, shirt); R(12, 12, 1, 4, shirt); // arms
-    R(3, 16, 1, 1, PX.skin); R(12, 16, 1, 1, PX.skin); // hands
-    // LEGS (2-frame walk) + shoes
+    // accessory
+    if (acc === "glasses") { R(4, 6, 3, 2, PX.out); R(9, 6, 3, 2, PX.out); R(7, 7, 2, 1, PX.out); R(5, 6, 1, 1, "#bfe0ff"); R(10, 6, 1, 1, "#bfe0ff"); }
+    else if (acc === "bow") { R(3, 2, 2, 2, "#f15a7a"); R(2, 2, 1, 2, "#d63f5e"); }
+    else if (acc === "cap") { R(3, 1, 10, 2, "#4a8fe0"); R(4, 0, 8, 1, "#5b9ff0"); R(11, 2, 3, 1, "#3a78c8"); }
+    // BODY (shirt)
+    R(3, 10, 10, 8, PX.out); R(4, 11, 8, 6, shirt); R(10, 11, 2, 6, shirtD);
+    R(4, 11, 8, 1, "rgba(255,255,255,.22)");
+    R(3, 12, 1, 4, shirt); R(12, 12, 1, 4, shirt); R(3, 16, 1, 1, sk); R(12, 16, 1, 1, sk);
+    // LEGS (2-frame) + shoes
     if (frame === 0) { R(5, 17, 2, 4, PX.pants); R(9, 17, 2, 4, PX.pants); R(5, 20, 2, 1, PX.shoe); R(9, 20, 2, 1, PX.shoe); }
     else { R(5, 17, 2, 3, PX.pants); R(5, 19, 2, 1, PX.shoe); R(9, 17, 2, 4, PX.pants); R(9, 20, 2, 1, PX.shoe); }
-    R(5, 17, 6, 1, PX.pantsD); // belt line
+    R(5, 17, 6, 1, PX.pantsD);
     return cv;
   }
   function buildAtlas() {
     ATLAS = [];
-    for (var g = 0; g < 4; g++) { ATLAS[g] = []; for (var hi = 0; hi < HAIRS.length; hi++) { ATLAS[g][hi] = []; var sh = shade(GRADE_C[g + 1], -0.28); for (var fr = 0; fr < 2; fr++) ATLAS[g][hi][fr] = bakeChar(GRADE_C[g + 1], sh, HAIRS[hi][0], HAIRS[hi][1], fr); } }
+    for (var g = 0; g < 4; g++) { ATLAS[g] = []; var sh = shade(GRADE_C[g + 1], -0.28); for (var v = 0; v < VARIANTS.length; v++) { ATLAS[g][v] = []; for (var fr = 0; fr < 2; fr++) ATLAS[g][v][fr] = bakeChar(GRADE_C[g + 1], sh, VARIANTS[v], fr); } }
   }
 
   /* === ART: Sơn Mài Diorama (lacquer-night campus, gold-leaf pavilions) === */
@@ -173,7 +183,7 @@
       }
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
       a.tell = s.tell || ""; a.seed = s.seed;
-      a.hairIdx = hashId(s.id) % HAIRS.length;
+      a.variantIdx = hashId(s.id) % VARIANTS.length;
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
@@ -257,7 +267,7 @@
     ctx.fillStyle = "rgba(36,44,24,.22)"; ctx.fillRect(x - 5, y + 3, 10, 2); ctx.fillRect(x - 3, y + 5, 6, 1);
     var frame = a._moving ? (Math.sin(ts / 150 + a.ph) > 0 ? 0 : 1) : 0;
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
-    var spr = ATLAS[a.grade - 1][a.hairIdx][frame];
+    var spr = ATLAS[a.grade - 1][a.variantIdx][frame];
     if (spr) ctx.drawImage(spr, x - 8, y - 20 + bob);
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 6.5, y - 20.5, 13, 11); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 24, 2, 2); ctx.fillRect(x - 2, y - 23, 1, 1); ctx.fillRect(x + 1, y - 23, 1, 1); } // scholarship star
