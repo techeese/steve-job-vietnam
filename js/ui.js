@@ -95,7 +95,7 @@
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
-  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null;
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
 
@@ -108,7 +108,7 @@
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
     buildAtlas(); // bake pixel-art sprite atlas once
-    rebuildWalk(); syncActors(true); initCats();
+    rebuildWalk(); syncActors(true); initCats(); initFlyers();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
     // font gate: redraw the static layer once 'Be Vietnam Pro' is ready so room labels aren't a fallback face
@@ -204,6 +204,7 @@
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
     if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
+    if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
     requestAnimationFrame(liveLoop);
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
@@ -255,6 +256,26 @@
     else if (t === "idea") { ctx.fillStyle = "#ffe06a"; ctx.fillRect(x - 1, ty, 3, 3); ctx.fillStyle = PX.out; ctx.fillRect(x, ty + 3, 1, 1); }
     else if (t === "sweat") { ctx.fillStyle = "#7fd0ff"; ctx.fillRect(x + 1, ty, 1, 2); ctx.fillRect(x, ty + 1, 2, 2); }
     else { ctx.fillStyle = "#6b7280"; ctx.fillRect(x - 1, ty, 3, 1); ctx.fillRect(x + 1, ty + 1, 1, 1); ctx.fillRect(x, ty + 2, 1, 1); ctx.fillRect(x, ty + 4, 1, 1); } // ?
+  }
+  /* butterflies drifting over the grounds — sunny ambient life */
+  var FLYCOL = ["#fff4d6", "#f6c14e", "#f48fb1", "#9fd0ff"];
+  function initFlyers() { flyers = []; for (var i = 0; i < 4; i++) flyers.push({ x: Math.random() * GW * T, y: 12 + Math.random() * GH * T * 0.7, vx: (Math.random() - 0.5) * 0.7, vy: (Math.random() - 0.5) * 0.5, col: FLYCOL[i % FLYCOL.length], ph: Math.random() * 6.28 }); }
+  function updateFlyers(ts) {
+    for (var i = 0; i < flyers.length; i++) {
+      var f = flyers[i]; f.x += f.vx; f.y += f.vy + Math.sin(ts / 180 + f.ph) * 0.18;
+      if (f.x < 4 || f.x > GW * T - 4) f.vx *= -1;
+      if (f.y < 10 || f.y > GH * T * 0.9) f.vy *= -1;
+      if (Math.random() < 0.01) { f.vx = (Math.random() - 0.5) * 0.7; f.vy = (Math.random() - 0.5) * 0.5; } // flutter turn
+    }
+  }
+  function drawFlyers(ctx, ts) {
+    for (var i = 0; i < flyers.length; i++) {
+      var f = flyers[i], x = f.x | 0, y = f.y | 0, flap = Math.sin(ts / 70 + f.ph) > 0;
+      ctx.fillStyle = f.col;
+      if (flap) { ctx.fillRect(x - 2, y - 1, 2, 2); ctx.fillRect(x + 1, y - 1, 2, 2); }
+      else { ctx.fillRect(x - 1, y, 1, 2); ctx.fillRect(x + 1, y, 1, 2); }
+      ctx.fillStyle = PX.out; ctx.fillRect(x, y, 1, 2);
+    }
   }
   /* a wandering campus cat — pure "love watching" charm */
   function initCats() { var t = randWalkTile(); cats = [{ px: t[0] * T + 13, py: t[1] * T + 13, tx: t[0], ty: t[1], wait: 0 }]; }
