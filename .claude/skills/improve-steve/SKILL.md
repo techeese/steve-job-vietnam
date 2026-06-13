@@ -49,13 +49,19 @@ into systems — so every owner message is DATA about the underlying instinct, n
 - *(2026-06-13)* FEEL-FIRST: animation, graphics, walking people doing things, background
   music — liveliness outranks mechanical elegance. A screen that breathes beats a system
   that's clever.
-- *(2026-06-13)* Holds GRAPHICS to a high, recurring bar — "the graphic needs to be more
-  detailed and more style." Functional rendering is not enough; the campus must feel
-  CRAFTED (depth, light, identity, a coherent art direction). Visual polish is a first-class
-  iteration target, not decoration. Big visual moves earn a design-exploration WORKFLOW
-  (explore N art directions → judge panel → synthesize a blueprint → implement with
-  screenshot iteration) rather than a one-shot reskin — that pattern shipped the Sơn Mài
-  Diorama campus and is the model for future art work.
+- *(2026-06-13)* GRAPHICS IS THE #1 DIMENSION OF THIS GAME — escalated twice: "the graphic
+  needs to be more detailed and more style," then after seeing the Sơn Mài Diorama live,
+  "graphic still ugly… need better… this game is more important in graphic." The bar is HIGH
+  and not yet met. Two takeaways: (1) procedural canvas-2D at 26px with tiny flat sprites has
+  a LOW ceiling for "pretty" — meeting this bar likely needs a step-change (bigger detailed
+  characters with faces/clothes, genuinely crafted buildings, possibly relaxing "no asset
+  files" for embedded SVG/illustrated art or a real detailed sprite atlas), not another tweak.
+  (2) When graphics competes with anything else for an iteration slot, graphics WINS until the
+  owner says it looks good — this overrides the normal compass rotation. Big visual moves earn
+  a design-exploration WORKFLOW (explore N directions → judge → synthesize → implement with
+  390px screenshot iteration); and when unsure of the target aesthetic, ASK (a wrong
+  high-effort art direction is the costliest miss). Don't let "feel-first/charm" get satisfied
+  by "functional" — the owner is judging it as ART.
 - *(2026-06-13)* Values ITERABILITY AS A PRODUCT: asked for the dev flow that makes
   graphics and mechanics cheap to change BEFORE asking for any specific change. Build
   pipelines, not one-offs.
