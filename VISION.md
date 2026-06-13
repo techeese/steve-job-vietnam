@@ -42,8 +42,10 @@ the world as engineers, founders, văn-mẫu clerks, coin sharks, and the rare �
 - ~~**Shareable end-card / epilogue**~~ ✅ the gold answer-to-the-đề-Văn card (68); + the Steve climax moment (72).
 - **Still open / next tier (needs owner steer or genuine new ambition):** deeper **khoa life** (rivalries,
   khoa-gated facilities, a dedicated screen); a possible **weather** layer (rain/sun-rays) if it stays
-  sunny; **late-game economic pressure** (a spend sink — the standing sweep flag); and whatever bold new
-  PILLAR the owner dreams up. The original vision is realized; the next vision is the owner's to set.
+  sunny; **late-game economic pressure** — the *spend sink* half landed iter 76 (Góp quỹ: cash→endowment, a
+  player decision), but a *passive/structural pressure* (rising costs, stakes that bite if you hoard) is
+  still open; and whatever bold new PILLAR the owner dreams up. The original vision is realized; the next
+  vision is the owner's to set.
 
 ## The bar, in one test
 *Would a screenshot of this make a stranger scrolling past want to stop and play?* Until the answer is
