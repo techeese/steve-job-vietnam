@@ -202,7 +202,8 @@
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
-  var TINTS = ["rgba(255,246,214,.045)", "rgba(255,251,224,.03)", "rgba(255,240,196,.06)", "rgba(255,214,148,.085)", "rgba(255,186,116,.12)"];
+  // time-of-day arc (kept light — sunny, never dark): fresh cool morning → bright noon → golden afternoon/evening
+  var TINTS = ["rgba(208,224,255,.05)", "rgba(255,252,236,.03)", "rgba(255,248,222,.04)", "rgba(255,206,138,.11)", "rgba(255,170,98,.16)"];
 
   // the build the browser actually loaded (from ui.js's own ?v= cache-bust) — ground truth of what's running
   var BUILD = (function () { try { var s = document.querySelector('script[src*="ui.js"]'); var m = s && s.src.match(/[?&]v=(\d+)/); return m ? m[1] : "dev"; } catch (e) { return "dev"; } })();
@@ -383,6 +384,12 @@
     for (i = 0; i < cats.length; i++) drawCat(ctx, cats[i], ts);
     drawFlyers(ctx, ts);
     drawSmoke(ctx, ts);
+    if (period >= 3) { // golden-hour: warm directional light from the low sun (upper-left), strongest at tan học
+      var sunR = GW * T * 0.95, ga = (period === 4) ? 0.17 : 0.085;
+      var gh = ctx.createRadialGradient(GW * T * 0.16, GH * T * 0.08, 0, GW * T * 0.16, GH * T * 0.08, sunR);
+      gh.addColorStop(0, "rgba(255,198,112," + ga + ")"); gh.addColorStop(1, "rgba(255,150,70,0)");
+      ctx.fillStyle = gh; ctx.fillRect(0, 0, GW * T, GH * T);
+    }
     ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity

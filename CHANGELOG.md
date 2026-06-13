@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Time-of-day light: a felt sunny day-arc (loop iter 62)
+- The campus now lives through a day. The per-period tint was flat-warm and barely felt; it's now a
+  legible **arc — fresh cool morning → bright neutral noon → golden afternoon → a warm golden-hour glow
+  at tan học** (a directional low-sun radial light from the upper-left, strongest in the last period).
+  Every period stays bright (sunny north-star — never dark). Together with the drifting cloud-shadows
+  (iter 61) the grounds now read as a living, sunny *place*. Pure ui.js (TINTS arc + a golden-hour glow
+  in drawLive), no engine/balance touch; gates green; verified across periods 0/2/4 via `_renderLiveOnce`.
+  Bar: BEAUTY 4 (the golden hour is genuinely pretty), JUICE 4, FUN 3, CLARITY 3, BITE 3.
+
 ## 2026-06-13 — Drifting cloud-shadows: the campus feels like a place (loop iter 61)
 - A small, sunny ambient touch — soft **cloud-shadows drift slowly across the grounds** (4 of them,
   gentle radial-gradient patches, wrapping around), the classic Kairosoft "alive world" beat. Strictly
