@@ -465,7 +465,9 @@
     var steve = pool.filter(function (a) { return a.state === "STEVE"; });
     var pick = (steve.length && Math.random() < 0.6) ? steve[(Math.random() * steve.length) | 0] : pool[(Math.random() * pool.length) | 0];
     var gx = GW >> 1;
-    visitor = { a: pick, vIdx: SPRITES.hashId(pick.id) % SPRITES.VARIANTS.length, px: gx * T + T / 2, py: GH * T + 16, ty: (GH * T * 0.52) | 0, phase: "in", pause: 0, ph: Math.random() * 6.28 };
+    var L = (CONTENT.visitLines && CONTENT.visitLines[pick.state]) || ["Em về thăm trường ạ."];
+    var ln = Array.isArray(L) ? L[(Math.random() * L.length) | 0] : L;  // pick once at spawn (stable through the visit)
+    visitor = { a: pick, line: ln, vIdx: SPRITES.hashId(pick.id) % SPRITES.VARIANTS.length, px: gx * T + T / 2, py: GH * T + 16, ty: (GH * T * 0.52) | 0, phase: "in", pause: 0, ph: Math.random() * 6.28 };
     return true;
   }
   function maybeVisitor(ts) {
@@ -489,7 +491,7 @@
     ctx.font = "9px system-ui,sans-serif"; ctx.textAlign = "center"; ctx.fillText("🎓", x + 8, y - 27);
     if (v.phase === "pause") {
       var chip = (CONFIG.ALUM.CHIPS[v.a.state] || "").split(" ")[0];          // the state emoji
-      var line = chip + " " + (CONTENT.visitLines[v.a.state] || "Em về thăm trường ạ.");
+      var line = chip + " " + (v.line || "Em về thăm trường ạ.");
       ctx.font = "700 8px 'Be Vietnam Pro',system-ui,sans-serif";
       var pw = (ctx.measureText(line).width + 10) | 0, by = y - 40;
       ctx.fillStyle = "rgba(18,22,30,.92)"; roundRect(ctx, (x - pw / 2) | 0, by - 11, pw, 15, 5); ctx.fill();

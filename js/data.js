@@ -266,15 +266,16 @@ var CONTENT = {
     damMe: "…vẫn nhớ lần thầy bảo cứ theo đam mê.", hocBong: "…vẫn nhớ suất học bổng giữ em ở lại trường.",
     lamLai: "…vẫn nhớ lần bị bắt làm lại từ đầu — hoá ra là may.", nghiNgoi: "…vẫn nhớ tuần được cho nghỉ lấy lại sức."
   },
-  // short lines for a cựu SV who strolls back onto campus (the watchable layer; kept tiny to fit a bubble)
+  // short lines for a cựu SV who strolls back onto campus (the watchable layer; kept tiny to fit a bubble).
+  // One is picked at spawn → repeat visits of the same fate now vary.
   visitLines: {
-    STEVE: "Em về kể chuyện cho khoá dưới.",
-    KY_SU: "Em về thăm thầy ạ!",
-    FOUNDER: "Vòng gọi vốn sắp chốt thầy ơi!",
-    CA_MAP_COIN: "Trường mình 'hợp tác' không thầy?",
-    QUAN_VAN_MAU: "Em được cử về báo cáo điển hình.",
-    LUONG_ON: "Em về thăm trường ạ.",
-    THAT_NGHIEP: "Em… ghé qua xem trường tí ạ."
+    STEVE: ["Em về kể chuyện cho khoá dưới.", "Em mang quà cho thư viện ạ.", "Trường vẫn thơm mùi cũ ghê."],
+    KY_SU: ["Em về thăm thầy ạ!", "Cái máy thầy dạy, em vẫn xài.", "Để em sửa giúp trường cái quạt."],
+    FOUNDER: ["Vòng gọi vốn sắp chốt thầy ơi!", "Trường cho em tuyển khoá dưới nhé?", "Lần này 'to thật' thầy ạ."],
+    CA_MAP_COIN: ["Trường mình 'hợp tác' không thầy?", "Em tài trợ giải, treo băng-rôn thôi.", "Suất khoá học của em, tặng thầy."],
+    QUAN_VAN_MAU: ["Em được cử về báo cáo điển hình.", "Em xin ít số liệu làm thành tích ạ.", "Trường mình lên báo nhờ em đấy."],
+    LUONG_ON: ["Em về thăm trường ạ.", "Em vẫn đi làm đều thầy ạ.", "Ghé tí rồi em lại đi làm."],
+    THAT_NGHIEP: ["Em… ghé qua xem trường tí ạ.", "Em đang 'gap year' thầy ạ.", "Trường tuyển trợ giảng không thầy?"]
   },
   // tap a HUD meter → a short, thematic explainer. The three meters ARE the three theses of the đề Văn —
   // fame, credibility, substance — and these lines teach the strategy while keeping the question open.

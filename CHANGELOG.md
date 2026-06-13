@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-14 — Returning-grad bubbles now vary (loop iter 99)
+- Same repetition-reduction as iter 98, on the visitor feature (iter 87): a cựu SV strolling back showed a
+  **single fixed line per fate**, so repeat visits of the same type read identically. Converted `visitLines`
+  to **2–3 short variants per state** (picked once at spawn, stable through the visit) — the kỹ sư now might
+  "về thăm thầy", offer to "sửa giúp trường cái quạt", or note "cái máy thầy dạy, em vẫn xài"; the cá mập
+  pitches a "hợp tác", a sponsored banner, or a free course "suất cho thầy."
+- data.js (`visitLines` → arrays) + ui.js (`spawnVisitor` picks `v.line` once; `drawVisitor` uses it). Cosmetic,
+  no engine/balance/save change. Verified: parse · `./gate.sh` GREEN · `./bot.sh` BOTOK · spawn probe (zero
+  JSERR, line picked). Plateau-mode safe value → `SMALL_SHIPS_SINCE_EPIC 1→2`. Bar: charm 4.
+
 ## 2026-06-14 — Twice the alumni one-liners (less repetition in the biographies) (loop iter 98)
 - Content depth on the game's **highest-repetition surface**: alumni one-liners (`alumLines`) drive the Sổ
   Cựu SV feed, the tap-to-read biography card, and the closing essay's cast. Each fate had only **2** lines —
