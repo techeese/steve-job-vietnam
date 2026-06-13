@@ -468,9 +468,10 @@ var CONTENT = {
       "Tấm băng-rôn 'Quyết tâm' đã treo sang năm thứ ba. Quyết tâm gì thì không ai chắc.",
       "Sinh viên năm tư bắt đầu nói 'thật ra em cũng không biết em muốn gì'. Đúng tiến độ.",
       "Bảng tin trường: một thông báo cũ, một thông báo cũ hơn, và một con gián.",
-      "Đồng hồ ở hội trường lại chạy nhanh 7 phút — đúng bằng thời lượng phần 'phát biểu ngắn gọn'."
+      "Đồng hồ ở hội trường lại chạy nhanh 7 phút — đúng bằng thời lượng phần 'phát biểu ngắn gọn'.",
+      "Bác Tâm đọc lại đề Văn 2026 ở cột cờ. Không ai bình luận.",
+      "Học viện iSteve Toàn Cầu quảng cáo: 'Cam kết đầu ra: Kỳ lân hoặc hoàn 30% học phí.'"
     ],
-    flagpole: "Bác Tâm đọc lại đề Văn 2026 ở cột cờ. Không ai bình luận.",
     thptJune: "2,1 triệu thí sinh vừa được hỏi câu hỏi của trường bạn.",
     poolForeshadow: "{n} hồ sơ đang hướng về cổng trường.",
     foundingJune: "Hết một năm học. Trường chưa có khóa tốt nghiệp nào — cả khóa lên lớp, sân vẫn rộng chỗ.",
@@ -479,8 +480,7 @@ var CONTENT = {
     cutHi295: "Thủ khoa 29,9 điểm vẫn trượt vì tiêu chí phụ.",
     cutHi300: "ĐIỂM CHUẨN 30,5/30 — ba điểm 10 vẫn trượt nguyện vọng 1.",
     cutHi27: "Điểm chuẩn cao kỷ lục. Phụ huynh chụp màn hình.",
-    cutLo: "Báo gọi đợt tuyển sinh này là 'vét sàn'. iSteve đăng meme.",
-    isteveTagline: "Học viện iSteve Toàn Cầu: 'Cam kết đầu ra: Kỳ lân hoặc hoàn 30% học phí.'"
+    cutLo: "Báo gọi đợt tuyển sinh này là 'vét sàn'. iSteve đăng meme."
   },
 
   modal: {

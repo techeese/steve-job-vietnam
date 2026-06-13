@@ -293,7 +293,7 @@ function monthRollover() {
   if (S.month === 2) tetBeat();
   if (S.month === CONFIG.KHOA_CUP.month) runKhoaCup(); // annual Cúp Khoa (before the June ceremony)
   if (S.month === 9 && S.day === 1) scholarshipDraw(); // day always 1 right after rollover
-  if (S.month === 6 && S.lastJuneYear !== S.year) { S.lastJuneYear = S.year; openJune(); }
+  if (S.month === 6 && S.lastJuneYear !== S.year) { S.lastJuneYear = S.year; news(CONTENT.ticker.thptJune); openJune(); } // June = the real THPT exam season; anchor it before the school's own ceremony
   if (S.month === 7 && !S.pendingAdmit && !hasResolvedAdmitThisYear()) openAdmissions();
   if (S.month === 11) flushGifts();
   // scripted Offer 1 — Tập đoàn Trứng Vàng (≈one month after boot)

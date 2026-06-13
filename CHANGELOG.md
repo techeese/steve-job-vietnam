@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-14 — Surface the last of the hidden ticker lines (loop iter 94)
+- Continuing the dead-content sweep from iter 93: audited every `ticker.*` key and found **3 more written but
+  never surfaced**. Now all wired, and the ticker block has **no dead content left**:
+  - **`thptJune`** ("2,1 triệu thí sinh vừa được hỏi câu hỏi của trường bạn.") → fires as a **June calendar
+    beat** — June is the real THPT exam season, so each year the feed now anchors to the actual moment the
+    nation gets asked your school's question, right before your own Lễ Tốt Nghiệp. A topical real-world tie.
+  - **`flagpole`** ("Bác Tâm đọc lại đề Văn 2026 ở cột cờ. Không ai bình luận.") and the rival-school joke
+    **`isteveTagline`** ("iSteve Toàn Cầu: 'Kỳ lân hoặc hoàn 30% học phí.'") → folded into the **idle
+    rotation** (their standalone keys removed — leave no debris).
+- engine.js: one June `news()` line. data.js: 2 lines moved into `idle`, 2 dead keys deleted. No balance/save
+  change. Verified: parse · `./gate.sh` GREEN · `./bot.sh` BOTOK · re-audit shows **all ticker keys used** · an
+  engine probe confirming thptJune lands in the feed each June.
+- Plateau-mode safe value → `SMALL_SHIPS_SINCE_EPIC 1→2`. Bar: **completeness 4** (the satirical newsfeed is
+  now fully alive — nothing written sits unseen).
+
 ## 2026-06-14 — The campus newsfeed never goes stale (loop iter 93)
 - **Fixed dead content + deepened the satirical voice.** The ticker's `idle` flavour lines (dry-humour
   background news) were defined in data.js but **never surfaced anywhere** — the ticker only ever showed the
