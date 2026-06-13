@@ -1,0 +1,4 @@
+brainstorm-raw.json
+/tmp-*
+*.png
+!icon-*.png
