@@ -387,7 +387,27 @@
     var edge = function (t) { return t[0] < 2 || t[0] > GW - 3 || t[1] < 2 || t[1] > GH - 3; };
     var nT = 0; for (i = 0; i < free.length && nT < 5; i++) { var f = free[i]; if (!f.u && edge(f)) { tree(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 5) | 0); f.u = 1; nT++; } }   // trees hug the border
     var nB = 0; for (i = 0; i < free.length && nB < 5; i++) { f = free[i]; if (!f.u) { bush(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 4) | 0); f.u = 1; nB++; } }
-    var nF = 0; for (i = 0; i < free.length && nF < 9; i++) { f = free[i]; if (!f.u) { flowers(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 6) | 0, rng); f.u = 1; nF++; } }
+    var nF = 0; for (i = 0; i < free.length && nF < 8; i++) { f = free[i]; if (!f.u) { flowers(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 6) | 0, rng); f.u = 1; nF++; } }
+    var nBe = 0; for (i = 0; i < free.length && nBe < 3; i++) { f = free[i]; if (!f.u) { bench(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 3) | 0); f.u = 1; nBe++; } }
+    // fountain centerpiece at the path plaza (skip if a room was built over it)
+    if (walk[colX] && walk[colX][rowY]) fountain(ctx, (colX * T + T / 2) | 0, (rowY * T + T / 2) | 0);
+  }
+  function fountain(ctx, cx, cy) {
+    ctx.fillStyle = "rgba(28,48,18,.18)"; ctx.fillRect(cx - 9, cy + 6, 18, 3);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 9, cy - 2, 18, 8); ctx.fillRect(cx - 7, cy - 4, 14, 2); ctx.fillRect(cx - 7, cy + 6, 14, 2); // basin outline
+    ctx.fillStyle = "#b8b2a6"; ctx.fillRect(cx - 8, cy - 1, 16, 6); ctx.fillRect(cx - 6, cy - 3, 12, 2); ctx.fillRect(cx - 6, cy + 5, 12, 2);
+    ctx.fillStyle = "#d2ccc0"; ctx.fillRect(cx - 8, cy - 1, 16, 1);                 // rim highlight
+    ctx.fillStyle = "#5fc7e0"; ctx.fillRect(cx - 6, cy, 12, 4);                     // water
+    ctx.fillStyle = "#9fe2f2"; ctx.fillRect(cx - 6, cy, 12, 1); ctx.fillRect(cx - 4, cy + 1, 3, 1);
+    ctx.fillStyle = "#a8a297"; ctx.fillRect(cx - 2, cy - 6, 4, 6);                  // pillar
+    ctx.fillStyle = "#bfeefa"; ctx.fillRect(cx - 1, cy - 9, 2, 4);                  // jet
+    ctx.fillStyle = "#8fdcef"; ctx.fillRect(cx - 3, cy - 5, 1, 2); ctx.fillRect(cx + 2, cy - 5, 1, 2);
+  }
+  function bench(ctx, cx, cy) {
+    ctx.fillStyle = "rgba(28,48,18,.15)"; ctx.fillRect(cx - 5, cy + 3, 11, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 5, cy - 3, 11, 2); ctx.fillRect(cx - 5, cy, 2, 4); ctx.fillRect(cx + 4, cy, 2, 4);
+    ctx.fillStyle = "#9a6a3c"; ctx.fillRect(cx - 4, cy - 2, 9, 1);
+    ctx.fillStyle = "#b27d48"; ctx.fillRect(cx - 5, cy, 11, 2);
   }
   function lamp(ctx, cx, cy) {
     ctx.fillStyle = "rgba(30,40,20,.16)"; ctx.fillRect(cx - 2, cy, 4, 1);
