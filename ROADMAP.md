@@ -54,6 +54,21 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
   engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
+## Gameplay balance — findings from `node sweep.js` (2026-06-13)
+The sweep (40 seeds × 5 strategies × 11y) flags real stagnation to fix (own iterations;
+re-run sweep before+after each change). Good news: economy Y1 net +12tr (in band), 0%
+bankrupt, and the THESIS HOLDS — đồ-án/craft yields a 🍎 in ~43% of runs + 69% kỹ sư, while
+cram/default settle into lương-ổn. Problems:
+- **Tiếng Tăm collapses to ~1** (decays −1/mo, nothing sustains it) → admissions pool shrinks,
+  the hype meter is dead weight, half the moral tension is inert. Needs TT sources (stunts,
+  contracts, viral defenses, events) that actually keep it alive across a run.
+- **Money inflates to ~2788tr end-game** — no spend sink/pressure. Needs sinks (Quỹ Ứng Cứu,
+  dedications, scaling salaries/maintenance, more to build) so cash stays a real constraint.
+- **CA_MAP_COIN (cá mập coin) ≈ 0%** across all strategies — the dark mirror barely fires;
+  `cm` (cá-mập stat) grows too slowly for the cascade gate (cm≥60∧tn≤40∧vet≥50). Cram should
+  breed some sharks. Raise cm growth on luyện-đề / add a coin-temptation path.
+- Non-craft strategies are samey (all lương-ổn-heavy) — differentiate cram→văn-mẫu/cá-mập.
+
 ## Salvaged from the retired /mvp/ build (worth keeping)
 - **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
   photSeeds silently) — surface it so the player feels the gamble building. (UI, small.)

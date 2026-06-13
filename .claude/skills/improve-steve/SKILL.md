@@ -176,10 +176,19 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
   > polish); pick the winner, bank the runner-up.
 - Scope control: one iteration = one shippable coherent change. Too big → split, name the
   parts in ROADMAP.
-- Maintenance sprint every ~5th iteration: `node sweep.js` (when engine.js exists), a
-  5-minute virtual-time bot playthrough (zero JSERR, no soft-locks, assert purchases AND
-  alumni ticks actually happened — dead selectors pass silently), full-page 390px audit
-  (actually LOOK at the PNGs), perf glance (interval count, DOM nodes, canvas frame cost).
+- Maintenance sprint every ~5th iteration: **`node sweep.js`** (the gameplay simulator —
+  see below), a 5-minute virtual-time bot playthrough (zero JSERR, no soft-locks, assert
+  purchases AND alumni ticks actually happened — dead selectors pass silently), full-page
+  390px audit (actually LOOK at the PNGs), perf glance (interval count, DOM nodes, frame cost).
+- **`node sweep.js` — the gameplay analysis simulator (owner directive 2026-06-13: "write the
+  simulator to play this game to sweep gameplay… do analysis to improve gameplay").** Drives
+  the DOM-free engine through 40 seeds × 5 strategies × 11y headlessly and reports: economy
+  (Y1 net band +8..25, bankruptcy, end-cash inflation), alumni-destiny distribution PER
+  strategy, 🍎-rate, and DESIGN-§1 pluralism/dominance flags. RUN IT before AND after any
+  CONFIG/FSM/preset/economy change, and whenever doing balance or "improve gameplay" work —
+  the flags (TT-collapse, money-inflation, dead-end-states, dominant-strategy, 🍎-unreachable)
+  are your balance to-do list. Extend the strategy list / flags as systems grow. Current open
+  findings live in ROADMAP "## Gameplay balance".
 - **Code-structure review every ~10th iteration (owner directive 2026-06-13 — this is a
   COMPLEX game and growing):** step back from features and audit the architecture itself.
   Pair it with the Owner-Model flow reflection (same "look at the whole" beat). Check:

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — Gameplay simulator: sweep.js (owner directive)
+- `node sweep.js` drives the DOM-free engine through 40 seeds × 5 strategies × 11 years and
+  reports economy band, alumni-destiny distribution per strategy, 🍎-rate, and DESIGN-§1
+  pluralism/dominance flags — so balance work is data-driven, not guessed.
+- First findings (→ ROADMAP "Gameplay balance"): thesis HOLDS (craft → 🍎 in 43% of runs),
+  economy in band; but Tiếng Tăm collapses to ~1, cash inflates to ~2788tr (no sink), and
+  cá-mập-coin ≈ 0% (dark mirror barely fires). Added to skill as the standing balance tool.
+
 ## 2026-06-13 — Liveliness pass (loop iter 8): emotes + a campus cat
 Chasing the north-star ("sunny, slightly chaotic little school you love watching").
 - **Emote bubbles:** students occasionally pop a little pixel reaction above their head
