@@ -54,6 +54,16 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
   engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
+## Flow reflection (iter 20, ~10-iteration checkpoint)
+The dev flow is serving the owner: 20 iterations shipped, ~15 autonomously (decide→ship→veto,
+no vetoes), the north-star ("sunny lively watchable school") resolves design forks cleanly,
+and `sweep.js` turned balance from guesswork into 3 data-driven fixes (now all-clear). Look +
+gameplay both strong. ONE flow risk: **`js/ui.js` is now 1203 lines** (art + campus-life +
+ambient + customization + HUD + panels + modals + sound + epilogue) — velocity will degrade.
+**The S1.5 `art.js` extraction is now the top structural priority** (chunked + before/after
+screenshot-verified, per the autonomous-refactor landmine). Best done when the owner is OK
+with one invisible-but-velocity iteration, or pulled forward if a new visual feature gets hard.
+
 ## Gameplay balance — findings from `node sweep.js` (2026-06-13)
 The sweep (40 seeds × 5 strategies × 11y) flags real stagnation to fix (own iterations;
 re-run sweep before+after each change). Good news: economy Y1 net +12tr (in band), 0%

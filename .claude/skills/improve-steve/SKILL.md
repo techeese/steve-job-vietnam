@@ -56,6 +56,15 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 - "everything on one screen / press button" → tabs + tap-world → accepted.
 - Open-question epilogue · campus-life · BGM → shipped, no veto (tacit accept).
 - Cache staleness made an accepted change look unchanged → owner confusion; fixed (bump.sh).
+- Owner: "just keep work on the loop" + (earlier) wants less heavy narration → DEFAULT to terse
+  one-line status after a push; only surface fully at milestones. Keep shipping autonomously.
+- Owner asked for a play-sim "to improve gameplay" → built sweep.js; drove 3 balance fixes →
+  the owner values DATA-DRIVEN depth, not just vibes. Keep the sweep green; cite it in OWNER lines.
+- Owner seeded the north-star + asked "how to be more autonomous" → wants HIGH autonomy + a sharp
+  taste model. Iters 8–20 ran almost entirely autonomously (look polish + sweep balance +
+  customization, owner-hinted) with no vetoes → the autonomy contract is calibrated right.
+- *(Flow reflection iter 20)* ui.js hit 1203 lines → art.js refactor is the velocity priority
+  (see ROADMAP "Flow reflection"). The flow otherwise healthy; no change needed beyond that.
 
 **Maintain this model actively:**
 - On EVERY owner interaction: extract the abstract intent behind the concrete ask and
