@@ -6,11 +6,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — the NEXT firing is HARD-LOCKED to the EPIC track, and EPICS_SINCE_STRUCTURE=2 FORCES it to be the ui.js→screens.js STRUCTURE move** (or a rigorous review-that-defers per SKILL, resetting the counter — see `## Architecture`; de-risked now by bot.sh + static-canvas-hash). (81 pennant + 82 umbrellas + 83 events = 3 POLISH.)
-- `EPICS_SINCE_STRUCTURE: 2`    → **≥2 NOW — the NEXT epic MUST be a STRUCTURE move** (ui.js→screens.js, see `## Architecture`). (75 BGM + 80 Cúp Khoa = 2 FEATURE epics since the iter-73 structure review; iter 79 was a polish, not an epic.)
-- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
-- `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
-- `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (Reset iter 84: the sprite-bakery STRUCTURE epic shipped.)
+- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 84: sprites.js extraction WAS the structure move — paid the debt the cadence was forcing.)
+- `LAST_EPIC: iter 84 — STRUCTURE: character sprite bakery → js/sprites.js (−156 lines ui.js; hash-proven byte-identical). Visual bake layer now whole (art.js + sprites.js).`
 - `LAST_MAINTENANCE: iter 78 — CLEAN bill of health. sweep green (0 bankrupt · pluralism holds) · NEW bot.sh full-game in-browser playthrough (11y, all 5 tabs + weather rendered each chunk) → BOTOK, zero JSERR, 84 grad/85 alumni · all 5 tabs 390px-audited (góp-quỹ + weather render live) · perf clean (2 intervals, 691 DOM nodes heaviest tab). No bugs found; no code changes beyond adding bot.sh.`
 
 ## Epic in progress
@@ -127,6 +125,18 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   `## Architecture` below; queue at most one behavior-neutral refactor.
 
 ## Architecture (structure-review log)
+- *(2026-06-14, iter 84 review + STRUCTURE epic)* Sizes: data.js 525 · engine.js 1187 · **art.js 411 ·
+  sprites.js 171 · audio.js 79** · ui.js **1534** · index.html 268 (~3907). **Verdict: HEALTHY; visual
+  layer now WHOLE.** The iter-73 review called ui.js's panels/modals "no clean leaf" — true, but it MISSED
+  a clean leaf hiding in plain sight: the **character sprite bakery** (left behind by the iter-57 art.js
+  split). Extracted it VERBATIM to `js/sprites.js` (window.SPRITES) this firing — a pure one-directional
+  factory (ui → sprites), like art/audio. ui.js 1690→1534. **Proof: baked-sprite pixel hash byte-identical
+  (2075002228) + gate green + bot.sh BOTOK + customizer verified.** Layer law still clean (engine 0 DOM;
+  bake layer = art.js+sprites.js; text in data.js). **Remaining hotspot: ui.js (1534)** — the panels/modals
+  → `screens.js` split is still *available* (backlog) but NOT urgent: it's coupling not size, and size just
+  dropped. Do it only if ui.js strains again or the owner OKs an invisible-velocity epic. This review +
+  epic DISCHARGE the EPICS_SINCE_STRUCTURE duty. **Flow reflection (74–84, all autonomous):** counted
+  cadence + bot.sh + divergence-when-needed is working; the gap is fresh owner taste — all inference since BGM.
 - *(2026-06-13, iter 73 review)* Sizes: data.js 499 · engine.js 1123 · **art.js 411 · audio.js 74** ·
   ui.js **1565** · index.html 267 (~3939). **Verdict: HEALTHY.** One-directional layering (data → engine
   → art/audio → ui) holds CLEAN: engine.js has 0 DOM refs; art.js/audio.js don't reach into game logic.

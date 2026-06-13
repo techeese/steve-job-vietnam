@@ -616,6 +616,20 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   reproduce-agent to regenerate the winner's drop-in code as PLAIN TEXT in its final message (the
   proven pattern for both the character-art iter 59 and buildings iter 70 integrations). PNGs land on
   disk before the workflow's structured result, so you can judge + proceed even if the result stalls.
+- STRUCTURE-EPIC, finding the seam (iter 84): when a structure review concludes a big file has "no clean
+  leaf to extract" (iter-73 said this of ui.js panels/modals — true, they're bidirectionally coupled),
+  CHECK FOR A LEAF LEFT BEHIND BY A PRIOR PARTIAL EXTRACTION before forcing the hard split. The art.js
+  extraction (iter 57) left the CHARACTER SPRITE BAKERY in ui.js; pulling it to `js/sprites.js` (iter 84)
+  was a clean one-directional factory (ui → sprites, like art/audio), −156 lines, far lower-risk than the
+  coupled panels split. The cadence forces a STRUCTURE move, NOT a specific one — pick the cleanest real
+  seam and record the swap.
+- STRUCTURE-EPIC, proving byte-identity (iter 84): for a refactor that moves DETERMINISTIC drawing/baking
+  code verbatim, the gold-standard proof is a PIXEL HASH that must match before & after. Recipe: capture a
+  baseline FIRST (before touching code) — render the deterministic output to a canvas (e.g. `__ui._bakeSheet()`
+  blits the sprite atlas to mapStatic), `getImageData(...).data` → FNV-1a hash, record it; refactor; re-run;
+  assert identical. Combine with `./gate.sh` + `./bot.sh` (UI render across 11y) + a 390px screenshot +
+  exercising any player-only path the bot skips (e.g. the look customizer: `SPRITES.custom/effLook/clampLook`
+  + an `inspectStudent` render). This makes a "scary" autonomous refactor provably safe.
 
 ## Playbook changelog
 - 2026-06-13: skill created at owner's request, seeded from the Nuôi Anh improve-game

@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-06-14 — STRUCTURE epic: the character sprite bakery → js/sprites.js (loop iter 84)
+- The cadence-forced STRUCTURE epic + the ~10-firing architecture review. **Swapped the queued ui.js→screens.js
+  for a cleaner, lower-risk move (recorded):** the iter-73 review concluded ui.js's panels/modals have "no clean
+  leaf to extract" (bidirectional render coupling) — but a genuinely clean leaf was hiding in plain sight: the
+  **character sprite bakery** (bakeChar/buildAtlas/customSprite/effLook/clampLook + the SKINS/HAIRSET/VARIANTS/
+  ATLAS data, ~156 lines) was simply *left behind* when art.js was extracted (iter 57). It's a pure factory with a
+  one-directional interface (ui.js → it), exactly like art.js/audio.js.
+- Moved it VERBATIM to **`js/sprites.js` (window.SPRITES)**, completing the visual-layer separation: **art.js**
+  (rooms/props/tiles) + **sprites.js** (characters) = the whole bake layer; ui.js is now orchestration + DOM
+  chrome. ui.js **1690 → 1534** (−156); the ~12 call sites (syncActors, drawActor, the inspect customizer,
+  panelStudents, boot, the _bakeSheet hook) rewired to `SPRITES.*`.
+- **Proven behavior-neutral** (the autonomous-refactor landmine demands it): a deterministic baked-sprite pixel
+  hash (via `_bakeSheet` → mapStatic getImageData FNV-1a) is **byte-identical before & after (2075002228)**;
+  `./gate.sh` GREEN; `./bot.sh` **BOTOK** (full 11y, actors render across all states, zero JSERR); the customizer
+  path (custom/effLook/clampLook + inspect render) verified; 390px actor screenshot clean. No data/engine/save
+  change.
+- **Architecture verdict (iter-84 review):** healthy. Layer law holds (engine 0 DOM, text in data.js, the visual
+  bake fully in art.js+sprites.js). ui.js at 1534 is still the largest file but no longer carries the pixel
+  bakery; the panels/modals→`screens.js` split remains *available* for a future structure beat if ui.js keeps
+  growing, but is not urgent (it's coupling, not size, and size just dropped). **Flow reflection:** the counted
+  cadence + bot.sh + divergence-when-needed is serving the owner's instincts well across 11 autonomous firings
+  (74–84); the only missing input is fresh owner taste signal — everything since the BGM finale has been inference.
+- EPIC shipped → cadence resets: **`SMALL_SHIPS_SINCE_EPIC 3→0`, `EPICS_SINCE_STRUCTURE 2→0`**. Bar: structure/
+  debt (exempt from the rubric floor; the lift is "the visual layer is now whole").
+
 ## 2026-06-14 — Two new đề-Văn events (brain drain · the "safe path") + a title bug fix (loop iter 83)
 - Branched from visual charm to **content/satire** — two fresh events naming the real forces that keep Việt Nam
   from growing its own Steve, each a genuine moral fork (the game's soul):

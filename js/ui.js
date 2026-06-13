@@ -31,165 +31,9 @@
     vuonntt:  { c: "#2f6b46", e: "🧭", g: "#3a875a" },
     vuoncva:  { c: "#7a5a2f", e: "🪶", g: "#9c7a3d" }
   };
-  var GRADE_C = { 1: "#3fb98e", 2: "#4a8fe0", 3: "#f0a838", 4: "#a86fe0" }; // year uniform colours (richer, pop on grass)
-
-  /* === PIXEL-ART v2: pre-baked character atlas (bake once → blit, fast at 48 actors) === */
-  // variety axes — students read as individuals, not clones
-  var SKINS = [["#f4c79c", "#e2a878"], ["#ecb888", "#d49a66"], ["#cf9a64", "#b07c4c"]]; // [skin, shadow]
-  var HAIRSET = [["#3a2a1c", "#5a3f28"], ["#21201f", "#3a3433"], ["#6e4a26", "#8a6336"], ["#a85a3a", "#c4724a"], ["#c9a14e", "#e0bb66"], ["#5b4a6e", "#74608c"]]; // [base, hi]
-  var HAIRSTYLE = ["short", "long", "bun"];
-  var ACC = ["none", "none", "glasses", "bow", "cap", "none"]; // weighted toward none
-  // baked variant list (skin × hair-colour × hair-style × accessory), capped
-  var VARIANTS = [];
-  (function () { var s = [0, 0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2], h = [0, 1, 2, 3, 1, 4, 0, 2, 5, 3, 1, 4], y = [0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0], a = [0, 2, 0, 3, 0, 1, 4, 0, 2, 0, 5, 1]; for (var i = 0; i < 12; i++) VARIANTS.push({ s: s[i], h: h[i], y: y[i], a: a[i] }); })();
-  var ATLAS = null; // ATLAS[grade0..3][variant0..11][frame0..1] = offscreen canvas
-  function bakeChar(shirt, shirtD, V, frame) {
-    // Premium volumetric chibi (24×32). ONE light source upper-left. Every mass uses a 4-step ramp:
-    // 1px lit rim (upper-left) -> core midtone -> one-step lower-right shade -> deep terminator.
-    // 1px dark outline throughout. Feet sit on the bottom row so the foot point = canvas bottom.
-    var sk = SKINS[V.s][0], skD = SKINS[V.s][1], skH = shade(sk, 0.16), skHH = shade(sk, 0.32), skT = shade(sk, -0.22);
-    var hair = HAIRSET[V.h][0], hairHi = HAIRSET[V.h][1], hairD = shade(hair, -0.34), style = HAIRSTYLE[V.y], acc = ACC[V.a];
-    var shirtH = shade(shirt, 0.30);   // lit rim (upper-left)
-    var shirtSh = shade(shirt, -0.18); // one-step lower-right shade
-    var shirtT = shade(shirt, -0.34);  // deep terminator at plane changes
-    var collar = shade(shirt, -0.20);
-    var pant = PX.pants, pantH = shade(PX.pants, 0.26), pantSh = shade(PX.pants, -0.20), pantT = shade(PX.pants, -0.44);
-    var shoe = PX.shoe, shoeH = shade(PX.shoe, 0.30);
-    var cv = document.createElement("canvas"); cv.width = 24; cv.height = 32;
-    var X = cv.getContext("2d"); X.imageSmoothingEnabled = false;
-    function R(x, y, w, h, c) { X.fillStyle = c; X.fillRect(x, y, w, h); }
-    function P(x, y, c) { X.fillStyle = c; X.fillRect(x, y, 1, 1); }
-
-    // CONTACT SHADOW — soft directional ellipse, grounds the figure on grass
-    X.fillStyle = "rgba(20,30,14,.16)"; X.beginPath(); X.ellipse(13, 30.5, 9, 2.6, 0, 0, 6.2832); X.fill();
-    X.fillStyle = "rgba(20,30,14,.22)"; X.beginPath(); X.ellipse(12, 30.5, 6.5, 1.8, 0, 0, 6.2832); X.fill();
-
-    // HEAD — x6..17 (12 wide), y1..13
-    R(6, 1, 12, 13, PX.out);
-    R(7, 2, 10, 11, sk);
-    X.clearRect(6, 1, 1, 1); X.clearRect(17, 1, 1, 1); X.clearRect(6, 13, 1, 1); X.clearRect(17, 13, 1, 1);
-    P(7, 2, PX.out); P(16, 2, PX.out); P(6, 12, PX.out); P(17, 12, PX.out);
-    R(7, 3, 1, 9, skH);             // lit left rim
-    R(8, 2, 7, 1, skH);             // lit top rim
-    P(8, 3, skHH); P(8, 2, skHH);   // brightest sparkle corner
-    R(16, 3, 1, 9, skD);            // shaded right column
-    R(14, 11, 3, 1, skD);           // shaded lower-right jaw
-    R(8, 12, 8, 1, skT);            // chin terminator (deep)
-    P(15, 3, shade(sk, -0.08));
-
-    // HAIR (style-dependent; lit top-left, dark right)
-    R(6, 1, 12, 3, hair);
-    R(6, 4, 1, 2, hair); R(17, 4, 1, 2, hairD);
-    R(7, 1, 9, 1, hairHi);
-    P(7, 2, hairHi); P(8, 2, hairHi);
-    R(16, 1, 1, 5, hairD);
-    if (style === "short") {
-      R(6, 4, 2, 1, hair); R(16, 4, 2, 1, hairD);
-      P(8, 4, hairHi); P(9, 4, hair); P(14, 4, hairD); P(15, 4, hairD);
-      P(11, 4, shade(hair, 0.12));
-      P(7, 5, hair); P(16, 5, hairD);
-    } else if (style === "long") {
-      R(6, 4, 1, 9, hair); R(17, 4, 1, 9, hairD);
-      R(7, 4, 1, 2, hair); R(16, 4, 1, 2, hairD);
-      P(6, 13, hair); P(17, 13, hairD); P(7, 12, hair); P(16, 12, hairD);
-    } else { // bun
-      R(10, -1, 4, 2, hair); R(10, -1, 3, 1, hairHi); P(13, 0, hairD);
-      R(6, 4, 2, 1, hair); R(16, 4, 2, 1, hairD); P(8, 4, hair); P(15, 4, hairD);
-    }
-
-    // FACE
-    P(8, 5, hairD); P(9, 5, hairD); P(13, 5, hairD); P(14, 5, hairD);
-    R(8, 6, 3, 3, PX.out); R(13, 6, 3, 3, PX.out);
-    R(9, 7, 2, 2, "#6a86c8"); R(14, 7, 2, 2, "#6a86c8");
-    R(9, 8, 2, 1, "#3a558f"); R(14, 8, 2, 1, "#3a558f");
-    P(9, 7, "#ffffff"); P(14, 7, "#ffffff");
-    P(10, 8, "#1c2742"); P(15, 8, "#1c2742");
-    P(7, 9, "#ef968a"); P(8, 9, "#f4a89a"); P(15, 9, "#ef968a"); P(16, 9, "#f4a89a");
-    P(12, 9, shade(sk, -0.16));
-    R(10, 11, 4, 1, PX.mouth); P(10, 11, shade(PX.mouth, -0.24)); P(13, 11, shade(PX.mouth, -0.24));
-    P(11, 12, "#d27668"); P(12, 12, "#d27668");
-
-    // ACCESSORY
-    if (acc === "glasses") {
-      R(7, 6, 4, 3, PX.out); R(13, 6, 4, 3, PX.out); R(11, 7, 2, 1, PX.out);
-      R(8, 7, 2, 1, "#bfe0ff"); R(14, 7, 2, 1, "#bfe0ff");
-      P(8, 7, "#eaf6ff"); P(14, 7, "#eaf6ff");
-      P(7, 8, shade("#bfe0ff", -0.2)); P(16, 8, shade("#bfe0ff", -0.2));
-    } else if (acc === "bow") {
-      R(5, 2, 3, 3, "#f15a7a"); R(5, 2, 1, 3, "#d63f5e"); P(7, 3, "#ff8aa0"); P(6, 3, "#ffb3c2"); P(7, 2, "#ffc4d0");
-    } else if (acc === "cap") {
-      R(6, 0, 12, 2, "#4a8fe0"); R(7, -1, 9, 1, "#5b9ff0"); R(16, 1, 1, 2, "#3a78c8");
-      R(17, 2, 4, 1, "#4a8fe0"); R(17, 3, 4, 1, "#3a78c8");
-      P(7, 0, "#7ab4f5"); P(8, 0, "#7ab4f5");
-    }
-
-    // NECK
-    R(10, 13, 4, 2, PX.out); R(11, 13, 2, 1, sk); R(11, 14, 2, 1, skT);
-
-    // TORSO + SHORT SLEEVES
-    R(4, 15, 16, 4, PX.out);
-    R(6, 18, 12, 8, PX.out);
-    R(7, 16, 10, 9, shirt);
-    R(5, 16, 2, 2, shirt);
-    R(17, 16, 2, 2, shirt);
-    X.clearRect(4, 15, 1, 1); X.clearRect(19, 15, 1, 1);
-    P(5, 15, PX.out); P(18, 15, PX.out);
-    R(5, 18, 2, 1, shirtT); R(16, 18, 2, 1, shade(shirtT, -0.04));
-    R(9, 15, 6, 1, collar); R(10, 16, 4, 1, shade(collar, -0.24));
-    P(11, 15, sk); P(12, 15, sk); P(9, 16, collar); P(14, 16, collar);
-    R(5, 16, 1, 2, shirtH); R(7, 16, 1, 9, shirtH);
-    R(5, 16, 3, 1, shirtH); R(7, 16, 7, 1, shirtH);
-    P(5, 16, shade(shirt, 0.42)); P(7, 16, shade(shirt, 0.42));
-    R(15, 17, 1, 8, shirtSh);
-    R(16, 17, 1, 8, shirtT);
-    R(18, 16, 1, 2, shirtSh);
-    R(8, 24, 8, 1, shirtT);
-    R(13, 21, 2, 3, shirtSh);
-
-    // HANDS
-    R(4, 21, 2, 3, PX.out); R(5, 22, 1, 1, sk); P(5, 22, skH);
-    R(18, 21, 2, 3, PX.out); R(18, 22, 1, 1, skD);
-
-    // LEGS + SHOES (2 walk frames)
-    function leg(lx, top) {
-      R(lx, top, 4, 31 - top, PX.out);
-      R(lx + 1, top, 2, 30 - top, pant);
-      P(lx + 1, top, pantH);
-      R(lx + 1, top, 1, 30 - top, shade(pant, 0.10));
-      R(lx + 2, top + 1, 1, 29 - top, pantSh);
-      R(lx + 1, top, 2, 1, pantT);
-    }
-    if (frame === 0) {
-      leg(7, 26); leg(13, 26);
-      R(7, 30, 4, 1, shoe); R(13, 30, 4, 1, shoe);
-      P(7, 30, shoeH); P(13, 30, shoeH);
-    } else {
-      leg(7, 26); leg(13, 25);
-      R(7, 29, 4, 1, shoe); R(13, 30, 4, 1, shoe);
-      P(7, 29, shoeH); P(13, 30, shoeH);
-    }
-
-    return cv;
-  }
-  function buildAtlas() {
-    ATLAS = [];
-    for (var g = 0; g < 4; g++) { ATLAS[g] = []; var sh = shade(GRADE_C[g + 1], -0.28); for (var v = 0; v < VARIANTS.length; v++) { ATLAS[g][v] = []; for (var fr = 0; fr < 2; fr++) ATLAS[g][v][fr] = bakeChar(GRADE_C[g + 1], sh, VARIANTS[v], fr); } }
-  }
-  // player-customized looks (arbitrary skin/hair/style/accessory combos) — baked on demand + cached
-  var customCache = {};
-  function clampLook(lc) { return { s: ((lc.s % SKINS.length) + SKINS.length) % SKINS.length, h: ((lc.h % HAIRSET.length) + HAIRSET.length) % HAIRSET.length, y: ((lc.y % HAIRSTYLE.length) + HAIRSTYLE.length) % HAIRSTYLE.length, a: ((lc.a % ACC.length) + ACC.length) % ACC.length }; }
-  function customSprite(grade, lc, frame) {
-    var c = clampLook(lc), key = grade + ":" + c.s + "." + c.h + "." + c.y + "." + c.a + ":" + frame;
-    if (!customCache[key]) customCache[key] = bakeChar(GRADE_C[grade], shade(GRADE_C[grade], -0.28), c, frame);
-    return customCache[key];
-  }
-  // the effective look object {s,h,y,a} for a student: their custom override, else their VARIANT
-  function effLook(st) { return st.lookC || VARIANTS[(typeof st.look === "number" && st.look >= 0 && st.look < VARIANTS.length) ? st.look : hashId(st.id) % VARIANTS.length]; }
-
   /* === ART: Sơn Mài Diorama (lacquer-night campus, gold-leaf pavilions) === */
   // per-room style: wall hue, roof silhouette, window temperature, gable sigil, short map label
   function mb(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
-  function hashId(id) { return (Math.imul(id, 2654435761) >>> 0); }
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "";
@@ -258,7 +102,7 @@
     AUDIO.init();
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
-    buildAtlas(); // bake pixel-art sprite atlas once
+    SPRITES.build(); // bake pixel-art sprite atlas once (js/sprites.js)
     rebuildWalk(); syncActors(true); initCats(); initFlyers(); initClouds();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
@@ -346,12 +190,12 @@
         // clear the arrival mark once they've actually stepped onto the grounds
         if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
-      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.ten = s.ten;
+      a.grade = s.grade; a.bodyC = SPRITES.GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.ten = s.ten;
       a.tell = s.tell || ""; a.seed = s.seed;
-      a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < VARIANTS.length) ? s.look : hashId(s.id) % VARIANTS.length;
+      a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < SPRITES.VARIANTS.length) ? s.look : SPRITES.hashId(s.id) % SPRITES.VARIANTS.length;
       a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
-      var el0 = a.lookC ? clampLook(a.lookC) : VARIANTS[a.variantIdx];
-      a.skin = SKINS[el0.s][0]; a.glasses = ACC[el0.a] === "glasses";
+      var el0 = a.lookC ? SPRITES.clampLook(a.lookC) : SPRITES.VARIANTS[a.variantIdx];
+      a.skin = SPRITES.SKINS[el0.s][0]; a.glasses = SPRITES.ACC[el0.a] === "glasses";
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
@@ -733,12 +577,12 @@
   }
   // chibi student — flat primitives only, no per-frame strings/gradients/save (60fps × 48)
   function drawActor(ctx, a, ts) {
-    if (!ATLAS) return;
+    if (!SPRITES.ready()) return;
     var x = a.px | 0, y = a.py | 0;
     // (contact shadow is baked into the 24×32 sprite now)
     var frame = a._moving ? (Math.sin(ts / 150 + a.ph) > 0 ? 0 : 1) : 0;
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
-    var spr = a.lookC ? customSprite(a.grade, a.lookC, frame) : ATLAS[a.grade - 1][a.variantIdx][frame];
+    var spr = a.lookC ? SPRITES.custom(a.grade, a.lookC, frame) : SPRITES.sprite(a.grade, a.variantIdx, frame);
     if (spr) ctx.drawImage(spr, x - 12, y - 30 + bob); // 24×32 sprite; feet at (x,y)
     // rain: the little people out in it (walking, or at recess on the sân) pop a cheerful umbrella; ~75% carry
     // one, the rest scurry bare-headed. Pure draw, reads the weather layer (iter 77) — ties weather to people.
@@ -914,9 +758,9 @@
     var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
     var sjMajor = HVS.studentMajor ? HVS.studentMajor(st) : null; // the khoa this student belongs to (if any)
     var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
-    var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < VARIANTS.length) ? st.look : hashId(st.id) % VARIANTS.length;
+    var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < SPRITES.VARIANTS.length) ? st.look : SPRITES.hashId(st.id) % SPRITES.VARIANTS.length;
     ins.innerHTML =
-      "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
+      "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (SPRITES.GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
       "<div class='grow'><input id='renameIn' value='" + esc(st.ten).replace(/'/g, "&#39;") + "' maxlength='18' style='width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 7px;font-family:inherit;font-weight:700;font-size:12px'/>" +
       "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + "</div>" +
       (sjMajor ? "<div class='imeta' style='color:var(--gold)'>" + sjMajor.icon + " " + esc(sjMajor.name) + "</div>" : "") + "</div>" +
@@ -929,17 +773,17 @@
         "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
         "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +
         "<button class='czb' id='cz_r'>🎲</button></div>";
-    if (ATLAS) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(st.lookC ? customSprite(st.grade, st.lookC, 0) : ATLAS[st.grade - 1][lookIdx][0], 0, 0); }
+    if (SPRITES.ready()) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(st.lookC ? SPRITES.custom(st.grade, st.lookC, 0) : SPRITES.sprite(st.grade, lookIdx, 0), 0, 0); }
     $("ixBtn").onclick = hideInspect;
     $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); };
     $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
-    $("lookBtn").onclick = function () { delete st.lookC; st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); }; // cycle presets (clears custom)
-    var cyc = function (axis, n) { st.lookC = Object.assign({}, st.lookC || effLook(st)); st.lookC[axis] = (st.lookC[axis] + 1) % n; syncActors(); showInspectStudent(id); };
-    $("cz_s").onclick = function () { cyc("s", SKINS.length); };
-    $("cz_h").onclick = function () { cyc("h", HAIRSET.length); };
-    $("cz_y").onclick = function () { cyc("y", HAIRSTYLE.length); };
-    $("cz_a").onclick = function () { cyc("a", ACC.length); };
-    $("cz_r").onclick = function () { st.lookC = { s: (Math.random() * SKINS.length) | 0, h: (Math.random() * HAIRSET.length) | 0, y: (Math.random() * HAIRSTYLE.length) | 0, a: (Math.random() * ACC.length) | 0 }; syncActors(); showInspectStudent(id); };
+    $("lookBtn").onclick = function () { delete st.lookC; st.look = (lookIdx + 1) % SPRITES.VARIANTS.length; syncActors(); showInspectStudent(id); }; // cycle presets (clears custom)
+    var cyc = function (axis, n) { st.lookC = Object.assign({}, st.lookC || SPRITES.effLook(st)); st.lookC[axis] = (st.lookC[axis] + 1) % n; syncActors(); showInspectStudent(id); };
+    $("cz_s").onclick = function () { cyc("s", SPRITES.SKINS.length); };
+    $("cz_h").onclick = function () { cyc("h", SPRITES.HAIRSET.length); };
+    $("cz_y").onclick = function () { cyc("y", SPRITES.HAIRSTYLE.length); };
+    $("cz_a").onclick = function () { cyc("a", SPRITES.ACC.length); };
+    $("cz_r").onclick = function () { st.lookC = { s: (Math.random() * SPRITES.SKINS.length) | 0, h: (Math.random() * SPRITES.HAIRSET.length) | 0, y: (Math.random() * SPRITES.HAIRSTYLE.length) | 0, a: (Math.random() * SPRITES.ACC.length) | 0 }; syncActors(); showInspectStudent(id); };
     ins.classList.add("show"); $("mapHint").textContent = "";
   }
   function showDedication(dedKey) {
@@ -1228,7 +1072,7 @@
         var r = el("div", "srow");
         var mini = "<div class='mini'>" + statBar("Tay nghề", st.tn, "#6fcf97") + statBar("Sáng tạo", st.st, "#6aa9f0") + statBar("Cá mập", st.cm, "#f2994a") + "</div>";
         var marks = (st.flags && st.flags.hb ? " ✦" : "") + (st.ten === "Mai Sương" ? " 🔧" : "");
-        r.innerHTML = "<div class='av' style='background:" + (GRADE_C[g] + "22") + "'>" + seedFace(st.seed) + "</div><div class='grow'><div class='nm'>" + esc(st.ten) + marks + "</div>" + mini + "</div><div class='tiny'>mood " + Math.round(st.mood) + "</div>";
+        r.innerHTML = "<div class='av' style='background:" + (SPRITES.GRADE_C[g] + "22") + "'>" + seedFace(st.seed) + "</div><div class='grow'><div class='nm'>" + esc(st.ten) + marks + "</div>" + mini + "</div><div class='tiny'>mood " + Math.round(st.mood) + "</div>";
         sl.appendChild(r);
       });
       c.appendChild(sl); wrap.appendChild(c);
@@ -1676,7 +1520,7 @@
     // positions, force a roster sync, and step the walk N frames under a pinned period.
     _dbgActors: function () { return actors.map(function (a) { return { py: Math.round(a.py), arr: !!a._arriving, lv: !!a._leaving }; }); },
     _sync: function (init) { syncActors(init); },
-    _bakeSheet: function () { var c = $("mapStatic"), X = c.getContext("2d"); X.imageSmoothingEnabled = false; X.fillStyle = "#79b34a"; X.fillRect(0, 0, c.width, c.height); var sc = 4, per = 4; for (var v = 0; v < ATLAS[0].length; v++) { var spr = ATLAS[0][v][0]; var col = v % per, row = (v / per) | 0; X.drawImage(spr, 8 + col * 104, 8 + row * 140, 24 * sc, 32 * sc); } },
+    _bakeSheet: function () { var c = $("mapStatic"), X = c.getContext("2d"); X.imageSmoothingEnabled = false; X.fillStyle = "#79b34a"; X.fillRect(0, 0, c.width, c.height); var sc = 4, per = 4, A = SPRITES.atlas(); for (var v = 0; v < A[0].length; v++) { var spr = A[0][v][0]; var col = v % per, row = (v / per) | 0; X.drawImage(spr, 8 + col * 104, 8 + row * 140, 24 * sc, 32 * sc); } },
     _steps: function (n, period) { var ts = 50000; for (var f = 0; f < (n || 60); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, period || 0); } },
     // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
     _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } },
