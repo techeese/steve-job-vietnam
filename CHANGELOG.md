@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — A rich share preview for the live link (loop iter 101)
+- Distribution (compass #12, never touched): the live link had **no Open Graph / social meta tags**, so a
+  shared link showed a bare URL. Added the full set (`description` + `og:*` + `twitter:card`) and rendered a
+  dedicated **1200×630 landscape banner** (`docs/og.png` — the sunny campus at recess under the đề-Văn hook +
+  the URL). Now sharing the link (which the owner does often) shows a card that earns the "would a stranger
+  stop?" test, complementing the in-game shareable end-card (iter 91) and the README cover.
+- index.html `<head>` only (meta tags) + `docs/og.png`. **No JS/game change** → live build byte-identical, no
+  bump. Verified: boot clean (no JSERR from the head) · `./gate.sh` GREEN · `./bot.sh` BOTOK · the banner reads
+  well at 1200×630. (Landmine re-confirmed: generate canvas-composite images via a top **overlay**, never by
+  wiping `document.body` — the running render loop crashes on the missing elements.)
+- The locked epic slot (`SMALL_SHIPS` hit 3 at iter 100) is resolved via the standing iter-92 review-defer
+  (epic awaits owner steer) → `SMALL_SHIPS_SINCE_EPIC` reset. Plateau-mode safe value.
+
 ## 2026-06-14 — Finish the alumni-line variety (the one path that missed it) (loop iter 100)
 - A loose end from iter 98: `pickLine` (used only by the garage→KY_SU recovery path) always returned line
   `[0]`, so those few alumni were stuck on a fixed line while everyone else now rotates the 4-line pool. Made
