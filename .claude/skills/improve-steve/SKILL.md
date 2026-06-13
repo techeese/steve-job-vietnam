@@ -132,6 +132,16 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   iteration over invisible internal progress.
 - *(2026-06-13)* Comfortable handing over autonomy (re-armed the loop pattern from Nuôi
   Anh unprompted) but expects the loop to keep learning him — this section IS his request.
+- *(2026-06-13, three directives — noted to ROADMAP "Now ★★★"):* (a) **"3D but still pixel"**
+  for houses AND people — wants DIMENSIONAL pixel-art (fake-iso / 2.5D: visible side walls,
+  pitched-with-depth roofs, characters with volume), not flat-front sprites. (b) **See students
+  walk from OUTSIDE the school to INSIDE** — arrival/matriculation should be visible: new
+  students enter through the cổng and walk in (DESIGN's "tân SV walk in at cổng," currently they
+  just appear). (c) **START WITH NOTHING, BUILD UP** — the boot-with-everything (42 SV, rooms,
+  teachers) is wrong-paced; he wants a Kairosoft from-scratch arc: empty grounds + some cash →
+  build the first room → recruit the first students → grow. This OVERRIDES the DESIGN "inherited
+  cram school with 42 zombies" premise. Deep signal: he wants the SATISFACTION OF GROWTH and the
+  TACTILITY of watching it fill in — the build-up IS the pleasure (extends the watchable north-star).
 
 ## Improvement Compass — 12 areas (rotate; broken always wins)
 

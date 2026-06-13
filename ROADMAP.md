@@ -6,6 +6,24 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
+★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority, do in this order:**
+- **(A) START FROM NOTHING, build up** *(do FIRST — it reframes everything else)*: the owner
+  wants a Kairosoft from-scratch arc, NOT boot-with-42-SV+rooms+teachers. Redesign freshState:
+  empty/near-empty grounds (maybe just the cổng), a starting cash pot, 0 (or a tiny handful of)
+  students, 1 teacher max; the player builds the first Phòng học, then admissions brings the
+  first cohort, then it grows. OVERRIDES the DESIGN "inherited cram school / 42 zombies" premise
+  + the scripted June-Y1 graduation + Trần Phi Lợi-as-zombie (re-home or drop him). MUST update
+  GATE_FRESH (no longer 42 SV / 8-12 alumni after 400d — first grads come ~4yr after first
+  intake) + the intro copy + sweep boot. Verify the early-game isn't dead-time (give an early
+  goal: build → first intake fast).
+- **(B) Students walk IN from outside** *(pairs with A)*: new/matriculating students spawn
+  OUTSIDE the cổng and walk in through it to their spot (DESIGN's "tân SV walk in at cổng").
+  Currently they just appear. Make arrival visible + satisfying.
+- **(C) "3D but still pixel"** for houses AND people: redraw buildings + characters with
+  DIMENSIONAL/fake-iso pixel depth (visible side walls, pitched-with-depth roofs, characters
+  with volume/shading), keeping the bright crisp pixel style. Big art pass — likely a design
+  workflow + screenshot iteration; mind 26px readability + 48-sprite perf (re-bake the atlas).
+
 0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
    SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),
    bright daytime palette, detailed bright buildings, crisp discipline — a real step-change from
