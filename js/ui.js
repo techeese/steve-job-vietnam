@@ -470,7 +470,7 @@
   }
   function maybeVisitor(ts) {
     if (visitor || ts - lastVisitTs < 42000) return;            // one at a time; min ~42s between visits
-    if (Math.random() < 0.004) spawnVisitor();                  // rare ambient stroll-back (~once/min when eligible)
+    if (Math.random() < 0.004 && spawnVisitor()) sfx("chime");  // rare ambient stroll-back (~once/min); a soft ding marks a returning grad
   }
   function updateVisitor(ts) {
     if (!visitor) return;

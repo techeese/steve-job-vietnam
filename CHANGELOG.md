@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-14 — A soft chime for a returning grad + coverage audit clean (loop iter 96)
+- **Coverage audit extended (clean):** checked the other dynamically-indexed content for the giftVt-class bug —
+  `essay.crossOut` & `essay.bacTam` cover all 8 epilogue branches (+`empty`), and `alumLines` covers all 8
+  alumni STATES. No more latent-`undefined` gaps; the content layer is coverage-complete.
+- **Juice:** the alumnus return-visit (iter 87) was silent — now a **soft chime** marks a graduate strolling
+  back onto campus (only on an actual spawn; `sfx` is a no-op when sound is off). A small "oh, someone's back"
+  cue for sound-on players.
+- The locked EPIC slot (`SMALL_SHIPS` hit 3) is resolved by **deferring to the standing iter-92 architecture
+  review** (unchanged: no worthwhile autonomous epic; the panels split waits for strain/owner-OK; feature epics
+  await steer) → cadence reset. ui.js 1-line; no engine/data/save change. Verified: parse · `./gate.sh` GREEN ·
+  `./bot.sh` BOTOK. Plateau-mode safe value.
+
 ## 2026-06-14 — Bugfix: every good deed now has its thank-you line (loop iter 95)
 - A **coverage-gap audit** (the safe inverse of the dead-content sweep — checking where code indexes content
   that may not exist) found a real one: `virtue()` is called with **8** keys (aiTay · damMe · hocBong · lamLai ·
