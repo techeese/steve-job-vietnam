@@ -135,7 +135,28 @@
     if (BUILD === "dev") return "dev";
     try { var d = new Date(+BUILD); var p = function (n) { return (n < 10 ? "0" : "") + n; }; return p(d.getHours()) + ":" + p(d.getMinutes()) + " " + p(d.getDate()) + "/" + p(d.getMonth() + 1); } catch (e) { return BUILD; }
   }
+  // AUTO-UPDATE: GitHub Pages caches index.html (max-age 600), so a plain refresh can keep serving an
+  // old build's ?v= script tags. On load we fetch a fresh index.html (cache-busted), read the live
+  // build, and if it's newer than what's running, hop to it via a cache-busting URL — so every refresh
+  // lands on the latest deploy without any manual cache-clearing. Converges (no reload loop).
+  function checkForUpdate() {
+    if (location.protocol === "file:" || BUILD === "dev" || typeof fetch !== "function") return;
+    var run = parseInt(BUILD, 10); if (!run) return;
+    fetch(location.pathname + "?_fresh=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) {
+        var m = html.match(/ui\.js\?v=(\d+)/);
+        if (!m) return;
+        var latest = parseInt(m[1], 10);
+        if (latest > run) {
+          var key = "hvs_upd_" + latest; // guard: hop to a given build at most once per session (no loop)
+          try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, "1"); } catch (e) {}
+          location.replace(location.pathname + "?b=" + latest); // jump to the fresh build
+        }
+      }).catch(function () {});
+  }
   function boot() {
+    checkForUpdate(); // if a newer build is live, hop to it so a refresh always shows the latest
     if (!HVS.loadGame()) { /* fresh already set */ }
     var q = location.search.match(/seed=(\d+)/);
     if (q && (!localStorage.getItem(CONFIG.SAVE_KEY))) HVS.freshState(parseInt(q[1], 10));
@@ -993,21 +1014,23 @@
     stp.appendChild(minus); stp.appendChild(val); stp.appendChild(plus); row.appendChild(stp); c2.appendChild(row);
     wrap.appendChild(c2);
 
-    // build
-    var c3 = el("div", "card"); c3.appendChild(el("h3", null, "Xây dựng"));
-    c3.appendChild(el("div", "tiny", "Chạm để xây — phòng tự hiện ra trong khuôn viên.")).style.marginBottom = "7px";
-    var grid = el("div", "buildgrid");
-    ["cangtin", "lab", "phongmay", "xuong", "phonghoc"].forEach(function (key) {
-      var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key];
-      var b = el("button", "build");
-      var owned = s.rooms.filter(function (r) { return r.key === key; }).length;
-      b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (owned ? " <span class='tiny'>×" + owned + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + (d.cost ? "−" + d.cost + "tr" : "Miễn phí") + "</div>";
-      if (d.cost > s.cash) b.disabled = true;
-      b.onclick = function () { buyRoom(key); };
-      grid.appendChild(b);
-    });
-    c3.appendChild(grid);
-    wrap.appendChild(c3);
+    // build — one of each; already-built rooms drop out of the menu so the campus stays tidy
+    var buildable = ["phonghoc", "cangtin", "lab", "phongmay", "xuong"].filter(function (key) { return !s.rooms.some(function (r) { return r.key === key; }); });
+    if (buildable.length) {
+      var c3 = el("div", "card"); c3.appendChild(el("h3", null, "Xây dựng"));
+      c3.appendChild(el("div", "tiny", "Chạm để xây — phòng tự hiện ra trong khuôn viên (mỗi loại một cái).")).style.marginBottom = "7px";
+      var grid = el("div", "buildgrid");
+      buildable.forEach(function (key) {
+        var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key];
+        var b = el("button", "build");
+        b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + (d.cost ? "−" + d.cost + "tr" : "Miễn phí") + "</div>";
+        if (d.cost > s.cash) b.disabled = true;
+        b.onclick = function () { buyRoom(key); };
+        grid.appendChild(b);
+      });
+      c3.appendChild(grid);
+      wrap.appendChild(c3);
+    }
 
     // dedications — honour a real educator (late-game prestige + a question to put to the grounds)
     var dedKeys = ["vuontdn", "vuontqb", "vuonhxh", "vuonntt", "vuoncva"].filter(function (k) { return !s.rooms.some(function (r) { return r.key === k; }); });
@@ -1313,13 +1336,17 @@
     var s = S(), pj = s.pendingJune, w = el("div");
     w.appendChild(el("div", "kic", "Kết quả · Năm " + (s.year - 1)));
     w.appendChild(el("h2", null, "Khoá vừa ra trường"));
-    (pj.results || []).forEach(function (rc) {
+    // followed student first, gently spotlit — the protégé you watched for years
+    var ordered = (pj.results || []).slice().sort(function (a, b) { return (b.fav ? 1 : 0) - (a.fav ? 1 : 0); });
+    ordered.forEach(function (rc) {
       var r = el("div", "gres");
+      if (rc.fav) { r.style.borderColor = "var(--gold)"; r.style.background = "linear-gradient(180deg,rgba(240,198,116,.12),rgba(240,198,116,.04))"; }
       var extra = "";
+      if (rc.fav) extra += "<div class='nod' style='color:var(--gold)'>⭐ Em bạn dõi theo từ ngày đầu.</div>";
       if (rc.tiem) extra += "<div class='nod'>" + CONTENT.bacTamTiemNang + "</div>";
       if (rc.viral) extra += "<div class='nod'>Phần bảo vệ lan truyền khắp mạng.</div>";
       if (rc.near) extra += "<div class='tiny' style='color:var(--faint)'>" + esc(rc.near) + "</div>";
-      r.innerHTML = "<div class='em'>" + rc.emoji + "</div><div class='grow'><div class='oc'>" + esc(rc.ten) + " — " + esc(rc.outcome) + "</div><div class='fl'>" + esc(rc.flavor || "") + "</div><div class='tiny' style='margin-top:2px'>Trạng thái đầu đời: " + rc.entryChip + "</div>" + extra + "</div><div class='dm'>" + rc.diem.toFixed(1) + "</div>";
+      r.innerHTML = "<div class='em'>" + rc.emoji + "</div><div class='grow'><div class='oc'>" + (rc.fav ? "⭐ " : "") + esc(rc.ten) + " — " + esc(rc.outcome) + "</div><div class='fl'>" + esc(rc.flavor || "") + "</div><div class='tiny' style='margin-top:2px'>Trạng thái đầu đời: " + rc.entryChip + "</div>" + extra + "</div><div class='dm'>" + rc.diem.toFixed(1) + "</div>";
       w.appendChild(r);
     });
     var btn = el("button", "btn gold", "Tiếp tục →"); btn.style.width = "100%"; btn.style.marginTop = "8px";

@@ -18,9 +18,10 @@
     --red:#eb6f6f; --purple:#b48ef0; --teal:#5fd0c5;
     --grad1:#0f1620; --grad2:#0b0e13;
   }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
-    font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    touch-action:manipulation} /* kill double-tap-to-zoom (iOS ignores user-scalable=no), keep scroll */
   body{display:flex;justify-content:center;min-height:100vh;
     background:radial-gradient(1200px 600px at 50% -10%, #182230 0%, var(--bg) 55%)}
   #app{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,var(--grad1),var(--grad2));
@@ -231,8 +232,8 @@
 <div id="modalRoot"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 
-<script src="js/data.js?v=1781348961964"></script>
-<script src="js/engine.js?v=1781348961964"></script>
-<script src="js/ui.js?v=1781348961964"></script>
+<script src="js/data.js?v=1781349389825"></script>
+<script src="js/engine.js?v=1781349389825"></script>
+<script src="js/ui.js?v=1781349389825"></script>
 </body>
 </html>

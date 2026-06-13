@@ -62,7 +62,7 @@ function pantheonByKey(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) i
 function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES && CONFIG.GARDEN_FIGURES[key]) || null; } // scholarship pantheon OR garden-only figures
 function placeRoom(key, x, y) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
-  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có vườn này rồi." };
+  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
   if (!canPlace(key, x, y)) return { ok: false, msg: "Không đặt được ở đây." };
   var cost = d.cost || 0;
   if (cost > S.cash) return { ok: false, msg: "Không đủ tiền." };
@@ -82,7 +82,7 @@ function placeRoom(key, x, y) {
 // path) and build there — no manual placement. Falls back to allowing the path if the grounds fill up.
 function autoPlace(key) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
-  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có vườn này rồi." };
+  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
   if ((d.cost || 0) > S.cash) return { ok: false, msg: "Không đủ tiền." };
   var px = CONFIG.GRID_W >> 1, py = CONFIG.GRID_H >> 1, best = null, pass, x, y;
   for (pass = 0; pass < 2 && !best; pass++) {
@@ -488,6 +488,7 @@ function finalizeJune(policy) {
     }
     var a = makeAlumnus(s, row, diem, tiem);
     var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row) };
+    if (s.id === S.META.favId) { rec.fav = true; news("⭐ " + s.ten + " — em bạn dõi theo từ ngày đầu — tốt nghiệp: " + row.name + "."); S.META.favId = null; } // the protégé's payoff
     results.push(rec);
     if (s._tpl) a._tpl = true; // Trần Phi Lợi marker (forced arrest year 2)
   }

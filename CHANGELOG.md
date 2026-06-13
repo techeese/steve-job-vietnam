@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-13 — Auto-update + one-of-each + no double-tap-zoom + protégé payoff (loop iter 44)
+- **Auto-update (owner: "do something so I can see changes each ship"):** on load the page now fetches
+  a cache-busted fresh index.html, reads the live build, and if it's newer than what's running, hops
+  to it via a `?b=<build>` URL — so a plain refresh always lands on the latest deploy past GitHub
+  Pages' 10-min index.html cache. Guarded (sessionStorage per build) against reload loops.
+- **One of each building (owner: "x2 makes the map crowded, maybe only 1"):** the standard rooms are
+  now `once` — building a second is rejected and built rooms drop out of the build menu, so the campus
+  stays a tidy predefined-style layout (one Phòng học, one Lab, …). Pairs with auto-placement.
+- **No more double-tap zoom (owner):** `touch-action: manipulation` everywhere — iOS ignores
+  `user-scalable=no`, so double-tapping the map was zooming the page; now it doesn't (scroll kept).
+- **Protégé payoff:** when the student you're following (iter 43) graduates, their result is spotlit
+  at the top of the June ceremony with a ⭐ and a news line ("em bạn dõi theo từ ngày đầu — tốt
+  nghiệp: …"), and the follow clears. Closes the follow-a-kid emotional loop. All verified; gates green.
+- *Queued (owner):* upgraded campus visuals once the school reaches a high enough value (a cleaner,
+  fancier look as a prestige tier) — next iteration.
+
 ## 2026-06-13 — Follow a student (your protégé, loop iter 43)
 - Serving the north-star ("the characters… doing stuff you like to see"): a student's inspect card now
   has a ☆/⭐ **follow** toggle. Mark one as your protégé and they get a persistent gold star bobbing
