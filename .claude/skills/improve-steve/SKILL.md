@@ -678,3 +678,17 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   by a rigorous review-that-defers (with the queued refactor logged) when no clean+worthwhile extraction
   exists — with an explicit anti-timidity guard (a CLEAN valuable extraction must still be done, proven by
   analysis not assertion). Discharged the structure duty via the review; reset the counter.
+- 2026-06-14 (iters 74–92, the LONG AUTONOMOUS RUN — owner away the whole time, steering only by the loop):
+  shipped BGM, góp-quỹ, weather (+umbrellas), the Cúp Khoa epic (+pennant), khoa identity, the sprites.js
+  STRUCTURE epic, alumni biographies (+return visits), 2 new đề-Văn events, the campus-social-life epic, a
+  README+cover, meter explainers, the now-actually-shareable end-card; added `bot.sh` (full-game in-browser
+  smoke test). MATURITY-PLATEAU LESSON (iter 92): once the game is mature AND the owner is absent for a long
+  run, the genuine remaining epics all become TASTE-BLOCKED (economic *feel*, character-arc tone, art
+  direction) or low-value/high-risk (the last ui.js split is bidirectional + ui.js isn't straining). The
+  honest play is NOT to force a risky/make-work epic to satisfy the counter — it's to resolve the epic slot
+  via the review-that-defers, keep shipping SAFE value (completeness/QoL/content/maintenance/docs), and
+  EXPLICITLY await owner steer for the next true epic (logged in ROADMAP `## Cadence`). The counted cadence
+  assumes a steady supply of worthwhile epics; that assumption lapses at maturity+absence, and forcing the
+  counter there manufactures the exact low-quality work the cadence was built to prevent. (Anti-timidity
+  still binds: this only applies after the real epics are genuinely shipped or genuinely blocked, proven by
+  analysis — not as a standing excuse.)

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-14 — Architecture review + an honest plateau call (loop iter 92)
+- The cadence forced an epic; the rigorous **architecture re-review** (also the ~10-firing review, due since
+  iter 84) concluded **DEFER** the only remaining structure move. Findings: layering still clean (engine pure
+  but for the guarded `window.HVS` export; art.js+sprites.js a clean one-directional bake layer); ui.js (1675)
+  is the hotspot but **workable** (+~140 lines over 7 iters, not straining); the panels/modals → `screens.js`
+  split is **bidirectionally coupled** (`renderPanel` 12× · `checkModals` 10× · `syncActors` 11× · `openModal`
+  14× · `el` 205×) — a shared-context refactor, **not a clean leaf** (the iter-84 sprites split took the last
+  clean one). Deferred for low value + high autonomous risk + owner-away; anti-timidity guard satisfied (real
+  epics 80/84/88 already shipped). This **discharges the structure duty** and resolves the epic slot (the
+  skill-sanctioned review-that-defers).
+- **Honest plateau signal:** at this maturity + ~18 firings of owner-absence, every *true* remaining epic is
+  taste-blocked (economic feel · character-arc tone · graphics art-direction) or queued-until-straining (the
+  ui split). The loop will keep shipping **safe value / completeness / content / maintenance** and **await
+  owner steer** for the next real epic, rather than force a risky or make-work one. Banked as a durable
+  process lesson in the skill. **No game code changed** (live build byte-identical); cadence reset
+  `SMALL_SHIPS 3→0`, `EPICS_SINCE_STRUCTURE 1→0`.
+
 ## 2026-06-14 — The end-card is now actually shareable (loop iter 91)
 - **Finished an incomplete feature** rather than adding a new one: the epilogue's gold summary card (the
   "shareable end-card" the owner valued, iter 68) only ever said *"📸 chụp để chia sẻ"* — i.e. screenshot it

@@ -6,8 +6,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — next firing is HARD-LOCKED to the EPIC track.** Reset to 0 only when an epic SHIPS. (89 README + 90 meter-help + 91 share-card = 3 POLISH.) The taste-dependent feature epics need owner steer; the autonomous-safe epic available is the **ui.js→screens.js STRUCTURE** move (behavior-neutral; de-risk via bot.sh + a render hash, like the iter-84 sprites split). NEXT: do that structure epic, OR a rigorous review-that-defers if no clean seam remains.
-- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (ui.js→screens.js panels split, still available; see `## Architecture`). (iter 88 social-life = 1 FEATURE epic since the iter-84 sprites.js structure move.)
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS (or, iter 92, when the epic slot is resolved by a rigorous structure-review-that-defers — the skill-sanctioned alternative when no worthwhile autonomous epic exists). Epic slot at iter 92 = the architecture review (no clean seam remains; feature epics await steer).
+- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 92 via the structure review — see `## Architecture`. The panels/modals→screens.js split stays QUEUED for "when ui.js strains / owner OKs".)
+- **NEXT TRUE EPIC AWAITS OWNER STEER.** All remaining epics need taste/feel input: late-game economic *feel* (and the sweep "inflation" is partly a bot artifact — a real player has the memorial gardens + góp-quỹ as sinks), a Mai Sương **character arc** (tone), another **graphics step-change** (art direction / divergence workflow), or the **panels→screens.js** split (do when straining/owner-OK). Until steer: ship safe value/completeness/maintenance/content; don't force a risky or make-work epic.
 - **Big epics QUEUED FOR OWNER STEER** (each reshapes feel/balance/art — costly to get wrong autonomously, owner away ~15 firings): (a) passive **late-game economic pressure** (the standing sweep flag; needs a difficulty/feel call + careful sweep tuning to keep 0-bankruptcy/pluralism); (b) a recurring **character arc** (Mai Sương multi-beat story — tone is a taste call); (c) another **graphics step-change** (wants a divergence workflow / ultracode to de-risk the art direction). Until steer: keep shipping safe, owner-blessed living-campus/charm/content + low-risk structure.
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 84: sprites.js extraction WAS the structure move — paid the debt the cadence was forcing.)
 - `LAST_EPIC: iter 84 — STRUCTURE: character sprite bakery → js/sprites.js (−156 lines ui.js; hash-proven byte-identical). Visual bake layer now whole (art.js + sprites.js).`
@@ -127,6 +128,22 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   `## Architecture` below; queue at most one behavior-neutral refactor.
 
 ## Architecture (structure-review log)
+- *(2026-06-14, iter 92 review — rigorous review-that-DEFERS)* Sizes: data.js 548 · engine.js 1187 · **art.js
+  411 · sprites.js 171 · audio.js 79** · ui.js **1675** · index.html 268. **Verdict: HEALTHY; DEFER the last
+  split.** Layer law holds (engine's only `window.` is the guarded HVS export; the bake layer art.js+sprites.js
+  is clean & one-directional). ui.js (1675) is the hotspot but **WORKABLE** (+~140 lines over 7 iters — not
+  straining). The ONLY remaining extraction — panels/modals → `screens.js` — is **bidirectionally coupled**
+  (`renderPanel` 12× · `checkModals` 10× · `syncActors` 11× · `openModal` 14× · `el` 205×, woven through every
+  cluster): a shared-UI-context refactor, **not a clean leaf** (the iter-84 sprites split took the last clean
+  one). **Deferred because:** (a) low marginal value (ui.js isn't straining); (b) high autonomous risk —
+  bidirectional, and modal-flow regressions are hard to fully verify headlessly (bot.sh clears pendings); (c)
+  owner away ~18 firings (landmine: prefer safe-additive over risky-refactor when away). **Anti-timidity guard
+  SATISFIED:** real epics already shipped (sprites-structure 84 · Cúp Khoa 80 · social-life 88) + the clean
+  extraction; what's left is genuinely the hard/low-value one, which iter-73 already classed "owner-OK'd,
+  not urgent." Do it only when ui.js genuinely strains OR the owner OKs an invisible-velocity epic. This review
+  DISCHARGES the structure duty. **Meta:** at this maturity + owner-absence, real epics (this split; the
+  taste-blocked feature epics) need owner steer — the loop should keep shipping safe value/completeness/
+  maintenance and await steer for the next true epic, not force a risky/make-work one.
 - *(2026-06-14, iter 84 review + STRUCTURE epic)* Sizes: data.js 525 · engine.js 1187 · **art.js 411 ·
   sprites.js 171 · audio.js 79** · ui.js **1534** · index.html 268 (~3907). **Verdict: HEALTHY; visual
   layer now WHOLE.** The iter-73 review called ui.js's panels/modals "no clean leaf" — true, but it MISSED
