@@ -494,27 +494,37 @@
   }
 
   // ---- static campus (lacquer-night diorama). Redrawn only on build; seeded → no flicker. ----
+  // campus prestige tier (0 raw → 2 prestigious) — monotonic so the upgraded look never flickers back
+  function campusTier() {
+    var s = S(), gardens = 0, other = 0, i;
+    for (i = 0; i < s.rooms.length; i++) { var d = CONFIG.ROOMS[s.rooms[i].key]; if (d && d.ded) gardens++; else other++; }
+    if (gardens >= 1 || (s.META.steves || 0) >= 1 || (s.META.graduated || 0) >= 20) return 2; // prestigious
+    if (other >= 3) return 1; // established (built out the basics)
+    return 0;
+  }
   function drawStatic() {
     var ctx = $("mapStatic").getContext("2d"), W = GW * T, H = GH * T;
     ctx.imageSmoothingEnabled = false;
-    var rng = mb(1337), i, x, y;
+    var rng = mb(1337), i, x, y, tier = campusTier();
     // PASS 1 — bright daytime grass (flat pixel base, no gloom)
-    ctx.fillStyle = PX.grass; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = tier >= 1 ? PX.grassL : PX.grass; ctx.fillRect(0, 0, W, H); // a touch brighter once established
     // PASS 2 — grass pixel texture: seeded tufts + dapple
-    for (i = 0; i < 520; i++) {
+    for (i = 0; i < (tier >= 1 ? 360 : 520); i++) { // fewer weeds as the grounds get tended
       x = (rng() * W) | 0; y = (rng() * H) | 0; var r = rng();
       ctx.fillStyle = r < 0.5 ? PX.grassD : (r < 0.82 ? PX.grassL : PX.grassT);
       ctx.fillRect(x, y, r < 0.7 ? 1 : 2, 1);
     }
     for (i = 0; i < 70; i++) { x = (rng() * W) | 0; y = (rng() * H) | 0; ctx.fillStyle = PX.grassL; ctx.fillRect(x, y, 1, 2); ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 1, y + 1, 1, 1); } // little grass blades
-    // PASS 3 — warm dirt path spine
-    pathBand(ctx, 0, (GH >> 1) * T, W, T, true);
-    pathBand(ctx, (GW >> 1) * T, 0, T, H, false);
+    if (tier >= 1) { ctx.fillStyle = "rgba(255,255,255,.05)"; for (y = 8; y < H; y += 16) ctx.fillRect(0, y, W, 3); } // manicured mow stripes
+    // PASS 3 — path spine (dirt → stone-edged → fully paved as the school's value rises)
+    pathBand(ctx, 0, (GH >> 1) * T, W, T, true, tier);
+    pathBand(ctx, (GW >> 1) * T, 0, T, H, false, tier);
     // rooms — y-sorted so lower buildings overlap upper
     var rooms = S().rooms.slice().sort(function (p, q) { return (p.y - q.y) || (p.x - q.x); });
     for (i = 0; i < rooms.length; i++) drawRoom(ctx, rooms[i]);
     // ambient props (seeded, capped, off walk lanes)
     drawProps(ctx, rng, rooms);
+    if (tier >= 2) { var gpx = ((GW >> 1) * T + T / 2) | 0; lampPost(ctx, gpx - 44, H - 3); lampPost(ctx, gpx + 44, H - 3); } // prestige: lamps flank the cổng
     // PASS 4 — gentle warm sun-vignette (light, not gloom): faintly brighten centre
     var vg = ctx.createRadialGradient(195, 130, 30, 195, 130, 260);
     vg.addColorStop(0, "rgba(255,250,220,.06)"); vg.addColorStop(1, "rgba(60,80,30,.10)");
@@ -568,6 +578,14 @@
     blossomPot(ctx, px - 34, GH * T - 7, "#ffd24a", "#ffe9a6"); // mai (yellow)
     blossomPot(ctx, px + 33, GH * T - 7, "#ff7eb0", "#ffd0e4"); // đào (pink)
   }
+  function lampPost(ctx, x, baseY) {
+    ctx.fillStyle = "rgba(20,34,14,.20)"; ctx.fillRect(x - 2, baseY, 6, 2);   // ground shadow
+    ctx.fillStyle = PX.out; ctx.fillRect(x, baseY - 17, 2, 17);               // pole
+    ctx.fillStyle = "#6a645c"; ctx.fillRect(x, baseY - 16, 1, 15);
+    ctx.fillStyle = PX.out; ctx.fillRect(x - 2, baseY - 21, 6, 5);            // lamp head
+    ctx.fillStyle = "#fff3c0"; ctx.fillRect(x - 1, baseY - 20, 4, 3);         // warm glow
+    ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, baseY - 20, 4, 1); ctx.fillRect(x - 2, baseY - 22, 6, 1);
+  }
   function lantern(ctx, cx, cy) {
     ctx.fillStyle = "#6e4f26"; ctx.fillRect(cx, cy - 4, 1, 4);                       // cord
     ctx.fillStyle = PX.out; ctx.fillRect(cx - 3, cy, 6, 9);                          // body outline
@@ -584,13 +602,24 @@
     ctx.fillStyle = bloHi; ctx.fillRect(cx - 2, cy - 10, 2, 2); ctx.fillRect(cx + 1, cy - 8, 1, 1);
     ctx.fillStyle = PX.gold; ctx.fillRect(cx - 1, cy - 8, 1, 1); ctx.fillRect(cx + 1, cy - 10, 1, 1); // golden centres
   }
-  function pathBand(ctx, x, y, w, h, horiz) {
+  function pathBand(ctx, x, y, w, h, horiz, tier) {
+    tier = tier || 0; var px, py;
+    if (tier >= 2) { // prestigious: light stone-paved plaza
+      ctx.fillStyle = "#8b857a"; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();
+      ctx.fillStyle = "#aaa395"; roundRect(ctx, x + 2, y + 2, w - 4, h - 5, 4); ctx.fill();
+      ctx.fillStyle = "#c5bfb0"; ctx.fillRect(x + 3, y + 2, w - 6, 1);
+      ctx.fillStyle = "rgba(74,68,58,.32)"; // tile seams
+      if (horiz) { for (px = x + 11; px < x + w - 4; px += 13) ctx.fillRect(px, y + 2, 1, h - 6); }
+      else { for (py = y + 11; py < y + h - 4; py += 13) ctx.fillRect(x + 2, py, w - 6, 1); }
+      return;
+    }
     ctx.fillStyle = PX.pathD; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();
     ctx.fillStyle = PX.path; roundRect(ctx, x + 2, y + 2, w - 4, h - 5, 4); ctx.fill();
     ctx.fillStyle = PX.pathHi; ctx.fillRect(x + 3, y + 2, w - 6, 1);
+    if (tier >= 1) { ctx.fillStyle = "#d2c5a2"; if (horiz) { ctx.fillRect(x + 1, y + 1, w - 2, 1); ctx.fillRect(x + 1, y + h - 2, w - 2, 1); } else { ctx.fillRect(x + 1, y + 1, 1, h - 2); ctx.fillRect(x + w - 2, y + 1, 1, h - 2); } } // tidy stone edging
     ctx.fillStyle = "rgba(120,90,50,.20)";
-    if (horiz) { for (var px = x + 8; px < x + w - 4; px += 10) ctx.fillRect(px, y + 2, 1, h - 6); }
-    else { for (var py = y + 8; py < y + h - 4; py += 10) ctx.fillRect(x + 2, py, w - 6, 1); }
+    if (horiz) { for (px = x + 8; px < x + w - 4; px += 10) ctx.fillRect(px, y + 2, 1, h - 6); }
+    else { for (py = y + 8; py < y + h - 4; py += 10) ctx.fillRect(x + 2, py, w - 6, 1); }
   }
   function drawRoom(ctx, r) {
     var d = CONFIG.ROOMS[r.key], sty = ROOM_STYLE[r.key] || { wall: "#555", roof: "gabled", win: "warm", short: d.name };

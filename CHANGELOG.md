@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Campus glow-up: visuals upgrade as the school grows (owner #2, loop iter 45)
+- The owner's "when we reach high enough value, the school should look cleaner" idea. Added a
+  monotonic campus-prestige tier (0 → 2): **tier 1 (established)** once you've built out ≥3 rooms —
+  brighter, more manicured grass (fewer weeds, mow stripes) and tidy stone edging on the paths;
+  **tier 2 (prestigious)** once you've raised a memorial garden / produced a Steve / graduated ≥20 —
+  the dirt paths become a light **stone-paved plaza** and warm **lamp posts** flank the cổng. All in
+  the static layer + safe zones (paths/grass/gate never collide with buildings); monotonic so the
+  upgraded look never flickers back. Verified the tier-0 dirt look vs the tier-2 paved look; gates green.
+
 ## 2026-06-13 — Auto-update + one-of-each + no double-tap-zoom + protégé payoff (loop iter 44)
 - **Auto-update (owner: "do something so I can see changes each ship"):** on load the page now fetches
   a cache-busted fresh index.html, reads the live build, and if it's newer than what's running, hops
