@@ -6,11 +6,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 Góp quỹ + iter 77 weather = 2 POLISH ships; one more then the EPIC track locks.)
+- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 Góp quỹ + iter 77 weather = 2 POLISH ships; iter 78 was a MAINTENANCE sprint — does NOT count as a ship — so still 2: ONE more polish then the EPIC track locks.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
-- `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
+- `LAST_MAINTENANCE: iter 78 — CLEAN bill of health. sweep green (0 bankrupt · pluralism holds) · NEW bot.sh full-game in-browser playthrough (11y, all 5 tabs + weather rendered each chunk) → BOTOK, zero JSERR, 84 grad/85 alumni · all 5 tabs 390px-audited (góp-quỹ + weather render live) · perf clean (2 intervals, 691 DOM nodes heaviest tab). No bugs found; no code changes beyond adding bot.sh.`
 
 ## Epic in progress
 _(none — buildings step-change SHIPPED iter 70: picked Direction B "rich materials" from the 3-way

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-14 — Maintenance sprint + a new browser smoke-test (loop iter 78)
+- The overdue ~5th-iteration health check (last was iter 67). **Clean bill of health — no game bugs found.**
+  - **Sweep** (`node sweep.js`): bands green — 0% bankruptcy, pluralism holds (cram→QUAN_VAN_MAU, craft→KY_SU/🍎),
+    Y1 net in band. Only the known (now accurately-worded) late-game auto-play cash flag.
+  - **390px full audit**: all five tabs (Điều hành / Sinh viên / Cựu SV / Tài chính / Trường) screenshotted on a
+    populated ~year-6 state — nothing clipped, all readable; the iter-76 Góp quỹ control and iter-77 weather both
+    render live and correctly.
+  - **Perf glance**: 2 `setInterval`s (loopTick + autosave — no leak; audio uses self-clearing setTimeout chains),
+    691 DOM nodes on the heaviest late-game tab (bounded; panels rebuild via innerHTML), renders stable.
+- **NEW `bot.sh`** — a full-game *in-browser* smoke test (the layer `gate.js`/`sweep.js` can't reach: they're
+  engine-only). Boots the real game headless, plays 11 years via `__test.days` in chunks, and on every chunk
+  re-renders all 5 tabs + a live frame + cycles weather — so a render crash on evolved late-game state surfaces
+  as JSERR. Asserts core progression (rooms built · students enrolled · graduates · alumni · year 11). This run:
+  **BOTOK** — zero JSERR, 84 graduated / 85 alumni / 48 roster / year 11. Turns this sprint's one-off into
+  reusable infrastructure (owner values iterability/tooling as architecture). Maintenance sprint → **does not
+  count as a cadence ship** (`SMALL_SHIPS_SINCE_EPIC` stays 2).
+
 ## 2026-06-13 — Weather: the campus gets sunbeams and rain (loop iter 77)
 - The top unbuilt graphics/charm item (VISION next-tier · backlog #2 · the **#1 dimension**): a **weather
   layer** so the grounds feel like a *place*, not a board. A light, mostly-sunny cosmetic state cycles

@@ -314,6 +314,15 @@ bias. It's now third, behind only broken + explicit asks.)*
   the flags (TT-collapse, money-inflation, dead-end-states, dominant-strategy, 🍎-unreachable)
   are your balance to-do list. Extend the strategy list / flags as systems grow. Current open
   findings live in ROADMAP "## Gameplay balance".
+- **`./bot.sh` — the full-game IN-BROWSER smoke test (added iter 78).** gate.js/sweep.js are engine-only;
+  bot.sh is the ONLY harness that exercises the real UI+engine together. It boots the game headless, plays
+  11 years via `__test.days` in chunks, and on EVERY chunk re-renders all 5 tabs (`ops/stu/alum/fund/info`)
+  + a live frame + cycles weather — so a render crash on evolved late-game state shows up as JSERR. Asserts
+  core progression (rooms · students · graduates · alumni · year 11) and prints `BOTOK …`/`BOTFAIL …`. RUN
+  IT in every maintenance sprint and after any ui.js panel/render change. Chrome-dependent (`CHROME=…` to
+  override the mac path). TIMING GOTCHA banked: `DAYS_PER_MONTH 30 → 360 days/year`; `__test.days(n)` = n
+  `dayTick`s; the FIRST graduates don't appear until ~year 6, so a smoke test must run ≥6 sim-years
+  (≥~2160 dayTicks) before asserting `META.graduated>0` — a short run falsely reads as "no graduations."
 - **Code-structure review every ~10th iteration (owner directive 2026-06-13 — this is a
   COMPLEX game and growing):** step back from features and audit the architecture itself.
   Pair it with the Owner-Model flow reflection (same "look at the whole" beat). Check:
