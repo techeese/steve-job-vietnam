@@ -109,6 +109,22 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
   engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
+## Flow reflection (iter 40, maintenance + checkpoint)
+40 iterations shipped (~30 autonomously, still zero vetoes). Since iter 20 the game went from a
+populated-school MVP to a **complete arc**: found-from-nothing → milestone-guided build-up →
+visible walk-in/walk-out at the cổng → 3D-but-pixel houses+people → seasonal Tết & graduation
+décor → the văn-mẫu destiny made reachable (the đề's thematic heart) → memorial gardens to five
+real reformers → the "Mười năm sau" decade capstone. All three owner directives (A/B/C) done, plus
+the owner's mobile-UX asks (selection marker, tap ripple, reset button) and the critical
+cache/save-staleness fix (bumped SAVE_KEY v3 + build stamp). **Maintenance verdict (iter 40):**
+sweep clean (only the late-game money-inflation flag, an S4 job), a 13-year all-systems playthrough
+runs error-free with solid v3 save/load and ~33ms/run perf, and the ops/Trường panels pass the
+390px audit. No regressions. **Standing flow risk unchanged:** `js/ui.js` is now **1508 lines** — the
+`art.js` extraction is the top structural debt, still best done when the owner OKs one invisible
+velocity iteration (it's behavior-neutral but the rAF actor layer can't be fully screenshot-verified,
+so extract the static-art renderer first). Remaining content depth = S2 admissions / S3 alumni /
+S4 funding / S5 pantheon, none blocking.
+
 ## Flow reflection (iter 20, ~10-iteration checkpoint)
 The dev flow is serving the owner: 20 iterations shipped, ~15 autonomously (decide→ship→veto,
 no vetoes), the north-star ("sunny lively watchable school") resolves design forks cleanly,

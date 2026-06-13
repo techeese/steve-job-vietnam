@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Maintenance sprint + flow reflection (loop iter 40)
+- No new feature — a health pass after a 5-iteration feature run (tap polish, June décor, cache fix,
+  decade capstone, reformer gardens). Verified the integrated whole: `sweep.js` clean (pluralism
+  holds — cram→văn-mẫu, craft→kỹ-sư; only the known money-inflation flag remains); a 13-game-year
+  all-systems playthrough (4 rooms + gardens, multiple cohorts, graduations, save/load on the new v3
+  key) ran with **no JS errors** and ~33ms/run perf; the ops + Trường panels pass the 390px mobile
+  audit (build grid, 5-figure dedication section, build stamp, reset all render clean); the seasonal
+  June carpet confirmed on the live map. **No regressions found.** Flow reflection recorded in ROADMAP:
+  40 iters shipped, complete arc from empty lot to decade capstone, `js/ui.js` (1508 lines) is the
+  standing structural debt (art.js extraction still queued).
+
 ## 2026-06-13 — Two more reformers to honour (loop iter 39)
 - Extended the memorial gardens with the two figures whose lives most directly *are* this game's
   argument: **Nguyễn Trường Tộ** (dâng điều trần đòi dạy thực học — toán, máy móc, ngoại ngữ —
