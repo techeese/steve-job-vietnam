@@ -154,8 +154,9 @@ var CONTENT = {
   disclaimer: "Mọi nhân vật, công ty, học viện trong game đều là hư cấu. Mọi sự trùng hợp là do vũ trụ thích đùa. Các danh nhân lịch sử được vinh danh với lòng kính trọng, đúng như mọi mái trường Việt Nam vẫn làm.",
   boot: [
     "Tháng 6/2026, đề Văn tốt nghiệp hỏi cả nước: làm thế nào để Việt Nam có những 'Steve Jobs Việt Nam'?",
-    "Bạn trả lời bằng cách mua lại một trường đại học phá sản — kèm 42 sinh viên, 3 giảng viên biên chế, và một khoản nợ 'đang cơ cấu'.",
-    "Nhiệm vụ: SẢN XUẤT một Steve Jobs. Hoặc ít nhất là đừng sản xuất thêm cá mập coin."
+    "Bài luận trả lời của bạn viral. Bạn cắm sổ đỏ căn nhà, gom thêm 50 triệu 'vốn mồi' thắng từ một cuộc thi khởi nghiệp ăn theo trào lưu — đủ để thuê một khoảnh sân trống.",
+    "Không trường, không phòng học, không sinh viên. Chỉ có một khoản vốn mỏng, một thầy giáo chịu theo, và một lời hứa: xây từ con số 0.",
+    "Nhiệm vụ: dựng lớp đầu tiên, chiêu sinh khóa đầu, rồi từ từ nuôi một 'Steve Jobs' thật — đừng nặn thêm cá mập coin như Trần Phi Lợi (học trò cũ của bạn, sắp lên báo)."
   ],
 
   dePool: [
@@ -312,6 +313,7 @@ var CONTENT = {
     flagpole: "Bác Tâm đọc lại đề Văn 2026 ở cột cờ. Không ai bình luận.",
     thptJune: "2,1 triệu thí sinh vừa được hỏi câu hỏi của trường bạn.",
     poolForeshadow: "{n} hồ sơ đang hướng về cổng trường.",
+    foundingJune: "Hết một năm học. Trường chưa có khóa tốt nghiệp nào — cả khóa lên lớp, sân vẫn rộng chỗ.",
     quyLai: "Quỹ hiến tặng: {bal}tr (+{lai}tr lãi). Không ai vỗ tay.",
     cutHi295: "Thủ khoa 29,9 điểm vẫn trượt vì tiêu chí phụ.",
     cutHi300: "ĐIỂM CHUẨN 30,5/30 — ba điểm 10 vẫn trượt nguyện vọng 1.",

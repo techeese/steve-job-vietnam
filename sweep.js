@@ -89,11 +89,13 @@ for (var name in STRATS) results[name] = agg(SEEDS, STRATS[name]);
 // ECONOMY (default)
 var dflt = results["default (honest)"];
 line("--- ECONOMY (default honest school) ---");
-line("  Y1 net/month: " + f1(dflt.avgY1Net) + "tr   (target band +8..25)");
+line("  Y1 net/month: " + f1(dflt.avgY1Net) + "tr   (founding year, lean by design: band 0..18)");
 line("  bankrupt rate: " + f0(dflt.bankruptRate * 100) + "%   avg min cash: " + f0(dflt.avgMinCash) + "tr   avg end cash: " + f0(dflt.avgCash) + "tr");
 line("  default (cram-leaning) meters TT/UT/TC: " + f0(dflt.avgTT) + "/" + f0(dflt.avgUT) + "/" + f0(dflt.avgTC) + "   endow: " + f0(dflt.avgEndow) + "tr");
 var honestM = results["cân bằng"]; line("  HONEST (cân bằng)     meters TT/UT/TC: " + f0(honestM.avgTT) + "/" + f0(honestM.avgUT) + "/" + f0(honestM.avgTC) + "   end cash: " + f0(honestM.avgCash) + "tr");
-if (dflt.avgY1Net < 8 || dflt.avgY1Net > 25) FLAGS.push("Y1 net " + f1(dflt.avgY1Net) + " outside +8..25 band");
+// start-from-nothing: Y1 boots with 0 students and ramps to one intake — a small positive
+// net (survive + build) is the goal, not a populated-school profit. Bankruptcy is the real risk.
+if (dflt.avgY1Net < 0 || dflt.avgY1Net > 18) FLAGS.push("Y1 net " + f1(dflt.avgY1Net) + " outside founding band 0..18");
 if (dflt.bankruptRate > 0.15) FLAGS.push("default bankrupts " + f0(dflt.bankruptRate * 100) + "% of runs");
 line("");
 

@@ -6,17 +6,18 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority, do in this order:**
-- **(A) START FROM NOTHING, build up** *(do FIRST — it reframes everything else)*: the owner
-  wants a Kairosoft from-scratch arc, NOT boot-with-42-SV+rooms+teachers. Redesign freshState:
-  empty/near-empty grounds (maybe just the cổng), a starting cash pot, 0 (or a tiny handful of)
-  students, 1 teacher max; the player builds the first Phòng học, then admissions brings the
-  first cohort, then it grows. OVERRIDES the DESIGN "inherited cram school / 42 zombies" premise
-  + the scripted June-Y1 graduation + Trần Phi Lợi-as-zombie (re-home or drop him). MUST update
-  GATE_FRESH (no longer 42 SV / 8-12 alumni after 400d — first grads come ~4yr after first
-  intake) + the intro copy + sweep boot. Verify the early-game isn't dead-time (give an early
-  goal: build → first intake fast).
-- **(B) Students walk IN from outside** *(pairs with A)*: new/matriculating students spawn
+★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority:**
+- ~~**(A) START FROM NOTHING, build up**~~ **SHIPPED (iter 24).** Boot = empty lot: 0 rooms,
+  0 students, 1 founding teacher, 200tr pot with an origin story (viral đề-Văn answer → cắm sổ
+  đỏ + 50tr vốn mồi). Tháng-6 boot → July founding intake → Mai Sương is enrollee #1; empty
+  Junes roll the year silently (foundingJune); first real graduation ~Year 5. TPL re-homed as a
+  shadow alumnus (scripted Y2-M3 arrest preserved). GATE_FRESH + sweep band updated, all green.
+  *Follow-ups:* early-game (Y1–4, pre-first-graduation) needs more to DO/watch so it isn't
+  dead-time — early build goals, cheaper first room as a deliberate spend, milestone nudges
+  ("xây phòng học", "khóa đầu đã tốt nghiệp"); late-game money still inflates (~2635tr, sweep
+  flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
+- **(B) Students walk IN from outside** *(do NEXT — pairs with A; the founding intake arriving
+  through the cổng is now the game's first satisfying moment)*: new/matriculating students spawn
   OUTSIDE the cổng and walk in through it to their spot (DESIGN's "tân SV walk in at cổng").
   Currently they just appear. Make arrival visible + satisfying.
 - **(C) "3D but still pixel"** for houses AND people: redraw buildings + characters with

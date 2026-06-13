@@ -120,8 +120,9 @@ function freshState(seed) {
     v: CONFIG.V,
     rngState: sd | 0,
     seed0: sd >>> 0,
-    // calendar: boot Tháng 9 Năm 1 (khai giảng); year++ at each June ceremony
-    day: 1, month: 9, year: 1, totalDays: 0, sub: 0,
+    // calendar: boot Tháng 6 Năm 1 (sáng lập) — first July rollover opens the FIRST
+    // intake; no founding ceremony (no graduates yet). year++ at each June.
+    day: 1, month: 6, year: 1, totalDays: 0, sub: 0,
     speed: 0, speed3Unlocked: false,
     // economy
     cash: CONFIG.BOOT_CASH, book: CONFIG.BOOK_VALUE, tuition: CONFIG.BOOT_TUITION,
@@ -147,43 +148,42 @@ function freshState(seed) {
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,
-    _mapDirty: true, _lastNod: -999, _chuongDone: false
+    _mapDirty: true, _lastNod: -999, _chuongDone: false,
+    _maiPending: true // Mai Sương joins as the FIRST believer in the founding intake
   };
   S = s;
   bootRooms(s);
   bootTeachers(s);
   bootRoster(s);
+  bootAlumni(s);
   return s;
 }
 
 function bootRooms(s) {
-  s.rooms = [
-    { key: "phonghoc", x: 1, y: 1 },
-    { key: "phonghoc", x: 5, y: 1 },
-    { key: "san", x: 1, y: 8 }
-  ];
+  // start from nothing: an empty lot. The player builds the first Phòng học.
+  s.rooms = [];
 }
 function bootTeachers(s) {
-  s.teachers = CONTENT.teachers.inherited.map(function (t) {
-    return { id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: !!t.bienChe, age: 0 };
-  });
+  // one founding teacher — the gym-teacher-who-covers-everything, underpaid, loyal.
+  var t = CONTENT.teachers.inherited[0];
+  s.teachers = [{ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }];
 }
 function bootRoster(s) {
-  // Năm 1: 12, Năm 2: 10, Năm 3: 10, Năm 4: 10 = 42 (CONVERSION-SPEC §2)
-  var i;
-  // Năm 1 (yours)
-  for (i = 0; i < 12; i++) s.students.push(genStudent(1, { kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) }));
-  // Mai Sương — fixed seedling
-  s.students[0] = genStudent(1, { ten: "Mai Sương", seed: 5, kt: 22, tn: 16, st: 35, cm: 12, mood: 72, vet: 4, tell: "sky" });
-  // Năm 2
-  for (i = 0; i < 10; i++) s.students.push(genStudent(2, { kt: rint(40, 60), tn: rint(15, 30), st: rint(20, 40), cm: rint(15, 30), mood: rint(55, 70), vet: rint(30, 50) }));
-  // Năm 3
-  for (i = 0; i < 10; i++) s.students.push(genStudent(3, { kt: rint(50, 70), tn: rint(20, 35), st: rint(20, 40), cm: rint(20, 35), mood: rint(40, 55), vet: rint(40, 60) }));
-  // Năm 4 — đồ-án-mẫu zombies
-  for (i = 0; i < 10; i++) s.students.push(genStudent(4, { kt: rint(65, 85), tn: rint(5, 15), st: rint(5, 20), cm: rint(20, 40), mood: rint(35, 50), vet: rint(60, 85) }));
-  // Trần Phi Lợi — fixed Năm 4 (scripted alumnus-to-be)
-  var tpl = s.students[s.students.length - 1];
-  tpl.ten = "Trần Phi Lợi"; tpl.kt = 55; tpl.tn = 25; tpl.st = 18; tpl.cm = 65; tpl.vet = 80; tpl.seed = 2; tpl._tpl = true;
+  // start from nothing: no students. The first cohort arrives at the July intake.
+  s.students = [];
+}
+function bootAlumni(s) {
+  // Trần Phi Lợi — the founder's old cram-school star, now a cá-mập-coin everyone admires.
+  // Seeded as a shadow alumnus at founding; the scripted Y2-M3 arrest falls on him (DESIGN beat).
+  var id = nid();
+  s.alumni.push({
+    id: id, ten: "Trần Phi Lợi", gradYear: 0, outcome: "CA_MAP_COIN",
+    state: "CA_MAP_COIN", history: ["CA_MAP_COIN"], yearsInState: 1,
+    annMonth: 3, _tpl: true,
+    fs: { kt: 55, tn: 25, st: 18, cm: 65, vet: 80, seed: 2 },
+    grat: 6, gifts: 0,
+    flags: { tiemNang: false, coinPath: true, garage: false, vt: [] }, line: ""
+  });
 }
 
 /* ============================================================================
@@ -376,6 +376,7 @@ function endowMilestones() {
    ========================================================================== */
 function openJune() {
   var grads = S.students.filter(function (s) { return s.grade === 4; });
+  if (!grads.length) { foundingJune(); return; } // young school: no graduating class yet
   S.pendingJune = {
     stage: "policy",
     de: rpick(CONTENT.dePool),
@@ -384,6 +385,15 @@ function openJune() {
     deadline: S.totalDays + 18, policy: null, results: null
   };
   S.speed = 0;
+}
+// young school with no Năm-4 cohort yet: roll the academic year & advance grades, no ceremony.
+function foundingJune() {
+  for (var i = 0; i < S.students.length; i++) S.students[i].grade = Math.min(4, S.students[i].grade + 1);
+  S.year++;
+  S.utYearNet = 0; S.pierceDefense = false;
+  S.speed3Unlocked = true;
+  buildAdmitPool();
+  news(CONTENT.ticker.foundingJune);
 }
 // policy: "dam" (đồ án mẫu) | "thuc" (bảo vệ thật)
 function finalizeJune(policy) {
@@ -540,6 +550,8 @@ function declareAdmissions(cutoff, quota, auto) {
   for (i = 0; i < take.length; i++) {
     var ap = take[i];
     var s = genStudent(1, { seed: ap.seed, tell: ap.tell, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) });
+    // Mai Sương — the founder's first believer joins the very first non-empty intake.
+    if (S._maiPending) { s.ten = "Mai Sương"; s.seed = 5; s.kt = 22; s.tn = 16; s.st = 35; s.cm = 12; s.mood = 72; s.vet = 4; s.tell = "sky"; S._maiPending = false; }
     S.students.push(s);
   }
   // scholarship auto-award to top holder-with-tell
@@ -586,6 +598,7 @@ function alumniMonth(month) {
     var a = S.alumni[i];
     if (a.annMonth !== month) continue;
     if (a.state === "STEVE") continue;
+    if (a._tpl && !a._arrested) continue; // scripted shadow — frozen in CA_MAP_COIN until the Y2-M3 arrest
     alumniTickOne(a);
   }
 }

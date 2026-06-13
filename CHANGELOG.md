@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-13 — START FROM NOTHING (owner directive A) + room-click fix (loop iter 24)
+- **Reframe: found a school from scratch.** Boot is now an empty lot — 0 rooms, 0 students,
+  1 founding teacher, a thin cash pot (200tr) with an origin story (you viral'd the đề Văn
+  answer, cắm sổ đỏ + won 50tr "vốn mồi"). Replaces the old "buy a bankrupt uni with 42 SV +
+  3 biên-chế" premise. Calendar boots Tháng 6 → first July rollover opens the FOUNDING INTAKE;
+  Mai Sương is guaranteed to be enrollee #1 (the first believer). Empty Junes (no Năm-4 yet)
+  roll the year & advance grades silently (foundingJune) — first real graduation lands ~Year 5.
+  Trần Phi Lợi re-homed as a shadow alumnus (the founder's old cram-school star, cá-mập-coin),
+  frozen until his scripted Y2-M3 arrest. New boot lore + intro copy ("Đặt viên gạch đầu tiên").
+  GATE_FRESH rewritten (boot 0/0/1/1, Year 2 + ~12 SV + Mai after 400d); sweep Y1 band
+  recalibrated for the lean founding year (0..18). All gates green; sweep thesis still holds.
+- **Fix:** tapping a room (e.g. Phòng học) now opens its inspect card — clustered campus-life
+  students no longer intercept the tap (room wins inside its rect unless you tap right on a SV).
+
 ## 2026-06-13 — Two new moral-choice events (loop iter 23)
 - 📸 "Báo muốn bài thủ khoa đầu ra" (stage a coached student for +Tiếng Tăm +mầm phốt, vs let a
   real kỹ sư speak awkwardly for +Uy Tín) and 🎁 "Phụ huynh lập quỹ khuyến học" (take the 25tr

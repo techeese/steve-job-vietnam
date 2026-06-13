@@ -12,17 +12,23 @@ var FAILS = [];
 function ok(cond, label){ if(!cond) FAILS.push('FAIL: '+label); else OUT.push('  ok '+label); }
 var OUT = [];
 
-/* GATE_FRESH */
+/* GATE_FRESH — start-from-nothing: empty grounds at boot, first intake at the July rollover */
 try {
   __test.fresh(123);
-  __test.place('cangtin', 6, 5);
+  ok(S.students.length === 0, 'boot 0 students (got '+S.students.length+')');
+  ok(S.rooms.length === 0, 'boot 0 rooms (got '+S.rooms.length+')');
+  ok(S.teachers.length === 1, 'boot 1 teacher (got '+S.teachers.length+')');
+  ok(S.alumni.length === 1 && S.alumni[0]._tpl, 'boot 1 shadow alumnus (TPL)');
+  ok(S.month === 6 && S.year === 1, 'boot Tháng 6 Năm 1');
+  __test.place('phonghoc', 1, 1);
   __test.days(400);
   var s = S;
   OUT.push('GATE_FRESH MONEY='+r1(s.cash)+' YEAR='+s.year+' STU='+s.students.length+' ALUM='+s.alumni.length+' ENDOW='+r1(s.endow.bal));
   ok(Number.isFinite(s.cash), 'fresh money finite');
-  ok(s.year === 2, 'fresh year==2 (got '+s.year+')');
-  ok(s.students.length >= 38 && s.students.length <= 48, 'fresh stu 38..48 (got '+s.students.length+')');
-  ok(s.alumni.length >= 8 && s.alumni.length <= 12, 'fresh alum 8..12 (got '+s.alumni.length+')');
+  ok(s.year === 2, 'fresh year==2 after first founding-June (got '+s.year+')');
+  ok(s.students.length >= 8 && s.students.length <= 14, 'fresh stu 8..14 — one intake grew in (got '+s.students.length+')');
+  ok(s.students.some(function(x){ return x.ten === 'Mai Sương'; }), 'Mai Sương enrolled in the founding intake');
+  ok(s.alumni.length === 1, 'no graduates yet — only the shadow alumnus (got '+s.alumni.length+')');
   ok(Number.isFinite(s.endow.bal), 'fresh endow finite');
 } catch(e){ FAILS.push('GATE_FRESH threw: '+e.message+'\\n'+e.stack); }
 
@@ -101,7 +107,7 @@ try {
   ok(rb.ok, 'build lab placed');
   ok(r1(c0 - S.cash) === 70, 'lab cost 70 deducted');
   ok(S.rooms.length - n0 === 1, 'rooms +1');
-  var rbad = __test.place('lab', 1, 1);
+  var rbad = __test.place('lab', 12, 1);
   ok(!rbad.ok, 'overlap rejected');
 } catch(e){ FAILS.push('GATE_BUILD threw: '+e.message+'\\n'+e.stack); }
 
