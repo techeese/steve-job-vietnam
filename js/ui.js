@@ -316,7 +316,11 @@
     if (period === 0) { roomKey = "phonghoc"; act = (a.tell === "sky") ? "daydream" : "study"; }
     else if (period === 1) { roomKey = "san"; act = (a.tell === "hype") ? "perform" : "recess"; }
     else if (period === 2) { roomKey = "cangtin"; act = "eat"; }
-    else if (period === 3) { if (a.grade === 4) { roomKey = duAn ? "xuong" : "phongmay"; act = "tinker"; } else { roomKey = "lab"; act = "study"; } }
+    else if (period === 3) {
+      if (a.tell === "hype") { roomKey = "lab"; act = "stream"; }                    // Sống Ảo khoa: skips the workshop to livestream (satire)
+      else if (a.grade === 4) { roomKey = duAn ? "xuong" : "phongmay"; act = "tinker"; }
+      else { roomKey = "lab"; act = "study"; }
+    }
     else { roomKey = null; act = (((a.id + period) % 3) === 0) ? "zzz" : "home"; }
     var ring = roomKey ? ringsByKey[roomKey] : null;
     if (ring && ring.length) { var t = ring[(a.id + period) % ring.length]; a.tx = t[0]; a.ty = t[1]; a.act = act; }
@@ -352,6 +356,7 @@
     if (a.act === "eat") return Math.random() < 0.6 ? "heart" : "spark";
     if (a.act === "study") return Math.random() < 0.5 ? "idea" : "dots";
     if (a.act === "tinker") return Math.random() < 0.6 ? "idea" : "spark";
+    if (a.act === "stream") return Math.random() < 0.6 ? "heart" : "spark"; // likes + clout
     if (a.act === "daydream") return Math.random() < 0.5 ? "dots" : "music";
     return EMOTES[(Math.random() * EMOTES.length) | 0];
   }
@@ -435,6 +440,15 @@
     } else if (a.act === "zzz") {
       var zy = (y - 24 - (Math.sin(ph) * 0.5 + 0.5) * 4) | 0;
       ctx.fillStyle = "#e2e9d4"; ctx.fillRect(x + 3, zy, 3, 1); ctx.fillRect(x + 5, zy + 1, 1, 1); ctx.fillRect(x + 3, zy + 2, 3, 1);
+    } else if (a.act === "stream") {
+      // Sống Ảo: filming a livestream — ring-light glow, a phone held up with a blinking REC dot, rising likes
+      ctx.fillStyle = "rgba(255,240,180,.16)"; ctx.fillRect(x - 6, y - 16, 13, 11);  // ring-light wash
+      ctx.fillStyle = PX.out; ctx.fillRect(x + 3, y - 13, 5, 8);                       // phone body, held up to the face
+      ctx.fillStyle = (Math.floor(ts / 320) % 2) ? "#bfe9ff" : "#8fc8ef"; ctx.fillRect(x + 4, y - 12, 3, 6); // glowing screen
+      ctx.fillStyle = "#e0392f"; if (Math.floor(ts / 400) % 2) ctx.fillRect(x + 4, y - 12, 1, 1);            // blinking REC dot
+      var hy = (y - 15 - (ts / 130 % 9)) | 0;                                          // like-hearts floating up
+      ctx.fillStyle = "#f15a7a"; ctx.fillRect((x - 5 + Math.sin(ts / 200) * 1.5) | 0, hy, 2, 2);
+      ctx.fillStyle = "#f2c14e"; ctx.fillRect((x - 7 + Math.sin(ts / 165 + 1) * 1.5) | 0, (hy + 4) | 0, 1, 1);
     }
   }
   // a little pickup football game on the Sân — the ball gets kicked around the pitch

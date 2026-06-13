@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Campus life: the Sống Ảo khoa livestreams itself (loop iter 54)
+- First iteration to tie the new **Khoa system to visible campus life** — and a satirical one. In the
+  afternoon period, students of the **Khoa Khởi nghiệp (Sống Ảo)** (the *hype*-tell influencer major)
+  now **skip the workshop and crowd the Lab to film themselves**: each holds a glowing phone up to their
+  face with a blinking REC dot, a ring-light wash, and pink "like"-hearts floating up; their emote bubbles
+  lean ❤️/✨ (likes & clout). A whole khoa standing around livestreaming instead of building anything —
+  the dark mirror of the đề Văn, shown not told. New `stream` activity (routing + overlay + emote); the
+  Lab that unlocks the khoa now also animates it. Pure ui.js (no engine/balance change); gates green;
+  verified with a 5× zoom of the actor layer via the new `_renderLiveOnce` hook (iter 53's tooling — its
+  first real use). First graphics/charm iteration after 6 straight mechanics ships.
+
 ## 2026-06-13 — Tooling: the living campus is now screenshot-verifiable (loop iter 53)
 - Closes a real verification gap behind the game's #1 priority. The walking students + activity
   animations draw only in the rAF `liveLoop`, which headless Chrome throttles — so every screenshot
