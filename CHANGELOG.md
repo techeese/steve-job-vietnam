@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-14 — The repo gets a front door: README + cover (loop iter 89)
+- Presentation/docs (compass #11, never touched in 89 iterations): the repo had **no README at all** — a
+  blank front door for a now-mature, polished game. Wrote a proper one: the đề-Văn hook + tagline, the live
+  link, a **cover screenshot** (`docs/cover.png` — a lively recess campus), what the game is (the playable
+  essay, Kairosoft register, the open question), the feature tour (living campus, biographies, the destiny
+  cascade, khoa life + Cúp Khoa, moral-tension events, the pantheon, the closing essay), the one-directional
+  module architecture (`ui → {art,sprites,audio} → engine → data`), and the verification commands
+  (`gate.sh` / `sweep.js` / `bot.sh`). Tone note: satire, fictional, pantheon reverent, question held open.
+- `.gitignore` gains a `!docs/*.png` exception so the cover ships (PNGs are otherwise ignored). No game code
+  changed → no bump/deploy (the live game is byte-identical). POLISH ship → `SMALL_SHIPS_SINCE_EPIC 0→1`.
+  Bar: presentation (exempt from the gameplay rubric floor; the lift is "the project finally looks finished").
+
 ## 2026-06-14 — EPIC: the campus comes alive socially (loop iter 88)
 - The cadence-forced epic, spent on the owner's **standing pre-authorised** category (*"deepening the activity
   layer is ALWAYS a valid pick — the living campus is the soul"*) — the one substantial autonomous move that

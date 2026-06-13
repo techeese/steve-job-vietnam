@@ -2,6 +2,7 @@ brainstorm-raw.json
 /tmp-*
 *.png
 !icon-*.png
+!docs/*.png
 node_modules/
 # scratch verification artifacts — never commit (see SKILL.md "LEAVE NO DEBRIS")
 __*.html

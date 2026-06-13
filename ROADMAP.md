@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (Reset iter 88: the campus-social-life FEATURE epic shipped.)
+- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 89 = POLISH: README + cover, docs/presentation.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (ui.js→screens.js panels split, still available; see `## Architecture`). (iter 88 social-life = 1 FEATURE epic since the iter-84 sprites.js structure move.)
 - **Big epics QUEUED FOR OWNER STEER** (each reshapes feel/balance/art — costly to get wrong autonomously, owner away ~15 firings): (a) passive **late-game economic pressure** (the standing sweep flag; needs a difficulty/feel call + careful sweep tuning to keep 0-bankruptcy/pluralism); (b) a recurring **character arc** (Mai Sương multi-beat story — tone is a taste call); (c) another **graphics step-change** (wants a divergence workflow / ultracode to de-risk the art direction). Until steer: keep shipping safe, owner-blessed living-campus/charm/content + low-risk structure.
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 84: sprites.js extraction WAS the structure move — paid the debt the cadence was forcing.)
