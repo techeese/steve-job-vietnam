@@ -956,6 +956,10 @@ function applyFx(fx, t) {
     case "epHoc": if (t) { t.vet = clamp(t.vet + 5, 0, 100); t.kt = clamp(t.kt + 2, 0, 100); t.mood = clamp(t.mood - 10, 0, 100); } break;
     case "choNghi": if (t) { t.mood = clamp(t.mood + 15, 0, 100); virtue(t, "nghiNgoi"); } break;
     case "loDaoVan": if (t) t.vet = clamp(t.vet + 5, 0, 100); seedPhot(2, "daovan"); break;
+    // AI làm hộ — the 2026 open-question: hollow shortcut vs tool-mastery vs hand-won craft
+    case "aiNop": if (t) { t.vet = clamp(t.vet + 8, 0, 100); t._diemBoost = 0.5; } gainTT(2); seedPhot(1, "ai"); break;
+    case "aiHieu": if (t) { t.tn = clamp(t.tn + 3, 0, 100); t.st = clamp(t.st + 2, 0, 100); } gainTC(1); break;
+    case "aiTay": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 6, 0, 100); virtue(t, "aiTay"); } gainTC(1); break;
     case "batLamLai": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 5, 0, 100); virtue(t, "lamLai"); } break;
     default: break;
   }

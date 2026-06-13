@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Soul: the "AI làm hộ đồ án" choice (loop iter 64)
+- A rotation from visuals back to the game's SOUL — a fresh, 2026-topical satirical event that puts the
+  đề Văn question on the table directly. A Năm-4 đồ án turns out to be AI-generated overnight ("em chỉ
+  prompt thôi, mà nó chạy thật mà thầy"), and you choose the school's answer:
+  - **Nộp luôn** (it looks impressive) — +Vẹt, +điểm, +Tiếng Tăm, but seeds a phốt: the hollow shortcut.
+  - **Cho dùng nhưng phải hiểu & bảo vệ** — +Tay nghề/Sáng tạo, +Thực Chất: AI as a *lever*, mastered.
+  - **Cấm tiệt, làm tay** — bigger Tay nghề/Sáng tạo, −mood, a quiet good deed: hand-won craft.
+  Three honest theses, no "correct" answer — the open question, in one decision (FUN + BITE). New event +
+  3 `applyFx` cases; all three verified to resolve cleanly; gates green; sweep thesis unchanged. Rotates
+  off a 4-ship visual streak (compass) and addresses the "soul getting fuller, not bolder" gap with a
+  genuinely new cultural beat. Bar: BEAUTY 3 / JUICE 3 / FUN 4 / CLARITY 3 / BITE 4.
+
 ## 2026-06-13 — Festivals: the campus celebrates (Tết petals + graduation confetti, loop iter 63)
 - The campus now comes ALIVE for the year's big moments. New festive-particle layer keyed to the
   calendar: **Tết (months 1–2) drifts đào-pink & mai-yellow blossom petals**; **June rains multi-colour

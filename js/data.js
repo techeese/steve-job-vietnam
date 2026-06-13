@@ -322,6 +322,14 @@ var CONTENT = {
         { label: "Đồng ý", hint: "+2 KT, +3 Vẹt Năm 4", fx: "tangGioOk" },
         { label: "Từ chối", hint: "+1 Thực Chất", fx: "tangGioNo" }
       ] },
+    { id: "aiHo", title: "🤖 AI làm hộ đồ án",
+      desc: "Đồ án của {ten} bỗng xịn bất thường — hỏi ra mới biết AI 'làm' qua đêm. Em ấy bảo: 'em chỉ prompt thôi, mà nó chạy thật mà thầy'.",
+      pred: "nam4Duan",
+      choices: [
+        { label: "Cứ nộp — nhìn xịn là được", hint: "+8 Vẹt, +0,5 điểm, +2 Tiếng Tăm, +1 mầm phốt", fx: "aiNop" },
+        { label: "Cho dùng, nhưng phải hiểu & bảo vệ được", hint: "+3 Tay nghề, +2 Sáng tạo, +1 Thực Chất", fx: "aiHieu" },
+        { label: "Cấm tiệt — làm tay, hiểu từng dòng", hint: "+5 Tay nghề, +3 Sáng tạo, −6 mood, một việc tử tế", fx: "aiTay" }
+      ] },
     { id: "chodoan", title: "🛒 Chợ đồ án mẫu",
       desc: "Trước bảo vệ, một 'dịch vụ' chào bán đồ án mẫu kèm slide đẹp: 15tr trọn gói, bảo hành qua hội đồng.",
       pred: "thang5",
