@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (81 pennant + 82 rain-umbrellas = 2 POLISH; ONE more then the EPIC track — FORCED to STRUCTURE (ui.js→screens.js) — locks.)
+- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — the NEXT firing is HARD-LOCKED to the EPIC track, and EPICS_SINCE_STRUCTURE=2 FORCES it to be the ui.js→screens.js STRUCTURE move** (or a rigorous review-that-defers per SKILL, resetting the counter — see `## Architecture`; de-risked now by bot.sh + static-canvas-hash). (81 pennant + 82 umbrellas + 83 events = 3 POLISH.)
 - `EPICS_SINCE_STRUCTURE: 2`    → **≥2 NOW — the NEXT epic MUST be a STRUCTURE move** (ui.js→screens.js, see `## Architecture`). (75 BGM + 80 Cúp Khoa = 2 FEATURE epics since the iter-73 structure review; iter 79 was a polish, not an epic.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).

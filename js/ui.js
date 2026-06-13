@@ -1599,9 +1599,10 @@
     var ev = CONTENT.events.filter(function (e) { return e.id === pe.id; })[0];
     var t = pe.targetId ? s.students.filter(function (x) { return x.id === pe.targetId; })[0] : null;
     var w = el("div");
+    var nm = t ? t.ten : "Một sinh viên";
     w.appendChild(el("div", "kic", "Tình huống"));
-    w.appendChild(el("h2", null, esc(ev.title)));
-    w.appendChild(el("div", "lead", esc((ev.desc || "").replace(/\{ten\}/g, t ? t.ten : "Một sinh viên"))));
+    w.appendChild(el("h2", null, esc((ev.title || "").replace(/\{ten\}/g, nm))));   // titles support {ten} too (fixes kietSuc)
+    w.appendChild(el("div", "lead", esc((ev.desc || "").replace(/\{ten\}/g, nm))));
     var ch = el("div", "choices");
     ev.choices.forEach(function (c, i) {
       var virtuous = /tử tế|mượn|báo cáo|giữ em/.test(c.hint || "");
@@ -1666,6 +1667,7 @@
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
     setWeather: function (w) { setWeather(w); weatherT = 1e15; }, // test hook: pin weather (rays/rain/clear) + freeze auto-cycle
+    checkModals: function () { checkModals(); }, // test hook: render whatever modal the current pending* state implies
     tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
     _sel: function () { return { stu: selStudent, room: selRoom }; },
     _drawSel: function () { var ctx = $("mapLive").getContext("2d"); ctx.imageSmoothingEnabled = false; drawSelection(ctx, 800); },

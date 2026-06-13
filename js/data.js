@@ -413,6 +413,20 @@ var CONTENT = {
       choices: [
         { label: "Lờ đi cho qua", hint: "em ấy +5 Vẹt, +1 mầm phốt nặng", fx: "loDaoVan" },
         { label: "Bắt làm lại từ đầu", hint: "em ấy +5 TN +3 ST −5 Mood, +1 Uy Tín", fx: "batLamLai" }
+      ] },
+    { id: "duhoc", title: "✈️ {ten} được học bổng du học",
+      desc: "{ten} — đứa giỏi nhất khoá — vừa giành học bổng toàn phần đi nước ngoài. Em ngập ngừng: 'Em… chắc không về thầy ạ.' (đề Văn vẫn để ngỏ: Steve Việt Nam ở lại, hay bay đi?)",
+      pred: "hasNam4",
+      choices: [
+        { label: "Chúc em đi, và đi cho tới", hint: "em rời trường — nhưng tử tế, +1 Thực Chất", fx: "duhocChuc" },
+        { label: "Thuyết phục em ở lại cống hiến", hint: "giữ được em, nhưng em −Mood +Vẹt; +1 Tiếng Tăm", fx: "duhocGiu" }
+      ] },
+    { id: "antoan", title: "👔 Bố mẹ {ten} muốn em chọn 'đường an toàn'",
+      desc: "Bố mẹ {ten} gọi điện: 'cho cháu thi công chức cho ổn định, chứ chế với chả tạo bấp bênh lắm thầy ạ'.",
+      pred: "hasNam4",
+      choices: [
+        { label: "Khuyên em theo hướng an toàn", hint: "em +Vẹt −Sáng tạo; phụ huynh yên tâm", fx: "antoanNghe" },
+        { label: "Ủng hộ em theo đam mê", hint: "em +Sáng tạo, một việc tử tế", fx: "antoanDam" }
       ] }
   ],
 

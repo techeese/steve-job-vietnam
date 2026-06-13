@@ -1007,6 +1007,11 @@ function applyFx(fx, t) {
     case "aiNop": if (t) { t.vet = clamp(t.vet + 8, 0, 100); t._diemBoost = 0.5; } gainTT(2); seedPhot(1, "ai"); break;
     case "aiHieu": if (t) { t.tn = clamp(t.tn + 3, 0, 100); t.st = clamp(t.st + 2, 0, 100); } gainTC(1); break;
     case "aiTay": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 6, 0, 100); virtue(t, "aiTay"); } gainTC(1); break;
+    // the đề-Văn's two real headwinds against a "Steve Việt Nam": brain drain, and the pull toward a "safe" path
+    case "duhocChuc": if (t) { t._drop = true; S.students = S.students.filter(function (s) { return !s._drop; }); } gainTC(1); bacTamNod(); break; // let talent fly — you lose your best, quietly honoured
+    case "duhocGiu": if (t) { t.mood = clamp(t.mood - 12, 0, 100); t.vet = clamp(t.vet + 4, 0, 100); } gainTT(1); break;                       // keep them for the school's glory — clipped wings
+    case "antoanNghe": if (t) { t.vet = clamp(t.vet + 6, 0, 100); t.st = clamp(t.st - 5, 0, 100); } break;                                     // the safe path dulls the spark
+    case "antoanDam": if (t) { t.st = clamp(t.st + 5, 0, 100); virtue(t, "damMe"); } break;                                                    // back the passion — one quiet nod
     // học thêm (shadow education) — income & drilled results vs exhaustion & equity
     case "themMo": S.cash = r1(S.cash + 12); for (var hi = 0; hi < S.students.length; hi++) { var hs = S.students[hi]; hs.kt = clamp(hs.kt + 3, 0, 100); hs.vet = clamp(hs.vet + 4, 0, 100); hs.mood = clamp(hs.mood - 8, 0, 100); } gainTT(1); break;
     case "themMienPhi": S.cash = r1(S.cash + 4); for (var hj = 0; hj < S.students.length; hj++) { var hs2 = S.students[hj]; hs2.kt = clamp(hs2.kt + 2, 0, 100); hs2.mood = clamp(hs2.mood - 3, 0, 100); } gainUT(1, false); bacTamNod(); break;

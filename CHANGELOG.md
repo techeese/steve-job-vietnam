@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-06-14 — Two new đề-Văn events (brain drain · the "safe path") + a title bug fix (loop iter 83)
+- Branched from visual charm to **content/satire** — two fresh events naming the real forces that keep Việt Nam
+  from growing its own Steve, each a genuine moral fork (the game's soul):
+  - **✈️ Du học / chảy máu chất xám** — your best Năm-4 student wins a scholarship abroad: *"Em… chắc không về
+    thầy ạ."* Bless them and lose them (a quiet +Thực Chất nod — talent set free) **or** persuade them to stay
+    for the school's glory (+Tiếng Tăm, but the student's wings get clipped: −Mood +Vẹt). The đề Văn, made playable.
+  - **👔 Bố mẹ muốn em chọn "đường an toàn"** — family pressure toward a stable công-chức life over passion:
+    dull the spark for safety (+Vẹt −Sáng tạo) **or** back the dream (+Sáng tạo, a quiet nod).
+  - Juice asymmetry honoured/inverted: the *virtuous* choices cost you (a lost student, foregone reputation) and
+    get one quiet nod; the *selfish* choices pay in Tiếng Tăm. Both auto-resolve to their benign branch, so the
+    **sweep bands are unchanged** (pluralism + destiny intact, verified).
+- **Bug fix:** event modal titles never substituted `{ten}` — the pre-existing `kietSuc` event showed a literal
+  "{ten} kiệt sức vì áp lực" in the heading (visible in the iter-78 audit). `showEvent` now replaces `{ten}` in the
+  title as it already did in the body, so titles personalise (e.g. "✈️ Phạm Hữu Uyên được học bổng du học").
+- data.js: 2 events. engine.js: 4 `applyFx` cases (`duhocChuc/duhocGiu/antoanNghe/antoanDam`; reuse the `hasNam4`
+  pred). ui.js: the title fix + a `__ui.checkModals` test hook (for modal screenshots). Verified: parse · behavioural
+  probe (all 4 choices · student-removal path · neutral=benign) · `./gate.sh` GREEN · `node sweep.js` bands GREEN ·
+  `./bot.sh` **BOTOK** · 390px screenshot of the rendered brain-drain modal.
+- POLISH ship → **`SMALL_SHIPS_SINCE_EPIC 2→3` ⇒ the NEXT firing is HARD-LOCKED to the EPIC track** (forced
+  STRUCTURE: ui.js→screens.js). Bar: **THESIS/CONTENT 4** (the deck now names the actual headwinds).
+
 ## 2026-06-14 — Umbrellas in the rain — weather meets the little people (loop iter 82)
 - Closes the iter-77 weather follow-up: when it drizzles, the students out in it (walking between buildings, or
   at recess on the sân) now **pop a cheerful umbrella** — varied colours (red/blue/gold/teal/purple/pink by id),
