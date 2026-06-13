@@ -351,6 +351,7 @@ function growStudents() {
   var tf = teacherFactor();
   var dpm = CONFIG.DAYS_PER_MONTH;
   var majorCount = {}; for (i = 0; i < n; i++) { var mm0 = studentMajor(S.students[i]); if (mm0) majorCount[mm0.key] = (majorCount[mm0.key] || 0) + 1; } // khoa headcounts for synergy
+  var thriving = 0; for (var mk in majorCount) if (majorCount[mk] >= CONFIG.SYN_MIN) thriving++; // P4: ≥2 thriving khoas → cross-pollination
   for (i = 0; i < n; i++) {
     s = S.students[i];
     var p = CONFIG.PRESETS[S.presets["n" + s.grade]] || CONFIG.PRESETS.canbang;
@@ -368,7 +369,10 @@ function growStudents() {
     s.vet = clamp(s.vet + vetGain, 0, 100);
     s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
-    if (smj && (majorCount[smj.key] || 0) >= CONFIG.SYN_MIN) s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW, 0, 100);
+    if (smj && (majorCount[smj.key] || 0) >= CONFIG.SYN_MIN) {
+      s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW, 0, 100);
+      if (thriving >= 2 && smj.cross) s[smj.cross] = clamp(s[smj.cross] + CONFIG.SYN_CROSS, 0, 100); // liên khoa: cross-pollinate a 2nd stat
+    }
     if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) s._drop = true;
   }
   if (n) S.students = S.students.filter(function (x) { return !x._drop; });

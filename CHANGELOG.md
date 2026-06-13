@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Khoa P4a: cross-khoa synergy (interdisciplinary → 🍎, loop iter 51)
+- First slice of the majors-depth phase the owner asked for. When **two or more khoas are thriving**
+  (each ≥4 students with synergy on), their members **cross-pollinate**: each gets a bonus to a second
+  stat (coders pick up Sáng tạo, designers pick up Tay nghề, founders pick up Sáng tạo). So a *focused
+  interdisciplinary* school — tinkerers in Lập trình **and** dreamers in Thiết kế, both rooms built —
+  grows dual-skilled students (high Tay nghề **and** Sáng tạo), which is exactly the profile that
+  reaches 🍎. A "⚡⚡ Liên khoa" line lights up in the Khoa card when it's active. Verified (+10.3 vs
+  +1.5 secondary-stat gain with two khoas vs one); sweep confirms it rewards *focus* without
+  over-producing Steves in unfocused play (thesis holds); gates green. More P4 depth (khoa head,
+  rivalries) still queued.
+
 ## 2026-06-13 — Khoa/Majors P2 (the UI) + Trần Phi Lợi hidden until arrested (loop iter 50)
 - **P2 — the Khoa system is now visible.** New "Khoa / Chuyên ngành" card in the **Sinh viên** tab:
   each khoa shows its icon/name, whether it's unlocked (or "🔒 Xây [building] để mở"), member count,

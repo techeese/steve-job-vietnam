@@ -17,16 +17,17 @@ var CONFIG = {
   ROOM_MAX_LEVEL: 3,            // buildings upgrade in place (one on the map) up to this level
   SYN_MIN: 4,                   // a khoa needs this many students for its synergy bonus to kick in
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)
+  SYN_CROSS: 0.15,            // P4: when ≥2 khoas thrive, members cross-pollinate — bonus to a 2nd stat
   // KHOA / MAJORS (P1) — students auto-join by tell; a khoa unlocks when its building exists; each
   // khoa grows one stat and leans toward one destiny (the satirical hook). Prodigy joins on unlock.
   MAJORS: [
-    { key: "code", name: "Khoa Lập trình", icon: "💻", room: "phongmay", tell: "spark", stat: "tn", dest: "👷 kỹ sư",
+    { key: "code", name: "Khoa Lập trình", icon: "💻", room: "phongmay", tell: "spark", stat: "tn", cross: "st", dest: "👷 kỹ sư",
       line: "Học để cái máy chạy thật, không phải để qua môn.",
       prodigy: { ten: "Tú 'Compiler'", seed: 5, kt: 30, tn: 45, st: 32, cm: 18, vet: 8, mood: 76, tell: "spark" } },
-    { key: "make", name: "Khoa Thiết kế Chế tạo", icon: "🎨", room: "xuong", tell: "sky", stat: "st", dest: "🍎 sáng tạo",
+    { key: "make", name: "Khoa Thiết kế Chế tạo", icon: "🎨", room: "xuong", tell: "sky", stat: "st", cross: "tn", dest: "🍎 sáng tạo",
       line: "Cái đẹp không có văn mẫu — phải tự vẽ lấy.",
       prodigy: { ten: "Hà 'Maker'", seed: 5, kt: 26, tn: 35, st: 48, cm: 16, vet: 6, mood: 76, tell: "sky" } },
-    { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", dest: "🪙 cá mập coin",
+    { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", cross: "st", dest: "🪙 cá mập coin",
       line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.",
       prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } }
   ],

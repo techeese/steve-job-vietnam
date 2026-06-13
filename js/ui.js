@@ -1133,6 +1133,8 @@
         row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + "</div><div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip'>" + cnt + " SV</div>";
         kc.appendChild(row);
       });
+      var thriving = CONFIG.MAJORS.filter(function (m) { return (counts[m.key] || 0) >= (CONFIG.SYN_MIN || 4); }).length;
+      if (thriving >= 2) kc.appendChild(el("div", "tiny", "<span style='color:var(--gold)'>⚡⚡ Liên khoa — các khoa mạnh học hỏi nhau (cộng hưởng chéo, đẩy về 🍎).</span>")).style.marginTop = "4px";
       if (general) kc.appendChild(el("div", "tiny", "Đại cương: " + general + " SV chưa thuộc khoa nào (xây phòng để mở khoa).")).style.marginTop = "3px";
       wrap.appendChild(kc);
     }
