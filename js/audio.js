@@ -6,12 +6,16 @@
   function $(id) { return document.getElementById(id); }
   var soundOn = false;
   var actx = null, master = null, sndTimers = [];
+  // each mood now carries a gentle CHORD PROGRESSION (root offsets) so the bed MOVES instead of droning;
+  // melody/pad/bass all follow the current chord root → harmonically coherent, calm, generative lofi.
   var MOODS = {
-    normal:  { base: 220, scale: [0, 2, 4, 7, 9],     pad: [0, 7, 16],     gain: 0.050, rate: [1500, 3200] }, // warm major pentatonic
-    tet:     { base: 247, scale: [0, 2, 4, 7, 9, 12], pad: [0, 7, 12, 16], gain: 0.055, rate: [1100, 2400] }, // brighter, busier (Tết)
-    june:    { base: 196, scale: [0, 3, 5, 7, 10],    pad: [0, 7, 12, 15], gain: 0.060, rate: [1700, 3400] }, // slower swell (Lễ Tốt Nghiệp)
-    scandal: { base: 196, scale: [0, 3, 5, 8, 10],    pad: [0, 3, 10],     gain: 0.044, rate: [1900, 3800] }  // minor undertone (phốt)
+    normal:  { base: 220, scale: [0, 2, 4, 7, 9],     pad: [0, 7, 16],     prog: [0, 5, 7, 5],   gain: 0.050, rate: [1500, 3200] }, // warm major pentatonic, I-IV-V-IV
+    tet:     { base: 247, scale: [0, 2, 4, 7, 9, 12], pad: [0, 7, 12, 16], prog: [0, 7, 5, 9],   gain: 0.055, rate: [1100, 2400] }, // brighter (Tết)
+    june:    { base: 196, scale: [0, 3, 5, 7, 10],    pad: [0, 7, 12, 15], prog: [0, -5, 5, 0],  gain: 0.060, rate: [1700, 3400] }, // slow spacious swell (Lễ Tốt Nghiệp)
+    scandal: { base: 196, scale: [0, 3, 5, 8, 10],    pad: [0, 3, 10],     prog: [0, 3, -2, 3],  gain: 0.044, rate: [1900, 3800] }  // restless minor undertone (phốt)
   };
+  var progI = 0;                                   // advances each pad cycle → the chord changes over time
+  function chordRoot(m) { var p = m.prog || [0]; return p[progI % p.length]; }
   function currentMood() {
     try { var s = S(); if (s.pendingJune) return "june"; if (s.month === 2) return "tet"; if ((s.photSeeds && s.photSeeds.length >= 3) || s.tiengTam < 16) return "scandal"; return "normal"; }
     catch (e) { return "normal"; }
@@ -27,21 +31,22 @@
   }
   function schedMelody() {
     if (!soundOn || !actx) return;
-    var m = MOODS[currentMood()];
-    var semi = m.scale[(Math.random() * m.scale.length) | 0] + (Math.random() < 0.35 ? 12 : 0);
+    var m = MOODS[currentMood()], root = chordRoot(m);                       // melody sits over the current chord
+    var semi = root + m.scale[(Math.random() * m.scale.length) | 0] + (Math.random() < 0.3 ? 12 : 0);
     tone(freqOf(m.base, semi), 2.4, m.gain, "sine", 0.5);
     sndTimers.push(setTimeout(schedMelody, m.rate[0] + Math.random() * (m.rate[1] - m.rate[0])));
   }
   function schedPad() {
     if (!soundOn || !actx) return;
-    var m = MOODS[currentMood()];
-    m.pad.forEach(function (semi) { tone(freqOf(m.base, semi - 12), 9, m.gain * 0.45, "triangle", 2.6); });
+    var m = MOODS[currentMood()], root = chordRoot(m);                       // the pad voices the current chord
+    m.pad.forEach(function (semi) { tone(freqOf(m.base, root + semi - 12), 9, m.gain * 0.45, "triangle", 2.6); });
+    progI++;                                                                  // advance to the next chord for the next cycle
     sndTimers.push(setTimeout(schedPad, 8000 + Math.random() * 4000));
   }
   function schedBass() {
     if (!soundOn || !actx) return;
-    var m = MOODS[currentMood()];
-    tone(freqOf(m.base, -24), 3.4, m.gain * 0.7, "sine", 0.8);
+    var m = MOODS[currentMood()], root = chordRoot(m);                       // bass on the chord root
+    tone(freqOf(m.base, root - 24), 3.4, m.gain * 0.7, "sine", 0.8);
     sndTimers.push(setTimeout(schedBass, 4200 + Math.random() * 2200));
   }
   // gentle musical SFX (same timbre as the score) for key moments — opt-in via the 🎵 toggle

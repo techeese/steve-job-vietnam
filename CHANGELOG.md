@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-13 — BGM enrichment: the campus music now moves (loop iter 75)
+- The last unbuilt VISION dream feature. The generative campus-lofi was a static pad-drone; now each mood
+  carries a gentle **chord progression** (normal I-IV-V-IV · Tết brighter · June a slow spacious swell ·
+  scandal a restless minor), and the **melody, pad, and bass all follow the current chord root** — so the
+  bed *moves* and breathes instead of hovering on one chord, while staying calm/consonant/generative
+  (no assets, fully defensive). All four moods' schedulers verified to run without throwing (across
+  init/start/toggle/sfx, no JSERR); the aesthetic is owner-verified on the live link (as audio always is).
+  Pure audio.js (a `prog` per mood + a `chordRoot`/`progI` cursor). FEATURE-epic → `SMALL_SHIPS 0`,
+  `EPICS_SINCE_STRUCTURE 1`. Bar: **JUICE 4** (atmosphere, owner-verified).
+- **Milestone: every dream feature in VISION.md (iters 59–75) is now built** — premium characters +
+  buildings, living-world lighting/weather/festivals, customization, the shareable thesis-card + the
+  Steve-climax moment, and now richer BGM. The original vision is realized; the next tier (deeper khoa
+  rivalries, a late-game spend sink, or a bold new pillar) is the owner's to steer.
+
 ## 2026-06-13 — Soul: the "bệnh thành tích" choice (achievement disease, loop iter 74)
 - Adds the deck's missing central Vietnamese-education satire: **achievement disease / ranking fraud**.
   Once your school has graduates, a "prestigious" ranking invites you in — "chỉ cần làm đẹp vài con số…

@@ -33,16 +33,17 @@ the world as engineers, founders, văn-mẫu clerks, coin sharks, and the rare �
   with strings, the pantheon of honored educators. Choices with moral tension.
 - **The essay frame** — intro, recurring characters, the epilogue assembled from *your* graduates.
 
-## Dream features (epic-shaped; not yet built — mine these)
-- A genuine **art step-change**: bigger 2.5D characters and buildings with real volume/side-walls,
-  or relaxing "no asset files" for a richer embedded atlas — clearing the "still ugly" bar for good.
-- **Weather, seasons, time-of-day** lighting that makes the campus a place, not a board.
-- **Festivals & set-pieces**: Tết, graduation, a viral-scandal day — the campus dresses and reacts.
-- **Player-customizable students** (hinted by the owner: "characters are customize").
-- **Generative campus-lofi BGM**, state-aware (term / Tết / June ceremony / scandal).
-- **A shareable end-card / epilogue** — the player's answer to the đề Văn, made beautiful to share.
-- **Deeper khoa life**: rivalries, khoa-gated facilities, a dedicated khoa screen, the trưởng-khoa
-  visibly present.
+## Dream features — the original list is now BUILT (iters 59–75) ✅
+- ~~**Art step-change**~~ ✅ premium 24×32 volumetric characters (59) + crafted material buildings (70).
+- ~~**Time-of-day lighting**~~ ✅ a felt sunny day-arc + golden hour (62); + drifting cloud-shadows (61).
+- ~~**Festivals & set-pieces**~~ ✅ Tết petals + graduation confetti (63) + a scandal-day news-van (67).
+- ~~**Player-customizable students**~~ ✅ per-axis look customizer (66).
+- ~~**Generative campus-lofi BGM**~~ ✅ enriched with moving chord progressions, state-aware (75).
+- ~~**Shareable end-card / epilogue**~~ ✅ the gold answer-to-the-đề-Văn card (68); + the Steve climax moment (72).
+- **Still open / next tier (needs owner steer or genuine new ambition):** deeper **khoa life** (rivalries,
+  khoa-gated facilities, a dedicated screen); a possible **weather** layer (rain/sun-rays) if it stays
+  sunny; **late-game economic pressure** (a spend sink — the standing sweep flag); and whatever bold new
+  PILLAR the owner dreams up. The original vision is realized; the next vision is the owner's to set.
 
 ## The bar, in one test
 *Would a screenshot of this make a stranger scrolling past want to stop and play?* Until the answer is

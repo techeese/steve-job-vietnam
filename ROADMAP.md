@@ -6,8 +6,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 3`   → ≥3 ⇒ **the NEXT firing is HARD-LOCKED to the EPIC track.** Reset to 0 only when an epic SHIPS. (EPICS_SINCE_STRUCTURE 0 < 2 ⇒ the forced epic may be FEATURE — e.g. BGM enrichment, the last unbuilt VISION dream feature — or the queued structure refactor.)
-- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
+- `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
 
