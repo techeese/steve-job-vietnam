@@ -60,6 +60,15 @@ function canPlace(key, x, y) {
 }
 function pantheonByKey(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === key) return CONFIG.PANTHEON[i]; return null; }
 function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES && CONFIG.GARDEN_FIGURES[key]) || null; } // scholarship pantheon OR garden-only figures
+// KHOA / MAJORS — students auto-join the khoa matching their tell once its building exists
+function majorByTell(tell) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].tell === tell) return M[i]; return null; }
+function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].room === room) return M[i]; return null; }
+function studentMajor(s) { var m = majorByTell(s.tell); return (m && hasRoom(m.room)) ? m : null; } // null = Đại cương (general)
+function enrollProdigy(m) {
+  if (S.students.length >= CONFIG.ROSTER_CAP) { news(m.icon + " Mở " + m.name + " — nhưng trường đã chật, chưa nhận thêm được."); return; }
+  var s = genStudent(1, m.prodigy); s._prodigy = true; S.students.push(s);
+  news(m.icon + " Mở " + m.name + " — " + m.prodigy.ten + " tuyển thẳng về học.");
+}
 function placeRoom(key, x, y) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
   if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
@@ -75,6 +84,8 @@ function placeRoom(key, x, y) {
     var p = dedFigure(d.ded);
     if (p) news("🏵️ Khánh thành " + d.name + ": " + p.line);
   } else if (cost > 0) news("Xây xong " + d.name + ". −" + cost + "tr.");
+  var mj = majorByRoom(key); // a building can open a khoa — once — and attract a prodigy "tuyển thẳng"
+  if (mj && S.META.majorsUnlocked.indexOf(mj.key) < 0) { S.META.majorsUnlocked.push(mj.key); enrollProdigy(mj); }
   checkMilestones(); // building can complete a founding milestone (responsive while paused)
   return { ok: true };
 }
@@ -185,7 +196,7 @@ function freshState(seed) {
     contracts: [], corpBlacklist: {}, offersSeen: [],
     photSeeds: [], examHistory: [],
     news: [],
-    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "", decadeShown: false, favId: null, campusTier: 0 },
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "", decadeShown: false, favId: null, campusTier: 0, majorsUnlocked: [] },
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,
@@ -339,6 +350,7 @@ function growStudents() {
   for (var g = 1; g <= 4; g++) crowdByGrade[g] = CONFIG.CROWD(counts[g]);
   var tf = teacherFactor();
   var dpm = CONFIG.DAYS_PER_MONTH;
+  var majorCount = {}; for (i = 0; i < n; i++) { var mm0 = studentMajor(S.students[i]); if (mm0) majorCount[mm0.key] = (majorCount[mm0.key] || 0) + 1; } // khoa headcounts for synergy
   for (i = 0; i < n; i++) {
     s = S.students[i];
     var p = CONFIG.PRESETS[S.presets["n" + s.grade]] || CONFIG.PRESETS.canbang;
@@ -355,6 +367,8 @@ function growStudents() {
     var vetGain = p.vet / dpm * hbMult(s, "vet");
     s.vet = clamp(s.vet + vetGain, 0, 100);
     s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
+    var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
+    if (smj && (majorCount[smj.key] || 0) >= CONFIG.SYN_MIN) s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW, 0, 100);
     if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) s._drop = true;
   }
   if (n) S.students = S.students.filter(function (x) { return !x._drop; });
@@ -1038,6 +1052,7 @@ function sanitize() {
   S.seed0 = (S.seed0 || 0) >>> 0;
   if (!S.META) S.META = {};
   if (!Array.isArray(S.META.goalsHit)) S.META.goalsHit = [];
+  if (!Array.isArray(S.META.majorsUnlocked)) S.META.majorsUnlocked = [];
 }
 
 /* ============================================================================
@@ -1064,5 +1079,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones }; }
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones, studentMajor: studentMajor }; }
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

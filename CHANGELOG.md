@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Khoa/Majors system P1: the engine (loop iter 49)
+- First phase of the owner-requested majors system (plan in ROADMAP, owner-approved). Three khoas,
+  each unlocked by a building and steering a destiny: 💻 Lập trình (Phòng Máy → Tay nghề → kỹ-sư),
+  🎨 Thiết kế Chế tạo (Xưởng → Sáng tạo → Steve), 🚀 Khởi nghiệp/Sống Ảo (Lab → Cá mập → the coin
+  trap). Students **auto-join** the khoa matching their *tell* once its building exists (else Đại
+  cương). A khoa with ≥4 students gets a **synergy** bonus (+0.3/day on its stat) — so a *focused*
+  school out-develops a scattered one. Building a khoa's room the first time opens it and pulls in a
+  **prodigy "tuyển thẳng"** (the "talent unlocks with the major" beat), with a news line. Verified by
+  simulation (auto-join, prodigy enroll, synergy A/B = +21 vs +3 tn), and the sweep confirms the
+  craft→🍎 / cram→văn-mẫu thesis still holds (synergy reinforces focus, doesn't break it). Gates green.
+  **Next: P2 (the Khoa UI — a card in Sinh viên + a khoa chip in the inspect card).**
+
 ## 2026-06-13 — Buildings upgrade in place + gentle SFX (loop iter 48)
 - **Owner clarification ("buy more but show 1 — consider it upgrading"):** buildings are no longer
   one-per-type. Buying the same building again now **upgrades it in place** — still one on the map

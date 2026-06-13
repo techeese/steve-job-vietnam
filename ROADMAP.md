@@ -30,8 +30,7 @@ attracts new talent. Owner-confirmed design decisions: **students AUTO-JOIN** (n
   ON/OFF, the destiny it leans toward) + show the student's khoa chip in the **inspect card**. Do NOT add a
   6th nav tab in V1 (the 5-tab nav is already tight at 390px). A dedicated Khoa-management screen is a
   *V2* only if the card proves too small — decide after seeing V1 on mobile.
-- **Phases (each ships green + verified):** **P1** data+engine (MAJORS config, unlockedMajors,
-  studentMajor, synergy in growStudents, prodigy-on-unlock, META.majorsUnlocked) — verify via node probe.
+- **Phases (each ships green + verified):** ~~**P1** data+engine~~ DONE (iter 49: auto-join, synergy, prodigy-on-unlock, thesis holds).
   **P2** UI (Khoa card + inspect chip) — verify via 390px screenshot. **P3** balance pass — `node sweep.js`
   before/after; synergy growth shifts tn/st/cm so it can move destinies — confirm the craft→🍎 / cram→
   văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4** (optional) deepen: khoa-vs-khoa
