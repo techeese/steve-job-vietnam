@@ -1331,7 +1331,7 @@
     ch.appendChild(a); ch.appendChild(b); w.appendChild(ch);
     openModal(w);
   }
-  function afterFinalize() { syncActors(); rebuildWalk(); drawStatic(); lastSig = ""; checkModals(); render(); }
+  function afterFinalize() { syncActors(); rebuildWalk(); drawStatic(); checkModals(); render(); }
   function showJuneResults() {
     var s = S(), pj = s.pendingJune, w = el("div");
     w.appendChild(el("div", "kic", "Kết quả · Năm " + (s.year - 1)));
@@ -1350,7 +1350,7 @@
       w.appendChild(r);
     });
     var btn = el("button", "btn gold", "Tiếp tục →"); btn.style.width = "100%"; btn.style.marginTop = "8px";
-    btn.onclick = function () { S().pendingJune = null; lastSig = ""; checkModals(); render(); };
+    btn.onclick = function () { S().pendingJune = null; checkModals(); render(); };
     w.appendChild(btn);
     openModal(w);
   }
@@ -1392,7 +1392,7 @@
     }
     rerender();
   }
-  function afterAdmit() { syncActors(); lastSig = ""; checkModals(); render(); toast("Tân sinh viên đang vào trường."); }
+  function afterAdmit() { syncActors(); checkModals(); render(); toast("Tân sinh viên đang vào trường."); }
   function dial(lab, val, dec, inc) {
     var r = el("div", "row"); r.style.marginBottom = "4px";
     r.innerHTML = "<div class='grow' style='font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.4px'>" + lab + "</div>";
@@ -1415,7 +1415,7 @@
       var virtuous = /tử tế|mượn|báo cáo|giữ em/.test(c.hint || "");
       var b = el("button", "choice" + (virtuous ? " virtue" : ""));
       b.innerHTML = "<div class='ttl'>" + esc(c.label) + "</div><div class='hint'>" + esc(c.hint || "") + "</div>";
-      b.onclick = function () { HVS.resolveEvent(i); lastSig = ""; checkModals(); renderPanel(); };
+      b.onclick = function () { HVS.resolveEvent(i); checkModals(); renderPanel(); };
       ch.appendChild(b);
     });
     w.appendChild(ch);
@@ -1429,9 +1429,9 @@
     w.appendChild(el("div", "lead", esc(c.offer)));
     var ch = el("div", "choices");
     var a = el("button", "choice"); a.innerHTML = "<div class='ttl'>Ký hợp đồng</div><div class='hint'>+" + c.sign + "tr ngay, +" + c.pay + "tr/tháng × " + c.months + ". −2 Thực Chất, +2 Tiếng Tăm.</div>";
-    a.onclick = function () { HVS.resolveContract(true); lastSig = ""; checkModals(); renderPanel(); };
+    a.onclick = function () { HVS.resolveContract(true); checkModals(); renderPanel(); };
     var b = el("button", "choice virtue"); b.innerHTML = "<div class='ttl'>Từ chối khéo</div><div class='hint'>+2 Thực Chất, +1 Uy Tín. Bác Tâm gật đầu.</div>";
-    b.onclick = function () { HVS.resolveContract(false); lastSig = ""; checkModals(); renderPanel(); };
+    b.onclick = function () { HVS.resolveContract(false); checkModals(); renderPanel(); };
     ch.appendChild(a); ch.appendChild(b); w.appendChild(ch);
     openModal(w);
   }
@@ -1443,7 +1443,7 @@
     if (gf.biggest) w.appendChild(el("div", "lead", "Từ " + esc(gf.biggest.ten) + ":<br><i>“" + esc(gf.quote) + "”</i>"));
     w.appendChild(el("div", "nod", "Bác Tâm để chồng thư lên bàn, không nói gì."));
     var btn = el("button", "btn gold", "Cất vào ngăn kéo"); btn.style.width = "100%"; btn.style.marginTop = "10px";
-    btn.onclick = function () { S()._giftFlush = null; lastSig = ""; checkModals(); render(); };
+    btn.onclick = function () { S()._giftFlush = null; checkModals(); render(); };
     w.appendChild(btn);
     openModal(w);
   }
