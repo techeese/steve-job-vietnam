@@ -305,6 +305,7 @@ function economyTick() {
   var contractPay = 0;
   S.contracts = S.contracts.filter(function (c) { contractPay += c.pay; c.mLeft -= 1; return c.mLeft > 0; });
   S.cash = r1(S.cash + income + contractPay - salaries - maint - materials);
+  if (S.cash > CONFIG.CASH_KEEP) S.cash = r1(S.cash - (S.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN); // reinvest surplus (money sink)
 
   // endowment compounds (DESIGN ruling 3) — keep full precision; r1 would round the 0.4% away
   var prev = S.endow.bal;

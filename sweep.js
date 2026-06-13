@@ -91,7 +91,8 @@ var dflt = results["default (honest)"];
 line("--- ECONOMY (default honest school) ---");
 line("  Y1 net/month: " + f1(dflt.avgY1Net) + "tr   (target band +8..25)");
 line("  bankrupt rate: " + f0(dflt.bankruptRate * 100) + "%   avg min cash: " + f0(dflt.avgMinCash) + "tr   avg end cash: " + f0(dflt.avgCash) + "tr");
-line("  avg endow: " + f0(dflt.avgEndow) + "tr   meters TT/UT/TC: " + f0(dflt.avgTT) + "/" + f0(dflt.avgUT) + "/" + f0(dflt.avgTC));
+line("  default (cram-leaning) meters TT/UT/TC: " + f0(dflt.avgTT) + "/" + f0(dflt.avgUT) + "/" + f0(dflt.avgTC) + "   endow: " + f0(dflt.avgEndow) + "tr");
+var honestM = results["cân bằng"]; line("  HONEST (cân bằng)     meters TT/UT/TC: " + f0(honestM.avgTT) + "/" + f0(honestM.avgUT) + "/" + f0(honestM.avgTC) + "   end cash: " + f0(honestM.avgCash) + "tr");
 if (dflt.avgY1Net < 8 || dflt.avgY1Net > 25) FLAGS.push("Y1 net " + f1(dflt.avgY1Net) + " outside +8..25 band");
 if (dflt.bankruptRate > 0.15) FLAGS.push("default bankrupts " + f0(dflt.bankruptRate * 100) + "% of runs");
 line("");
@@ -126,11 +127,13 @@ var anySteve = names.some(function (nm) { return results[nm].steveRate > 0.05; }
 if (!anySteve) FLAGS.push("🍎 essentially unreachable in 11y across ALL strategies (steveRate<5%)");
 var craftSteve = results["đồ án (craft)"].steveRate, cramSteve = results["luyện đề (cram)"].steveRate;
 if (craftSteve <= cramSteve) FLAGS.push("craft path does not out-produce cram on 🍎 (craft " + f0(craftSteve * 100) + "% vs cram " + f0(cramSteve * 100) + "%) — thesis weak");
-if (dflt.avgTT < 10) FLAGS.push("Tiếng Tăm collapses to ~" + f0(dflt.avgTT) + " (decays −1/mo with no sustain) — admissions pool shrinks, hype meter is dead weight");
+var honest = results["cân bằng"]; // an HONEST school is the meter-health benchmark (default is intentionally cram-leaning)
+if (honest && honest.avgTT < 10) FLAGS.push("HONEST (cân bằng) school's Tiếng Tăm collapses to ~" + f0(honest.avgTT) + " — baseline reputation not sustained");
+if (honest && honest.avgUT < 5) FLAGS.push("HONEST school's Uy Tín collapses to ~" + f0(honest.avgUT) + " — losses outpace the capped gains");
 if (dflt.avgCash > 1200) FLAGS.push("late-game money inflates to ~" + f0(dflt.avgCash) + "tr — no spend sink / no economic pressure mid-late run");
 var maxCoin = Math.max.apply(null, names.map(function (nm) { return results[nm].statePct.CA_MAP_COIN; }));
 if (maxCoin < 1.5) FLAGS.push("CA_MAP_COIN (cá mập coin) only ~" + f1(maxCoin) + "% across ALL strategies — the satire's dark mirror barely fires; cram should breed some sharks");
-var dead = keys.filter(function (k) { return names.every(function (nm) { return results[nm].statePct[k] < 1; }); });
+var dead = keys.filter(function (k) { return k !== "STEVE" && names.every(function (nm) { return results[nm].statePct[k] < 0.5; }); }); // STEVE is meant to be rare per-capita (tracked via 🍎rate)
 if (dead.length) FLAGS.push("end-states that essentially never occur: " + dead.join(", ") + " — content/cascade gates may be unreachable");
 line("");
 

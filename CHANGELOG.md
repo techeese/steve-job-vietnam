@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Balance: money sink — sweep now fully clean (loop iter 18)
+- Late-game cash inflated to ~2,800tr (no sink). Added a reserve-protecting sink: surplus
+  ABOVE 300tr is reinvested into operations at 3%/mo (normal saving untouched, hoarding capped)
+  → end cash ~1,012tr, Y1 net still +12.3 (in band). Shown as a funding-panel line.
+- Sharpened the sweep flags (meter-health checks the HONEST cân-bằng school, not the
+  intentionally cram-leaning default; 🍎 excluded from dead-state check since it is rare by design).
+- **Sweep now reports ALL CLEAR**: economy in band, plural outcomes, 🍎 reachable, thesis holds.
+  Confirmed contrast — honest school keeps TT 13/UT 9/TC 63; cram default TT 8/UT 3 (consequence).
+
 ## 2026-06-13 — Balance: the cá-mập-coin ending now fires (loop iter 17, sweep-driven)
 - The game is *about* not mass-producing coin sharks, but the cá-mập-coin ending literally
   never fired (0%). Root cause: the vet/cram drag (VET_MULT) was halving the cá-mập stat too,

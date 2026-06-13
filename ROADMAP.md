@@ -67,11 +67,13 @@ cram/default settle into lương-ổn. Problems:
 - ~~Tiếng Tăm collapse~~ FIXED (iter 16): TT_FLOOR = 10+0.25×UT, decays/recovers toward it.
 - ~~CA_MAP_COIN ≈ 0%~~ FIXED (iter 17): decoupled cm growth from the vet drag + lowered the
   gate (cm≥52∧tn≤45∧vet≥50) → cá-mập now fires ~2% and the dark arc works (sharks → BI_BAT).
-- **Money inflates to ~2,800tr** — STILL OPEN (top remaining balance item). Add sinks.
-- **Deeper meter pass** — the cram-leaning DEFAULT config (n2–4 luyện-đề) now sees TT/UT
-  depress over a run (sharks → arrests → reputation hit; thesis-correct but rough for a new
-  player on defaults). Consider: a gentler default preset config, UT recovery vs arrest losses,
-  and verifying HONEST/craft strategies keep meters healthy (the intended contrast).
+- ~~Money inflates~~ FIXED (iter 18): surplus above CASH_KEEP(300) reinvested 3%/mo → end
+  cash ~1,012tr (was 2,800), Y1 net still +12.3 in band. Visible as a funding-panel line.
+- **SWEEP NOW CLEAN** (iter 18): all flags clear. Confirmed contrast — HONEST cân-bằng school
+  keeps TT 13 / UT 9 / TC 63 (healthy), cram-leaning default TT 8 / UT 3 (consequence). Thesis
+  holds under simulation. Remaining polish (not flagged, lower priority): the cram DEFAULT
+  config is rough for a brand-new player (could ship a gentler preset default); proper spend
+  channels (scholarships drawing cash, Quỹ Ứng Cứu — S4) would beat the blunt cash-drain sink.
 
 ## Salvaged from the retired /mvp/ build (worth keeping)
 - **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track

@@ -17,6 +17,7 @@ var CONFIG = {
   // economy
   BOOT_CASH: 120, BOOK_VALUE: 150, BOOT_ENDOW: 10, BOOT_TUITION: 2,
   MAINT_RATE: 0.007,            // %/month of book+builds
+  CASH_KEEP: 300, CASH_DRAIN: 0.03, // surplus above CASH_KEEP reinvested into operations/mo (money sink; protects normal saving)
   DUAN_COST_PER_SV: 1,          // tr/sv/th for Đồ Án & Lab preset
   TUITION_MIN: 1, TUITION_MAX: 6, TUITION_STEP: 0.5,
 
