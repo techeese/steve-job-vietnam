@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 Góp quỹ + iter 77 weather = 2 POLISH ships; iter 78 was a MAINTENANCE sprint — does NOT count as a ship — so still 2: ONE more polish then the EPIC track locks.)
+- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — the NEXT firing is HARD-LOCKED to the EPIC track.** Reset to 0 only when an epic SHIPS. (76 Góp quỹ · 77 weather · 79 khoa identity = 3 POLISH; 78 maintenance didn't count.) NEXT = an EPIC: either the rest of **deeper-khoa life** (rivalries with teeth / khoa-gated facilities / a dedicated khoa screen — FEATURE) or the queued **ui.js→screens.js** (STRUCTURE, see `## Architecture`). EPICS_SINCE_STRUCTURE is 1 so a FEATURE epic is still allowed; pick by value.
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`

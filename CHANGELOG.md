@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-14 — Khoa identity + an inter-khoa standing (loop iter 79)
+- First slice of the VISION next-tier **"deeper khoa life"** — done safely (UI + one data field, zero
+  engine/save/balance change). The Sinh viên tab's khoa section went from a plain list to **identity-rich
+  cards**: each khoa now wears its **color** (Lập trình blue · Thiết kế Chế tạo gold · Khởi nghiệp/Sống Ảo
+  purple) as a left-border accent + a colored SV count, and finally shows its **motto** (the `line` that was
+  already in the data but never surfaced — "Học để cái máy chạy thật…", "Cái đẹp không có văn mẫu…", "Chưa
+  có sản phẩm nhưng đã có hoodie và pitch deck.").
+- New **inter-khoa standing**: the unlocked khoas with students are ranked by size → **🥇🥈🥉 medals** (only
+  when ≥2 compete), and the campus crowns a **"Khoa nổi bật năm nay"** at the top of the card. Purely derived
+  live from member counts — no new state, no FSM/economy touch, so the destiny thesis & sweep are untouched.
+- data.js: a `color` per MAJOR. ui.js: `panelStudents` khoa block (rank/medal/motto/accent). Verified:
+  node-parse · `./gate.sh` ALL GREEN · `./bot.sh` **BOTOK** (full 11y in-browser, zero JSERR) · 390px
+  screenshot of the new cards (accents/mottos/medals/standout header all clean, nothing clipped).
+- POLISH ship → **`SMALL_SHIPS_SINCE_EPIC 2→3` ⇒ the NEXT firing is HARD-LOCKED to the EPIC track** (the
+  natural epic: the rest of deeper-khoa life — rivalries with teeth / a dedicated khoa screen — or the queued
+  ui.js→screens.js STRUCTURE move). Bar: **FUN/CHARM 4** (khoas read as cultures with a pennant race now).
+
 ## 2026-06-14 — Maintenance sprint + a new browser smoke-test (loop iter 78)
 - The overdue ~5th-iteration health check (last was iter 67). **Clean bill of health — no game bugs found.**
   - **Sweep** (`node sweep.js`): bands green — 0% bankruptcy, pluralism holds (cram→QUAN_VAN_MAU, craft→KY_SU/🍎),

@@ -1140,13 +1140,24 @@
       s.students.forEach(function (st) { var m = HVS.studentMajor(st); if (m) counts[m.key] = (counts[m.key] || 0) + 1; else general++; });
       var kc = el("div", "card"); kc.appendChild(el("h3", null, "Khoa / Chuyên ngành"));
       var thr = function (k) { return HVS.khoaThreshold ? HVS.khoaThreshold(k) : (CONFIG.SYN_MIN || 4); };
+      var dflt = "#9aa4b2";
+      // inter-khoa STANDING: rank the unlocked khoas that actually have students → 🥇🥈🥉 (only when ≥2 compete),
+      // and crown the campus's "khoa nổi bật" this year. Derived live from member counts — no engine/save state.
+      var ranked = CONFIG.MAJORS.filter(function (m) { return s.rooms.some(function (r) { return r.key === m.room; }) && (counts[m.key] || 0) > 0; })
+        .sort(function (a, b) { return (counts[b.key] || 0) - (counts[a.key] || 0); });
+      var rankOf = {}; if (ranked.length >= 2) ranked.forEach(function (m, i) { rankOf[m.key] = ["🥇", "🥈", "🥉"][i] || ""; });
+      if (ranked.length >= 2) { var top = ranked[0]; kc.appendChild(el("div", "tiny", "Khoa nổi bật năm nay: <span style='color:" + (top.color || dflt) + ";font-weight:700'>" + top.icon + " " + esc(top.name) + "</span>")).style.marginBottom = "6px"; }
       CONFIG.MAJORS.forEach(function (m) {
         var unlocked = s.rooms.some(function (r) { return r.key === m.room; });
-        var cnt = counts[m.key] || 0, need = thr(m.key), syn = cnt >= need;
+        var cnt = counts[m.key] || 0, need = thr(m.key), syn = cnt >= need, col = m.color || dflt;
         var status = !unlocked ? ("🔒 Xây " + CONFIG.ROOMS[m.room].name + " để mở")
           : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + need + " SV để cộng hưởng"));
+        var medal = rankOf[m.key] ? (" " + rankOf[m.key]) : "";
         var row = el("div", "row"); row.style.marginBottom = unlocked ? "2px" : "6px"; if (!unlocked) row.style.opacity = ".5";
-        row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + "</div><div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip'>" + cnt + " SV</div>";
+        row.style.borderLeft = "3px solid " + col; row.style.paddingLeft = "7px";
+        row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + medal + "</div>" +
+          "<div class='tiny' style='font-style:italic;opacity:.78'>" + esc(m.line) + "</div>" +
+          "<div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip' style='color:" + col + "'>" + cnt + " SV</div>";
         kc.appendChild(row);
         if (unlocked) { // P4b: assign a trưởng-khoa (a teacher) — khoa thrives at one fewer SV + grows faster
           var hid = s.khoaHead && s.khoaHead[m.key];
