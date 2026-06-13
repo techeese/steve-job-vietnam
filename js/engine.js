@@ -78,6 +78,24 @@ function placeRoom(key, x, y) {
   checkMilestones(); // building can complete a founding milestone (responsive while paused)
   return { ok: true };
 }
+// "buy → it just appears": find the first tidy spot (reading order, inside a border, off the central
+// path) and build there — no manual placement. Falls back to allowing the path if the grounds fill up.
+function autoPlace(key) {
+  var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
+  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có vườn này rồi." };
+  if ((d.cost || 0) > S.cash) return { ok: false, msg: "Không đủ tiền." };
+  var px = CONFIG.GRID_W >> 1, py = CONFIG.GRID_H >> 1, best = null, pass, x, y;
+  for (pass = 0; pass < 2 && !best; pass++) {
+    for (y = 1; y <= CONFIG.GRID_H - d.h && !best; y++) {
+      for (x = 1; x <= CONFIG.GRID_W - d.w && !best; x++) {
+        var onPath = (x <= px && px < x + d.w) || (y <= py && py < y + d.h);
+        if (canPlace(key, x, y) && (pass === 1 || !onPath)) best = { x: x, y: y };
+      }
+    }
+  }
+  if (!best) return { ok: false, msg: "Hết chỗ trong khuôn viên." };
+  return placeRoom(key, best.x, best.y);
+}
 
 /* ---------- news / meters ---------- */
 function news(line) { S.news.unshift({ t: S.totalDays, s: line }); if (S.news.length > 60) S.news.pop(); }
@@ -1020,5 +1038,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones }; }
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones }; }
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

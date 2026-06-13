@@ -111,6 +111,16 @@
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
   var selStudent = null, selRoom = null; // what the player has tapped (drives the on-map selection marker)
   var tapFx = null; // transient tap ripple (immediate touch feedback on mobile)
+  // "buy → it just appears": no manual placement — the building drops into the next tidy spot,
+  // briefly flashing so you can see where it landed.
+  function buyRoom(key) {
+    var res = HVS.autoPlace(key);
+    if (!res.ok) { toast(res.msg); return; }
+    var d = CONFIG.ROOMS[key], ded = d && d.ded, placed = S().rooms[S().rooms.length - 1];
+    rebuildWalk(); drawStatic(); render();
+    if (placed) { selRoom = { x: placed.x, y: placed.y, key: placed.key }; selStudent = null; } // flash where it landed
+    if (ded) showDedication(ded); else toast("Đã xây " + d.name + ".");
+  }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
@@ -784,14 +794,6 @@
   }
   function onMapClick(ev) {
     var pt = mapPoint(ev);
-    if (placingKey) {
-      var d = CONFIG.ROOMS[placingKey];
-      var gx = Math.max(0, Math.min(GW - d.w, pt.gx)), gy = Math.max(0, Math.min(GH - d.h, pt.gy));
-      var res = HVS.placeRoom(placingKey, gx, gy);
-      if (res.ok) { var pk = placingKey, ded = CONFIG.ROOMS[pk] && CONFIG.ROOMS[pk].ded; placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; rebuildWalk(); drawStatic(); render(); if (ded) showDedication(ded); else toast("Đã xây xong."); }
-      else toast(res.msg);
-      return;
-    }
     tapFx = { x: pt.px, y: pt.py, t0: (typeof performance !== "undefined" ? performance.now() : 0) }; // tap ripple feedback
     resolveTap(pt.px, pt.py, pt.gx, pt.gy);
   }
@@ -985,6 +987,7 @@
 
     // build
     var c3 = el("div", "card"); c3.appendChild(el("h3", null, "Xây dựng"));
+    c3.appendChild(el("div", "tiny", "Chạm để xây — phòng tự hiện ra trong khuôn viên.")).style.marginBottom = "7px";
     var grid = el("div", "buildgrid");
     ["cangtin", "lab", "phongmay", "xuong", "phonghoc"].forEach(function (key) {
       var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key];
@@ -992,7 +995,7 @@
       var owned = s.rooms.filter(function (r) { return r.key === key; }).length;
       b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (owned ? " <span class='tiny'>×" + owned + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + (d.cost ? "−" + d.cost + "tr" : "Miễn phí") + "</div>";
       if (d.cost > s.cash) b.disabled = true;
-      b.onclick = function () { placingKey = key; document.body.classList.add("placing"); $("mapHint").textContent = "Chạm vào khuôn viên để đặt " + d.name + " (" + d.w + "×" + d.h + ")."; toast("Chọn vị trí trên bản đồ."); };
+      b.onclick = function () { buyRoom(key); };
       grid.appendChild(b);
     });
     c3.appendChild(grid);
@@ -1009,7 +1012,7 @@
         var b = el("button", "build");
         b.innerHTML = "<div class='nm'>" + sk.e + " " + esc(d.name) + "</div><div class='ds'>" + esc(d.desc) + "</div><div class='pr'>−" + d.cost + "tr</div>";
         if (d.cost > s.cash) b.disabled = true;
-        b.onclick = function () { placingKey = key; document.body.classList.add("placing"); $("mapHint").textContent = "Chạm vào khuôn viên để đặt " + d.name + " (" + d.w + "×" + d.h + ")."; toast("Chọn vị trí cho khu vườn."); };
+        b.onclick = function () { buyRoom(key); };
         dgrid.appendChild(b);
       });
       c3b.appendChild(dgrid); wrap.appendChild(c3b);

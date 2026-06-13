@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — Buy → it just appears: auto-placement (owner UX, loop iter 41)
+- Owner hit the build flow cold ("How should I touch?") — tapping a build button entered a manual
+  "placing" mode whose only cue was a tiny bottom strip, so it wasn't clear you had to then tap the
+  map. Per the owner's own idea ("predefined layout… when we bought something it just appear"),
+  removed manual placement entirely: tapping a building (or a memorial garden) in the build menu now
+  **auto-places it** in the next tidy spot — reading-order scan, inside a 1-tile border, off the
+  central path — and briefly highlights where it landed. New engine `autoPlace()` (with a path-avoiding
+  fallback); the build menu gained a "phòng tự hiện ra trong khuôn viên" hint. Verified: 9 mixed
+  builds land with 0 overlaps and 0 on the path, a real button-click places a room, gates green.
+
 ## 2026-06-13 — Maintenance sprint + flow reflection (loop iter 40)
 - No new feature — a health pass after a 5-iteration feature run (tap polish, June décor, cache fix,
   decade capstone, reformer gardens). Verified the integrated whole: `sweep.js` clean (pluralism
