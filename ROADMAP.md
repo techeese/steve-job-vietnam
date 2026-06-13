@@ -6,6 +6,12 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
+★ **Balance follow-ups surfaced in the iter-34 audit (queue):** (1) **Uy Tín erosion** — over a long
+run UT decays to ~1 even with memorial-garden boosts; the gardens' one-time +5 doesn't hold. Decide
+whether monuments should give a small *ongoing* UT floor/source (like lab's +TT) vs one-time. (2)
+**Late-game money** still inflates (~2344–2655tr); gardens are a sink only if the player builds them —
+the sweep (fixed strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
+
 ★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority:**
 - ~~**(A) START FROM NOTHING, build up**~~ **SHIPPED (iter 24).** Boot = empty lot: 0 rooms,
   0 students, 1 founding teacher, 200tr pot with an origin story (viral đề-Văn answer → cắm sổ

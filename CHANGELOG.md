@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — On-map selection marker + maintenance audit (loop iter 34)
+- **Owner feedback: "map selection on mobile still not clear."** Tapping worked, but nothing on the
+  map showed *what* you'd selected — the inspect card just appeared at the bottom. Added a clear,
+  pulsing selection marker: a tapped student gets a gold feet-ring + a bobbing overhead pointer; a
+  tapped room gets gold corner brackets. Selection tracks every tap and clears on dismiss, so on a
+  small phone screen it's now unmistakable which student/room the card refers to. Verified the state
+  wiring (room→bracket, student→pointer, hide→clear) and the bracket render; gates green.
+- **Maintenance sprint** (~5th-iter cadence): 11-game-year playthrough exercising all systems
+  (gardens, events, Tết, văn-mẫu, walk-in/out) ran clean — no JS errors, save/load solid, sim 28ms
+  (no perf issue). Noted for follow-up: Uy Tín erodes to ~1 over a long run despite garden boosts
+  (a decay-balance item), and the late-game money-inflation sweep flag persists (S4 spend channels).
+
 ## 2026-06-13 — Memorial gardens: honour a real educator (loop iter 33)
 - The late game had no aspiration once the founding milestones were done, and the philosophical
   core (the owner's emphasis: "the player's own version of the answer") lived only in the epilogue.

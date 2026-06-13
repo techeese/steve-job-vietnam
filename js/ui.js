@@ -105,6 +105,7 @@
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
+  var selStudent = null, selRoom = null; // what the player has tapped (drives the on-map selection marker)
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
@@ -239,6 +240,7 @@
     for (i = 0; i < actors.length; i++) updateActor(actors[i], alive, ts, period);
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
+    drawSelection(ctx, ts); // on-map marker for the tapped student/room
     if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
@@ -408,6 +410,35 @@
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 24, 2, 2); ctx.fillRect(x - 2, y - 23, 1, 1); ctx.fillRect(x + 1, y - 23, 1, 1); } // scholarship star
   }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  // make the current tap selection unmistakable on the map (mobile: small targets need a clear marker)
+  function drawSelection(ctx, ts) {
+    var pulse = 0.5 + 0.5 * Math.sin(ts / 220);
+    if (selRoom) {
+      var d = CONFIG.ROOMS[selRoom.key];
+      if (d) {
+        var rx = selRoom.x * T, ry = selRoom.y * T, rw = d.w * T, rh = d.h * T, c = 6;
+        ctx.strokeStyle = "rgba(240,198,116," + (0.55 + 0.4 * pulse).toFixed(2) + ")"; ctx.lineWidth = 2;
+        // corner brackets — read as "selected" without boxing in the art
+        ctx.beginPath();
+        ctx.moveTo(rx, ry + c); ctx.lineTo(rx, ry); ctx.lineTo(rx + c, ry);
+        ctx.moveTo(rx + rw - c, ry); ctx.lineTo(rx + rw, ry); ctx.lineTo(rx + rw, ry + c);
+        ctx.moveTo(rx + rw, ry + rh - c); ctx.lineTo(rx + rw, ry + rh); ctx.lineTo(rx + rw - c, ry + rh);
+        ctx.moveTo(rx + c, ry + rh); ctx.lineTo(rx, ry + rh); ctx.lineTo(rx, ry + rh - c);
+        ctx.stroke();
+      }
+    }
+    if (selStudent != null) {
+      var a = null; for (var i = 0; i < actors.length; i++) if (actors[i].id === selStudent) { a = actors[i]; break; }
+      if (a) {
+        var x = a.px | 0, y = a.py | 0;
+        ctx.strokeStyle = "rgba(240,198,116," + (0.6 + 0.4 * pulse).toFixed(2) + ")"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.ellipse(x, y + 4, 8, 3.5, 0, 0, 6.2832); ctx.stroke(); // feet ring
+        var my = (y - 31 - 2 * pulse) | 0;                                         // bobbing overhead pointer
+        ctx.fillStyle = PX.out; ctx.beginPath(); ctx.moveTo(x - 5, my - 1); ctx.lineTo(x + 5, my - 1); ctx.lineTo(x, my + 6); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = PX.gold; ctx.beginPath(); ctx.moveTo(x - 4, my); ctx.lineTo(x + 4, my); ctx.lineTo(x, my + 4); ctx.closePath(); ctx.fill();
+      }
+    }
+  }
 
   // ---- static campus (lacquer-night diorama). Redrawn only on build; seeded → no flicker. ----
   function drawStatic() {
@@ -740,6 +771,7 @@
   function showInspectStudent(id) {
     var st = null, list = S().students; for (var i = 0; i < list.length; i++) if (list[i].id === id) { st = list[i]; break; }
     if (!st) { hideInspect(); return; }
+    selStudent = id; selRoom = null; // mark the selection on the map
     var ins = $("inspect");
     var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
     var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
@@ -772,6 +804,7 @@
   }
   function showInspectRoom(r) {
     var d = CONFIG.ROOMS[r.key], sk = ROOM_SKIN[r.key] || { e: "▫" }, ins = $("inspect");
+    selRoom = { x: r.x, y: r.y, key: r.key }; selStudent = null; // mark the selection on the map
     var cnt = 0;
     for (var i = 0; i < actors.length; i++) { var gx = Math.floor(actors[i].px / T), gy = Math.floor(actors[i].py / T); if (gx >= r.x && gx < r.x + d.w && gy >= r.y && gy < r.y + d.h) cnt++; }
     ins.innerHTML =
@@ -783,7 +816,7 @@
     $("ixBtn").onclick = hideInspect;
     ins.classList.add("show"); $("mapHint").textContent = "";
   }
-  function hideInspect() { $("inspect").classList.remove("show"); }
+  function hideInspect() { $("inspect").classList.remove("show"); selStudent = null; selRoom = null; }
 
   /* ============================================================================
      HUD
@@ -1374,6 +1407,8 @@
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
     tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
+    _sel: function () { return { stu: selStudent, room: selRoom }; },
+    _drawSel: function () { var ctx = $("mapLive").getContext("2d"); ctx.imageSmoothingEnabled = false; drawSelection(ctx, 800); },
     rooms: function () { return S().rooms.map(function (r) { return { key: r.key, x: r.x, y: r.y }; }); },
     // test hooks (headless rAF is throttled, so drive sync/walk manually): inspect actor
     // positions, force a roster sync, and step the walk N frames under a pinned period.
