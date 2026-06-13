@@ -284,6 +284,20 @@ var CONTENT = {
       choices: [
         { label: "Mua cho khoá yếu", hint: "-15tr, +0,5 điểm, +10 Vẹt, +1 mầm phốt nặng", fx: "chodoanMua" },
         { label: "Không mua", hint: "bảo vệ bằng thực lực", fx: null }
+      ] },
+    { id: "baodauRa", title: "📸 Báo muốn bài 'thủ khoa đầu ra'",
+      desc: "Một tờ báo muốn viết 'sinh viên trường mình ra trường lương nghìn đô'. Họ cần một gương mặt biết cười.",
+      pred: "hasNam4",
+      choices: [
+        { label: "Dàn dựng với em được gà kỹ", hint: "+3 Tiếng Tăm, +1 mầm phốt", fx: "baoGa" },
+        { label: "Để một kỹ sư thật nói vụng về", hint: "+1 Uy Tín, một việc thật", fx: "baoThat" }
+      ] },
+    { id: "quykhuyenhoc", title: "🎁 Phụ huynh lập 'quỹ khuyến học'",
+      desc: "Một phụ huynh khá giả đề nghị tặng 25tr 'quỹ khuyến học', kèm lời nhắn mong khoa 'lưu ý' con mình.",
+      pred: "common",
+      choices: [
+        { label: "Nhận quỹ, sẽ 'lưu ý'", hint: "+25tr, +2 Vẹt khoá cuối, +1 mầm phốt nặng", fx: "quaNhan" },
+        { label: "Cảm ơn, xin không nhận", hint: "+2 Uy Tín, Bác Tâm gật đầu", fx: "quaTuChoi" }
       ] }
   ],
 

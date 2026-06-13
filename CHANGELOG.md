@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-13 — Two new moral-choice events (loop iter 23)
+- 📸 "Báo muốn bài thủ khoa đầu ra" (stage a coached student for +Tiếng Tăm +mầm phốt, vs let a
+  real kỹ sư speak awkwardly for +Uy Tín) and 🎁 "Phụ huynh lập quỹ khuyến học" (take the 25tr
+  "donation" with strings → +cash +Vẹt +mầm phốt, vs decline for +Uy Tín + a Bác Tâm nod).
+- Both encode the hype-vs-substance tension; new fx + predicates (hasNam4/common); all four
+  branches verified (TT/UT/cash/phốt deltas correct). Gates green.
+
 ## 2026-06-13 — First-time intro (loop iter 22): set the premise
 - New players landed in the school with zero context. Added a one-time intro modal that shows
   the boot premise (the real 2026 đề Văn question → you bought a bankrupt university to MANUFACTURE

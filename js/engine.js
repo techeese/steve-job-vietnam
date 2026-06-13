@@ -733,6 +733,8 @@ function eventPred(e) {
     case "moodLow": return S.students.some(function (s) { return s.mood < 45; });
     case "nam4Duan": return S.presets.n4 === "duan" && S.students.some(function (s) { return s.grade === 4; });
     case "thang5": return S.month === 5;
+    case "hasNam4": return S.students.some(function (s) { return s.grade === 4; });
+    case "common": return S.students.length >= 10;
     default: return e.scripted === true;
   }
 }
@@ -799,6 +801,10 @@ function applyFx(fx, t) {
     case "tangGioOk": classmates(4, function (s) { s.kt = clamp(s.kt + 2, 0, 100); s.vet = clamp(s.vet + 3, 0, 100); }); break;
     case "tangGioNo": gainTC(1); break;
     case "chodoanMua": S.cash = r1(S.cash - 15); classmates(4, function (s) { s.vet = clamp(s.vet + 10, 0, 100); s._diemBoost = 0.5; }); seedPhot(2, "chodoan"); break;
+    case "baoGa": gainTT(3); seedPhot(1, "bao"); break;
+    case "baoThat": gainUT(1, false); bacTamNod(); break;
+    case "quaNhan": S.cash = r1(S.cash + 25); classmates(4, function (s) { s.vet = clamp(s.vet + 2, 0, 100); }); seedPhot(2, "qua"); break;
+    case "quaTuChoi": gainUT(2, false); bacTamNod(); break;
     default: break;
   }
 }
