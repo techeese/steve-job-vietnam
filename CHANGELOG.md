@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-13 — Góp quỹ: late-game money finally has a decision (loop iter 76)
+- The standing sweep flag — *late-game bank inflates to ~2,600tr with no spend sink* — gets its first
+  answer, as a **player choice** rather than a balance nerf (so the auto-play destiny thesis is untouched).
+  The **Quỹ hiến tặng** card in Tài chính now has a **Góp quỹ** control: move surplus bank cash **into the
+  endowment** — `+100tr`, `+500tr`, and a one-tap **Góp phần dư** (everything above the `CASH_KEEP` reserve).
+  It's **one-way** (the quỹ can never be spent back; it only compounds at ×1.004/mo and funds scholarships),
+  so late-game money becomes a real strategic question: *how much of today's surplus do I invest in the
+  institution's future?* A contribution can **cross a SCHOL_GATE on the spot** (200/350/500tr) — unlocking a
+  pantheon scholarship (Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương) → better students. Thematic: it's
+  "tiền của lòng biết ơn," and now also of the founder's deliberate sacrifice.
+- engine.js: pure `contributeQuy(amt)` (clamps to available cash, guards bad input, logs the gift, calls
+  `endowMilestones()`; HVS-exported, never called by the sim). ui.js: the góp row in `panelFund` (toast + chime).
+  Verified: node-parse all 5 · `./gate.sh` ALL GREEN · a behavioral probe (transfer + gate-crossing unlock +
+  overdraw clamp + bad-input guard) · `node sweep.js` bands unchanged (0 bankruptcy, pluralism holds) ·
+  390px screenshot of the Fund tab (three buttons wrap clean, nothing clipped). sweep.js flag reworded to note
+  the manual sink now exists (bot still doesn't opt in → a *passive* late-game pressure remains open).
+  POLISH ship → `SMALL_SHIPS_SINCE_EPIC 0→1`, `EPICS_SINCE_STRUCTURE 1` (unchanged). Bar: **FUN 4** (a real
+  late-game decision where there was none).
+
 ## 2026-06-13 — BGM enrichment: the campus music now moves (loop iter 75)
 - The last unbuilt VISION dream feature. The generative campus-lofi was a static pad-drone; now each mood
   carries a gentle **chord progression** (normal I-IV-V-IV · Tết brighter · June a slow spacious swell ·

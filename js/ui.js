@@ -1193,6 +1193,27 @@
     // endowment
     var ce = el("div", "card"); ce.appendChild(el("h3", null, "Quỹ hiến tặng"));
     ce.appendChild(el("div", "row", "<div class='grow'><div style='font-size:20px;font-weight:800;color:var(--gold)'>" + Math.round(s.endow.bal) + "tr</div><div class='tiny'>×1,004 mỗi tháng · không bao giờ mất giá · không mua được Uy Tín</div></div>"));
+    // góp quỹ — the player turns surplus bank cash into endowment (one-way; funds the scholarships
+    // below). Late-game money finally has a meaningful decision: invest in the institution's future.
+    var surplus = Math.max(0, Math.round(s.cash - CONFIG.CASH_KEEP));
+    var gq = el("div", "row"); gq.style.gap = "6px"; gq.style.flexWrap = "wrap";
+    gq.appendChild(el("div", "tiny grow", "Góp tiền trường vào quỹ — đổi tiền hôm nay lấy thế hệ mai sau (không rút lại được). Bank: " + Math.round(s.cash) + "tr."));
+    function gopBtn(label, amtOf) {
+      var b = el("button", "btn", label); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
+      b.onclick = function () {
+        var amt = amtOf();
+        if (amt <= 0) { toast("Không đủ tiền trong ngân hàng."); return; }
+        var moved = HVS.contributeQuy(amt);
+        if (moved <= 0) { toast("Không đủ tiền trong ngân hàng."); return; }
+        toast("🌱 Đã góp " + Math.round(moved) + "tr vào quỹ hiến tặng."); sfx("chime");
+        renderPanel();
+      };
+      return b;
+    }
+    gq.appendChild(gopBtn("+100tr", function () { return s.cash >= 100 ? 100 : 0; }));
+    gq.appendChild(gopBtn("+500tr", function () { return s.cash >= 500 ? 500 : 0; }));
+    if (surplus >= 100) gq.appendChild(gopBtn("Góp phần dư (" + surplus + "tr)", function () { return Math.max(0, Math.round(s.cash - CONFIG.CASH_KEEP)); }));
+    ce.appendChild(gq);
     // pantheon plaques (endowed)
     CONFIG.PANTHEON.forEach(function (p, i) {
       var sc = s.scholarships[i];

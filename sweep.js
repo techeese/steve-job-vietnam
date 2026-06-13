@@ -132,7 +132,7 @@ if (craftSteve <= cramSteve) FLAGS.push("craft path does not out-produce cram on
 var honest = results["cân bằng"]; // an HONEST school is the meter-health benchmark (default is intentionally cram-leaning)
 if (honest && honest.avgTT < 10) FLAGS.push("HONEST (cân bằng) school's Tiếng Tăm collapses to ~" + f0(honest.avgTT) + " — baseline reputation not sustained");
 if (honest && honest.avgUT < 5) FLAGS.push("HONEST school's Uy Tín collapses to ~" + f0(honest.avgUT) + " — losses outpace the capped gains");
-if (dflt.avgCash > 1200) FLAGS.push("late-game money inflates to ~" + f0(dflt.avgCash) + "tr — no spend sink / no economic pressure mid-late run");
+if (dflt.avgCash > 1200) FLAGS.push("auto-play bank inflates to ~" + f0(dflt.avgCash) + "tr — a manual sink now exists (Góp quỹ: cash→endowment, iter 76) but the bot never opts in; a passive/structural late-game pressure is still open");
 var maxCoin = Math.max.apply(null, names.map(function (nm) { return results[nm].statePct.CA_MAP_COIN; }));
 if (maxCoin < 1.5) FLAGS.push("CA_MAP_COIN (cá mập coin) only ~" + f1(maxCoin) + "% across ALL strategies — the satire's dark mirror barely fires; cram should breed some sharks");
 var dead = keys.filter(function (k) { return k !== "STEVE" && names.every(function (nm) { return results[nm].statePct[k] < 0.5; }); }); // STEVE is meant to be rare per-capita (tracked via 🍎rate)

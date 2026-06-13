@@ -481,6 +481,21 @@ function endowMilestones() {
     bacTamNod();
   }
 }
+// Player decision (late-game money sink): move cash from the bank INTO the endowment. One-way —
+// the quỹ can never be spent back; it only compounds and funds scholarships. So this is the
+// strategic "invest today's surplus in the institution's future" choice, and it can cross a
+// SCHOL_GATE to unlock a pantheon scholarship on the spot. Returns the amount actually moved.
+function contributeQuy(amt) {
+  if (!Number.isFinite(amt) || amt <= 0) return 0;
+  amt = Math.min(r1(amt), r1(S.cash));            // never give more than the bank holds
+  if (amt <= 0) return 0;
+  S.cash = r1(S.cash - amt);
+  S.endow.bal = r1(S.endow.bal + amt);
+  S.endow.log.push({ t: S.totalDays, gift: amt, ten: "Nhà trường góp" });
+  if (S.endow.log.length > 100) S.endow.log.shift();
+  endowMilestones();                              // a contribution may cross a gate → unlock now
+  return amt;
+}
 
 /* ============================================================================
    JUNE — two-stage ceremony (policy → graduation cascade), then admissions.
@@ -1122,5 +1137,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones, studentMajor: studentMajor, khoaHeaded: khoaHeaded, khoaThreshold: khoaThreshold, setKhoaHead: setKhoaHead, teacherById: teacherById }; }
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones, studentMajor: studentMajor, khoaHeaded: khoaHeaded, khoaThreshold: khoaThreshold, setKhoaHead: setKhoaHead, teacherById: teacherById, contributeQuy: contributeQuy }; }
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

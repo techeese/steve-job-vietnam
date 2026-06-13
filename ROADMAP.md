@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS.
+- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (iter 76 = POLISH ship: Góp quỹ late-game spend decision.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
