@@ -20,6 +20,26 @@
   };
   var GRADE_C = { 1: "#6fcf97", 2: "#6aa9f0", 3: "#f2c14e", 4: "#b48ef0" };
 
+  /* === ART: Sơn Mài Diorama (lacquer-night campus, gold-leaf pavilions) === */
+  // per-room style: wall hue, roof silhouette, window temperature, gable sigil, short map label
+  var ROOM_STYLE = {
+    phonghoc: { wall: "#2f5d8a", roof: "gabled",   win: "warm",   sigil: "board",   short: "Phòng học" },
+    san:      { wall: "#2f6b46", roof: "none",      win: "none",   sigil: null,      short: "Sân trường" },
+    cangtin:  { wall: "#8a5a2f", roof: "awning",    win: "warm",   sigil: "bowl",    short: "Căng tin" },
+    lab:      { wall: "#2f7e87", roof: "glossy",    win: "mirror", sigil: "halo",    short: "Lab" },
+    phongmay: { wall: "#5a3f8a", roof: "flatvent",  win: "cold",   sigil: "monitor", short: "Phòng máy" },
+    xuong:    { wall: "#7a4a2f", roof: "sawtooth",  win: "warm",   sigil: "wrench",  short: "Xưởng" }
+  };
+  function mb(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function hashId(id) { return (Math.imul(id, 2654435761) >>> 0); }
+  function shade(hex, pct) {
+    var n = parseInt(hex.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    if (pct > 0) { r += (255 - r) * pct; g += (255 - g) * pct; b += (255 - b) * pct; }
+    else { r *= (1 + pct); g *= (1 + pct); b *= (1 + pct); }
+    return "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
+  }
+  function glow(ctx, cx, cy, col) { var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 8); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.fillRect(cx - 8, cy - 8, 16, 16); }
+
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
   var actors = [], walk = null;
@@ -34,6 +54,8 @@
     rebuildWalk(); syncActors(true);
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
+    // font gate: redraw the static layer once 'Be Vietnam Pro' is ready so room labels aren't a fallback face
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { S()._mapDirty = true; });
     setInterval(loopTick, CONFIG.TICK_MS);
     setInterval(function () { HVS.saveGame(); }, 4000);
     $("soundBtn").onclick = toggleSound;
@@ -86,7 +108,9 @@
         var t0 = randWalkTile();
         a = { id: s.id, px: t0[0] * T + T / 2, py: t0[1] * T + T / 2, tx: t0[0], ty: t0[1], wait: 0, ph: Math.random() * 6.28 };
       }
-      a.grade = s.grade; a.color = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
+      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
+      a.legC = shade(a.bodyC, -0.30);
+      var hh = hashId(s.id); a.hairC = (hh & 1) ? "#241a14" : "#4a3528"; a.hairFlick = (hh % 5 === 0);
       next.push(a);
     }
     actors = next;
@@ -109,62 +133,211 @@
     if (dist < 1.5) {
       if (a.wait > 0) { a.wait -= 1; }
       else { var nt = randWalkTile(); a.tx = nt[0]; a.ty = nt[1]; a.wait = (Math.random() * 50) | 0; }
+      a._moving = false;
     } else {
       var sp = 0.45 + (a.grade === 1 ? 0.1 : 0); // gentle, slightly faster freshers
       a.px += (dx / dist) * sp; a.py += (dy / dist) * sp;
-      a.dir = dx < 0 ? -1 : 1;
+      a.dir = dx < 0 ? -1 : 1; a._moving = true;
     }
     a.bob = Math.sin(ts / 180 + a.ph) * (dist > 1.5 ? 1.4 : 0.4);
   }
+  // chibi student — flat primitives only, no per-frame strings/gradients/save (60fps × 48)
   function drawActor(ctx, a, ts) {
-    var x = a.px, y = a.py + (a.bob || 0);
-    // shadow
-    ctx.fillStyle = "rgba(0,0,0,.28)"; ctx.beginPath(); ctx.ellipse(x, a.py + 6, 5, 2.2, 0, 0, 6.28); ctx.fill();
-    // body
-    ctx.fillStyle = a.color;
-    roundRect(ctx, x - 4, y - 1, 8, 8, 2.4); ctx.fill();
-    // head
-    ctx.fillStyle = "#f4d9b8"; ctx.beginPath(); ctx.arc(x, y - 4, 3.4, 0, 6.28); ctx.fill();
-    // hair
-    ctx.fillStyle = "#2a2018"; ctx.beginPath(); ctx.arc(x, y - 5, 3.4, Math.PI, 0); ctx.fill();
+    var x = a.px | 0, y = a.py + (a.bob || 0), by = a.py | 0;
+    // breathing contact shadow (stays grounded as the body bobs)
+    var rx = 5 - Math.max(0, a.bob || 0) * 0.7;
+    ctx.fillStyle = "rgba(0,0,0,.30)"; ctx.beginPath(); ctx.ellipse(x, by + 6, rx, 2.2, 0, 0, 6.28); ctx.fill();
+    // legs — 2-frame scissor when walking
+    var lf = a._moving ? (Math.sin(ts / 120 + a.ph) > 0 ? 1 : -1) : 0;
+    ctx.fillStyle = a.legC;
+    ctx.fillRect(x - 2.5, by + 3 + (lf > 0 ? 1 : 0), 2, 3);
+    ctx.fillRect(x + 0.5, by + 3 + (lf < 0 ? 1 : 0), 2, 3);
+    // body (full chroma — the primary identifier)
+    ctx.fillStyle = a.bodyC; roundRect(ctx, x - 4, y - 1, 8, 7, 2.4); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.18)"; ctx.fillRect(x - 3, y - 1, 6, 1);
+    drawMarker(ctx, a.grade, x, y);
+    // head + hair
+    ctx.fillStyle = "#f4d9b8"; ctx.beginPath(); ctx.arc(x, y - 4, 3.3, 0, 6.28); ctx.fill();
+    ctx.fillStyle = a.hairC; ctx.beginPath(); ctx.arc(x, y - 5, 3.3, Math.PI, 0); ctx.fill();
+    if (a.hairFlick) ctx.fillRect(x + (a.dir < 0 ? -4 : 3), y - 5, 1, 2);
+    // quiet gold collar tick (UI-gold echo)
+    ctx.fillStyle = "rgba(240,198,116,.7)"; ctx.fillRect(x - 1, y - 1, 2, 1);
     if (a.special) { ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y - 4, 5.4, 0, 6.28); ctx.stroke(); }
-    if (a.hb) { ctx.fillStyle = "#f0c674"; ctx.fillText && (ctx.font = "6px sans-serif", ctx.fillText("✦", x + 3, y - 6)); }
+    if (a.hb) { ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.moveTo(x + 3, y - 8); ctx.lineTo(x + 5, y - 6); ctx.lineTo(x + 3, y - 4); ctx.lineTo(x + 1, y - 6); ctx.closePath(); ctx.fill(); }
+  }
+  function drawMarker(ctx, g, x, y) {
+    if (g === 1) { ctx.fillStyle = "#fff"; ctx.fillRect(x - 1, y - 1, 2, 1); }
+    else if (g === 2) { ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x - 3, y + 4); ctx.lineTo(x + 2, y - 1); ctx.stroke(); }
+    else if (g === 3) { ctx.fillStyle = "rgba(0,0,0,.28)"; ctx.fillRect(x - 3, y + 3, 7, 1); }
+    else if (g === 4) { ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.moveTo(x - 2, y - 1); ctx.lineTo(x, y + 3); ctx.lineTo(x + 2, y - 1); ctx.closePath(); ctx.fill(); }
   }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 
+  // ---- static campus (lacquer-night diorama). Redrawn only on build; seeded → no flicker. ----
   function drawStatic() {
-    var ctx = $("mapStatic").getContext("2d");
-    // ground
-    var g = ctx.createLinearGradient(0, 0, 0, GH * T);
-    g.addColorStop(0, "#17211b"); g.addColorStop(1, "#121a16");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, GW * T, GH * T);
-    // subtle tile texture
-    for (var x = 0; x < GW; x++) for (var y = 0; y < GH; y++) {
-      if ((x + y) % 2 === 0) { ctx.fillStyle = "rgba(255,255,255,.012)"; ctx.fillRect(x * T, y * T, T, T); }
+    var ctx = $("mapStatic").getContext("2d"), W = GW * T, H = GH * T;
+    var rng = mb(1337), cx = 195, cy = 140, i, x, y;
+    // PASS 1 — lacquer base
+    var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#161b1f"); g.addColorStop(1, "#101316");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // PASS 2 — vỏ trứng eggshell flecks (hand-laid lacquer panel)
+    for (i = 0; i < 320; i++) {
+      x = (rng() * W) | 0; y = (rng() * H) | 0;
+      if (Math.hypot(x - cx, y - cy) > 150 && rng() < 0.45) continue;
+      var a = (0.08 + rng() * 0.10).toFixed(2);
+      ctx.fillStyle = (rng() < 0.5 ? "rgba(233,226,207," : "rgba(205,191,156,") + a + ")";
+      ctx.fillRect(x, y, rng() < 0.2 ? 2 : 1, 1);
     }
-    // central path cross (cosmetic)
-    ctx.fillStyle = "rgba(190,170,120,.10)";
-    ctx.fillRect(0, (GH >> 1) * T - 3, GW * T, T + 6);
-    ctx.fillRect((GW >> 1) * T - 3, 0, T + 6, GH * T);
-    // rooms
-    var rooms = S().rooms;
-    for (var i = 0; i < rooms.length; i++) drawRoom(ctx, rooms[i]);
-    // placement ghost handled in live layer overlay text
+    for (i = 0; i < 30; i++) { ctx.fillStyle = "rgba(233,226,207,.24)"; ctx.fillRect((rng() * W) | 0, (rng() * H) | 0, 2, 2); }
+    // PASS 3 — raised boardwalk path spine
+    pathBand(ctx, 0, (GH >> 1) * T, W, T, true);
+    pathBand(ctx, (GW >> 1) * T, 0, T, H, false);
+    // rooms — y-sorted so lower buildings overlap upper
+    var rooms = S().rooms.slice().sort(function (p, q) { return (p.y - q.y) || (p.x - q.x); });
+    for (i = 0; i < rooms.length; i++) drawRoom(ctx, rooms[i]);
+    // ambient props (seeded, capped, off walk lanes)
+    drawProps(ctx, rng, rooms);
+    // PASS 4 — vignette: lit center, edges dissolve into the dark-gold chrome
+    var vg = ctx.createRadialGradient(cx, cy, 40, cx, cy, 250);
+    vg.addColorStop(0, "rgba(10,13,15,0)"); vg.addColorStop(1, "rgba(10,13,15,.45)");
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+  }
+  function pathBand(ctx, x, y, w, h, horiz) {
+    ctx.fillStyle = "#9c8657"; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();
+    ctx.fillStyle = "#c9b079"; roundRect(ctx, x + 2, y + 2, w - 4, h - 5, 4); ctx.fill();
+    ctx.fillStyle = "rgba(255,243,214,.14)"; ctx.fillRect(x + 3, y + 2, w - 6, 1);
+    ctx.fillStyle = "rgba(0,0,0,.18)";
+    if (horiz) { for (var px = x + 8; px < x + w - 4; px += 10) ctx.fillRect(px, y + 2, 1, h - 6); }
+    else { for (var py = y + 8; py < y + h - 4; py += 10) ctx.fillRect(x + 2, py, w - 6, 1); }
   }
   function drawRoom(ctx, r) {
-    var d = CONFIG.ROOMS[r.key], sk = ROOM_SKIN[r.key] || { c: "#444", e: "▫", g: "#666" };
-    var x = r.x * T, y = r.y * T, w = d.w * T, h = d.h * T;
-    ctx.fillStyle = sk.c; roundRect(ctx, x + 1.5, y + 1.5, w - 3, h - 3, 5); ctx.fill();
-    // roof highlight
-    ctx.fillStyle = "rgba(255,255,255,.08)"; roundRect(ctx, x + 1.5, y + 1.5, w - 3, Math.min(10, h / 3), 5); ctx.fill();
-    ctx.strokeStyle = sk.g; ctx.lineWidth = 1.4; roundRect(ctx, x + 1.5, y + 1.5, w - 3, h - 3, 5); ctx.stroke();
-    // icon
-    ctx.font = "14px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(sk.e, x + w / 2, y + h / 2 - 4);
-    // name
-    ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.fillStyle = "rgba(255,255,255,.82)";
-    ctx.fillText(d.name, x + w / 2, y + h - 8);
+    var d = CONFIG.ROOMS[r.key], sty = ROOM_STYLE[r.key] || { wall: "#555", roof: "gabled", win: "warm", short: d.name };
+    var x = r.x * T + 1.5, y = r.y * T + 1.5, w = d.w * T - 3, h = d.h * T - 3, wall = sty.wall;
+    // (A) double-copy soft drop shadow
+    ctx.fillStyle = "rgba(10,13,15,.30)"; roundRect(ctx, x + 4, y + 5, w, h, 5); ctx.fill();
+    ctx.fillStyle = "rgba(10,13,15,.14)"; roundRect(ctx, x + 8, y + 10, w, h, 6); ctx.fill();
+    if (sty.roof === "none") { drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return; }
+    var roofH = Math.min(18, h * 0.38);
+    // (B) front-wall extrusion lip
+    ctx.fillStyle = shade(wall, -0.22); roundRect(ctx, x, y + h - 6, w, 6, 4); ctx.fill();
+    // (C) body
+    ctx.fillStyle = wall; roundRect(ctx, x, y + roofH - 4, w, h - roofH + 4, 5); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.10)"; ctx.fillRect(x + 2, y + roofH - 2, w - 4, 1);
+    // (F) lamplit windows (under the gold frame so the bloom sits behind)
+    drawWindows(ctx, sty.win, x, y + roofH, w, h - roofH);
+    // (D) roof silhouette
+    drawRoof(ctx, sty.roof, wall, x, y, w, roofH);
+    // ambient-occlusion cheat at roof/wall seam
+    ctx.fillStyle = "rgba(0,0,0,.20)"; ctx.fillRect(x, y + roofH - 1, w, 1);
+    // (G) arched door facing the path
+    var dw = 6, dh = 8, dx = x + w / 2 - dw / 2, dy = y + h - dh - 1;
+    ctx.fillStyle = "#241a14"; ctx.beginPath(); ctx.moveTo(dx, dy + dh); ctx.lineTo(dx, dy + 2); ctx.arc(dx + dw / 2, dy + 2, dw / 2, Math.PI, 0); ctx.lineTo(dx + dw, dy + dh); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "rgba(240,198,116,.5)"; ctx.fillRect(dx, dy + dh - 1, dw, 1);
+    // (E) gold-leaf frame — the biggest 26px separation win
+    ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 1.2; roundRect(ctx, x, y + roofH - 4, w, h - roofH + 4, 5); ctx.stroke();
+    ctx.strokeStyle = "rgba(202,162,74,.7)"; ctx.lineWidth = 0.5; roundRect(ctx, x + 1.5, y + roofH - 2.5, w - 3, h - roofH + 1, 4); ctx.stroke();
+    // gable sigil (third redundant cue beyond roof-shape + hue)
+    if (sty.sigil) drawSigil(ctx, sty.sigil, x + w / 2, y + roofH + 5);
+    roomLabel(ctx, sty.short, x, y, w, h);
+  }
+  function roomLabel(ctx, name, x, y, w, h) {
+    ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    var tw = ctx.measureText(name).width, pw = tw + 8, px = x + w / 2 - pw / 2, py = y + h - 8;
+    ctx.fillStyle = "rgba(0,0,0,.5)"; roundRect(ctx, px, py - 5.5, pw, 11, 5); ctx.fill();
+    ctx.fillStyle = "rgba(255,243,214,.92)"; ctx.fillText(name, x + w / 2, py + 0.5);
     ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+  }
+  function drawWindows(ctx, type, x, y, w, h) {
+    if (type === "none") return;
+    var n = Math.max(1, Math.floor((w - 10) / 9)), gap = (w - 2 - n * 5) / (n + 1), wy = y + h - 12, i, wx;
+    for (i = 0; i < n; i++) {
+      wx = x + 2 + gap * (i + 1) + 5 * i;
+      if (type === "warm") { glow(ctx, wx + 2.5, wy + 3, "rgba(240,198,116,.16)"); ctx.fillStyle = "#ffe9a8"; ctx.fillRect(wx, wy, 5, 6); ctx.fillStyle = "#fff3d6"; ctx.fillRect(wx, wy, 5, 3); }
+      else if (type === "cold") { glow(ctx, wx + 2.5, wy + 3, "rgba(127,208,255,.18)"); ctx.fillStyle = "#7fd0ff"; ctx.fillRect(wx, wy, 5, 6); ctx.fillStyle = "#cfeefb"; ctx.fillRect(wx, wy, 5, 2); }
+      else { ctx.fillStyle = "#cfeaf2"; ctx.fillRect(wx, wy, 5, 6); ctx.strokeStyle = "rgba(240,198,116,.7)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(wx, wy + 5); ctx.lineTo(wx + 5, wy); ctx.stroke(); }
+    }
+  }
+  function drawRoof(ctx, type, wall, x, y, w, roofH) {
+    var rc = shade(wall, 0.14), s;
+    if (type === "gabled") {
+      ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(x - 1, y + roofH); ctx.lineTo(x + w / 2, y); ctx.lineTo(x + w + 1, y + roofH); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = "rgba(255,243,214,.5)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w / 2, y + 1); ctx.lineTo(x + w / 2, y + roofH); ctx.stroke();
+      ctx.fillStyle = "#caa24a"; ctx.fillRect(x + w / 2 - 1, y - 1, 2, 2); // finial
+    } else if (type === "awning") {
+      ctx.fillStyle = rc; roundRect(ctx, x - 1, y, w + 2, roofH, 3); ctx.fill();
+      for (s = 0; s < Math.ceil(w / 4); s++) { ctx.fillStyle = (s % 2) ? "#c8412e" : "#efe6cf"; ctx.fillRect(x + s * 4, y + roofH - 3, 4, 3); }
+    } else if (type === "glossy") {
+      ctx.fillStyle = rc; roundRect(ctx, x - 1, y, w + 2, roofH, 6); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,.18)"; roundRect(ctx, x + 1, y + 1, w - 2, roofH / 2, 5); ctx.fill();
+    } else if (type === "flatvent") {
+      ctx.fillStyle = rc; ctx.fillRect(x - 1, y, w + 2, roofH);
+      for (s = 0; s < 3; s++) { ctx.fillStyle = shade(wall, -0.12); ctx.fillRect(x + 4 + s * ((w - 8) / 3), y + 2, 5, roofH - 5); ctx.fillStyle = "#8b929b"; ctx.fillRect(x + 5 + s * ((w - 8) / 3), y + 3, 3, 2); }
+    } else if (type === "sawtooth") {
+      for (s = 0; s < 3; s++) { var sx = x + s * (w / 3); ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx, y + roofH); ctx.lineTo(sx, y + 3); ctx.lineTo(sx + w / 3, y + roofH); ctx.closePath(); ctx.fill(); ctx.fillStyle = "rgba(200,230,240,.5)"; ctx.fillRect(sx + 1, y + 4, 2, roofH - 6); }
+    }
+  }
+  function drawSan(ctx, x, y, w, h) {
+    ctx.fillStyle = "#2f6b46"; roundRect(ctx, x, y, w, h, 5); ctx.fill();
+    for (var i = 0; i < Math.ceil(h / 8); i++) if (i % 2) { ctx.fillStyle = "#34734d"; ctx.fillRect(x + 2, y + 2 + i * 8, w - 4, 4); }
+    ctx.strokeStyle = "rgba(255,255,255,.5)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(x + w / 2, y + h / 2, w * 0.17, h * 0.17, 0, 0, 6.28); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + w / 2, y + 3); ctx.lineTo(x + w / 2, y + h - 3); ctx.stroke();
+    ctx.strokeStyle = "rgba(240,198,116,.5)"; ctx.lineWidth = 1.2; roundRect(ctx, x, y, w, h, 5); ctx.stroke();
+  }
+  function drawSigil(ctx, kind, cx, cy) {
+    ctx.strokeStyle = "#f0c674"; ctx.fillStyle = "#f0c674"; ctx.lineWidth = 1;
+    if (kind === "board") { ctx.fillStyle = "rgba(18,24,18,.92)"; ctx.fillRect(cx - 4, cy - 3, 8, 6); ctx.strokeRect(cx - 4, cy - 3, 8, 6); ctx.fillStyle = "rgba(240,198,116,.8)"; ctx.fillRect(cx - 2.5, cy - 1, 5, 1); }
+    else if (kind === "bowl") { ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI); ctx.stroke(); ctx.fillRect(cx - 3.5, cy - 0.5, 7, 1); }
+    else if (kind === "halo") { ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 6.28); ctx.stroke(); }
+    else if (kind === "monitor") { ctx.strokeRect(cx - 4, cy - 3, 8, 5); ctx.fillStyle = "rgba(127,208,255,.85)"; ctx.fillRect(cx - 3, cy - 2, 6, 3); ctx.fillStyle = "#f0c674"; ctx.fillRect(cx - 1, cy + 2, 2, 1); }
+    else if (kind === "wrench") { ctx.beginPath(); ctx.arc(cx - 2, cy - 2, 2, 0, 6.28); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx - 1, cy - 1); ctx.lineTo(cx + 3, cy + 3); ctx.stroke(); }
+  }
+  // ambient props — all static, seeded, capped, kept off the walk lanes so the little people stay visible
+  function drawProps(ctx, rng, rooms) {
+    var rowY = GH >> 1, colX = GW >> 1, i, x, y;
+    // lamp posts along the path spine (the cozy warm points)
+    for (i = 2; i < GW; i += 4) lamp(ctx, i * T + T / 2, rowY * T + T / 2);
+    for (i = 3; i < GH; i += 4) lamp(ctx, colX * T + T / 2, i * T + T / 2);
+    // flagpole at a Phòng học corner — the quiet satirical đề/pantheon nod
+    var ph = rooms.filter(function (r) { return r.key === "phonghoc"; })[0];
+    if (ph) flagpole(ctx, ph.x * T - 1, (ph.y + CONFIG.ROOMS.phonghoc.h) * T);
+    // free edge tiles for trees/marginalia (walkable, off path, near the border)
+    var free = [];
+    for (x = 0; x < GW; x++) for (y = 0; y < GH; y++) {
+      if (!(walk[x] && walk[x][y])) continue;
+      if (y === rowY || x === colX) continue;
+      if (x < 2 || x > GW - 3 || y < 2 || y > GH - 3) free.push([x, y]);
+    }
+    for (i = free.length - 1; i > 0; i--) { var j = (rng() * (i + 1)) | 0, t = free[i]; free[i] = free[j]; free[j] = t; }
+    var nT = 0;
+    for (i = 0; i < free.length && nT < 6; i++) { tree(ctx, free[i][0] * T + T / 2, free[i][1] * T + T / 2); nT++; }
+    var gly = ["bulb", "apple", "sigma"], nG = 0;
+    for (i = nT; i < free.length && nG < 3; i++) { marginalia(ctx, free[i][0] * T + T / 2, free[i][1] * T + T / 2, gly[nG]); nG++; }
+  }
+  function lamp(ctx, cx, cy) {
+    glow(ctx, cx, cy - 6, "rgba(240,198,116,.18)");
+    ctx.fillStyle = "#2a2f36"; ctx.fillRect(cx - 0.5, cy - 8, 1, 9);
+    ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.arc(cx, cy - 8, 1.8, 0, 6.28); ctx.fill();
+  }
+  function flagpole(ctx, x, y) {
+    ctx.fillStyle = "rgba(10,13,15,.3)"; ctx.beginPath(); ctx.ellipse(x, y - 1, 3, 1.4, 0, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "#9aa0a6"; ctx.fillRect(x, y - 16, 1, 16);
+    ctx.fillStyle = "#7d1f12"; ctx.beginPath(); ctx.moveTo(x + 1, y - 16); ctx.lineTo(x + 8, y - 14.5); ctx.lineTo(x + 1, y - 12); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 0.6; ctx.stroke();
+    ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.arc(x + 0.5, y - 16, 1, 0, 6.28); ctx.fill();
+  }
+  function tree(ctx, cx, cy) {
+    ctx.fillStyle = "rgba(10,13,15,.3)"; ctx.beginPath(); ctx.ellipse(cx, cy + 5, 5, 2, 0, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "#5a3a22"; ctx.fillRect(cx - 1, cy, 2, 6);
+    ctx.fillStyle = "#223a2b"; ctx.beginPath(); ctx.arc(cx - 2, cy - 2, 4, 0, 6.28); ctx.arc(cx + 2, cy - 2, 4, 0, 6.28); ctx.arc(cx, cy - 5, 5, 0, 6.28); ctx.fill();
+    ctx.fillStyle = "rgba(110,207,151,.25)"; ctx.beginPath(); ctx.arc(cx - 1, cy - 6, 2, 0, 6.28); ctx.fill();
+  }
+  function marginalia(ctx, cx, cy, kind) {
+    ctx.globalAlpha = 0.4; ctx.strokeStyle = "#cdbf9c"; ctx.fillStyle = "#cdbf9c"; ctx.lineWidth = 1;
+    if (kind === "bulb") { ctx.beginPath(); ctx.arc(cx, cy - 1, 2.5, 0, 6.28); ctx.stroke(); ctx.fillRect(cx - 1, cy + 1.5, 2, 2); }
+    else if (kind === "apple") { ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, 6.28); ctx.fill(); ctx.strokeStyle = "#5a3a22"; ctx.beginPath(); ctx.moveTo(cx, cy - 2); ctx.lineTo(cx + 1.2, cy - 4); ctx.stroke(); }
+    else { ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.fillText("∑", cx, cy + 3); ctx.textAlign = "left"; }
+    ctx.globalAlpha = 1;
   }
 
   function mapPoint(ev) {

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-13 — Campus art overhaul: Sơn Mài Diorama
+Owner directive: "the graphic needs to be more detailed and more style." Replaced the flat
+rectangles with a full art direction (synthesized via a 6-direction explore → 3-judge →
+fuse workflow).
+- **Ground:** near-black lacquer gradient dusted with ~320 deterministic vỏ-trứng eggshell
+  flecks + a raised warm boardwalk path spine + a center vignette that melts edges into the
+  dark-gold chrome. Figure-ground flipped so full-chroma students finally POP.
+- **Buildings:** six visually distinct fake-iso pavilions — double drop shadow, front-wall
+  extrusion, **gold-leaf frame** (the 26px separation win), lamplit windows. Each room type
+  carries three redundant cues: unique roof (gabled / open-field / awning / glossy / flat+vents
+  / sawtooth) + unique hue + warm-vs-cold window + a gable sigil. Sân is a real football pitch.
+- **Students:** richer chibi — breathing contact shadow, 2-frame scissor legs, full-chroma
+  body, per-year class marker (collar/sash/belt/grad-stole), hashed hair, gold collar tick,
+  honor diamond (killed the per-frame ✦ fillText). ~8 flat ops/sprite → 48 hold 60fps.
+- **Props:** seeded + capped, off walk lanes — lamp posts (gold glow), flagpole, trees,
+  marginalia sigils (bulb/apple/∑ — the dry-satire counterweight to the reverent lacquer).
+- One top-left light direction across everything; font-gated first paint. Gates green.
+
 ## 2026-06-13 — Tap-the-world inspect + /mvp/ retired
 - **Interaction (owner decision):** the campus is now tappable. Tapping a student opens a
   non-pausing inspect card (stats, tell, hạt-giống potential, scholarship); tapping a room

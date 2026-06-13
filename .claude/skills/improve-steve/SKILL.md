@@ -49,6 +49,13 @@ into systems — so every owner message is DATA about the underlying instinct, n
 - *(2026-06-13)* FEEL-FIRST: animation, graphics, walking people doing things, background
   music — liveliness outranks mechanical elegance. A screen that breathes beats a system
   that's clever.
+- *(2026-06-13)* Holds GRAPHICS to a high, recurring bar — "the graphic needs to be more
+  detailed and more style." Functional rendering is not enough; the campus must feel
+  CRAFTED (depth, light, identity, a coherent art direction). Visual polish is a first-class
+  iteration target, not decoration. Big visual moves earn a design-exploration WORKFLOW
+  (explore N art directions → judge panel → synthesize a blueprint → implement with
+  screenshot iteration) rather than a one-shot reskin — that pattern shipped the Sơn Mài
+  Diorama campus and is the model for future art work.
 - *(2026-06-13)* Values ITERABILITY AS A PRODUCT: asked for the dev flow that makes
   graphics and mechanics cheap to change BEFORE asking for any specific change. Build
   pipelines, not one-offs.
@@ -234,3 +241,6 @@ development flow itself to match — that feedback loop is the owner's core requ
 - 2026-06-13: added the ~10th-iteration code-structure review (owner directive — "more
   complex game, add code structure review from time to time"); Owner Model distillation
   gains the "architecture as a living deliverable" signal.
+- 2026-06-13: owner raised the GRAPHICS bar ("more detailed and more style"); shipped the
+  Sơn Mài Diorama campus via an explore→judge→synthesize art-direction workflow. Recorded
+  that workflow as the standing method for substantial visual work; Owner Model updated.

@@ -6,14 +6,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-0. **Tap-the-world inspect (owner DECIDED 2026-06-13: "tabs + tap-the-world"):** tapping a
-   student or room on the campus opens a non-pausing inspect card — the antidote to
-   "everything's a button." Tabs stay for management; the world becomes tappable for
-   curiosity. SHIPPING NOW.
-1. **Campus life pass v1 (owner directive — feel-first):** students sit in class during
-   periods, eat at căng tin (food bubbles), tinker in Xưởng (sparks), kick a ball on sân,
-   zzz period 1 — activity by schedule×room, pure view layer. Builds on the tap-inspect
-   interaction grammar from item 0.
+1. **Campus life pass v1 (owner directive — feel-first):** students visibly DO things —
+   sit in class during periods, eat at căng tin (food bubbles), tinker in Xưởng (sparks),
+   kick a ball on the sân pitch, zzz period 1, celebrate after June. Activity by
+   schedule×room; pure view layer. Layers onto the new Sơn Mài Diorama art + tap-inspect
+   grammar. (Watch: keep walk-lane sightlines clear — props are already capped for this.)
 2. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
    *"bản nháp bài luận của hiệu trưởng"* — a year-end / milestone epilogue assembled from
    the player's OWN school (which students became what, which choices recurred, the three
@@ -21,14 +18,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
    up the mirror; it never states the answer. Pairs with a balance pass guaranteeing no
    single dominant strategy (every path stays a viable, distinct thesis).
 3. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
-   `art.js` (all visual data + atlas builder) / `content.js` (all text/events/banks) /
-   `index.html` (engine + UI + CONFIG); build `tools/gallery.html` rendering every
-   sprite/tile/animation for phone review at the live URL; add GATE_ART (every referenced
-   sprite id exists). No behavior change — gates prove it.
-3. **Campus life pass v1 (owner directive):** students visibly DO things — sit in class,
-   eat at căng tin (food bubbles), tinker in Xưởng (sparks), kick a ball on sân, zzz in
-   period 1, celebrate after June. One activity animation per existing room; activity
-   chosen by schedule period + room; pure view-layer (no sim change).
+   `art.js` (all visual data + the Sơn Mài draw functions + atlas) / `content.js` (all
+   text/events/banks) / `index.html` (engine + UI + CONFIG); build `tools/gallery.html`
+   rendering every sprite/tile/room/animation for phone review at the live URL; add GATE_ART.
+   No behavior change — gates prove it. (ui.js is now ~760 lines incl. the art renderer — the
+   art layer is the natural first extraction; see Architecture log.)
 4. **Background music v1 (owner directive):** generative WebAudio campus-lofi — gentle
    pentatonic loop, state-aware layers (normal term / Tết flavor / June ceremony swell /
    scandal undertone), 🎵 toggle persisted in META, autoplay-unlock on first interaction.
@@ -53,9 +47,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
   text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
   node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no
-  numbers) · `index.html` (shell). engine.js ~640 lines, ui.js ~520 — both under the ~900
-  split threshold. First refactor to watch for: engine.js will want module-splitting
-  (sim/june/admissions/alumni/funding) once alumni S3 + funding S4 land. Don't split early.
+  numbers) · `index.html` (shell). engine.js ~945 lines, ui.js ~760 (grew with the Sơn Mài
+  art renderer) — engine.js is now over the ~900 split threshold and ui.js is approaching it.
+  NEXT refactor (queue as S1.5): extract the art renderer (drawStatic/drawRoom/drawActor +
+  ROOM_STYLE + prop drawers) into `art.js`, and plan engine.js module-split
+  (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
 ## Salvaged from the retired /mvp/ build (worth keeping)
 - **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
@@ -67,6 +63,10 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 (empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
 
 ## Done (see CHANGELOG.md)
+- **Campus art overhaul (Sơn Mài Diorama)** — lacquer-night ground, gold-framed fake-iso
+  pavilions (6 distinct room types), lamplit windows, richer chibi, seeded props.
+  Synthesized via explore→judge→synthesize art-direction workflow.
+- **Tap-the-world inspect** + **/mvp/ retired** (root v2 canonical).
 - **S1 MVP shipped** — multi-file build, full sim/June/admissions/alumni/funding, 5 gates
   green, 390px verified, live link flipped from placeholder to playable.
 - Design v2 (university edition, 17 canonical rulings) + CONVERSION-SPEC.
