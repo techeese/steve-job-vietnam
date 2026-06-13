@@ -590,10 +590,14 @@
       else toast(res.msg);
       return;
     }
-    // tap-the-world: nearest student, else room, else dismiss
-    var a = nearestActor(pt.px, pt.py, 11);
+    resolveTap(pt.px, pt.py, pt.gx, pt.gy);
+  }
+  function resolveTap(px, py, gx, gy) {
+    // tap-the-world: inside a room, the room wins unless you tap right on a
+    // student (tight 7px); on open grounds students grab a looser 11px.
+    var r = roomAt(gx, gy);
+    var a = nearestActor(px, py, r ? 7 : 11);
     if (a) { showInspectStudent(a.id); return; }
-    var r = roomAt(pt.gx, pt.gy);
     if (r) { showInspectRoom(r); return; }
     hideInspect();
   }
@@ -1210,6 +1214,8 @@
     firstStudentId: function () { return S().students[0] && S().students[0].id; },
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
+    tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
+    rooms: function () { return S().rooms.map(function (r) { return { key: r.key, x: r.x, y: r.y }; }); },
     // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
     _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } }
   };

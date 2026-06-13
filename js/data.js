@@ -15,7 +15,7 @@ var CONFIG = {
   RUN_CAP_YEARS: 12,
 
   // economy
-  BOOT_CASH: 120, BOOK_VALUE: 150, BOOT_ENDOW: 10, BOOT_TUITION: 2,
+  BOOT_CASH: 200, BOOK_VALUE: 40, BOOT_ENDOW: 10, BOOT_TUITION: 2, // start-from-nothing: a small pot, near-empty grounds
   MAINT_RATE: 0.007,            // %/month of book+builds
   CASH_KEEP: 300, CASH_DRAIN: 0.03, // surplus above CASH_KEEP reinvested into operations/mo (money sink; protects normal saving)
   DUAN_COST_PER_SV: 1,          // tr/sv/th for Đồ Án & Lab preset
