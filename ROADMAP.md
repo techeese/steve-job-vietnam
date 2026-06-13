@@ -6,8 +6,8 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. (At 2 — next polish forces an epic; structure-epic is still due — see below.)
-- `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ **the next epic MUST be a STRUCTURE-epic** (due, but deferred — ui.js ~1500 is workable, no painful debt after the art.js+audio.js extractions; do it when ui.js strains or it's force-triggered).
+- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
 
@@ -24,7 +24,7 @@ divergence. OWNER veto options if you'd prefer: A = deeper-2.5D blocks, C = cozy
 5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
 6. ~~[FEATURE] Shareable end-card~~ SHIPPED iter 68 — a gold canvas summary card atop the epilogue (school, đề Văn, the player's answer icon+verdict, stats, share footer).
 7. **[FEATURE/tune] Map-scale harmony** — if the new 24×32 characters read too big vs buildings, bump TILE / zoom so the world feels proportionate. Decide on owner reaction.
-8. **[STRUCTURE] (if needed) further ui.js modularization** — extract the atlas/sprite layer if ui.js grows again. Not urgent.
+8. **[STRUCTURE] ui.js (1565) → `screens.js`** — extract the panels+modals DOM layer (~550 lines) via a shared-UI-context object (ui populates it; screens.js aliases ~25 helpers + attaches its fns back). High-coupling (`el` 146×, bidirectional) so it's a real refactor, not a leaf — do it when ui.js strains or as a deliberate invisible-velocity epic. (iter 73 review)
 
 ## Debt
 <!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
@@ -124,6 +124,17 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   `## Architecture` below; queue at most one behavior-neutral refactor.
 
 ## Architecture (structure-review log)
+- *(2026-06-13, iter 73 review)* Sizes: data.js 499 · engine.js 1123 · **art.js 411 · audio.js 74** ·
+  ui.js **1565** · index.html 267 (~3939). **Verdict: HEALTHY.** One-directional layering (data → engine
+  → art/audio → ui) holds CLEAN: engine.js has 0 DOM refs; art.js/audio.js don't reach into game logic.
+  The leaf modules (art, audio) split cleanly. **Hotspot: ui.js (1565).** Its one remaining big cluster —
+  the panels/modals DOM layer (~550 lines) — is HIGH-COUPLING: ~25 distinct closure symbols (`el` 146×,
+  `esc` 37×, `S` 29×, + render/openModal/checkModals/buyRoom/syncActors/… ) and it's BIDIRECTIONAL (ui
+  calls into it too). So extracting it is a real refactor (a shared-UI-context object that ui populates +
+  `screens.js` aliases, ~15 ui-side call-site rewrites), NOT a clean leaf. **Queued `## Epic backlog`:
+  STRUCTURE — ui.js → `screens.js` (panels+modals) via a shared-UI context.** Do it when ui.js genuinely
+  strains or as a deliberate owner-OK'd invisible-velocity epic; not urgent (1565 is workable). This
+  review DISCHARGES the EPICS_SINCE_STRUCTURE duty (reset; see the refined cadence rule in SKILL.md).
 - *(2026-06-13, iter 32 review)* Sizes: data.js 408 · engine.js 1007 · ui.js **1334** · index.html
   235 (~2984 total). The one-directional layering (ui→engine→data) is still CLEAN and has held
   through 12 feature iterations — no leaks, gates green throughout. Hotspot remains **ui.js (1334,

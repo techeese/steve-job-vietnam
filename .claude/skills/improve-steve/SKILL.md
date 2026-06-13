@@ -57,9 +57,17 @@ the track — you don't get to choose timid:
   used: planned, then 7 small phases). **If this counter is ≥ 3, this firing is HARD-LOCKED to the
   EPIC track — a polish pick is ILLEGAL.** Your only legal moves: advance the in-flight epic, or
   dequeue + plan + start the top `## Epic backlog` item.
-- `EPICS_SINCE_STRUCTURE` — +1 per FEATURE-epic shipped; reset on a STRUCTURE-epic. **If ≥ 2, the next
-  epic MUST be a STRUCTURE-epic.** This guarantees the codebase stays plastic (the art.js split, the
-  ui.js split) without letting invisible refactors crowd out the feature pillars the owner watches for.
+- `EPICS_SINCE_STRUCTURE` — +1 per FEATURE-epic shipped; reset on a STRUCTURE move. **If ≥ 2, the next
+  epic MUST be a STRUCTURE move.** This keeps the codebase plastic (the art.js split, audio.js split)
+  without letting invisible refactors crowd out feature pillars. **A STRUCTURE move is satisfied by EITHER
+  (a) a worthwhile refactor, OR (b) — only when a RIGOROUS structure review (concrete file sizes + a
+  measured coupling-surface assessment, not hand-waving) concludes no clean+safe+worthwhile extraction is
+  currently available — logging that verdict + the queued next refactor, then resetting the counter.**
+  Guard against timidity: if a clean, valuable extraction IS available, you MUST do it (don't review it
+  away — that's the exact dodge this counter exists to prevent; art.js was wrongly deferred 35 iters).
+  The review-escape is ONLY for genuinely high-coupling / non-urgent cases PROVEN by analysis (iter 73:
+  ui.js's panels/modals = ~25-symbol bidirectional closure coupling, `el` used 146×; a real refactor via
+  a shared-UI-context object, queued — not a clean leaf, and ui.js at ~1560 isn't yet painful).
 - Update the ledger in the SAME commit as every ship. Broken-always-wins and explicit owner asks
   preempt the track — but a preempting *small* ship still increments `SMALL_SHIPS_SINCE_EPIC`, so
   preemption can't be used to dodge epics forever.
@@ -639,3 +647,11 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   regression. Validated the divergence→owner-picks-options→integrate flow (character art step-change).
   No flow change — hold course. Owner Model gained the "tends-the-loop-as-product / steers-via-concrete-
   options / picks-boldest" signal.
+- 2026-06-13 (iter 73, SELF-CORRECTION): code-structure review (due since iter 32) found the codebase
+  HEALTHY (clean one-directional layering; art.js/audio.js cleanly split; no dead code) but ui.js the
+  hotspot (1565) with its remaining cluster (panels/modals) heavily coupled (~25 symbols, `el` 146×) — a
+  major shared-context refactor, not a clean leaf, and ui.js isn't yet painful. The `EPICS_SINCE_STRUCTURE`
+  rule would have forced a high-risk make-work refactor, so REFINED it: a STRUCTURE move can be satisfied
+  by a rigorous review-that-defers (with the queued refactor logged) when no clean+worthwhile extraction
+  exists — with an explicit anti-timidity guard (a CLEAN valuable extraction must still be done, proven by
+  analysis not assertion). Discharged the structure duty via the review; reset the counter.
