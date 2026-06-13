@@ -89,11 +89,33 @@ those into systems. So **every owner message is data about the model**, not just
 - **(2026-06-13) Wants to WATCH IT GROW remotely** — steers by reaction, not specification.
   Optimize for visible iteration over invisible internal progress.
 
+## Two sessions — coordination (read this first)
+
+A second session (the owner's Mac) is **actively designing** the canonical game on `main`
+(`index.html` + the design docs). This web session must never fight it:
+
+- **Develop on branch `claude/usage-d28v69`.** All iteration churn lives there.
+- **Touch only `mvp/`.** This session's playable build is `mvp/index.html` (+ `mvp/` harness
+  and notes). Never edit `index.html`, `DESIGN.md`, `ROADMAP.md`, `MVP-SPEC.md`,
+  `CONVERSION-SPEC.md`, or any shared file — they belong to the other session.
+- **Shared docs are READ-ONLY here.** Pull them each iteration to track the design, but
+  record this build's decisions/log in `mvp/CHANGELOG.md`, not the shared docs. (This
+  overrides "evolve the design docs" below *while the other session is active* — the design
+  edits are theirs to make.)
+- Always `git pull --rebase` before pushing. Because `mvp/` is disjoint from their files,
+  rebases and the deploy stay conflict-free.
+
 ## Deploy
 
-`main` root → **https://techeese.github.io/steve-job-vietnam/**. A `git push origin main`
-is the deploy. The owner confirms visually; this environment can't reach the live host, so
-**rely on the owner's eyes** for live confirmation and on `gate.sh` for correctness.
+Two live links, one repo. Pages serves `main` root:
+- Other session → **https://techeese.github.io/steve-job-vietnam/** (`index.html`)
+- This session  → **https://techeese.github.io/steve-job-vietnam/mvp/** (`mvp/index.html`)
+
+Deploy = copy just the `mvp/` folder onto `main` and push (never the rest of the branch):
+run **`bash mvp/deploy.sh`** (gates-gate it, rebase main, `git checkout <devbranch> -- mvp/`,
+commit, push, return to dev branch). The owner confirms visually; this environment can't
+reach the live host, so **rely on the owner's eyes** for live confirmation and on `gate.sh`
+for correctness.
 
 ## Gates (`gate.sh`)
 
