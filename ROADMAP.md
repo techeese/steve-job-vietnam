@@ -6,8 +6,19 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-1. **Land + verify S1 MVP** (if not already shipped): gates green, 390px pass, push live.
-2. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
+1. **Campus life pass v1 (owner directive — feel-first):** the live link is playable but
+   the academy reads as "menu + map." Make the map the SOUL: students sit in class during
+   periods, eat at căng tin (food bubbles), tinker in Xưởng (sparks), kick a ball on sân,
+   zzz period 1 — activity by schedule×room, pure view layer. This is the antidote to the
+   "everything's a button" feel (owner 2026-06-13). Consider tap-a-student / tap-a-room
+   inspect popovers so curiosity taps reward (see Parked: interaction-model question).
+2. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
+   *"bản nháp bài luận của hiệu trưởng"* — a year-end / milestone epilogue assembled from
+   the player's OWN school (which students became what, which choices recurred, the three
+   ledgers, 🍎-or-absence), reflecting their answer to the đề back at them. The game holds
+   up the mirror; it never states the answer. Pairs with a balance pass guaranteeing no
+   single dominant strategy (every path stays a viable, distinct thesis).
+3. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
    `art.js` (all visual data + atlas builder) / `content.js` (all text/events/banks) /
    `index.html` (engine + UI + CONFIG); build `tools/gallery.html` rendering every
    sprite/tile/animation for phone review at the live URL; add GATE_ART (every referenced
@@ -33,10 +44,26 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 ## Recurring
 - Maintenance sprint every ~5th iteration (sweep, bot, full 390px audit, perf).
 - Mobile audit even when nothing changed.
+- Code-structure review every ~10th iteration (owner directive) — verdict lands in
+  `## Architecture` below; queue at most one behavior-neutral refactor.
+
+## Architecture (structure-review log)
+- *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
+  text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
+  node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no
+  numbers) · `index.html` (shell). engine.js ~640 lines, ui.js ~520 — both under the ~900
+  split threshold. First refactor to watch for: engine.js will want module-splitting
+  (sim/june/admissions/alumni/funding) once alumni S3 + funding S4 land. Don't split early.
 
 ## Parked
-(empty)
+- **Interaction-model question (owner 2026-06-13, awaiting answer):** "everything on same
+  screen and you need to press the button." Two readings — (a) keep single-screen tabbed +
+  buttons (mobile-clean, current) vs (b) push toward tapping students/rooms directly in the
+  world (Kairosoft register). Likely BOTH: keep tabs for management, add world-tap inspect
+  for curiosity. Resolve before the campus-life pass commits an interaction grammar.
 
 ## Done (see CHANGELOG.md)
+- **S1 MVP shipped** — multi-file build, full sim/June/admissions/alumni/funding, 5 gates
+  green, 390px verified, live link flipped from placeholder to playable.
 - Design v2 (university edition, 17 canonical rulings) + CONVERSION-SPEC.
-- Repo + Pages live; placeholder page; loop infrastructure (skill + Stop hook).
+- Repo + Pages live; loop infrastructure (skill + Stop hook).

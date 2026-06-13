@@ -1,0 +1,939 @@
+/* ============================================================================
+   Học viện Steve — js/engine.js
+   State, deterministic sim, June ceremony, admissions, alumni FSM, funding.
+   NO DOM here (layer law) — ui.js owns rendering; this file is headless-testable.
+   Three RNG streams (DESIGN §determinism):
+     · main sim   → S.rngState (mulberry32, mutated by rnd())
+     · admissions → S.admissions.poolSeed (pool derived, never serialized)
+     · alumni     → S.seed0 (per-alumnus-year throwaway generators)
+   ========================================================================== */
+
+/* ---------- math / rng helpers ---------- */
+function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+function r1(v) { return Math.round(v * 10) / 10; }
+function r2(v) { return Math.round(v * 100) / 100; }
+function r025(v) { return Math.round(v * 4) / 4; }
+function imul(a, b) { return Math.imul(a, b); }
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+// main stream — mutates S.rngState
+function rnd() {
+  S.rngState = (S.rngState + 0x6D2B79F5) | 0;
+  var t = S.rngState;
+  t = Math.imul(t ^ (t >>> 15), 1 | t);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+function rrange(lo, hi) { return lo + rnd() * (hi - lo); }
+function rint(lo, hi) { return Math.floor(lo + rnd() * (hi - lo + 1)); }
+function rpick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
+function gauss(prng) { var u = 1 - prng(), v = prng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+function hashStr(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+/* ---------- module globals ---------- */
+var S = null;
+var _nextId = 1;
+function nid() { return _nextId++; }
+
+/* derived alumni stats (never stored — DESIGN §5a) */
+function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }
+function aHustle(a) { return a.fs.cm; }
+function aHollow(a) { return a.fs.vet; }
+function aLua(a) { return a.fs.seed; }
+
+/* ---------- room / grid helpers ---------- */
+function roomRect(r) { var d = CONFIG.ROOMS[r.key]; return { x: r.x, y: r.y, w: d.w, h: d.h }; }
+function hasRoom(key) { for (var i = 0; i < S.rooms.length; i++) if (S.rooms[i].key === key) return true; return false; }
+function rectsOverlap(a, b) { return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
+function canPlace(key, x, y) {
+  var d = CONFIG.ROOMS[key]; if (!d) return false;
+  if (x < 0 || y < 0 || x + d.w > CONFIG.GRID_W || y + d.h > CONFIG.GRID_H) return false;
+  var nr = { x: x, y: y, w: d.w, h: d.h };
+  for (var i = 0; i < S.rooms.length; i++) if (rectsOverlap(nr, roomRect(S.rooms[i]))) return false;
+  return true;
+}
+function placeRoom(key, x, y) {
+  var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
+  if (!canPlace(key, x, y)) return { ok: false, msg: "Không đặt được ở đây." };
+  var cost = d.cost || 0;
+  if (cost > S.cash) return { ok: false, msg: "Không đủ tiền." };
+  S.cash = r1(S.cash - cost);
+  S.book = r1(S.book + cost);
+  S.rooms.push({ key: key, x: x, y: y });
+  S._mapDirty = true;
+  if (cost > 0) news("Xây xong " + d.name + ". −" + cost + "tr.");
+  return { ok: true };
+}
+
+/* ---------- news / meters ---------- */
+function news(line) { S.news.unshift({ t: S.totalDays, s: line }); if (S.news.length > 60) S.news.pop(); }
+function moodAll(d) { for (var i = 0; i < S.students.length; i++) S.students[i].mood = clamp(S.students[i].mood + d, 0, 100); }
+function gainTT(d) { S.tiengTam = clamp(r1(S.tiengTam + d), 0, 200); }
+// Uy Tín: net ±UT_YEAR_CAP/yr unless pierce (DESIGN: exactly two pierce events)
+function gainUT(d, pierce) {
+  if (!pierce && d > 0) { var room = CONFIG.UT_YEAR_CAP - S.utYearNet; d = Math.min(d, Math.max(0, room)); }
+  if (d === 0) return;
+  S.uyTin = clamp(r1(S.uyTin + d), 0, 100);
+  S.utYearNet = r1(S.utYearNet + d);
+}
+function gainTC(d) { S.thucChat = clamp(r1(S.thucChat + d), 0, 100); }
+function bacTamNod() { S._lastNod = S.totalDays; } // the one quiet virtue beat (ui reads)
+
+/* ---------- student generation ---------- */
+function genStudent(grade, opts) {
+  opts = opts || {};
+  var seed = opts.seed != null ? opts.seed : rint(1, 5);
+  var s = {
+    id: nid(), ten: opts.ten || genName(), grade: grade, seed: seed,
+    kt: 20, tn: 15, st: 18, cm: 15, vet: 5, mood: 70,
+    tell: opts.tell || rollTell(), flags: { vt: [] }
+  };
+  for (var k in opts) if (k !== "seed" && k !== "ten" && k !== "tell") s[k] = opts[k];
+  return s;
+}
+function genName() {
+  var n = CONTENT.nameParts;
+  return rpick(n.ho) + " " + rpick(n.dem) + " " + rpick(n.ten);
+}
+function rollTell() {
+  var r = rnd();
+  if (r < 0.18) return "spark";   // tinkerer
+  if (r < 0.34) return "hype";    // showy
+  if (r < 0.46) return "sky";     // dreamer
+  return "";
+}
+
+/* ============================================================================
+   freshState — complete shape (CONVERSION-SPEC §7). Every field also covered
+   by mergeInto()/sanitize() so saves never break.
+   ========================================================================== */
+function freshState(seed) {
+  _nextId = 1;
+  var sd = (seed != null ? seed : 0x53544556) >>> 0; // "STEV"
+  var s = {
+    v: CONFIG.V,
+    rngState: sd | 0,
+    seed0: sd >>> 0,
+    // calendar: boot Tháng 9 Năm 1 (khai giảng); year++ at each June ceremony
+    day: 1, month: 9, year: 1, totalDays: 0, sub: 0,
+    speed: 0, speed3Unlocked: false,
+    // economy
+    cash: CONFIG.BOOT_CASH, book: CONFIG.BOOK_VALUE, tuition: CONFIG.BOOT_TUITION,
+    // meters
+    tiengTam: CONFIG.BOOT_TT, uyTin: CONFIG.BOOT_UT, thucChat: CONFIG.BOOT_TC,
+    utYearNet: 0, pierceDefense: false, pierceKeynote: false,
+    presets: { n1: "canbang", n2: "luyende", n3: "luyende", n4: "luyende" },
+    rooms: [],
+    students: [],
+    teachers: [],
+    alumni: [],
+    admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
+    endow: { bal: CONFIG.BOOT_ENDOW, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 },
+    scholarships: [
+      { key: "tdn", holderId: null, suspended: false },
+      { key: "tqb", holderId: null, suspended: false },
+      { key: "hxh", holderId: null, suspended: false }
+    ],
+    contracts: [], corpBlacklist: {}, offersSeen: [],
+    photSeeds: [], examHistory: [],
+    news: [],
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0 },
+    // transient modal state (persisted so a mid-modal reload resumes)
+    pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
+    lastEventDay: -999, lastJuneYear: 0,
+    _mapDirty: true, _lastNod: -999, _chuongDone: false
+  };
+  S = s;
+  bootRooms(s);
+  bootTeachers(s);
+  bootRoster(s);
+  return s;
+}
+
+function bootRooms(s) {
+  s.rooms = [
+    { key: "phonghoc", x: 1, y: 1 },
+    { key: "phonghoc", x: 5, y: 1 },
+    { key: "san", x: 1, y: 8 }
+  ];
+}
+function bootTeachers(s) {
+  s.teachers = CONTENT.teachers.inherited.map(function (t) {
+    return { id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: !!t.bienChe, age: 0 };
+  });
+}
+function bootRoster(s) {
+  // Năm 1: 12, Năm 2: 10, Năm 3: 10, Năm 4: 10 = 42 (CONVERSION-SPEC §2)
+  var i;
+  // Năm 1 (yours)
+  for (i = 0; i < 12; i++) s.students.push(genStudent(1, { kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) }));
+  // Mai Sương — fixed seedling
+  s.students[0] = genStudent(1, { ten: "Mai Sương", seed: 5, kt: 22, tn: 16, st: 35, cm: 12, mood: 72, vet: 4, tell: "sky" });
+  // Năm 2
+  for (i = 0; i < 10; i++) s.students.push(genStudent(2, { kt: rint(40, 60), tn: rint(15, 30), st: rint(20, 40), cm: rint(15, 30), mood: rint(55, 70), vet: rint(30, 50) }));
+  // Năm 3
+  for (i = 0; i < 10; i++) s.students.push(genStudent(3, { kt: rint(50, 70), tn: rint(20, 35), st: rint(20, 40), cm: rint(20, 35), mood: rint(40, 55), vet: rint(40, 60) }));
+  // Năm 4 — đồ-án-mẫu zombies
+  for (i = 0; i < 10; i++) s.students.push(genStudent(4, { kt: rint(65, 85), tn: rint(5, 15), st: rint(5, 20), cm: rint(20, 40), mood: rint(35, 50), vet: rint(60, 85) }));
+  // Trần Phi Lợi — fixed Năm 4 (scripted alumnus-to-be)
+  var tpl = s.students[s.students.length - 1];
+  tpl.ten = "Trần Phi Lợi"; tpl.kt = 55; tpl.tn = 25; tpl.st = 18; tpl.cm = 65; tpl.vet = 80; tpl.seed = 2; tpl._tpl = true;
+}
+
+/* ============================================================================
+   CLOCK / dayTick — pure sim. Always advances + auto-resolves overdue modals
+   (so headless __test.days() never stalls at a modal). The UI interval is what
+   *pauses* for the player; __test.days() bypasses that by calling dayTick直接.
+   ========================================================================== */
+function anyModal() { return !!(S.pendingJune || S.pendingAdmit || S.pendingEvent || S.pendingContract); }
+
+function dayTick() {
+  // auto-resolve modals left open past their deadline (headless / hiệu trưởng đi vắng)
+  if (S.pendingEvent && S.totalDays - S.pendingEvent.born >= 12) resolveEvent(neutralChoice(S.pendingEvent.id));
+  if (S.pendingContract && S.totalDays - S.pendingContract.born >= 20) resolveContract(false);
+  if (S.pendingJune) {
+    if (S.pendingJune.stage === "policy" && S.totalDays >= S.pendingJune.deadline) finalizeJune("thuc");
+    else if (S.pendingJune.stage === "results" && S.totalDays >= S.pendingJune.deadline) S.pendingJune = null;
+  }
+  if (S.pendingAdmit && S.totalDays >= S.pendingAdmit.deadline) declareAdmissions(Math.max(15, S.admissions.lastCutoff - 0.5), 12, true);
+
+  S.day++; S.totalDays++;
+  growStudents();
+  maybeEvent();
+
+  if (S.day > CONFIG.DAYS_PER_MONTH) { S.day = 1; monthRollover(); }
+}
+
+function monthRollover() {
+  S.month++;
+  if (S.month > 12) S.month = 1;
+  economyTick();
+  alumniMonth(S.month);
+  if (S.year === 2 && S.month === 3) scriptedArrest();
+  if (S.month === 2) tetBeat();
+  if (S.month === 9 && S.day === 1) scholarshipDraw(); // day always 1 right after rollover
+  if (S.month === 6 && S.lastJuneYear !== S.year) { S.lastJuneYear = S.year; openJune(); }
+  if (S.month === 7 && !S.pendingAdmit && !hasResolvedAdmitThisYear()) openAdmissions();
+  if (S.month === 11) flushGifts();
+  // scripted Offer 1 — Tập đoàn Trứng Vàng (≈one month after boot)
+  if (S.offersSeen.indexOf("trungvang") < 0 && S.year === 1 && S.month >= 10) { S.offersSeen.push("trungvang"); offerContract(CONTENT.contract.trungvang); }
+  endowMilestones();
+}
+function hasResolvedAdmitThisYear() {
+  var h = S.admissions.declaredHistory;
+  return h.length && h[h.length - 1].year === S.year;
+}
+
+/* ---------- daily student growth ---------- */
+function teacherFactor() {
+  var mult = 1, mood = 0;
+  for (var i = 0; i < S.teachers.length; i++) {
+    var t = S.teachers[i];
+    if (t.trait === "tch") mult += 0.06;
+    else if (t.trait === "isi") mult -= 0.04;
+    else if (t.trait === "hype") mood += (t.age < 2 ? 1 : -0.5);
+  }
+  return { mult: Math.max(0.4, mult), mood: mood };
+}
+function scholarshipMult(stat) {
+  var m = 1;
+  for (var i = 0; i < S.scholarships.length; i++) {
+    var sc = S.scholarships[i]; if (sc.suspended) continue;
+    var p = pantheonOf(sc.key); if (!p) continue;
+    if (p.eff === "tn" && stat === "tn") m *= p.val;
+    if (p.eff === "st" && stat === "st") m *= p.val;
+  }
+  return m;
+}
+function hbMult(s, stat) {
+  if (!s.flags.hb) return 1;
+  var p = pantheonOf(s.flags.hb); if (!p) return 1;
+  if (p.eff === stat) return p.val;
+  return 1;
+}
+function pantheonOf(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === key) return CONFIG.PANTHEON[i]; return null; }
+
+function growStudents() {
+  var n = S.students.length;
+  var crowdByGrade = {};
+  var counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  var i, s;
+  for (i = 0; i < n; i++) counts[S.students[i].grade]++;
+  for (var g = 1; g <= 4; g++) crowdByGrade[g] = CONFIG.CROWD(counts[g]);
+  var tf = teacherFactor();
+  var dpm = CONFIG.DAYS_PER_MONTH;
+  for (i = 0; i < n; i++) {
+    s = S.students[i];
+    var p = CONFIG.PRESETS[S.presets["n" + s.grade]] || CONFIG.PRESETS.canbang;
+    var sm = CONFIG.SEED_MULT(s.seed);
+    var vm = CONFIG.VET_MULT(s.vet);
+    var moodF = s.mood < CONFIG.MOOD_PENALTY_BELOW ? 0.7 : 1;
+    var roomF = (S.presets["n" + s.grade] === "duan" && !hasRoom("phongmay")) ? 0.5 : 1;
+    var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm;
+    s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
+    s.tn = clamp(s.tn + p.tn * g * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
+    s.st = clamp(s.st + p.st * g * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
+    s.cm = clamp(s.cm + p.cm * g, 0, 100);
+    var vetGain = p.vet / dpm * hbMult(s, "vet");
+    s.vet = clamp(s.vet + vetGain, 0, 100);
+    s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
+    if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) s._drop = true;
+  }
+  if (n) S.students = S.students.filter(function (x) { return !x._drop; });
+}
+function ktSat(v) {
+  if (v > CONFIG.KT_SATURATE) v -= CONFIG.KT_RUST / CONFIG.DAYS_PER_MONTH;
+  return clamp(v, 0, 100);
+}
+
+/* ---------- monthly economy ---------- */
+function economyTick() {
+  var n = S.students.length, i;
+  var income = r1(S.tuition * n);
+  var salaries = 0; for (i = 0; i < S.teachers.length; i++) { salaries += S.teachers[i].luong; S.teachers[i].age += 1 / 12; }
+  var roomCost = 0; for (i = 0; i < S.rooms.length; i++) roomCost += (CONFIG.ROOMS[S.rooms[i].key].cost || 0);
+  var maint = r1(CONFIG.MAINT_RATE * (S.book + roomCost));
+  var materials = 0;
+  for (i = 0; i < S.students.length; i++) if (S.presets["n" + S.students[i].grade] === "duan") materials += CONFIG.DUAN_COST_PER_SV;
+  var contractPay = 0;
+  S.contracts = S.contracts.filter(function (c) { contractPay += c.pay; c.mLeft -= 1; return c.mLeft > 0; });
+  S.cash = r1(S.cash + income + contractPay - salaries - maint - materials);
+
+  // endowment compounds (DESIGN ruling 3) — keep full precision; r1 would round the 0.4% away
+  var prev = S.endow.bal;
+  S.endow.bal = S.endow.bal * (1 + CONFIG.FUND.ENDOW_RATE);
+  var lai = r2(S.endow.bal - prev);
+  S.endow.log.push({ t: S.totalDays, bal: S.endow.bal }); if (S.endow.log.length > 100) S.endow.log.shift();
+  news(tpl(CONTENT.ticker.quyLai, { bal: Math.round(S.endow.bal), lai: lai }));
+
+  // meters
+  S.tiengTam = clamp(r1(S.tiengTam - CONFIG.TT_DECAY), 0, 200);
+  for (i = 0; i < S.teachers.length; i++) if (S.teachers[i].trait === "isi") gainTT(0.5);
+  if (hasRoom("cangtin")) moodAll(1);
+  // thực chất drifts toward (craft − cram) of student body
+  if (n) {
+    var tnSum = 0, vetSum = 0;
+    for (i = 0; i < S.students.length; i++) { tnSum += S.students[i].tn; vetSum += S.students[i].vet; }
+    var target = clamp((tnSum / n) - (vetSum / n) * 0.5 + 30, 0, 100);
+    S.thucChat = clamp(r1(S.thucChat + (target - S.thucChat) * 0.06), 0, 100);
+  }
+  resolvePhots();
+}
+function resolvePhots() {
+  S.photSeeds = S.photSeeds.filter(function (p) {
+    var pr = CONFIG.PHOT.P(p.sev, S.tiengTam);
+    if (rnd() < pr) {
+      var dmg = r1(CONFIG.PHOT.DMG(p.sev, S.tiengTam));
+      S.tiengTam = clamp(r1(S.tiengTam - dmg), 0, 200);
+      gainUT(-1, false);
+      // morality clause: live contracts may self-cancel on detonation
+      S.contracts = S.contracts.filter(function (c) {
+        if (rnd() < CONFIG.FUND.MORALITY(p.sev)) { news(tpl(CONTENT.contract.morality, { co: c.co })); return false; }
+        return true;
+      });
+      news("Một mầm phốt cũ bung ra. Tiếng Tăm −" + Math.round(dmg) + ".");
+      return false;
+    }
+    return true;
+  });
+}
+function seedPhot(sev, src) { S.photSeeds.push({ src: src || "", sev: sev, born: S.totalDays }); }
+
+/* ---------- Tết / scholarships / endowment milestones ---------- */
+function tetBeat() { moodAll(10); S.endow.bal = r1(S.endow.bal); S.cash = r1(S.cash + 10); news(CONTENT.modal.tet); }
+function scholarshipDraw() {
+  S.endow.drawnYear = false;
+  for (var i = 0; i < S.scholarships.length; i++) {
+    var sc = S.scholarships[i];
+    if (!sc._endowed) continue;
+    if (S.endow.bal >= CONFIG.FUND.SCHOL_DRAW) { S.endow.bal = r1(S.endow.bal - CONFIG.FUND.SCHOL_DRAW); sc.suspended = false; }
+    else { sc.suspended = true; gainUT(-1, false); news("Học bổng " + pantheonOf(sc.key).name + " tạm dừng một năm. Không có thông cáo báo chí."); }
+  }
+}
+function endowMilestones() {
+  var gates = CONFIG.FUND.SCHOL_GATES;
+  while (S.endow.milestonesClaimed < gates.length && S.endow.bal >= gates[S.endow.milestonesClaimed]) {
+    var key = S.scholarships[S.endow.milestonesClaimed].key;
+    S.scholarships[S.endow.milestonesClaimed]._endowed = true;
+    S.endow.milestonesClaimed++;
+    news("Quỹ đủ lớn để lập " + pantheonOf(key).name + ". " + pantheonOf(key).line);
+    bacTamNod();
+  }
+}
+
+/* ============================================================================
+   JUNE — two-stage ceremony (policy → graduation cascade), then admissions.
+   ========================================================================== */
+function openJune() {
+  var grads = S.students.filter(function (s) { return s.grade === 4; });
+  S.pendingJune = {
+    stage: "policy",
+    de: rpick(CONTENT.dePool),
+    foreshadow: tpl(CONTENT.ticker.poolForeshadow, { n: CONFIG.ADMIT.POOL(S.tiengTam) }),
+    gradIds: grads.map(function (s) { return s.id; }),
+    deadline: S.totalDays + 18, policy: null, results: null
+  };
+  S.speed = 0;
+}
+// policy: "dam" (đồ án mẫu) | "thuc" (bảo vệ thật)
+function finalizeJune(policy) {
+  if (!S.pendingJune) return;
+  var pj = S.pendingJune;
+  var d = CONFIG.JUNE.DIEM, pd = CONFIG.JUNE.POLICY_DAM;
+  var grads = S.students.filter(function (s) { return pj.gradIds.indexOf(s.id) >= 0; });
+  var hasShop = hasRoom("xuong") || hasRoom("phongmay");
+  var bonus = 0, viralX = 1;
+  if (policy === "dam") { bonus = pd.bonus; for (var k = 0; k < grads.length; k++) grads[k].vet = clamp(grads[k].vet + pd.vetCohort, 0, 100); seedPhot(pd.seedSev, "dam"); gainTT(rnd() < 0.5 ? pd.ttWin : pd.ttLose); }
+  else { viralX = 2; }
+
+  var results = [];
+  for (var i = 0; i < grads.length; i++) {
+    var s = grads[i];
+    var qvm = Math.min(d.qvmCap, d.qvmPer * Math.floor(s.vet / 20));
+    var noRoom = hasShop ? 0 : d.noRoom;
+    var diem = clamp(d.base + d.tn * s.tn + d.st * s.st + d.vet * s.vet + qvm + noRoom + bonus + rrange(-d.noise, d.noise), 0, 10);
+    diem = r1(diem);
+    var row = (diem < CONFIG.JUNE.PASS) ? cascadeRow("THAT_NGHIEP") : cascadeOutcome(s);
+    var tiem = isTiemNang(s);
+    // viral defense (rare pierce) — high craft + creativity defends well
+    var defScore = CONFIG.JUNE.DEFQ.st * s.st + CONFIG.JUNE.DEFQ.tn * s.tn + CONFIG.JUNE.DEFQ.ut * S.uyTin;
+    var viral = false;
+    if (defScore >= CONFIG.JUNE.DEFQ.viralAt) {
+      var pV = (policy === "thuc" ? CONFIG.JUNE.DEFQ.pViralThat : CONFIG.JUNE.DEFQ.pViral) * viralX;
+      if (rnd() < Math.min(0.95, pV)) { viral = true; gainTT(CONFIG.JUNE.DEFQ.viralTT); if (!S.pierceDefense) { gainUT(CONFIG.JUNE.DEFQ.viralUT, true); S.pierceDefense = true; } }
+    }
+    var a = makeAlumnus(s, row, diem, tiem);
+    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row) };
+    results.push(rec);
+    if (s._tpl) a._tpl = true; // Trần Phi Lợi marker (forced arrest year 2)
+  }
+  // remove grads, advance cohorts
+  var gradSet = {}; for (i = 0; i < pj.gradIds.length; i++) gradSet[pj.gradIds[i]] = 1;
+  S.students = S.students.filter(function (s) { return !gradSet[s.id]; });
+  for (i = 0; i < S.students.length; i++) S.students[i].grade++;
+  S.META.graduated += results.length;
+
+  // alumni of PRIOR years advance one world-year now (this cohort waits to next June)
+  S.year++;
+  S.utYearNet = 0; S.pierceDefense = false; // new academic year, reset Uy Tín budget
+
+  pj.stage = "results"; pj.results = results; pj.policy = policy;
+  S.speed3Unlocked = true;
+  // chain straight into admissions setup
+  buildAdmitPool();
+}
+function cascadeRow(key) { for (var i = 0; i < CONFIG.CASCADE.length; i++) if (CONFIG.CASCADE[i].key === key) return CONFIG.CASCADE[i]; return CONFIG.CASCADE[CONFIG.CASCADE.length - 1]; }
+function cascadeOutcome(s) {
+  for (var i = 0; i < CONFIG.CASCADE.length; i++) if (gatePass(CONFIG.CASCADE[i].gate, s)) return CONFIG.CASCADE[i];
+  return CONFIG.CASCADE[CONFIG.CASCADE.length - 1];
+}
+function gatePass(gate, s) {
+  var hasOr = ("ktOr" in gate) || ("tnOr" in gate);
+  for (var k in gate) {
+    var spec = gate[k];
+    if (k === "tnMax") { if (!(s.tn <= spec[0])) return false; continue; }
+    if (k === "ktOr" || k === "tnOr") continue;
+    var val = s[k];
+    if (val == null) return false;
+    if (spec[1] > 0) { if (!(val >= spec[0])) return false; } else { if (!(val <= spec[0])) return false; }
+  }
+  if (hasOr) {
+    var ok = false;
+    if (gate.ktOr && s.kt >= gate.ktOr[0]) ok = true;
+    if (gate.tnOr && s.tn >= gate.tnOr[0]) ok = true;
+    if (!ok) return false;
+  }
+  return true;
+}
+function isTiemNang(s) {
+  var t = CONFIG.TIEMNANG;
+  return s.st >= t.st && s.tn >= t.tn && s.cm >= t.cm && s.vet <= t.vetMax && S.thucChat >= t.tcMin;
+}
+function nearMiss(s, row) {
+  // closest missed cascade tier (for the wistful one-liner)
+  for (var i = 0; i < CONFIG.CASCADE.length; i++) {
+    var g = CONFIG.CASCADE[i].gate;
+    for (var k in g) {
+      if (k === "ktOr" || k === "tnOr" || k === "tnMax") continue;
+      var spec = g[k]; if (spec[1] <= 0) continue;
+      var miss = spec[0] - (s[k] || 0);
+      if (miss > 0 && miss <= 6 && CONFIG.CASCADE[i].key !== row.key) return tpl(CONTENT.nearMiss, { n: Math.ceil(miss), stat: statLabel(k) });
+    }
+  }
+  return null;
+}
+function statLabel(k) { return { kt: "Kiến Thức", tn: "Tay Nghề", st: "Sáng Tạo", cm: "Cá Mập", vet: "Vẹt" }[k] || k; }
+
+function makeAlumnus(s, row, diem, tiem) {
+  var entry = CONFIG.ALUM.ENTRY_MAP[row.key] || "THAT_NGHIEP";
+  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, vt: (s.flags.vt || []).slice() };
+  var ef = CONFIG.ALUM.ENTRY_FLAGS[row.key]; if (ef) flags[ef] = true;
+  if (s.flags.hb) flags.hb = s.flags.hb;
+  var id = nid();
+  var grat = clamp(0.35 * s.mood + 0.35 * (100 - s.vet) + 8 * flags.vt.length + (s.flags.hb ? 10 : 0), 0, 100);
+  var a = {
+    id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry,
+    yearsInState: 0, annMonth: annMonthFor(id),
+    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed },
+    grat: r1(grat), gifts: 0, flags: flags, line: ""
+  };
+  S.alumni.push(a);
+  return a;
+}
+function annMonthFor(id) { var months = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12]; return months[hashStr("a" + id) % 11]; }
+
+/* ============================================================================
+   ADMISSIONS — deterministic pool off poolSeed, modal cutoff/quota, resolve.
+   ========================================================================== */
+function buildAdmitPool() {
+  S.admissions.poolSeed = (Math.floor(rnd() * 4294967296)) >>> 0;
+}
+function derivedPool() {
+  var n = CONFIG.ADMIT.POOL(S.tiengTam);
+  var mu = CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year), sigma = CONFIG.ADMIT.SIGMA;
+  var pool = [];
+  for (var i = 0; i < n; i++) {
+    var pr = mulberry32((S.admissions.poolSeed ^ Math.imul(i + 1, 0x9E3779B9)) >>> 0);
+    var score = clamp(r2(gauss(pr) * sigma + mu), 3, 30);
+    var seedW = 1 + Math.round((score - 12) / 4.5); seedW = clamp(seedW, 1, 5);
+    pool.push({ score: score, seed: seedW, tell: pr() < 0.3 ? "spark" : (pr() < 0.5 ? "hype" : "") });
+  }
+  pool.sort(function (a, b) { return b.score - a.score; });
+  return pool;
+}
+function openAdmissions() {
+  if (!S.admissions.poolSeed) buildAdmitPool();
+  var pool = derivedPool();
+  var a = S.admissions;
+  S.pendingAdmit = {
+    year: S.year, pool: pool, n: pool.length,
+    cut: clamp(r025(CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year) - 1), CONFIG.ADMIT.CUT_MIN, CONFIG.ADMIT.CUT_MAX),
+    quota: Math.min(CONFIG.ADMIT.QUOTA_MAX, Math.max(CONFIG.ADMIT.QUOTA_MIN, Math.min(CONFIG.COHORT_NOMINAL, CONFIG.ROSTER_CAP - S.students.length))),
+    lastCutoff: a.lastCutoff, lastFill: a.lastFill, lastQuota: a.lastQuota,
+    rivals: CONFIG.ADMIT.RIVALS(S.year), deadline: S.totalDays + 18
+  };
+  S.speed = 0;
+}
+function declareAdmissions(cutoff, quota, auto) {
+  cutoff = clamp(r025(cutoff), CONFIG.ADMIT.CUT_MIN, CONFIG.ADMIT.CUT_MAX);
+  quota = clamp(Math.round(quota), CONFIG.ADMIT.QUOTA_MIN, CONFIG.ADMIT.QUOTA_MAX);
+  var pool = S.pendingAdmit ? S.pendingAdmit.pool : derivedPool();
+  var rivals = S.pendingAdmit ? S.pendingAdmit.rivals : CONFIG.ADMIT.RIVALS(S.year);
+  // stunt reactions
+  if (cutoff >= 30.0) { gainTT(12); gainUT(-3, false); seedPhot(2, "admit300"); news(CONTENT.ticker.cutHi300); }
+  else if (cutoff >= 29.5) { gainTT(8); gainUT(-2, false); seedPhot(1, "admit295"); news(CONTENT.ticker.cutHi295); }
+  else if (cutoff >= 27) { gainTT(4); news(CONTENT.ticker.cutHi27); }
+  else if (cutoff <= 15.5) { gainTT(-3); news(CONTENT.ticker.cutLo); }
+  // resolve
+  var qualified = []; for (var i = 0; i < pool.length; i++) if (pool[i].score >= cutoff) qualified.push(pool[i]);
+  var take = qualified.slice(0, Math.min(quota, CONFIG.ROSTER_CAP - S.students.length));
+  for (i = 0; i < take.length; i++) {
+    var ap = take[i];
+    var s = genStudent(1, { seed: ap.seed, tell: ap.tell, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) });
+    S.students.push(s);
+  }
+  // scholarship auto-award to top holder-with-tell
+  awardScholarships(take);
+  // BXH rank
+  var rank = admitRank(cutoff, rivals);
+  var pay = CONFIG.ADMIT.RANK_TT[clamp(rank - 1, 0, 3)];
+  gainTT(pay); if (rank <= 2) gainTT(2);
+  // history
+  S.admissions.lastCutoff = cutoff; S.admissions.lastQuota = quota; S.admissions.lastFill = take.length;
+  S.admissions.declaredHistory.push({ year: S.year, cutoff: cutoff, fill: take.length, rank: rank });
+  if (S.admissions.declaredHistory.length > 20) S.admissions.declaredHistory.shift();
+  S.examHistory.push({ year: S.year, cutoff: cutoff, rank: rank, fill: take.length });
+  news("Công bố điểm chuẩn " + cutoff.toFixed(2) + " — " + take.length + "/" + quota + " nhập học. Hạng " + rank + "/4.");
+  S.pendingAdmit = null;
+  return { fill: take.length, rank: rank };
+}
+function admitRank(cut, rivals) {
+  var all = [cut]; for (var i = 0; i < rivals.length; i++) all.push(rivals[i].cut + (rivals[i].noise ? rrange(-rivals[i].noise, rivals[i].noise) : 0));
+  all.sort(function (a, b) { return b - a; });
+  return all.indexOf(cut) + 1;
+}
+function awardScholarships(cohort) {
+  for (var i = 0; i < S.scholarships.length; i++) {
+    var sc = S.scholarships[i]; if (!sc._endowed || sc.suspended) continue;
+    // find a not-yet-holder student in the new cohort with a tell, highest seed
+    var best = null;
+    for (var j = 0; j < cohort.length; j++) { /* cohort entries are pool refs, holders set on actual students */ }
+    var pool = S.students.filter(function (s) { return s.grade === 1 && !s.flags.hb && s.tell; });
+    pool.sort(function (a, b) { return b.seed - a.seed; });
+    if (pool.length) {
+      var s = pool[0]; s.flags.hb = sc.key; s.seed = clamp(s.seed + 1, 1, 5); sc.holderId = s.id;
+      bacTamNod();
+    }
+  }
+}
+
+/* ============================================================================
+   ALUMNI FSM — deterministic per (alumnus, year). seed0 stream only.
+   ========================================================================== */
+function alumniMonth(month) {
+  for (var i = 0; i < S.alumni.length; i++) {
+    var a = S.alumni[i];
+    if (a.annMonth !== month) continue;
+    if (a.state === "STEVE") continue;
+    alumniTickOne(a);
+  }
+}
+function alumniTickOne(a) {
+  var r = mulberry32((S.seed0 ^ Math.imul(a.id, 2654435761) ^ Math.imul(S.year, 40503)) >>> 0);
+  a.yearsInState += 1;
+  var ysg = Math.max(0, S.year - a.gradYear);
+  // DRAW 1 — Steve/garage (always drawn; meaningful only for FOUNDER)
+  var d1 = r();
+  if (a.state === "FOUNDER") {
+    if (!a.flags.garage) {
+      var pS = stevePShort(a);
+      if (d1 < pS) { a.flags.garage = true; gainTT(-2); a.line = tpl(CONTENT.garageLine, { ten: a.ten }); a.yearsInState = a.yearsInState; return; }
+    } else {
+      if (d1 < stevePShort(a) * 3) { becomeSteve(a); return; }
+      else { a.state = "KY_SU"; a.yearsInState = 0; a.line = pickLine("KY_SU", a); return; }
+    }
+  }
+  // DRAW 2 — transition
+  var d2 = r();
+  transition(a, d2, ysg);
+  // DRAW 3 — flavor line
+  var d3 = r();
+  if (!a.line) a.line = pickLineIdx(a.state, a, Math.floor(d3 * 999));
+  // DRAW 4 — gift (resolved at 20/11 flush; here we just queue eligibility)
+  var d4 = r();
+  queueGift(a, d4);
+}
+function stevePShort(a) {
+  var lua = aLua(a);
+  var luaM = CONFIG.ALUM.STEVE_LUA[lua] != null ? CONFIG.ALUM.STEVE_LUA[lua] : CONFIG.ALUM.STEVE_LUA_ELSE;
+  var p = CONFIG.ALUM.STEVE_BASE * (aCraft(a) >= CONFIG.ALUM.STEVE_CRAFT ? 1 : 0) * luaM * (aHollow(a) <= CONFIG.ALUM.STEVE_HOLLOW ? 1 : 0) * (1 + 0.1 * Math.min(5, a.yearsInState)) * (a.flags.tiemNang ? 1 : CONFIG.ALUM.STEVE_NOFLAG);
+  return p;
+}
+function becomeSteve(a) {
+  a.state = "STEVE"; a.yearsInState = 0;
+  gainTT(CONFIG.ALUM.KEYNOTE_TT);
+  if (!S.pierceKeynote) { gainUT(CONFIG.ALUM.KEYNOTE_UT, true); S.pierceKeynote = true; }
+  S.META.jobsEver = true; S.META.steves++;
+  S.endow.bal = r1(S.endow.bal + CONFIG.ALUM.MEGA_GIFT); // mega-gift to quỹ
+  a.line = tpl(CONTENT.keynoteLine, { ten: a.ten });
+  news(a.line); bacTamNod();
+}
+function transition(a, draw, ysg) {
+  var rows = [];
+  var fsm = CONFIG.ALUM.FSM[a.state] || [];
+  for (var i = 0; i < fsm.length; i++) {
+    var row = fsm[i], target = row[0], base = row[1], gate = row[2], w = base;
+    if (gate === "arrestClock") { w = Math.min(0.95, 0.18 + 0.06 * a.yearsInState); }
+    else if (gate) { w = base * (gateFn(gate, a, ysg) ? 1 : 0); if (gate === "coinpull") w *= (a.flags.coinPath && ysg <= 2 ? 4 : 1); }
+    if (w > 0) rows.push({ t: target, w: w });
+  }
+  // BI_BAT special (FSM empty in data): yearsInState>=2 → escape
+  if (a.state === "BI_BAT" && a.yearsInState >= 2) { rows = [{ t: "THAT_NGHIEP", w: 0.9 }, { t: "CA_MAP_COIN", w: 0.1 }]; }
+  var sum = 0; for (i = 0; i < rows.length; i++) sum += rows[i].w;
+  if (sum > CONFIG.ALUM.ROW_CAP) { var sc = CONFIG.ALUM.ROW_CAP / sum; for (i = 0; i < rows.length; i++) rows[i].w *= sc; sum = CONFIG.ALUM.ROW_CAP; }
+  var cum = 0;
+  for (i = 0; i < rows.length; i++) {
+    cum += rows[i].w;
+    if (draw < cum) {
+      var to = rows[i].t;
+      if (to === "BI_BAT") arrestAlumnus(a);
+      else { a.state = to; a.yearsInState = 0; a.line = ""; }
+      return;
+    }
+  }
+  // else: stay (residual)
+}
+function gateFn(key, a, ysg) {
+  var craft = aCraft(a), hustle = aHustle(a), hollow = aHollow(a), lua = aLua(a);
+  switch (key) {
+    case "craft50": return craft >= 50;
+    case "craft55": return craft >= 55;
+    case "lua3": return lua >= 3;
+    case "lua3hustle50": return lua >= 3 && hustle >= 50;
+    case "coinpull": return hollow >= 50 && hustle >= 60;
+    default: return true;
+  }
+}
+function arrestAlumnus(a) {
+  a.state = "BI_BAT"; a.yearsInState = 0;
+  var dmg = r1(CONFIG.ALUM.ARREST(aHollow(a) >= 50 ? 2 : 1, S.tiengTam, Math.max(0, S.year - a.gradYear)));
+  S.tiengTam = clamp(r1(S.tiengTam - dmg), 0, 200);
+  gainUT(-2, false);
+  S.META.arrested++;
+  a.line = rpick(CONTENT.alumLines.BI_BAT).replace("{ten}", a.ten);
+  news("Cựu sinh viên " + a.ten + " bị bắt. Tiếng Tăm −" + Math.round(dmg) + ".");
+}
+function scriptedArrest() {
+  for (var i = 0; i < S.alumni.length; i++) {
+    var a = S.alumni[i];
+    if (a._tpl && a.state !== "BI_BAT") {
+      a.state = "BI_BAT"; a.yearsInState = 0; a._arrested = true;
+      var dmg = r1(CONFIG.ALUM.ARREST(2, S.tiengTam, Math.max(0, S.year - a.gradYear)));
+      S.tiengTam = clamp(r1(S.tiengTam - dmg), 0, 200);
+      gainUT(-2, false); S.META.arrested++;
+      news(CONTENT.arrestTPL + " (" + CONTENT.arrestNote + ")");
+      // morality clause cascade
+      S.contracts = S.contracts.filter(function (c) { news(tpl(CONTENT.contract.morality, { co: c.co })); return false; });
+      return;
+    }
+  }
+}
+
+/* ---------- gifts ---------- */
+function queueGift(a, draw) {
+  var base = CONFIG.ALUM.GIFT_BASE[a.state]; if (!base) return;
+  var p = clamp(base * a.grat / 50, 0, 0.95);
+  if (draw < p) {
+    var rng = CONFIG.ALUM.GIFT_AMT[a.state] || [0, 0];
+    var amt = a.state === "STEVE" ? CONFIG.ALUM.MEGA_GIFT : Math.round(rrange(rng[0], rng[1]) * (1 + S.uyTin / 100));
+    S.endow.pending.push({ amt: amt, alumId: a.id, ten: a.ten, vt: a.flags.vt && a.flags.vt.length ? a.flags.vt[0] : null });
+    a.gifts += amt;
+  }
+}
+function flushGifts() {
+  if (!S.endow.pending.length) {
+    // scripted guarantee: by 20/11 of Y2, if zero gifts and ≥1 KY_SU alumnus → force one
+    if (S.year >= 2) { for (var i = 0; i < S.alumni.length; i++) if (S.alumni[i].state === "KY_SU") { S.endow.pending.push({ amt: 30, alumId: S.alumni[i].id, ten: S.alumni[i].ten, vt: null }); break; } }
+    if (!S.endow.pending.length) return;
+  }
+  var n = S.endow.pending.length, biggest = null, cashSum = 0, quySum = 0;
+  for (var j = 0; j < S.endow.pending.length; j++) {
+    var g = S.endow.pending[j];
+    if (g.amt >= CONFIG.FUND.GIFT_TO_QUY_MIN) { S.endow.bal = r1(S.endow.bal + g.amt); quySum += g.amt; }
+    else { S.cash = r1(S.cash + g.amt); cashSum += g.amt; }
+    if (!biggest || g.amt > biggest.amt) biggest = g;
+    S.endow.log.push({ t: S.totalDays, gift: g.amt, ten: g.ten });
+  }
+  S._giftFlush = { n: n, biggest: biggest, quote: biggest && biggest.vt ? CONTENT.giftVt[biggest.vt] : CONTENT.giftHead };
+  news("🎓 " + n + " phong bì từ cựu sinh viên (" + Math.round(cashSum + quySum) + "tr).");
+  bacTamNod();
+  S.endow.pending = [];
+}
+
+/* ============================================================================
+   EVENTS — light deck (CONTENT.events), pauses for a choice.
+   ========================================================================== */
+function eventPred(e) {
+  switch (e.pred) {
+    case "anyLuyende": return S.presets.n1 === "luyende" || S.presets.n2 === "luyende" || S.presets.n3 === "luyende" || S.presets.n4 === "luyende";
+    case "contractPr": return S.tiengTam >= 30 && !S.contracts.some(function (c) { return c.type === "pr"; });
+    case "anyClc": return false;
+    case "xuongDuan": return hasRoom("xuong") && anyDuan();
+    case "moodLow": return S.students.some(function (s) { return s.mood < 45; });
+    case "nam4Duan": return S.presets.n4 === "duan" && S.students.some(function (s) { return s.grade === 4; });
+    case "thang5": return S.month === 5;
+    default: return e.scripted === true;
+  }
+}
+function anyDuan() { return S.presets.n1 === "duan" || S.presets.n2 === "duan" || S.presets.n3 === "duan" || S.presets.n4 === "duan"; }
+function maybeEvent() {
+  if (anyModal()) return;
+  if (S.month === 6) return;
+  if (S.totalDays - S.lastEventDay < 14) return;
+  if (rnd() > 0.06) return;
+  var elig = CONTENT.events.filter(eventPred);
+  var ev = null;
+  if (!S._chuongDone) { for (var i = 0; i < elig.length; i++) if (elig[i].id === "chuong") ev = elig[i]; }
+  if (!ev && elig.length) ev = elig[Math.floor(rnd() * elig.length)];
+  if (!ev) return;
+  var targetId = null;
+  if (/\{ten\}/.test(ev.desc)) {
+    var t = ev.id === "chuong" ? S.students.filter(function (s) { return s.ten === "Mai Sương"; })[0] : pickEventStudent(ev);
+    if (!t) return; targetId = t.id;
+  } else if (ev.id === "chuong") {
+    var ms = S.students.filter(function (s) { return s.ten === "Mai Sương"; })[0]; if (ms) targetId = ms.id;
+  }
+  S.pendingEvent = { id: ev.id, targetId: targetId, born: S.totalDays };
+  S.lastEventDay = S.totalDays; S.speed = 0;
+}
+function pickEventStudent(ev) {
+  var pool = S.students;
+  if (ev.pred === "anyLuyende") pool = S.students.filter(function (s) { return S.presets["n" + s.grade] === "luyende"; });
+  if (ev.pred === "moodLow") pool = S.students.filter(function (s) { return s.mood < 45; });
+  if (ev.pred === "nam4Duan") pool = S.students.filter(function (s) { return s.grade === 4; });
+  if (!pool.length) pool = S.students;
+  return pool.length ? pool[Math.floor(rnd() * pool.length)] : null;
+}
+function neutralChoice(id) {
+  var ev = CONTENT.events.filter(function (e) { return e.id === id; })[0];
+  if (!ev) return 0;
+  for (var i = 0; i < ev.choices.length; i++) if (ev.choices[i].fx == null) return i;
+  return ev.choices.length > 1 ? 1 : 0;
+}
+function resolveEvent(idx) {
+  var pe = S.pendingEvent; if (!pe) return;
+  var ev = CONTENT.events.filter(function (e) { return e.id === pe.id; })[0];
+  var ch = ev.choices[idx];
+  var t = pe.targetId ? S.students.filter(function (s) { return s.id === pe.targetId; })[0] : null;
+  applyFx(ch.fx, t);
+  if (ev.id === "chuong") S._chuongDone = true;
+  S.pendingEvent = null;
+}
+function classmates(grade, fn) { for (var i = 0; i < S.students.length; i++) if (S.students[i].grade === grade) fn(S.students[i]); }
+function virtue(t, key) { if (t) { t.flags.vt = t.flags.vt || []; t.flags.vt.push(key); } gainUT(1, false); bacTamNod(); }
+function applyFx(fx, t) {
+  switch (fx) {
+    case "chuongKyLuat": moodAll(0); if (t) { classmates(t.grade, function (s) { s.kt = clamp(s.kt + 2, 0, 100); }); t.st = clamp(t.st - 5, 0, 100); } break;
+    case "chuongTuaVit": if (t) { t.tn = clamp(t.tn + 3, 0, 100); virtue(t, "tuaVit"); } break;
+    case "duanKyLuat": if (t) { classmates(t.grade, function (s) { s.kt = clamp(s.kt + 2, 0, 100); }); t.st = clamp(t.st - 4, 0, 100); } break;
+    case "duanChoMuon": S.cash = r1(S.cash - 2); if (t) { t.tn = clamp(t.tn + 4, 0, 100); virtue(t, "phongmay"); } break;
+    case "tvcOk": gainTT(3); seedPhot(1, "tvc"); break;
+    case "tvcNo": gainTC(1); break;
+    case "clcHua": break;
+    case "clcThang": gainTC(1); break;
+    case "chayGiau": seedPhot(2, "chay"); break;
+    case "chayBao": gainTT(-2); virtue(null, "pccc"); break;
+    case "baoluuGiu": S.cash = r1(S.cash - 10); if (t) { t.mood = clamp(t.mood + 15, 0, 100); virtue(t, "hocBong"); } break;
+    case "baoluuKy": if (t) t._drop = true; S.students = S.students.filter(function (s) { return !s._drop; }); break;
+    case "tangGioOk": classmates(4, function (s) { s.kt = clamp(s.kt + 2, 0, 100); s.vet = clamp(s.vet + 3, 0, 100); }); break;
+    case "tangGioNo": gainTC(1); break;
+    case "chodoanMua": S.cash = r1(S.cash - 15); classmates(4, function (s) { s.vet = clamp(s.vet + 10, 0, 100); s._diemBoost = 0.5; }); seedPhot(2, "chodoan"); break;
+    default: break;
+  }
+}
+
+/* ---------- contracts ---------- */
+function offerContract(def) { S.pendingContract = { def: def, born: S.totalDays }; S.speed = 0; }
+function resolveContract(accept) {
+  var pc = S.pendingContract; if (!pc) return;
+  var c = pc.def;
+  if (accept) {
+    S.cash = r1(S.cash + (c.sign || 0));
+    S.contracts.push({ id: nid(), co: c.co, type: c.type, pay: c.pay, mLeft: c.months, strings: [c.type] });
+    gainTC(-2); gainTT(2);
+    news(c.accept || ("Đã ký hợp đồng với " + c.co + "."));
+  } else { gainTC(2); gainUT(1, false); bacTamNod(); news(c.refuse || ("Từ chối " + c.co + ".")); }
+  S.pendingContract = null;
+}
+
+/* ---------- flavor line helpers ---------- */
+function pickLine(state, a) { var b = CONTENT.alumLines[state] || ["—"]; return b[0].replace(/\{ten\}/g, a.ten); }
+function pickLineIdx(state, a, idx) { var b = CONTENT.alumLines[state] || ["—"]; return b[idx % b.length].replace(/\{ten\}/g, a.ten); }
+function tpl(str, o) { return String(str).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
+
+/* ============================================================================
+   SAVE / LOAD / SANITIZE  (S.v migrator + Number.isFinite discipline)
+   ========================================================================== */
+function saveGame() {
+  try { localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize())); } catch (e) {}
+}
+function serialize() {
+  var o = {}; for (var k in S) { if (k === "_mapDirty" || k === "_lastNod" || k === "_giftFlush") continue; o[k] = S[k]; }
+  return o;
+}
+function loadGame() {
+  var raw = null; try { raw = localStorage.getItem(CONFIG.SAVE_KEY); } catch (e) {}
+  if (!raw) { freshState(); return false; }
+  var data; try { data = JSON.parse(raw); } catch (e) { freshState(); return false; }
+  freshState();
+  if (data && data.v === 1) data = migrateV1(data);
+  mergeInto(S, data);
+  // restore id counter above anything loaded
+  var maxId = 0;
+  S.students.concat(S.alumni).forEach(function (x) { if (x && x.id > maxId) maxId = x.id; });
+  _nextId = maxId + 1;
+  sanitize();
+  return true;
+}
+function mergeInto(base, data) {
+  if (!data || typeof data !== "object") return;
+  for (var k in base) {
+    if (!(k in data)) continue;
+    var bv = base[k], dv = data[k];
+    if (Array.isArray(bv)) { if (Array.isArray(dv)) base[k] = dv; }
+    else if (bv && typeof bv === "object") { if (dv && typeof dv === "object") mergeInto(bv, dv); }
+    else if (typeof bv === "number") { if (Number.isFinite(dv)) base[k] = dv; }
+    else if (typeof bv === typeof dv) base[k] = dv;
+  }
+}
+function migrateV1(d) {
+  // best-effort: v1 (clicker-school) → v2 university. No real v1 players exist,
+  // but GATE_COMPAT exercises this path.
+  var gmap = { g10: 2, g11: 3, g12: 4 };
+  var out = { v: 2 };
+  out.presets = { n1: "canbang", n2: (d.presets && d.presets.g10) || "luyende", n3: (d.presets && d.presets.g11) || "luyende", n4: (d.presets && d.presets.g12) || "luyende" };
+  if (Array.isArray(d.students)) out.students = d.students.map(function (s) { var g = gmap[s.grade] || (typeof s.grade === "number" ? clamp(s.grade, 1, 4) : 1); s.grade = g; s.flags = s.flags || { vt: [] }; if (!s.flags.vt) s.flags.vt = []; return s; });
+  if (d.sponsor && d.sponsor.accepted) out.contracts = [{ id: 1, co: "trungvang", type: "pr", pay: 12, mLeft: 10, strings: ["pr"] }];
+  var emap = { jobs: "STEVE", camap: "CA_MAP_COIN", vanmau: "QUAN_VAN_MAU", kysu: "KY_SU", reviewer: "LUONG_ON", luongon: "LUONG_ON" };
+  if (Array.isArray(d.alumni)) out.alumni = d.alumni.map(function (a, i) {
+    var id = a.id || (1000 + i);
+    return { id: id, ten: a.ten || ("Cựu SV " + i), gradYear: a.year || 1, outcome: a.outcome || "luongon", state: emap[a.outcome] || "LUONG_ON", yearsInState: 0, annMonth: annMonthFor(id), fs: { kt: 55, tn: 50, st: 45, cm: 50, vet: 30, seed: 3 }, grat: 50, gifts: 0, flags: { vt: [] } };
+  });
+  // keep economy/meters if present
+  ["cash", "book", "tuition"].forEach(function (k) { if (Number.isFinite(d[k])) out[k] = d[k]; });
+  return out;
+}
+function sanitize() {
+  var bad = function (v) { return !Number.isFinite(v); };
+  ["cash", "book", "tuition", "tiengTam", "uyTin", "thucChat", "utYearNet"].forEach(function (k) { if (bad(S[k])) S[k] = 0; });
+  S.day = clamp(Math.round(S.day) || 1, 1, 30); S.month = clamp(Math.round(S.month) || 1, 1, 12);
+  S.year = Math.max(1, Math.round(S.year) || 1); S.speed = clamp(Math.round(S.speed) || 0, 0, 3);
+  if (!CONFIG.PRESETS[S.presets.n1]) S.presets.n1 = "canbang";
+  ["n1", "n2", "n3", "n4"].forEach(function (k) { if (!CONFIG.PRESETS[S.presets[k]]) S.presets[k] = "canbang"; });
+  S.students = (S.students || []).map(function (s) {
+    if (!s) return null;
+    if (bad(s.kt) || bad(s.tn) || bad(s.st) || bad(s.cm) || bad(s.vet)) return null;
+    s.grade = clamp(Math.round(s.grade) || 1, 1, 4);
+    s.seed = clamp(Math.round(s.seed) || 1, 1, 5);
+    ["kt", "tn", "st", "cm", "vet", "mood"].forEach(function (k) { s[k] = clamp(s[k], 0, 100); });
+    if (!s.flags) s.flags = {}; if (!s.flags.vt) s.flags.vt = [];
+    return s;
+  }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP);
+  if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;
+  S.endow.milestonesClaimed = clamp(Math.round(S.endow.milestonesClaimed) || 0, 0, 3);
+  S.admissions.lastCutoff = clamp(S.admissions.lastCutoff || 15, 12, 30.5);
+  S.admissions.lastQuota = clamp(Math.round(S.admissions.lastQuota) || 12, 4, 14);
+  S.admissions.poolSeed = (S.admissions.poolSeed || 0) >>> 0;
+  // scholarships: rebuild against 3-key registry
+  var reg = CONFIG.PANTHEON.map(function (p) { return p.key; });
+  var byKey = {}; (S.scholarships || []).forEach(function (sc) { if (sc && reg.indexOf(sc.key) >= 0) byKey[sc.key] = sc; });
+  S.scholarships = reg.map(function (k) { return byKey[k] || { key: k, holderId: null, suspended: false }; });
+  // contracts
+  S.contracts = (S.contracts || []).filter(function (c) { return c && Number.isFinite(c.pay); }).map(function (c) { c.mLeft = clamp(Math.round(c.mLeft) || 0, 0, 48); return c; }).slice(0, 3);
+  // alumni
+  var STATE = CONFIG.ALUM.STATES;
+  S.alumni = (S.alumni || []).filter(function (a) { return a && a.fs; }).map(function (a) {
+    if (STATE.indexOf(a.state) < 0) a.state = "LUONG_ON";
+    a.yearsInState = Math.max(0, Math.round(a.yearsInState) || 0);
+    if (!(a.annMonth >= 1 && a.annMonth <= 12) || a.annMonth === 6) a.annMonth = annMonthFor(a.id);
+    ["kt", "tn", "st", "cm", "vet"].forEach(function (k) { a.fs[k] = clamp(a.fs[k] || 0, 0, 100); });
+    a.fs.seed = clamp(Math.round(a.fs.seed) || 1, 1, 5);
+    a.grat = clamp(a.grat || 0, 0, 100); a.gifts = Math.max(0, a.gifts || 0);
+    if (!a.flags) a.flags = { vt: [] };
+    return a;
+  });
+  S.seed0 = (S.seed0 || 0) >>> 0;
+}
+
+/* ============================================================================
+   __test API (headless gates) + main-loop clock helper
+   ========================================================================== */
+function clockTick() {
+  // called by ui interval; advances by S.speed sub-ticks (10 = one day)
+  S.sub += S.speed;
+  while (S.sub >= CONFIG.TICKS_PER_DAY) { S.sub -= CONFIG.TICKS_PER_DAY; dayTick(); }
+}
+
+var __test = {
+  fresh: function (seed) { freshState(seed); return S; },
+  state: function () { return S; },
+  days: function (n) { for (var i = 0; i < n; i++) dayTick(); return S; },
+  place: function (key, x, y) { return placeRoom(key, x, y); },
+  admit: function (cut, quota) { if (!S.pendingAdmit) openAdmissions(); return declareAdmissions(cut, quota, false); },
+  pool: function () { if (!S.admissions.poolSeed) buildAdmitPool(); return derivedPool(); },
+  alum: function () { return S.alumni; },
+  almYears: function (n) { for (var y = 0; y < n; y++) { for (var m = 1; m <= 12; m++) if (m !== 6) alumniMonth(m); S.year++; } return S.alumni; },
+  endow: function (n) { S.endow.bal = n; },
+  june: function (policy) { openJune(); finalizeJune(policy || "thuc"); return S; },
+  save: saveGame, load: loadGame, serialize: serialize,
+  config: function () { return CONFIG; }
+};
+
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool }; }
+if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }
