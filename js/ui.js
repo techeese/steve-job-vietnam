@@ -285,18 +285,30 @@
     if (ts - lastSync > 500) { syncActors(); lastSync = ts; }
     var alive = !anyModal(); // campus stays alive at speed 0 (chill); freezes only for modals
     var period = (forcePeriod >= 0) ? forcePeriod : (Math.floor(ts / PERIOD_MS) % N_PERIODS);
+    stepLive(ts, period, alive); // advance positions/ball/cats/flyers
+    drawLive(ctx, ts, period);   // paint the campus (shared with the headless _renderLiveOnce hook)
+    requestAnimationFrame(liveLoop);
+  }
+  // step + draw split so a single live frame can be rendered ON DEMAND (headless rAF is throttled,
+  // so actors never paint in screenshots otherwise — _renderLiveOnce drives drawLive once).
+  function stepLive(ts, period, alive) {
     var i;
     for (i = 0; i < actors.length; i++) updateActor(actors[i], alive, ts, period);
+    if (period === 1 && alive) updateBall(ts);
+    for (i = 0; i < cats.length; i++) if (alive) updateCat(cats[i], ts);
+    if (alive) updateFlyers(ts);
+  }
+  function drawLive(ctx, ts, period) {
+    var i;
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
     drawSelection(ctx, ts); // on-map marker for the tapped student/room
     drawTapFx(ctx, ts);     // expanding ripple at the last tap (touch feedback)
-    if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
-    for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
-    if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
+    if (period === 1) drawBall(ctx); // pickup football at recess
+    for (i = 0; i < cats.length; i++) drawCat(ctx, cats[i], ts);
+    drawFlyers(ctx, ts);
     drawSmoke(ctx, ts);
     ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
-    requestAnimationFrame(liveLoop);
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
   function assignActivity(a, period) {
@@ -1639,7 +1651,11 @@
     _bakeSheet: function () { var c = $("mapStatic"), X = c.getContext("2d"); X.imageSmoothingEnabled = false; X.fillStyle = "#79b34a"; X.fillRect(0, 0, c.width, c.height); var sc = 5, per = 5; for (var v = 0; v < ATLAS[0].length; v++) { var spr = ATLAS[0][v][0]; var col = v % per, row = (v / per) | 0; X.drawImage(spr, 8 + col * 76, 8 + row * 116, 16 * sc, 22 * sc); } },
     _steps: function (n, period) { var ts = 50000; for (var f = 0; f < (n || 60); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, period || 0); } },
     // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
-    _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } }
+    _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } },
+    // paint ONE live frame on demand so headless screenshots capture the walking campus (rAF is
+    // throttled in headless, so actors/activities never render otherwise). Recipe: setPeriod(p) →
+    // _sync(true) → _settle(N) to move them into place → _renderLiveOnce(p) → screenshot.
+    _renderLiveOnce: function (period, ts) { var ctx = $("mapLive").getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, GW * T, GH * T); if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = (period != null) ? period : (forcePeriod >= 0 ? forcePeriod : 0); drawLive(ctx, ts || 50000, p); }
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();

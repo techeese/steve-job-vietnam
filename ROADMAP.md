@@ -131,6 +131,11 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   `roundRect`, `mb`, `hashId` are shared by BOTH the static-art drawers AND bakeChar/drawActor, so a
   clean split must move shared helpers to art.js and expose them; the static layer is fully
   screenshot-verifiable, the rAF actor layer is NOT — extract static-art first, actors later).
+- *(2026-06-13, iter 53)* **Actor layer is NOW screenshot-verifiable** — `liveLoop` split into
+  `stepLive`/`drawLive` + `__ui._renderLiveOnce(period)` paints one live frame on demand (recipe in
+  the skill Step 3.4). The "rAF actor layer is NOT verifiable" caveat above/below is superseded for
+  TESTING (the architectural coupling note still stands). Every campus-liveliness iteration must now
+  screenshot the walking campus, not ship blind.
 - *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
   text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
   node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no

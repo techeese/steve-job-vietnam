@@ -132,6 +132,14 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   iteration over invisible internal progress.
 - *(2026-06-13)* Comfortable handing over autonomy (re-armed the loop pattern from Nuôi
   Anh unprompted) but expects the loop to keep learning him — this section IS his request.
+- *(2026-06-13)* PREFERS THE AUTONOMOUS SHIP-AND-REACT CADENCE OVER PRESENCE-GATED
+  HESITATION. When asked which loop-improvements to apply, he greenlit the verification-
+  TOOLING fix (`_renderLiveOnce` — making the living campus screenshot-verifiable; pure
+  "iterability as a product" instinct) but DECLINED a "presence-aware looping" rule that
+  would slow the loop to consult him when he's at the keyboard ("maybe we can apply 1 only
+  :)"). Read: don't make the loop wait on his presence — keep shipping; he steers by
+  REACTING to ships, not by being asked. Veto-by-reaction is the contract he wants, even
+  when he's watching live.
 - *(2026-06-13, three directives — noted to ROADMAP "Now ★★★"):* (a) **"3D but still pixel"**
   for houses AND people — wants DIMENSIONAL pixel-art (fake-iso / 2.5D: visible side walls,
   pitched-with-depth roofs, characters with volume), not flat-front sprites. (b) **See students
@@ -263,6 +271,16 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
 4. Visual QA when UI/art changed: headless screenshots at true 390px (iframe wrapper —
    headless Chrome won't shrink below ~500px) AND 1240px; READ the PNGs and look. Art
    changes additionally re-render tools/gallery.html and screenshot it.
+   - **THE LIVING CAMPUS IS SCREENSHOT-VERIFIABLE — USE IT (the #1 priority earns proof,
+     not hope).** Actors/activities draw only in `liveLoop` (rAF), which headless throttles,
+     so a plain screenshot shows an EMPTY map — people invisible. To capture walking
+     students + activities, drive the on-demand hook: seed a roster, then
+     `__ui.setPeriod(p)` → `__ui._sync(true)` → `__ui._settle(1500)` (walks them to their
+     period-p destinations) → `__ui._renderLiveOnce(p)` (paints ONE live frame to #mapLive)
+     → screenshot. Periods: 0 sleep, 1 recess (sân + football), 2 class, 3 căng-tin, 4
+     Xưởng/activities (check N_PERIODS/the schedule for current mapping). ANY iteration
+     touching actors, activity overlays, tells, motes, or campus liveliness MUST screenshot
+     this way and LOOK — that layer is the soul and was previously unverifiable.
 5. Minimal seeds in harnesses (migrations fill what tests don't assert on; structurally
    required: meta object, run containers, gameOver:false). Clean up temp files.
 
@@ -310,6 +328,13 @@ development flow itself to match — that feedback loop is the owner's core requ
   render at END state (invisible). Pin with `animation-play-state:paused` — but for
   FADE-IN animations pin shows opacity-0; use `animation:none!important;opacity:1` there.
   Repeated identical events stack pinned elements into a blob — use a single event.
+- ACTORS/ACTIVITIES draw only in the rAF `liveLoop`, which headless Chrome throttles → a
+  plain screenshot shows an EMPTY campus (people invisible), so for a long time the #1
+  priority (the living campus) shipped unverified. FIXED (loop iter 53): `liveLoop` split
+  into `stepLive`/`drawLive`, and `__ui._renderLiveOnce(period[,ts])` paints one live frame
+  on demand. Recipe in Step 3.4. If a future actor screenshot is still empty: call
+  `_settle` BEFORE `_renderLiveOnce` (settle moves them; renderLiveOnce only paints), and
+  confirm a roster exists + the right period is set.
 - Never wipe document.body in a harness intercept — the game's render loop crashes on
   missing elements and that JSERR masks your actual test. Overlay position:fixed instead.
 - Hide `#toasts` in screenshot harnesses when a rich seed fires achievements/events.
@@ -354,3 +379,7 @@ development flow itself to match — that feedback loop is the owner's core requ
 - 2026-06-13: owner raised the GRAPHICS bar ("more detailed and more style"); shipped the
   Sơn Mài Diorama campus via an explore→judge→synthesize art-direction workflow. Recorded
   that workflow as the standing method for substantial visual work; Owner Model updated.
+- 2026-06-13 (iter 53): owner asked "what can be improved in the skills?"; shipped the #1
+  pick — the living campus is now SCREENSHOT-VERIFIABLE (`_renderLiveOnce` hook + Step 3.4
+  recipe + landmine). Owner declined the proposed #2 (presence-aware looping); recorded that
+  as an Owner-Model signal (keep the autonomous cadence; veto-by-reaction even when present).

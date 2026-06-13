@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Tooling: the living campus is now screenshot-verifiable (loop iter 53)
+- Closes a real verification gap behind the game's #1 priority. The walking students + activity
+  animations draw only in the rAF `liveLoop`, which headless Chrome throttles — so every screenshot
+  showed an **empty map**, and "people doing things" (the soul of the game) shipped on hope. Split
+  `liveLoop` into `stepLive` (advance) + `drawLive` (paint) — behavior-neutral — and added a
+  `__ui._renderLiveOnce(period)` test hook that paints ONE live frame on demand. Now a headless
+  harness can do `setPeriod → _sync → _settle → _renderLiveOnce → screenshot` and actually SEE the
+  campus full of students. Verified: a 390px shot now renders 15 detailed pixel-art students around
+  Phòng học / Xưởng / sân (recess football, benches) where before it was bare grass. No gameplay
+  change; gates green. The improve-steve skill gained the recipe + a landmine so every future
+  campus-liveliness iteration is proven, not hoped.
+
 ## 2026-06-13 — Khoa P4b: trưởng-khoa (a teacher head boosts a khoa, loop iter 52)
 - More majors-depth (the owner's "add more depth to the mechanics"). You can now **assign a teacher
   as trưởng khoa** to any unlocked khoa, from the "Khoa / Chuyên ngành" card (a "Phân công" / "Đổi"
