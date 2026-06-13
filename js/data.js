@@ -337,6 +337,14 @@ var CONTENT = {
         { label: "Mua cho khoá yếu", hint: "-15tr, +0,5 điểm, +10 Vẹt, +1 mầm phốt nặng", fx: "chodoanMua" },
         { label: "Không mua", hint: "bảo vệ bằng thực lực", fx: null }
       ] },
+    { id: "lopthem", title: "📚 Mở lớp học thêm buổi tối",
+      desc: "Cô Giáo Trình Mẫu đề nghị mở lớp học thêm buổi tối: 'phụ huynh nào cũng muốn, trường lại có thêm khoản thu'. Mấy đứa thì đã đỏ mắt.",
+      pred: "anyLuyende",
+      choices: [
+        { label: "Mở — ai cũng học thêm", hint: "+12tr, +KT/Vẹt cả trường, -8 mood, +1 Tiếng Tăm", fx: "themMo" },
+        { label: "Mở, nhưng miễn phí cho SV nghèo", hint: "+4tr, +KT nhẹ, một việc tử tế (+Uy Tín)", fx: "themMienPhi" },
+        { label: "Không — các em cần được nghỉ", hint: "+8 mood cả trường, +1 Thực Chất", fx: "themKhong" }
+      ] },
     { id: "baodauRa", title: "📸 Báo muốn bài 'thủ khoa đầu ra'",
       desc: "Một tờ báo muốn viết 'sinh viên trường mình ra trường lương nghìn đô'. Họ cần một gương mặt biết cười.",
       pred: "hasNam4",

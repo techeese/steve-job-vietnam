@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-13 — Soul: the "học thêm" choice (shadow education, loop iter 71)
+- A fresh satirical event on the one central Vietnamese-education theme the deck was missing: **paid
+  evening extra-classes (học thêm)**. Cô Giáo Trình Mẫu proposes them — "phụ huynh nào cũng muốn, trường
+  lại có thêm khoản thu", but the students are already worn out. You choose: **mở** (open for all — +tiền
+  & drilled KT/Vẹt, but −8 mood school-wide & a Tiếng-Tăm bump: income/results at the cost of exhaustion),
+  **miễn phí cho SV nghèo** (open but free for poor students — smaller gains + a quiet Uy-Tín good deed:
+  the equity middle), or **không** (let them rest — +mood & +Thực Chất: rest over drilling). The moral
+  tension of VN's shadow-education culture, in one decision. New event + 3 `applyFx` cases; all 3 verified
+  to resolve cleanly; gates green; sweep thesis intact (the drilling nudges cram→văn-mẫu, as expected).
+  Bar: **BITE 4** / FUN 3. Cadence: SMALL_SHIPS 1.
+- Also: a cohesion check confirmed the new premium buildings + premium characters harmonize (proportions
+  read well — the richer buildings resolved the earlier character-size concern); no fix needed.
+
 ## 2026-06-13 — Buildings graphics step-change: a crafted, premium campus (loop iter 70)
 - The buildings now match the premium 24×32 characters. `drawRoom` overhauled with **per-building
   materials** (plaster Phòng học · striped-awning Căng tin · purple-**brick** Phòng máy · **wood-plank**
