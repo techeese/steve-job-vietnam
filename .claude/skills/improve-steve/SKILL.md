@@ -62,6 +62,18 @@ into systems — so every owner message is DATA about the underlying instinct, n
   390px screenshot iteration); and when unsure of the target aesthetic, ASK (a wrong
   high-effort art direction is the costliest miss). Don't let "feel-first/charm" get satisfied
   by "functional" — the owner is judging it as ART.
+  → *(update)* shipped GRAPHICS OVERHAUL v2: a DETAILED PIXEL-ART pivot the owner chose (over
+  cute-cartoon / illustrated / polish-current). Procedural canvas CAN look like a finished game —
+  the unlock was: a PRE-BAKED sprite atlas (bake ~16×22 chibis WITH FACES once → blit, 60fps at
+  48), a BRIGHT daytime palette (grass not lacquer — figure-ground so characters pop), detailed
+  bright BUILDINGS (framed pixel windows, distinct roofs, doors, 1px outlines), crisp discipline
+  (imageSmoothingEnabled=false, flat fills, no gradients/arcs on sprites). Keep iterating on
+  owner reaction; bar = "looks like a real cute game."
+  → **Tooling (owner directive 2026-06-13): use the `frontend-design` plugin for UI work** — for
+  substantial HTML/CSS chrome (HUD, panels, modals, layout, typography, overall aesthetic),
+  invoke `plugin:frontend-design:frontend-design` for distinctive, non-"AI-slop" design. It
+  targets HTML/CSS (informs the chrome more than the procedural canvas pixel-art), but its
+  anti-generic principles apply to the whole look.
 - *(2026-06-13)* Values ITERABILITY AS A PRODUCT: asked for the dev flow that makes
   graphics and mechanics cheap to change BEFORE asking for any specific change. Build
   pipelines, not one-offs.

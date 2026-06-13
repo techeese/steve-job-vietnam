@@ -6,16 +6,14 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-0. **★ GRAPHICS OVERHAUL v2 — TOP PRIORITY (owner 2026-06-13: "graphic still ugly… need
-   better… this game is more important in graphic"):** the Sơn Mài Diorama procedural canvas
-   is NOT meeting the owner's bar — graphics is THE defining quality of this game and the
-   current look reads as programmer-art. This is the standing #1 lever; keep iterating on it
-   until the owner says it looks good. Likely needs a real step-change, not a tweak: bigger
-   higher-detail characters (faces, clothes, real silhouettes), genuinely crafted buildings,
-   and possibly a STYLE PIVOT and/or relaxing the no-asset constraint (embedded SVG/illustrated
-   sprites, a real sprite atlas, or proper detailed pixel-art). Direction pending owner answer
-   (cute-cartoon vs detailed-pixel vs illustrated-rich vs polish-current). Run a fresh
-   art-direction workflow once direction is set; iterate with 390px screenshots every pass.
+0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
+   SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),
+   bright daytime palette, detailed bright buildings, crisp discipline — a real step-change from
+   the rejected dark Sơn Mài. KEEP ITERATING on owner reaction until they say it looks great.
+   Next polish candidates: cuter/more-expressive faces (blink, idle), more building props
+   (signboards, flowers, fences, banners), seasonal tint (Tết/June), shadow/light passes, a
+   `tools/gallery.html` to review every sprite/building on the phone, and bigger-tile/zoom if
+   detail still feels cramped at 26px. Use the `frontend-design` plugin for any HTML/CSS chrome.
 1. **S1.5 — Workshop refactor, CHUNKED (architecture for iterability, owner priority):** the
    one-directional dep (ui→art→globals) makes this clean, but do it in SMALL safe moves, each
    a behavior-neutral iteration proven by before/after 390px screenshots + gates (a 350-line

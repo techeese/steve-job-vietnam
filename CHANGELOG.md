@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-13 — GRAPHICS OVERHAUL v2: detailed pixel-art (owner: "graphic still ugly")
+Full visual pivot after the owner rejected the dark Sơn Mài Diorama. Owner chose detailed
+pixel-art and flagged all four issues (tiny/plain characters, flat buildings, too dark,
+unpolished). (The art-direction workflow died on socket errors; hand-built from the mandate.)
+- **Characters:** a pre-baked sprite ATLAS — bigger ~16×22 chibis with real FACES (eyes,
+  cheeks, mouth), hair variants, year-coloured uniforms, 2-frame walk, 1px outline. Baked once
+  at boot (4 years × 3 hair × 2 frames) → blitted with drawImage, so 48 actors stay 60fps.
+- **Buildings:** bright pixel-art — cream schoolhouses with red gabled roofs + shingles, the
+  Căng Tin's striped awning, Lab's glossy roof, Phòng Máy's vented roof + cold windows, Xưởng's
+  sawtooth, all with framed pixel windows, wooden doors, 1px outlines. Six instantly distinct.
+- **Palette:** killed the near-black lacquer — bright sunny daytime grass with pixel texture,
+  warm dirt paths, a light (not dark) vignette. Characters now POP instead of vanishing.
+- **Crisp:** imageSmoothingEnabled=false + integer pixel discipline (flat fills, no gradients/
+  arcs on sprites). Activity overlays (eat/study/zzz/sparks) repositioned for the bigger sprite.
+- Gates green; verified home + all 6 building types + a settled lunch period at 390px.
+- Skill updated: graphics is the standing #1 lever; use the `frontend-design` plugin for UI work.
+
 ## 2026-06-13 — Background music v1 (loop iter 3): state-aware campus-lofi
 Owner directive ("background music… sound… a bit chill/relax"). Replaced the bare pentatonic
 stub with a calm generative 3-layer bed — all procedural WebAudio, no asset files, defensive.

@@ -18,17 +18,60 @@
     phongmay: { c: "#5a3f8a", e: "🖥️", g: "#7351ad" },
     xuong:    { c: "#7a4a2f", e: "🔧", g: "#9c5f3d" }
   };
-  var GRADE_C = { 1: "#6fcf97", 2: "#6aa9f0", 3: "#f2c14e", 4: "#b48ef0" };
+  var GRADE_C = { 1: "#3fb98e", 2: "#4a8fe0", 3: "#f0a838", 4: "#a86fe0" }; // year uniform colours (richer, pop on grass)
+
+  /* === PIXEL-ART v2: pre-baked character atlas (bake once → blit, fast at 48 actors) === */
+  var PX = { // bright daytime palette
+    grass: "#7fb84a", grassD: "#72a83f", grassL: "#8cc457", grassT: "#6a9c3a",
+    path: "#d8b779", pathD: "#bd9a5c", pathHi: "#e7cf9b",
+    out: "#2c2738", skin: "#f4c79c", skinD: "#e2a878", eye: "#3a2f3a",
+    pants: "#46506a", pantsD: "#343c52", shoe: "#2c2535", mouth: "#a85248",
+    gold: "#f5cd6a", roof: "#caa24a"
+  };
+  var HAIRS = [["#3a2a1c", "#5a3f28"], ["#21201f", "#3a3433"], ["#6e4a26", "#8a6336"]]; // [base,hi] variants
+  var ATLAS = null; // ATLAS[grade0..3][hair0..2][frame0..1] = offscreen canvas
+  function px(x, w, h, c, X, gx, gy) { X.fillStyle = c; X.fillRect(gx, gy, w, h); } // unused helper placeholder
+  function bakeChar(shirt, shirtD, hair, hairHi, frame) {
+    var cv = document.createElement("canvas"); cv.width = 16; cv.height = 22;
+    var X = cv.getContext("2d"); X.imageSmoothingEnabled = false;
+    function R(x, y, w, h, c) { X.fillStyle = c; X.fillRect(x, y, w, h); }
+    // HEAD (big chibi) with 1px dark outline
+    R(3, 1, 10, 10, PX.out);          // head silhouette (dark base = outline)
+    R(4, 2, 8, 8, PX.skin);           // skin face inset → 1px outline shows
+    X.clearRect(3, 1, 1, 1); X.clearRect(12, 1, 1, 1); X.clearRect(3, 10, 1, 1); X.clearRect(12, 10, 1, 1); // round corners
+    // hair
+    R(4, 2, 8, 2, hair); R(4, 2, 1, 5, hair); R(11, 2, 1, 5, hair); R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair);
+    R(4, 2, 8, 1, hairHi);
+    // face: big cute eyes + shine, cheeks, mouth
+    R(5, 6, 2, 2, PX.eye); R(9, 6, 2, 2, PX.eye); R(5, 6, 1, 1, "#ffffff"); R(9, 6, 1, 1, "#ffffff");
+    R(4, 8, 1, 1, "#f2ad95"); R(11, 8, 1, 1, "#f2ad95"); R(7, 9, 2, 1, PX.mouth);
+    // BODY (shirt) with outline
+    R(3, 10, 10, 8, PX.out);          // body silhouette
+    R(4, 11, 8, 6, shirt);            // shirt
+    R(10, 11, 2, 6, shirtD);          // shirt shade (right)
+    R(4, 11, 8, 1, "rgba(255,255,255,.22)"); // collar highlight
+    R(3, 12, 1, 4, shirt); R(12, 12, 1, 4, shirt); // arms
+    R(3, 16, 1, 1, PX.skin); R(12, 16, 1, 1, PX.skin); // hands
+    // LEGS (2-frame walk) + shoes
+    if (frame === 0) { R(5, 17, 2, 4, PX.pants); R(9, 17, 2, 4, PX.pants); R(5, 20, 2, 1, PX.shoe); R(9, 20, 2, 1, PX.shoe); }
+    else { R(5, 17, 2, 3, PX.pants); R(5, 19, 2, 1, PX.shoe); R(9, 17, 2, 4, PX.pants); R(9, 20, 2, 1, PX.shoe); }
+    R(5, 17, 6, 1, PX.pantsD); // belt line
+    return cv;
+  }
+  function buildAtlas() {
+    ATLAS = [];
+    for (var g = 0; g < 4; g++) { ATLAS[g] = []; for (var hi = 0; hi < HAIRS.length; hi++) { ATLAS[g][hi] = []; var sh = shade(GRADE_C[g + 1], -0.28); for (var fr = 0; fr < 2; fr++) ATLAS[g][hi][fr] = bakeChar(GRADE_C[g + 1], sh, HAIRS[hi][0], HAIRS[hi][1], fr); } }
+  }
 
   /* === ART: Sơn Mài Diorama (lacquer-night campus, gold-leaf pavilions) === */
   // per-room style: wall hue, roof silhouette, window temperature, gable sigil, short map label
-  var ROOM_STYLE = {
-    phonghoc: { wall: "#2f5d8a", roof: "gabled",   win: "warm",   sigil: "board",   short: "Phòng học" },
-    san:      { wall: "#2f6b46", roof: "none",      win: "none",   sigil: null,      short: "Sân trường" },
-    cangtin:  { wall: "#8a5a2f", roof: "awning",    win: "warm",   sigil: "bowl",    short: "Căng tin" },
-    lab:      { wall: "#2f7e87", roof: "glossy",    win: "mirror", sigil: "halo",    short: "Lab" },
-    phongmay: { wall: "#5a3f8a", roof: "flatvent",  win: "cold",   sigil: "monitor", short: "Phòng máy" },
-    xuong:    { wall: "#7a4a2f", roof: "sawtooth",  win: "warm",   sigil: "wrench",  short: "Xưởng" }
+  var ROOM_STYLE = { // bright pixel-art buildings
+    phonghoc: { wall: "#f0dcab", wallD: "#d4bd86", roof: "gabled",   rc: "#e0584a", rcD: "#bf4439", win: "warm",  short: "Phòng học" },
+    san:      { wall: "#5fae4a", roof: "none",      win: "none",                                     short: "Sân trường" },
+    cangtin:  { wall: "#f3b676", wallD: "#d9985a", roof: "awning",   rc: "#e0584a", rcD: "#bf4439", win: "warm",  short: "Căng tin" },
+    lab:      { wall: "#c2e8e3", wallD: "#9bccc7", roof: "glossy",   rc: "#4fb0c0", rcD: "#3a8d9c", win: "glass", short: "Lab" },
+    phongmay: { wall: "#d8c6ef", wallD: "#b9a4d8", roof: "flatvent", rc: "#8a6cc0", rcD: "#6f53a4", win: "cold",  short: "Phòng máy" },
+    xuong:    { wall: "#cca982", wallD: "#ad8a62", roof: "sawtooth", rc: "#9a7548", rcD: "#7d5d36", win: "warm",  short: "Xưởng" }
   };
   function mb(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function hashId(id) { return (Math.imul(id, 2654435761) >>> 0); }
@@ -54,6 +97,7 @@
     if (soundOn) $("soundBtn").classList.add("on");
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
+    buildAtlas(); // bake pixel-art sprite atlas once
     rebuildWalk(); syncActors(true);
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
@@ -128,9 +172,8 @@
         a = { id: s.id, px: t0[0] * T + T / 2, py: t0[1] * T + T / 2, tx: t0[0], ty: t0[1], wait: 0, ph: Math.random() * 6.28 };
       }
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
-      a.legC = shade(a.bodyC, -0.30);
       a.tell = s.tell || ""; a.seed = s.seed;
-      var hh = hashId(s.id); a.hairC = (hh & 1) ? "#241a14" : "#4a3528"; a.hairFlick = (hh % 5 === 0);
+      a.hairIdx = hashId(s.id) % HAIRS.length;
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
@@ -139,6 +182,7 @@
   var lastSync = 0;
   function liveLoop(ts) {
     var ctx = $("mapLive").getContext("2d");
+    ctx.imageSmoothingEnabled = false; // crisp pixel-art blits
     ctx.clearRect(0, 0, GW * T, GH * T);
     if (S()._mapDirty) { rebuildWalk(); drawStatic(); }
     if (ts - lastSync > 500) { syncActors(); lastSync = ts; }
@@ -178,24 +222,22 @@
   }
   // per-activity overlay — flat ops only, drawn for parked actors (≈ one room's worth at a time)
   function drawActivity(ctx, a, ts) {
-    var x = a.px | 0, y = a.py + (a.bob || 0), ph = ts / 600 + a.ph, k;
+    var x = a.px | 0, y = a.py | 0, ph = ts / 600 + a.ph, k; // overlays positioned for the 22px sprite (head ≈ y-14, hands ≈ y-9)
     if (a.act === "study") {
-      var bx = x + (a.dir < 0 ? -9 : 5);
-      ctx.fillStyle = "#e9e2cf"; ctx.fillRect(bx, y - 3, 4, 3);
-      ctx.fillStyle = "#9c8657"; ctx.fillRect(bx, y - 3 + (Math.sin(ts / 300) > 0 ? 0 : 1), 4, 1);
+      ctx.fillStyle = "#f3ead0"; ctx.fillRect(x - 3, y - 10, 6, 4); ctx.fillStyle = PX.out; ctx.fillRect(x, y - 10, 1, 4);
+      ctx.fillStyle = "#9c8657"; ctx.fillRect(x - 2, y - 9 + (Math.sin(ts / 300) > 0 ? 0 : 1), 4, 1);
     } else if (a.act === "daydream") {
-      var d = (Math.sin(ph) * 0.5 + 0.5); ctx.globalAlpha = 1 - d; ctx.fillStyle = "#bfe0ff"; ctx.fillRect(x + 2, (y - 9 - d * 5) | 0, 2, 2); ctx.globalAlpha = 1;
+      var d = (Math.sin(ph) * 0.5 + 0.5); ctx.globalAlpha = 0.5 + (1 - d) * 0.5; ctx.fillStyle = "#bfe0ff"; ctx.fillRect(x + 3, (y - 22 - d * 5) | 0, 2, 2); ctx.globalAlpha = 1;
     } else if (a.act === "eat") {
-      ctx.fillStyle = "#d8cdb5"; ctx.beginPath(); ctx.arc(x, y + 4, 3, 0, Math.PI); ctx.fill();
-      ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1;
-      for (k = 0; k < 2; k++) { var sx = x - 1 + k * 2; ctx.beginPath(); ctx.moveTo(sx, y + 1); ctx.lineTo(sx + Math.sin(ts / 200 + k) * 1.5, y - 2); ctx.stroke(); }
+      ctx.fillStyle = "#e8dcc2"; ctx.fillRect(x - 3, y - 9, 6, 3); ctx.fillStyle = PX.out; ctx.fillRect(x - 3, y - 6, 6, 1);
+      ctx.fillStyle = "rgba(255,255,255,.5)"; for (k = 0; k < 2; k++) { var sx = x - 1 + k * 2; ctx.fillRect((sx + Math.sin(ts / 200 + k) * 1.2) | 0, (y - 13 - (ts / 130 % 3)) | 0, 1, 2); }
     } else if (a.act === "tinker") {
-      if ((Math.floor(ts / 160) + a.id) % 3 === 0) { var n = (a.tell === "spark") ? 3 : 2; ctx.fillStyle = "#ffe9a8"; for (k = 0; k < n; k++) { var an = k * 2.2 + ts / 100; ctx.fillRect((x + Math.cos(an) * 4) | 0, (y - 2 + Math.sin(an) * 4) | 0, 1, 1); } }
+      if ((Math.floor(ts / 150) + a.id) % 2 === 0) { var n = (a.tell === "spark") ? 3 : 2; ctx.fillStyle = "#ffd34a"; for (k = 0; k < n; k++) { var an = k * 2.2 + ts / 90; ctx.fillRect((x + Math.cos(an) * 5) | 0, (y - 9 + Math.sin(an) * 4) | 0, 1, 1); } }
     } else if (a.act === "perform") {
-      ctx.strokeStyle = a.bodyC; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(x - 3, y + 1); ctx.lineTo(x - 5, y - 3); ctx.moveTo(x + 3, y + 1); ctx.lineTo(x + 5, y - 3); ctx.stroke();
+      ctx.fillStyle = PX.gold; ctx.fillRect(x + 3, (y - 24 + (Math.sin(ph) > 0 ? 0 : 1)) | 0, 2, 2); ctx.fillRect(x + 4, y - 27, 1, 3);
     } else if (a.act === "zzz") {
-      var zy = (y - 8 - (Math.sin(ph) * 0.5 + 0.5) * 4) | 0;
-      ctx.strokeStyle = "rgba(220,226,200,.7)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + 2, zy); ctx.lineTo(x + 5, zy); ctx.lineTo(x + 2, zy + 3); ctx.lineTo(x + 5, zy + 3); ctx.stroke();
+      var zy = (y - 24 - (Math.sin(ph) * 0.5 + 0.5) * 4) | 0;
+      ctx.fillStyle = "#e2e9d4"; ctx.fillRect(x + 3, zy, 3, 1); ctx.fillRect(x + 5, zy + 1, 1, 1); ctx.fillRect(x + 3, zy + 2, 3, 1);
     }
   }
   function drawSanBall(ctx, ts) {
@@ -209,53 +251,34 @@
   }
   // chibi student — flat primitives only, no per-frame strings/gradients/save (60fps × 48)
   function drawActor(ctx, a, ts) {
-    var x = a.px | 0, y = a.py + (a.bob || 0), by = a.py | 0;
-    // breathing contact shadow (stays grounded as the body bobs)
-    var rx = 5 - Math.max(0, a.bob || 0) * 0.7;
-    ctx.fillStyle = "rgba(0,0,0,.30)"; ctx.beginPath(); ctx.ellipse(x, by + 6, rx, 2.2, 0, 0, 6.28); ctx.fill();
-    // legs — 2-frame scissor when walking
-    var lf = a._moving ? (Math.sin(ts / 120 + a.ph) > 0 ? 1 : -1) : 0;
-    ctx.fillStyle = a.legC;
-    ctx.fillRect(x - 2.5, by + 3 + (lf > 0 ? 1 : 0), 2, 3);
-    ctx.fillRect(x + 0.5, by + 3 + (lf < 0 ? 1 : 0), 2, 3);
-    // body (full chroma — the primary identifier)
-    ctx.fillStyle = a.bodyC; roundRect(ctx, x - 4, y - 1, 8, 7, 2.4); ctx.fill();
-    ctx.fillStyle = "rgba(255,255,255,.18)"; ctx.fillRect(x - 3, y - 1, 6, 1);
-    drawMarker(ctx, a.grade, x, y);
-    // head + hair
-    ctx.fillStyle = "#f4d9b8"; ctx.beginPath(); ctx.arc(x, y - 4, 3.3, 0, 6.28); ctx.fill();
-    ctx.fillStyle = a.hairC; ctx.beginPath(); ctx.arc(x, y - 5, 3.3, Math.PI, 0); ctx.fill();
-    if (a.hairFlick) ctx.fillRect(x + (a.dir < 0 ? -4 : 3), y - 5, 1, 2);
-    // quiet gold collar tick (UI-gold echo)
-    ctx.fillStyle = "rgba(240,198,116,.7)"; ctx.fillRect(x - 1, y - 1, 2, 1);
-    if (a.special) { ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y - 4, 5.4, 0, 6.28); ctx.stroke(); }
-    if (a.hb) { ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.moveTo(x + 3, y - 8); ctx.lineTo(x + 5, y - 6); ctx.lineTo(x + 3, y - 4); ctx.lineTo(x + 1, y - 6); ctx.closePath(); ctx.fill(); }
-  }
-  function drawMarker(ctx, g, x, y) {
-    if (g === 1) { ctx.fillStyle = "#fff"; ctx.fillRect(x - 1, y - 1, 2, 1); }
-    else if (g === 2) { ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x - 3, y + 4); ctx.lineTo(x + 2, y - 1); ctx.stroke(); }
-    else if (g === 3) { ctx.fillStyle = "rgba(0,0,0,.28)"; ctx.fillRect(x - 3, y + 3, 7, 1); }
-    else if (g === 4) { ctx.fillStyle = "#f0c674"; ctx.beginPath(); ctx.moveTo(x - 2, y - 1); ctx.lineTo(x, y + 3); ctx.lineTo(x + 2, y - 1); ctx.closePath(); ctx.fill(); }
+    if (!ATLAS) return;
+    var x = a.px | 0, y = a.py | 0;
+    // soft pixel contact shadow
+    ctx.fillStyle = "rgba(36,44,24,.22)"; ctx.fillRect(x - 5, y + 3, 10, 2); ctx.fillRect(x - 3, y + 5, 6, 1);
+    var frame = a._moving ? (Math.sin(ts / 150 + a.ph) > 0 ? 0 : 1) : 0;
+    var bob = (a.bob || 0) < -0.6 ? -1 : 0;
+    var spr = ATLAS[a.grade - 1][a.hairIdx][frame];
+    if (spr) ctx.drawImage(spr, x - 8, y - 20 + bob);
+    if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 6.5, y - 20.5, 13, 11); } // Mai Sương — gold frame
+    if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 24, 2, 2); ctx.fillRect(x - 2, y - 23, 1, 1); ctx.fillRect(x + 1, y - 23, 1, 1); } // scholarship star
   }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 
   // ---- static campus (lacquer-night diorama). Redrawn only on build; seeded → no flicker. ----
   function drawStatic() {
     var ctx = $("mapStatic").getContext("2d"), W = GW * T, H = GH * T;
-    var rng = mb(1337), cx = 195, cy = 140, i, x, y;
-    // PASS 1 — lacquer base
-    var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#161b1f"); g.addColorStop(1, "#101316");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    // PASS 2 — vỏ trứng eggshell flecks (hand-laid lacquer panel)
-    for (i = 0; i < 320; i++) {
-      x = (rng() * W) | 0; y = (rng() * H) | 0;
-      if (Math.hypot(x - cx, y - cy) > 150 && rng() < 0.45) continue;
-      var a = (0.08 + rng() * 0.10).toFixed(2);
-      ctx.fillStyle = (rng() < 0.5 ? "rgba(233,226,207," : "rgba(205,191,156,") + a + ")";
-      ctx.fillRect(x, y, rng() < 0.2 ? 2 : 1, 1);
+    ctx.imageSmoothingEnabled = false;
+    var rng = mb(1337), i, x, y;
+    // PASS 1 — bright daytime grass (flat pixel base, no gloom)
+    ctx.fillStyle = PX.grass; ctx.fillRect(0, 0, W, H);
+    // PASS 2 — grass pixel texture: seeded tufts + dapple
+    for (i = 0; i < 520; i++) {
+      x = (rng() * W) | 0; y = (rng() * H) | 0; var r = rng();
+      ctx.fillStyle = r < 0.5 ? PX.grassD : (r < 0.82 ? PX.grassL : PX.grassT);
+      ctx.fillRect(x, y, r < 0.7 ? 1 : 2, 1);
     }
-    for (i = 0; i < 30; i++) { ctx.fillStyle = "rgba(233,226,207,.24)"; ctx.fillRect((rng() * W) | 0, (rng() * H) | 0, 2, 2); }
-    // PASS 3 — raised boardwalk path spine
+    for (i = 0; i < 70; i++) { x = (rng() * W) | 0; y = (rng() * H) | 0; ctx.fillStyle = PX.grassL; ctx.fillRect(x, y, 1, 2); ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 1, y + 1, 1, 1); } // little grass blades
+    // PASS 3 — warm dirt path spine
     pathBand(ctx, 0, (GH >> 1) * T, W, T, true);
     pathBand(ctx, (GW >> 1) * T, 0, T, H, false);
     // rooms — y-sorted so lower buildings overlap upper
@@ -263,100 +286,92 @@
     for (i = 0; i < rooms.length; i++) drawRoom(ctx, rooms[i]);
     // ambient props (seeded, capped, off walk lanes)
     drawProps(ctx, rng, rooms);
-    // PASS 4 — vignette: lit center, edges dissolve into the dark-gold chrome
-    var vg = ctx.createRadialGradient(cx, cy, 40, cx, cy, 250);
-    vg.addColorStop(0, "rgba(10,13,15,0)"); vg.addColorStop(1, "rgba(10,13,15,.45)");
+    // PASS 4 — gentle warm sun-vignette (light, not gloom): faintly brighten centre
+    var vg = ctx.createRadialGradient(195, 130, 30, 195, 130, 260);
+    vg.addColorStop(0, "rgba(255,250,220,.06)"); vg.addColorStop(1, "rgba(60,80,30,.10)");
     ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
   }
   function pathBand(ctx, x, y, w, h, horiz) {
-    ctx.fillStyle = "#9c8657"; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();
-    ctx.fillStyle = "#c9b079"; roundRect(ctx, x + 2, y + 2, w - 4, h - 5, 4); ctx.fill();
-    ctx.fillStyle = "rgba(255,243,214,.14)"; ctx.fillRect(x + 3, y + 2, w - 6, 1);
-    ctx.fillStyle = "rgba(0,0,0,.18)";
+    ctx.fillStyle = PX.pathD; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();
+    ctx.fillStyle = PX.path; roundRect(ctx, x + 2, y + 2, w - 4, h - 5, 4); ctx.fill();
+    ctx.fillStyle = PX.pathHi; ctx.fillRect(x + 3, y + 2, w - 6, 1);
+    ctx.fillStyle = "rgba(120,90,50,.20)";
     if (horiz) { for (var px = x + 8; px < x + w - 4; px += 10) ctx.fillRect(px, y + 2, 1, h - 6); }
     else { for (var py = y + 8; py < y + h - 4; py += 10) ctx.fillRect(x + 2, py, w - 6, 1); }
   }
   function drawRoom(ctx, r) {
     var d = CONFIG.ROOMS[r.key], sty = ROOM_STYLE[r.key] || { wall: "#555", roof: "gabled", win: "warm", short: d.name };
-    var x = r.x * T + 1.5, y = r.y * T + 1.5, w = d.w * T - 3, h = d.h * T - 3, wall = sty.wall;
-    // (A) double-copy soft drop shadow
-    ctx.fillStyle = "rgba(10,13,15,.30)"; roundRect(ctx, x + 4, y + 5, w, h, 5); ctx.fill();
-    ctx.fillStyle = "rgba(10,13,15,.14)"; roundRect(ctx, x + 8, y + 10, w, h, 6); ctx.fill();
+    var x = (r.x * T + 1) | 0, y = (r.y * T + 1) | 0, w = (d.w * T - 2) | 0, h = (d.h * T - 2) | 0;
+    // soft ground shadow (cast onto grass, down-right)
+    ctx.fillStyle = "rgba(28,44,18,.16)"; ctx.fillRect(x + 3, y + h, w, 3); ctx.fillRect(x + w, y + 8, 3, h - 6);
     if (sty.roof === "none") { drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return; }
-    var roofH = Math.min(18, h * 0.38);
-    // (B) front-wall extrusion lip
-    ctx.fillStyle = shade(wall, -0.22); roundRect(ctx, x, y + h - 6, w, 6, 4); ctx.fill();
-    // (C) body
-    ctx.fillStyle = wall; roundRect(ctx, x, y + roofH - 4, w, h - roofH + 4, 5); ctx.fill();
-    ctx.fillStyle = "rgba(255,255,255,.10)"; ctx.fillRect(x + 2, y + roofH - 2, w - 4, 1);
-    // (F) lamplit windows (under the gold frame so the bloom sits behind)
-    drawWindows(ctx, sty.win, x, y + roofH, w, h - roofH);
-    // (D) roof silhouette
-    drawRoof(ctx, sty.roof, wall, x, y, w, roofH);
-    // ambient-occlusion cheat at roof/wall seam
-    ctx.fillStyle = "rgba(0,0,0,.20)"; ctx.fillRect(x, y + roofH - 1, w, 1);
-    // (G) arched door facing the path
-    var dw = 6, dh = 8, dx = x + w / 2 - dw / 2, dy = y + h - dh - 1;
-    ctx.fillStyle = "#241a14"; ctx.beginPath(); ctx.moveTo(dx, dy + dh); ctx.lineTo(dx, dy + 2); ctx.arc(dx + dw / 2, dy + 2, dw / 2, Math.PI, 0); ctx.lineTo(dx + dw, dy + dh); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = "rgba(240,198,116,.5)"; ctx.fillRect(dx, dy + dh - 1, dw, 1);
-    // (E) gold-leaf frame — the biggest 26px separation win
-    ctx.strokeStyle = "#f0c674"; ctx.lineWidth = 1.2; roundRect(ctx, x, y + roofH - 4, w, h - roofH + 4, 5); ctx.stroke();
-    ctx.strokeStyle = "rgba(202,162,74,.7)"; ctx.lineWidth = 0.5; roundRect(ctx, x + 1.5, y + roofH - 2.5, w - 3, h - roofH + 1, 4); ctx.stroke();
-    // gable sigil (third redundant cue beyond roof-shape + hue)
-    if (sty.sigil) drawSigil(ctx, sty.sigil, x + w / 2, y + roofH + 5);
+    var roofH = Math.min(16, (h * 0.42) | 0), wallTop = y + roofH;
+    // WALL: dark outline base → bright wall → right shade → top highlight → plank lines
+    ctx.fillStyle = PX.out; ctx.fillRect(x, wallTop - 1, w, h - roofH + 1);
+    ctx.fillStyle = sty.wall; ctx.fillRect(x + 1, wallTop, w - 2, h - roofH - 1);
+    ctx.fillStyle = sty.wallD; ctx.fillRect(x + w - 3, wallTop, 2, h - roofH - 1);
+    ctx.fillStyle = "rgba(255,255,255,.20)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);
+    ctx.fillStyle = sty.wallD; for (var ly = wallTop + 5; ly < y + h - 4; ly += 6) ctx.fillRect(x + 1, ly, w - 2, 1);
+    // WINDOWS
+    drawWindows(ctx, sty.win, x, wallTop, w, h - roofH);
+    // ROOF
+    drawRoof(ctx, sty.roof, sty, x, y, w, roofH);
+    // DOOR (framed wood, facing path)
+    var dw = 8, dh = 9, dx = (x + w / 2 - dw / 2) | 0, dy = y + h - dh - 1;
+    ctx.fillStyle = PX.out; ctx.fillRect(dx - 1, dy - 1, dw + 2, dh + 1);
+    ctx.fillStyle = "#9a6238"; ctx.fillRect(dx, dy, dw, dh);
+    ctx.fillStyle = "#754827"; ctx.fillRect(dx + (dw >> 1), dy, 1, dh);
+    ctx.fillStyle = PX.gold; ctx.fillRect(dx + 2, dy + (dh >> 1), 1, 1);
     roomLabel(ctx, sty.short, x, y, w, h);
   }
   function roomLabel(ctx, name, x, y, w, h) {
     ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    var tw = ctx.measureText(name).width, pw = tw + 8, px = x + w / 2 - pw / 2, py = y + h - 8;
-    ctx.fillStyle = "rgba(0,0,0,.5)"; roundRect(ctx, px, py - 5.5, pw, 11, 5); ctx.fill();
-    ctx.fillStyle = "rgba(255,243,214,.92)"; ctx.fillText(name, x + w / 2, py + 0.5);
+    var tw = ctx.measureText(name).width, pw = tw + 8, px = (x + w / 2 - pw / 2) | 0, py = y + h - 7;
+    ctx.fillStyle = "rgba(20,28,14,.62)"; roundRect(ctx, px, py - 5.5, pw, 11, 4); ctx.fill();
+    ctx.fillStyle = "#fff8e6"; ctx.fillText(name, x + w / 2, py + 0.5);
     ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
   }
   function drawWindows(ctx, type, x, y, w, h) {
     if (type === "none") return;
-    var n = Math.max(1, Math.floor((w - 10) / 9)), gap = (w - 2 - n * 5) / (n + 1), wy = y + h - 12, i, wx;
+    var n = Math.max(1, Math.floor((w - 8) / 10)), gap = (w - 4 - n * 6) / (n + 1), wy = y + 4, i, wx;
+    var pane = type === "cold" ? "#9fd8ff" : (type === "glass" ? "#cfeef2" : "#ffe3a0");
     for (i = 0; i < n; i++) {
-      wx = x + 2 + gap * (i + 1) + 5 * i;
-      if (type === "warm") { glow(ctx, wx + 2.5, wy + 3, "rgba(240,198,116,.16)"); ctx.fillStyle = "#ffe9a8"; ctx.fillRect(wx, wy, 5, 6); ctx.fillStyle = "#fff3d6"; ctx.fillRect(wx, wy, 5, 3); }
-      else if (type === "cold") { glow(ctx, wx + 2.5, wy + 3, "rgba(127,208,255,.18)"); ctx.fillStyle = "#7fd0ff"; ctx.fillRect(wx, wy, 5, 6); ctx.fillStyle = "#cfeefb"; ctx.fillRect(wx, wy, 5, 2); }
-      else { ctx.fillStyle = "#cfeaf2"; ctx.fillRect(wx, wy, 5, 6); ctx.strokeStyle = "rgba(240,198,116,.7)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(wx, wy + 5); ctx.lineTo(wx + 5, wy); ctx.stroke(); }
+      wx = (x + 2 + gap * (i + 1) + 6 * i) | 0;
+      ctx.fillStyle = PX.out; ctx.fillRect(wx, wy, 6, 7);                 // frame
+      ctx.fillStyle = pane; ctx.fillRect(wx + 1, wy + 1, 4, 5);           // pane
+      ctx.fillStyle = "rgba(255,255,255,.65)"; ctx.fillRect(wx + 1, wy + 1, 2, 2); // glint
+      ctx.fillStyle = PX.out; ctx.fillRect(wx + 3, wy + 1, 1, 5); ctx.fillRect(wx + 1, wy + 3, 4, 1); // mullions
     }
   }
-  function drawRoof(ctx, type, wall, x, y, w, roofH) {
-    var rc = shade(wall, 0.14), s;
+  function drawRoof(ctx, type, sty, x, y, w, roofH) {
+    var rc = sty.rc || "#c8553f", rcD = sty.rcD || "#a8412f", s;
     if (type === "gabled") {
-      ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(x - 1, y + roofH); ctx.lineTo(x + w / 2, y); ctx.lineTo(x + w + 1, y + roofH); ctx.closePath(); ctx.fill();
-      ctx.strokeStyle = "rgba(255,243,214,.5)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w / 2, y + 1); ctx.lineTo(x + w / 2, y + roofH); ctx.stroke();
-      ctx.fillStyle = "#caa24a"; ctx.fillRect(x + w / 2 - 1, y - 1, 2, 2); // finial
+      ctx.fillStyle = PX.out; ctx.beginPath(); ctx.moveTo(x - 2, y + roofH + 1); ctx.lineTo(x + w / 2, y - 1); ctx.lineTo(x + w + 2, y + roofH + 1); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(x, y + roofH); ctx.lineTo(x + w / 2, y + 1); ctx.lineTo(x + w, y + roofH); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = rcD; for (s = 3; s < roofH; s += 3) { var hw = (w / 2) * (1 - s / roofH); ctx.fillRect(x + w / 2 - hw, y + s, hw * 2, 1); }
+      ctx.fillStyle = "#fff"; ctx.fillRect((x + w / 2 - 1) | 0, y - 1, 2, 3);
     } else if (type === "awning") {
-      ctx.fillStyle = rc; roundRect(ctx, x - 1, y, w + 2, roofH, 3); ctx.fill();
-      for (s = 0; s < Math.ceil(w / 4); s++) { ctx.fillStyle = (s % 2) ? "#c8412e" : "#efe6cf"; ctx.fillRect(x + s * 4, y + roofH - 3, 4, 3); }
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 2, y, w + 4, roofH);
+      for (s = 0; s < Math.ceil((w + 4) / 5); s++) { ctx.fillStyle = (s % 2) ? rc : "#f5e8ca"; ctx.fillRect((x - 2 + s * 5) | 0, y + 1, 5, roofH - 1); }
     } else if (type === "glossy") {
-      ctx.fillStyle = rc; roundRect(ctx, x - 1, y, w + 2, roofH, 6); ctx.fill();
-      ctx.fillStyle = "rgba(255,255,255,.18)"; roundRect(ctx, x + 1, y + 1, w - 2, roofH / 2, 5); ctx.fill();
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);
+      ctx.fillStyle = rc; ctx.fillRect(x, y + 1, w, roofH - 2);
+      ctx.fillStyle = "rgba(255,255,255,.4)"; ctx.fillRect(x + 2, y + 1, w - 4, 2);
     } else if (type === "flatvent") {
-      ctx.fillStyle = rc; ctx.fillRect(x - 1, y, w + 2, roofH);
-      for (s = 0; s < 3; s++) { ctx.fillStyle = shade(wall, -0.12); ctx.fillRect(x + 4 + s * ((w - 8) / 3), y + 2, 5, roofH - 5); ctx.fillStyle = "#8b929b"; ctx.fillRect(x + 5 + s * ((w - 8) / 3), y + 3, 3, 2); }
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y + 2, w + 2, roofH - 1);
+      ctx.fillStyle = rc; ctx.fillRect(x, y + 3, w, roofH - 3);
+      for (s = 0; s < 3; s++) { var vx = (x + 4 + s * ((w - 8) / 3)) | 0; ctx.fillStyle = PX.out; ctx.fillRect(vx, y, 6, 4); ctx.fillStyle = "#aeb6bf"; ctx.fillRect(vx + 1, y + 1, 4, 2); }
     } else if (type === "sawtooth") {
-      for (s = 0; s < 3; s++) { var sx = x + s * (w / 3); ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx, y + roofH); ctx.lineTo(sx, y + 3); ctx.lineTo(sx + w / 3, y + roofH); ctx.closePath(); ctx.fill(); ctx.fillStyle = "rgba(200,230,240,.5)"; ctx.fillRect(sx + 1, y + 4, 2, roofH - 6); }
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);
+      for (s = 0; s < 3; s++) { var sx = x + s * (w / 3); ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx + 1, y + roofH - 1); ctx.lineTo(sx + 1, y + 3); ctx.lineTo(sx + w / 3 - 1, y + roofH - 1); ctx.closePath(); ctx.fill(); ctx.fillStyle = "#cdeef4"; ctx.fillRect((sx + 2) | 0, y + 4, 2, roofH - 6); }
     }
   }
   function drawSan(ctx, x, y, w, h) {
-    ctx.fillStyle = "#2f6b46"; roundRect(ctx, x, y, w, h, 5); ctx.fill();
-    for (var i = 0; i < Math.ceil(h / 8); i++) if (i % 2) { ctx.fillStyle = "#34734d"; ctx.fillRect(x + 2, y + 2 + i * 8, w - 4, 4); }
-    ctx.strokeStyle = "rgba(255,255,255,.5)"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.ellipse(x + w / 2, y + h / 2, w * 0.17, h * 0.17, 0, 0, 6.28); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x + w / 2, y + 3); ctx.lineTo(x + w / 2, y + h - 3); ctx.stroke();
-    ctx.strokeStyle = "rgba(240,198,116,.5)"; ctx.lineWidth = 1.2; roundRect(ctx, x, y, w, h, 5); ctx.stroke();
-  }
-  function drawSigil(ctx, kind, cx, cy) {
-    ctx.strokeStyle = "#f0c674"; ctx.fillStyle = "#f0c674"; ctx.lineWidth = 1;
-    if (kind === "board") { ctx.fillStyle = "rgba(18,24,18,.92)"; ctx.fillRect(cx - 4, cy - 3, 8, 6); ctx.strokeRect(cx - 4, cy - 3, 8, 6); ctx.fillStyle = "rgba(240,198,116,.8)"; ctx.fillRect(cx - 2.5, cy - 1, 5, 1); }
-    else if (kind === "bowl") { ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI); ctx.stroke(); ctx.fillRect(cx - 3.5, cy - 0.5, 7, 1); }
-    else if (kind === "halo") { ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 6.28); ctx.stroke(); }
-    else if (kind === "monitor") { ctx.strokeRect(cx - 4, cy - 3, 8, 5); ctx.fillStyle = "rgba(127,208,255,.85)"; ctx.fillRect(cx - 3, cy - 2, 6, 3); ctx.fillStyle = "#f0c674"; ctx.fillRect(cx - 1, cy + 2, 2, 1); }
-    else if (kind === "wrench") { ctx.beginPath(); ctx.arc(cx - 2, cy - 2, 2, 0, 6.28); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx - 1, cy - 1); ctx.lineTo(cx + 3, cy + 3); ctx.stroke(); }
+    ctx.fillStyle = "#5fae4a"; ctx.fillRect(x, y, w, h);
+    for (var i = 0; i < Math.ceil(h / 7); i++) if (i % 2) { ctx.fillStyle = "#69b853"; ctx.fillRect(x, y + i * 7, w, 4); } // mow stripes
+    ctx.strokeStyle = "#eef6ec"; ctx.lineWidth = 1; ctx.strokeRect(x + 1.5, y + 1.5, w - 3, h - 3);
+    ctx.beginPath(); ctx.arc((x + w / 2) | 0, (y + h / 2) | 0, Math.min(w, h) * 0.16, 0, 6.28); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo((x + w / 2) | 0, y + 2); ctx.lineTo((x + w / 2) | 0, y + h - 2); ctx.stroke();
   }
   // ambient props — all static, seeded, capped, kept off the walk lanes so the little people stay visible
   function drawProps(ctx, rng, rooms) {
