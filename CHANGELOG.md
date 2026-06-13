@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-13 — Memorial gardens: honour a real educator (loop iter 33)
+- The late game had no aspiration once the founding milestones were done, and the philosophical
+  core (the owner's emphasis: "the player's own version of the answer") lived only in the epilogue.
+  New: buildable **Vườn Tưởng Niệm** memorial gardens honouring three real Vietnamese educators —
+  Trần Đại Nghĩa (made tools from scarcity), Tạ Quang Bửu (self-taught, opened the world), Hồ Xuân
+  Hương (wrote in her *own* voice in an age of borrowed templates — literally the văn-mẫu thesis).
+  Each is a one-time, escalating-cost build (150/250/350tr) that grants a full +5 Uy Tín (pierces
+  the yearly cap — it's a deliberate, paid honour) and opens a reflective dedication modal placing
+  the school's question ("how do we get a Steve Jobs Việt Nam?") beside someone who answered it
+  with their life. Renders as a tended lawn + stone stele on the campus. Reuses the Pantheon
+  content (the lines already existed as scholarship flavour) and the build system. A late-game
+  cash sink with a soul + a collectible prestige goal. Mechanics verified (once-gate, affordability,
+  +Uy Tín, philosophical line); gates green.
+
 ## 2026-06-13 — Founding-era event deck + structure review (loop iter 32)
 - The from-nothing build-up years were event-sparse (most event predicates need năm-4 students or a
   populated school). Added a 3-event founding deck (pred `founding`: năm ≤ 3, ≥1 student), each a

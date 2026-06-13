@@ -58,8 +58,10 @@ function canPlace(key, x, y) {
   for (var i = 0; i < S.rooms.length; i++) if (rectsOverlap(nr, roomRect(S.rooms[i]))) return false;
   return true;
 }
+function pantheonByKey(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === key) return CONFIG.PANTHEON[i]; return null; }
 function placeRoom(key, x, y) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
+  if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có vườn này rồi." };
   if (!canPlace(key, x, y)) return { ok: false, msg: "Không đặt được ở đây." };
   var cost = d.cost || 0;
   if (cost > S.cash) return { ok: false, msg: "Không đủ tiền." };
@@ -67,7 +69,11 @@ function placeRoom(key, x, y) {
   S.book = r1(S.book + cost);
   S.rooms.push({ key: key, x: x, y: y });
   S._mapDirty = true;
-  if (cost > 0) news("Xây xong " + d.name + ". −" + cost + "tr.");
+  if (d.ded) { // a memorial garden — lasting prestige + a real educator's idea on the grounds
+    gainUT(d.utBoost || 5, true); bacTamNod(); // pierce the yearly cap: a deliberate, paid-for honour
+    var p = pantheonByKey(d.ded);
+    if (p) news("🏵️ Khánh thành " + d.name + ": " + p.line);
+  } else if (cost > 0) news("Xây xong " + d.name + ". −" + cost + "tr.");
   checkMilestones(); // building can complete a founding milestone (responsive while paused)
   return { ok: true };
 }

@@ -16,7 +16,10 @@
     cangtin:  { c: "#8a5a2f", e: "🍜", g: "#ad7a3d" },
     lab:      { c: "#2f7e87", e: "💡", g: "#3aa0ab" },
     phongmay: { c: "#5a3f8a", e: "🖥️", g: "#7351ad" },
-    xuong:    { c: "#7a4a2f", e: "🔧", g: "#9c5f3d" }
+    xuong:    { c: "#7a4a2f", e: "🔧", g: "#9c5f3d" },
+    vuontdn:  { c: "#2f6b46", e: "🌳", g: "#3a875a" },
+    vuontqb:  { c: "#2f5d8a", e: "📖", g: "#3d77ad" },
+    vuonhxh:  { c: "#8a2f5a", e: "🌸", g: "#ad3d77" }
   };
   var GRADE_C = { 1: "#3fb98e", 2: "#4a8fe0", 3: "#f0a838", 4: "#a86fe0" }; // year uniform colours (richer, pop on grass)
 
@@ -85,7 +88,10 @@
     cangtin:  { wall: "#f3b676", wallD: "#d9985a", roof: "awning",   rc: "#e0584a", rcD: "#bf4439", win: "warm",  short: "Căng tin" },
     lab:      { wall: "#c2e8e3", wallD: "#9bccc7", roof: "glossy",   rc: "#4fb0c0", rcD: "#3a8d9c", win: "glass", short: "Lab" },
     phongmay: { wall: "#d8c6ef", wallD: "#b9a4d8", roof: "flatvent", rc: "#8a6cc0", rcD: "#6f53a4", win: "cold",  short: "Phòng máy" },
-    xuong:    { wall: "#cca982", wallD: "#ad8a62", roof: "sawtooth", rc: "#9a7548", rcD: "#7d5d36", win: "warm",  short: "Xưởng" }
+    xuong:    { wall: "#cca982", wallD: "#ad8a62", roof: "sawtooth", rc: "#9a7548", rcD: "#7d5d36", win: "warm",  short: "Xưởng" },
+    vuontdn:  { garden: true, accent: "#6fcf97", short: "Trần Đại Nghĩa" },
+    vuontqb:  { garden: true, accent: "#6aa9f0", short: "Tạ Quang Bửu" },
+    vuonhxh:  { garden: true, accent: "#f15a7a", short: "Hồ Xuân Hương" }
   };
   function mb(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function hashId(id) { return (Math.imul(id, 2654435761) >>> 0); }
@@ -481,6 +487,7 @@
   function drawRoom(ctx, r) {
     var d = CONFIG.ROOMS[r.key], sty = ROOM_STYLE[r.key] || { wall: "#555", roof: "gabled", win: "warm", short: d.name };
     var x = (r.x * T + 1) | 0, y = (r.y * T + 1) | 0, w = (d.w * T - 2) | 0, h = (d.h * T - 2) | 0;
+    if (sty.garden) { drawGarden(ctx, x, y, w, h, sty); roomLabel(ctx, sty.short, x, y, w, h); return; }
     if (sty.roof === "none") {
       ctx.fillStyle = "rgba(28,44,18,.16)"; ctx.fillRect(x + 3, y + h, w, 3); // soft ground shadow
       drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return;
@@ -567,6 +574,25 @@
     } else {
       ctx.fillRect(x - 2 + dp, y + dp, w + 4, roofH); // eaves slab for flat/awning/glossy/vent/sawtooth
     }
+  }
+  // a memorial garden: a tended lawn with a hedge border and a central stone stele + accent plaque
+  function drawGarden(ctx, x, y, w, h, sty) {
+    ctx.fillStyle = "rgba(20,34,14,.18)"; ctx.fillRect(x + 3, y + h, w, 3); // shadow
+    ctx.fillStyle = "#5aa64a"; ctx.fillRect(x, y, w, h);                    // lawn
+    ctx.fillStyle = "#67b557"; for (var i = 0; i < h; i += 6) ctx.fillRect(x, y + i, w, 2); // mow stripes
+    ctx.fillStyle = "#3f7a34"; ctx.fillRect(x + 1, y + 1, w - 2, 1); ctx.fillRect(x + 1, y + h - 2, w - 2, 1); ctx.fillRect(x + 1, y + 1, 1, h - 2); ctx.fillRect(x + w - 2, y + 1, 1, h - 2); // hedge
+    var cx = (x + w / 2) | 0, by = (y + h - 5) | 0, top = (y + 6) | 0;
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 5, top, 10, by - top + 2);    // stele outline
+    ctx.fillStyle = "#b9b3a6"; ctx.fillRect(cx - 4, top + 1, 8, by - top);  // stone
+    ctx.fillStyle = "#d6d0c4"; ctx.fillRect(cx - 4, top + 1, 3, by - top);  // lit left
+    ctx.fillStyle = "#9a9488"; ctx.fillRect(cx + 2, top + 1, 2, by - top);  // shade right
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 3, top - 3, 6, 3); ctx.fillStyle = "#c9c3b6"; ctx.fillRect(cx - 2, top - 2, 4, 2); // peaked cap
+    ctx.fillStyle = sty.accent; ctx.fillRect(cx - 3, top + 4, 6, 5);        // plaque (figure's accent)
+    ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.fillRect(cx - 3, top + 4, 6, 1);
+    ctx.fillStyle = PX.gold; ctx.fillRect(cx - 1, top + 6, 2, 2);           // rosette
+    ctx.fillStyle = sty.accent;                                            // flowers in the accent
+    ctx.fillRect(x + 3, y + h - 5, 2, 2); ctx.fillRect(x + w - 5, y + h - 6, 2, 2); ctx.fillRect(x + 4, y + 4, 1, 1);
+    ctx.fillStyle = "#fff3c0"; ctx.fillRect(x + 3, y + h - 4, 1, 1); ctx.fillRect(x + w - 4, y + h - 5, 1, 1);
   }
   function drawSan(ctx, x, y, w, h) {
     ctx.fillStyle = "#5fae4a"; ctx.fillRect(x, y, w, h);
@@ -683,7 +709,7 @@
       var d = CONFIG.ROOMS[placingKey];
       var gx = Math.max(0, Math.min(GW - d.w, pt.gx)), gy = Math.max(0, Math.min(GH - d.h, pt.gy));
       var res = HVS.placeRoom(placingKey, gx, gy);
-      if (res.ok) { placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; rebuildWalk(); drawStatic(); render(); toast("Đã xây xong."); }
+      if (res.ok) { var pk = placingKey, ded = CONFIG.ROOMS[pk] && CONFIG.ROOMS[pk].ded; placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; rebuildWalk(); drawStatic(); render(); if (ded) showDedication(ded); else toast("Đã xây xong."); }
       else toast(res.msg);
       return;
     }
@@ -731,6 +757,18 @@
     $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
     $("lookBtn").onclick = function () { st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); };
     ins.classList.add("show"); $("mapHint").textContent = "";
+  }
+  function showDedication(dedKey) {
+    var p = null; for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === dedKey) p = CONFIG.PANTHEON[i];
+    if (!p) { toast("Đã khánh thành khu vườn."); return; }
+    var w = el("div");
+    w.appendChild(el("div", "kic", "🏵️ Khánh thành vườn tưởng niệm"));
+    w.appendChild(el("h2", null, esc(p.name.replace("Học bổng ", ""))));
+    w.appendChild(el("div", "lead", esc(p.line)));
+    w.appendChild(el("div", "lead", "<span style='color:var(--gold)'>Trường của bạn vừa đặt câu hỏi của mình — <i>làm thế nào để có một 'Steve Jobs Việt Nam'?</i> — cạnh một người đã trả lời nó bằng cả đời mình.</span>"));
+    var btn = el("button", "btn gold", "Khắc bia · +5 Uy Tín"); btn.style.width = "100%";
+    btn.onclick = hideModal;
+    w.appendChild(btn); openModal(w);
   }
   function showInspectRoom(r) {
     var d = CONFIG.ROOMS[r.key], sk = ROOM_SKIN[r.key] || { e: "▫" }, ins = $("inspect");
@@ -875,6 +913,23 @@
     });
     c3.appendChild(grid);
     wrap.appendChild(c3);
+
+    // dedications — honour a real educator (late-game prestige + a question to put to the grounds)
+    var dedKeys = ["vuontdn", "vuontqb", "vuonhxh"].filter(function (k) { return !s.rooms.some(function (r) { return r.key === k; }); });
+    if (dedKeys.length) {
+      var c3b = el("div", "card"); c3b.appendChild(el("h3", null, "Vinh danh nhà giáo dục"));
+      c3b.appendChild(el("div", "tiny", "Dựng một khu vườn tưởng niệm — đặt câu hỏi của trường cạnh một người đã trả lời nó thật.")).style.marginBottom = "7px";
+      var dgrid = el("div", "buildgrid");
+      dedKeys.forEach(function (key) {
+        var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key];
+        var b = el("button", "build");
+        b.innerHTML = "<div class='nm'>" + sk.e + " " + esc(d.name) + "</div><div class='ds'>" + esc(d.desc) + "</div><div class='pr'>−" + d.cost + "tr</div>";
+        if (d.cost > s.cash) b.disabled = true;
+        b.onclick = function () { placingKey = key; document.body.classList.add("placing"); $("mapHint").textContent = "Chạm vào khuôn viên để đặt " + d.name + " (" + d.w + "×" + d.h + ")."; toast("Chọn vị trí cho khu vườn."); };
+        dgrid.appendChild(b);
+      });
+      c3b.appendChild(dgrid); wrap.appendChild(c3b);
+    }
 
     // hire
     var c4 = el("div", "card"); c4.appendChild(el("h3", null, "Giảng viên"));

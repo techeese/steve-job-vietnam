@@ -47,7 +47,12 @@ var CONFIG = {
     cangtin:  { name: "Căng Tin Mì Tôm", w: 2, h: 2, cost: 0, free: true, desc: "+1 Mood/tháng toàn trường. Ngân hàng tặng kèm khi bán nợ." },
     lab:      { name: "Phòng Lab Sống Ảo", w: 2, h: 2, cost: 70, desc: "+0,5 Tiếng Tăm/tháng. Đẹp nhất trường. Không dạy được gì." },
     phongmay: { name: "Phòng Máy", w: 3, h: 2, cost: 120, desc: "Mở khoá toàn bộ hiệu quả Đồ Án & Lab (thiếu nó: -50%)." },
-    xuong:    { name: "Xưởng Chế", w: 3, h: 3, cost: 200, desc: "+1 Tay Nghề khi học Đồ Án. +5 Thực Chất một lần. Bừa bộn, không lên hình." }
+    xuong:    { name: "Xưởng Chế", w: 3, h: 3, cost: 200, desc: "+1 Tay Nghề khi học Đồ Án. +5 Thực Chất một lần. Bừa bộn, không lên hình." },
+    // memorial gardens — late-game prestige: honour a real Vietnamese educator. One-time +Uy Tín,
+    // a place to put a question to. Costs escalate; each can be built once. (a cash sink with a soul)
+    vuontdn:  { name: "Vườn Trần Đại Nghĩa", w: 2, h: 2, cost: 150, ded: "tdn", utBoost: 5, once: true, desc: "Tưởng niệm người tạo ra phương tiện từ sự thiếu thốn. +5 Uy Tín lâu dài." },
+    vuontqb:  { name: "Vườn Tạ Quang Bửu", w: 2, h: 2, cost: 250, ded: "tqb", utBoost: 5, once: true, desc: "Tưởng niệm vị bộ trưởng tự học, mở cửa cho cả một thế hệ. +5 Uy Tín lâu dài." },
+    vuonhxh:  { name: "Vườn Hồ Xuân Hương", w: 2, h: 2, cost: 350, ded: "hxh", utBoost: 5, once: true, desc: "Tưởng niệm người viết bằng tiếng của chính mình giữa thời văn mẫu. +5 Uy Tín lâu dài." }
   },
 
   TEACH_SALARY: function (d, dd) { return 8 + 2.5 * (d + dd); },

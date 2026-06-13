@@ -64,7 +64,10 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
    GIANG_VIEN/QUAY_DAU), world years, Sổ filters + gratitude tiers, 20/11 envelope
    sprites, the "Mười năm sau…" epilogue, "Mời cựu SV về nói chuyện" verb.
 7. **S4 — Funding full:** contract types 🦜🎣🤝, renewal escalation, decks T/E/C, Quỹ Ứng Cứu.
-8. **S5/S6 — Pantheon pack + content:** dedications (Vườn Nguyễn Trường Tộ first), Giải
+8. **S5/S6 — Pantheon pack + content:** ~~dedications~~ STARTED (iter 33: 3 buildable Vườn Tưởng
+   Niệm memorial gardens — Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương — +Uy Tín, dedication
+   modal, on-campus stele; a late-game cash sink + prestige goal). Next: more figures (Nguyễn
+   Trường Tộ, Chu Văn An), Giải
    Giọng Riêng + Lễ Vinh Danh (trimmed), remaining 6 scholarships with pipeline effects,
    living-archetype event deck, uni teacher archetypes, khoa split.
 
