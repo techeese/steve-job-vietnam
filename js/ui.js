@@ -476,6 +476,30 @@
   function drawSeason(ctx, W, H) {
     var m = S().month;
     if (m === 1 || m === 2) drawTet(ctx, W, H);
+    else if (m === 6) drawJune(ctx, W, H); // Lễ Tốt Nghiệp — the campus dresses for graduation
+  }
+  function drawJune(ctx, W, H) {
+    // red carpet down the central path (the graduation procession route to the cổng)
+    var cx = (GW >> 1) * T;
+    ctx.fillStyle = "#9a2b2b"; ctx.fillRect(cx + 4, 0, T - 8, H);
+    ctx.fillStyle = "#bd3a3a"; ctx.fillRect(cx + 5, 0, T - 10, H);
+    ctx.fillStyle = PX.gold; ctx.fillRect(cx + 5, 0, 1, H); ctx.fillRect(cx + T - 6, 0, 1, H); // gold trim
+    ctx.fillStyle = "rgba(255,255,255,.10)"; for (var cy = 4; cy < H; cy += 12) ctx.fillRect(cx + 6, cy, T - 12, 1); // weave
+    // tossed mortarboard caps near the top — the signature graduation image
+    mortarboard(ctx, 44, 16); mortarboard(ctx, 126, 9); mortarboard(ctx, 250, 14); mortarboard(ctx, 330, 20);
+    // academic bunting (blue/gold) strung across the very top
+    var cols = ["#4a8fe0", "#f2c14e"], k = 0;
+    for (var bx = 6; bx < W - 8; bx += 16) {
+      ctx.fillStyle = cols[(k++) % 2];
+      for (var t = 0; t < 6; t++) ctx.fillRect(bx + 1 + t, 3, 7 - 2 * t > 0 ? 7 - 2 * t : 1, 1);
+    }
+  }
+  function mortarboard(ctx, x, y) {
+    ctx.fillStyle = PX.out; ctx.beginPath(); ctx.moveTo(x, y - 4); ctx.lineTo(x + 7, y); ctx.lineTo(x, y + 4); ctx.lineTo(x - 7, y); ctx.closePath(); ctx.fill(); // board rim
+    ctx.fillStyle = "#262626"; ctx.beginPath(); ctx.moveTo(x, y - 2.5); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 2.5); ctx.lineTo(x - 5, y); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#3a3a3a"; ctx.fillRect(x - 2, y, 4, 3); // cap base under the board
+    ctx.fillStyle = PX.gold; ctx.fillRect(x, y - 1, 1, 1); // button
+    ctx.fillStyle = "#f2c14e"; ctx.fillRect(x + 4, y, 1, 4); ctx.fillRect(x + 4, y + 4, 2, 1); // tassel
   }
   function drawTet(ctx, W, H) {
     // bunting garland across the top (above the building band) — alternating red/gold/teal flags

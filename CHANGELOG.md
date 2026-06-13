@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 — Graduation day dresses the campus (loop iter 36)
+- The emotional climax — June graduation — had no visual occasion (Tết did, via iter 31's seasonal
+  hook). Now Tháng 6 dresses the campus for Lễ Tốt Nghiệp: a gold-trimmed **red carpet** down the
+  central path (the procession route to the cổng — pairs with the graduation walk-out), **tossed
+  mortarboard caps** at the top (the signature graduation image), and academic blue/gold bunting.
+  Reuses `drawSeason()`; distinct look from Tết. Verified it shows in month 6 and is gated off
+  otherwise; gates green.
+- Also corrected an iter-34 audit note: the "Uy Tín erosion" I flagged is **not a bug** — the sweep
+  shows UT is a healthy moral meter (honest school ~43, cram ~18); my audit's UT=1 was one harsh
+  cram endpoint. Gardens' one-time +Uy Tín is left as-is (you can't monument away how you run a school).
+
 ## 2026-06-13 — Mobile tap polish + reset button (loop iter 35)
 - Following up the owner's "map selection still not clear" across all three dimensions, not just the
   visual marker (iter 34): (1) **tap ripple** — every tap now spawns a brief expanding gold ring at

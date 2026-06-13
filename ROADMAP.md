@@ -6,11 +6,12 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-★ **Balance follow-ups surfaced in the iter-34 audit (queue):** (1) **Uy Tín erosion** — over a long
-run UT decays to ~1 even with memorial-garden boosts; the gardens' one-time +5 doesn't hold. Decide
-whether monuments should give a small *ongoing* UT floor/source (like lab's +TT) vs one-time. (2)
-**Late-game money** still inflates (~2344–2655tr); gardens are a sink only if the player builds them —
-the sweep (fixed strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
+★ **Balance follow-ups (queue):** (1) ~~Uy Tín erosion~~ NOT A BUG (iter 35 check): the sweep shows
+UT is a working moral meter — honest (cân bằng) keeps UT ~43, cram sits ~18; my iter-34 audit's
+UT=1 was a single harsh-cram endpoint, not systemic. Gardens' one-time +5 is thematically right
+(you can't monument away how you run the school). Leave as-is. (2) **Late-game money** still
+inflates (~2344–2655tr); gardens are a sink only if the player builds them — the sweep (fixed
+strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
 
 ★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority:**
 - ~~**(A) START FROM NOTHING, build up**~~ **SHIPPED (iter 24).** Boot = empty lot: 0 rooms,
@@ -40,8 +41,9 @@ the sweep (fixed strategy) still flags it. Proper fix = S4 spend channels / scal
   face vs the current solid extrusion), and a `tools/gallery.html` promoting the `__ui._bakeSheet`
   hook to a real phone-reviewable sprite/building gallery. ~~Seasonal Tết décor~~ SHIPPED (iter 31:
   bunting + lanterns + blossom pots in Tháng 1–2 via `drawSeason()`). Next season candidates:
-  June graduation flair (bunting + a stage at the sân during the ceremony), a falling-petal live
-  layer during Tết, a subtle seasonal sky/grass tint.
+  ~~June graduation flair~~ SHIPPED (iter 36: red carpet + tossed
+  mortarboard caps + academic bunting in Tháng 6). Next season candidates: a falling-petal live
+  layer during Tết, graduating actors wearing caps during June, a subtle seasonal sky/grass tint.
 
 0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
    SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),
