@@ -137,7 +137,9 @@ var CONFIG = {
       line: "Vị bộ trưởng đại học tự học mọi thứ, và ký giấy cho cả một thế hệ ra thế giới học về." },
     { key: "hxh", name: "Học bổng Hồ Xuân Hương", eff: "vet", val: 0.5,
       line: "Bà chúa thơ Nôm — viết bằng tiếng của chính mình giữa một thời đại viết bằng điển cố đi mượn." }
-  ]
+  ],
+
+  ESSAY: { CAST_CAP: 4, STEVE_CAP: 2, BIBAT_CAP: 1, SAME_STATE_RATIO: 0.40, MAJOR_RATIO: 0.35, ENDOW_THIN: 20, HYPE_GAP: 30 }
 };
 
 /* ========================== CONTENT (all text) ========================== */
@@ -325,6 +327,52 @@ var CONTENT = {
 
   virtueApplicant: "Một hồ sơ điểm cao xin về trường: 'nghe đồn trường này dạy thật — {ly_do}'. Hạt giống tốt tự tìm đất.",
   vtReasons: { tuaVit: "chuyện cái tua vít", phongmay: "chuyện phòng máy mở cửa tối", pccc: "chuyện trường tự báo vụ cháy" },
+
+  // "Bản nháp bài luận của hiệu trưởng" — the open-question epilogue (DESIGN §1). Reflect, never verdict.
+  essay: {
+    ones: ["", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"],
+    openBtn: "📜 Bản nháp bài luận",
+    kic: "Bản nháp · chưa nộp · Năm {year}",
+    title: "Bài luận của hiệu trưởng",
+    falseStart: "<s>Sau {yearWord} năm, tôi đã có câu trả lời.</s>",
+    deHeader: "“{de}” — tôi chép lại nguyên văn, như Bác Tâm vẫn đọc ở cột cờ, không thêm chữ nào.",
+    ledger: "Tôi mua một trường đang nợ. {yearWord} năm, sổ ghi {graduated} cái tên. Đề bài thì vẫn nằm nguyên trên bàn tôi.",
+    empty: "Tôi mở sổ. Sổ còn trắng — tôi mới chép cái đề lên trang đầu, chưa có cái tên nào để xếp xuống dưới. Ba quyển sổ kia cũng mỏng: trong ngân hàng {cash}tr, quỹ hiến tặng {endow}tr. Tiền thì đã có, người thì chưa.",
+    nameWithSteve: "Đề hỏi Steve Jobs ở đâu. Có lẽ là mấy đứa này — tôi chỉ dám chỉ tay, không dám kết luận:",
+    nameNoSteve: "Đề hỏi Steve Jobs ở đâu. Tôi không có. Tôi chỉ có thể chỉ vào mấy đứa này:",
+    castRowArrestTail: " — khoá này tốt nghiệp thời chủ cũ, nhưng tên vẫn nằm trong sổ tôi.",
+    steveColEmpty: "Cột “🍎” vẫn để trống — chỗ đó tôi chừa, chưa gạch.",
+    steveColFull: "Cột “🍎” có {steves} dòng. Tôi vẫn không chắc là tôi viết ra nó, hay tôi chỉ tình cờ không xoá nó đi.",
+    ledgerHead: "Rồi tôi đặt ba quyển sổ cạnh nhau.",
+    ledgerBank: "Sổ ngân hàng: {cash}tr.",
+    ledgerEndow: "Quỹ hiến tặng: {endow}tr — tiền của lòng biết ơn,{endowTail} không tiêu được vào quảng cáo.",
+    ledgerThird: "Sổ thứ ba không in được thành tiền: là cái danh sách ở trên.",
+    ledgerStare: "Ba quyển nằm cạnh nhau trên bàn. Quyển nào to hơn thì… để Bộ duyệt.",
+    crossOut: {
+      steve: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi định viết “thành công rồi”, nhìn lại thấy chữ đó không phải của mình, xoá. Tôi—",
+      coin: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “trường tôi dạy làm giàu”, rồi đọc lại cái dòng 🚔, để dấu ba chấm. Tôi—",
+      vanmau: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi chép sẵn một câu mở bài mẫu cho nhanh, đọc lại thấy buồn cười, xoá. Tôi—",
+      kysu: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi gạch xoá ba lần. Tôi viết “có lẽ là đừng sản xuất”, rồi xoá nốt. Tôi—",
+      thuc: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi định viết “chậm mà chắc”, nghe như khẩu hiệu, xoá. Tôi—",
+      hype: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “cả nước biết tên trường”, rồi nhìn quỹ hiến tặng, xoá. Tôi—",
+      that: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “có lẽ tôi dạy chưa tới”, để đó, chưa xoá. Tôi—",
+      kind: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “một ngôi trường tử tế”, nghe hơi tự khen, để xem mai có xoá không. Tôi—"
+    },
+    bacTam: {
+      steve: "Bác Tâm để ấm trà xuống: “Đứa đó hồi xưa hay tháo chuông trường. Sổ này có nó là đủ dày.”",
+      coin: "Bác Tâm để ấm trà xuống: “Có đứa gửi quà Tết to lắm. Tôi để nguyên hộp, chưa mở.”",
+      vanmau: "Bác Tâm để ấm trà xuống: “Đồ án mẫu của cô Trình treo ở phòng truyền thống. Đẹp thật.”",
+      kysu: "Bác Tâm để ấm trà xuống: “{nKySu} đứa sửa máy. Sổ này đọc cũng được.”",
+      thuc: "Bác Tâm để ấm trà xuống: “Mấy đứa này về vẫn hỏi thăm. Thư chất đầy ngăn kéo.”",
+      hype: "Bác Tâm để ấm trà xuống: “Sân lúc nào cũng đông phóng viên. Trà nguội nhanh.”",
+      that: "Bác Tâm để ấm trà xuống: “Mấy đứa thỉnh thoảng ghé sân ngồi. Vẫn gọi tôi là bác.”",
+      kind: "Bác Tâm để ấm trà xuống: “Không đứa nào lên tivi. Cũng không đứa nào vào tù. Sân vẫn sạch.”",
+      empty: "Bác Tâm để ấm trà xuống: “Cột cờ mới dựng. Đề thì đọc rồi.”"
+    },
+    echo: "“{de}”",
+    foot: "Đề vẫn ở cột cờ. Sáng mai Bác Tâm lại đọc.",
+    foldBtn: "Gấp bản nháp lại"
+  },
 
   rebirth: null // university has no restart in S1 (run cap = sandbox); reserved
 };

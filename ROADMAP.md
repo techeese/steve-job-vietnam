@@ -6,13 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-1. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
-   *"bản nháp bài luận của hiệu trưởng"* — a year-end / milestone epilogue assembled from
-   the player's OWN school (which students became what, which choices recurred, the three
-   ledgers, 🍎-or-absence), reflecting their answer to the đề back at them. The game holds
-   up the mirror; it never states the answer. Pairs with a balance pass guaranteeing no
-   single dominant strategy (every path stays a viable, distinct thesis).
-3. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
+1. **S1.5 — Workshop refactor (architecture for iterability, owner priority):** split into
    `art.js` (all visual data + the Sơn Mài draw functions + atlas) / `content.js` (all
    text/events/banks) / `index.html` (engine + UI + CONFIG); build `tools/gallery.html`
    rendering every sprite/tile/room/animation for phone review at the live URL; add GATE_ART.
@@ -59,6 +53,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 (empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
 
 ## Done (see CHANGELOG.md)
+- **The Player's Answer epilogue (loop iter 2)** — "Bản nháp bài luận của hiệu trưởng": the
+  open-question law (DESIGN §1) as a pull-only mirror modal. 8 branch voices + empty guard;
+  reflects the player's own school, crosses out every verdict, ends on the đề hanging.
+  Follow-up: a balance pass proving no single dominant strategy (so every essay branch is
+  genuinely reachable), and a "Mười năm sau…" run-end FSM fast-forward (DESIGN §S3).
 - **Campus life v1 (loop iter 1)** — 5-period real-time day clock routes students to room
   door-rings to study/eat/tinker/play-ball/zzz; đồ-án-mode Năm-4→Xưởng; shared Sân ball;
   tell-driven (sky daydreams, hype performs, spark sparks). Pure view layer. Follow-ups

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-13 — The Player's Answer epilogue (loop iter 2): "Bản nháp bài luận của hiệu trưởng"
+The open-question law (DESIGN §1) made playable. A 📜 button in the Trường tab opens a
+draft-essay modal that holds up a MIRROR and never a verdict. Designed via a 3-lens
+(ledger / draft-letter / question-echo) → synthesis workflow.
+- Re-asks the real 2026 đề verbatim, then the founder CROSSES OUT every sentence that smells
+  like a conclusion (struck `<s>` false-start; cross-out cut mid-word at "Tôi—").
+- Points at the player's OWN graduates by name + chip + their own line; the 🍎 column is
+  shown empty-or-full in the same neutral register (no path is ranked above another).
+- Lays the three ledgers (bank / quỹ hiến tặng / the name-list itself) bare and refuses to
+  weigh them — "Quyển nào to hơn thì… để Bộ duyệt."
+- Bác Tâm gets one quiet physical line (never a moral); the đề returns identical as the LAST
+  readable thing; close button is "Gấp bản nháp lại," never "done."
+- 8 branch voices (steve/coin/vanmau/kysu/thuc/hype/that/kind) + empty-book guard, chosen
+  from META/alumni-majority/meters. Pure view layer, derived on open, stores nothing.
+  Templates in CONTENT.essay, thresholds in CONFIG.ESSAY, assembler in ui.js essayDraft().
+- Verified at 390px across post-June (no-Steve), seeded-Steve, and empty-book states; gates green.
+
 ## 2026-06-13 — Campus life v1 (loop iteration 1): students keep a schedule
 Designed via a 4-lens → synthesis workflow. Pure view layer (no sim/state change).
 - **Day clock:** 5 real-time periods × 16s — class · recess · lunch · afternoon · tan học —

@@ -707,6 +707,10 @@
       var line = Object.keys(byState).map(function (k) { return CONFIG.ALUM.CHIPS[k] + " " + byState[k]; }).join(" · ");
       c.appendChild(el("div", "row muted", line));
     }
+    // open-question epilogue — a mirror the player PULLS (DESIGN §1), always available
+    var eb = el("button", "btn", CONTENT.essay.openBtn); eb.style.marginTop = "9px"; eb.style.width = "100%";
+    eb.onclick = function () { openModal(essayDraft()); };
+    c.appendChild(eb);
     wrap.appendChild(c);
     // BXH
     if (s.examHistory.length) {
@@ -719,6 +723,75 @@
     var d = el("div", "card"); d.appendChild(el("div", "tiny", CONTENT.disclaimer));
     wrap.appendChild(d);
     return wrap;
+  }
+
+  /* === The Player's Answer — "Bản nháp bài luận của hiệu trưởng" (DESIGN §1: reflect, never verdict) === */
+  function numWord(n) { var o = CONTENT.essay.ones; return (n >= 1 && n <= 9) ? o[n] : String(n); }
+  function isOldCohort(a) { if (a._tpl) return true; var sc = CONFIG.ALUM.SCRIPTED || []; for (var i = 0; i < sc.length; i++) if (sc[i].ten === a.ten) return true; return false; }
+  function buildCast(s, byState, majorityKey, C) {
+    function pick(arr) { return arr.slice().sort(function (a, b) { return (b.grat - a.grat) || ((b.gifts || 0) - (a.gifts || 0)); }); }
+    var cast = [], used = {}, total = s.alumni.length, i;
+    pick(s.alumni.filter(function (a) { return a.state === "STEVE"; })).slice(0, C.STEVE_CAP).forEach(function (a) { cast.push(a); used[a.id] = 1; });
+    pick(s.alumni.filter(function (a) { return a.state === "BI_BAT"; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });
+    if (majorityKey) {
+      var maj = pick(s.alumni.filter(function (a) { return a.state === majorityKey && !used[a.id]; }));
+      if (maj[0] && cast.length < C.CAST_CAP) { cast.push(maj[0]); used[maj[0].id] = 1; }
+      if (maj[1] && cast.length < C.CAST_CAP && (byState[majorityKey] / Math.max(1, total)) >= C.SAME_STATE_RATIO) { cast.push(maj[1]); used[maj[1].id] = 1; }
+    }
+    var order = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT" && k !== majorityKey; }).sort(function (a, b) { return byState[b] - byState[a]; });
+    for (i = 0; i < order.length && cast.length < C.CAST_CAP; i++) { var ex = pick(s.alumni.filter(function (a) { return a.state === order[i] && !used[a.id]; }))[0]; if (ex) { cast.push(ex); used[ex.id] = 1; } }
+    return cast;
+  }
+  function essayDraft() {
+    var s = S(), C = CONFIG.ESSAY, E = CONTENT.essay, w = el("div");
+    var de = CONTENT.dePool[0], yw = numWord(s.year), cash = Math.round(s.cash), endow = Math.round(s.endow.bal);
+    var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
+    var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
+    var majorityKey = nonSteve.sort(function (a, b) { return byState[b] - byState[a]; })[0] || null;
+    var total = s.alumni.length;
+    var steveAlum = s.alumni.filter(function (a) { return a.state === "STEVE"; });
+    var tenSteve = steveAlum[0] ? steveAlum[0].ten : null;
+    var branchKey = (function () {
+      if (s.META.steves > 0) return "steve";
+      if (!majorityKey) return "kind";
+      var ratio = byState[majorityKey] / Math.max(1, total);
+      if (majorityKey === "CA_MAP_COIN" || (s.META.arrested > 0 && ((byState.CA_MAP_COIN || 0) + (byState.BI_BAT || 0)) / Math.max(1, total) >= C.MAJOR_RATIO)) return "coin";
+      if (majorityKey === "QUAN_VAN_MAU" && ratio >= C.MAJOR_RATIO) return "vanmau";
+      if (majorityKey === "THAT_NGHIEP" && ratio >= C.MAJOR_RATIO) return "that";
+      if (majorityKey === "KY_SU" && s.thucChat >= 55) return "kysu";
+      if (s.tiengTam - s.thucChat >= C.HYPE_GAP) return "hype";
+      if (s.thucChat >= 65 && s.tiengTam < 60) return "thuc";
+      return "kind";
+    })();
+    function P(cls, html, it) { var e = el("div", cls, html); if (it) e.style.fontStyle = "italic"; w.appendChild(e); }
+    P("kic", esc(E.kic.replace("{year}", s.year)));
+    var h = el("h2", null, esc(E.title)); w.appendChild(h);
+    P("lead", tpl(E.falseStart, { yearWord: yw }));
+    P("lead", tpl(E.deHeader, { de: de }), true);
+    if (s.META.graduated === 0) {
+      P("lead", tpl(E.empty, { cash: cash, endow: endow }));
+    } else {
+      P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
+      P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
+      buildCast(s, byState, majorityKey, C).forEach(function (a) {
+        var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
+        var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
+        P("lead", esc(a.ten) + " — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + "<br>“" + esc(line) + "”");
+      });
+      P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);
+      P("lead", E.ledgerHead);
+      P("lead", tpl(E.ledgerBank, { cash: cash }));
+      var endowTail = (majorityKey === "KY_SU" || (byState.KY_SU || 0) > 0) ? " phần lớn mấy đứa kỹ sư gửi về," : (tenSteve ? (" phần lớn là của " + esc(tenSteve) + ",") : "");
+      P("lead", tpl(E.ledgerEndow, { endow: endow, endowTail: endowTail }));
+      P("lead", E.ledgerThird);
+      P("lead", E.ledgerStare);
+    }
+    P("lead", tpl(E.crossOut[branchKey], {}));
+    P("nod", tpl(E.bacTam[s.META.graduated === 0 ? "empty" : branchKey], { nKySu: (byState.KY_SU || 0) }));
+    P("lead", tpl(E.echo, { de: de }), true);
+    P("tiny", esc(E.foot));
+    var btn = el("button", "btn gold", esc(E.foldBtn)); btn.style.width = "100%"; btn.style.marginTop = "10px"; btn.onclick = hideModal; w.appendChild(btn);
+    return w;
   }
 
   /* ============================================================================
