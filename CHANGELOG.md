@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Campus life: the afternoon is now a khoa practicum (loop iter 55)
+- Completes the charm thread from iter 54 — **all three khoas now have a signature on-map activity**, so
+  in the afternoon period you can read a student's major just by watching where they go and what they do:
+  - 💻 **Lập trình** (spark) heads-down at a glowing **monitor** in Phòng Máy — green code scrolls line by
+    line, a cursor blinks (`code`).
+  - 🎨 **Thiết kế Chế tạo** (sky) shapes a **workpiece** at the Xưởng — a plank, a sliding saw, sawdust
+    spraying off (`craft`).
+  - 🚀 **Khởi nghiệp (Sống Ảo)** (hype) still livestreams itself at the Lab (`stream`, iter 54).
+  The campus visibly splits by discipline each afternoon — the Khoa system, legible through pure watching
+  (the game's "love watching little people do stuff" soul). Pure ui.js (routing + two new activity overlays
+  + emotes), no engine/balance change; gates green; all three verified via `_renderLiveOnce` zoom.
+
 ## 2026-06-13 — Campus life: the Sống Ảo khoa livestreams itself (loop iter 54)
 - First iteration to tie the new **Khoa system to visible campus life** — and a satirical one. In the
   afternoon period, students of the **Khoa Khởi nghiệp (Sống Ảo)** (the *hype*-tell influencer major)

@@ -317,7 +317,10 @@
     else if (period === 1) { roomKey = "san"; act = (a.tell === "hype") ? "perform" : "recess"; }
     else if (period === 2) { roomKey = "cangtin"; act = "eat"; }
     else if (period === 3) {
-      if (a.tell === "hype") { roomKey = "lab"; act = "stream"; }                    // Sống Ảo khoa: skips the workshop to livestream (satire)
+      // afternoon KHOA PRACTICUM — each major works in its own room, its own way (read a khoa by watching)
+      if (a.tell === "hype") { roomKey = "lab"; act = "stream"; }                     // Sống Ảo: livestreams instead of building (satire)
+      else if (a.tell === "spark") { roomKey = "phongmay"; act = "code"; }            // Lập trình: heads-down at a monitor
+      else if (a.tell === "sky") { roomKey = "xuong"; act = "craft"; }                // Thiết kế Chế tạo: sawing/shaping a workpiece
       else if (a.grade === 4) { roomKey = duAn ? "xuong" : "phongmay"; act = "tinker"; }
       else { roomKey = "lab"; act = "study"; }
     }
@@ -356,6 +359,8 @@
     if (a.act === "eat") return Math.random() < 0.6 ? "heart" : "spark";
     if (a.act === "study") return Math.random() < 0.5 ? "idea" : "dots";
     if (a.act === "tinker") return Math.random() < 0.6 ? "idea" : "spark";
+    if (a.act === "code") return Math.random() < 0.55 ? "idea" : "dots";   // debugging the loop
+    if (a.act === "craft") return Math.random() < 0.6 ? "spark" : "idea";  // sparks off the workpiece
     if (a.act === "stream") return Math.random() < 0.6 ? "heart" : "spark"; // likes + clout
     if (a.act === "daydream") return Math.random() < 0.5 ? "dots" : "music";
     return EMOTES[(Math.random() * EMOTES.length) | 0];
@@ -440,6 +445,18 @@
     } else if (a.act === "zzz") {
       var zy = (y - 24 - (Math.sin(ph) * 0.5 + 0.5) * 4) | 0;
       ctx.fillStyle = "#e2e9d4"; ctx.fillRect(x + 3, zy, 3, 1); ctx.fillRect(x + 5, zy + 1, 1, 1); ctx.fillRect(x + 3, zy + 2, 3, 1);
+    } else if (a.act === "code") {
+      // Lập trình: heads-down at a glowing monitor, code scrolling line by line
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 4, y - 13, 9, 8);                      // monitor bezel
+      ctx.fillStyle = "#0e2019"; ctx.fillRect(x - 3, y - 12, 7, 5);                   // dark screen
+      ctx.fillStyle = "#5fe08a"; for (k = 0; k < 3; k++) { var lw = 2 + ((Math.floor(ts / 200) + k + a.id) % 5); ctx.fillRect(x - 3, y - 11 + k * 2, lw > 6 ? 6 : lw, 1); } // green code lines
+      ctx.fillStyle = (Math.floor(ts / 350) % 2) ? "#9fe8c0" : "#0e2019"; ctx.fillRect(x + 3, y - 7, 1, 1); // blinking cursor
+      ctx.fillStyle = "#2a2a33"; ctx.fillRect(x - 4, y - 5, 9, 1);                    // keyboard ledge
+    } else if (a.act === "craft") {
+      // Thiết kế Chế tạo: shaping a workpiece — a plank and a sliding saw, sawdust spraying off
+      ctx.fillStyle = "#9a6238"; ctx.fillRect(x - 5, y - 9, 10, 2); ctx.fillStyle = "#caa46a"; ctx.fillRect(x - 5, y - 9, 10, 1); // plank (lit top)
+      var sx2 = (x - 2 + Math.sin(ts / 110) * 3) | 0; ctx.fillStyle = "#cdd2d8"; ctx.fillRect(sx2, y - 11, 4, 1); ctx.fillStyle = PX.out; ctx.fillRect(sx2 + 4, y - 11, 1, 2); // saw blade + handle
+      if ((Math.floor(ts / 110) + a.id) % 2 === 0) { ctx.fillStyle = "#e8d2a0"; for (k = 0; k < 3; k++) { var an = k * 2.1 + ts / 95; ctx.fillRect((x + Math.cos(an) * 5) | 0, (y - 7 + Math.sin(an) * 3) | 0, 1, 1); } } // sawdust motes
     } else if (a.act === "stream") {
       // Sống Ảo: filming a livestream — ring-light glow, a phone held up with a blinking REC dot, rising likes
       ctx.fillStyle = "rgba(255,240,180,.16)"; ctx.fillRect(x - 6, y - 16, 13, 11);  // ring-light wash
