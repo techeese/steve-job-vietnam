@@ -253,6 +253,16 @@ var CONTENT = {
   arrestNote: "khóa này tốt nghiệp thời chủ cũ",
   giftHead: "Cảm ơn thầy đã không bắt em học thuộc.",
   giftVt: { tuaVit: "…vẫn nhớ chuyện cái tua vít.", phongmay: "…vẫn nhớ buổi tối được mượn phòng máy.", pccc: "…vẫn nhớ lần trường tự báo cáo vụ cháy." },
+  // short lines for a cựu SV who strolls back onto campus (the watchable layer; kept tiny to fit a bubble)
+  visitLines: {
+    STEVE: "Em về kể chuyện cho khoá dưới.",
+    KY_SU: "Em về thăm thầy ạ!",
+    FOUNDER: "Vòng gọi vốn sắp chốt thầy ơi!",
+    CA_MAP_COIN: "Trường mình 'hợp tác' không thầy?",
+    QUAN_VAN_MAU: "Em được cử về báo cáo điển hình.",
+    LUONG_ON: "Em về thăm trường ạ.",
+    THAT_NGHIEP: "Em… ghé qua xem trường tí ạ."
+  },
 
   teachers: {
     inherited: [

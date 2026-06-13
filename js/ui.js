@@ -54,6 +54,7 @@
   }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [], fest = [];
+  var visitor = null, lastVisitTs = -1e9; // a cựu SV occasionally strolls back onto campus (transient, separate from actors)
   var celebrateUntil = 0, _steveSeen = -1; // 🍎 Steve-emergence celebration (the đề Văn's answer, made a moment)
   var _cupSeen = -1; // 🏆 Cúp Khoa — fire a non-blocking celebration when a new year's cup is awarded
   var UMB_COLS = ["#e0584a", "#4a8fe0", "#f2c14e", "#5fd0c5", "#b48ef0", "#ee7ab0"]; // rain umbrellas (cheerful, varied by id)
@@ -235,12 +236,14 @@
     if (alive) updateClouds(ts);
     if (alive) { tickWeather(ts); updateWeather(ts); }
     if (alive) updateFest(ts);
+    if (alive) { maybeVisitor(ts); updateVisitor(ts); }
   }
   function drawLive(ctx, ts, period) {
     var i;
     drawClouds(ctx);  // soft cloud-shadows drifting over the grounds, beneath the actors
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
+    drawVisitor(ctx, ts);   // a returning cựu SV, if one is currently visiting
     drawSelection(ctx, ts); // on-map marker for the tapped student/room
     drawTapFx(ctx, ts);     // expanding ripple at the last tap (touch feedback)
     if (period === 1) drawBall(ctx); // pickup football at recess
@@ -448,6 +451,50 @@
       ctx.fillStyle = col; ctx.fillRect(px + 2 + c, baseY + yo, 1, hh);
       ctx.fillStyle = "rgba(255,255,255,.28)"; ctx.fillRect(px + 2 + c, baseY + yo, 1, 1); // top glint
     }
+  }
+  /* a cựu SV strolls back onto campus — biographies made VISIBLE in the watchable layer (the owner's soul:
+     "people and trajectories, doing things you like to see"). One transient at a time, separate from the
+     student actors (so syncActors never touches it). Walks up the central path → pauses with a line → leaves. */
+  var VISIT_OK = { STEVE: 1, KY_SU: 1, FOUNDER: 1, CA_MAP_COIN: 1, QUAN_VAN_MAU: 1, LUONG_ON: 1, THAT_NGHIEP: 1 }; // BI_BAT stays away
+  function spawnVisitor(stateOverride) {
+    var s = S(), pool = s.alumni.filter(function (a) { return (!a._tpl || a._arrested) && VISIT_OK[a.state] && (!stateOverride || a.state === stateOverride); });
+    if (!pool.length) return false;
+    var steve = pool.filter(function (a) { return a.state === "STEVE"; });
+    var pick = (steve.length && Math.random() < 0.6) ? steve[(Math.random() * steve.length) | 0] : pool[(Math.random() * pool.length) | 0];
+    var gx = GW >> 1;
+    visitor = { a: pick, vIdx: SPRITES.hashId(pick.id) % SPRITES.VARIANTS.length, px: gx * T + T / 2, py: GH * T + 16, ty: (GH * T * 0.52) | 0, phase: "in", pause: 0, ph: Math.random() * 6.28 };
+    return true;
+  }
+  function maybeVisitor(ts) {
+    if (visitor || ts - lastVisitTs < 42000) return;            // one at a time; min ~42s between visits
+    if (Math.random() < 0.004) spawnVisitor();                  // rare ambient stroll-back (~once/min when eligible)
+  }
+  function updateVisitor(ts) {
+    if (!visitor) return;
+    var v = visitor;
+    if (v.phase === "in") { v.py -= 0.55; if (v.py <= v.ty) { v.py = v.ty; v.phase = "pause"; v.pause = ts; } }
+    else if (v.phase === "pause") { if (ts - v.pause > 4200) v.phase = "out"; }
+    else { v.py += 0.6; if (v.py > GH * T + 24) { visitor = null; lastVisitTs = ts; } }
+  }
+  function drawVisitor(ctx, ts) {
+    if (!visitor || !SPRITES.ready()) return;
+    var v = visitor, x = v.px | 0, y = v.py | 0, moving = v.phase !== "pause";
+    var frame = moving ? (Math.sin(ts / 150 + v.ph) > 0 ? 0 : 1) : 0;
+    var spr = SPRITES.sprite(4, v.vIdx, frame); // graduates wear the year-4 (departed) colour
+    if (spr) ctx.drawImage(spr, x - 12, y - 30);
+    // a small 🎓 marker so a returning alum reads as distinct from current students
+    ctx.font = "9px system-ui,sans-serif"; ctx.textAlign = "center"; ctx.fillText("🎓", x + 8, y - 27);
+    if (v.phase === "pause") {
+      var chip = (CONFIG.ALUM.CHIPS[v.a.state] || "").split(" ")[0];          // the state emoji
+      var line = chip + " " + (CONTENT.visitLines[v.a.state] || "Em về thăm trường ạ.");
+      ctx.font = "700 8px 'Be Vietnam Pro',system-ui,sans-serif";
+      var pw = (ctx.measureText(line).width + 10) | 0, by = y - 40;
+      ctx.fillStyle = "rgba(18,22,30,.92)"; roundRect(ctx, (x - pw / 2) | 0, by - 11, pw, 15, 5); ctx.fill();
+      ctx.fillStyle = "#fff"; ctx.fillText(line, x, by - 0.5);
+      // little tail
+      ctx.fillStyle = "rgba(18,22,30,.92)"; ctx.fillRect(x - 1, by + 4, 3, 2);
+    }
+    ctx.textAlign = "left";
   }
   /* festive falling particles — Tết blossom petals (đào/mai) and June graduation confetti; keyed to the calendar */
   var FEST_PETAL = ["#ffc0d0", "#ff9ec0", "#ffd24a", "#ffe07a"]; // đào pink + mai yellow
@@ -1546,6 +1593,7 @@
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
     setWeather: function (w) { setWeather(w); weatherT = 1e15; }, // test hook: pin weather (rays/rain/clear) + freeze auto-cycle
     checkModals: function () { checkModals(); }, // test hook: render whatever modal the current pending* state implies
+    spawnVisitor: function (state) { var ok = spawnVisitor(state); if (ok && visitor) { visitor.py = visitor.ty; visitor.phase = "pause"; visitor.pause = 0; } return ok; }, // test hook: pose a returning alum at the bubble
     tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
     _sel: function () { return { stu: selStudent, room: selRoom }; },
     _drawSel: function () { var ctx = $("mapLive").getContext("2d"); ctx.imageSmoothingEnabled = false; drawSelection(ctx, 800); },

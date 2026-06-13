@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-14 — Cựu sinh viên come back to visit — biographies, made flesh on campus (loop iter 87)
+- The owner's deepest soul ("people and trajectories, doing things you like to *watch*") reaching the living
+  campus, not just the panels: every so often a **graduate strolls back through the cổng**, walks up the central
+  path, pauses with a little speech bubble keyed to their fate, then heads back out. A 🍎 Steve returns "để kể
+  chuyện cho khoá dưới"; a kỹ sư "về thăm thầy"; a cá mập coin sidles up — "Trường mình 'hợp tác' không thầy?";
+  the unemployed one just "ghé qua xem trường tí ạ." The destiny cascade you read in the Sổ Cựu SV now literally
+  walks back onto the grounds.
+- Built as a **single transient** (one visitor at a time, separate from the student `actors` array so
+  `syncActors` never touches it): `spawnVisitor`/`maybeVisitor` (rare ambient trigger, ≥42s apart, prefers the
+  rare 🍎) + `updateVisitor` (walk-in → pause → walk-out) + `drawVisitor` (a grade-4 graduate sprite via
+  `SPRITES` + a 🎓 marker + a centred bubble). Pure cosmetic — `Math.random`, never serialized, reads only
+  alumni state → **no engine/balance/save change.** data.js: a tiny `visitLines` per state.
+- Verified: parse · `./gate.sh` GREEN · `./bot.sh` **BOTOK** · zoom screenshot of a Steve visitor's bubble ·
+  a 5s live-loop run exercising spawn/walk/pause/leave (VSTEPOK, zero JSERR) · new `__ui.spawnVisitor` test hook.
+- POLISH ship → `SMALL_SHIPS_SINCE_EPIC 2→3` ⇒ the next firing is hard-locked to the EPIC track
+  (EPICS_SINCE_STRUCTURE=0, so a FEATURE epic is allowed). Bar: **CHARM/THESIS 4** (the campus tells its
+  graduates' stories by itself).
+
 ## 2026-06-14 — Maintenance sprint (clean) + the 🍎 Steve's biography gets its keynote (loop iter 86)
 - **Maintenance/coherence sprint** (due — 8 firings & 7 features since iter 78): `node sweep.js` bands GREEN
   (0 bankruptcy, pluralism holds), `./bot.sh` **BOTOK**, a **fresh full 390px audit of all 5 tabs** on a

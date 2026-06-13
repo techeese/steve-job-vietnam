@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (85 bio card + 86 Steve-keynote = 2 POLISH; 86 also a maintenance sprint (clean, doesn't count). ONE more polish then the EPIC track locks.)
+- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — the next firing is HARD-LOCKED to the EPIC track** (EPICS_SINCE_STRUCTURE=0, so a FEATURE epic is allowed, or a STRUCTURE move). Reset to 0 only when an epic SHIPS. (85 bio + 86 Steve-keynote + 87 alumni-visits = 3 POLISH.) Candidate epics: a *passive late-game economic pressure* (balance — wants owner steer / careful sweep tuning), or deeper alumni/khoa systems. Prefer owner-steered or low-risk-additive given the long autonomous run.
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 84: sprites.js extraction WAS the structure move — paid the debt the cadence was forcing.)
 - `LAST_EPIC: iter 84 — STRUCTURE: character sprite bakery → js/sprites.js (−156 lines ui.js; hash-proven byte-identical). Visual bake layer now whole (art.js + sprites.js).`
 - `LAST_MAINTENANCE: iter 86 — CLEAN. sweep green (0 bankrupt, pluralism holds) · bot.sh BOTOK · fresh full 390px audit of all 5 tabs on a populated late-game state → no regressions after 7 features (weather/khoa-identity/Cúp Khoa/pennant/umbrellas/events/sprites.js split/bio card). Game coheres; healthy. (iter 78 was the prior one — also clean + added bot.sh.)`
