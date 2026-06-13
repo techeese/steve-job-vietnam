@@ -205,6 +205,7 @@
     if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
+    drawSmoke(ctx, ts);
     requestAnimationFrame(liveLoop);
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
@@ -256,6 +257,16 @@
     else if (t === "idea") { ctx.fillStyle = "#ffe06a"; ctx.fillRect(x - 1, ty, 3, 3); ctx.fillStyle = PX.out; ctx.fillRect(x, ty + 3, 1, 1); }
     else if (t === "sweat") { ctx.fillStyle = "#7fd0ff"; ctx.fillRect(x + 1, ty, 1, 2); ctx.fillRect(x, ty + 1, 2, 2); }
     else { ctx.fillStyle = "#6b7280"; ctx.fillRect(x - 1, ty, 3, 1); ctx.fillRect(x + 1, ty + 1, 1, 1); ctx.fillRect(x, ty + 2, 1, 1); ctx.fillRect(x, ty + 4, 1, 1); } // ?
+  }
+  /* cooking smoke from the Căng Tin chimney — the canteen is always making mì tôm */
+  function drawSmoke(ctx, ts) {
+    var cg = null, rooms = S().rooms; for (var i = 0; i < rooms.length; i++) if (rooms[i].key === "cangtin") { cg = rooms[i]; break; }
+    if (!cg) return;
+    var d = CONFIG.ROOMS.cangtin, cx = cg.x * T + d.w * T - 8, cy = cg.y * T - 3;
+    for (var k = 0; k < 3; k++) {
+      var t = ((ts / 750) + k / 3) % 1, px = (cx + Math.sin(ts / 300 + k * 2) * 2) | 0, py = (cy - t * 16) | 0, a = (1 - t) * 0.38, s = 1 + (t * 2.5 | 0);
+      ctx.fillStyle = "rgba(222,222,222," + a.toFixed(2) + ")"; ctx.fillRect(px, py, s, s);
+    }
   }
   /* butterflies drifting over the grounds — sunny ambient life */
   var FLYCOL = ["#fff4d6", "#f6c14e", "#f48fb1", "#9fd0ff"];
@@ -402,6 +413,7 @@
     drawWindows(ctx, sty.win, x, wallTop, w, h - roofH);
     // ROOF
     drawRoof(ctx, sty.roof, sty, x, y, w, roofH);
+    if (r.key === "cangtin") { ctx.fillStyle = PX.out; ctx.fillRect(x + w - 9, y - 3, 4, roofH + 3); ctx.fillStyle = "#9a6238"; ctx.fillRect(x + w - 8, y - 2, 2, roofH + 2); ctx.fillStyle = "#6e4626"; ctx.fillRect(x + w - 9, y - 3, 4, 1); } // chimney
     // DOOR (framed wood, facing path)
     var dw = 8, dh = 9, dx = (x + w / 2 - dw / 2) | 0, dy = y + h - dh - 1;
     ctx.fillStyle = PX.out; ctx.fillRect(dx - 1, dy - 1, dw + 2, dh + 1);
