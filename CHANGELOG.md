@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Three more moral-choice events (loop iter 47)
+- A pacing check confirmed the early game is well-paced (7–13 events/year + yearly admissions +
+  milestones + graduations from ~Y4), but with ~11 events the deck repeats. Added a recurring moral
+  deck for variety + the satire's soul: 📉 a ranking site drops you to the bottom and a "PR expert"
+  sells a 15tr rank-pumping package (buy hype +mầm-phốt vs let điểm chuẩn speak); 😵 a student burns
+  out from grade pressure (push them for +Vẹt/−Mood vs give them a week off); 📑 a Năm-4's đồ-án is a
+  line-for-line copy of an open-source project (cover it up +Vẹt/+mầm-phốt vs make them redo it for
+  real skill +Uy Tín). New `hasNam4` event targeting; all six branches verified; gates green; sweep clean.
+
 ## 2026-06-13 — Campus glow-up gets a moment (loop iter 46)
 - The campus-tier upgrade (iter 45) happened silently — you'd build your 3rd room and the grounds
   quietly got prettier without knowing why. Now reaching a new prestige tier fires a celebratory

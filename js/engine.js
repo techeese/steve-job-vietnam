@@ -846,7 +846,7 @@ function pickEventStudent(ev) {
   var pool = S.students;
   if (ev.pred === "anyLuyende") pool = S.students.filter(function (s) { return S.presets["n" + s.grade] === "luyende"; });
   if (ev.pred === "moodLow") pool = S.students.filter(function (s) { return s.mood < 45; });
-  if (ev.pred === "nam4Duan") pool = S.students.filter(function (s) { return s.grade === 4; });
+  if (ev.pred === "nam4Duan" || ev.pred === "hasNam4") pool = S.students.filter(function (s) { return s.grade === 4; });
   if (!pool.length) pool = S.students;
   return pool.length ? pool[Math.floor(rnd() * pool.length)] : null;
 }
@@ -895,6 +895,13 @@ function applyFx(fx, t) {
     case "dayThat": for (var ti = 0; ti < S.students.length; ti++) { var ts2 = S.students[ti]; ts2.tn = clamp(ts2.tn + 2, 0, 100); ts2.mood = clamp(ts2.mood + 4, 0, 100); } gainUT(1, false); break;
     case "datTenCo": S.cash = r1(S.cash + 30); gainTT(2); gainUT(-2, false); seedPhot(1, "datten"); break;
     case "datTenGiu": gainUT(2, false); bacTamNod(); break;
+    // recurring moral deck
+    case "muaHang": S.cash = r1(S.cash - 15); gainTT(6); seedPhot(1, "muahang"); break;
+    case "khongMuaHang": gainUT(1, false); bacTamNod(); break;
+    case "epHoc": if (t) { t.vet = clamp(t.vet + 5, 0, 100); t.kt = clamp(t.kt + 2, 0, 100); t.mood = clamp(t.mood - 10, 0, 100); } break;
+    case "choNghi": if (t) { t.mood = clamp(t.mood + 15, 0, 100); virtue(t, "nghiNgoi"); } break;
+    case "loDaoVan": if (t) t.vet = clamp(t.vet + 5, 0, 100); seedPhot(2, "daovan"); break;
+    case "batLamLai": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 5, 0, 100); virtue(t, "lamLai"); } break;
     default: break;
   }
 }

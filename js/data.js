@@ -346,6 +346,28 @@ var CONTENT = {
       choices: [
         { label: "Nhận tiền, đổi tên", hint: "+30tr +2 Tiếng Tăm, −2 Uy Tín (bán danh)", fx: "datTenCo" },
         { label: "Giữ tên trường", hint: "+2 Uy Tín, Bác Tâm gật đầu", fx: "datTenGiu" }
+      ] },
+    // ---- recurring moral deck (variety across a full run) ----
+    { id: "tutHang", title: "📉 Trường tụt hạng trên BXH",
+      desc: "Một trang xếp hạng vừa đẩy trường bạn xuống nhóm cuối. Một 'chuyên gia truyền thông' chào gói kéo hạng: bài PR, vài KOL review, 15tr là 'lên top ngành'.",
+      pred: "common",
+      choices: [
+        { label: "Mua gói kéo hạng", hint: "−15tr, +6 Tiếng Tăm, +1 mầm phốt", fx: "muaHang" },
+        { label: "Để điểm chuẩn nói thay", hint: "+1 Uy Tín, Bác Tâm gật đầu", fx: "khongMuaHang" }
+      ] },
+    { id: "kietSuc", title: "😵 {ten} kiệt sức vì áp lực",
+      desc: "{ten} ngủ gục trên bàn ba buổi liền — em ấy bảo 'chỉ cần qua kỳ này thôi thầy'. Cô y tế trường đề nghị cho em nghỉ ít hôm.",
+      pred: "common",
+      choices: [
+        { label: "Bảo em cố nốt", hint: "em ấy +5 Vẹt +2 KT −10 Mood", fx: "epHoc" },
+        { label: "Cho em nghỉ một tuần", hint: "em ấy +15 Mood, một việc tử tế", fx: "choNghi" }
+      ] },
+    { id: "daoVan", title: "📑 Đồ án giống hệt một dự án trên mạng",
+      desc: "Đồ án của {ten} giống đến từng dòng một dự án mã nguồn mở. Em ấy bảo 'em có đổi tên biến mà thầy'. Hội đồng đang chờ ý kiến.",
+      pred: "hasNam4",
+      choices: [
+        { label: "Lờ đi cho qua", hint: "em ấy +5 Vẹt, +1 mầm phốt nặng", fx: "loDaoVan" },
+        { label: "Bắt làm lại từ đầu", hint: "em ấy +5 TN +3 ST −5 Mood, +1 Uy Tín", fx: "batLamLai" }
       ] }
   ],
 
