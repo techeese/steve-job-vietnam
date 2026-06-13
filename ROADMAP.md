@@ -22,10 +22,13 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   places the existing roster in place. *Follow-ups:* a walk-OUT on graduation (cựu SV leave
   through the gate at June); maybe a gather-at-cổng cluster on khai-giảng day before they
   disperse; tune the column spacing if a 12-strong intake feels too long.
-- **(C) "3D but still pixel"** for houses AND people *(do NEXT)*: redraw buildings + characters with
-  DIMENSIONAL/fake-iso pixel depth (visible side walls, pitched-with-depth roofs, characters
-  with volume/shading), keeping the bright crisp pixel style. Big art pass — likely a design
-  workflow + screenshot iteration; mind 26px readability + 48-sprite perf (re-bake the atlas).
+- **(C) "3D but still pixel"** — **HOUSES SHIPPED (iter 26)**, PEOPLE next. Buildings now render
+  as extruded 3D blocks (dark side+roof depth offset down-right, directional contact shadow, lit
+  top/left edges; all roof types). *Still TODO — characters:* re-bake the sprite atlas with more
+  volume/shading (stronger right-side body+head shadow, lit left edge, rounder shoulders) so the
+  little people read 3D too. Verify via the inspect-card avatar canvas (renders synchronously,
+  unlike the rAF map layer). Mind 26px readability + 48-sprite perf. Optional polish after: push
+  building depth further (true side-wall face), seasonal roof tints.
 
 0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
    SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),

@@ -418,15 +418,28 @@
   function drawRoom(ctx, r) {
     var d = CONFIG.ROOMS[r.key], sty = ROOM_STYLE[r.key] || { wall: "#555", roof: "gabled", win: "warm", short: d.name };
     var x = (r.x * T + 1) | 0, y = (r.y * T + 1) | 0, w = (d.w * T - 2) | 0, h = (d.h * T - 2) | 0;
-    // soft ground shadow (cast onto grass, down-right)
-    ctx.fillStyle = "rgba(28,44,18,.16)"; ctx.fillRect(x + 3, y + h, w, 3); ctx.fillRect(x + w, y + 8, 3, h - 6);
-    if (sty.roof === "none") { drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return; }
+    if (sty.roof === "none") {
+      ctx.fillStyle = "rgba(28,44,18,.16)"; ctx.fillRect(x + 3, y + h, w, 3); // soft ground shadow
+      drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return;
+    }
     var roofH = Math.min(16, (h * 0.42) | 0), wallTop = y + roofH;
-    // WALL: dark outline base → bright wall → right shade → top highlight → plank lines
+    var dp = 5; // 3D extrusion depth — the block has thickness toward the lower-right
+    // CONTACT SHADOW — one directional pool down-right (light from upper-left)
+    ctx.fillStyle = "rgba(16,28,12,.22)";
+    ctx.beginPath(); ctx.moveTo(x + 2, y + h + 1); ctx.lineTo(x + w + dp + 1, y + h + 1);
+    ctx.lineTo(x + w + dp + 6, y + h + 6); ctx.lineTo(x + 7, y + h + 6); ctx.closePath(); ctx.fill();
+    // EXTRUSION — solid dark silhouette offset down-right gives the box its 3D thickness
+    var sideW = shade(sty.wall, -0.40), sideR = shade(sty.rc || "#c8553f", -0.40);
+    ctx.fillStyle = PX.out; ctx.fillRect(x + dp, wallTop + dp - 1, w, h - roofH + 1);   // wall side base
+    ctx.fillStyle = sideW; ctx.fillRect(x + dp + 1, wallTop + dp, w - 1, h - roofH - 1); // wall side face
+    roofDepth(ctx, sty.roof, x, y, w, roofH, dp, sideR);                                 // roof side face
+    // ---- FRONT FACES ----
+    // WALL: dark outline base → bright wall → right shade → lit top+left edges → plank lines
     ctx.fillStyle = PX.out; ctx.fillRect(x, wallTop - 1, w, h - roofH + 1);
     ctx.fillStyle = sty.wall; ctx.fillRect(x + 1, wallTop, w - 2, h - roofH - 1);
     ctx.fillStyle = sty.wallD; ctx.fillRect(x + w - 3, wallTop, 2, h - roofH - 1);
-    ctx.fillStyle = "rgba(255,255,255,.20)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);
+    ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);     // lit top edge
+    ctx.fillStyle = "rgba(255,255,255,.15)"; ctx.fillRect(x + 1, wallTop, 1, h - roofH - 1); // lit left edge
     ctx.fillStyle = sty.wallD; for (var ly = wallTop + 5; ly < y + h - 4; ly += 6) ctx.fillRect(x + 1, ly, w - 2, 1);
     // WINDOWS
     drawWindows(ctx, sty.win, x, wallTop, w, h - roofH);
@@ -481,6 +494,15 @@
     } else if (type === "sawtooth") {
       ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);
       for (s = 0; s < 3; s++) { var sx = x + s * (w / 3); ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx + 1, y + roofH - 1); ctx.lineTo(sx + 1, y + 3); ctx.lineTo(sx + w / 3 - 1, y + roofH - 1); ctx.closePath(); ctx.fill(); ctx.fillStyle = "#cdeef4"; ctx.fillRect((sx + 2) | 0, y + 4, 2, roofH - 6); }
+    }
+  }
+  // the roof's right-side thickness (dark), drawn offset down-right behind the front roof
+  function roofDepth(ctx, type, x, y, w, roofH, dp, col) {
+    ctx.fillStyle = col;
+    if (type === "gabled") {
+      ctx.beginPath(); ctx.moveTo(x - 2 + dp, y + roofH + 1 + dp); ctx.lineTo(x + w / 2 + dp, y - 1 + dp); ctx.lineTo(x + w + 2 + dp, y + roofH + 1 + dp); ctx.closePath(); ctx.fill();
+    } else {
+      ctx.fillRect(x - 2 + dp, y + dp, w + 4, roofH); // eaves slab for flat/awning/glossy/vent/sawtooth
     }
   }
   function drawSan(ctx, x, y, w, h) {

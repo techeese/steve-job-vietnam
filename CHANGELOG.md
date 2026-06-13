@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — 3D-but-pixel BUILDINGS (owner directive C, part 1, loop iter 26)
+- Buildings were flat front-elevations; now each reads as a chunky 3D block. Added an extruded
+  depth silhouette (solid dark side+roof faces offset down-right = the box's thickness), a single
+  directional contact-shadow pool, and lit top/left wall edges — light consistently from the
+  upper-left. Works across all roof types (gabled house gets a real hip/gable depth; flat/awning/
+  glossy/vent/sawtooth get an eaves slab). Drawing-only: footprints and walk-blocking unchanged.
+  Verified at 2× phone scale across all 5 room types. Part 2 (people get volume/shading) is next.
+
 ## 2026-06-13 — Students walk IN through the cổng (owner directive B, loop iter 25)
 - New matriculants no longer pop into existence — each freshly-enrolled student spawns just
   OUTSIDE the gate (below the map at the cổng's x) and walks up the central path to their first
