@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-06-13 — Phốt risk indicator (loop iter 20)
+- A qualitative HUD chip surfaces accumulating scandal danger — ⚠️ Có/Nhiều mầm phốt → 🔥 Phốt
+  sắp bung — so the gamble is legible (pairs with the scandal-mood music + the now-firing
+  cá-mập→arrest arc). Tiers, not an exact count, to preserve the mystery. Gates green.
+
 ## 2026-06-13 — Character customization (loop iter 19, owner-hinted)
 - Tap a student → their inspect card now shows the ACTUAL pixel sprite (live canvas avatar) and
   lets you RENAME them (inline field) and CHANGE THEIR LOOK (🔄 cycles the 12 baked variants —

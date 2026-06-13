@@ -674,6 +674,14 @@
     stats.appendChild(chip("", "🎓", s.students.length + " SV"));
     stats.appendChild(chip("", "🧑‍🏫", s.teachers.length));
     if (s.endow.bal >= 200) stats.appendChild(chip("", "🌱", Math.round(s.endow.bal) + "tr"));
+    // phốt risk — qualitative (preserve mystery), surfaces the gamble as dodgy decisions pile up
+    var phot = (s.photSeeds || []).reduce(function (a, p) { return a + (p.sev || 1); }, 0);
+    if (phot > 0) {
+      var lvl = phot >= 5 ? { e: "🔥", t: "Phốt sắp bung", c: "#eb6f6f" } : phot >= 3 ? { e: "⚠️", t: "Nhiều mầm phốt", c: "#f2994a" } : { e: "⚠️", t: "Có mầm phốt", c: "#f2c14e" };
+      var pchip = el("div", "chip"); pchip.style.color = lvl.c; pchip.style.borderColor = lvl.c;
+      pchip.innerHTML = lvl.e + " <span style='font-weight:700;font-size:10px'>" + lvl.t + "</span>";
+      pchip.title = "Rủi ro phốt — những quyết định mờ ám đang tích lại"; stats.appendChild(pchip);
+    }
     // meters
     var m = $("meters"); m.innerHTML = "";
     m.appendChild(meter("m-tt", "TIẾNG TĂM", s.tiengTam, 100));
