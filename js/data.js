@@ -345,6 +345,13 @@ var CONTENT = {
         { label: "Mở, nhưng miễn phí cho SV nghèo", hint: "+4tr, +KT nhẹ, một việc tử tế (+Uy Tín)", fx: "themMienPhi" },
         { label: "Không — các em cần được nghỉ", hint: "+8 mood cả trường, +1 Thực Chất", fx: "themKhong" }
       ] },
+    { id: "thanhtich", title: "🏆 Suất vào bảng xếp hạng trường",
+      desc: "Một bảng xếp hạng 'uy tín' mời trường mình vào: 'chỉ cần làm đẹp vài con số tỉ lệ ra trường — có hạng là có thí sinh, có thí sinh là có tất cả'.",
+      pred: "firstgrad",
+      choices: [
+        { label: "Làm đẹp số liệu — lên hạng", hint: "+5 Tiếng Tăm, +Vẹt cả trường, +1 mầm phốt", fx: "ttLam" },
+        { label: "Báo đúng số thật — hạng nào cũng được", hint: "+2 Uy Tín, +1 Thực Chất", fx: "ttThat" }
+      ] },
     { id: "baodauRa", title: "📸 Báo muốn bài 'thủ khoa đầu ra'",
       desc: "Một tờ báo muốn viết 'sinh viên trường mình ra trường lương nghìn đô'. Họ cần một gương mặt biết cười.",
       pred: "hasNam4",

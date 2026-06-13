@@ -964,6 +964,9 @@ function applyFx(fx, t) {
     case "themMo": S.cash = r1(S.cash + 12); for (var hi = 0; hi < S.students.length; hi++) { var hs = S.students[hi]; hs.kt = clamp(hs.kt + 3, 0, 100); hs.vet = clamp(hs.vet + 4, 0, 100); hs.mood = clamp(hs.mood - 8, 0, 100); } gainTT(1); break;
     case "themMienPhi": S.cash = r1(S.cash + 4); for (var hj = 0; hj < S.students.length; hj++) { var hs2 = S.students[hj]; hs2.kt = clamp(hs2.kt + 2, 0, 100); hs2.mood = clamp(hs2.mood - 3, 0, 100); } gainUT(1, false); bacTamNod(); break;
     case "themKhong": moodAll(8); gainTC(1); break;
+    // bệnh thành tích (achievement disease) — juice the rankings vs report the truth
+    case "ttLam": gainTT(5); for (var ki = 0; ki < S.students.length; ki++) S.students[ki].vet = clamp(S.students[ki].vet + 5, 0, 100); seedPhot(1, "thanhtich"); break;
+    case "ttThat": gainUT(2, false); gainTC(1); bacTamNod(); break;
     case "batLamLai": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 5, 0, 100); virtue(t, "lamLai"); } break;
     default: break;
   }

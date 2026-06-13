@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Soul: the "bệnh thành tích" choice (achievement disease, loop iter 74)
+- Adds the deck's missing central Vietnamese-education satire: **achievement disease / ranking fraud**.
+  Once your school has graduates, a "prestigious" ranking invites you in — "chỉ cần làm đẹp vài con số…
+  có hạng là có thí sinh". You choose: **làm đẹp số liệu** (juice the numbers — +5 Tiếng Tăm & +Vẹt
+  school-wide, but a phốt seed: prestige bought with fakery) or **báo đúng số thật** (+Uy Tín + Thực
+  Chất, a quiet good deed: integrity over rank). The thành-tích critique in one decision. New event + 2
+  `applyFx`; both verified; gates green; sweep thesis intact. Bar: **BITE 4** / FUN 3. Cadence:
+  SMALL_SHIPS 3 → next firing is an epic.
+
 ## 2026-06-13 — A Steve emerges: the climax finally gets its moment (loop iter 72)
 - The game's defining triumph — a 🍎 **Steve** emerging from your school, the answer to the đề Văn the
   whole game builds toward — used to pass with only a news line + a stat bump. Now it's a **moment**: when
