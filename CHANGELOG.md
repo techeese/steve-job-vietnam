@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Visible build badge: confirm the live deploy loaded (owner-requested, loop iter 58)
+- Owner ask: "a version name on top so we know the deploy is loaded." A small **build badge** now sits in
+  the header (top-right): `v HH:MM DD/MM`, derived from the `?v=` cache-bust stamp that `bump.sh` already
+  refreshes on every push — so it **changes every deploy**. Glance at it to confirm the live page is the
+  fresh build, not a stale cache (the recurring "still looks like before" pain). Subtle by design; easy to
+  move into credits when the product matures. Pure chrome (no engine/balance touch), gates green.
+  Bar: CLARITY 4 (you can now trust what you're looking at is live). OWNER: used the build timestamp as
+  the "version" since it auto-changes per deploy — say if you'd prefer a manual semantic version (v1/v2).
+
 ## 2026-06-13 — STRUCTURE-epic complete: pixel-art extracted to art.js (loop iter 57)
 - The refactor deferred for **35 iterations** finally shipped — autonomously, proven safe by the new EPIC
   machinery. The pure pixel-art layer (the palette `PX`, `ROOM_STYLE`, the helpers `shade`/`roundRect`/

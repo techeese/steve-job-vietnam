@@ -55,6 +55,9 @@ window.onerror = function (m, src, ln) {
     background:linear-gradient(90deg,var(--gold),#fff3d6);-webkit-background-clip:text;background-clip:text;color:transparent}
   .brand .sub{font-size:9px;color:var(--faint);font-weight:500}
   .brand .sp{flex:1}
+  /* build/version badge — confirms the live deploy actually loaded (move to credits when mature) */
+  .ver{font-size:8.5px;font-weight:600;color:var(--faint);background:var(--panel);border:1px solid var(--line);
+    border-radius:6px;padding:2px 6px;letter-spacing:.2px;white-space:nowrap;font-variant-numeric:tabular-nums}
   .iconbtn{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:var(--panel);
     color:var(--ink);font-size:14px;display:grid;place-items:center;cursor:pointer}
   .iconbtn.on{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 1px rgba(240,198,116,.25) inset}
@@ -226,6 +229,7 @@ window.onerror = function (m, src, ln) {
       <h1>Học viện Steve</h1>
       <div class="sub" id="schoolSub"></div>
       <div class="sp"></div>
+      <span class="ver" id="buildBadge" title="Bản dựng đang chạy — đổi mỗi lần deploy"></span>
       <button class="iconbtn" id="soundBtn" title="Nhạc nền">🎵</button>
     </div>
     <div class="hudrow">
@@ -251,9 +255,9 @@ window.onerror = function (m, src, ln) {
 <div id="modalRoot"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 
-<script src="js/data.js?v=1781358066623"></script>
-<script src="js/engine.js?v=1781358066623"></script>
-<script src="js/art.js?v=1781358066623"></script>
-<script src="js/ui.js?v=1781358066623"></script>
+<script src="js/data.js?v=1781358441669"></script>
+<script src="js/engine.js?v=1781358441669"></script>
+<script src="js/art.js?v=1781358441669"></script>
+<script src="js/ui.js?v=1781358441669"></script>
 </body>
 </html>

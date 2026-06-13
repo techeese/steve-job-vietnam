@@ -695,6 +695,7 @@
   }
   function renderHUD() {
     var s = S();
+    var bb = $("buildBadge"); if (bb && !bb.textContent) bb.textContent = "v " + buildLabel(); // deploy stamp (changes each push)
     $("clockMain").textContent = "Năm " + s.year;
     $("clockSub").textContent = "Tháng " + MONTHS[s.month];
     // speeds
