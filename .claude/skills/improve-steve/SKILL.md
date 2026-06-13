@@ -32,12 +32,23 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 - Bias BOLD over safe-incremental on creative/visual work — the owner judges by reaction, and a
   striking miss teaches the model more than a timid hit. Silence after a push = tacit accept.
 
-**Taste north-star (owner-seeded — the autonomy fuel; the ONE input only the owner can give):**
-- *(seeking — asked 2026-06-13)* concrete games/apps whose LOOK the owner loves, hard yes/no
-  aesthetic rules, and a one-line "how this game should FEEL." Until seeded, infer from distillation
-  + ledger. The richer this is, the fewer questions the loop needs.
-- VISUAL so far: DETAILED PIXEL-ART, bright/cute/faces/crafted buildings; NOT dark/moody/
-  programmer-art. Bar = "looks like a real cute game."
+**Taste north-star (owner-seeded — the autonomy fuel; resolve design forks against THIS):**
+- *(SEEDED 2026-06-13, owner verbatim)* **"It should feel a sunny, slightly chaotic little school
+  you love watching, the characters are customize, and doing stuff that you like to see."**
+  → NORTH STAR = **a SUNNY, LIVELY little school that is a JOY TO WATCH.** Decoded:
+  · **SUNNY** — bright, warm, cheerful; never dark/moody (the lacquer rejection, now a rule).
+  · **SLIGHTLY CHAOTIC** — alive and busy; many little things happening AT ONCE; controlled chaos
+    beats sterile order. Crowds, motion, simultaneous activities, happy little accidents.
+  · **A LITTLE SCHOOL YOU LOVE WATCHING** — small, cozy; the WATCHING itself is the pleasure
+    (observational delight is the core, not menus). Optimize for "I just want to sit and watch it."
+  · **CHARACTERS ARE CUSTOM / INDIVIDUAL** — varied, personal, named, with quirks (the variety pass
+    serves this; candidate feature: player-customizable students — pursue if it fits, it's hinted).
+  · **DOING STUFF YOU LIKE TO SEE** — charming, legible little behaviours are FIRST-CLASS; keep
+    deepening the campus-life activity vocabulary with delightful watchable actions.
+  Use to resolve forks autonomously: when unsure, pick the option that makes the school SUNNIER,
+  LIVELIER, more INDIVIDUAL, and more FUN TO WATCH. This is the single most weighted signal.
+- VISUAL: DETAILED PIXEL-ART, bright/cute/faces/crafted buildings; NOT dark/moody/programmer-art.
+  Bar = "looks like a real cute game."
 
 **Reactions ledger (append-only — shipped call → owner reaction; makes asking rarer over time):**
 - Sơn Mài Diorama (dark lacquer) → REJECTED "still ugly." → not dark, not subtle, judged as ART.
