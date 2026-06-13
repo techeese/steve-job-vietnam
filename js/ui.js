@@ -184,6 +184,7 @@
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
       a.tell = s.tell || ""; a.seed = s.seed;
       a.variantIdx = hashId(s.id) % VARIANTS.length;
+      a.skin = SKINS[VARIANTS[a.variantIdx].s][0]; a.glasses = ACC[VARIANTS[a.variantIdx].a] === "glasses";
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
@@ -356,6 +357,8 @@
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
     var spr = ATLAS[a.grade - 1][a.variantIdx][frame];
     if (spr) ctx.drawImage(spr, x - 8, y - 20 + bob);
+    // idle blink — eyes close briefly every few seconds when standing still
+    if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 3, y - 14 + bob, 2, 2); ctx.fillRect(x + 1, y - 14 + bob, 2, 2); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 6.5, y - 20.5, 13, 11); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 24, 2, 2); ctx.fillRect(x - 2, y - 23, 1, 1); ctx.fillRect(x + 1, y - 23, 1, 1); } // scholarship star
   }
