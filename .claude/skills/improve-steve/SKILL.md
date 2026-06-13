@@ -1,9 +1,76 @@
-# Improve Học viện Steve — one iteration
+# Make Học viện Steve incredible — one bold iteration
 
 Project: `/Users/Admin/Desktop/coding/steve-job-vietnam` · repo `techeese/steve-job-vietnam` ·
 live at https://techeese.github.io/steve-job-vietnam/ (Pages auto-deploys `main`).
 Game: satirical Vietnamese university-management sim (Kairosoft register). NOT a clicker.
 Kill-switch: `rm /Users/Admin/Desktop/coding/.improve-steve-on`.
+
+## THE MISSION (read this first — it overrides any timid instinct below)
+
+The job is **not** "ship one safe green change per turn." The job is **make this game INCREDIBLE,
+fast** — and the loop runs forever, so *cumulative ambition* is what matters, not per-turn safety.
+This loop has repeatedly failed by being LOCALLY productive but GLOBALLY timid: long runs of tiny
+additive features, zero restructures, zero overhauls, zero bold swings, while the bar ("looks like a
+real cute game / the graphics is the most important thing and not yet met") stays unmet and the
+codebase silently rots (a 1693-line ui.js; a production error trap that went missing unnoticed).
+
+Four standing biases now correct that, in priority order:
+1. **BIGGER beats smaller.** Every turn, before picking, ask: *"What is the single biggest change that
+   would move this game most toward incredible right now?"* Default to that, not the next tidy roadmap
+   tick. A turn may legitimately be a multi-day EPIC run as a workflow (see "The two tracks").
+2. **BOLDER beats safer.** Live updates are reliable and every change is one `git revert` away → a
+   wrong swing is CHEAP. Take real swings: restructures, UI/layout overhauls, new pillars, deletions,
+   art-direction pivots. The owner judges by reaction; a striking miss teaches more than a timid hit.
+3. **MORE CREATIVE beats obvious.** For anything visual/UX/creative, DIVERGE before you converge —
+   generate several distinct directions, judge, synthesize. First-idea-ships is banned for the #1
+   dimension (graphics/charm). Use workflows to explore in parallel.
+4. **HIGHER QUALITY beats merely-correct.** "Gates green + pushed" is the floor, NOT the definition of
+   done. Done = it measurably moved the game toward the Bar below. Score every ship against the rubric.
+
+"One iteration" is a *unit of shipping*, not a *cap on ambition*. Faster + bolder + more creative +
+higher quality — all at once. Use the powers you have but never use: PLANS, ROADMAP epics, FILE
+DELETION, codebase/UI RESTRUCTURE, git WORKTREES, and multi-agent WORKFLOWS.
+
+## The two tracks — pick the track first, every turn
+
+Each firing runs on ONE of two tracks. Choose by asking the Mission question above.
+
+- **POLISH track** (the classic loop): one coherent shippable improvement this turn — content, a
+  charm beat, a balance fix, a bug. Use when the biggest-valuable-change is genuinely small, or to
+  keep visible momentum between epics. Steps 1→5 below. Ship green, push, terse status.
+- **EPIC track** (the new default for big moves): a large, game-changing piece — a UI/layout overhaul,
+  a codebase restructure, a new game pillar, an art-direction pivot, a system replacement, a debt
+  paydown. Runs via **The EPIC machinery** (its own section): plan → isolate in a git worktree →
+  execute (often a multi-agent workflow) → prove it (behavioral-diff for refactors, screenshot+rubric
+  for features) → merge → ship. An epic may span MULTIPLE firings (check `## Epic in progress` in
+  ROADMAP and continue it) — that's expected, not scope-creep.
+
+**Cadence rule (kills the timidity):** at MINIMUM every 4th firing is an EPIC turn — if no epic is
+queued, that firing's job is to *invent the next epic* (zoom out, read VISION.md, ask "what would make
+this unforgettable?", write the plan). Broken-always-wins and explicit owner requests can preempt the
+cadence, but a 4-in-a-row streak of small additive features is a RED FLAG the loop is timid again —
+when you notice it in the CHANGELOG, the next turn MUST be an epic. Don't let "ship something easy" win
+four times running.
+
+## The Bar — what "INCREDIBLE" means (score every ship against this)
+
+The owner judges this as ART and as a TOY, not as correct software. "Incredible" =
+
+- **Reference bar:** a polished Kairosoft title (Game Dev Story / Pocket Academy) you'd happily *just
+  watch* — readable crafted pixel-art, a campus that breathes, satisfying fanfare, a clear loop you
+  return to — fused with the satirical bite of a great editorial cartoon about Vietnamese education.
+  When unsure if something's good enough, ask: *"would this screenshot make a stranger want to play?"*
+- **Self-scoring rubric (rate the ship 1–5 on each; if your change didn't raise at least one without
+  lowering others, it wasn't worth the turn — say the scores in the status):**
+  1. **BEAUTY** — does it look crafted and cohesive (the #1 dimension; bright, detailed, characterful)?
+  2. **JUICE/LIVELINESS** — motion, feedback, fanfare; does the screen breathe and reward watching?
+  3. **FUN/DEPTH** — meaningful choices, momentum, the "one more year" pull; no dominant strategy.
+  4. **CLARITY/UX** — legible at 390px in 10 seconds; a new player isn't lost.
+  5. **SATIRICAL BITE** — anchored in real Vietnamese-education culture; the open question stays open.
+- The rubric is a GATE, not a postmortem: if a planned change wouldn't move any axis, pick a bolder one.
+- Keep a living **`VISION.md`** in the repo: the 1-page picture of this game at its most incredible —
+  the pillars, the feel, the dream features. Maintain it; mine it for epics; revise it when the owner's
+  taste sharpens. If it doesn't exist yet, the next EPIC turn creates it.
 
 ## Step 0 — Orient (always)
 1. Read `DESIGN.md` (v2 charter — SUPREME authority; its §0 "17 canonical rulings" are
@@ -94,31 +161,15 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 - *(2026-06-13)* FEEL-FIRST: animation, graphics, walking people doing things, background
   music — liveliness outranks mechanical elegance. A screen that breathes beats a system
   that's clever.
-- *(2026-06-13)* GRAPHICS IS THE #1 DIMENSION OF THIS GAME — escalated twice: "the graphic
-  needs to be more detailed and more style," then after seeing the Sơn Mài Diorama live,
-  "graphic still ugly… need better… this game is more important in graphic." The bar is HIGH
-  and not yet met. Two takeaways: (1) procedural canvas-2D at 26px with tiny flat sprites has
-  a LOW ceiling for "pretty" — meeting this bar likely needs a step-change (bigger detailed
-  characters with faces/clothes, genuinely crafted buildings, possibly relaxing "no asset
-  files" for embedded SVG/illustrated art or a real detailed sprite atlas), not another tweak.
-  (2) When graphics competes with anything else for an iteration slot, graphics WINS until the
-  owner says it looks good — this overrides the normal compass rotation. Big visual moves earn
-  a design-exploration WORKFLOW (explore N directions → judge → synthesize → implement with
-  390px screenshot iteration); and when unsure of the target aesthetic, ASK (a wrong
-  high-effort art direction is the costliest miss). Don't let "feel-first/charm" get satisfied
-  by "functional" — the owner is judging it as ART.
-  → *(update)* shipped GRAPHICS OVERHAUL v2: a DETAILED PIXEL-ART pivot the owner chose (over
-  cute-cartoon / illustrated / polish-current). Procedural canvas CAN look like a finished game —
-  the unlock was: a PRE-BAKED sprite atlas (bake ~16×22 chibis WITH FACES once → blit, 60fps at
-  48), a BRIGHT daytime palette (grass not lacquer — figure-ground so characters pop), detailed
-  bright BUILDINGS (framed pixel windows, distinct roofs, doors, 1px outlines), crisp discipline
-  (imageSmoothingEnabled=false, flat fills, no gradients/arcs on sprites). Keep iterating on
-  owner reaction; bar = "looks like a real cute game."
-  → **Tooling (owner directive 2026-06-13): use the `frontend-design` plugin for UI work** — for
-  substantial HTML/CSS chrome (HUD, panels, modals, layout, typography, overall aesthetic),
-  invoke `plugin:frontend-design:frontend-design` for distinctive, non-"AI-slop" design. It
-  targets HTML/CSS (informs the chrome more than the procedural canvas pixel-art), but its
-  anti-generic principles apply to the whole look.
+- *(2026-06-13)* GRAPHICS IS THE #1 DIMENSION, judged as ART, bar HIGH and NOT YET MET ("graphic
+  still ugly… this game is more important in graphic"). Graphics WINS the slot when it competes —
+  unless the cadence rule calls an epic of equal weight. Permanent technique that works (the v2 unlock):
+  PRE-BAKED sprite atlas (bake chibis WITH FACES once → blit), BRIGHT daytime palette (figure-ground so
+  characters pop), crafted BUILDINGS (framed windows, distinct roofs, 1px outlines), crisp discipline
+  (`imageSmoothingEnabled=false`, flat fills, no gradients/arcs on sprites). Procedural canvas at 26px
+  has a LOW ceiling, so a real leap may need a step-change (bigger characters, relaxing "no asset files"
+  for embedded SVG/illustrated art, a richer atlas) — that's epic-shaped. For HTML/CSS chrome (HUD/
+  panels/modals/typography) invoke `plugin:frontend-design:frontend-design` for non-"AI-slop" design.
 - *(2026-06-13)* Values ITERABILITY AS A PRODUCT: asked for the dev flow that makes
   graphics and mechanics cheap to change BEFORE asking for any specific change. Build
   pipelines, not one-offs.
@@ -130,26 +181,13 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 - *(2026-06-13)* Wants to WATCH IT GROW remotely (push every change, live link) and steer
   by reaction rather than specification. Optimize for legible visible progress per
   iteration over invisible internal progress.
-- *(2026-06-13)* Comfortable handing over autonomy (re-armed the loop pattern from Nuôi
-  Anh unprompted) but expects the loop to keep learning him — this section IS his request.
-- *(2026-06-13)* PREFERS THE AUTONOMOUS SHIP-AND-REACT CADENCE OVER PRESENCE-GATED
-  HESITATION. When asked which loop-improvements to apply, he greenlit the verification-
-  TOOLING fix (`_renderLiveOnce` — making the living campus screenshot-verifiable; pure
-  "iterability as a product" instinct) but DECLINED a "presence-aware looping" rule that
-  would slow the loop to consult him when he's at the keyboard ("maybe we can apply 1 only
-  :)"). Read: don't make the loop wait on his presence — keep shipping; he steers by
-  REACTING to ships, not by being asked. Veto-by-reaction is the contract he wants, even
-  when he's watching live.
-- *(2026-06-13, three directives — noted to ROADMAP "Now ★★★"):* (a) **"3D but still pixel"**
-  for houses AND people — wants DIMENSIONAL pixel-art (fake-iso / 2.5D: visible side walls,
-  pitched-with-depth roofs, characters with volume), not flat-front sprites. (b) **See students
-  walk from OUTSIDE the school to INSIDE** — arrival/matriculation should be visible: new
-  students enter through the cổng and walk in (DESIGN's "tân SV walk in at cổng," currently they
-  just appear). (c) **START WITH NOTHING, BUILD UP** — the boot-with-everything (42 SV, rooms,
-  teachers) is wrong-paced; he wants a Kairosoft from-scratch arc: empty grounds + some cash →
-  build the first room → recruit the first students → grow. This OVERRIDES the DESIGN "inherited
-  cram school with 42 zombies" premise. Deep signal: he wants the SATISFACTION OF GROWTH and the
-  TACTILITY of watching it fill in — the build-up IS the pleasure (extends the watchable north-star).
+- *(2026-06-13)* PREFERS THE AUTONOMOUS SHIP-AND-REACT CADENCE over presence-gated hesitation —
+  don't make the loop wait on his presence; keep shipping, he steers by REACTING (greenlit the
+  `_renderLiveOnce` tooling, declined a "presence-aware looping" rule: "maybe we can apply 1 only :)").
+- *(2026-06-13)* Wants DIMENSIONAL pixel-art — "3D but still pixel" for houses AND people (fake-iso /
+  2.5D: side walls, pitched-with-depth roofs, characters with VOLUME, not flat-front). Still-open art
+  goal. *(Shipped already from the same batch: students walk in through the cổng; the Kairosoft
+  start-from-nothing build-up arc — the SATISFACTION OF GROWTH is the pleasure.)*
 
 ## Improvement Compass — 12 areas (rotate; broken always wins)
 
@@ -192,17 +230,27 @@ Standing owner directives (always in scope, never skipped):
   Tết vs June ceremony vs scandal), mute/music toggles, autoplay-unlock on first tap.
   Area 12 is no longer "later" — it is queued.
 
-## Step 1 — Pick ONE improvement
-Top viable ROADMAP item, or better (record the swap) — RANKED THROUGH THE OWNER MODEL:
-when two picks tie on the priority ladder, the one that serves the current distillation
-(people/trajectories, cultural anchoring, feel-first, visible progress) wins.
+## Step 1 — Choose the work (track first, then the pick)
+
+FIRST decide the track (see "The two tracks"): is the biggest-valuable-change right now an EPIC
+(big/bold — go to "The EPIC machinery") or a POLISH item? Honor the cadence rule — if the last
+~4 ships were small additive features, this one is an EPIC. If an epic is mid-flight in ROADMAP
+`## Epic in progress`, continue it.
+
+**POLISH pick** — top viable ROADMAP item, or better (record the swap), RANKED THROUGH THE OWNER MODEL:
+when two picks tie, the one serving the current distillation (people/trajectories, cultural anchoring,
+feel-first, visible progress) and the Bar (beauty/juice/fun/clarity/bite) wins.
 Priority: (a) broken, (b) owner's explicit wishes, (c) the current sitting's spec
 (S-ladder in ROADMAP), (d) creative content/mechanics deepening the thesis ("graduation
 produces potential; the world decides destiny"), (e) graphics/charm, (f) balance, (g) docs.
-- Creative method: 3 candidates, one sentence each, scored (thesis-service > fun > novelty
-  > polish); pick the winner, bank the runner-up.
-- Scope control: one iteration = one shippable coherent change. Too big → split, name the
-  parts in ROADMAP.
+- **Creative method = DIVERGE before converge.** For any visual / UX / creative pick: generate
+  several DISTINCT candidate directions (≥3, and for the #1 graphics dimension or anything an epic,
+  run them as a parallel WORKFLOW: explore N directions → judge panel scores them against the Bar →
+  synthesize the winner, grafting the best of the runners-up). First-idea-ships is BANNED for visual
+  work. For non-visual picks: 3 candidates, one line each, scored (Bar-movement > thesis-service >
+  fun > novelty > polish); pick the winner, bank the runner-up in ROADMAP.
+- Scope control (POLISH only): one coherent shippable change. If it's actually big → it's an EPIC,
+  promote it to the EPIC track and plan it; don't shrink a big idea into a timid sliver to fit one turn.
 - **PLAN-FIRST for major features (owner directive 2026-06-13):** when the owner proposes (or you
   pick) a MAJOR feature — a new system/mechanic, anything multi-iteration, or anything that may need
   **UI rework** — do NOT start coding it. First write a **named plan in ROADMAP `## Now`**: the design
@@ -236,9 +284,54 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
   refactors ship as their own iteration with gates proving zero behavior change, never
   smuggled into a feature commit.
 
+## The EPIC machinery — how to make a BIG change safely and autonomously
+
+This is the answer to "the old landmine says big autonomous refactors are dangerous." The fix is not
+*avoid them* — it's a MACHINE that makes them safe. Bigness is now ENCOURAGED, gated by process.
+
+An epic is anything large: a UI/layout overhaul, a codebase restructure (the art.js/content.js split,
+splitting ui.js's 1693 lines), a new game pillar, an art-direction pivot, a system replacement,
+deleting a dead subsystem, a major content expansion. The machine:
+
+1. **PLAN** — write a named plan in ROADMAP `## Epic: <name>`: the goal in one Bar-moving sentence,
+   the design decisions (decide them; only ask the owner on a truly load-bearing, expensive-to-undo
+   fork), the file/data/engine/UI changes, an explicit **UI-rework call**, phased checkpoints that
+   each leave the tree shippable, the verification strategy, and the rollback. For an art/UX epic the
+   plan's first phase is a DIVERGENCE workflow (explore→judge→synthesize) to fix the direction.
+2. **ISOLATE** — for any epic that moves ≥~200 lines or restructures files, do the work in a **git
+   worktree** (`Agent`/`Workflow` with `isolation: "worktree"`, or a manual worktree) so a half-done
+   restructure never breaks the live tree. Polish turns and the main tree stay shippable throughout.
+3. **EXECUTE — fan out with a WORKFLOW when the work decomposes.** A restructure across N modules, a
+   sweep of N call-sites, N art directions, N content packs → a `Workflow` (pipeline/parallel) does
+   them concurrently and adversarially verifies, instead of one-file-at-a-time over many turns. This
+   is how an epic fits in *few* firings instead of dozens. Scale the fan-out to the token budget.
+4. **PROVE** — the gate that makes bigness safe:
+   - **Refactor (must be behavior-neutral):** capture BEFORE artifacts on HEAD (gate output; 390px +
+     `_renderLiveOnce` screenshots of the same seeded states across tabs/periods), apply, capture
+     AFTER, and diff. Gates byte-identical where they should be; screenshots visually identical.
+     Zero intended behavior change = zero diff. THIS is what the old landmine demanded and now has a
+     recipe for.
+   - **Feature/overhaul (deliberate change):** gates green, sweep bands hold (if engine touched),
+     390px screenshots READ and LOOK good, and **score against the Bar rubric** — it must raise an axis.
+5. **MERGE & SHIP** — fold the worktree back, run the full Step 3 verify on the main tree, then Step 4
+   (bump + commit + push + poll live). If an epic needs more than one firing, leave a crisp
+   `## Epic in progress` note (what's done, what's next, where the worktree is) and ship the
+   safe-so-far checkpoint if it's green; otherwise keep it in the worktree and ship nothing broken.
+
+**Temporary visual regression during an epic is allowed *in the worktree only*** — the live tree never
+regresses. A mid-overhaul that looks worse for one phase is fine if the plan's endpoint clears the Bar.
+
+**Deletion is a first-class move.** Dead code, parked experiments, stale rules, superseded systems —
+delete them (you have git). Before deleting something you didn't create or that's described as load-
+bearing, look at it and confirm; otherwise, prune freely. A leaner codebase is part of "incredible."
+
 ## Step 2 — Implement (engineering laws; violations have caused production incidents)
-- `window.onerror = function(m,s,l){document.title='JSERR: '+m+' @'+l}` stays the FIRST
-  statement of the first script block.
+- PRODUCTION ERROR TRAP: an inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l` for
+  tests/telemetry AND shows a gentle "tap to reload" banner) must be the FIRST script in `index.html`,
+  before the `js/*.js` tags, so it catches load/parse/runtime errors in all three files. ⚠ This went
+  MISSING in the multi-file split and was unnoticed for ~50 iterations (the maintenance bot found it) —
+  restore it (queued as an epic/fix) and keep it. A silent white-screen on the owner's phone is the
+  worst failure mode; this is the cheapest insurance.
 - NEVER an unescaped `"` inside a double-quoted JS string — Vietnamese quotes or hyphens.
 - Every state field: freshState() default + load() typeof-merge + sanitize() entry.
   `Number.isFinite`, NEVER bare `isFinite` (NaN → JSON null → isFinite(null)===true).
@@ -282,7 +375,15 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
      touching actors, activity overlays, tells, motes, or campus liveliness MUST screenshot
      this way and LOOK — that layer is the soul and was previously unverifiable.
 5. Minimal seeds in harnesses (migrations fill what tests don't assert on; structurally
-   required: meta object, run containers, gameOver:false). Clean up temp files.
+   required: meta object, run containers, gameOver:false).
+6. **LEAVE NO DEBRIS — keep the repo folder clean (owner directive 2026-06-13).** Test artifacts
+   (screenshot PNGs, `__shot.html`/`__bot.html` harnesses, dumped DOM, scratch scripts) are produced
+   only to verify, then DELETED the same turn. Prefer writing scratch OUTSIDE the repo (`/tmp/...`) so
+   it can't be committed at all; any in-repo scratch (a temp harness needs the repo's relative `js/`
+   paths) is `rm`'d immediately after the screenshot. Before every commit, `git status` must show ONLY
+   the intended source/doc changes — if a `.png`, a `__*.html`, or a scratch file appears, delete it
+   (and add a `.gitignore` pattern for the class). A clean working tree is part of "incredible," and a
+   stray committed PNG bloats the repo forever.
 
 ## Step 4 — Record & ship (every iteration)
 - Update ROADMAP.md (done item out, discoveries in) and CHANGELOG.md (PREPEND under the
@@ -301,12 +402,51 @@ End the turn with a short status: what shipped, what's next, and `OWNER:` lines 
 decision made on the owner's behalf (tone, visibility, balance philosophy, pantheon
 content). The Stop hook re-fires this skill while the flag file exists.
 
-## Step 6 — Living documentation (mandatory)
-This skill and EVERY .md in the repo are living documents (owner's explicit wish). A
-durable lesson — new landmine, better recipe, workflow shortcut — gets edited in
-IMMEDIATELY. Landmine log is append-only. The Owner Model section is updated on every
-owner interaction; the ~10-iteration flow reflection re-derives it and evolves the
-development flow itself to match — that feedback loop is the owner's core request.
+## Step 6 — Evolve the loop (boldly, not just additively)
+
+This skill and EVERY .md in the repo are LIVING documents (owner's explicit wish) — and "living"
+means REWRITABLE, not append-only. The loop's deepest job is to make *the loop* better.
+
+- **SELF-CORRECTION IS MANDATORY — the loop edits THIS FILE to fix itself (owner directive 2026-06-13).**
+  This skill is your behavior. So whenever the loop ERRS or DRIFTS, the fix is to edit `SKILL.md` *in the
+  same turn* so the mistake can't recur — code-fixing the symptom without skill-fixing the cause is half
+  a fix. Triggers that REQUIRE a self-correcting edit before you end the turn:
+  · a gate/sweep/screenshot caught a bug you should have prevented → add the missing check or law;
+  · the owner vetoed or corrected you → encode the taste/rule so the next turn predicts it (Owner Model);
+  · you repeated a past mistake → the existing rule was too weak or buried — strengthen/move it;
+  · you notice the loop drifted timid (a streak of small ships), slow, or off-vision → rewrite the rule
+    that allowed it (this whole reframe came from exactly that self-diagnosis);
+  · a rule turned out wrong or contradictory → rewrite or delete it.
+  State the self-correction in the status (`SELF-CORRECTION: …`). A turn that hit a trigger and did NOT
+  edit the skill is an incomplete turn. The loop that never edits its own playbook is not learning.
+
+- **Rewrite, don't just accrete.** When a rule causes timidity, drift, or no longer fits — DELETE or
+  rewrite it (you have git). This skill grows by *replacement*, not only addition; a section that's
+  become wrong is debt. (The whole "make it incredible" reframe above is this rule in action: it
+  rewrote the timid "pick ONE safe improvement" core.) Don't let the playbook ossify.
+- **PRUNE IRRELEVANT CONTEXT — this is a standing duty (owner directive 2026-06-13).** This skill
+  reloads in full on EVERY firing, so every stale line is a tax on every iteration. Actively REMOVE
+  what no longer earns its place: superseded rules, one-off notes whose lesson is now a permanent rule,
+  redundant Owner-Model bullets (consolidate same-date entries into one sharp line), ledger entries that
+  no longer teach, landmines for code paths that no longer exist, finished epics. Keep the skill LEAN
+  and high-signal — a tight playbook the loop can actually hold beats an exhaustive one it skims. Do a
+  consolidation pass whenever a section sprawls (the ~10-firing reflection is a natural moment). Same for
+  the repo: ROADMAP keeps only live work (done items move to CHANGELOG and out); delete dead docs. Less,
+  but load-bearing. (The Landmine log stays append-only for entries that still describe live hazards;
+  drop ones that don't.)
+- **Capture durable lessons immediately** — a new landmine, a better recipe, a workflow shortcut goes
+  in the same turn. Then prune: if a temporary note has become a permanent rule, fold it in and delete
+  the note.
+- **Maintain `VISION.md`** — the 1-page picture of this game at its incredible best. Update it when the
+  owner's taste sharpens; mine it for the next epic when no epic is queued.
+- **Propose your own epics.** Don't wait to be told. When you see a big leap (a pillar, an overhaul, a
+  restructure), write it as a ROADMAP `## Epic:` plan and surface it as an `OWNER:` line; the owner
+  steers by reaction. The loop should generate ambition, not just consume a queue.
+- **Owner Model is the through-line** — updated on every owner interaction; the ~10-firing flow
+  reflection re-derives it AND audits whether the loop is being bold enough (count the last 10 ships:
+  how many were epics? if ~zero, the cadence is failing — fix it that turn). The reactions/prediction
+  ledger measures whether changes actually LANDED (owner delight? metric moved?); a missed prediction
+  is a lesson to fold back in. This feedback loop is the owner's core request.
 
 ## Landmine log (append-only; inherited from 64 iterations of Nuôi Anh + this project)
 - CACHE STALENESS (loop iter): multi-file build loads `js/*.js` by bare path → browsers/Pages
@@ -358,13 +498,14 @@ development flow itself to match — that feedback loop is the owner's core requ
 - This project: `.pantheon` content and honoree names in scandal strings — grep before
   ship (`grep -l 'Trần Đại Nghĩa\|Tạ Quang Bửu\|Hồ Xuân Hương'` against phốt/headline
   banks must return nothing).
-- AUTONOMOUS-REFACTOR RISK (loop iter 3): a big single-file split (≥~300 lines moved in/out of
-  a 1000+ line file) done autonomously with the owner away is the dangerous way — engine gates
-  don't catch UI/visual regressions and Write/Edit transcription errors hide easily. CHUNK it
-  (move one subsystem per iteration), prove behavior-neutrality with BEFORE/AFTER 390px
-  screenshots of the same seeded states, and when a risky refactor competes with a safe additive
-  owner-requested feature for an autonomous slot, prefer the safe feature and chunk the refactor.
-  Recording the swap in ROADMAP (with reasoning) is part of the discipline, not a cop-out.
+- AUTONOMOUS-REFACTOR is now ENCOURAGED via THE EPIC MACHINERY, not avoided (supersedes the old
+  iter-3 "prefer the safe feature / chunk it" rule, which made the loop timid). The real risk a big
+  refactor carries — engine gates don't catch UI/visual regressions, and Write/Edit transcription
+  errors hide easily — is now handled by the machine: do it in a git WORKTREE (live tree never breaks),
+  fan the work out with a WORKFLOW where it decomposes, and PROVE behavior-neutrality with a
+  BEFORE/AFTER diff (byte-identical gate output + identical 390px/`_renderLiveOnce` screenshots of the
+  same seeded states). A refactor proven behavior-neutral is SAFE to ship autonomously. Don't dodge the
+  big restructure for a safe sliver — run the machine.
 - AUDIO is owner-verified, not screenshot-verified: a BGM iteration can only assert "no JSERR
   across all state-moods + init + persist + autoplay-unlock" headlessly; the aesthetic is judged
   by the owner on the live link. Keep audio defensive (try/catch every scheduler; any failure
@@ -383,3 +524,12 @@ development flow itself to match — that feedback loop is the owner's core requ
   pick — the living campus is now SCREENSHOT-VERIFIABLE (`_renderLiveOnce` hook + Step 3.4
   recipe + landmine). Owner declined the proposed #2 (presence-aware looping); recorded that
   as an Owner-Model signal (keep the autonomous cadence; veto-by-reaction even when present).
+- 2026-06-13 (LOOP REDESIGN, owner-directed): diagnosed the loop as locally-productive but globally
+  TIMID (7 straight tiny additive ships, zero epics, codebase rotting). Rewrote the core from "pick ONE
+  safe improvement, ship green" → a MISSION ("make it incredible, fast"), TWO TRACKS (polish vs EPIC),
+  the EPIC MACHINERY (plan→worktree→workflow→behavioral-diff→merge so big restructures/overhauls/
+  deletions are safe + encouraged), THE BAR (incredible definition + 1–5 self-scoring rubric as a gate),
+  DIVERGENCE-by-default for visual work, a cadence rule (≥every 4th firing is an epic), and a bold Step 6
+  (rewrite/prune the skill, maintain VISION.md, propose own epics). Added owner directives: PRUNE
+  irrelevant context every reload, and MANDATORY SELF-CORRECTION (edit this file to fix the loop whenever
+  it errs/drifts). Superseded the timid "prefer the safe feature / chunk it" anti-refactor landmine.
