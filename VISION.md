@@ -42,8 +42,11 @@ the world as engineers, founders, văn-mẫu clerks, coin sharks, and the rare �
 - ~~**Shareable end-card / epilogue**~~ ✅ the gold answer-to-the-đề-Văn card (68); + the Steve climax moment (72).
 - ~~**weather layer**~~ ✅ SHIPPED iter 77 — drifting god-ray sunbeams + gentle drizzle (stayed sunny), a
   cosmetic overlay; could deepen with actor reactions (umbrellas).
-- **Still open / next tier (needs owner steer or genuine new ambition):** deeper **khoa life** (rivalries,
-  khoa-gated facilities, a dedicated screen); **late-game economic pressure** — the *spend sink* half landed
+- ~~**khoa rivalries**~~ ✅ SHIPPED iters 79–80 — khoa identity (color/motto/standing) + the annual **Cúp Khoa**
+  trophy pennant race (reward kept story-not-power so the destiny thesis held). Still open within khoa life:
+  **khoa-gated facilities** and a **dedicated khoa screen**.
+- **Still open / next tier (needs owner steer or genuine new ambition):** the rest of **khoa life** (gated
+  facilities, a dedicated screen); **late-game economic pressure** — the *spend sink* half landed
   iter 76 (Góp quỹ: cash→endowment, a player decision), but a *passive/structural pressure* (rising costs,
   stakes that bite if you hoard) is still open; and whatever bold new PILLAR the owner dreams up. The
   original vision is realized; the next vision is the owner's to set.
