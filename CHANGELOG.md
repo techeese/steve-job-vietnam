@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Tap-the-world inspect + /mvp/ retired
+- **Interaction (owner decision):** the campus is now tappable. Tapping a student opens a
+  non-pausing inspect card (stats, tell, hạt-giống potential, scholarship); tapping a room
+  shows its description + how many students are nearby. Tabs stay for management — "tabs +
+  tap-the-world." Antidote to the "everything's a button" feel. `window.__ui` test hook added.
+- **/mvp/ retired (owner decision):** the parallel single-file build (older 3-grade spec)
+  removed; the root multi-file v2 build is canonical. Salvaged ideas (phốt risk meter,
+  export-save) parked in ROADMAP. Orphaned jsdom package.json removed.
+- **Design:** DESIGN §1 "open-question law" — the game holds the đề philosophical; no
+  dominant strategy, reflect-don't-impose, epilogue mirrors the player's own school back.
+- **Skill:** added the ~10th-iteration code-structure review (owner directive).
+
 ## 2026-06-13 — S1 MVP (first playable)
 Multi-file build flips the live link from placeholder to a playable university sim.
 

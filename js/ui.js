@@ -33,6 +33,7 @@
     buildSpeeds(); buildTabs();
     rebuildWalk(); syncActors(true);
     drawStatic(); render(); requestAnimationFrame(liveLoop);
+    $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
     setInterval(loopTick, CONFIG.TICK_MS);
     setInterval(function () { HVS.saveGame(); }, 4000);
     $("soundBtn").onclick = toggleSound;
@@ -166,18 +167,73 @@
     ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
   }
 
-  function onMapClick(ev) {
-    if (!placingKey) return;
+  function mapPoint(ev) {
     var cv = $("mapStatic"), rect = cv.getBoundingClientRect();
     var sx = cv.width / rect.width, sy = cv.height / rect.height;
-    var gx = Math.floor(((ev.clientX - rect.left) * sx) / T);
-    var gy = Math.floor(((ev.clientY - rect.top) * sy) / T);
-    var d = CONFIG.ROOMS[placingKey];
-    gx = Math.max(0, Math.min(GW - d.w, gx)); gy = Math.max(0, Math.min(GH - d.h, gy));
-    var res = HVS.placeRoom(placingKey, gx, gy);
-    if (res.ok) { placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; rebuildWalk(); drawStatic(); render(); toast("Đã xây xong."); }
-    else toast(res.msg);
+    var cx = ev.clientX != null ? ev.clientX : (ev.touches && ev.touches[0] ? ev.touches[0].clientX : 0);
+    var cy = ev.clientY != null ? ev.clientY : (ev.touches && ev.touches[0] ? ev.touches[0].clientY : 0);
+    var px = (cx - rect.left) * sx, py = (cy - rect.top) * sy;
+    return { px: px, py: py, gx: Math.floor(px / T), gy: Math.floor(py / T) };
   }
+  function onMapClick(ev) {
+    var pt = mapPoint(ev);
+    if (placingKey) {
+      var d = CONFIG.ROOMS[placingKey];
+      var gx = Math.max(0, Math.min(GW - d.w, pt.gx)), gy = Math.max(0, Math.min(GH - d.h, pt.gy));
+      var res = HVS.placeRoom(placingKey, gx, gy);
+      if (res.ok) { placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; rebuildWalk(); drawStatic(); render(); toast("Đã xây xong."); }
+      else toast(res.msg);
+      return;
+    }
+    // tap-the-world: nearest student, else room, else dismiss
+    var a = nearestActor(pt.px, pt.py, 11);
+    if (a) { showInspectStudent(a.id); return; }
+    var r = roomAt(pt.gx, pt.gy);
+    if (r) { showInspectRoom(r); return; }
+    hideInspect();
+  }
+  function nearestActor(px, py, rad) {
+    var best = null, bd = rad;
+    for (var i = 0; i < actors.length; i++) { var d = Math.hypot(actors[i].px - px, actors[i].py - py); if (d < bd) { bd = d; best = actors[i]; } }
+    return best;
+  }
+  function roomAt(gx, gy) {
+    var rooms = S().rooms;
+    for (var i = 0; i < rooms.length; i++) { var d = CONFIG.ROOMS[rooms[i].key]; if (gx >= rooms[i].x && gx < rooms[i].x + d.w && gy >= rooms[i].y && gy < rooms[i].y + d.h) return rooms[i]; }
+    return null;
+  }
+  function pantheonName(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === key) return CONFIG.PANTHEON[i].name; return null; }
+  var TELL_TXT = { spark: "hay tháo đồ ra xem nó chạy thế nào", hype: "thích sân khấu hơn bảng đen", sky: "hay nhìn lên trời giữa giờ", "": "chưa lộ điều gì đặc biệt" };
+  function ibar(l, v, c) { return "<div class='ib'>" + esc(l) + " " + Math.round(v) + "<div class='bar2'><b style='width:" + Math.max(0, Math.min(100, v)) + "%;background:" + c + "'></b></div></div>"; }
+  function showInspectStudent(id) {
+    var st = null, list = S().students; for (var i = 0; i < list.length; i++) if (list[i].id === id) { st = list[i]; break; }
+    if (!st) { hideInspect(); return; }
+    var ins = $("inspect");
+    var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
+    var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
+    ins.innerHTML =
+      "<div class='ihead'><div class='av' style='background:" + (GRADE_C[st.grade] + "22") + "'>" + seedFace(st.seed) + "</div>" +
+      "<div><div class='iname'>" + esc(st.ten) + (st.ten === "Mai Sương" ? " 🔧" : "") + "</div><div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + "</div></div>" +
+      "<button class='ix' id='ixBtn'>✕</button></div>" +
+      "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
+      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>";
+    $("ixBtn").onclick = hideInspect;
+    ins.classList.add("show"); $("mapHint").textContent = "";
+  }
+  function showInspectRoom(r) {
+    var d = CONFIG.ROOMS[r.key], sk = ROOM_SKIN[r.key] || { e: "▫" }, ins = $("inspect");
+    var cnt = 0;
+    for (var i = 0; i < actors.length; i++) { var gx = Math.floor(actors[i].px / T), gy = Math.floor(actors[i].py / T); if (gx >= r.x && gx < r.x + d.w && gy >= r.y && gy < r.y + d.h) cnt++; }
+    ins.innerHTML =
+      "<div class='ihead'><div class='av' style='background:rgba(255,255,255,.06)'>" + sk.e + "</div>" +
+      "<div><div class='iname'>" + esc(d.name) + "</div><div class='imeta'>" + d.w + "×" + d.h + (d.cost ? " · xây " + d.cost + "tr" : " · miễn phí") + "</div></div>" +
+      "<button class='ix' id='ixBtn'>✕</button></div>" +
+      "<div class='inote'>" + esc(d.desc) + "</div>" +
+      "<div class='iflav'>" + cnt + " sinh viên đang ở gần.</div>";
+    $("ixBtn").onclick = hideInspect;
+    ins.classList.add("show"); $("mapHint").textContent = "";
+  }
+  function hideInspect() { $("inspect").classList.remove("show"); }
 
   /* ============================================================================
      HUD
@@ -234,7 +290,7 @@
     var nav = $("tabs"); nav.innerHTML = "";
     TABS.forEach(function (t) {
       var b = el("button"); b.innerHTML = "<span class='ic'>" + t[1] + "</span>" + t[2];
-      b.onclick = function () { tab = t[0]; placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; render(); };
+      b.onclick = function () { tab = t[0]; placingKey = null; document.body.classList.remove("placing"); $("mapHint").textContent = ""; hideInspect(); render(); };
       nav.appendChild(b);
     });
   }
@@ -442,6 +498,7 @@
     if (sig === lastSig) return;
     lastSig = sig;
     if (!sig) { hideModal(); return; }
+    hideInspect();
     if (s.pendingJune) s.pendingJune.stage === "policy" ? showJunePolicy() : showJuneResults();
     else if (s.pendingAdmit) showAdmit();
     else if (s.pendingContract) showContract();
@@ -615,6 +672,13 @@
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   var toastTimer = null;
   function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove("show"); }, 1900); }
+
+  // tiny test hook (screenshots / future gates) — view-only, no game mutation
+  window.__ui = {
+    inspectStudent: showInspectStudent, inspectRoom: showInspectRoom, hideInspect: hideInspect,
+    firstStudentId: function () { return S().students[0] && S().students[0].id; },
+    setTab: function (t) { tab = t; render(); }
+  };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
