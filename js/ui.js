@@ -922,9 +922,9 @@
     }
     // meters
     var m = $("meters"); m.innerHTML = "";
-    m.appendChild(meter("m-tt", "TIẾNG TĂM", s.tiengTam, 100));
-    m.appendChild(meter("m-ut", "UY TÍN", s.uyTin, 100));
-    m.appendChild(meter("m-tc", "THỰC CHẤT", s.thucChat, 100));
+    m.appendChild(meter("m-tt", "TIẾNG TĂM", s.tiengTam, 100, "tt"));
+    m.appendChild(meter("m-ut", "UY TÍN", s.uyTin, 100, "ut"));
+    m.appendChild(meter("m-tc", "THỰC CHẤT", s.thucChat, 100, "tc"));
     // founding-milestone banner: the next un-earned goal (hidden once the build-up arc is done)
     var gb = $("goalBar"), ms = CONTENT.milestones || [], hit = (s.META.goalsHit || []), cur = null;
     for (var gi = 0; gi < ms.length; gi++) { if (hit.indexOf(ms[gi].key) < 0) { cur = ms[gi]; break; } }
@@ -952,10 +952,27 @@
     }
   }
   function chip(cls, ic, v) { var c = el("div", "chip " + cls); c.innerHTML = ic + " <span class='v'>" + v + "</span>"; return c; }
-  function meter(cls, lab, v, max) {
+  function meter(cls, lab, v, max, key) {
     var d = el("div", "meter " + cls);
     d.innerHTML = "<div class='lab'>" + lab + " <b>" + Math.round(v) + "</b></div><div class='bar'><i style='width:" + Math.max(0, Math.min(100, v / max * 100)) + "%'></i></div>";
+    if (key) { d.style.cursor = "pointer"; d.title = "Chạm để xem chỉ số này là gì"; d.onclick = function () { showMeterHelp(key); }; }
     return d;
+  }
+  // tap a meter → a short thematic explainer (the three meters are the đề Văn's three theses: fame, credibility, substance)
+  function showMeterHelp(key) {
+    var h = (CONTENT.meterHelp || {})[key]; if (!h) return;
+    var s = S(), val = key === "tt" ? s.tiengTam : key === "ut" ? s.uyTin : s.thucChat;
+    var bar = key === "tt" ? "#f2c14e" : key === "ut" ? "#6fcf97" : "#b48ef0";
+    var w = el("div");
+    w.appendChild(el("div", "kic", "Chỉ số của trường"));
+    w.appendChild(el("div", "row", "<div class='grow'><div style='font-size:16px;font-weight:800;color:" + bar + "'>" + esc(h.name) + "</div></div><div style='font-size:20px;font-weight:800;color:" + bar + "'>" + Math.round(val) + "</div>"));
+    w.appendChild(el("div", "lead", esc(h.what)));
+    w.appendChild(el("div", "tiny", "<span style='color:var(--green)'>▲ Tăng khi:</span> " + esc(h.up))).style.marginTop = "5px";
+    w.appendChild(el("div", "tiny", "<span style='color:var(--red)'>▼ Giảm khi:</span> " + esc(h.down))).style.marginTop = "3px";
+    w.appendChild(el("div", "lead", "“" + esc(h.soul) + "”")).style.cssText = "font-style:italic;color:var(--gold);margin-top:8px";
+    var btn = el("button", "btn", "Rõ rồi"); btn.style.width = "100%"; btn.style.marginTop = "10px"; btn.onclick = hideModal;
+    w.appendChild(btn);
+    openModal(w);
   }
 
   /* ============================================================================

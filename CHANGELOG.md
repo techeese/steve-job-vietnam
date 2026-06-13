@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — Tap a meter to learn what it means (loop iter 90)
+- UX/onboarding (compass #6, barely touched): the three HUD meters — **Tiếng Tăm / Uy Tín / Thực Chất** —
+  are the abstract heart of the game, but a new player ("a stranger who stops to play") had no way to learn
+  what they do. Now **tap any meter** → a short, thematic explainer: what it is, ▲ what raises it, ▼ what
+  lowers it, and a one-line soul. The three meters ARE the đề Văn's three theses (fame · credibility ·
+  substance), so the cards teach strategy *and* hold the question open — e.g. Thực Chất: "thứ duy nhất biến
+  hạt giống thành quả táo," up via đồ án/real work/mentoring, down via luyện đề/đạo văn/AI-làm-hộ.
+- data.js: `meterHelp` (3 entries). ui.js: `meter()` gains a tappable key + a `showMeterHelp(key)` modal.
+  Reads existing state only — no engine/balance/save change → gate & sweep untouched. Verified: parse ·
+  `./gate.sh` GREEN · `./bot.sh` BOTOK · 390px screenshot of the Thực Chất card.
+- POLISH ship → `SMALL_SHIPS_SINCE_EPIC 1→2`. Bar: **UX/legibility 4** (the game's abstract core is now
+  self-explaining).
+
 ## 2026-06-14 — The repo gets a front door: README + cover (loop iter 89)
 - Presentation/docs (compass #11, never touched in 89 iterations): the repo had **no README at all** — a
   blank front door for a now-mature, polished game. Wrote a proper one: the đề-Văn hook + tagline, the live

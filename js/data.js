@@ -263,6 +263,19 @@ var CONTENT = {
     LUONG_ON: "Em về thăm trường ạ.",
     THAT_NGHIEP: "Em… ghé qua xem trường tí ạ."
   },
+  // tap a HUD meter → a short, thematic explainer. The three meters ARE the three theses of the đề Văn —
+  // fame, credibility, substance — and these lines teach the strategy while keeping the question open.
+  meterHelp: {
+    tt: { name: "Tiếng Tăm", what: "Trường nổi đến đâu — quyết định bao nhiêu hồ sơ tìm về cổng mỗi mùa tuyển sinh.",
+      up: "Hợp đồng PR, khoa Sống Ảo, sự kiện đánh bóng, các 'phốt' đẹp.", down: "Bê bối, cựu SV bị bắt, và tự rơi dần về mức nền theo thời gian.",
+      soul: "Tiếng tăm kéo người tới cổng — nhưng không mua được lòng tin." },
+    ut: { name: "Uy Tín", what: "Mức độ trường được tin cậy — xây chậm bằng sự tử tế, nâng cả mức nền của Tiếng Tăm.",
+      up: "Những lần từ chối tử tế, vườn tưởng niệm danh nhân, việc đàng hoàng (Bác Tâm gật đầu).", down: "Bán mình cho hợp đồng có điều khoản, gian lận, mua giải.",
+      soul: "Uy tín xây bằng những lần nói không — chậm, nhưng bền." },
+    tc: { name: "Thực Chất", what: "Năng lực thật trường gây dựng trong sinh viên — thứ thực sự đẩy các em về phía kỹ sư và quả táo 🍎.",
+      up: "Dạy đồ án, làm thật trong Xưởng, kèm cặp, để các em tự vẽ lấy.", down: "Luyện đề/văn mẫu, đạo văn, để AI làm hộ — qua môn nhưng rỗng.",
+      soul: "Thực chất là thứ duy nhất biến hạt giống thành quả táo." }
+  },
 
   teachers: {
     inherited: [
