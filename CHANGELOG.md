@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-13 — Alumni trajectories (loop iter 21): watch lives unfold
+- Each cựu sinh viên now records a STATE HISTORY as the FSM moves them year by year, shown in
+  the Sổ as a trajectory of chips (e.g. 🚀 → 🪙 → 🚔, or 💼 → 👷). The owner's core instinct —
+  outcomes that evolve over years ("scammer 2 years after graduate") — made visible.
+- Engine: setAlumState() helper tracks history at every transition; sanitize defaults it for
+  old saves. GATE_ALUM caught a determinism bug (seeded vs sanitized history) — fixed; replay green.
+
 ## 2026-06-13 — Phốt risk indicator (loop iter 20)
 - A qualitative HUD chip surfaces accumulating scandal danger — ⚠️ Có/Nhiều mầm phốt → 🔥 Phốt
   sắp bung — so the gamble is legible (pairs with the scandal-mood music + the now-firing

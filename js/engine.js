@@ -482,7 +482,7 @@ function makeAlumnus(s, row, diem, tiem) {
   var id = nid();
   var grat = clamp(0.35 * s.mood + 0.35 * (100 - s.vet) + 8 * flags.vt.length + (s.flags.hb ? 10 : 0), 0, 100);
   var a = {
-    id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry,
+    id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry, history: [entry],
     yearsInState: 0, annMonth: annMonthFor(id),
     fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed },
     grat: r1(grat), gifts: 0, flags: flags, line: ""
@@ -580,6 +580,7 @@ function awardScholarships(cohort) {
 /* ============================================================================
    ALUMNI FSM — deterministic per (alumnus, year). seed0 stream only.
    ========================================================================== */
+function setAlumState(a, st) { if (a.state !== st) { if (!a.history) a.history = [a.state]; a.state = st; a.history.push(st); } a.yearsInState = 0; } // track the trajectory
 function alumniMonth(month) {
   for (var i = 0; i < S.alumni.length; i++) {
     var a = S.alumni[i];
@@ -600,7 +601,7 @@ function alumniTickOne(a) {
       if (d1 < pS) { a.flags.garage = true; gainTT(-2); a.line = tpl(CONTENT.garageLine, { ten: a.ten }); a.yearsInState = a.yearsInState; return; }
     } else {
       if (d1 < stevePShort(a) * 3) { becomeSteve(a); return; }
-      else { a.state = "KY_SU"; a.yearsInState = 0; a.line = pickLine("KY_SU", a); return; }
+      else { setAlumState(a, "KY_SU"); a.line = pickLine("KY_SU", a); return; }
     }
   }
   // DRAW 2 — transition
@@ -620,7 +621,7 @@ function stevePShort(a) {
   return p;
 }
 function becomeSteve(a) {
-  a.state = "STEVE"; a.yearsInState = 0;
+  setAlumState(a, "STEVE");
   gainTT(CONFIG.ALUM.KEYNOTE_TT);
   if (!S.pierceKeynote) { gainUT(CONFIG.ALUM.KEYNOTE_UT, true); S.pierceKeynote = true; }
   S.META.jobsEver = true; S.META.steves++;
@@ -647,7 +648,7 @@ function transition(a, draw, ysg) {
     if (draw < cum) {
       var to = rows[i].t;
       if (to === "BI_BAT") arrestAlumnus(a);
-      else { a.state = to; a.yearsInState = 0; a.line = ""; }
+      else { setAlumState(a, to); a.line = ""; }
       return;
     }
   }
@@ -665,7 +666,7 @@ function gateFn(key, a, ysg) {
   }
 }
 function arrestAlumnus(a) {
-  a.state = "BI_BAT"; a.yearsInState = 0;
+  setAlumState(a, "BI_BAT");
   var dmg = r1(CONFIG.ALUM.ARREST(aHollow(a) >= 50 ? 2 : 1, S.tiengTam, Math.max(0, S.year - a.gradYear)));
   S.tiengTam = clamp(r1(S.tiengTam - dmg), 0, 200);
   gainUT(-2, false);
@@ -677,7 +678,7 @@ function scriptedArrest() {
   for (var i = 0; i < S.alumni.length; i++) {
     var a = S.alumni[i];
     if (a._tpl && a.state !== "BI_BAT") {
-      a.state = "BI_BAT"; a.yearsInState = 0; a._arrested = true;
+      setAlumState(a, "BI_BAT"); a._arrested = true;
       var dmg = r1(CONFIG.ALUM.ARREST(2, S.tiengTam, Math.max(0, S.year - a.gradYear)));
       S.tiengTam = clamp(r1(S.tiengTam - dmg), 0, 200);
       gainUT(-2, false); S.META.arrested++;
@@ -904,6 +905,7 @@ function sanitize() {
   var STATE = CONFIG.ALUM.STATES;
   S.alumni = (S.alumni || []).filter(function (a) { return a && a.fs; }).map(function (a) {
     if (STATE.indexOf(a.state) < 0) a.state = "LUONG_ON";
+    if (!Array.isArray(a.history) || !a.history.length) a.history = [a.state]; else a.history = a.history.filter(function (h) { return STATE.indexOf(h) >= 0; });
     a.yearsInState = Math.max(0, Math.round(a.yearsInState) || 0);
     if (!(a.annMonth >= 1 && a.annMonth <= 12) || a.annMonth === 6) a.annMonth = annMonthFor(a.id);
     ["kt", "tn", "st", "cm", "vet"].forEach(function (k) { a.fs[k] = clamp(a.fs[k] || 0, 0, 100); });

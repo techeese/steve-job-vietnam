@@ -825,7 +825,8 @@
       var r = el("div", "srow");
       var chipCls = a.state === "STEVE" ? "schip gold-chip" : a.state === "BI_BAT" ? "schip red-chip" : "schip";
       var line = a.line || (CONTENT.alumLines[a.state] ? CONTENT.alumLines[a.state][0].replace(/\{ten\}/g, a.ten) : "");
-      r.innerHTML = "<div class='av' style='background:rgba(255,255,255,.06)'>🎓</div><div class='grow'><div class='nm'>" + esc(a.ten) + " <span class='tiny'>· K" + a.gradYear + "</span></div><div class='meta'>" + esc(line) + "</div></div><div class='" + chipCls + "'>" + CONFIG.ALUM.CHIPS[a.state] + "</div>";
+      var traj = (a.history && a.history.length > 1) ? "<div class='tiny' style='color:var(--faint);margin-top:2px;letter-spacing:1px'>" + a.history.map(function (h) { return (CONFIG.ALUM.CHIPS[h] || "").split(" ")[0]; }).join(" → ") + "</div>" : "";
+      r.innerHTML = "<div class='av' style='background:rgba(255,255,255,.06)'>🎓</div><div class='grow'><div class='nm'>" + esc(a.ten) + " <span class='tiny'>· K" + a.gradYear + "</span></div><div class='meta'>" + esc(line) + "</div>" + traj + "</div><div class='" + chipCls + "'>" + CONFIG.ALUM.CHIPS[a.state] + "</div>";
       sl.appendChild(r);
     });
     c.appendChild(sl);

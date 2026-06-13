@@ -49,7 +49,7 @@ try {
   S.year = 3;
   var states = ['THAT_NGHIEP','LUONG_ON','KY_SU','FOUNDER','CA_MAP_COIN','QUAN_VAN_MAU','BI_BAT','FOUNDER','KY_SU','LUONG_ON'];
   S.alumni = states.map(function(st, i){
-    return { id: 100+i, ten:'Cựu '+i, gradYear:1, outcome:'x', state:st, yearsInState:(i%3),
+    return { id: 100+i, ten:'Cựu '+i, gradYear:1, outcome:'x', state:st, history:[st], yearsInState:(i%3),
       annMonth: [1,2,3,4,5,7,8,9,10,11][i], fs:{kt:50+i,tn:40+i,st:45,cm:50+i,vet:35,seed:1+(i%5)}, grat:50, gifts:0,
       flags:{tiemNang:(i===3), coinPath:(st==='CA_MAP_COIN'), garage:false, vt:[]} };
   });
