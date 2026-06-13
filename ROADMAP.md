@@ -6,7 +6,7 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. **(At 2 — next polish forces an epic; a STRUCTURE-epic is due at EPICS_SINCE_STRUCTURE 1→ not yet, but the forced epic can be feature.)**
+- `SMALL_SHIPS_SINCE_EPIC: 3`   → ≥3 ⇒ **the NEXT firing is HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. (EPICS_SINCE_STRUCTURE 1 < 2, so the forced epic may be FEATURE or STRUCTURE.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
 - `LAST_EPIC: iter 66 — FEATURE: player-customizable students (per-axis look customizer)`
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`

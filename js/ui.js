@@ -341,7 +341,7 @@
         // clear the arrival mark once they've actually stepped onto the grounds
         if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
-      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id);
+      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.ten = s.ten;
       a.tell = s.tell || ""; a.seed = s.seed;
       a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < VARIANTS.length) ? s.look : hashId(s.id) % VARIANTS.length;
       a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
@@ -660,8 +660,15 @@
     if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 7.5, y - 30.5, 15, 14); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 34, 2, 2); ctx.fillRect(x - 2, y - 33, 1, 1); ctx.fillRect(x + 1, y - 33, 1, 1); } // scholarship star
-    if (a.fav) { // followed student — a persistent gold star bobbing overhead so you can find your protégé
+    if (a.fav) { // followed student — a gold star + a name label overhead, so you bond with your protégé
       var fsy = (y - 39 + Math.sin(ts / 300 + a.ph) * 1.2) | 0;
+      if (a.ten) { // floating name pill above the star
+        ctx.font = "700 8px 'Be Vietnam Pro',system-ui,sans-serif"; ctx.textAlign = "center";
+        var nm = a.ten, pw = (ctx.measureText(nm).width + 7) | 0, ly = fsy - 9;
+        ctx.fillStyle = "rgba(18,14,6,.74)"; roundRect(ctx, (x - pw / 2) | 0, ly - 7, pw, 11, 4); ctx.fill();
+        ctx.fillStyle = PX.gold; ctx.fillText(nm, x, ly - 0.5);
+        ctx.textAlign = "left";
+      }
       ctx.fillStyle = PX.out; ctx.fillRect(x - 1, fsy - 2, 3, 6); ctx.fillRect(x - 3, fsy, 7, 2);
       ctx.fillStyle = PX.gold; ctx.fillRect(x, fsy - 2, 1, 5); ctx.fillRect(x - 2, fsy, 5, 1); ctx.fillRect(x - 1, fsy - 1, 3, 2);
       ctx.fillStyle = "#fff3c0"; ctx.fillRect(x, fsy - 1, 1, 1);

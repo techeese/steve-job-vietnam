@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — Follow your protégé: a name floats over the one you're watching (loop iter 69)
+- A small charm beat for the game's emotional core ("a little school you love watching"). Following a
+  student (⭐) already pinned a gold star overhead; now their **name floats above them in a gold pill**
+  too — so you can actually track and bond with your protégé as they walk to class, tinker, and graduate.
+  Watching a *named* kid grow beats watching an anonymous dot. Pure ui.js (actor carries `a.ten`; a label
+  in the fav-star block); gates green; verified in-game ("Bé Khánh" labelled over the followed student).
+  Bar: FUN 4 / CLARITY 4 / JUICE 3. Cadence: SMALL_SHIPS_SINCE_EPIC 3 → next firing is an EPIC.
+
 ## 2026-06-13 — Shareable end-card: your answer to the đề Văn, made beautiful (loop iter 68)
 - The thesis payoff, now shareable. The epilogue ("Bản nháp bài luận của hiệu trưởng" — the reflection
   that mirrors your school back at you) now opens with a **gold canvas summary card**: "Học viện Steve ·
