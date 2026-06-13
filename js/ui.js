@@ -489,6 +489,20 @@
     var nBe = 0; for (i = 0; i < free.length && nBe < 3; i++) { f = free[i]; if (!f.u) { bench(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 3) | 0); f.u = 1; nBe++; } }
     // fountain centerpiece at the path plaza (skip if a room was built over it)
     if (walk[colX] && walk[colX][rowY]) fountain(ctx, (colX * T + T / 2) | 0, (rowY * T + T / 2) | 0);
+    drawGate(ctx); // school entrance at the bottom of the path
+  }
+  function drawGate(ctx) {
+    var px = ((GW >> 1) * T + T / 2) | 0, bottom = GH * T, top = bottom - 24, lx = px - 13, rx = px + 11;
+    ctx.fillStyle = PX.out; ctx.fillRect(lx - 2, top, 5, 24); ctx.fillRect(rx - 1, top, 5, 24);          // posts
+    ctx.fillStyle = "#c2a06e"; ctx.fillRect(lx - 1, top + 1, 3, 23); ctx.fillRect(rx, top + 1, 3, 23);
+    ctx.fillStyle = "#a8865a"; ctx.fillRect(lx + 1, top + 1, 1, 23); ctx.fillRect(rx + 2, top + 1, 1, 23);
+    ctx.fillStyle = PX.out; ctx.fillRect(lx - 3, top - 2, 7, 2); ctx.fillRect(rx - 2, top - 2, 7, 2);     // caps
+    ctx.fillStyle = PX.gold; ctx.fillRect(lx - 2, top - 2, 5, 1); ctx.fillRect(rx - 1, top - 2, 5, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(lx - 1, top - 9, rx - lx + 6, 7);                                // banner
+    ctx.fillStyle = "#e0584a"; ctx.fillRect(lx, top - 8, rx - lx + 4, 5);
+    ctx.fillStyle = "#c2412f"; ctx.fillRect(lx, top - 4, rx - lx + 4, 1);
+    ctx.font = "700 6px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillStyle = "#fff8e6"; ctx.fillText("HỌC VIỆN", px, top - 5); ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
   }
   function fountain(ctx, cx, cy) {
     ctx.fillStyle = "rgba(28,48,18,.18)"; ctx.fillRect(cx - 9, cy + 6, 18, 3);
