@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-13 — The art step-change: premium 24×32 characters (owner-picked, loop iter 59)
+- The #1 priority — graphics, "not yet met" — takes its biggest swing yet. The flat 16×22 chibis are
+  replaced by **premium 24×32 volumetric characters**: one consistent upper-left light with a 4-step
+  ramp per body mass (lit rim → core → shade → deep terminator), a 1px outline, **separated arms** with
+  sleeve cuffs + skin hands, a rounded crew collar, an expressive face (brows, two-tone sparkly eyes,
+  blush, two-tone smile), and a soft baked **contact shadow** grounding each figure. The owner's "3D but
+  still pixel, characters with volume" directive, delivered.
+- **Chosen via a 3-direction DIVERGENCE workflow** (iso-block / soft-rounded / bigger-detailed), each a
+  self-refined prototype; the owner picked Direction C (bigger & detailed). Integrated into `bakeChar`,
+  with `drawActor` blit offset (x−12, y−30), the overhead markers (star/fav/selection/Mai-frame),
+  idle-blink, `_bakeSheet`, and the inspect avatar all re-anchored for the taller sprite. No JSERR,
+  gates green, verified in-game via `_renderLiveOnce`.
+- FEATURE-epic shipped: `EPICS_SINCE_STRUCTURE 1`, `SMALL_SHIPS_SINCE_EPIC 0`. Bar: **BEAUTY 4** (the
+  flat-sticker look is gone), JUICE 4, FUN 3, CLARITY 4, BITE 3. OWNER: characters now read a touch BIG
+  vs the buildings (the 24×32 tradeoff you accepted) — if it bugs you, a map-scale pass is queued
+  (backlog #7); say the word and I'll proportion the world to them.
+
 ## 2026-06-13 — Visible build badge: confirm the live deploy loaded (owner-requested, loop iter 58)
 - Owner ask: "a version name on top so we know the deploy is loaded." A small **build badge** now sits in
   the header (top-right): `v HH:MM DD/MM`, derived from the `?v=` cache-bust stamp that `bump.sh` already

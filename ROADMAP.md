@@ -6,27 +6,25 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 1`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
-- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
-- `LAST_EPIC: iter 57 — STRUCTURE: art.js extraction (+ onerror restore iter 56)`
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
+- `LAST_EPIC: iter 59 — FEATURE: character art step-change (24×32 premium chibis, owner-picked dir C)`
 
 ## Epic in progress
-**Epic: FEATURE — art step-change (characters with volume)** (started iter 59, backlog #1; the #1 unmet
-BEAUTY bar). Phase 1 = a 3-direction DIVERGENCE workflow (`w0qlpzi7c`): ISO-block volume / soft-rounded
-volume / bigger-detailed — each a self-refined prototype screenshot. Next: present the 3 to the owner to
-PICK the direction (art = costliest miss), then integrate the winner into `js/art.js`'s sprite baker,
-prove it (390px + `_renderLiveOnce`), ship. If the owner is away when results land, pick the
-highest-Bar-scoring direction and ship it for veto-by-reaction.
+_(none — the art step-change shipped iter 59. Possible veto-driven follow-up: if the 24×32 characters
+read too BIG vs the buildings, a map-scale pass (bigger TILE / zoom) is a queued FEATURE-epic — decide
+on owner reaction.)_
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
-1. **[FEATURE] Art step-change** — bigger 2.5D characters with real volume (visible side walls, shading), the owner's "3D but still pixel." BEAUTY — the #1 unmet bar. Phase 1 = a 3-up divergence workflow. *(Now cheap to iterate: all pixel-art lives in `js/art.js`.)*
+1. ~~[FEATURE] Character art step-change~~ SHIPPED iter 59 (owner-picked Direction C: premium 24×32 volumetric chibis with separated arms, expressive faces, contact shadows).
 2. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
 3. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
 4. **[FEATURE] Player-customizable students** — owner-hinted ("characters are customize"). FUN + individuality.
 5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
 6. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.
-7. **[STRUCTURE] (if needed) further ui.js modularization** — extract the atlas/sprite layer (bakeChar/buildAtlas/drawActor) and/or panels/modals, if ui.js (now 1393) grows again. Not urgent.
+7. **[FEATURE/tune] Map-scale harmony** — if the new 24×32 characters read too big vs buildings, bump TILE / zoom so the world feels proportionate. Decide on owner reaction.
+8. **[STRUCTURE] (if needed) further ui.js modularization** — extract the atlas/sprite layer if ui.js grows again. Not urgent.
 
 ## Debt
 <!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
