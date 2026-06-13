@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-13 — The Văn-Mẫu champion is finally reachable (loop iter 30)
+- The 📋 Quán Quân Văn Mẫu end-state — the thematic heart of the whole đề-Văn premise — had
+  been **mathematically unreachable** (sweep-flagged): cram graduates have huge knowledge + cram
+  but near-zero craft/creativity, so they *failed* the craft-based graduation diem and were routed
+  to THẤT NGHIỆP, never reaching the cascade. Fixed the satire: a rote exam-champion now "passes"
+  into a bureaucratic công-chức role by memorization even when the đồ-án score fails (isVanMau:
+  kt≥70 ∧ vet≥55 ∧ st≤25). The rote crammer who also grew a predatory hustle (cm≥64) pivots to
+  cá-mập-coin instead — so cram now mass-produces văn-mẫu (59-66%), breeds some sharks (9-11%) who
+  get arrested (7-9%), exactly the dark mirror. **Both stale sweep flags cleared**; the craft
+  thesis is untouched (đồ-án still → 75% kỹ-sư / 13% 🍎, cram still 0% 🍎); pluralism strong; gates
+  green. All the văn-mẫu content (chip, flavor, alumni lines, gifts, FSM) was already written —
+  it was just stranded behind an impossible gate.
+
 ## 2026-06-13 — Graduation walk-OUT + maintenance audit (loop iter 29)
 - **Walk-out:** at June, graduating (and any departing) students no longer blink out — their
   actor stays and walks OUT through the cổng before being dropped, mirroring the matriculation

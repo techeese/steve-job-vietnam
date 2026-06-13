@@ -17,6 +17,8 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   more *mid-build texture* (founding-specific events, a visible "first đồ-án" beat, a cheaper-but-
   paid first room for a real spend decision); late-game money still inflates (~2635tr, sweep
   flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
+  ~~văn-mẫu unreachable~~ FIXED (iter 30: rote exam-champions become 📋 Quán Quân Văn Mẫu instead
+  of failing into thất-nghiệp; cram → ~60% văn-mẫu / ~10% cá-mập→bị-bắt; craft thesis intact).
 - ~~**(B) Students walk IN from outside**~~ **SHIPPED (iter 25).** Each new matriculant spawns
   just outside the cổng (below the map at the gate's x) and walks up the central path to their
   spot; a whole intake files in as a staggered procession with a "!" welcome bubble. Boot/reload

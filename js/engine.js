@@ -441,7 +441,15 @@ function finalizeJune(policy) {
     var noRoom = hasShop ? 0 : d.noRoom;
     var diem = clamp(d.base + d.tn * s.tn + d.st * s.st + d.vet * s.vet + qvm + noRoom + bonus + rrange(-d.noise, d.noise), 0, 10);
     diem = r1(diem);
-    var row = (diem < CONFIG.JUNE.PASS) ? cascadeRow("THAT_NGHIEP") : cascadeOutcome(s);
+    // A rote exam-champion (huge knowledge + cram, no creativity) doesn't end up unemployed when the
+    // craft-based đồ-án score fails — by memorization they "pass" into a bureaucratic công-chức role
+    // (văn-mẫu satire). But the rote crammer who also grew a predatory hustle (high cá-mập) pivots to
+    // crypto instead → cá mập coin (the dark mirror). Genuine low-everything failures → unemployed.
+    var row;
+    if (diem < CONFIG.JUNE.PASS) {
+      if (isVanMau(s)) row = (s.cm >= 64) ? cascadeRow("CA_MAP_COIN") : cascadeRow("QUAN_VAN_MAU");
+      else row = cascadeRow("THAT_NGHIEP");
+    } else row = cascadeOutcome(s);
     var tiem = isTiemNang(s);
     // viral defense (rare pierce) — high craft + creativity defends well
     var defScore = CONFIG.JUNE.DEFQ.st * s.st + CONFIG.JUNE.DEFQ.tn * s.tn + CONFIG.JUNE.DEFQ.ut * S.uyTin;
@@ -493,6 +501,9 @@ function gatePass(gate, s) {
   }
   return true;
 }
+// the pure rote profile: memorized everything (high knowledge), drilled to death (high cram),
+// no spark of their own (near-zero creativity) — the văn-mẫu champion.
+function isVanMau(s) { return s.kt >= 70 && s.vet >= 55 && s.st <= 25; }
 function isTiemNang(s) {
   var t = CONFIG.TIEMNANG;
   return s.st >= t.st && s.tn >= t.tn && s.cm >= t.cm && s.vet <= t.vetMax && S.thucChat >= t.tcMin;

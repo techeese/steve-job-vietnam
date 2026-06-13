@@ -95,7 +95,7 @@ var CONFIG = {
   // graduation cascade — priority order, first match wins (8 rows, no 🍎)
   CASCADE: [
     { key: "CA_MAP_COIN", emoji: "🪙", name: "Cá Mập Coin", gate: { cm: [52, 1], tn: [45, -1], vet: [50, 1] } },
-    { key: "QUAN_VAN_MAU", emoji: "📋", name: "Quán Quân Văn Mẫu", gate: { kt: [80, 1], vet: [60, 1], st: [40, -1] } },
+    { key: "QUAN_VAN_MAU", emoji: "📋", name: "Quán Quân Văn Mẫu", gate: { kt: [60, 1], vet: [50, 1], st: [35, -1] } },
     { key: "FOUNDER", emoji: "🚀", name: "Founder Gọi Vốn", gate: { cm: [80, 1], st: [60, 1], tn: [51, -1] } },
     { key: "KY_SU", emoji: "👷", name: "Kỹ Sư Chân Chính", gate: { tn: [70, 1] } },
     { key: "XUAT_NGOAI", emoji: "✈️", name: "Kỹ Sư Xuất Ngoại", gate: { tn: [60, 1], cm: [50, 1], st: [50, -1] } },
