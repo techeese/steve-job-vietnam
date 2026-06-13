@@ -311,6 +311,28 @@ var CONTENT = {
       choices: [
         { label: "Nhận quỹ, sẽ 'lưu ý'", hint: "+25tr, +2 Vẹt khoá cuối, +1 mầm phốt nặng", fx: "quaNhan" },
         { label: "Cảm ơn, xin không nhận", hint: "+2 Uy Tín, Bác Tâm gật đầu", fx: "quaTuChoi" }
+      ] },
+    // ---- founding-era deck (the from-nothing years, năm ≤ 3): identity choices for a young school ----
+    { id: "phuhuynh1", title: "👀 Phụ huynh đến xem 'cơ ngơi'",
+      desc: "Một phụ huynh đến tận nơi xem trường mới: sân còn trống, lớp đếm trên đầu ngón tay. 'Trường mình… quy mô thế nào hả thầy?'",
+      pred: "founding",
+      choices: [
+        { label: "Khoe 'sắp đạt chuẩn quốc tế'", hint: "+5 Tiếng Tăm, +1 mầm phốt (nói quá)", fx: "khoeMe" },
+        { label: "Thành thật: trường mới, đang xây", hint: "+2 Uy Tín, Bác Tâm gật đầu", fx: "thatTha" }
+      ] },
+    { id: "daytu", title: "📖 Giảng viên gợi ý 'dạy tủ'",
+      desc: "Thầy giáo độc nhất, ôm hết các lớp, mệt mỏi đề xuất: 'hay là mình dạy tủ cho nhanh qua môn? Các em đỡ khổ, mình đỡ đuối'.",
+      pred: "founding",
+      choices: [
+        { label: "Đồng ý dạy tủ", hint: "cả trường +2 KT +3 Vẹt −2 ST, +1 mầm phốt", fx: "dayTu" },
+        { label: "Dạy thật, dù chậm", hint: "cả trường +2 TN +4 Mood, +1 Uy Tín", fx: "dayThat" }
+      ] },
+    { id: "datten", title: "💸 Nhà đầu tư đòi đặt tên trường",
+      desc: "Một nhà đầu tư 'thiên thần' chuyển khoản trước 30tr, kèm điều kiện: đổi tên trường thành 'Học viện <Tên Tập Đoàn Của Họ>'. Logo đã thiết kế sẵn.",
+      pred: "founding",
+      choices: [
+        { label: "Nhận tiền, đổi tên", hint: "+30tr +2 Tiếng Tăm, −2 Uy Tín (bán danh)", fx: "datTenCo" },
+        { label: "Giữ tên trường", hint: "+2 Uy Tín, Bác Tâm gật đầu", fx: "datTenGiu" }
       ] }
   ],
 

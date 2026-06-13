@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Founding-era event deck + structure review (loop iter 32)
+- The from-nothing build-up years were event-sparse (most event predicates need năm-4 students or a
+  populated school). Added a 3-event founding deck (pred `founding`: năm ≤ 3, ≥1 student), each a
+  moral choice about the young school's identity: 👀 a parent inspects the bare campus (oversell for
+  +Tiếng Tăm +mầm-phốt vs honesty for +Uy Tín); 📖 the lone overworked teacher suggests "dạy tủ"
+  (school-wide +KT+Vẹt−ST cram vs +TN+Mood real teaching); 💸 an angel investor pays 30tr to rename
+  the school (sell the name for cash/−Uy Tín vs keep it). All six branches verified for correct
+  fx; gates green; sweep balance unaffected.
+- **Code-structure review** (owner directive, ~every 10th iter): verdict logged in ROADMAP —
+  layering still clean after 12 feature iters; ui.js (1334) is the growing hotspot; the chunked
+  art.js extraction stays queued for an owner-OK'd invisible iteration (shared-helper coupling noted).
+
 ## 2026-06-13 — Tết comes to campus (seasonal décor, loop iter 31)
 - The campus looked identical year-round; the tetBeat mechanic (Tháng 2 mood boost) had no
   visual presence. Now Tháng 1–2 decks the grounds for Tết: a red/gold/teal bunting garland

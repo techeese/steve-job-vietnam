@@ -788,6 +788,7 @@ function eventPred(e) {
     case "nam4Duan": return S.presets.n4 === "duan" && S.students.some(function (s) { return s.grade === 4; });
     case "thang5": return S.month === 5;
     case "hasNam4": return S.students.some(function (s) { return s.grade === 4; });
+    case "founding": return S.year <= 3 && S.students.length >= 1; // the from-nothing build-up years
     case "common": return S.students.length >= 10;
     default: return e.scripted === true;
   }
@@ -859,6 +860,13 @@ function applyFx(fx, t) {
     case "baoThat": gainUT(1, false); bacTamNod(); break;
     case "quaNhan": S.cash = r1(S.cash + 25); classmates(4, function (s) { s.vet = clamp(s.vet + 2, 0, 100); }); seedPhot(2, "qua"); break;
     case "quaTuChoi": gainUT(2, false); bacTamNod(); break;
+    // founding-era deck
+    case "khoeMe": gainTT(5); seedPhot(1, "khoe"); break;
+    case "thatTha": gainUT(2, false); bacTamNod(); break;
+    case "dayTu": for (var di = 0; di < S.students.length; di++) { var ds = S.students[di]; ds.kt = clamp(ds.kt + 2, 0, 100); ds.vet = clamp(ds.vet + 3, 0, 100); ds.st = clamp(ds.st - 2, 0, 100); } seedPhot(1, "daytu"); break;
+    case "dayThat": for (var ti = 0; ti < S.students.length; ti++) { var ts2 = S.students[ti]; ts2.tn = clamp(ts2.tn + 2, 0, 100); ts2.mood = clamp(ts2.mood + 4, 0, 100); } gainUT(1, false); break;
+    case "datTenCo": S.cash = r1(S.cash + 30); gainTT(2); gainUT(-2, false); seedPhot(1, "datten"); break;
+    case "datTenGiu": gainUT(2, false); bacTamNod(); break;
     default: break;
   }
 }

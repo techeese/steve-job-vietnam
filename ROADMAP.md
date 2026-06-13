@@ -14,8 +14,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   shadow alumnus (scripted Y2-M3 arrest preserved). GATE_FRESH + sweep band updated, all green.
   *Follow-ups:* ~~milestone nudges~~ SHIPPED (iter 28: "Cột mốc" founding-goal banner walks the
   player build→intake→teacher→spec-room→grow→firstgrad). Still open: the early years could use
-  more *mid-build texture* (founding-specific events, a visible "first đồ-án" beat, a cheaper-but-
-  paid first room for a real spend decision); late-game money still inflates (~2635tr, sweep
+  more *mid-build texture*: ~~founding-specific events~~ SHIPPED (iter 32: 3-event founding deck —
+  parent inspection / dạy-tủ temptation / sell-the-name). Still open: a visible "first đồ-án" beat,
+  a cheaper-but-paid first room for a real spend decision; late-game money still inflates (~2635tr, sweep
   flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
   ~~văn-mẫu unreachable~~ FIXED (iter 30: rote exam-champions become 📋 Quán Quân Văn Mẫu instead
   of failing into thất-nghiệp; cram → ~60% văn-mẫu / ~10% cá-mập→bị-bắt; craft thesis intact).
@@ -74,6 +75,17 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   `## Architecture` below; queue at most one behavior-neutral refactor.
 
 ## Architecture (structure-review log)
+- *(2026-06-13, iter 32 review)* Sizes: data.js 408 · engine.js 1007 · ui.js **1334** · index.html
+  235 (~2984 total). The one-directional layering (ui→engine→data) is still CLEAN and has held
+  through 12 feature iterations — no leaks, gates green throughout. Hotspot remains **ui.js (1334,
+  +130 since iter 20)**: art renderer + campus-life + ambient + seasonal + customization + HUD +
+  panels + modals + sound + test hooks. engine.js crossed 1000 but is cohesive (sim/june/admissions/
+  alumni/funding/events/milestones). **Verdict: still very workable; no refactor forced this
+  iteration.** Queued (unchanged priority, do when owner OKs one invisible velocity iteration): the
+  **chunked art.js extraction** — but note the real coupling cost surfaced (PX palette, `shade`,
+  `roundRect`, `mb`, `hashId` are shared by BOTH the static-art drawers AND bakeChar/drawActor, so a
+  clean split must move shared helpers to art.js and expose them; the static layer is fully
+  screenshot-verifiable, the rAF actor layer is NOT — extract static-art first, actors later).
 - *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
   text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
   node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no
