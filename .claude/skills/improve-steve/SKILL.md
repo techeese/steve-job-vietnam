@@ -1,6 +1,6 @@
 ---
 name: improve-steve
-description: The autonomous improvement loop for "Học viện Steve" (Steve Jobs Việt Nam) — a satirical Vietnamese cram-school/university management game shipped as a single live page. Use when asked to build, improve, iterate on, or "run the loop" for this game. One invocation = one iteration: orient → pick the top ROADMAP item → build → gate → push to main (live on GitHub Pages) → log → update the Owner Model. The owner watches the result remotely and steers by reaction, so EVERY iteration must ship something visible at the live URL.
+description: The autonomous improvement loop for "Học viện Steve" (Steve Jobs Việt Nam) — a satirical Vietnamese cram-school/university management game shipped as a single live page. Use when asked to build, improve, iterate on, or "run the loop" for this game. One invocation = one iteration: orient → pick the top ROADMAP item → build → gate → push to main (live on GitHub Pages) → log → update the Owner Model. The loop also evolves the design itself — editing DESIGN.md, the specs, and ROADMAP.md so the game grows over time, not just executes a frozen plan. The owner watches the result remotely and steers by reaction, so EVERY iteration must ship something visible at the live URL.
 ---
 
 # improve-steve — the development loop
@@ -20,7 +20,8 @@ what he actually wants. Ship every iteration. Silence between pushes is wasted b
    slice.
 3. **Build.** Implement against the specs: `MVP-SPEC.md` (S1 high-school skeleton),
    `CONVERSION-SPEC.md` (S1 → university), `DESIGN.md` (v2 rulings — these win on conflict).
-   All balance constants live in one `CONFIG` object. Don't re-decide settled design.
+   All balance constants live in one `CONFIG` object. Don't *thrash* settled design on a
+   whim — but the design is **not frozen** (see next).
 4. **Gate.** `bash gate.sh` must be green (GATE_FRESH / GATE_COMPAT / GATE_BUILD, plus any
    gate the item adds, e.g. GATE_ART). No `JSERR` in any boot. Gates are the proof the owner
    can't get by reading code — never push red.
@@ -33,6 +34,25 @@ what he actually wants. Ship every iteration. Silence between pushes is wasted b
    anything you discovered to the queue; prune ruthlessly.
 8. **Owner-model upkeep.** Update the distillation below from this iteration's signal (see
    next section).
+
+## The design is living — evolve the docs, don't just consume them
+
+The spec files are not a frozen contract; they are the game's evolving memory. This skill
+**edits the design docs** as the game grows, so the design and the build never drift apart:
+
+- **`DESIGN.md`** — when an owner steer or a shipped iteration establishes a new ruling
+  (a mechanic, an outcome, a tone call), write it in as a dated, numbered ruling. DESIGN.md
+  is the canon that wins on conflict, so it must stay current.
+- **`MVP-SPEC.md` / `CONVERSION-SPEC.md`** — refine numbers, presets, and beats as sweeps
+  and playtests teach you what's actually fun/balanced; record the trim line you took.
+- **`ROADMAP.md`** — the queue is yours to grow and prune every iteration.
+- **`CHANGELOG.md`** — one line per iteration; the running history.
+
+Rules of thumb: **the owner's word changes the design** (fold his steer into DESIGN.md and
+quote him); a balance discovery changes the spec numbers; settled, working design isn't
+re-litigated without a reason. When code and docs disagree, fix the disagreement — usually
+by updating the doc to match the better idea, or the code to match the canon. Every design
+edit ships in the same commit as the code it justifies, so the repo always explains itself.
 
 ## The Owner Model (living — this is the point)
 
