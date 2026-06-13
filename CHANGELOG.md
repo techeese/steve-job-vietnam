@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — STRUCTURE-epic: audio extracted to js/audio.js (loop iter 65)
+- The cadence-due structure-epic (EPICS_SINCE_STRUCTURE hit 2). The generative-music + SFX subsystem
+  (MOODS, the pad/pluck/bass scheduler, `sfx`, start/stop/toggle) is relocated verbatim from ui.js into a
+  new **`js/audio.js`** exposing `window.AUDIO` (sfx/toggle/start/stop/isOn/init); ui binds `sfx` and calls
+  `AUDIO.*` for the soundBtn + autoplay-unlock. **ui.js 1541→1475**; audio is now a clean, self-contained
+  module (owns its own `soundOn`/`actx`). Behavior-neutral (a pure relocation): verified parse + gates
+  green + clean boot (no JSERR) + soundBtn wired to AUDIO.toggle + sfx callable + toggle flips soundOn +
+  the campus still renders. Done autonomously while the owner was away — ideal for invisible refactor.
+- STRUCTURE-epic shipped → `SMALL_SHIPS_SINCE_EPIC 0`, `EPICS_SINCE_STRUCTURE 0`. Bar: structure/debt
+  (exempt) — lowers the cost of touching either layer. The render layer (engine→art→audio→ui) is now
+  cleanly separated.
+
 ## 2026-06-13 — Soul: the "AI làm hộ đồ án" choice (loop iter 64)
 - A rotation from visuals back to the game's SOUL — a fresh, 2026-topical satirical event that puts the
   đề Văn question on the table directly. A Năm-4 đồ án turns out to be AI-generated overnight ("em chỉ
