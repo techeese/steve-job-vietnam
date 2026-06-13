@@ -1117,6 +1117,18 @@
   function statBar(label, v, color) {
     return "<i title='" + label + "'><b style='width:" + Math.max(0, Math.min(100, v)) + "%;background:" + color + "'></b></i>";
   }
+  // P4b — cycle the trưởng-khoa: vacate → each free teacher → vacate. setKhoaHead enforces one khoa/teacher.
+  function cycleKhoaHead(key) {
+    var s = S();
+    var curr = (s.khoaHead && s.khoaHead[key]) || null;
+    var busy = {}; for (var k in (s.khoaHead || {})) if (k !== key && s.khoaHead[k]) busy[s.khoaHead[k]] = true;
+    var opts = [null]; s.teachers.forEach(function (t) { if (!busy[t.id]) opts.push(t.id); });
+    var idx = opts.indexOf(curr); if (idx < 0) idx = 0;
+    var next = opts[(idx + 1) % opts.length];
+    HVS.setKhoaHead(key, next);
+    if (next) sfx("chime");
+    renderPanel();
+  }
   function panelStudents() {
     var s = S(), wrap = el("div");
     // KHOA / majors — auto-join specializations; synergy when a khoa is full; unlocked by buildings
@@ -1124,16 +1136,27 @@
       var counts = {}, general = 0;
       s.students.forEach(function (st) { var m = HVS.studentMajor(st); if (m) counts[m.key] = (counts[m.key] || 0) + 1; else general++; });
       var kc = el("div", "card"); kc.appendChild(el("h3", null, "Khoa / Chuyên ngành"));
+      var thr = function (k) { return HVS.khoaThreshold ? HVS.khoaThreshold(k) : (CONFIG.SYN_MIN || 4); };
       CONFIG.MAJORS.forEach(function (m) {
         var unlocked = s.rooms.some(function (r) { return r.key === m.room; });
-        var cnt = counts[m.key] || 0, syn = cnt >= (CONFIG.SYN_MIN || 4);
+        var cnt = counts[m.key] || 0, need = thr(m.key), syn = cnt >= need;
         var status = !unlocked ? ("🔒 Xây " + CONFIG.ROOMS[m.room].name + " để mở")
-          : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + (CONFIG.SYN_MIN || 4) + " SV để cộng hưởng"));
-        var row = el("div", "row"); row.style.marginBottom = "6px"; if (!unlocked) row.style.opacity = ".5";
+          : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + need + " SV để cộng hưởng"));
+        var row = el("div", "row"); row.style.marginBottom = unlocked ? "2px" : "6px"; if (!unlocked) row.style.opacity = ".5";
         row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + "</div><div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip'>" + cnt + " SV</div>";
         kc.appendChild(row);
+        if (unlocked) { // P4b: assign a trưởng-khoa (a teacher) — khoa thrives at one fewer SV + grows faster
+          var hid = s.khoaHead && s.khoaHead[m.key];
+          var head = hid && HVS.teacherById ? HVS.teacherById(hid) : null;
+          var hr = el("div", "row"); hr.style.marginBottom = "6px";
+          hr.appendChild(el("div", "tiny grow", "Trưởng khoa: " + (head ? "<span style='color:var(--gold)'>🎓 " + esc(head.ten) + "</span>" : "<span style='opacity:.65'>chưa có</span>")));
+          var btn = el("button", "btn", head ? "Đổi" : "Phân công"); btn.style.fontSize = "10.5px"; btn.style.padding = "4px 9px";
+          if (!s.teachers.length) { btn.disabled = true; btn.title = "Cần có giáo viên"; }
+          btn.onclick = function () { cycleKhoaHead(m.key); };
+          hr.appendChild(btn); kc.appendChild(hr);
+        }
       });
-      var thriving = CONFIG.MAJORS.filter(function (m) { return (counts[m.key] || 0) >= (CONFIG.SYN_MIN || 4); }).length;
+      var thriving = CONFIG.MAJORS.filter(function (m) { return (counts[m.key] || 0) >= thr(m.key); }).length;
       if (thriving >= 2) kc.appendChild(el("div", "tiny", "<span style='color:var(--gold)'>⚡⚡ Liên khoa — các khoa mạnh học hỏi nhau (cộng hưởng chéo, đẩy về 🍎).</span>")).style.marginTop = "4px";
       if (general) kc.appendChild(el("div", "tiny", "Đại cương: " + general + " SV chưa thuộc khoa nào (xây phòng để mở khoa).")).style.marginTop = "3px";
       wrap.appendChild(kc);

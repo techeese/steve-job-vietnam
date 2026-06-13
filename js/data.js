@@ -18,6 +18,7 @@ var CONFIG = {
   SYN_MIN: 4,                   // a khoa needs this many students for its synergy bonus to kick in
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)
   SYN_CROSS: 0.15,            // P4: when ≥2 khoas thrive, members cross-pollinate — bonus to a 2nd stat
+  HEAD_BONUS: 0.12,           // P4: a khoa with a trưởng-khoa teacher synergizes at one fewer member + grows faster
   // KHOA / MAJORS (P1) — students auto-join by tell; a khoa unlocks when its building exists; each
   // khoa grows one stat and leans toward one destiny (the satirical hook). Prodigy joins on unlock.
   MAJORS: [

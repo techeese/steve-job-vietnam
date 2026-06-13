@@ -33,9 +33,9 @@ attracts new talent. Owner-confirmed design decisions: **students AUTO-JOIN** (n
 - **Phases (each ships green + verified):** ~~**P1** data+engine~~ DONE (iter 49: auto-join, synergy, prodigy-on-unlock, thesis holds).
   ~~**P2** UI (Khoa card + inspect chip)~~ DONE (iter 50, 390px-verified). **P3** balance pass — `node sweep.js`
   before/after; synergy growth shifts tn/st/cm so it can move destinies — confirm the craft→🍎 / cram→
-  văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4 — DEEPEN (owner-wanted):** ~~cross-khoa synergy~~ DONE (iter 51: 2+ thriving khoas cross-pollinate -> dual-skill -> the apple path). Remaining: khoa-vs-khoa rivalry/events, a khoa head (assign a teacher to boost a
-  khoa), cross-khoa synergies (Lập trình + Thiết kế collab → bonus), khoa-gated facilities, the
-  dedicated Khoa screen if the card proves too small. Not optional — the owner wants this layer rich.
+  văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4 — DEEPEN (owner-wanted):** ~~cross-khoa synergy~~ DONE (iter 51: 2+ thriving khoas cross-pollinate -> dual-skill -> the apple path).
+  ~~khoa head — assign a teacher as trưởng khoa~~ DONE (iter 52: headed khoa thrives at 1 fewer SV + grows +HEAD_BONUS faster; one teacher per khoa = a real choice). Remaining: khoa-vs-khoa rivalry/events,
+  khoa-gated facilities, the dedicated Khoa screen if the card proves too small. Not optional — the owner wants this layer rich.
 - **Risk:** synergy growth is a balance lever — it directly feeds the destiny cascade; do P3 carefully.
 
 ★ **Balance follow-ups (queue):** (1) ~~Uy Tín erosion~~ NOT A BUG (iter 35 check): the sweep shows

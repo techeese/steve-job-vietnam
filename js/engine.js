@@ -64,6 +64,23 @@ function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES &&
 function majorByTell(tell) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].tell === tell) return M[i]; return null; }
 function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].room === room) return M[i]; return null; }
 function studentMajor(s) { var m = majorByTell(s.tell); return (m && hasRoom(m.room)) ? m : null; } // null = Đại cương (general)
+// P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.
+function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
+function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }
+function teacherById(id) { for (var i = 0; i < S.teachers.length; i++) if (S.teachers[i].id === id) return S.teachers[i]; return null; }
+// assign teacher `tid` as head of khoa `key` (null = vacate). One teacher heads at most one khoa.
+function setKhoaHead(key, tid) {
+  if (!S.khoaHead) S.khoaHead = {};
+  if (!majorByKey(key)) return { ok: false };
+  if (tid == null) { delete S.khoaHead[key]; return { ok: true }; }
+  if (!teacherById(tid)) return { ok: false };
+  for (var k in S.khoaHead) if (S.khoaHead[k] === tid) delete S.khoaHead[k]; // a teacher can head only one khoa
+  S.khoaHead[key] = tid;
+  var m = majorByKey(key), t = teacherById(tid);
+  if (m && t) news("🎓 " + t.ten + " làm trưởng " + m.name + " — khoa cộng hưởng dễ hơn.");
+  return { ok: true };
+}
+function majorByKey(key) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].key === key) return M[i]; return null; }
 function enrollProdigy(m) {
   if (S.students.length >= CONFIG.ROSTER_CAP) { news(m.icon + " Mở " + m.name + " — nhưng trường đã chật, chưa nhận thêm được."); return; }
   var s = genStudent(1, m.prodigy); s._prodigy = true; S.students.push(s);
@@ -185,6 +202,7 @@ function freshState(seed) {
     rooms: [],
     students: [],
     teachers: [],
+    khoaHead: {}, // P4b: khoa key → teacher id (a trưởng-khoa boosts that khoa)
     alumni: [],
     admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
     endow: { bal: CONFIG.BOOT_ENDOW, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 },
@@ -351,7 +369,7 @@ function growStudents() {
   var tf = teacherFactor();
   var dpm = CONFIG.DAYS_PER_MONTH;
   var majorCount = {}; for (i = 0; i < n; i++) { var mm0 = studentMajor(S.students[i]); if (mm0) majorCount[mm0.key] = (majorCount[mm0.key] || 0) + 1; } // khoa headcounts for synergy
-  var thriving = 0; for (var mk in majorCount) if (majorCount[mk] >= CONFIG.SYN_MIN) thriving++; // P4: ≥2 thriving khoas → cross-pollination
+  var thriving = 0; for (var mk in majorCount) if (majorCount[mk] >= khoaThreshold(mk)) thriving++; // P4: ≥2 thriving khoas → cross-pollination (a head lowers the bar)
   for (i = 0; i < n; i++) {
     s = S.students[i];
     var p = CONFIG.PRESETS[S.presets["n" + s.grade]] || CONFIG.PRESETS.canbang;
@@ -369,8 +387,9 @@ function growStudents() {
     s.vet = clamp(s.vet + vetGain, 0, 100);
     s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
-    if (smj && (majorCount[smj.key] || 0) >= CONFIG.SYN_MIN) {
-      s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW, 0, 100);
+    if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
+      var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster
+      s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW + (headed ? CONFIG.HEAD_BONUS : 0), 0, 100);
       if (thriving >= 2 && smj.cross) s[smj.cross] = clamp(s[smj.cross] + CONFIG.SYN_CROSS, 0, 100); // liên khoa: cross-pollinate a 2nd stat
     }
     if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) s._drop = true;
@@ -1057,6 +1076,14 @@ function sanitize() {
   if (!S.META) S.META = {};
   if (!Array.isArray(S.META.goalsHit)) S.META.goalsHit = [];
   if (!Array.isArray(S.META.majorsUnlocked)) S.META.majorsUnlocked = [];
+  // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
+  if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};
+  var seenT = {};
+  for (var hk in S.khoaHead) {
+    var tid = S.khoaHead[hk];
+    if (!majorByKey(hk) || !teacherById(tid) || seenT[tid]) { delete S.khoaHead[hk]; continue; }
+    seenT[tid] = true;
+  }
 }
 
 /* ============================================================================
@@ -1083,5 +1110,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones, studentMajor: studentMajor }; }
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones, studentMajor: studentMajor, khoaHeaded: khoaHeaded, khoaThreshold: khoaThreshold, setKhoaHead: setKhoaHead, teacherById: teacherById }; }
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

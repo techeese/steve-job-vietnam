@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — Khoa P4b: trưởng-khoa (a teacher head boosts a khoa, loop iter 52)
+- More majors-depth (the owner's "add more depth to the mechanics"). You can now **assign a teacher
+  as trưởng khoa** to any unlocked khoa, from the "Khoa / Chuyên ngành" card (a "Phân công" / "Đổi"
+  button per khoa). A headed khoa **thrives at one fewer student** (synergy bar drops 4→3) **and grows
+  faster** (+`HEAD_BONUS` 0.12/day on top of `SYN_GROW`). One teacher heads at most one khoa — so with a
+  small faculty you must *choose* which khoa to back (decision density, not a free buff). Verified via a
+  node probe (3-SV khoa: synergy OFF unheaded vs ON + 12.6 tn/30d headed); save-compat holds (`khoaHead`
+  defaulted in freshState + pruned in sanitize); gates green, sweep thesis intact; 390px-verified.
+  P4 remaining: khoa-vs-khoa rivalry/events, a dedicated Khoa screen if the card outgrows itself.
+
 ## 2026-06-13 — Khoa P4a: cross-khoa synergy (interdisciplinary → 🍎, loop iter 51)
 - First slice of the majors-depth phase the owner asked for. When **two or more khoas are thriving**
   (each ≥4 students with synergy on), their members **cross-pollinate**: each gets a bonus to a second
