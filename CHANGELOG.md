@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-13 — STRUCTURE-epic complete: pixel-art extracted to art.js (loop iter 57)
+- The refactor deferred for **35 iterations** finally shipped — autonomously, proven safe by the new EPIC
+  machinery. The pure pixel-art layer (the palette `PX`, `ROOM_STYLE`, the helpers `shade`/`roundRect`/
+  `glow`, and ~25 stateless drawers — buildings, roofs, windows, gardens, props, lamps, seasonal Tết/
+  June) is extracted from the 1694-line ui.js into a new **`js/art.js`** (317 lines) exposing `window.ART`;
+  ui.js binds those names into its closure. **ui.js is now 1393 lines** (−301), and all future graphics
+  work touches one focused art file — the owner's "iterability as a product" win, unblocking the art
+  step-change that's next in the backlog.
+- **Proven behavior-neutral** (the machinery's gate for a refactor): the deterministic static canvas
+  renders a **byte-identical hash** before vs after (3914331577 / 188938 chars); the live layer renders
+  with **zero JSERR**; all gates green. The extraction was caught mid-flight trying to move `drawTapFx`
+  (which secretly reads ui state) — the restored `onerror` trap surfaced it instantly, the deterministic
+  test failed, I corrected the boundary and re-proved. The safety net worked exactly as designed.
+- `## Cadence` reset (epic shipped): `SMALL_SHIPS_SINCE_EPIC 0`, `EPICS_SINCE_STRUCTURE 0` — the loop is
+  free again. Bar: unchanged 3s (STRUCTURE-epic, debt-exempt) — but it lowers the cost of every future
+  BEAUTY ship. `content.js` deemed unneeded (text already lives in data.js CONTENT).
+
 ## 2026-06-13 — STRUCTURE-epic checkpoint 1: production error trap restored (loop iter 56)
 - First firing of the **redesigned loop**, and it behaved exactly as the new `## Cadence` ledger forces:
   hard-locked to the EPIC track (7 small ships → epic-only) and to a STRUCTURE-epic (structure overdue),

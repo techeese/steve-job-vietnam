@@ -6,35 +6,28 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 7`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
-- `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
-- `LAST_EPIC: none yet (new scheme)`
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
+- `LAST_EPIC: iter 57 — STRUCTURE: art.js extraction (+ onerror restore iter 56)`
 
 ## Epic in progress
-**Epic: STRUCTURE — robustness + ui.js split** (started iter 56, backlog #1). Plan: (1) ✅ restore
-`window.onerror` production trap [iter 56 checkpoint — title=JSERR + reload banner, gate-verified];
-(2) split the 1693-line ui.js → `ui.js` (shell/HUD/panels/modals) + `art.js` (canvas: sprites, bake,
-buildings, campus-life draw) + `content.js` (any inline strings), in a git WORKTREE, proven
-behavior-neutral by BEFORE/AFTER gate byte-diff + identical 390px/`_renderLiveOnce` screenshots across
-tabs/periods. Coupling to handle: PX palette, `shade`, `roundRect`, `mb`, `hashId` are shared by the
-static-art drawers AND bakeChar/drawActor → move shared helpers to art.js and expose them. Epic
-COMPLETES (resets `EPICS_SINCE_STRUCTURE`) when the split ships green. ← next checkpoint.
+_(none — the STRUCTURE-epic shipped iter 57; next firing is free to pick polish or dequeue an epic.)_
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
-1. **[STRUCTURE] Restore `window.onerror` (✅ iter 56) + split ui.js (1693) → `ui.js`/`art.js`/`content.js`.** ← IN PROGRESS (see `## Epic in progress`). Unblocks all graphics-iteration velocity. Worktree + behavior-neutral diff; autonomous.
-2. **[FEATURE] Art step-change** — bigger 2.5D characters with real volume (visible side walls, shading), the owner's "3D but still pixel." BEAUTY — the #1 unmet bar. Phase 1 = a 3-up divergence workflow.
-3. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
-4. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
-5. **[FEATURE] Player-customizable students** — owner-hinted ("characters are customize"). FUN + individuality.
-6. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
-7. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.
+1. **[FEATURE] Art step-change** — bigger 2.5D characters with real volume (visible side walls, shading), the owner's "3D but still pixel." BEAUTY — the #1 unmet bar. Phase 1 = a 3-up divergence workflow. *(Now cheap to iterate: all pixel-art lives in `js/art.js`.)*
+2. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
+3. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
+4. **[FEATURE] Player-customizable students** — owner-hinted ("characters are customize"). FUN + individuality.
+5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
+6. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.
+7. **[STRUCTURE] (if needed) further ui.js modularization** — extract the atlas/sprite layer (bakeChar/buildAtlas/drawActor) and/or panels/modals, if ui.js (now 1393) grows again. Not urgent.
 
 ## Debt
 <!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
-- [x] `window.onerror` production trap — RESTORED iter 56 (inline first script: JSERR title + gentle reload banner; gate-verified).
-- [ ] ui.js = 1693 lines, past the ~900 split threshold (flagged since iter 20, ~35 iters ago) → epic #1.
-- [ ] art.js / content.js layer split never shipped (queued iter 20) → epic #1.
+- [x] `window.onerror` production trap — RESTORED iter 56 (inline first script: JSERR title + gentle reload banner; gate-verified). _(Already earned its keep: caught a `tapFx` leak during the iter-57 refactor.)_
+- [x] art layer extracted to `js/art.js` iter 57 — ui.js 1694→1393; pixel-art is now an isolated, behavior-neutral module (static-canvas hash identical before/after). `content.js` deemed unneeded (text already lives in `data.js` CONTENT).
+- [ ] (low priority) ui.js still 1393 — fine for now; further split is backlog #7 if it grows.
 
 ## Now
 
