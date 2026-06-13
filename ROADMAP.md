@@ -151,6 +151,22 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
   engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
 
+## Flow reflection (iter 60 — the loop-redesign checkpoint)
+**The redesign WORKED — measurably.** iters 49–55 were 7 straight small additive ships (Khoa phases,
+single activities, tooling) = the timidity the owner diagnosed. After the mid-session LOOP REDESIGN
+(Mission + two tracks + counted `## Cadence` + EPIC machinery + Bar gate + divergence-by-workflow +
+self-correction/prune/failure-detection), iters 56–59 delivered **2 epics + a debt-paydown + 1
+owner-polish**: onerror restored (56), the art.js extraction deferred 35 iters finally shipped (57),
+build badge (58), and the premium 24×32 character art step-change (59). Debt is trending DOWN (2 of 3
+closed). The counted cadence hard-lock is what flipped it — soft "shoulds" had failed 7×; state +
+counters made bold the path of least resistance.
+**Validated flow:** divergence-workflow → owner-picks-from-concrete-options → integrate-with-proof
+(used for the character art) is the owner's steer-by-reaction sweet spot — he engaged eagerly and chose
+the BOLDEST option (Direction C, accepting its rescale cost). Keep using it for all #1-dimension work.
+**Health:** cadence counters firing correctly; the restored onerror trap already caught a real
+regression (the iter-57 tapFx leak); no drift; the loop is bold and self-correcting. **No flow change
+needed** — hold course; next visible swings are weather/lighting + the rest of the Epic backlog.
+
 ## Flow reflection (iter 40, maintenance + checkpoint)
 40 iterations shipped (~30 autonomously, still zero vetoes). Since iter 20 the game went from a
 populated-school MVP to a **complete arc**: found-from-nothing → milestone-guided build-up →

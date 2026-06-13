@@ -209,9 +209,15 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   don't make the loop wait on his presence; keep shipping, he steers by REACTING (greenlit the
   `_renderLiveOnce` tooling, declined a "presence-aware looping" rule: "maybe we can apply 1 only :)").
 - *(2026-06-13)* Wants DIMENSIONAL pixel-art — "3D but still pixel" for houses AND people (fake-iso /
-  2.5D: side walls, pitched-with-depth roofs, characters with VOLUME, not flat-front). Still-open art
-  goal. *(Shipped already from the same batch: students walk in through the cổng; the Kairosoft
-  start-from-nothing build-up arc — the SATISFACTION OF GROWTH is the pleasure.)*
+  2.5D: side walls, pitched-with-depth roofs, characters with VOLUME, not flat-front). *(Shipped iter 59:
+  premium 24×32 volumetric characters; the start-from-nothing build-up arc + walk-in-at-cổng earlier.)*
+- *(2026-06-13, iter-60 reflection)* TENDS THE LOOP AS A PRODUCT and steers via CONCRETE OPTIONS. He
+  drove a full loop redesign (timid→bold) with rapid meta-directive bursts (prune, self-correct,
+  clean-folder, failure-detection, version-badge), and it WORKED (2 epics in 4 firings after 7 timid
+  ones). Decisive validated play: **divergence-workflow → show him 3 concrete visual options → he picks →
+  integrate-with-proof.** He engages eagerly with options and picks the BOLDEST/most-premium (Direction
+  C, accepting its cost) — confirms graphics-#1 + take-the-big-swing. Generating options to react to beats
+  asking open questions; use this flow for every #1-dimension move.
 
 ## Improvement Compass — 12 areas (rotate; broken always wins)
 
@@ -620,3 +626,8 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   Also added the failure-mode detector + the 50-firing skill review; pruned ROADMAP (done KHOA block,
   the "owner OKs an invisible iteration" hedges that blocked art.js for 35 iters). Seeded `## Cadence`
   to force the very next game iteration to be the STRUCTURE-epic (restore onerror + split ui.js).
+- 2026-06-13 (iter-60 flow reflection): the redesign WORKED — 7 timid ships (49–55) → 2 epics +
+  debt-paydown + owner-polish (56–59); debt trending down; counters firing; onerror caught a real
+  regression. Validated the divergence→owner-picks-options→integrate flow (character art step-change).
+  No flow change — hold course. Owner Model gained the "tends-the-loop-as-product / steers-via-concrete-
+  options / picks-boldest" signal.
