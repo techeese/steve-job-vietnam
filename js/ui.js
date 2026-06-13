@@ -210,6 +210,7 @@
   }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [], fest = [];
+  var celebrateUntil = 0, _steveSeen = -1; // 🍎 Steve-emergence celebration (the đề Văn's answer, made a moment)
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
@@ -250,6 +251,7 @@
     if (q && (!localStorage.getItem(CONFIG.SAVE_KEY))) HVS.freshState(parseInt(q[1], 10));
     var sb = S().META.build; saveIsOld = !!(sb && sb !== BUILD); // running newer code than the save was written under
     S().META.build = BUILD;
+    _steveSeen = S().META.steves || 0; // baseline so a loaded save's existing Steves don't re-celebrate
     AUDIO.init();
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
@@ -407,6 +409,19 @@
     }
     ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
     drawFest(ctx, ts); // festive petals (Tết) / confetti (June) fall in front of everything
+    if (celebrateUntil && (typeof performance !== "undefined" ? performance.now() : ts) < celebrateUntil) drawCelebrate(ctx, ts); // 🍎 Steve burst
+  }
+  // a golden confetti burst + warm glow when a Steve emerges — over everything, for a few seconds
+  function drawCelebrate(ctx, ts) {
+    var W = GW * T, H = GH * T, n = 44, i, px, py, w;
+    for (i = 0; i < n; i++) {
+      px = ((i * 53.3) % W + Math.sin(ts / 480 + i) * 9) % W;
+      py = ((ts * (0.05 + (i % 5) * 0.011) + i * 41) % (H + 24)) - 12;
+      ctx.fillStyle = (i % 3 === 0) ? "#f0c674" : (i % 3 === 1 ? "#fff3c0" : "#ffd24a");
+      w = 2 + (Math.abs(Math.cos(ts / 110 + i)) * 2 | 0);
+      ctx.fillRect(px | 0, py | 0, w, 3);
+    }
+    ctx.fillStyle = "rgba(255,212,120," + (0.10 + 0.05 * Math.sin(ts / 190)).toFixed(2) + ")"; ctx.fillRect(0, 0, W, (H * 0.28) | 0); // warm top glow
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
   function assignActivity(a, period) {
@@ -927,6 +942,9 @@
     else gb.classList.remove("show");
     // celebrate a just-completed milestone (engine sets the flag; we toast + clear)
     if (s._milestoneJustHit) { toast("🎉 " + s._milestoneJustHit); sfx("milestone"); s._milestoneJustHit = null; }
+    // 🍎 a Steve emerged — the game's climax (the đề Văn's answer): golden confetti burst + fanfare
+    if (_steveSeen >= 0 && (s.META.steves || 0) > _steveSeen) { celebrateUntil = (typeof performance !== "undefined" ? performance.now() : 0) + 5200; toast("🍎 Một 'Steve' ra đời — trường đã có quả táo của riêng mình!"); sfx("grad"); }
+    _steveSeen = s.META.steves || 0;
     // campus glow-up: when the grounds reach a new prestige tier, celebrate + repaint (once per tier)
     var ct = campusTier();
     if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; sfx("milestone"); toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }

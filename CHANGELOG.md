@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-13 — A Steve emerges: the climax finally gets its moment (loop iter 72)
+- The game's defining triumph — a 🍎 **Steve** emerging from your school, the answer to the đề Văn the
+  whole game builds toward — used to pass with only a news line + a stat bump. Now it's a **moment**: when
+  `META.steves` increases, the campus erupts in a **golden confetti burst** + a warm glow for ~5s, with a
+  toast ("🍎 Một 'Steve' ra đời — trường đã có quả táo của riêng mình!") and the warm `grad` fanfare
+  chord. Rare and earned, so it lands. UI-side detection (tracks a `_steveSeen` baseline so loaded saves
+  don't re-fire) + a transient `drawCelebrate` over the live layer — no engine change. Gates green; fires
+  verified (no JSERR, burst renders). Well-rotated JUICE/spectacle beat (after content + graphics). Bar:
+  **JUICE 4 / BITE 4** (the thesis climax, made spectacle). Cadence: SMALL_SHIPS 2.
+- Note: the structure-epic (EPICS_SINCE_STRUCTURE 2) stays deferred — ui.js's remaining clusters
+  (panels/modals) are bidirectionally coupled to the IIFE closure (no clean/safe leaf-extraction left),
+  so a refactor there is high-effort/high-risk for modest reward; do it only when ui.js genuinely strains.
+
 ## 2026-06-13 — Soul: the "học thêm" choice (shadow education, loop iter 71)
 - A fresh satirical event on the one central Vietnamese-education theme the deck was missing: **paid
   evening extra-classes (học thêm)**. Cô Giáo Trình Mẫu proposes them — "phụ huynh nào cũng muốn, trường
