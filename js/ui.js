@@ -177,12 +177,24 @@
   function syncActors(initial) {
     var st = S().students, byId = {};
     for (var i = 0; i < actors.length; i++) byId[actors[i].id] = actors[i];
-    var next = [];
+    var next = [], arriveN = 0;
     for (i = 0; i < st.length; i++) {
       var s = st[i], a = byId[s.id];
       if (!a) {
-        var t0 = randWalkTile();
-        a = { id: s.id, px: t0[0] * T + T / 2, py: t0[1] * T + T / 2, tx: t0[0], ty: t0[1], wait: 0, ph: Math.random() * 6.28 };
+        if (initial) {
+          // boot / reload: existing roster lands in place, no walk-in
+          var t0 = randWalkTile();
+          a = { id: s.id, px: t0[0] * T + T / 2, py: t0[1] * T + T / 2, tx: t0[0], ty: t0[1], wait: 0, ph: Math.random() * 6.28 };
+        } else {
+          // a brand-new matriculant: spawn just OUTSIDE the cổng and walk in up the path.
+          // simultaneous arrivals queue in a short column so a cohort files in as a procession.
+          var gx = GW >> 1;
+          a = { id: s.id, px: gx * T + T / 2 + (((s.id * 29) % 5) - 2), py: GH * T + 14 + arriveN * 15, tx: gx, ty: GH - 1, wait: 0, ph: Math.random() * 6.28, _arriving: true, emote: "excl", emoteUntil: 1e15 };
+          arriveN++;
+        }
+      } else if (a._arriving) {
+        // clear the arrival mark once they've actually stepped onto the grounds
+        if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
       a.tell = s.tell || ""; a.seed = s.seed;
@@ -1216,6 +1228,11 @@
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
     tapTile: function (gx, gy) { resolveTap(gx * T + T / 2, gy * T + T / 2, gx, gy); return $("inspect").classList.contains("show") ? ($("inspect").querySelector(".iname") ? "room" : "student") : "none"; },
     rooms: function () { return S().rooms.map(function (r) { return { key: r.key, x: r.x, y: r.y }; }); },
+    // test hooks (headless rAF is throttled, so drive sync/walk manually): inspect actor
+    // positions, force a roster sync, and step the walk N frames under a pinned period.
+    _dbgActors: function () { return actors.map(function (a) { return { py: Math.round(a.py), arr: !!a._arriving }; }); },
+    _sync: function (init) { syncActors(init); },
+    _steps: function (n, period) { var ts = 50000; for (var f = 0; f < (n || 60); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, period || 0); } },
     // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
     _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } }
   };

@@ -16,11 +16,13 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   dead-time — early build goals, cheaper first room as a deliberate spend, milestone nudges
   ("xây phòng học", "khóa đầu đã tốt nghiệp"); late-game money still inflates (~2635tr, sweep
   flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
-- **(B) Students walk IN from outside** *(do NEXT — pairs with A; the founding intake arriving
-  through the cổng is now the game's first satisfying moment)*: new/matriculating students spawn
-  OUTSIDE the cổng and walk in through it to their spot (DESIGN's "tân SV walk in at cổng").
-  Currently they just appear. Make arrival visible + satisfying.
-- **(C) "3D but still pixel"** for houses AND people: redraw buildings + characters with
+- ~~**(B) Students walk IN from outside**~~ **SHIPPED (iter 25).** Each new matriculant spawns
+  just outside the cổng (below the map at the gate's x) and walks up the central path to their
+  spot; a whole intake files in as a staggered procession with a "!" welcome bubble. Boot/reload
+  places the existing roster in place. *Follow-ups:* a walk-OUT on graduation (cựu SV leave
+  through the gate at June); maybe a gather-at-cổng cluster on khai-giảng day before they
+  disperse; tune the column spacing if a 12-strong intake feels too long.
+- **(C) "3D but still pixel"** for houses AND people *(do NEXT)*: redraw buildings + characters with
   DIMENSIONAL/fake-iso pixel depth (visible side walls, pitched-with-depth roofs, characters
   with volume/shading), keeping the bright crisp pixel style. Big art pass — likely a design
   workflow + screenshot iteration; mind 26px readability + 48-sprite perf (re-bake the atlas).

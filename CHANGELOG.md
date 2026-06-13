@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Students walk IN through the cổng (owner directive B, loop iter 25)
+- New matriculants no longer pop into existence — each freshly-enrolled student spawns just
+  OUTSIDE the gate (below the map at the cổng's x) and walks up the central path to their first
+  spot. A whole intake files in as a staggered procession (queued in a short column so they
+  don't overlap), each wearing a little "!" welcome bubble until they step onto the grounds.
+  Pairs with start-from-nothing: the July founding intake arriving through the gate is now the
+  game's first satisfying beat. Boot/reload places the existing roster in place (no mass march).
+  Verified numerically (headless rAF is throttled): all 12 spawn below the gate and climb in.
+
 ## 2026-06-13 — START FROM NOTHING (owner directive A) + room-click fix (loop iter 24)
 - **Reframe: found a school from scratch.** Boot is now an empty lot — 0 rooms, 0 students,
   1 founding teacher, a thin cash pot (200tr) with an origin story (you viral'd the đề Văn
