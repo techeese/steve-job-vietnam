@@ -12,9 +12,10 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   đỏ + 50tr vốn mồi). Tháng-6 boot → July founding intake → Mai Sương is enrollee #1; empty
   Junes roll the year silently (foundingJune); first real graduation ~Year 5. TPL re-homed as a
   shadow alumnus (scripted Y2-M3 arrest preserved). GATE_FRESH + sweep band updated, all green.
-  *Follow-ups:* early-game (Y1–4, pre-first-graduation) needs more to DO/watch so it isn't
-  dead-time — early build goals, cheaper first room as a deliberate spend, milestone nudges
-  ("xây phòng học", "khóa đầu đã tốt nghiệp"); late-game money still inflates (~2635tr, sweep
+  *Follow-ups:* ~~milestone nudges~~ SHIPPED (iter 28: "Cột mốc" founding-goal banner walks the
+  player build→intake→teacher→spec-room→grow→firstgrad). Still open: the early years could use
+  more *mid-build texture* (founding-specific events, a visible "first đồ-án" beat, a cheaper-but-
+  paid first room for a real spend decision); late-game money still inflates (~2635tr, sweep
   flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
 - ~~**(B) Students walk IN from outside**~~ **SHIPPED (iter 25).** Each new matriculant spawns
   just outside the cổng (below the map at the gate's x) and walks up the central path to their

@@ -13,6 +13,7 @@ var CONFIG = {
   GRID_W: 15, GRID_H: 12, TILE: 26,
   ROSTER_CAP: 48, COHORT_NOMINAL: 12,
   RUN_CAP_YEARS: 12,
+  MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
 
   // economy
   BOOT_CASH: 200, BOOK_VALUE: 40, BOOT_ENDOW: 10, BOOT_TUITION: 2, // start-from-nothing: a small pot, near-empty grounds
@@ -157,6 +158,17 @@ var CONTENT = {
     "Bài luận trả lời của bạn viral. Bạn cắm sổ đỏ căn nhà, gom thêm 50 triệu 'vốn mồi' thắng từ một cuộc thi khởi nghiệp ăn theo trào lưu — đủ để thuê một khoảnh sân trống.",
     "Không trường, không phòng học, không sinh viên. Chỉ có một khoản vốn mỏng, một thầy giáo chịu theo, và một lời hứa: xây từ con số 0.",
     "Nhiệm vụ: dựng lớp đầu tiên, chiêu sinh khóa đầu, rồi từ từ nuôi một 'Steve Jobs' thật — đừng nặn thêm cá mập coin như Trần Phi Lợi (học trò cũ của bạn, sắp lên báo)."
+  ],
+
+  // founding milestones — guide & celebrate the build-up arc (start-from-nothing). Completed
+  // in order; each gives a small Tiếng Tăm bump. After the last, the open-ended phase begins.
+  milestones: [
+    { key: "room1",    goal: "Xây phòng học đầu tiên",                      done: "Cột mốc: phòng học đầu tiên đã dựng — đã có chỗ để điểm danh." },
+    { key: "cohort1",  goal: "Chiêu sinh khóa đầu (mở tuyển vào tháng 7)",  done: "Cột mốc: khóa đầu tiên đã nhập học — Mai Sương đứng đầu danh sách." },
+    { key: "teacher2", goal: "Tuyển thêm một giảng viên",                   done: "Cột mốc: đã có thêm người đứng lớp — thầy Thể Dục đỡ phải kiêm hết." },
+    { key: "specroom", goal: "Xây một phòng chuyên môn (Lab / Xưởng / Phòng máy)", done: "Cột mốc: trường đã có phòng chuyên môn — không chỉ học chay nữa." },
+    { key: "grow20",   goal: "Nuôi trường lên 20 sinh viên",               done: "Cột mốc: 20 sinh viên — sân trường bắt đầu đông." },
+    { key: "firstgrad", goal: "Đưa khóa đầu tiên tốt nghiệp",              done: "Cột mốc: khóa đầu tiên ra trường. Câu hỏi lớn bắt đầu: họ sẽ thành gì?" }
   ],
 
   dePool: [

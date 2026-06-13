@@ -730,6 +730,13 @@
     m.appendChild(meter("m-tt", "TIẾNG TĂM", s.tiengTam, 100));
     m.appendChild(meter("m-ut", "UY TÍN", s.uyTin, 100));
     m.appendChild(meter("m-tc", "THỰC CHẤT", s.thucChat, 100));
+    // founding-milestone banner: the next un-earned goal (hidden once the build-up arc is done)
+    var gb = $("goalBar"), ms = CONTENT.milestones || [], hit = (s.META.goalsHit || []), cur = null;
+    for (var gi = 0; gi < ms.length; gi++) { if (hit.indexOf(ms[gi].key) < 0) { cur = ms[gi]; break; } }
+    if (cur) { gb.innerHTML = "<span class='gt'>🎯 Cột mốc</span><span class='gl'>" + esc(cur.goal) + "</span>"; gb.classList.add("show"); }
+    else gb.classList.remove("show");
+    // celebrate a just-completed milestone (engine sets the flag; we toast + clear)
+    if (s._milestoneJustHit) { toast("🎉 " + s._milestoneJustHit); s._milestoneJustHit = null; }
     // ticker
     if (s.news.length) {
       var n = s.news[0];
@@ -825,7 +832,7 @@
         var r = el("div", "srow");
         r.innerHTML = "<div class='av' style='background:rgba(240,198,116,.12)'>＋</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + esc(t.note) + "</div></div>";
         var b = el("button", "btn", t.luong + "tr"); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
-        b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); renderPanel(); };
+        b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); HVS.checkMilestones(); render(); };
         r.appendChild(b); c4.appendChild(r);
       });
     }

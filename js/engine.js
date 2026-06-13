@@ -68,6 +68,7 @@ function placeRoom(key, x, y) {
   S.rooms.push({ key: key, x: x, y: y });
   S._mapDirty = true;
   if (cost > 0) news("Xây xong " + d.name + ". −" + cost + "tr.");
+  checkMilestones(); // building can complete a founding milestone (responsive while paused)
   return { ok: true };
 }
 
@@ -144,7 +145,7 @@ function freshState(seed) {
     contracts: [], corpBlacklist: {}, offersSeen: [],
     photSeeds: [], examHistory: [],
     news: [],
-    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0 },
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [] },
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,
@@ -206,6 +207,7 @@ function dayTick() {
   S.day++; S.totalDays++;
   growStudents();
   maybeEvent();
+  checkMilestones();
 
   if (S.day > CONFIG.DAYS_PER_MONTH) { S.day = 1; monthRollover(); }
 }
@@ -228,6 +230,32 @@ function monthRollover() {
 function hasResolvedAdmitThisYear() {
   var h = S.admissions.declaredHistory;
   return h.length && h[h.length - 1].year === S.year;
+}
+
+/* ---------- founding milestones (guide + celebrate the build-up) ---------- */
+function milestoneMet(key) {
+  switch (key) {
+    case "room1": return hasRoom("phonghoc");
+    case "cohort1": return S.students.length >= 1;
+    case "teacher2": return S.teachers.length >= 2;
+    case "specroom": return hasRoom("lab") || hasRoom("xuong") || hasRoom("phongmay");
+    case "grow20": return S.students.length >= 20;
+    case "firstgrad": return S.META.graduated >= 1;
+    default: return false;
+  }
+}
+function checkMilestones() {
+  if (!S.META.goalsHit) S.META.goalsHit = [];
+  var list = CONTENT.milestones || [];
+  for (var i = 0; i < list.length; i++) {
+    var m = list[i];
+    if (S.META.goalsHit.indexOf(m.key) >= 0) continue; // already earned
+    if (!milestoneMet(m.key)) continue;                // independent: celebrate each as it's achieved
+    S.META.goalsHit.push(m.key);
+    gainTT(CONFIG.MILESTONE_TT);
+    news(m.done);
+    S._milestoneJustHit = m.done;
+  }
 }
 
 /* ---------- daily student growth ---------- */
@@ -567,6 +595,7 @@ function declareAdmissions(cutoff, quota, auto) {
   S.examHistory.push({ year: S.year, cutoff: cutoff, rank: rank, fill: take.length });
   news("Công bố điểm chuẩn " + cutoff.toFixed(2) + " — " + take.length + "/" + quota + " nhập học. Hạng " + rank + "/4.");
   S.pendingAdmit = null;
+  checkMilestones(); // a fresh intake can complete cohort1 / grow20
   return { fill: take.length, rank: rank };
 }
 function admitRank(cut, rivals) {
@@ -934,6 +963,8 @@ function sanitize() {
     return a;
   });
   S.seed0 = (S.seed0 || 0) >>> 0;
+  if (!S.META) S.META = {};
+  if (!Array.isArray(S.META.goalsHit)) S.META.goalsHit = [];
 }
 
 /* ============================================================================
@@ -960,5 +991,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool }; }
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, loadGame: loadGame, saveGame: saveGame, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, canPlace: canPlace, declareAdmissions: declareAdmissions, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, derivedPool: derivedPool, checkMilestones: checkMilestones }; }
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

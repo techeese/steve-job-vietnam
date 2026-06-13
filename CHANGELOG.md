@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — Founding milestones (early-game guidance, loop iter 28)
+- Start-from-nothing left Years 1–4 (pre-first-graduation) thin on direction. Added a "Cột mốc"
+  system: a gold HUD banner shows the next founding goal (build first Phòng học → first intake →
+  hire a 2nd teacher → build a chuyên-môn room → grow to 20 SV → first graduation), each
+  celebrated with a toast + ticker line + a small +4 Tiếng Tăm (the school gets noticed). Goals
+  fire independently (real progress is always celebrated) and the banner shows the first unearned
+  one as the suggested next step; it hides once the build-up arc is done. New `META.goalsHit`
+  state (+ sanitize guard); engine `checkMilestones()` runs on day-tick, build, intake, and hire
+  so it's responsive even while paused. Gates green; verified the full chain reaches firstgrad ~Y5.
+
 ## 2026-06-13 — 3D-but-pixel PEOPLE (owner directive C, part 2, loop iter 27)
 - Re-baked the character sprite atlas with volume: faces and torsos are now lit from the
   upper-left (lighter skin/shirt highlight edges) and shaded on the lower-right (2-tone shirt

@@ -61,6 +61,12 @@
   .m-tt i{background:linear-gradient(90deg,#f2994a,#f2c14e)}
   .m-ut i{background:linear-gradient(90deg,#56ccf2,#6fcf97)}
   .m-tc i{background:linear-gradient(90deg,#bb6bd9,#b48ef0)}
+  .goalbar{display:none;align-items:center;gap:7px;margin-top:7px;padding:5px 9px;border-radius:9px;
+    background:linear-gradient(90deg,rgba(240,198,116,.16),rgba(240,198,116,.05));
+    border:1px solid rgba(240,198,116,.32);font-size:11px;font-weight:600;color:var(--gold)}
+  .goalbar.show{display:flex}
+  .goalbar .gt{font-size:9px;color:var(--gold2);font-weight:700;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0}
+  .goalbar .gl{color:var(--ink);font-weight:600}
 
   /* ---------- map ---------- */
   .mapwrap{position:relative;width:100%;background:#0a0d12;border-bottom:1px solid var(--line)}
@@ -205,6 +211,7 @@
     </div>
     <div class="stats" id="stats"></div>
     <div class="meters" id="meters"></div>
+    <div class="goalbar" id="goalBar"></div>
   </header>
 
   <div class="mapwrap" id="mapwrap">
@@ -221,8 +228,8 @@
 <div id="modalRoot"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 
-<script src="js/data.js?v=1781342072935"></script>
-<script src="js/engine.js?v=1781342072935"></script>
-<script src="js/ui.js?v=1781342072935"></script>
+<script src="js/data.js?v=1781342550122"></script>
+<script src="js/engine.js?v=1781342550122"></script>
+<script src="js/ui.js?v=1781342550122"></script>
 </body>
 </html>
