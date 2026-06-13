@@ -591,6 +591,14 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   across all state-moods + init + persist + autoplay-unlock" headlessly; the aesthetic is judged
   by the owner on the live link. Keep audio defensive (try/catch every scheduler; any failure
   silently disables) so a bad AudioContext never breaks the game.
+- DIVERGENCE-WORKFLOW: don't put large CODE in a structured-output `schema` field (iter 70: a
+  building-divergence agent's `source` field made the StructuredOutput return hang/never-finish AFTER
+  the PNGs were already done — I had to TaskStop it). Instead: divergence agents return the screenshot
+  PATH + a short description via schema (small fields only), WRITE any source to a file, and the prompt
+  art lives in the prototype HTML. Then after the owner (or you) picks a direction, spawn ONE
+  reproduce-agent to regenerate the winner's drop-in code as PLAIN TEXT in its final message (the
+  proven pattern for both the character-art iter 59 and buildings iter 70 integrations). PNGs land on
+  disk before the workflow's structured result, so you can judge + proceed even if the result stalls.
 
 ## Playbook changelog
 - 2026-06-13: skill created at owner's request, seeded from the Nuôi Anh improve-game

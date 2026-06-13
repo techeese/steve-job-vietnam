@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-13 — Buildings graphics step-change: a crafted, premium campus (loop iter 70)
+- The buildings now match the premium 24×32 characters. `drawRoom` overhauled with **per-building
+  materials** (plaster Phòng học · striped-awning Căng tin · purple-**brick** Phòng máy · **wood-plank**
+  Xưởng · **glass** Lab), **tiled roofs** with row courses + ridge highlights + skylights, **shuttered
+  windows** with sills + a warm interior glow, a **carved gold sign** over each door, a **base plinth/
+  trim**, and a 4-step shade ramp — all keeping the fake-iso depth + per-room ROOM_STYLE identity. The
+  campus reads as a crafted, cohesive, premium little world now (graphics is the owner's #1 dimension).
+- **Chosen via a 3-direction divergence workflow** (deeper-2.5D / rich-materials / cozy-cottage); owner
+  away, so I picked the highest-Bar (rich-materials — it covers BOTH "3D but still pixel" via kept depth
+  AND "more detail/style") and ship it for veto-by-reaction. New `drawRoom`/`drawWall`/`drawDoorSign`/
+  `roomMaterial` + richer `drawWindows`/`drawRoof` in art.js; garden + sân branches preserved; gates
+  green; in-game verified (no JSERR, all materials render). Bar: **BEAUTY 5 / CLARITY 4**.
+- FEATURE-epic shipped → `SMALL_SHIPS 0`, `EPICS_SINCE_STRUCTURE 2` (a STRUCTURE-epic is due next).
+
 ## 2026-06-13 — Follow your protégé: a name floats over the one you're watching (loop iter 69)
 - A small charm beat for the game's emotional core ("a little school you love watching"). Following a
   student (⭐) already pinned a gold star overhead; now their **name floats above them in a gold pill**

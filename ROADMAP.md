@@ -6,17 +6,14 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 3`   → ≥3 ⇒ **the NEXT firing is HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. (EPICS_SINCE_STRUCTURE 1 < 2, so the forced epic may be FEATURE or STRUCTURE.)
-- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
-- `LAST_EPIC: iter 66 — FEATURE: player-customizable students (per-axis look customizer)`
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ **the next epic MUST be a STRUCTURE-epic** (now due).
+- `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
 
 ## Epic in progress
-**Epic: FEATURE — buildings graphics step-change** (started iter 70; cadence forced an epic; graphics #1).
-Now that characters are premium 24×32, buildings under-match them. Phase 1 = a 3-direction DIVERGENCE
-workflow (`wnqn9xeb1`): deeper-2.5D / rich-materials / cozy-cottage prototypes. Next: pick the
-highest-Bar (owner away → my pick, ship for veto), integrate the winner into `js/art.js` drawRoom (keep
-per-room ROOM_STYLE variety + fake-iso depth), prove via static-layer 390px screenshots, ship.
+_(none — buildings step-change SHIPPED iter 70: picked Direction B "rich materials" from the 3-way
+divergence. OWNER veto options if you'd prefer: A = deeper-2.5D blocks, C = cozy cottage.)_
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->

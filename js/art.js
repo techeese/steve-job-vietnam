@@ -124,42 +124,93 @@
       ctx.fillStyle = "rgba(28,44,18,.16)"; ctx.fillRect(x + 3, y + h, w, 3); // soft ground shadow
       drawSan(ctx, x, y, w, h); roomLabel(ctx, sty.short, x, y, w, h); return;
     }
+    var mat = roomMaterial(r.key, sty);
     var roofH = Math.min(16, (h * 0.42) | 0), wallTop = y + roofH;
-    var dp = 5; // 3D extrusion depth — the block has thickness toward the lower-right
-    // CONTACT SHADOW — one directional pool down-right (light from upper-left)
+    var dp = 5;                                  // fake-iso extrusion depth (down-right; light from upper-left)
+    var bodyH = h - roofH;                        // front wall height
+    var plinthH = Math.max(3, (bodyH * 0.16) | 0);// base plinth/trim band
+    // CONTACT SHADOW — one directional pool down-right
     ctx.fillStyle = "rgba(16,28,12,.22)";
     ctx.beginPath(); ctx.moveTo(x + 2, y + h + 1); ctx.lineTo(x + w + dp + 1, y + h + 1);
     ctx.lineTo(x + w + dp + 6, y + h + 6); ctx.lineTo(x + 7, y + h + 6); ctx.closePath(); ctx.fill();
-    // EXTRUSION — solid dark silhouette offset down-right gives the box its 3D thickness
-    var sideW = shade(sty.wall, -0.40), sideR = shade(sty.rc || "#c8553f", -0.40);
-    ctx.fillStyle = PX.out; ctx.fillRect(x + dp, wallTop + dp - 1, w, h - roofH + 1);   // wall side base
-    ctx.fillStyle = sideW; ctx.fillRect(x + dp + 1, wallTop + dp, w - 1, h - roofH - 1); // wall side face
-    roofDepth(ctx, sty.roof, x, y, w, roofH, dp, sideR);                                 // roof side face
-    // ---- FRONT FACES ----
-    // WALL: dark outline base → bright wall → right shade → lit top+left edges → plank lines
-    ctx.fillStyle = PX.out; ctx.fillRect(x, wallTop - 1, w, h - roofH + 1);
-    ctx.fillStyle = sty.wall; ctx.fillRect(x + 1, wallTop, w - 2, h - roofH - 1);
-    ctx.fillStyle = sty.wallD; ctx.fillRect(x + w - 3, wallTop, 2, h - roofH - 1);
-    ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);     // lit top edge
-    ctx.fillStyle = "rgba(255,255,255,.15)"; ctx.fillRect(x + 1, wallTop, 1, h - roofH - 1); // lit left edge
-    ctx.fillStyle = sty.wallD; for (var ly = wallTop + 5; ly < y + h - 4; ly += 6) ctx.fillRect(x + 1, ly, w - 2, 1);
-    // WINDOWS
-    drawWindows(ctx, sty.win, x, wallTop, w, h - roofH);
-    // ROOF
+    // EXTRUSION (side faces, dark) — the box's thickness
+    var sideW = shade(sty.wall, -0.42), sideR = shade(sty.rc || "#c8553f", -0.42);
+    ctx.fillStyle = PX.out; ctx.fillRect(x + dp, wallTop + dp - 1, w, bodyH + 1);   // wall side base (outline)
+    ctx.fillStyle = sideW;  ctx.fillRect(x + dp + 1, wallTop + dp, w - 1, bodyH - 1); // wall side face
+    ctx.fillStyle = shade(sty.wall, -0.55); ctx.fillRect(x + dp + 1, y + h + dp - plinthH, w - 1, plinthH - 1); // side plinth
+    roofDepth(ctx, sty.roof, x, y, w, roofH, dp, sideR);                            // roof side thickness
+    // ---- FRONT WALL (4-step ramp + MATERIAL texture) ----
+    drawWall(ctx, mat, sty, x, wallTop, w, bodyH, plinthH);
+    // WINDOWS (framed, sills + shutters, warm interior glow)
+    drawWindows(ctx, sty.win, x, wallTop, w, bodyH, plinthH);
+    // ROOF (tiled rows + ridge highlight, per material)
     drawRoof(ctx, sty.roof, sty, x, y, w, roofH);
-    if (r.key === "cangtin") { ctx.fillStyle = PX.out; ctx.fillRect(x + w - 9, y - 3, 4, roofH + 3); ctx.fillStyle = "#9a6238"; ctx.fillRect(x + w - 8, y - 2, 2, roofH + 2); ctx.fillStyle = "#6e4626"; ctx.fillRect(x + w - 9, y - 3, 4, 1); } // chimney
-    // DOOR (framed wood, facing path)
-    var dw = 8, dh = 9, dx = (x + w / 2 - dw / 2) | 0, dy = y + h - dh - 1;
-    ctx.fillStyle = PX.out; ctx.fillRect(dx - 1, dy - 1, dw + 2, dh + 1);
-    ctx.fillStyle = "#9a6238"; ctx.fillRect(dx, dy, dw, dh);
-    ctx.fillStyle = "#754827"; ctx.fillRect(dx + (dw >> 1), dy, 1, dh);
-    ctx.fillStyle = PX.gold; ctx.fillRect(dx + 2, dy + (dh >> 1), 1, 1);
+    if (r.key === "cangtin") { // chimney/flue post on the right
+      ctx.fillStyle = PX.out; ctx.fillRect(x + w - 9, y - 3, 4, roofH + 3);
+      ctx.fillStyle = "#9a6238"; ctx.fillRect(x + w - 8, y - 2, 2, roofH + 2);
+      ctx.fillStyle = "#6e4626"; ctx.fillRect(x + w - 9, y - 3, 4, 1);
+    }
+    // DOOR + carved SIGN block above it
+    drawDoorSign(ctx, sty, x, y, w, h, bodyH);
     roomLabel(ctx, sty.short, x, y, w, h);
     if ((r.level || 1) >= 2) { // upgrade pip badge, top-right of the building
       var bx = x + w - 3, by = wallTop + 1, lv = Math.min(3, r.level);
       ctx.fillStyle = PX.out; ctx.fillRect(bx - lv * 3 - 1, by - 1, lv * 3 + 2, 5);
       ctx.fillStyle = PX.gold; for (var lp = 0; lp < lv; lp++) ctx.fillRect(bx - lp * 3 - 2, by, 2, 3);
     }
+  }
+  // per-room material: brick / wood / glass / awning-front / plaster (default)
+  function roomMaterial(key, sty) {
+    if (sty && sty.material) return sty.material;
+    if (key === "phongmay") return "brick";
+    if (key === "xuong")    return "wood";
+    if (key === "lab")      return "glass";
+    if (key === "cangtin")  return "awning";
+    return "plaster";
+  }
+  // wall: outline + flat core + 4-step ramp + lit rim + plinth trim + per-material texture
+  function drawWall(ctx, mat, sty, x, wallTop, w, bodyH, plinthH) {
+    var core = sty.wall, coreD = sty.wallD || shade(core, -0.16);
+    var deep = shade(core, -0.30);                       // deep terminator (right column)
+    ctx.fillStyle = PX.out; ctx.fillRect(x, wallTop - 1, w, bodyH + 1);          // 1px dark outline base
+    ctx.fillStyle = core;   ctx.fillRect(x + 1, wallTop, w - 2, bodyH - 1);      // CORE fill
+    ctx.fillStyle = "rgba(255,255,255,.10)"; ctx.fillRect(x + 1, wallTop, ((w - 2) * 0.30) | 0, bodyH - 1); // lit core (left third)
+    ctx.fillStyle = coreD; ctx.fillRect(x + w - 4, wallTop, 2, bodyH - 1);       // shade column
+    ctx.fillStyle = deep;  ctx.fillRect(x + w - 2, wallTop, 1, bodyH - 1);       // deep terminator (rightmost)
+    ctx.fillStyle = "rgba(40,30,20,.22)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);// under-eave shadow line
+    // ---- MATERIAL TEXTURE ----
+    if (mat === "brick") {
+      var mortar = shade(core, -0.20), bh = 3, row = 0;
+      for (var by = wallTop + 2; by < wallTop + bodyH - plinthH - 1; by += bh) {
+        ctx.fillStyle = mortar; ctx.fillRect(x + 1, by, w - 2, 1);               // horizontal mortar
+        var off = (row & 1) ? bh : 0;
+        for (var bx = x + 2 + off; bx < x + w - 2; bx += bh * 2) ctx.fillRect(bx, by - bh + 1, 1, bh - 1); // vertical joints
+        row++;
+      }
+    } else if (mat === "wood") {
+      var plankHi = shade(core, 0.12), pw = 4;
+      for (var px = x + 2; px < x + w - 2; px += pw) {                            // VERTICAL planks
+        ctx.fillStyle = shade(core, -0.18); ctx.fillRect(px, wallTop, 1, bodyH - 1);     // groove
+        ctx.fillStyle = plankHi;            ctx.fillRect(px + 1, wallTop, 1, bodyH - 1); // plank lit edge
+      }
+      ctx.fillStyle = shade(core, -0.10); for (var ky = wallTop + 4; ky < wallTop + bodyH - plinthH; ky += 7) ctx.fillRect(x + 2, ky, w - 4, 1); // grain bands
+    } else if (mat === "glass") {
+      ctx.fillStyle = "rgba(255,255,255,.30)";                                   // glossy curtain-wall sheen
+      ctx.fillRect(x + 2, wallTop + 1, ((w - 4) * 0.22) | 0, bodyH - plinthH - 2);
+      ctx.fillStyle = shade(core, -0.10); var step = ((w - 4) / 3) | 0;          // vertical mullion grid
+      for (var gx = x + 2 + step; gx < x + w - 3; gx += step) ctx.fillRect(gx, wallTop, 1, bodyH - 1);
+      ctx.fillStyle = "rgba(255,255,255,.18)"; for (var gy = wallTop + 5; gy < wallTop + bodyH - plinthH; gy += 6) ctx.fillRect(x + 2, gy, w - 4, 1);
+    } else { // plaster (& awning-front body): subtle horizontal courses
+      ctx.fillStyle = coreD; for (var ly = wallTop + 5; ly < wallTop + bodyH - plinthH; ly += 6) ctx.fillRect(x + 1, ly, w - 2, 1);
+    }
+    // lit rim AFTER texture so it stays crisp
+    ctx.fillStyle = "rgba(255,255,255,.26)"; ctx.fillRect(x + 1, wallTop, w - 2, 1);     // lit top edge
+    ctx.fillStyle = "rgba(255,255,255,.16)"; ctx.fillRect(x + 1, wallTop, 1, bodyH - 1); // lit left edge
+    // BASE PLINTH / TRIM
+    var py = wallTop + bodyH - plinthH;
+    ctx.fillStyle = shade(core, -0.34); ctx.fillRect(x + 1, py, w - 2, plinthH - 1); // plinth band
+    ctx.fillStyle = shade(core, -0.50); ctx.fillRect(x + 1, py, w - 2, 1);           // trim line
+    ctx.fillStyle = "rgba(255,255,255,.14)"; ctx.fillRect(x + 1, py + 1, w - 2, 1);  // highlight under trim
   }
   function roomLabel(ctx, name, x, y, w, h) {
     ctx.font = "700 8px 'Be Vietnam Pro',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -168,51 +219,95 @@
     ctx.fillStyle = "#fff8e6"; ctx.fillText(name, x + w / 2, py + 0.5);
     ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
   }
-  function drawWindows(ctx, type, x, y, w, h) {
+  // framed windows w/ sill, shutters, mullions + warm interior glow
+  function drawWindows(ctx, type, x, y, w, bodyH, plinthH) {
     if (type === "none") return;
-    var n = Math.max(1, Math.floor((w - 8) / 10)), gap = (w - 4 - n * 6) / (n + 1), wy = y + 4, i, wx;
+    var n = Math.max(1, Math.floor((w - 8) / 12)), gap = (w - 4 - n * 8) / (n + 1), i, wx;
+    var wy = y + 4, ww = 6, wh = 7;
     var pane = type === "cold" ? "#9fd8ff" : (type === "glass" ? "#cfeef2" : "#ffe3a0");
+    var paneD = type === "cold" ? "#6fb6e8" : (type === "glass" ? "#a9dde2" : "#f1bf63");
+    var shut = type === "cold" ? "#5f6f86" : (type === "glass" ? "#6fa8af" : "#b07a3e");
+    var glw  = type === "warm" ? "rgba(255,210,120,.55)" : "rgba(180,230,255,.30)";
     for (i = 0; i < n; i++) {
-      wx = (x + 2 + gap * (i + 1) + 6 * i) | 0;
-      ctx.fillStyle = PX.out; ctx.fillRect(wx, wy, 6, 7);                 // frame
-      ctx.fillStyle = pane; ctx.fillRect(wx + 1, wy + 1, 4, 5);           // pane
-      ctx.fillStyle = "rgba(255,255,255,.65)"; ctx.fillRect(wx + 1, wy + 1, 2, 2); // glint
-      ctx.fillStyle = PX.out; ctx.fillRect(wx + 3, wy + 1, 1, 5); ctx.fillRect(wx + 1, wy + 3, 4, 1); // mullions
+      wx = (x + 2 + gap * (i + 1) + 8 * i) | 0;
+      ctx.fillStyle = PX.out;  ctx.fillRect(wx - 2, wy, 1, wh + 1); ctx.fillRect(wx + ww + 1, wy, 1, wh + 1); // shutter outlines
+      ctx.fillStyle = shut;    ctx.fillRect(wx - 2, wy, 1, wh);     ctx.fillRect(wx + ww + 1, wy, 1, wh);     // shutters
+      ctx.fillStyle = glw;     ctx.fillRect(wx - 1, wy - 1, ww + 2, wh + 2);                                 // warm interior glow halo
+      ctx.fillStyle = PX.out;  ctx.fillRect(wx, wy, ww, wh);                                                  // frame
+      ctx.fillStyle = pane;    ctx.fillRect(wx + 1, wy + 1, ww - 2, wh - 2);                                  // pane
+      ctx.fillStyle = paneD;   ctx.fillRect(wx + 1, wy + wh - 2, ww - 2, 1);                                  // pane bottom shade
+      ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.fillRect(wx + 1, wy + 1, 2, 2);                             // glint
+      ctx.fillStyle = PX.out;  ctx.fillRect(wx + (ww >> 1), wy + 1, 1, wh - 2); ctx.fillRect(wx + 1, wy + (wh >> 1), ww - 2, 1); // mullions
+      ctx.fillStyle = PX.out;  ctx.fillRect(wx - 2, wy + wh, ww + 4, 1);                                      // sill outline
+      ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(wx - 1, wy + wh, ww + 2, 1);                      // sill highlight
     }
   }
   function drawRoof(ctx, type, sty, x, y, w, roofH) {
-    var rc = sty.rc || "#c8553f", rcD = sty.rcD || "#a8412f", s;
+    var rc = sty.rc || "#c8553f", rcD = sty.rcD || shade(rc, -0.18), s;
     if (type === "gabled") {
       ctx.fillStyle = PX.out; ctx.beginPath(); ctx.moveTo(x - 2, y + roofH + 1); ctx.lineTo(x + w / 2, y - 1); ctx.lineTo(x + w + 2, y + roofH + 1); ctx.closePath(); ctx.fill();
       ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(x, y + roofH); ctx.lineTo(x + w / 2, y + 1); ctx.lineTo(x + w, y + roofH); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = rcD; for (s = 3; s < roofH; s += 3) { var hw = (w / 2) * (1 - s / roofH); ctx.fillRect(x + w / 2 - hw, y + s, hw * 2, 1); }
-      ctx.fillStyle = "#fff"; ctx.fillRect((x + w / 2 - 1) | 0, y - 1, 2, 3);
+      ctx.save(); ctx.beginPath(); ctx.moveTo(x, y + roofH); ctx.lineTo(x + w / 2, y + 1); ctx.lineTo(x + w, y + roofH); ctx.closePath(); ctx.clip(); // clip so courses never spill into sky
+      ctx.fillStyle = rcD; for (s = 3; s < roofH; s += 3) ctx.fillRect(x, y + s, w, 1);          // tiled row courses
+      ctx.fillStyle = "rgba(40,20,16,.16)"; ctx.fillRect((x + w / 2) | 0, y, (w / 2 | 0) + 1, roofH); // right-slope shade
+      ctx.restore();
+      ctx.fillStyle = shade(rc, 0.32); ctx.fillRect((x + w / 2 - 1) | 0, y + 1, 1, roofH - 2);   // ridge highlight
+      ctx.fillStyle = "#fff"; ctx.fillRect((x + w / 2 - 1) | 0, y - 1, 2, 3);                     // finial
     } else if (type === "awning") {
       ctx.fillStyle = PX.out; ctx.fillRect(x - 2, y, w + 4, roofH);
-      for (s = 0; s < Math.ceil((w + 4) / 5); s++) { ctx.fillStyle = (s % 2) ? rc : "#f5e8ca"; ctx.fillRect((x - 2 + s * 5) | 0, y + 1, 5, roofH - 1); }
+      var scol = Math.ceil((w + 4) / 5);
+      for (s = 0; s < scol; s++) { ctx.fillStyle = (s % 2) ? rc : "#f5e8ca"; ctx.fillRect((x - 2 + s * 5) | 0, y + 1, 5, roofH - 2); }
+      ctx.fillStyle = shade(rc, 0.30); ctx.fillRect(x - 2, y + 1, w + 4, 1);                       // lit ridge
+      ctx.fillStyle = PX.out; for (s = 0; s < scol; s++) ctx.fillRect((x - 2 + s * 5 + 2) | 0, y + roofH - 1, 1, 1); // scallop notches
+      ctx.fillStyle = "rgba(40,20,16,.15)"; ctx.fillRect(x - 2, y + roofH - 2, w + 4, 1);
     } else if (type === "glossy") {
       ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);
       ctx.fillStyle = rc; ctx.fillRect(x, y + 1, w, roofH - 2);
-      ctx.fillStyle = "rgba(255,255,255,.4)"; ctx.fillRect(x + 2, y + 1, w - 4, 2);
+      ctx.fillStyle = rcD; ctx.fillRect(x, y + roofH - 2, w, 1);                                   // shaded lower band
+      ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.fillRect(x + 2, y + 1, w - 4, 2);                // gloss strip
+      ctx.fillStyle = shade(rc, 0.34); ctx.fillRect(x, y + 1, w, 1);                               // lit ridge
     } else if (type === "flatvent") {
       ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y + 2, w + 2, roofH - 1);
       ctx.fillStyle = rc; ctx.fillRect(x, y + 3, w, roofH - 3);
-      for (s = 0; s < 3; s++) { var vx = (x + 4 + s * ((w - 8) / 3)) | 0; ctx.fillStyle = PX.out; ctx.fillRect(vx, y, 6, 4); ctx.fillStyle = "#aeb6bf"; ctx.fillRect(vx + 1, y + 1, 4, 2); }
+      ctx.fillStyle = shade(rc, 0.30); ctx.fillRect(x, y + 3, w, 1);                               // lit parapet top
+      ctx.fillStyle = rcD; ctx.fillRect(x, y + roofH - 2, w, 1);                                   // shaded base
+      for (s = 0; s < 3; s++) { var vx = (x + 4 + s * ((w - 8) / 3)) | 0; ctx.fillStyle = PX.out; ctx.fillRect(vx, y, 6, 4); ctx.fillStyle = "#aeb6bf"; ctx.fillRect(vx + 1, y + 1, 4, 2); ctx.fillStyle = "#d4d9df"; ctx.fillRect(vx + 1, y + 1, 4, 1); }
     } else if (type === "sawtooth") {
-      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);
-      for (s = 0; s < 3; s++) { var sx = x + s * (w / 3); ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx + 1, y + roofH - 1); ctx.lineTo(sx + 1, y + 3); ctx.lineTo(sx + w / 3 - 1, y + roofH - 1); ctx.closePath(); ctx.fill(); ctx.fillStyle = "#cdeef4"; ctx.fillRect((sx + 2) | 0, y + 4, 2, roofH - 6); }
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, y, w + 2, roofH);                                // dark roof band
+      for (s = 0; s < 3; s++) {
+        var sx = x + s * (w / 3);
+        ctx.fillStyle = rc; ctx.beginPath(); ctx.moveTo(sx + 1, y + roofH - 1); ctx.lineTo(sx + 1, y + 3); ctx.lineTo(sx + w / 3 - 1, y + roofH - 1); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = rcD; ctx.fillRect((sx + 1) | 0, y + 3, 1, roofH - 4);                       // shaded back of tooth
+        ctx.fillStyle = "#cdeef4"; ctx.fillRect((sx + 2) | 0, y + 4, 2, roofH - 6);                 // glazed skylight
+        ctx.fillStyle = "rgba(255,255,255,.6)"; ctx.fillRect((sx + 2) | 0, y + 4, 1, ((roofH - 6) / 2) | 0); // sheen
+      }
     }
   }
-  // the roof's right-side thickness (dark), drawn offset down-right behind the front roof
+  // roof's right-side thickness (dark), offset down-right behind front roof
   function roofDepth(ctx, type, x, y, w, roofH, dp, col) {
     ctx.fillStyle = col;
     if (type === "gabled") {
       ctx.beginPath(); ctx.moveTo(x - 2 + dp, y + roofH + 1 + dp); ctx.lineTo(x + w / 2 + dp, y - 1 + dp); ctx.lineTo(x + w + 2 + dp, y + roofH + 1 + dp); ctx.closePath(); ctx.fill();
     } else {
-      ctx.fillRect(x - 2 + dp, y + dp, w + 4, roofH); // eaves slab for flat/awning/glossy/vent/sawtooth
+      ctx.fillRect(x - 2 + dp, y + dp, w + 4, roofH);
     }
   }
-  // a memorial garden: a tended lawn with a hedge border and a central stone stele + accent plaque
+  // framed wood door + carved SIGN block above it
+  function drawDoorSign(ctx, sty, x, y, w, h, bodyH) {
+    var dw = 8, dh = 9, dx = (x + w / 2 - dw / 2) | 0, dy = y + h - dh - 1;
+    var sw = 14, sx = (x + w / 2 - sw / 2) | 0, sy = dy - 6;                       // SIGN block above door
+    ctx.fillStyle = PX.out; ctx.fillRect(sx - 1, sy - 1, sw + 2, 6);
+    ctx.fillStyle = "#7a5230"; ctx.fillRect(sx, sy, sw, 4);                        // sign board
+    ctx.fillStyle = "#9a6a3c"; ctx.fillRect(sx, sy, sw, 1);                        // lit top
+    ctx.fillStyle = PX.gold;  ctx.fillRect(sx + 2, sy + 1, sw - 4, 1); ctx.fillRect(sx + 2, sy + 2, sw - 4, 1); // carved gold lettering
+    ctx.fillStyle = shade("#7a5230", -0.3); ctx.fillRect(sx, sy + 3, sw, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(dx - 1, dy - 1, dw + 2, dh + 1);          // DOOR
+    ctx.fillStyle = "#9a6238"; ctx.fillRect(dx, dy, dw, dh);
+    ctx.fillStyle = "#b27d48"; ctx.fillRect(dx, dy, 1, dh);                        // lit left jamb
+    ctx.fillStyle = "#754827"; ctx.fillRect(dx + (dw >> 1), dy, 1, dh);            // centre seam
+    ctx.fillStyle = "rgba(255,225,160,.5)"; ctx.fillRect(dx + 1, dy + 1, dw - 2, 2); // warm glow over transom
+    ctx.fillStyle = PX.gold; ctx.fillRect(dx + 2, dy + (dh >> 1), 1, 1); ctx.fillRect(dx + dw - 3, dy + (dh >> 1), 1, 1); // handles
+  }
   function drawGarden(ctx, x, y, w, h, sty) {
     ctx.fillStyle = "rgba(20,34,14,.18)"; ctx.fillRect(x + 3, y + h, w, 3); // shadow
     ctx.fillStyle = "#5aa64a"; ctx.fillRect(x, y, w, h);                    // lawn
