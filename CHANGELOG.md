@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-14 — Maintenance sprint: clean (loop iter 97)
+- Due since iter 86 (11 firings, ~8 changes ago). Full health pass: `node sweep.js` bands GREEN (0 bankruptcy,
+  pluralism holds, destiny distribution stable) · `./bot.sh` **BOTOK** (11y, zero JSERR) · perf clean (2
+  `setInterval`s, 699 DOM nodes on the heaviest tab — +8 since iter 78, bounded) · full **390px audit of all 5
+  tabs** on a populated late-game state. **No regressions** — the plateau-run additions (ticker-idle, alumni
+  visits, the biography card, meter explainers, the shareable end-card, the visit chime, the giftVt bugfix) all
+  cohere. The game is healthy. Maintenance — doesn't count as a cadence ship; no code change.
+
 ## 2026-06-14 — A soft chime for a returning grad + coverage audit clean (loop iter 96)
 - **Coverage audit extended (clean):** checked the other dynamically-indexed content for the giftVt-class bug —
   `essay.crossOut` & `essay.bacTam` cover all 8 epilogue branches (+`empty`), and `alumLines` covers all 8
