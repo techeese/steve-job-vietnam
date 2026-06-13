@@ -6,12 +6,14 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Now
 
-1. **Campus life pass v1 (owner directive — feel-first):** the live link is playable but
-   the academy reads as "menu + map." Make the map the SOUL: students sit in class during
+0. **Tap-the-world inspect (owner DECIDED 2026-06-13: "tabs + tap-the-world"):** tapping a
+   student or room on the campus opens a non-pausing inspect card — the antidote to
+   "everything's a button." Tabs stay for management; the world becomes tappable for
+   curiosity. SHIPPING NOW.
+1. **Campus life pass v1 (owner directive — feel-first):** students sit in class during
    periods, eat at căng tin (food bubbles), tinker in Xưởng (sparks), kick a ball on sân,
-   zzz period 1 — activity by schedule×room, pure view layer. This is the antidote to the
-   "everything's a button" feel (owner 2026-06-13). Consider tap-a-student / tap-a-room
-   inspect popovers so curiosity taps reward (see Parked: interaction-model question).
+   zzz period 1 — activity by schedule×room, pure view layer. Builds on the tap-inspect
+   interaction grammar from item 0.
 2. **The Player's Answer — open-question epilogue (owner directive 2026-06-13, DESIGN §1):**
    *"bản nháp bài luận của hiệu trưởng"* — a year-end / milestone epilogue assembled from
    the player's OWN school (which students became what, which choices recurred, the three
@@ -55,12 +57,14 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   split threshold. First refactor to watch for: engine.js will want module-splitting
   (sim/june/admissions/alumni/funding) once alumni S3 + funding S4 land. Don't split early.
 
+## Salvaged from the retired /mvp/ build (worth keeping)
+- **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
+  photSeeds silently) — surface it so the player feels the gamble building. (UI, small.)
+- **Export/import save string:** copy-save-to-clipboard for sharing/backup a run. (Nice-to-have.)
+- Otherwise /mvp/ was the older 3-grade spec (superseded by v2); nothing else to salvage.
+
 ## Parked
-- **Interaction-model question (owner 2026-06-13, awaiting answer):** "everything on same
-  screen and you need to press the button." Two readings — (a) keep single-screen tabbed +
-  buttons (mobile-clean, current) vs (b) push toward tapping students/rooms directly in the
-  world (Kairosoft register). Likely BOTH: keep tabs for management, add world-tap inspect
-  for curiosity. Resolve before the campus-life pass commits an interaction grammar.
+(empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
 
 ## Done (see CHANGELOG.md)
 - **S1 MVP shipped** — multi-file build, full sim/June/admissions/alumni/funding, 5 gates
