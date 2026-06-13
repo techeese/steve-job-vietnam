@@ -34,7 +34,7 @@ var CONFIG = {
   CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
 
   PRESETS: {
-    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0, st: -1, cm: 0.5, mood: -2, vet: 2, cost: 0 },
+    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0 }, // cram → gaming-the-system hustle (breeds some cá mập)
     canbang: { label: "Cân Bằng", kt: 2.5, tn: 1, st: 0.5, cm: 0.5, mood: 0, vet: 0.5, cost: 0 },
     duan:    { label: "Đồ Án & Lab", kt: 1, tn: 2, st: 1.5, cm: 1.5, mood: 1, vet: -1, cost: 1 }
   },
@@ -92,7 +92,7 @@ var CONFIG = {
 
   // graduation cascade — priority order, first match wins (8 rows, no 🍎)
   CASCADE: [
-    { key: "CA_MAP_COIN", emoji: "🪙", name: "Cá Mập Coin", gate: { cm: [60, 1], tn: [40, -1], vet: [50, 1] } },
+    { key: "CA_MAP_COIN", emoji: "🪙", name: "Cá Mập Coin", gate: { cm: [52, 1], tn: [45, -1], vet: [50, 1] } },
     { key: "QUAN_VAN_MAU", emoji: "📋", name: "Quán Quân Văn Mẫu", gate: { kt: [80, 1], vet: [60, 1], st: [40, -1] } },
     { key: "FOUNDER", emoji: "🚀", name: "Founder Gọi Vốn", gate: { cm: [80, 1], st: [60, 1], tn: [51, -1] } },
     { key: "KY_SU", emoji: "👷", name: "Kỹ Sư Chân Chính", gate: { tn: [70, 1] } },

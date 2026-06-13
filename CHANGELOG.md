@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Balance: the cá-mập-coin ending now fires (loop iter 17, sweep-driven)
+- The game is *about* not mass-producing coin sharks, but the cá-mập-coin ending literally
+  never fired (0%). Root cause: the vet/cram drag (VET_MULT) was halving the cá-mập stat too,
+  so crammers could never build the hustle to qualify. Decoupled cm growth from the vet drag
+  (gaming-the-system IS a cram skill) + nudged the cascade gate (cm≥52∧tn≤45∧vet≥50).
+- Now cá-mập fires ~2% and the full dark arc works (sharks get arrested → BI_BAT appears).
+  Sweep-verified; economy still in band; gates green. Remaining (ROADMAP): money sink + a
+  deeper meter-recovery pass for the cram-leaning default.
+
 ## 2026-06-13 — Balance: Tiếng Tăm floor (loop iter 16, sweep-driven)
 - The sweep found TT bled to ~1 over a run → admissions pool shrank → the campus slowly
   emptied (a liveliness bug, not just balance). Gave TT a FLOOR = 10 + 0.25×Uy-Tín: it still

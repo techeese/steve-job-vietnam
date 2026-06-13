@@ -279,7 +279,8 @@ function growStudents() {
     s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
     s.tn = clamp(s.tn + p.tn * g * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
     s.st = clamp(s.st + p.st * g * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
-    s.cm = clamp(s.cm + p.cm * g, 0, 100);
+    var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
+    s.cm = clamp(s.cm + p.cm * gCm, 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");
     s.vet = clamp(s.vet + vetGain, 0, 100);
     s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
@@ -315,6 +316,7 @@ function economyTick() {
   // meters
   var ttFloor = CONFIG.TT_FLOOR(S.uyTin);
   if (S.tiengTam > ttFloor) S.tiengTam = clamp(r1(Math.max(ttFloor, S.tiengTam - CONFIG.TT_DECAY)), 0, 200);
+  else S.tiengTam = clamp(r1(Math.min(ttFloor, S.tiengTam + 0.5)), 0, 200); // recover toward baseline after a scandal/arrest dip
   for (i = 0; i < S.teachers.length; i++) if (S.teachers[i].trait === "isi") gainTT(0.5);
   if (hasRoom("cangtin")) moodAll(1);
   // thực chất drifts toward (craft − cram) of student body

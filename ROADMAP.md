@@ -64,10 +64,14 @@ cram/default settle into lương-ổn. Problems:
   contracts, viral defenses, events) that actually keep it alive across a run.
 - **Money inflates to ~2788tr end-game** — no spend sink/pressure. Needs sinks (Quỹ Ứng Cứu,
   dedications, scaling salaries/maintenance, more to build) so cash stays a real constraint.
-- **CA_MAP_COIN (cá mập coin) ≈ 0%** across all strategies — the dark mirror barely fires;
-  `cm` (cá-mập stat) grows too slowly for the cascade gate (cm≥60∧tn≤40∧vet≥50). Cram should
-  breed some sharks. Raise cm growth on luyện-đề / add a coin-temptation path.
-- Non-craft strategies are samey (all lương-ổn-heavy) — differentiate cram→văn-mẫu/cá-mập.
+- ~~Tiếng Tăm collapse~~ FIXED (iter 16): TT_FLOOR = 10+0.25×UT, decays/recovers toward it.
+- ~~CA_MAP_COIN ≈ 0%~~ FIXED (iter 17): decoupled cm growth from the vet drag + lowered the
+  gate (cm≥52∧tn≤45∧vet≥50) → cá-mập now fires ~2% and the dark arc works (sharks → BI_BAT).
+- **Money inflates to ~2,800tr** — STILL OPEN (top remaining balance item). Add sinks.
+- **Deeper meter pass** — the cram-leaning DEFAULT config (n2–4 luyện-đề) now sees TT/UT
+  depress over a run (sharks → arrests → reputation hit; thesis-correct but rough for a new
+  player on defaults). Consider: a gentler default preset config, UT recovery vs arrest losses,
+  and verifying HONEST/craft strategies keep meters healthy (the intended contrast).
 
 ## Salvaged from the retired /mvp/ build (worth keeping)
 - **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
