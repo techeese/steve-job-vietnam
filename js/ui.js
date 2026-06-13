@@ -1118,6 +1118,13 @@
     w.appendChild(el("div", "kic", "Cựu sinh viên · K" + a.gradYear));
     w.appendChild(el("div", "row", "<div class='av' style='background:rgba(255,255,255,.06);font-size:18px'>🎓</div><div class='grow'><div style='font-size:15px;font-weight:800'>" + esc(a.ten) + "</div><div class='tiny'>Tiềm năng (hạt giống): " + "★".repeat(seed) + "☆".repeat(5 - seed) + "</div></div><div class='" + chipCls + "'>" + CONFIG.ALUM.CHIPS[a.state] + "</div>"));
     if (a.history && a.history.length > 1) w.appendChild(el("div", "lead", "<b>Hành trình:</b> " + a.history.map(function (h) { return CONFIG.ALUM.CHIPS[h] || h; }).join("  →  ")));
+    // 🍎 the climax: a Steve's biography IS the đề Văn's answer, embodied — give it the keynote, gold-framed
+    if (a.state === "STEVE") {
+      var kn = el("div", "lead", "🍎 " + esc(tpl(CONTENT.keynoteLine, { ten: a.ten })));
+      kn.style.cssText = "background:linear-gradient(90deg,rgba(240,198,116,.18),rgba(240,198,116,.04));border:1px solid rgba(240,198,116,.4);border-radius:9px;padding:8px 10px;color:var(--gold);font-weight:600";
+      w.appendChild(kn);
+      w.appendChild(el("div", "tiny", "Câu trả lời cho đề Văn năm ấy — không phải bằng lý lẽ, mà bằng một con người trường này nuôi lớn.")).style.marginTop = "4px";
+    }
     var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
     w.appendChild(el("div", "lead", "“" + esc(line) + "”")).style.fontStyle = "italic";
     if (a.fs) w.appendChild(el("div", "ibars", ibar("Kiến thức", a.fs.kt, "#bb6bd9") + ibar("Tay nghề", a.fs.tn, "#6fcf97") + ibar("Sáng tạo", a.fs.st, "#6aa9f0") + ibar("Cá mập", a.fs.cm, "#f2994a")));

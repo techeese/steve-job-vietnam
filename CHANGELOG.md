@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-14 — Maintenance sprint (clean) + the 🍎 Steve's biography gets its keynote (loop iter 86)
+- **Maintenance/coherence sprint** (due — 8 firings & 7 features since iter 78): `node sweep.js` bands GREEN
+  (0 bankruptcy, pluralism holds), `./bot.sh` **BOTOK**, a **fresh full 390px audit of all 5 tabs** on a
+  populated late-game state (OPS/STU/CỰU SV/Tài chính/Trường). **No regressions** — the whole still coheres
+  after weather, khoa identity, the Cúp Khoa, the pennant, umbrellas, the new events, the sprites.js split,
+  and the biography card. The game is healthy.
+- Paired ship: the **🍎 Steve biography** now gets the climax framing it deserves. A Steve is the đề Văn's
+  answer embodied in a person — tapping one in the Sổ Cựu SV now shows a **gold-framed keynote** ("MỘT THỨ
+  NỮA… — {ten} bước ra sân khấu. Cả nước nhận ra câu trả lời của đề Văn năm ấy.") + "không phải bằng lý lẽ,
+  mà bằng một con người trường này nuôi lớn." The juice exception the game makes for the 🍎 (its one earned
+  triumph) now reaches the biography card, not just the in-game burst.
+- Pure ui.js (a STEVE branch in `showAlumnus`). No engine/data/save change. Verified: parse · gate GREEN ·
+  bot.sh BOTOK · 390px screenshot of a seeded Steve's gold keynote card. POLISH → `SMALL_SHIPS_SINCE_EPIC
+  1→2` (maintenance doesn't count). Bar: **CHARM 4**.
+
 ## 2026-06-14 — Tap a cựu sinh viên to read their biography (loop iter 85)
 - Serves the owner's deepest instinct (*"people and trajectories, not scores — outcomes that span years,
   states that switch"*) where players actually meet the school's output: the **Sổ Cựu SV**. Alumni rows are
