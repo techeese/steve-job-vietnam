@@ -38,19 +38,22 @@
   (function () { var s = [0, 0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2], h = [0, 1, 2, 3, 1, 4, 0, 2, 5, 3, 1, 4], y = [0, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0], a = [0, 2, 0, 3, 0, 1, 4, 0, 2, 0, 5, 1]; for (var i = 0; i < 12; i++) VARIANTS.push({ s: s[i], h: h[i], y: y[i], a: a[i] }); })();
   var ATLAS = null; // ATLAS[grade0..3][variant0..11][frame0..1] = offscreen canvas
   function bakeChar(shirt, shirtD, V, frame) {
-    var sk = SKINS[V.s][0], skD = SKINS[V.s][1], hair = HAIRSET[V.h][0], hairHi = HAIRSET[V.h][1], style = HAIRSTYLE[V.y], acc = ACC[V.a];
+    var sk = SKINS[V.s][0], skD = SKINS[V.s][1], skH = shade(sk, 0.16);
+    var hair = HAIRSET[V.h][0], hairHi = HAIRSET[V.h][1], hairD = shade(hair, -0.32), style = HAIRSTYLE[V.y], acc = ACC[V.a];
+    var shirtH = shade(shirt, 0.20), shirtDD = shade(shirtD, -0.20);
     var cv = document.createElement("canvas"); cv.width = 16; cv.height = 22;
     var X = cv.getContext("2d"); X.imageSmoothingEnabled = false;
     function R(x, y, w, h, c) { X.fillStyle = c; X.fillRect(x, y, w, h); }
-    // HEAD with 1px outline
+    // HEAD with 1px outline — lit upper-left, shaded lower-right (rounded volume)
     R(3, 1, 10, 10, PX.out); R(4, 2, 8, 8, sk);
-    R(11, 7, 1, 2, skD); // cheek shadow
+    R(4, 2, 7, 1, skH); R(4, 2, 1, 7, skH);  // lit top + left edge
+    R(11, 3, 1, 7, skD); R(10, 8, 1, 2, skD); // shaded right + lower-right cheek
     X.clearRect(3, 1, 1, 1); X.clearRect(12, 1, 1, 1); X.clearRect(3, 10, 1, 1); X.clearRect(12, 10, 1, 1);
-    // hair by style
-    R(4, 2, 8, 2, hair); R(4, 2, 1, 4, hair); R(11, 2, 1, 4, hair); R(4, 2, 8, 1, hairHi);
-    if (style === "short") { R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair); }
-    else if (style === "long") { R(4, 2, 1, 8, hair); R(11, 2, 1, 8, hair); R(3, 9, 1, 1, hair); R(12, 9, 1, 1, hair); }
-    else { R(7, 0, 2, 2, hair); R(6, 0, 4, 1, hairHi); R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hair); } // bun
+    // hair by style (right side darker for roundness)
+    R(4, 2, 8, 2, hair); R(4, 2, 1, 4, hair); R(11, 2, 1, 4, hair); R(4, 2, 8, 1, hairHi); R(11, 2, 1, 4, hairD);
+    if (style === "short") { R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hairD); }
+    else if (style === "long") { R(4, 2, 1, 8, hair); R(11, 2, 1, 8, hairD); R(3, 9, 1, 1, hair); R(12, 9, 1, 1, hairD); }
+    else { R(7, 0, 2, 2, hair); R(6, 0, 4, 1, hairHi); R(5, 4, 1, 1, hair); R(10, 4, 1, 1, hairD); } // bun
     // face
     R(5, 6, 2, 2, PX.eye); R(9, 6, 2, 2, PX.eye); R(5, 6, 1, 1, "#ffffff"); R(9, 6, 1, 1, "#ffffff");
     R(4, 8, 1, 1, "#f2ad95"); R(11, 8, 1, 1, "#f2ad95"); R(7, 9, 2, 1, PX.mouth);
@@ -58,14 +61,15 @@
     if (acc === "glasses") { R(4, 6, 3, 2, PX.out); R(9, 6, 3, 2, PX.out); R(7, 7, 2, 1, PX.out); R(5, 6, 1, 1, "#bfe0ff"); R(10, 6, 1, 1, "#bfe0ff"); }
     else if (acc === "bow") { R(3, 2, 2, 2, "#f15a7a"); R(2, 2, 1, 2, "#d63f5e"); }
     else if (acc === "cap") { R(3, 1, 10, 2, "#4a8fe0"); R(4, 0, 8, 1, "#5b9ff0"); R(11, 2, 3, 1, "#3a78c8"); }
-    // BODY (shirt)
-    R(3, 10, 10, 8, PX.out); R(4, 11, 8, 6, shirt); R(10, 11, 2, 6, shirtD);
-    R(4, 11, 8, 1, "rgba(255,255,255,.22)");
-    R(3, 12, 1, 4, shirt); R(12, 12, 1, 4, shirt); R(3, 16, 1, 1, sk); R(12, 16, 1, 1, sk);
+    // BODY (shirt) — rounded torso: lit left, 2-tone shadow on the right, lit top seam
+    R(3, 10, 10, 8, PX.out); R(4, 11, 8, 6, shirt);
+    R(4, 11, 7, 1, shirtH); R(4, 11, 1, 5, shirtH);   // lit top + left edge
+    R(10, 11, 2, 6, shirtD); R(11, 11, 1, 6, shirtDD); // shaded right (2-tone)
+    R(3, 12, 1, 4, shirt); R(12, 12, 1, 4, shirtD); R(3, 16, 1, 1, sk); R(12, 16, 1, 1, sk); // arms (right arm in shade)
     // LEGS (2-frame) + shoes
     if (frame === 0) { R(5, 17, 2, 4, PX.pants); R(9, 17, 2, 4, PX.pants); R(5, 20, 2, 1, PX.shoe); R(9, 20, 2, 1, PX.shoe); }
     else { R(5, 17, 2, 3, PX.pants); R(5, 19, 2, 1, PX.shoe); R(9, 17, 2, 4, PX.pants); R(9, 20, 2, 1, PX.shoe); }
-    R(5, 17, 6, 1, PX.pantsD);
+    R(5, 17, 6, 1, PX.pantsD); R(9, 17, 2, 3, shade(PX.pants, -0.12)); // waistband + shaded right leg (pants only, shoe kept)
     return cv;
   }
   function buildAtlas() {
@@ -1254,6 +1258,7 @@
     // positions, force a roster sync, and step the walk N frames under a pinned period.
     _dbgActors: function () { return actors.map(function (a) { return { py: Math.round(a.py), arr: !!a._arriving }; }); },
     _sync: function (init) { syncActors(init); },
+    _bakeSheet: function () { var c = $("mapStatic"), X = c.getContext("2d"); X.imageSmoothingEnabled = false; X.fillStyle = "#79b34a"; X.fillRect(0, 0, c.width, c.height); var sc = 5, per = 5; for (var v = 0; v < ATLAS[0].length; v++) { var spr = ATLAS[0][v][0]; var col = v % per, row = (v / per) | 0; X.drawImage(spr, 8 + col * 76, 8 + row * 116, 16 * sc, 22 * sc); } },
     _steps: function (n, period) { var ts = 50000; for (var f = 0; f < (n || 60); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, period || 0); } },
     // test hook: fast-forward the walk so a pinned period reaches its destinations (headless rAF is throttled)
     _settle: function (frames) { if (S()._mapDirty) { rebuildWalk(); drawStatic(); } var p = forcePeriod >= 0 ? forcePeriod : 0, ts = 20000; for (var i0 = 0; i0 < actors.length; i0++) actors[i0]._period = -99; for (var f = 0; f < (frames || 1500); f++) { ts += 16; for (var i = 0; i < actors.length; i++) updateActor(actors[i], true, ts, p); } }

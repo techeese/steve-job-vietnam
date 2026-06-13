@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — 3D-but-pixel PEOPLE (owner directive C, part 2, loop iter 27)
+- Re-baked the character sprite atlas with volume: faces and torsos are now lit from the
+  upper-left (lighter skin/shirt highlight edges) and shaded on the lower-right (2-tone shirt
+  shadow, right cheek/hair/arm/leg in shade) — so each chibi reads as a rounded form instead of
+  a flat cut-out, matching the buildings' light direction. Kept bright + crisp (subtle, not
+  muddy). Verified against a before/after 5× sprite sheet across all 12 variants. Directive C
+  (houses + people both 3D-but-pixel) now complete; further depth/polish is optional.
+
 ## 2026-06-13 — 3D-but-pixel BUILDINGS (owner directive C, part 1, loop iter 26)
 - Buildings were flat front-elevations; now each reads as a chunky 3D block. Added an extruded
   depth silhouette (solid dark side+roof faces offset down-right = the box's thickness), a single
