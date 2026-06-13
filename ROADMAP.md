@@ -6,15 +6,17 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 3`   → **≥3 NOW — the NEXT firing is HARD-LOCKED to the EPIC track.** Reset to 0 only when an epic SHIPS. (76 Góp quỹ · 77 weather · 79 khoa identity = 3 POLISH; 78 maintenance didn't count.) NEXT = an EPIC: either the rest of **deeper-khoa life** (rivalries with teeth / khoa-gated facilities / a dedicated khoa screen — FEATURE) or the queued **ui.js→screens.js** (STRUCTURE, see `## Architecture`). EPICS_SINCE_STRUCTURE is 1 so a FEATURE epic is still allowed; pick by value.
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track**. Reset to 0 only when an epic SHIPS. (Reset iter 80: the Cúp Khoa FEATURE epic shipped.)
+- `EPICS_SINCE_STRUCTURE: 2`    → **≥2 NOW — the NEXT epic MUST be a STRUCTURE move** (ui.js→screens.js, see `## Architecture`). (75 BGM + 80 Cúp Khoa = 2 FEATURE epics since the iter-73 structure review; iter 79 was a polish, not an epic.)
 - `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be a STRUCTURE move (queued: ui.js → screens.js, see `## Architecture`).
 - `LAST_EPIC: iter 75 — FEATURE: BGM enrichment (chord progressions). All VISION dream features now built.` **Reset iter 73 via the structure REVIEW** (codebase healthy; the one queued refactor — ui.js panels/modals → `screens.js` — is high-coupling/non-urgent, see `## Architecture`).
 - `LAST_EPIC: iter 70 — FEATURE: buildings graphics step-change (rich materials, drawRoom overhaul)`
 - `LAST_MAINTENANCE: iter 78 — CLEAN bill of health. sweep green (0 bankrupt · pluralism holds) · NEW bot.sh full-game in-browser playthrough (11y, all 5 tabs + weather rendered each chunk) → BOTOK, zero JSERR, 84 grad/85 alumni · all 5 tabs 390px-audited (góp-quỹ + weather render live) · perf clean (2 intervals, 691 DOM nodes heaviest tab). No bugs found; no code changes beyond adding bot.sh.`
 
 ## Epic in progress
-_(none — buildings step-change SHIPPED iter 70: picked Direction B "rich materials" from the 3-way
-divergence. OWNER veto options if you'd prefer: A = deeper-2.5D blocks, C = cozy cottage.)_
+_(none — **Cúp Khoa SHIPPED iter 80**: annual inter-khoa contest + trophy pennant race, reward kept
+story-not-power so the sweep bands held. NEXT epic is FORCED to STRUCTURE: ui.js→screens.js, see
+`## Architecture`. A dedicated khoa SCREEN remains a possible later FEATURE epic if it earns its slot.)_
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->

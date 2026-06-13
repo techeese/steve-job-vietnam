@@ -203,6 +203,8 @@ function freshState(seed) {
     students: [],
     teachers: [],
     khoaHead: {}, // P4b: khoa key → teacher id (a trưởng-khoa boosts that khoa)
+    khoaCup: { trophies: {}, champ: null, lastYear: 0 }, // iter 80: annual inter-khoa Cúp Khoa — a trophy pennant race
+
     alumni: [],
     admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
     endow: { bal: CONFIG.BOOT_ENDOW, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 },
@@ -289,6 +291,7 @@ function monthRollover() {
   alumniMonth(S.month);
   if (S.year === 2 && S.month === 3) scriptedArrest();
   if (S.month === 2) tetBeat();
+  if (S.month === CONFIG.KHOA_CUP.month) runKhoaCup(); // annual Cúp Khoa (before the June ceremony)
   if (S.month === 9 && S.day === 1) scholarshipDraw(); // day always 1 right after rollover
   if (S.month === 6 && S.lastJuneYear !== S.year) { S.lastJuneYear = S.year; openJune(); }
   if (S.month === 7 && !S.pendingAdmit && !hasResolvedAdmitThisYear()) openAdmissions();
@@ -480,6 +483,35 @@ function endowMilestones() {
     news("Quỹ đủ lớn để lập " + pantheonOf(key).name + ". " + pantheonOf(key).line);
     bacTamNod();
   }
+}
+// Cúp Khoa (iter 80): once a year (month 5, before June) the unlocked khoas with students compete. Winner
+// = best of (members + avg signature-stat + synergy/head bonuses). Reward is STORY-not-power: a trophy (a
+// multi-year pennant race), a morale lift to the winning khoa (mood above the penalty floor → no growth
+// bonus, so the destiny cascade is untouched), and a tiny reputation nod. Deterministic from S; no rnd.
+function runKhoaCup() {
+  if (!S.khoaCup) S.khoaCup = { trophies: {}, champ: null, lastYear: 0 };
+  if (S.khoaCup.lastYear === S.year) return;                 // at most once per year
+  var rooms = {}; for (var ri = 0; ri < S.rooms.length; ri++) rooms[S.rooms[ri].key] = true;
+  var tally = {};
+  CONFIG.MAJORS.forEach(function (m) { if (rooms[m.room]) tally[m.key] = { m: m, n: 0, statSum: 0 }; });
+  for (var si = 0; si < S.students.length; si++) {
+    var st = S.students[si], mj = studentMajor(st);
+    if (mj && tally[mj.key]) { tally[mj.key].n++; tally[mj.key].statSum += (st[mj.stat] || 0); }
+  }
+  var contenders = []; for (var k in tally) if (tally[k].n > 0) contenders.push(tally[k]);
+  if (contenders.length < 2) return;                         // need a real contest
+  S.khoaCup.lastYear = S.year;
+  contenders.forEach(function (t) {
+    t.score = t.n + (t.statSum / t.n) / 10 + (khoaHeaded(t.m.key) ? 1 : 0) + (t.n >= khoaThreshold(t.m.key) ? 2 : 0);
+  });
+  contenders.sort(function (a, b) { return b.score - a.score; });
+  var win = contenders[0].m;
+  S.khoaCup.trophies[win.key] = (S.khoaCup.trophies[win.key] || 0) + 1;
+  S.khoaCup.champ = win.key;
+  // reward — kept sweep-safe (see CONFIG.KHOA_CUP note): morale lift to the winner's khoa + a small TT nod
+  for (var wi = 0; wi < S.students.length; wi++) { var ws = S.students[wi], wm = studentMajor(ws); if (wm && wm.key === win.key) ws.mood = clamp(ws.mood + CONFIG.KHOA_CUP.moodWin, 0, 100); }
+  if (CONFIG.KHOA_CUP.ttWin) gainTT(CONFIG.KHOA_CUP.ttWin);
+  news(tpl(CONTENT.ticker.khoaCup, { year: S.year, khoa: win.name, n: S.khoaCup.trophies[win.key] }));
 }
 // Player decision (late-game money sink): move cash from the bank INTO the endowment. One-way —
 // the quỹ can never be spent back; it only compounds and funds scholarships. So this is the
@@ -1111,6 +1143,15 @@ function sanitize() {
     if (!majorByKey(hk) || !teacherById(tid) || seenT[tid]) { delete S.khoaHead[hk]; continue; }
     seenT[tid] = true;
   }
+  // khoaCup (iter 80): validate the trophy record + reigning champion
+  if (!S.khoaCup || typeof S.khoaCup !== "object") S.khoaCup = { trophies: {}, champ: null, lastYear: 0 };
+  if (!S.khoaCup.trophies || typeof S.khoaCup.trophies !== "object") S.khoaCup.trophies = {};
+  for (var ck in S.khoaCup.trophies) {
+    if (!majorByKey(ck) || !Number.isFinite(S.khoaCup.trophies[ck])) { delete S.khoaCup.trophies[ck]; continue; }
+    S.khoaCup.trophies[ck] = Math.max(0, Math.round(S.khoaCup.trophies[ck]));
+  }
+  S.khoaCup.lastYear = clamp(Math.round(S.khoaCup.lastYear) || 0, 0, 999);
+  if (S.khoaCup.champ != null && !majorByKey(S.khoaCup.champ)) S.khoaCup.champ = null;
 }
 
 /* ============================================================================

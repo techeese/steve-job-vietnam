@@ -19,6 +19,10 @@ var CONFIG = {
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)
   SYN_CROSS: 0.15,            // P4: when ≥2 khoas thrive, members cross-pollinate — bonus to a 2nd stat
   HEAD_BONUS: 0.12,           // P4: a khoa with a trưởng-khoa teacher synergizes at one fewer member + grows faster
+  // Cúp Khoa (iter 80): an annual inter-khoa contest in month 5. Reward is deliberately STORY-not-power —
+  // a trophy record (a pennant race) + a morale lift (mood above the penalty floor gives no growth bonus,
+  // so the destiny cascade is untouched) + a tiny reputation nod. No cash/stat/growth reward → no dominant strategy.
+  KHOA_CUP: { month: 5, moodWin: 12, ttWin: 2 },
   // KHOA / MAJORS (P1) — students auto-join by tell; a khoa unlocks when its building exists; each
   // khoa grows one stat and leans toward one destiny (the satirical hook). Prodigy joins on unlock.
   MAJORS: [
@@ -425,6 +429,7 @@ var CONTENT = {
     poolForeshadow: "{n} hồ sơ đang hướng về cổng trường.",
     foundingJune: "Hết một năm học. Trường chưa có khóa tốt nghiệp nào — cả khóa lên lớp, sân vẫn rộng chỗ.",
     quyLai: "Quỹ hiến tặng: {bal}tr (+{lai}tr lãi). Không ai vỗ tay.",
+    khoaCup: "🏆 Cúp Khoa năm {year}: {khoa} vô địch — chiếc cúp thứ {n}. Cả khoa hò reo, khoa bạn lặng lẽ về xưởng.",
     cutHi295: "Thủ khoa 29,9 điểm vẫn trượt vì tiêu chí phụ.",
     cutHi300: "ĐIỂM CHUẨN 30,5/30 — ba điểm 10 vẫn trượt nguyện vọng 1.",
     cutHi27: "Điểm chuẩn cao kỷ lục. Phụ huynh chụp màn hình.",

@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-06-14 — EPIC: Cúp Khoa — the khoas now race for a trophy across the years (loop iter 80)
+- The cadence-forced EPIC (after 3 polish ships). Turns iter-79's soft khoa standing into a real **annual
+  inter-khoa competition** with a multi-year **pennant race** — deeper khoa life, the top VISION next-tier item.
+- **How it plays:** every year in **tháng 5** (just before the June ceremony) the unlocked khoas with students
+  compete; the strongest — *members + average signature-stat + synergy/head bonuses* — wins the **Cúp Khoa** and
+  a **trophy**. The reigning champion + each khoa's trophy count (🏆×N) now show in the Sinh viên khoa cards, so
+  the school grows a visible *culture history*: "💻 Khoa Lập trình đương kim vô địch · cúp ×6."
+- **Reward is STORY-not-power (by design, to keep the đề-Văn question open):** the trophy record (cosmetic) + a
+  morale lift to the winning khoa (mood above the penalty floor gives **no** growth bonus, engine line 378 — so
+  the destiny cascade is untouched) + a tiny reputation nod (+2 TT). **No cash, no stat inflation, no permanent
+  growth change → no dominant strategy.** Proven: `node sweep.js` bands are **unchanged** with the cup firing in
+  auto-play (0% bankruptcy, pluralism holds, destiny distribution identical within noise).
+- **Non-blocking fanfare** (the owner watches remotely): a cup win fires a confetti burst + toast + news ticker
+  (mirrors the Steve-burst detector), **not** a blocking modal — the watch-flow stays smooth.
+- engine.js: `runKhoaCup()` (deterministic, no rnd) called from `monthRollover`; `S.khoaCup {trophies,champ,
+  lastYear}` with freshState default + mergeInto (old saves get it free) + sanitize entry (no schema-V bump).
+  data.js: `CONFIG.KHOA_CUP` + a ticker line. ui.js: the non-blocking celebration + trophy/champion display.
+  Verified: parse · behavioral probe (fires · accumulates · same-year guard · save-compat without `khoaCup` ·
+  morale reward) · `./gate.sh` GREEN · `./bot.sh` **BOTOK** (11y, cup+celebration+trophies all exercised, zero
+  JSERR) · 390px screenshot of the pennant-race cards.
+- EPIC shipped → cadence resets: **`SMALL_SHIPS_SINCE_EPIC 3→0`**, **`EPICS_SINCE_STRUCTURE 1→2`** ⇒ the NEXT
+  epic must be the queued **STRUCTURE** move (ui.js→screens.js). Bar: **FUN/DEPTH 4** (khoas became cultures
+  with stakes and a history).
+
 ## 2026-06-14 — Khoa identity + an inter-khoa standing (loop iter 79)
 - First slice of the VISION next-tier **"deeper khoa life"** — done safely (UI + one data field, zero
   engine/save/balance change). The Sinh viên tab's khoa section went from a plain list to **identity-rich

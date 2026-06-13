@@ -211,6 +211,7 @@
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [], fest = [];
   var celebrateUntil = 0, _steveSeen = -1; // 🍎 Steve-emergence celebration (the đề Văn's answer, made a moment)
+  var _cupSeen = -1; // 🏆 Cúp Khoa — fire a non-blocking celebration when a new year's cup is awarded
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
@@ -252,6 +253,7 @@
     var sb = S().META.build; saveIsOld = !!(sb && sb !== BUILD); // running newer code than the save was written under
     S().META.build = BUILD;
     _steveSeen = S().META.steves || 0; // baseline so a loaded save's existing Steves don't re-celebrate
+    _cupSeen = (S().khoaCup && S().khoaCup.lastYear) || 0; // baseline so a loaded save's last cup doesn't re-fire
     AUDIO.init();
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
@@ -991,6 +993,13 @@
     // 🍎 a Steve emerged — the game's climax (the đề Văn's answer): golden confetti burst + fanfare
     if (_steveSeen >= 0 && (s.META.steves || 0) > _steveSeen) { celebrateUntil = (typeof performance !== "undefined" ? performance.now() : 0) + 5200; toast("🍎 Một 'Steve' ra đời — trường đã có quả táo của riêng mình!"); sfx("grad"); }
     _steveSeen = s.META.steves || 0;
+    // 🏆 Cúp Khoa — a khoa just won this year's cup: non-blocking confetti + fanfare (no modal; the watch-flow stays smooth)
+    var cy = (s.khoaCup && s.khoaCup.lastYear) || 0;
+    if (_cupSeen >= 0 && cy > _cupSeen && s.khoaCup.champ) {
+      var cm = CONFIG.MAJORS.filter(function (m) { return m.key === s.khoaCup.champ; })[0];
+      if (cm) { celebrateUntil = (typeof performance !== "undefined" ? performance.now() : 0) + 4200; toast("🏆 " + cm.icon + " " + cm.name + " vô địch Cúp Khoa năm " + cy + "!"); sfx("milestone"); }
+    }
+    _cupSeen = cy;
     // campus glow-up: when the grounds reach a new prestige tier, celebrate + repaint (once per tier)
     var ct = campusTier();
     if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; sfx("milestone"); toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }
@@ -1146,16 +1155,20 @@
       var ranked = CONFIG.MAJORS.filter(function (m) { return s.rooms.some(function (r) { return r.key === m.room; }) && (counts[m.key] || 0) > 0; })
         .sort(function (a, b) { return (counts[b.key] || 0) - (counts[a.key] || 0); });
       var rankOf = {}; if (ranked.length >= 2) ranked.forEach(function (m, i) { rankOf[m.key] = ["🥇", "🥈", "🥉"][i] || ""; });
-      if (ranked.length >= 2) { var top = ranked[0]; kc.appendChild(el("div", "tiny", "Khoa nổi bật năm nay: <span style='color:" + (top.color || dflt) + ";font-weight:700'>" + top.icon + " " + esc(top.name) + "</span>")).style.marginBottom = "6px"; }
+      var cup = s.khoaCup || { trophies: {}, champ: null };
+      if (cup.champ) { var ch = CONFIG.MAJORS.filter(function (m) { return m.key === cup.champ; })[0]; if (ch) kc.appendChild(el("div", "tiny", "🏆 Đương kim vô địch Cúp Khoa: <span style='color:" + (ch.color || dflt) + ";font-weight:700'>" + ch.icon + " " + esc(ch.name) + "</span> · cúp ×" + (cup.trophies[ch.key] || 1))).style.marginBottom = "6px"; }
+      else if (ranked.length >= 2) { var top = ranked[0]; kc.appendChild(el("div", "tiny", "Khoa nổi bật năm nay: <span style='color:" + (top.color || dflt) + ";font-weight:700'>" + top.icon + " " + esc(top.name) + "</span> <span style='opacity:.6'>· Cúp Khoa tháng 5</span>")).style.marginBottom = "6px"; }
       CONFIG.MAJORS.forEach(function (m) {
         var unlocked = s.rooms.some(function (r) { return r.key === m.room; });
         var cnt = counts[m.key] || 0, need = thr(m.key), syn = cnt >= need, col = m.color || dflt;
         var status = !unlocked ? ("🔒 Xây " + CONFIG.ROOMS[m.room].name + " để mở")
           : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + need + " SV để cộng hưởng"));
         var medal = rankOf[m.key] ? (" " + rankOf[m.key]) : "";
+        var troph = (cup.trophies && cup.trophies[m.key]) || 0;
+        var trophBadge = troph ? " <span style='color:var(--gold)'>🏆×" + troph + "</span>" : "";
         var row = el("div", "row"); row.style.marginBottom = unlocked ? "2px" : "6px"; if (!unlocked) row.style.opacity = ".5";
         row.style.borderLeft = "3px solid " + col; row.style.paddingLeft = "7px";
-        row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + medal + "</div>" +
+        row.innerHTML = "<div class='grow'><div style='font-size:11.5px;font-weight:700'>" + m.icon + " " + esc(m.name) + medal + trophBadge + "</div>" +
           "<div class='tiny' style='font-style:italic;opacity:.78'>" + esc(m.line) + "</div>" +
           "<div class='tiny'>" + status + " · → " + m.dest + "</div></div><div class='schip' style='color:" + col + "'>" + cnt + " SV</div>";
         kc.appendChild(row);
