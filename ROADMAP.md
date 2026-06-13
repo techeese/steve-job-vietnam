@@ -11,7 +11,12 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - `LAST_EPIC: iter 57 — STRUCTURE: art.js extraction (+ onerror restore iter 56)`
 
 ## Epic in progress
-_(none — the STRUCTURE-epic shipped iter 57; next firing is free to pick polish or dequeue an epic.)_
+**Epic: FEATURE — art step-change (characters with volume)** (started iter 59, backlog #1; the #1 unmet
+BEAUTY bar). Phase 1 = a 3-direction DIVERGENCE workflow (`w0qlpzi7c`): ISO-block volume / soft-rounded
+volume / bigger-detailed — each a self-refined prototype screenshot. Next: present the 3 to the owner to
+PICK the direction (art = costliest miss), then integrate the winner into `js/art.js`'s sprite baker,
+prove it (390px + `_renderLiveOnce`), ship. If the owner is away when results land, pick the
+highest-Bar-scoring direction and ship it for veto-by-reaction.
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
