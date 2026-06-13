@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — Liveliness pass (loop iter 8): emotes + a campus cat
+Chasing the north-star ("sunny, slightly chaotic little school you love watching").
+- **Emote bubbles:** students occasionally pop a little pixel reaction above their head
+  (♪ ❗ ♥ 💡 … 💧 ✨ ?), context-aware (music when performing, hearts at lunch, ideas while
+  tinkering) — personality everywhere, the campus reacts.
+- **Campus cat:** a wandering pixel cat roams the grounds — pure watch-it charm.
+- Both cheap (live-layer flat ops); gates green.
+
 ## 2026-06-13 — Character variety (loop iter 7): students as individuals
 - Expanded the sprite atlas from 3 hair colours to 12 baked VARIANTS per year — 3 skin tones,
   6 hair colours × 3 styles (short/long/bun), and accessories (glasses/bow/cap, weighted to

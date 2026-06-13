@@ -95,7 +95,7 @@
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
-  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1;
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
 
@@ -108,7 +108,7 @@
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
     buildAtlas(); // bake pixel-art sprite atlas once
-    rebuildWalk(); syncActors(true);
+    rebuildWalk(); syncActors(true); initCats();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
     // font gate: redraw the static layer once 'Be Vietnam Pro' is ready so room labels aren't a fallback face
@@ -201,8 +201,9 @@
     var i;
     for (i = 0; i < actors.length; i++) updateActor(actors[i], alive, ts, period);
     actors.sort(function (a, b) { return a.py - b.py; });
-    for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); }
+    for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
     if (period === 1 || period === 3) drawSanBall(ctx, ts); // ball out at recess / afternoon
+    for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     requestAnimationFrame(liveLoop);
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
@@ -229,6 +230,50 @@
     }
     var amp = (a.act === "perform" && a._atDest) ? 2.6 : (a._moving ? 1.4 : 0.4);
     a.bob = Math.sin(ts / 180 + a.ph) * amp;
+    // personality: occasional emote bubble (the campus reacts, lives)
+    if (a.emoteUntil && ts > a.emoteUntil) a.emote = null;
+    else if (!a.emote && alive && Math.random() < 0.0008) { a.emote = pickEmote(a); a.emoteUntil = ts + 2300; }
+  }
+  var EMOTES = ["music", "excl", "dots", "heart", "spark", "idea", "sweat", "q"];
+  function pickEmote(a) {
+    if (a.act === "perform") return "music";
+    if (a.act === "eat") return Math.random() < 0.6 ? "heart" : "spark";
+    if (a.act === "study") return Math.random() < 0.5 ? "idea" : "dots";
+    if (a.act === "tinker") return Math.random() < 0.6 ? "idea" : "spark";
+    if (a.act === "daydream") return Math.random() < 0.5 ? "dots" : "music";
+    return EMOTES[(Math.random() * EMOTES.length) | 0];
+  }
+  function drawEmote(ctx, t, x, y) {
+    var ty = y - 27;
+    ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.fillRect(x - 3, ty - 1, 7, 7); ctx.fillRect(x - 1, ty + 6, 2, 1); // speech bubble
+    ctx.fillStyle = "rgba(0,0,0,.12)"; ctx.fillRect(x - 3, ty + 5, 7, 1);
+    if (t === "music") { ctx.fillStyle = PX.out; ctx.fillRect(x + 1, ty, 1, 4); ctx.fillStyle = "#e0584a"; ctx.fillRect(x - 1, ty + 3, 2, 2); }
+    else if (t === "excl") { ctx.fillStyle = "#e0584a"; ctx.fillRect(x, ty, 2, 3); ctx.fillRect(x, ty + 4, 2, 1); }
+    else if (t === "dots") { ctx.fillStyle = "#6b7280"; ctx.fillRect(x - 2, ty + 2, 1, 1); ctx.fillRect(x, ty + 2, 1, 1); ctx.fillRect(x + 2, ty + 2, 1, 1); }
+    else if (t === "heart") { ctx.fillStyle = "#f15a7a"; ctx.fillRect(x - 2, ty, 1, 1); ctx.fillRect(x + 1, ty, 1, 1); ctx.fillRect(x - 2, ty + 1, 4, 2); ctx.fillRect(x - 1, ty + 3, 2, 1); }
+    else if (t === "spark") { ctx.fillStyle = "#f2c14e"; ctx.fillRect(x, ty - 1, 1, 5); ctx.fillRect(x - 2, ty + 1, 5, 1); }
+    else if (t === "idea") { ctx.fillStyle = "#ffe06a"; ctx.fillRect(x - 1, ty, 3, 3); ctx.fillStyle = PX.out; ctx.fillRect(x, ty + 3, 1, 1); }
+    else if (t === "sweat") { ctx.fillStyle = "#7fd0ff"; ctx.fillRect(x + 1, ty, 1, 2); ctx.fillRect(x, ty + 1, 2, 2); }
+    else { ctx.fillStyle = "#6b7280"; ctx.fillRect(x - 1, ty, 3, 1); ctx.fillRect(x + 1, ty + 1, 1, 1); ctx.fillRect(x, ty + 2, 1, 1); ctx.fillRect(x, ty + 4, 1, 1); } // ?
+  }
+  /* a wandering campus cat — pure "love watching" charm */
+  function initCats() { var t = randWalkTile(); cats = [{ px: t[0] * T + 13, py: t[1] * T + 13, tx: t[0], ty: t[1], wait: 0 }]; }
+  function updateCat(c, ts) {
+    var tgx = c.tx * T + 13, tgy = c.ty * T + 13, dx = tgx - c.px, dy = tgy - c.py, d = Math.hypot(dx, dy);
+    if (d < 1.5) { if (c.wait > 0) c.wait--; else { var n = randWalkTile(); c.tx = n[0]; c.ty = n[1]; c.wait = (Math.random() * 140) | 0; } c.moving = false; }
+    else { c.px += (dx / d) * 0.6; c.py += (dy / d) * 0.6; c.dir = dx < 0 ? -1 : 1; c.moving = true; }
+  }
+  function drawCat(ctx, c, ts) {
+    var x = c.px | 0, y = c.py | 0, col = "#e0944a", colD = "#c2762f", dir = c.dir || 1;
+    ctx.fillStyle = "rgba(30,40,20,.22)"; ctx.fillRect(x - 4, y + 1, 9, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(x - 4, y - 4, 9, 5);                 // body outline
+    ctx.fillStyle = col; ctx.fillRect(x - 3, y - 3, 7, 3); ctx.fillStyle = colD; ctx.fillRect(x - 3, y - 1, 7, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(x + 4 * dir - (dir < 0 ? 1 : 0), y - 6, 4, 4); // head (front)
+    ctx.fillStyle = col; ctx.fillRect(x + 4 * dir + (dir < 0 ? 0 : 1) - (dir < 0 ? 1 : 0), y - 5, 2, 2);
+    ctx.fillStyle = "#2a2330"; ctx.fillRect(x + 5 * dir, y - 5, 1, 1);          // eye
+    ctx.fillStyle = PX.out; ctx.fillRect(x + 3 * dir, y - 7, 1, 1); ctx.fillRect(x + 6 * dir, y - 7, 1, 1); // ears
+    ctx.fillStyle = col; ctx.fillRect(x - 5 * dir, y - 5, 1, 2); ctx.fillRect(x - 6 * dir, y - 6, 2, 1);   // tail
+    ctx.fillStyle = PX.out; if (c.moving && Math.sin(ts / 140) > 0) { ctx.fillRect(x - 2, y + 1, 1, 1); ctx.fillRect(x + 2, y + 1, 1, 1); } else { ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 1, y + 1, 1, 1); }
   }
   // per-activity overlay — flat ops only, drawn for parked actors (≈ one room's worth at a time)
   function drawActivity(ctx, a, ts) {
