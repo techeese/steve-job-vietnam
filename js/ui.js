@@ -233,7 +233,7 @@
         // clear the arrival mark once they've actually stepped onto the grounds
         if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
-      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
+      a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id);
       a.tell = s.tell || ""; a.seed = s.seed;
       a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < VARIANTS.length) ? s.look : hashId(s.id) % VARIANTS.length;
       a.skin = SKINS[VARIANTS[a.variantIdx].s][0]; a.glasses = ACC[VARIANTS[a.variantIdx].a] === "glasses";
@@ -434,6 +434,12 @@
     if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 3, y - 14 + bob, 2, 2); ctx.fillRect(x + 1, y - 14 + bob, 2, 2); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 6.5, y - 20.5, 13, 11); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 24, 2, 2); ctx.fillRect(x - 2, y - 23, 1, 1); ctx.fillRect(x + 1, y - 23, 1, 1); } // scholarship star
+    if (a.fav) { // followed student — a persistent gold star bobbing overhead so you can find your protégé
+      var fsy = (y - 29 + Math.sin(ts / 300 + a.ph) * 1.2) | 0;
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 1, fsy - 2, 3, 6); ctx.fillRect(x - 3, fsy, 7, 2);
+      ctx.fillStyle = PX.gold; ctx.fillRect(x, fsy - 2, 1, 5); ctx.fillRect(x - 2, fsy, 5, 1); ctx.fillRect(x - 1, fsy - 1, 3, 2);
+      ctx.fillStyle = "#fff3c0"; ctx.fillRect(x, fsy - 1, 1, 1);
+    }
   }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
   // make the current tap selection unmistakable on the map (mobile: small targets need a clear marker)
@@ -831,13 +837,15 @@
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='16' height='22' style='width:22px;height:30px;image-rendering:pixelated;background:" + (GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
       "<div class='grow'><input id='renameIn' value='" + esc(st.ten).replace(/'/g, "&#39;") + "' maxlength='18' style='width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 7px;font-family:inherit;font-weight:700;font-size:12px'/>" +
-      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + "</div></div>" +
+      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + "</div></div>" +
+      "<button class='ix' id='favBtn' title='Theo dõi'>" + (S().META.favId === st.id ? "⭐" : "☆") + "</button>" +
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
       "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>";
     if (ATLAS) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(ATLAS[st.grade - 1][lookIdx][0], 0, 0); }
     $("ixBtn").onclick = hideInspect;
+    $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); };
     $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
     $("lookBtn").onclick = function () { st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); };
     ins.classList.add("show"); $("mapHint").textContent = "";

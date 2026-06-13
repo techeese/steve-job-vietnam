@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Follow a student (your protégé, loop iter 43)
+- Serving the north-star ("the characters… doing stuff you like to see"): a student's inspect card now
+  has a ☆/⭐ **follow** toggle. Mark one as your protégé and they get a persistent gold star bobbing
+  over their head on the map — so among 40 kids you can pick *one* and watch them from nervous tân SV
+  through the years to whatever they become, without it spoiling the June reveal. New `META.favId`;
+  the marker reuses the verified pixel-overhead pattern; toggling re-syncs the actor flag live.
+  Verified the toggle sets/clears state and the button reflects it; gates green. *Follow-up:* a
+  payoff line at graduation when your followed student walks out and becomes a kỹ-sư / văn-mẫu / 🍎.
+
 ## 2026-06-13 — Clock auto-starts after the intro (onboarding, loop iter 42)
 - The game booted **paused** (speed 0) with no cue to press play, so a first-timer could build their
   Phòng học, see the "wait for tháng 7" goal, and then watch nothing happen because the clock wasn't
