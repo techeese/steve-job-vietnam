@@ -7,7 +7,7 @@
 
 var CONFIG = {
   V: 2,
-  SAVE_KEY: "hoc-vien-steve-v2",
+  SAVE_KEY: "hoc-vien-steve-v3", // v3: start-from-nothing reframe — old v2 saves (42-SV school) are retired so the new boot shows
   // clock: 10 ticks = 1 day; 1 day = 1.0s at 1x
   TICK_MS: 100, TICKS_PER_DAY: 10, DAYS_PER_MONTH: 30,
   GRID_W: 15, GRID_H: 12, TILE: 26,

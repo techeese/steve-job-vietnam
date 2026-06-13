@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — "Still the same after many versions" — cache/save fix (loop iter 37)
+- Owner reported the live site looked unchanged across many builds. Diagnosed: deployment was always
+  correct (live `?v=` matched HEAD), but two things stacked — (1) GitHub Pages serves index.html with
+  `Cache-Control: max-age=600`, so browsers held a stale index.html (old `?v=` → old JS); (2) the old
+  localStorage save loaded the pre-reframe 42-student school, hiding the start-from-nothing boot even
+  when code did update (confirmed by the owner's screenshot: new 3D buildings + milestone banner, but
+  42 SV). Fixes: **bumped SAVE_KEY v2→v3** so the incompatible old save is retired and the from-nothing
+  boot shows automatically (one-time correction for the iter-24 reframe); **cache-control meta tags**
+  on index.html to push browsers to revalidate the entry HTML; and a **visible build stamp** (read
+  from ui.js's own `?v=`) in the intro footer + Trường tab, with a "your save is from an older build"
+  hint — so it's always clear what version is actually running. Gates green.
+
 ## 2026-06-13 — Graduation day dresses the campus (loop iter 36)
 - The emotional climax — June graduation — had no visual occasion (Tết did, via iter 31's seasonal
   hook). Now Tháng 6 dresses the campus for Lễ Tốt Nghiệp: a gold-trimmed **red carpet** down the

@@ -151,7 +151,7 @@ function freshState(seed) {
     contracts: [], corpBlacklist: {}, offersSeen: [],
     photSeeds: [], examHistory: [],
     news: [],
-    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [] },
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "" },
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,

@@ -114,10 +114,19 @@
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
   var TINTS = ["rgba(255,246,214,.045)", "rgba(255,251,224,.03)", "rgba(255,240,196,.06)", "rgba(255,214,148,.085)", "rgba(255,186,116,.12)"];
 
+  // the build the browser actually loaded (from ui.js's own ?v= cache-bust) — ground truth of what's running
+  var BUILD = (function () { try { var s = document.querySelector('script[src*="ui.js"]'); var m = s && s.src.match(/[?&]v=(\d+)/); return m ? m[1] : "dev"; } catch (e) { return "dev"; } })();
+  var saveIsOld = false;
+  function buildLabel() {
+    if (BUILD === "dev") return "dev";
+    try { var d = new Date(+BUILD); var p = function (n) { return (n < 10 ? "0" : "") + n; }; return p(d.getHours()) + ":" + p(d.getMinutes()) + " " + p(d.getDate()) + "/" + p(d.getMonth() + 1); } catch (e) { return BUILD; }
+  }
   function boot() {
     if (!HVS.loadGame()) { /* fresh already set */ }
     var q = location.search.match(/seed=(\d+)/);
     if (q && (!localStorage.getItem(CONFIG.SAVE_KEY))) HVS.freshState(parseInt(q[1], 10));
+    var sb = S().META.build; saveIsOld = !!(sb && sb !== BUILD); // running newer code than the save was written under
+    S().META.build = BUILD;
     soundOn = !!S().META.sound;
     if (soundOn) $("soundBtn").classList.add("on");
     $("schoolSub").textContent = CONTENT.schoolSub;
@@ -1141,8 +1150,10 @@
     }
     // reset — wipe the save and reload the latest build (so changes show up from a clean start)
     var rc = el("div", "card"); rc.appendChild(el("h3", null, "Kiểm thử"));
-    rc.appendChild(el("div", "tiny", "Xoá lưu và tải lại bản mới nhất để chơi lại từ con số 0.")).style.marginBottom = "8px";
-    var rb = el("button", "btn", "🔄 Chơi lại từ đầu (xoá lưu)"); rb.style.width = "100%";
+    rc.appendChild(el("div", "tiny", "Bản dựng đang chạy: <b style='color:var(--gold)'>" + esc(buildLabel()) + "</b> · <span style='color:var(--faint)'>" + esc(BUILD) + "</span>"));
+    if (saveIsOld) rc.appendChild(el("div", "tiny", "<span style='color:var(--amber)'>Bản lưu của bạn từ bản dựng trước — bấm Chơi lại từ đầu để xem các thay đổi mới (bắt đầu từ con số 0).</span>")).style.margin = "5px 0";
+    else rc.appendChild(el("div", "tiny", "Xoá lưu và chơi lại từ một khoảnh sân trống.")).style.margin = "5px 0 8px";
+    var rb = el("button", "btn" + (saveIsOld ? " gold" : ""), "🔄 Chơi lại từ đầu (xoá lưu)"); rb.style.width = "100%";
     rb.onclick = confirmReset;
     rc.appendChild(rb); wrap.appendChild(rc);
 
@@ -1388,7 +1399,7 @@
     w.appendChild(el("h2", null, "Học viện Steve"));
     CONTENT.boot.forEach(function (b) { w.appendChild(el("div", "lead", esc(b))); });
     w.appendChild(el("div", "lead", "<span style='color:var(--gold)'>Việc đầu tiên:</span> xây căn <b>Phòng học</b> đầu tiên (nút Xây), rồi đợi <b>tháng 7</b> — đợt chiêu sinh khóa đầu sẽ mở, Mai Sương sẽ là người ghi danh đầu tiên. Chạm vào sinh viên để xem (và đặt tên). Rồi ngồi xem trường lớn lên từ con số 0."));
-    var foot = el("div", "tiny", CONTENT.disclaimer); foot.style.marginBottom = "10px"; w.appendChild(foot);
+    var foot = el("div", "tiny", CONTENT.disclaimer + " · bản dựng " + esc(buildLabel())); foot.style.marginBottom = "10px"; w.appendChild(foot);
     var btn = el("button", "btn gold", "Đặt viên gạch đầu tiên →"); btn.style.width = "100%";
     btn.onclick = function () { try { S().META.tutorial = true; HVS.saveGame(); } catch (e) {} hideModal(); };
     w.appendChild(btn);
