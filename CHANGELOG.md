@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-13 — Clock auto-starts after the intro (onboarding, loop iter 42)
+- The game booted **paused** (speed 0) with no cue to press play, so a first-timer could build their
+  Phòng học, see the "wait for tháng 7" goal, and then watch nothing happen because the clock wasn't
+  running. Now dismissing the intro auto-starts the clock at 1× (only when it was paused, i.e. a
+  fresh session — reloads keep your saved speed), and the 1× button lights up so it's clear time is
+  flowing. Closes the "nothing happens after I build" gap in the from-nothing onboarding. Verified
+  boot=paused → intro-dismiss → 1× active; gates green.
+
 ## 2026-06-13 — Buy → it just appears: auto-placement (owner UX, loop iter 41)
 - Owner hit the build flow cold ("How should I touch?") — tapping a build button entered a manual
   "placing" mode whose only cue was a tiny bottom strip, so it wasn't clear you had to then tap the

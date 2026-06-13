@@ -1421,7 +1421,7 @@
     w.appendChild(el("div", "lead", "<span style='color:var(--gold)'>Việc đầu tiên:</span> xây căn <b>Phòng học</b> đầu tiên (nút Xây), rồi đợi <b>tháng 7</b> — đợt chiêu sinh khóa đầu sẽ mở, Mai Sương sẽ là người ghi danh đầu tiên. Chạm vào sinh viên để xem (và đặt tên). Rồi ngồi xem trường lớn lên từ con số 0."));
     var foot = el("div", "tiny", CONTENT.disclaimer + " · bản dựng " + esc(buildLabel())); foot.style.marginBottom = "10px"; w.appendChild(foot);
     var btn = el("button", "btn gold", "Đặt viên gạch đầu tiên →"); btn.style.width = "100%";
-    btn.onclick = function () { try { S().META.tutorial = true; HVS.saveGame(); } catch (e) {} hideModal(); };
+    btn.onclick = function () { try { S().META.tutorial = true; if (S().speed === 0) { S().speed = 1; } HVS.saveGame(); } catch (e) {} hideModal(); renderHUD(); };
     w.appendChild(btn);
     openModal(w);
   }
