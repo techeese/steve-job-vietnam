@@ -12,9 +12,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - `LAST_MAINTENANCE: iter 67 — clean (sweep green · no JSERR across all new systems · panels 390px-clean · perf modest)`
 
 ## Epic in progress
-_(none — the art step-change shipped iter 59. Possible veto-driven follow-up: if the 24×32 characters
-read too BIG vs the buildings, a map-scale pass (bigger TILE / zoom) is a queued FEATURE-epic — decide
-on owner reaction.)_
+**Epic: FEATURE — buildings graphics step-change** (started iter 70; cadence forced an epic; graphics #1).
+Now that characters are premium 24×32, buildings under-match them. Phase 1 = a 3-direction DIVERGENCE
+workflow (`wnqn9xeb1`): deeper-2.5D / rich-materials / cozy-cottage prototypes. Next: pick the
+highest-Bar (owner away → my pick, ship for veto), integrate the winner into `js/art.js` drawRoom (keep
+per-room ROOM_STYLE variety + fake-iso depth), prove via static-layer 390px screenshots, ship.
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
