@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-13 — Campus glow-up gets a moment (loop iter 46)
+- The campus-tier upgrade (iter 45) happened silently — you'd build your 3rd room and the grounds
+  quietly got prettier without knowing why. Now reaching a new prestige tier fires a celebratory
+  toast ("🌿 Sân trường gọn gàng hơn…" at tier 1, "🏛️ Trường khang trang hẳn…" at tier 2) and an
+  immediate repaint, so the glow-up reads as an earned milestone. Tracked in `META.campusTier`
+  (once per tier, persists across reloads). Verified the 0→1→2 progression fires on cue; gates green.
+
 ## 2026-06-13 — Campus glow-up: visuals upgrade as the school grows (owner #2, loop iter 45)
 - The owner's "when we reach high enough value, the school should look cleaner" idea. Added a
   monotonic campus-prestige tier (0 → 2): **tier 1 (established)** once you've built out ≥3 rooms —

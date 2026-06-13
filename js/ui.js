@@ -978,6 +978,9 @@
     else gb.classList.remove("show");
     // celebrate a just-completed milestone (engine sets the flag; we toast + clear)
     if (s._milestoneJustHit) { toast("🎉 " + s._milestoneJustHit); s._milestoneJustHit = null; }
+    // campus glow-up: when the grounds reach a new prestige tier, celebrate + repaint (once per tier)
+    var ct = campusTier();
+    if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }
     // ticker
     if (s.news.length) {
       var n = s.news[0];
