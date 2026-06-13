@@ -107,8 +107,11 @@ into systems — so every owner message is DATA about the underlying instinct, n
 
 Standing owner directives (always in scope, never skipped):
 - **PUSH EVERY ITERATION** — the owner follows the live link remotely; an unpushed
-  improvement does not exist. Ship pattern: `./gate.sh && git add -A && git commit … && git push`,
-  then `curl` the live URL for a unique new string until deployed.
+  improvement does not exist. Ship pattern: `./gate.sh && ./bump.sh && git add -A && git commit … && git push`,
+  then `curl` the live URL for a unique new string until deployed. **`./bump.sh` is MANDATORY**
+  before every commit: it rewrites `?v=<n>` on the `<script>` tags to a fresh timestamp so the
+  browser/CDN re-fetch the JS — WITHOUT it the owner sees a stale cached build and thinks
+  nothing changed (this happened — "still looks like before, no grass").
 - **Graphics iterability is architecture**: once the S1.5 workshop refactor lands, ALL
   visual data lives in `art.js`, all text in `content.js`, all tunables in CONFIG —
   art iterations may not touch engine code and vice versa. `tools/gallery.html` renders
@@ -195,8 +198,9 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
 ## Step 4 — Record & ship (every iteration)
 - Update ROADMAP.md (done item out, discoveries in) and CHANGELOG.md (PREPEND under the
   `# Changelog` header — never anchor on the previous entry).
-- `./gate.sh && git add -A && git commit -m "…" && git push` — gates chained so nothing
-  ships red. Then poll the live URL for a unique new string until DEPLOYED.
+- `./gate.sh && ./bump.sh && git add -A && git commit -m "…" && git push` — gates chained so
+  nothing ships red; bump.sh cache-busts so the push is actually VISIBLE. Then poll the live
+  URL for a unique new string until DEPLOYED.
 
 ## Step 4.5 — Failure recovery
 Two failed fix attempts on one problem → `git checkout` back to HEAD, write the failure +
@@ -216,6 +220,12 @@ owner interaction; the ~10-iteration flow reflection re-derives it and evolves t
 development flow itself to match — that feedback loop is the owner's core request.
 
 ## Landmine log (append-only; inherited from 64 iterations of Nuôi Anh + this project)
+- CACHE STALENESS (loop iter): multi-file build loads `js/*.js` by bare path → browsers/Pages
+  CDN cache them, so after a push the owner sees the OLD build and reports "nothing changed /
+  looks like before." FIX: `?v=<n>` on every `<script src>` + `./bump.sh` (fresh timestamp)
+  before every commit. The single-file Nuôi Anh game never hit this; multi-file did. If the
+  owner ever says a shipped change isn't showing, suspect cache first (verify with `curl`ing
+  the live JS for a unique new string — if it's there, it's their cache: hard-refresh).
 - Unescaped `"` in double-quoted JS strings kills the whole script at parse; page silently
   shows static HTML (onerror registers too late to catch it).
 - NaN serializes to JSON `null`; `isFinite(null)===true`. Always Number.isFinite.
