@@ -429,6 +429,46 @@
     var vg = ctx.createRadialGradient(195, 130, 30, 195, 130, 260);
     vg.addColorStop(0, "rgba(255,250,220,.06)"); vg.addColorStop(1, "rgba(60,80,30,.10)");
     ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+    // PASS 5 — seasonal décor (tracks the calendar via monthRollover's _mapDirty)
+    drawSeason(ctx, W, H);
+  }
+  // seasonal dressing — Tết (Tháng 1–2) decks the campus in red & gold without touching buildings
+  function drawSeason(ctx, W, H) {
+    var m = S().month;
+    if (m === 1 || m === 2) drawTet(ctx, W, H);
+  }
+  function drawTet(ctx, W, H) {
+    // bunting garland across the top (above the building band) — alternating red/gold/teal flags
+    var cols = ["#e0584a", "#f2c14e", "#5fd0c5"], k = 0;
+    ctx.fillStyle = "#6e4f26"; ctx.fillRect(0, 3, W, 1);
+    for (var bx = 4; bx < W - 8; bx += 13) {
+      var sag = (Math.sin(bx / W * 3.14159) * 3) | 0, by = 4 + sag;
+      ctx.fillStyle = "#6e4f26"; ctx.fillRect(bx, 3, 1, by - 3); // hanger
+      ctx.fillStyle = cols[(k++) % 3];
+      for (var t = 0; t < 7; t++) ctx.fillRect(bx + 1 + t, by, 9 - 2 * t > 0 ? 9 - 2 * t : 1, 1); // little triangle flag
+      ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.fillRect(bx + 1, by, 3, 1);
+    }
+    // red lanterns + blossom pots flanking the cổng (bottom-centre, always clear of buildings)
+    var px = ((GW >> 1) * T + T / 2) | 0, gateTop = GH * T - 24;
+    lantern(ctx, px - 22, gateTop - 12); lantern(ctx, px + 22, gateTop - 12);
+    blossomPot(ctx, px - 34, GH * T - 7, "#ffd24a", "#ffe9a6"); // mai (yellow)
+    blossomPot(ctx, px + 33, GH * T - 7, "#ff7eb0", "#ffd0e4"); // đào (pink)
+  }
+  function lantern(ctx, cx, cy) {
+    ctx.fillStyle = "#6e4f26"; ctx.fillRect(cx, cy - 4, 1, 4);                       // cord
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 3, cy, 6, 9);                          // body outline
+    ctx.fillStyle = "#e0392f"; ctx.fillRect(cx - 2, cy + 1, 5, 7);                   // red body
+    ctx.fillStyle = "#ff6a5a"; ctx.fillRect(cx - 2, cy + 1, 1, 7);                   // sheen
+    ctx.fillStyle = PX.gold; ctx.fillRect(cx - 2, cy, 5, 1); ctx.fillRect(cx - 2, cy + 8, 5, 1); // gold caps
+    ctx.fillStyle = "#f2c14e"; ctx.fillRect(cx, cy + 9, 1, 3);                       // tassel
+  }
+  function blossomPot(ctx, cx, cy, blo, bloHi) {
+    ctx.fillStyle = PX.out; ctx.fillRect(cx - 3, cy, 7, 5);                          // pot outline
+    ctx.fillStyle = "#b5532f"; ctx.fillRect(cx - 2, cy + 1, 5, 3); ctx.fillStyle = "#cf6a40"; ctx.fillRect(cx - 2, cy + 1, 5, 1);
+    ctx.fillStyle = "#5a3b22"; ctx.fillRect(cx, cy - 6, 1, 7);                       // little trunk
+    ctx.fillStyle = blo; ctx.fillRect(cx - 3, cy - 10, 7, 5); ctx.fillRect(cx - 2, cy - 11, 5, 1); // blossom puff
+    ctx.fillStyle = bloHi; ctx.fillRect(cx - 2, cy - 10, 2, 2); ctx.fillRect(cx + 1, cy - 8, 1, 1);
+    ctx.fillStyle = PX.gold; ctx.fillRect(cx - 1, cy - 8, 1, 1); ctx.fillRect(cx + 1, cy - 10, 1, 1); // golden centres
   }
   function pathBand(ctx, x, y, w, h, horiz) {
     ctx.fillStyle = PX.pathD; roundRect(ctx, x + 1, y + 1, w - 2, h - 2, 4); ctx.fill();

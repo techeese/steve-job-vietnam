@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-13 — Tết comes to campus (seasonal décor, loop iter 31)
+- The campus looked identical year-round; the tetBeat mechanic (Tháng 2 mood boost) had no
+  visual presence. Now Tháng 1–2 decks the grounds for Tết: a red/gold/teal bunting garland
+  strung across the top, and red lanterns + mai (yellow) / đào (pink) blossom pots flanking the
+  cổng. All in safe zones (top strip + the always-clear gate) so no player building is disturbed.
+  Driven by a `drawSeason()` pass in the static layer; `monthRollover` now flags `_mapDirty` so
+  the décor tracks the calendar. Verified Tết shows in month 2 and the campus is clean in month 5.
+  Hooks for future seasons (June graduation flair, etc.) are in place. Gates green.
+
 ## 2026-06-13 — The Văn-Mẫu champion is finally reachable (loop iter 30)
 - The 📋 Quán Quân Văn Mẫu end-state — the thematic heart of the whole đề-Văn premise — had
   been **mathematically unreachable** (sweep-flagged): cram graduates have huge knowledge + cram

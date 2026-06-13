@@ -30,8 +30,11 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
   characters re-baked with upper-left light + lower-right shade (rounded faces/torsos, 2-tone
   shirt shadow, shaded arm/leg/hair). All three owner directives (A/B/C) now done. *Optional
   polish, queue if owner wants more:* push building depth further (a true receding side-wall
-  face vs the current solid extrusion), seasonal roof tints (Tết/June), and a `tools/gallery.html`
-  promoting the `__ui._bakeSheet` hook to a real phone-reviewable sprite/building gallery.
+  face vs the current solid extrusion), and a `tools/gallery.html` promoting the `__ui._bakeSheet`
+  hook to a real phone-reviewable sprite/building gallery. ~~Seasonal Tết décor~~ SHIPPED (iter 31:
+  bunting + lanterns + blossom pots in Tháng 1–2 via `drawSeason()`). Next season candidates:
+  June graduation flair (bunting + a stage at the sân during the ceremony), a falling-petal live
+  layer during Tết, a subtle seasonal sky/grass tint.
 
 0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
    SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),

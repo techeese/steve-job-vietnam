@@ -215,6 +215,7 @@ function dayTick() {
 function monthRollover() {
   S.month++;
   if (S.month > 12) S.month = 1;
+  S._mapDirty = true; // refresh the static layer so seasonal décor (Tết, …) tracks the calendar
   economyTick();
   alumniMonth(S.month);
   if (S.year === 2 && S.month === 3) scriptedArrest();
