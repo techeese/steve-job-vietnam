@@ -70,7 +70,9 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
    ticker, iSteve mid-run exposé.
 6. **S3 — Alumni full:** remaining 7 states (TRUONG_PHONG/GIAM_DOC/XUAT_NGOAI/KOL/VE_QUE/
    GIANG_VIEN/QUAY_DAU), world years, Sổ filters + gratitude tiers, 20/11 envelope
-   sprites, the "Mười năm sau…" epilogue, "Mời cựu SV về nói chuyện" verb.
+   sprites, ~~the "Mười năm sau…" epilogue~~ SHIPPED (iter 38: auto-fires the reflective essay as a
+   decade capstone at RUN_CAP_YEARS; follow-ups — a "where are they now" FSM fast-forward before it,
+   a formal end-screen vs the current keep-playing sandbox), "Mời cựu SV về nói chuyện" verb.
 7. **S4 — Funding full:** contract types 🦜🎣🤝, renewal escalation, decks T/E/C, Quỹ Ứng Cứu.
 8. **S5/S6 — Pantheon pack + content:** ~~dedications~~ STARTED (iter 33: 3 buildable Vườn Tưởng
    Niệm memorial gardens — Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương — +Uy Tín, dedication

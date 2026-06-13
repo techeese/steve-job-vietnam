@@ -1191,8 +1191,13 @@
     for (i = 0; i < order.length && cast.length < C.CAST_CAP; i++) { var ex = pick(s.alumni.filter(function (a) { return a.state === order[i] && !used[a.id]; }))[0]; if (ex) { cast.push(ex); used[ex.id] = 1; } }
     return cast;
   }
-  function essayDraft() {
+  function essayDraft(capstone) {
     var s = S(), C = CONFIG.ESSAY, E = CONTENT.essay, w = el("div");
+    if (capstone) {
+      w.appendChild(el("div", "kic", "Mười năm sau · Lễ Bế Giảng"));
+      var ch = el("h2", null, "Mười năm sau ngày khai giảng đầu tiên"); w.appendChild(ch);
+      var intro = el("div", "lead", "Trường đã đi hết một chặng. Bạn ngồi xuống, lấy ra bản nháp bài luận năm xưa — câu hỏi vẫn còn đó. Lần này bạn viết bằng những gương mặt đã đi qua sân trường này."); intro.style.fontStyle = "italic"; w.appendChild(intro);
+    }
     var de = CONTENT.dePool[0], yw = numWord(s.year), cash = Math.round(s.cash), endow = Math.round(s.endow.bal);
     var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
     var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
@@ -1247,7 +1252,14 @@
      MODALS
      ========================================================================== */
   function checkModals() {
-    var s = S(), sig = "";
+    var s = S();
+    // one-shot decade capstone — fire the "Mười năm sau" reflection only when no gameplay modal is up
+    var pending = s.pendingJune || s.pendingAdmit || s.pendingContract || s.pendingEvent || s._giftFlush;
+    if (s._decadeHit && !pending && !$("modalRoot").classList.contains("show")) {
+      s._decadeHit = false; s.META.decadeShown = true; try { HVS.saveGame(); } catch (e) {}
+      hideInspect(); openModal(essayDraft(true)); return;
+    }
+    var sig = "";
     if (s.pendingJune) sig = "june:" + s.pendingJune.stage;
     else if (s.pendingAdmit) sig = "admit:" + s.pendingAdmit.year;
     else if (s.pendingContract) sig = "ct:" + s.pendingContract.born;

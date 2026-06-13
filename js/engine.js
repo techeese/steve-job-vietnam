@@ -151,7 +151,7 @@ function freshState(seed) {
     contracts: [], corpBlacklist: {}, offersSeen: [],
     photSeeds: [], examHistory: [],
     news: [],
-    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "" },
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "", decadeShown: false },
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,
@@ -233,6 +233,8 @@ function monthRollover() {
   // scripted Offer 1 — Tập đoàn Trứng Vàng (≈one month after boot)
   if (S.offersSeen.indexOf("trungvang") < 0 && S.year === 1 && S.month >= 10) { S.offersSeen.push("trungvang"); offerContract(CONTENT.contract.trungvang); }
   endowMilestones();
+  // decade capstone: once the school reaches its run-cap year, arm the "Mười năm sau" reflection
+  if (S.year >= CONFIG.RUN_CAP_YEARS && !S.META.decadeShown && !S._decadeHit) S._decadeHit = true;
 }
 function hasResolvedAdmitThisYear() {
   var h = S.admissions.declaredHistory;

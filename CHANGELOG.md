@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — "Mười năm sau" — the decade capstone (loop iter 38)
+- `RUN_CAP_YEARS: 12` had been defined but never used — the game had no ending or payoff, it just
+  trailed off. Now when the school reaches its 12th year, the reflective epilogue essay (previously
+  pull-only) auto-fires once as a **"Mười năm sau · Lễ Bế Giảng"** capstone: the headmaster looks
+  back across the decade, the essay written in the faces that passed through — the destiny tally,
+  the cast, the ledger, the branch-voice verdict, the đề still hanging. It defers politely under any
+  gameplay modal (June/admissions/event) and shows once (META.decadeShown); the school keeps running
+  after (sandbox). Gives a full playthrough a philosophical climax. Verified: arms exactly at year 12,
+  fires on a clear stage with the "Mười năm sau" framing, doesn't re-fire; gates green.
+
 ## 2026-06-13 — "Still the same after many versions" — cache/save fix (loop iter 37)
 - Owner reported the live site looked unchanged across many builds. Diagnosed: deployment was always
   correct (live `?v=` matched HEAD), but two things stacked — (1) GitHub Pages serves index.html with
