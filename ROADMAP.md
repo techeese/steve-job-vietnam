@@ -4,44 +4,37 @@ Ordered; the loop takes from the top. Add freely, prune ruthlessly.
 Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` same file.
 Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EVERY ITERATION.
 
+## Cadence
+<!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
+- `SMALL_SHIPS_SINCE_EPIC: 7`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
+- `LAST_EPIC: none yet (new scheme)`
+
+## Epic backlog
+<!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
+1. **[STRUCTURE] Restore `window.onerror` + split ui.js (1693 lines) → `ui.js` / `art.js` / `content.js`.** ← FORCED NEXT (structure due + top debt). Unblocks all graphics-iteration velocity (the owner's "iterability as a product" ask). Worktree + behavior-neutral byte/screenshot diff; ships autonomously.
+2. **[FEATURE] Art step-change** — bigger 2.5D characters with real volume (visible side walls, shading), the owner's "3D but still pixel." BEAUTY — the #1 unmet bar. Phase 1 = a 3-up divergence workflow.
+3. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
+4. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
+5. **[FEATURE] Player-customizable students** — owner-hinted ("characters are customize"). FUN + individuality.
+6. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
+7. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.
+
+## Debt
+<!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
+- [ ] `window.onerror` production trap MISSING from index.html (dropped in the multi-file split, ~50 iters unnoticed) — worst case is a silent white screen on the owner's phone. → epic #1.
+- [ ] ui.js = 1693 lines, past the ~900 split threshold (flagged since iter 20, ~35 iters ago) → epic #1.
+- [ ] art.js / content.js layer split never shipped (queued iter 20) → epic #1.
+
 ## Now
 
-★★★ **PLAN — KHOA / MAJORS SYSTEM (owner-requested 2026-06-13, "great idea I want to add"):**
-A specialization layer: students join a *khoa* (major), khoas give synergies, and unlocking a khoa
-attracts new talent. Owner-confirmed design decisions: **students AUTO-JOIN** (no manual assignment);
-**khoas unlock via buildings** (ties into the build/upgrade system). This is a multi-iteration feature
-— build it in the phases below, each shipping green, NOT in one shot.
-
-- **The three khoas** (each tied to a special building + a *tell* + a stat, and each steers a destiny —
-  this is the satirical hook):
-  - 💻 **Khoa Lập trình** — unlocked by **Phòng Máy** · joins *spark* (tinkerers) · grows **Tay nghề** → the *kỹ sư* path.
-  - 🎨 **Khoa Thiết kế Chế tạo** — unlocked by **Xưởng** · joins *sky* (dreamers) · grows **Sáng tạo** → the *Steve/creator* path.
-  - 🚀 **Khoa Khởi nghiệp (Sống Ảo)** — unlocked by **Lab "Sống Ảo"** · joins *hype* (showy) · grows **Cá mập** → the *cá-mập-coin* trap (the dark mirror).
-  - Students whose tell's khoa isn't unlocked (or with no tell) sit in **Đại cương** (general, no synergy).
-- **Mechanics:** (a) *unlock* — building the khoa's room opens it (one-time); (b) *auto-join* —
-  `studentMajor(s)` = the khoa matching `s.tell` if its room exists, else general (compute on the fly,
-  no stored field to keep save-compat trivial); (c) *synergy* — a khoa with ≥`SYN_MIN` (≈4) members gives
-  its members +`SYN_GROW` (≈0.35)/day growth on the khoa's stat, so a *focused* school out-develops a
-  scattered one (a real build decision); (d) *talent unlock* — when a khoa first opens, a **prodigy
-  "tuyển thẳng"** enrolls (a high-stat student of that khoa) + a news beat — the owner's "some students
-  only unlock after a major" point. Track opened khoas in `META.majorsUnlocked` so the prodigy fires once.
-- **UI plan (the part that may need rework — keep V1 light):** V1 = a **"Khoa" card in the Sinh viên
-  panel** (list each khoa: icon, name, unlocked/locked + which building unlocks it, member count, synergy
-  ON/OFF, the destiny it leans toward) + show the student's khoa chip in the **inspect card**. Do NOT add a
-  6th nav tab in V1 (the 5-tab nav is already tight at 390px). A dedicated Khoa-management screen is a
-  *V2* only if the card proves too small — decide after seeing V1 on mobile.
-- **Phases (each ships green + verified):** ~~**P1** data+engine~~ DONE (iter 49: auto-join, synergy, prodigy-on-unlock, thesis holds).
-  ~~**P2** UI (Khoa card + inspect chip)~~ DONE (iter 50, 390px-verified). **P3** balance pass — `node sweep.js`
-  before/after; synergy growth shifts tn/st/cm so it can move destinies — confirm the craft→🍎 / cram→
-  văn-mẫu thesis still holds and tune `SYN_GROW` if it doesn't. **P4 — DEEPEN (owner-wanted):** ~~cross-khoa synergy~~ DONE (iter 51: 2+ thriving khoas cross-pollinate -> dual-skill -> the apple path).
-  ~~khoa head — assign a teacher as trưởng khoa~~ DONE (iter 52: headed khoa thrives at 1 fewer SV + grows +HEAD_BONUS faster; one teacher per khoa = a real choice). Remaining: khoa-vs-khoa rivalry/events,
-  khoa-gated facilities, the dedicated Khoa screen if the card proves too small. Not optional — the owner wants this layer rich.
-- ~~**Khoa → visible campus life (charm thread):** each khoa gets a SIGNATURE on-map activity~~ DONE
-  (iters 54–55): Sống Ảo→`stream` (Lab), Lập trình→`code` (Phòng Máy), Thiết kế→`craft` (Xưởng). The
-  afternoon period is now a visible khoa practicum. Future charm: a khoa-tinted accessory/badge on the
-  sprite itself (read a major even when a student is walking, not just at their station); a small crowd
-  gathering around the Sống Ảo streamer; the trưởng-khoa teacher visibly present in their khoa's room.
-- **Risk:** synergy growth is a balance lever — it directly feeds the destiny cascade; do P3 carefully.
+★ **Khoa / Majors system — SHIPPED** (iters 49–55; full detail in CHANGELOG): auto-join by tell,
+synergy + cross-khoa synergy, trưởng-khoa heads, and the three signature campus activities
+(Lập trình→`code`, Thiết kế→`craft`, Sống Ảo→`stream`). Sweep confirms the destiny thesis held.
+Remaining ideas (POLISH-sized — pick when they clear the rubric floor): khoa-vs-khoa rivalry/events;
+khoa-gated facilities; a dedicated Khoa screen if the card outgrows itself; a khoa-tinted badge on the
+sprite (read a major while a student walks); a crowd around the Sống Ảo streamer; the trưởng-khoa
+visibly present in their room.
 
 ★ **Balance follow-ups (queue):** (1) ~~Uy Tín erosion~~ NOT A BUG (iter 35 check): the sweep shows
 UT is a working moral meter — honest (cân bằng) keeps UT ~43, cram sits ~18; my iter-34 audit's
@@ -131,8 +124,9 @@ strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
   +130 since iter 20)**: art renderer + campus-life + ambient + seasonal + customization + HUD +
   panels + modals + sound + test hooks. engine.js crossed 1000 but is cohesive (sim/june/admissions/
   alumni/funding/events/milestones). **Verdict: still very workable; no refactor forced this
-  iteration.** Queued (unchanged priority, do when owner OKs one invisible velocity iteration): the
-  **chunked art.js extraction** — but note the real coupling cost surfaced (PX palette, `shade`,
+  iteration.** Now SCHEDULED as `## Epic backlog` #1 (a STRUCTURE-epic — worktree + behavior-neutral
+  diff, ships autonomously; no longer waits on an "owner OK for an invisible iteration" — that hedge is
+  exactly why it never shipped): the **art.js extraction** — note the real coupling cost (PX palette, `shade`,
   `roundRect`, `mb`, `hashId` are shared by BOTH the static-art drawers AND bakeChar/drawActor, so a
   clean split must move shared helpers to art.js and expose them; the static layer is fully
   screenshot-verifiable, the rAF actor layer is NOT — extract static-art first, actors later).
@@ -161,11 +155,11 @@ the owner's mobile-UX asks (selection marker, tap ripple, reset button) and the 
 cache/save-staleness fix (bumped SAVE_KEY v3 + build stamp). **Maintenance verdict (iter 40):**
 sweep clean (only the late-game money-inflation flag, an S4 job), a 13-year all-systems playthrough
 runs error-free with solid v3 save/load and ~33ms/run perf, and the ops/Trường panels pass the
-390px audit. No regressions. **Standing flow risk unchanged:** `js/ui.js` is now **1508 lines** — the
-`art.js` extraction is the top structural debt, still best done when the owner OKs one invisible
-velocity iteration (it's behavior-neutral but the rAF actor layer can't be fully screenshot-verified,
-so extract the static-art renderer first). Remaining content depth = S2 admissions / S3 alumni /
-S4 funding / S5 pantheon, none blocking.
+390px audit. No regressions. **Standing flow risk unchanged:** `js/ui.js` (now 1693 lines) — the
+`art.js` extraction is the top structural debt, now SCHEDULED as `## Epic backlog` #1 (ships
+autonomously via the STRUCTURE-epic machinery; the actor layer is now screenshot-verifiable via
+`_renderLiveOnce`, so the old "can't verify actors" blocker is gone). Remaining content depth =
+S2 admissions / S3 alumni / S4 funding / S5 pantheon, none blocking.
 
 ## Flow reflection (iter 20, ~10-iteration checkpoint)
 The dev flow is serving the owner: 20 iterations shipped, ~15 autonomously (decide→ship→veto,
@@ -173,9 +167,8 @@ no vetoes), the north-star ("sunny lively watchable school") resolves design for
 and `sweep.js` turned balance from guesswork into 3 data-driven fixes (now all-clear). Look +
 gameplay both strong. ONE flow risk: **`js/ui.js` is now 1203 lines** (art + campus-life +
 ambient + customization + HUD + panels + modals + sound + epilogue) — velocity will degrade.
-**The S1.5 `art.js` extraction is now the top structural priority** (chunked + before/after
-screenshot-verified, per the autonomous-refactor landmine). Best done when the owner is OK
-with one invisible-but-velocity iteration, or pulled forward if a new visual feature gets hard.
+**The S1.5 `art.js` extraction is now the top structural priority** — scheduled as `## Epic backlog`
+#1, a STRUCTURE-epic that ships autonomously (worktree + behavior-neutral before/after diff).
 
 ## Gameplay balance — findings from `node sweep.js` (2026-06-13)
 The sweep (40 seeds × 5 strategies × 11y) flags real stagnation to fix (own iterations;

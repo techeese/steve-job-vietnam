@@ -33,24 +33,36 @@ DELETION, codebase/UI RESTRUCTURE, git WORKTREES, and multi-agent WORKFLOWS.
 
 ## The two tracks — pick the track first, every turn
 
-Each firing runs on ONE of two tracks. Choose by asking the Mission question above.
+Each firing runs on ONE of two tracks. The choice is NOT discretionary — it's set by the counted
+cadence ledger (below), because soft "shoulds" lost seven times running.
 
-- **POLISH track** (the classic loop): one coherent shippable improvement this turn — content, a
-  charm beat, a balance fix, a bug. Use when the biggest-valuable-change is genuinely small, or to
-  keep visible momentum between epics. Steps 1→5 below. Ship green, push, terse status.
-- **EPIC track** (the new default for big moves): a large, game-changing piece — a UI/layout overhaul,
-  a codebase restructure, a new game pillar, an art-direction pivot, a system replacement, a debt
-  paydown. Runs via **The EPIC machinery** (its own section): plan → isolate in a git worktree →
-  execute (often a multi-agent workflow) → prove it (behavioral-diff for refactors, screenshot+rubric
-  for features) → merge → ship. An epic may span MULTIPLE firings (check `## Epic in progress` in
-  ROADMAP and continue it) — that's expected, not scope-creep.
+- **POLISH track** (the classic loop): one coherent shippable improvement — content, a charm beat, a
+  balance fix, a bug. Legal only when the cadence ledger permits it. Steps 1→5; ship green, push.
+- **EPIC track** (the engine of bigness) — two sub-types, each with its own cadence claim:
+  - **FEATURE-EPIC** — a new pillar, a UI/layout overhaul, an art-direction pivot, a system
+    replacement, a big content expansion. RAISES a Bar axis; proven by screenshot + rubric.
+  - **STRUCTURE-EPIC** — a file split / module extraction, a dead-code purge, the onerror restore, a
+    perf rebuild. BEHAVIOR-NEUTRAL; proven by the BEFORE/AFTER byte-diff + identical screenshots the
+    EPIC machinery specifies. Worktree-isolated, near-zero veto risk → **ships fully autonomously**
+    (owner's call 2026-06-13: no heads-up needed; a proven-neutral refactor IS the safe move).
+  Both run via **The EPIC machinery**. An epic may span MULTIPLE firings — and when it does, **ship a
+  green safe-so-far checkpoint EACH firing** (owner's call: visible progress on the live link beats a
+  long quiet worktree). Track it in ROADMAP `## Epic in progress`.
 
-**Cadence rule (kills the timidity):** at MINIMUM every 4th firing is an EPIC turn — if no epic is
-queued, that firing's job is to *invent the next epic* (zoom out, read VISION.md, ask "what would make
-this unforgettable?", write the plan). Broken-always-wins and explicit owner requests can preempt the
-cadence, but a 4-in-a-row streak of small additive features is a RED FLAG the loop is timid again —
-when you notice it in the CHANGELOG, the next turn MUST be an epic. Don't let "ship something easy" win
-four times running.
+**THE COUNTED CADENCE (binding — replaces the old soft "every 4th should be an epic," which the loop
+dodged 7×):** ROADMAP carries a machine-readable `## Cadence` ledger. Step 0 READS it and it DICTATES
+the track — you don't get to choose timid:
+- `SMALL_SHIPS_SINCE_EPIC` — +1 on every polish ship; **reset to 0 only when an EPIC actually SHIPS**
+  (a *planned* epic does NOT reset it — that's the "plan forever, build never" escape the Khoa system
+  used: planned, then 7 small phases). **If this counter is ≥ 3, this firing is HARD-LOCKED to the
+  EPIC track — a polish pick is ILLEGAL.** Your only legal moves: advance the in-flight epic, or
+  dequeue + plan + start the top `## Epic backlog` item.
+- `EPICS_SINCE_STRUCTURE` — +1 per FEATURE-epic shipped; reset on a STRUCTURE-epic. **If ≥ 2, the next
+  epic MUST be a STRUCTURE-epic.** This guarantees the codebase stays plastic (the art.js split, the
+  ui.js split) without letting invisible refactors crowd out the feature pillars the owner watches for.
+- Update the ledger in the SAME commit as every ship. Broken-always-wins and explicit owner asks
+  preempt the track — but a preempting *small* ship still increments `SMALL_SHIPS_SINCE_EPIC`, so
+  preemption can't be used to dodge epics forever.
 
 ## The Bar — what "INCREDIBLE" means (score every ship against this)
 
@@ -60,14 +72,19 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
   watch* — readable crafted pixel-art, a campus that breathes, satisfying fanfare, a clear loop you
   return to — fused with the satirical bite of a great editorial cartoon about Vietnamese education.
   When unsure if something's good enough, ask: *"would this screenshot make a stranger want to play?"*
-- **Self-scoring rubric (rate the ship 1–5 on each; if your change didn't raise at least one without
-  lowering others, it wasn't worth the turn — say the scores in the status):**
+- **Self-scoring rubric — a BINDING GATE (owner's call 2026-06-13: moderate floor + debt valve).**
+  Rate the ship 1–5 on each axis and STATE the five scores in the commit body AND the status line:
   1. **BEAUTY** — does it look crafted and cohesive (the #1 dimension; bright, detailed, characterful)?
   2. **JUICE/LIVELINESS** — motion, feedback, fanfare; does the screen breathe and reward watching?
   3. **FUN/DEPTH** — meaningful choices, momentum, the "one more year" pull; no dominant strategy.
   4. **CLARITY/UX** — legible at 390px in 10 seconds; a new player isn't lost.
   5. **SATIRICAL BITE** — anchored in real Vietnamese-education culture; the open question stays open.
-- The rubric is a GATE, not a postmortem: if a planned change wouldn't move any axis, pick a bolder one.
+  - **THE FLOOR:** a FEATURE or POLISH ship is legal only if it **lifts ≥1 axis to 4+ while no axis
+    drops below 3.** If your pick can't name the axis it raises to 4+, it's too timid — diverge and
+    pick bolder (this is the divergence rule with teeth). **Debt valve:** bugfixes, balance/sweep
+    fixes, and `## Debt`-paydown ships are EXEMPT from the floor (they keep the machine healthy; score
+    them but don't block). The ~10-firing reflection reads the score TREND — a long flat line of 3s is
+    the timidity alarm even when each ship was individually "fine."
 - Keep a living **`VISION.md`** in the repo: the 1-page picture of this game at its most incredible —
   the pillars, the feel, the dream features. Maintain it; mine it for epics; revise it when the owner's
   taste sharpens. If it doesn't exist yet, the next EPIC turn creates it.
@@ -75,10 +92,17 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
 ## Step 0 — Orient (always)
 1. Read `DESIGN.md` (v2 charter — SUPREME authority; its §0 "17 canonical rulings" are
    settled law, never re-litigate), `CONVERSION-SPEC.md` (current sitting spec; raw numbers
-   win there), `ROADMAP.md` (the queue + sitting ladder).
+   win there), `ROADMAP.md` (the queue, `## Cadence`, `## Epic backlog`, `## Epic in progress`, `## Debt`).
 2. `git status` + `git log --oneline -3`. If the tree holds large uncommitted changes YOU
    didn't make, a background build may be in flight — STOP and investigate before touching
    anything (check for running agents/tasks first).
+3. **READ `## Cadence` AND RUN THE FAILURE DETECTOR — this sets the track before you look at any idea:**
+   - if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → **HARD-LOCKED to the EPIC track** (polish is illegal this turn);
+   - else if an `## Epic in progress` exists → continue it (ship its next green checkpoint);
+   - else POLISH is permitted (but an epic is still allowed if it's the biggest-value move).
+   Then scan the last ~8 CHANGELOG entries against the FAILURE MODES (see "Failure-mode detection"); if
+   one trips, this firing is a SKILL REVIEW. If the latest "loop iter N" crosses a ~50-mark → the
+   50-firing skill review.
 
 ## The Owner Model (living — this is the point of the skill)
 
@@ -232,23 +256,26 @@ Standing owner directives (always in scope, never skipped):
 
 ## Step 1 — Choose the work (track first, then the pick)
 
-FIRST decide the track (see "The two tracks"): is the biggest-valuable-change right now an EPIC
-(big/bold — go to "The EPIC machinery") or a POLISH item? Honor the cadence rule — if the last
-~4 ships were small additive features, this one is an EPIC. If an epic is mid-flight in ROADMAP
-`## Epic in progress`, continue it.
+The track is already set by Step 0's `## Cadence` read (HARD-LOCK to EPIC if `SMALL_SHIPS_SINCE_EPIC ≥ 3`;
+continue any `## Epic in progress`). EPIC turn → go to "The EPIC machinery" (dequeue `## Epic backlog`).
+POLISH turn → pick below.
 
 **POLISH pick** — top viable ROADMAP item, or better (record the swap), RANKED THROUGH THE OWNER MODEL:
 when two picks tie, the one serving the current distillation (people/trajectories, cultural anchoring,
-feel-first, visible progress) and the Bar (beauty/juice/fun/clarity/bite) wins.
-Priority: (a) broken, (b) owner's explicit wishes, (c) the current sitting's spec
-(S-ladder in ROADMAP), (d) creative content/mechanics deepening the thesis ("graduation
-produces potential; the world decides destiny"), (e) graphics/charm, (f) balance, (g) docs.
-- **Creative method = DIVERGE before converge.** For any visual / UX / creative pick: generate
-  several DISTINCT candidate directions (≥3, and for the #1 graphics dimension or anything an epic,
-  run them as a parallel WORKFLOW: explore N directions → judge panel scores them against the Bar →
-  synthesize the winner, grafting the best of the runners-up). First-idea-ships is BANNED for visual
-  work. For non-visual picks: 3 candidates, one line each, scored (Bar-movement > thesis-service >
-  fun > novelty > polish); pick the winner, bank the runner-up in ROADMAP.
+feel-first, visible progress) and the Bar wins — and it must clear the rubric FLOOR (lifts an axis to 4+;
+debt/bugfix exempt). If it can't, it's too small → bundle it toward an epic or pick bolder.
+Priority: (a) broken, (b) owner's explicit wishes, (c) **graphics/charm — the #1 unmet dimension**,
+(d) creative content/mechanics deepening the thesis ("graduation produces potential; the world decides
+destiny"), (e) the current sitting's spec (S-ladder in ROADMAP), (f) balance, (g) docs. *(Graphics was
+fifth here for 50 iterations while the owner called it the most important thing — that ordering WAS the
+bias. It's now third, behind only broken + explicit asks.)*
+- **Creative method = DIVERGE before converge.** For ANY pick touching the #1 visual dimension (sprites,
+  buildings, palette, layout, activity look), divergence is **MANDATORY, not ceremony**: spawn ≥3
+  parallel subagent drafts (worktree-isolated) → screenshot all at 390px via `_renderLiveOnce` → judge
+  against the Bar → ship the synthesized winner grafting the best of the runners-up → DELETE the rest
+  (they're meant to be thrown away, no merge debt). First-idea-ships is BANNED here. Workflow
+  infra-failure → fall back to SEQUENTIAL 3-up, NEVER to a single draft. For non-visual picks: 3
+  candidates, one line each, scored (Bar-movement > thesis-service > fun > novelty > polish).
 - Scope control (POLISH only): one coherent shippable change. If it's actually big → it's an EPIC,
   promote it to the EPIC track and plan it; don't shrink a big idea into a timid sliver to fit one turn.
 - **PLAN-FIRST for major features (owner directive 2026-06-13):** when the owner proposes (or you
@@ -258,10 +285,12 @@ produces potential; the world decides destiny"), (e) graphics/charm, (f) balance
   **UI-rework call** (does it need a new screen/tab, or fit existing panels?), phased steps that each
   ship green, and the balance/verification risk. Build only after the plan exists. Small/medium changes
   (one coherent iteration) skip this — just build. Example: the Khoa/Majors system (ROADMAP "Now ★★★").
-- Maintenance sprint every ~5th iteration: **`node sweep.js`** (the gameplay simulator —
-  see below), a 5-minute virtual-time bot playthrough (zero JSERR, no soft-locks, assert
-  purchases AND alumni ticks actually happened — dead selectors pass silently), full-page
-  390px audit (actually LOOK at the PNGs), perf glance (interval count, DOM nodes, frame cost).
+- Maintenance checks (`node sweep.js`, a virtual-time bot playthrough for JSERR/soft-locks, a full
+  390px audit, a perf glance) are a HYGIENE duty folded into the ~10-firing reflection and into
+  STRUCTURE-epics — **NOT a standalone "ship."** A firing whose only output is "audited, no regressions"
+  does NOT count as a ship and does NOT reset/advance the cadence ledger (that framing legitimized
+  zero-progress turns). Run the checks when they're due; if they surface a problem, THAT becomes the
+  pick (a bugfix ship or a queued epic).
 - **`node sweep.js` — the gameplay analysis simulator (owner directive 2026-06-13: "write the
   simulator to play this game to sweep gameplay… do analysis to improve gameplay").** Drives
   the DOM-free engine through 40 seeds × 5 strategies × 11y headlessly and reports: economy
@@ -318,8 +347,16 @@ deleting a dead subsystem, a major content expansion. The machine:
    `## Epic in progress` note (what's done, what's next, where the worktree is) and ship the
    safe-so-far checkpoint if it's green; otherwise keep it in the worktree and ship nothing broken.
 
-**Temporary visual regression during an epic is allowed *in the worktree only*** — the live tree never
-regresses. A mid-overhaul that looks worse for one phase is fine if the plan's endpoint clears the Bar.
+**Temporary visual regression is ALLOWED (owner's call 2026-06-13).** Most of an overhaul hides in the
+worktree, but a multi-firing FEATURE-epic MAY push a green checkpoint that looks rough for a phase, as
+long as the epic's planned endpoint clears the Bar — this is what lets the loop take a "worse, then
+much better" art leap instead of only safe one-step polish. Don't abuse it: regress only with a clear
+upward plan, and never leave the live link rough at an epic's END.
+
+**Where the epic comes from:** the epic turn DEQUEUES the top `## Epic backlog` entry (respecting
+`EPICS_SINCE_STRUCTURE` — if ≥2, take the top STRUCTURE entry), expands it into a `## Epic: <name>`
+plan, and starts phase 1. Keep the backlog full by mining VISION.md; an empty backlog on an epic turn
+is itself a planning failure (invent the next one from VISION.md on the spot).
 
 **Deletion is a first-class move.** Dead code, parked experiments, stale rules, superseded systems —
 delete them (you have git). Before deleting something you didn't create or that's described as load-
@@ -386,8 +423,11 @@ bearing, look at it and confirm; otherwise, prune freely. A leaner codebase is p
    stray committed PNG bloats the repo forever.
 
 ## Step 4 — Record & ship (every iteration)
-- Update ROADMAP.md (done item out, discoveries in) and CHANGELOG.md (PREPEND under the
-  `# Changelog` header — never anchor on the previous entry).
+- Update ROADMAP.md (done item out, discoveries in; **update `## Cadence`** — +1
+  `SMALL_SHIPS_SINCE_EPIC` on a polish ship, reset to 0 on an epic ship; bump/reset
+  `EPICS_SINCE_STRUCTURE`; tick `## Debt` if you closed one) and CHANGELOG.md (PREPEND under the
+  `# Changelog` header — never anchor on the previous entry; put the loop-iter number in the heading).
+- The commit body STATES the rubric scores (`Bar: BEAUTY n / JUICE n / FUN n / CLARITY n / BITE n`).
 - `./gate.sh && ./bump.sh && git add -A && git commit -m "…" && git push` — gates chained so
   nothing ships red; bump.sh cache-busts so the push is actually VISIBLE. Then poll the live
   URL for a unique new string until DEPLOYED.
@@ -398,9 +438,11 @@ hypothesis under `## Parked` in ROADMAP.md, pick something else. NEVER ship red 
 NEVER leave the tree broken at turn end.
 
 ## Step 5 — Continue the loop
-End the turn with a short status: what shipped, what's next, and `OWNER:` lines for any
-decision made on the owner's behalf (tone, visibility, balance philosophy, pantheon
-content). The Stop hook re-fires this skill while the flag file exists.
+End the turn with a short status: what shipped (with **rubric scores** + which axis it lifted to 4+),
+the `## Cadence` state (`SMALL_SHIPS_SINCE_EPIC` / `EPICS_SINCE_STRUCTURE`) and `## Debt` count, what's
+next, and `OWNER:` lines for any call made on the owner's behalf (tone, visibility, balance philosophy,
+pantheon content) — these are veto-bait, the owner steers by reacting. The Stop hook re-fires this skill
+while the flag file exists.
 
 ## Step 6 — Evolve the loop (boldly, not just additively)
 
@@ -447,6 +489,39 @@ means REWRITABLE, not append-only. The loop's deepest job is to make *the loop* 
   how many were epics? if ~zero, the cadence is failing — fix it that turn). The reactions/prediction
   ledger measures whether changes actually LANDED (owner delight? metric moved?); a missed prediction
   is a lesson to fold back in. This feedback loop is the owner's core request.
+
+## Failure-mode detection → SKILL review (owner directive 2026-06-13)
+
+Self-correction (above) is per-mistake. This is the SYSTEMIC layer: cheap signals the loop checks at
+Step 0 every firing to catch DRIFT before it becomes a rut — and a deep periodic skill audit for the
+slow rot per-turn checks miss. Both end in editing THIS file.
+
+**Detector — at Step 0, read the last ~8 CHANGELOG entries + recent git log and trip on any of these
+FAILURE MODES; if one trips, this firing's job is a SKILL REVIEW (diagnose the cause, edit SKILL.md to
+prevent recurrence) before/instead of a normal pick:**
+- **TIMIDITY** — ≥4 of the last ships are small additive features, zero epics → the cadence rule is
+  being dodged; force an epic and strengthen whatever let it slide.
+- **THRASH** — the same area was fixed/reverted across multiple recent turns, or the same bug recurred
+  → a missing gate/law; add it.
+- **STUCK EPIC** — an `## Epic in progress` has carried over many firings without a shipped checkpoint
+  → re-plan, split, or cut it; fix the planning rule that let it sprawl.
+- **TASTE MISS** — owner vetoes/corrections cluster in the reactions ledger → the Owner Model failed to
+  predict; sharpen it.
+- **QUALITY STALL** — recent ships' Bar-rubric scores are flat/declining, or all green-but-boring →
+  the picks aren't aiming at the Bar; re-point them.
+- **DEBT CREEP** — a file blew past its split threshold, a queued refactor has rotted N turns, prod
+  robustness slipped (e.g. the missing onerror) → queue the paydown epic NOW.
+- **STALENESS** — the skill itself has grown bloated/contradictory/wrong → prune and reconcile.
+
+**The 50-firing SKILL REVIEW (a standing epic-weight beat):** every ~50 firings (read the latest
+"loop iter N" in CHANGELOG; trigger when N crosses a 50-mark or it's been ~50 since the last review
+logged in the Playbook changelog), step fully back and AUDIT THE SKILL itself as the deliverable:
+- Is it still serving the Mission, or has it drifted back toward timidity? (count epics in the last 50.)
+- Re-derive the Bar and re-read VISION.md against what actually shipped — still the right dream?
+- PRUNE hard: kill stale rules, consolidate sprawl, resolve contradictions, drop dead landmines.
+- Are the cadences (maintenance ~5, structure/flow ~10, this ~50) firing and earning their slots?
+- Rewrite whatever the last 50 firings proved wrong. Log the review in the Playbook changelog.
+This is the loop's "annual physical" — the deepest self-improvement beat, and itself an epic turn.
 
 ## Landmine log (append-only; inherited from 64 iterations of Nuôi Anh + this project)
 - CACHE STALENESS (loop iter): multi-file build loads `js/*.js` by bare path → browsers/Pages
@@ -533,3 +608,15 @@ means REWRITABLE, not append-only. The loop's deepest job is to make *the loop* 
   (rewrite/prune the skill, maintain VISION.md, propose own epics). Added owner directives: PRUNE
   irrelevant context every reload, and MANDATORY SELF-CORRECTION (edit this file to fix the loop whenever
   it errs/drifts). Superseded the timid "prefer the safe feature / chunk it" anti-refactor landmine.
+- 2026-06-13 (ENFORCEMENT LAYER, from a 6-agent design workflow + 4 owner calls): the redesign's bold
+  LANGUAGE was non-binding (it was the last commit, yet ui.js stayed 1693 lines + onerror stayed
+  missing), so converted intentions into HARD MECHANISMS with state: a counted `## Cadence` ledger that
+  HARD-LOCKS the track (≥3 small ships ⇒ epic-only; ≥2 feature-epics ⇒ next must be STRUCTURE), split
+  EPIC into FEATURE/STRUCTURE epics, a `## Epic backlog` (mined from VISION.md) the epic turn dequeues, a
+  `## Debt` list, the Bar rubric as a BINDING floor-gate (lift ≥1 axis to 4+, debt/bugfix exempt),
+  divergence-by-workflow MANDATORY for the #1 visual dimension, graphics moved to priority (c). Owner
+  calls baked in: allow brief LIVE regressions on epic checkpoints · moderate rubric floor + debt valve ·
+  STRUCTURE-epics ship FULLY AUTONOMOUSLY · ship a green checkpoint EACH firing of a multi-firing epic.
+  Also added the failure-mode detector + the 50-firing skill review; pruned ROADMAP (done KHOA block,
+  the "owner OKs an invisible iteration" hedges that blocked art.js for 35 iters). Seeded `## Cadence`
+  to force the very next game iteration to be the STRUCTURE-epic (restore onerror + split ui.js).
