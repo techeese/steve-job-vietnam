@@ -945,10 +945,13 @@
     // campus glow-up: when the grounds reach a new prestige tier, celebrate + repaint (once per tier)
     var ct = campusTier();
     if (ct > (s.META.campusTier || 0)) { s.META.campusTier = ct; s._mapDirty = true; sfx("milestone"); toast(ct >= 2 ? "🏛️ Trường khang trang hẳn — lối lát đá, đèn sáng cổng." : "🌿 Sân trường gọn gàng hơn — cỏ xén, lối đi sạch sẽ."); }
-    // ticker
+    // ticker — show the latest real news; during quiet stretches, rotate the dry-humour idle flavour lines
+    // (they were defined but never surfaced) so the campus newsfeed always has something to read.
     if (s.news.length) {
-      var n = s.news[0];
-      $("ticker").innerHTML = "▸ " + esc(n.s);
+      var n = s.news[0], idle = (CONTENT.ticker && CONTENT.ticker.idle) || [];
+      var stale = (s.totalDays - (n.t || 0)) > 8 && idle.length;       // no real news for over a "week"
+      var line = stale ? idle[Math.floor(s.totalDays / 5) % idle.length] : n.s; // rotate every ~5 days
+      $("ticker").innerHTML = "▸ " + esc(line);
     }
   }
   function chip(cls, ic, v) { var c = el("div", "chip " + cls); c.innerHTML = ic + " <span class='v'>" + v + "</span>"; return c; }

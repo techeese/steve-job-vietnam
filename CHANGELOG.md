@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-14 — The campus newsfeed never goes stale (loop iter 93)
+- **Fixed dead content + deepened the satirical voice.** The ticker's `idle` flavour lines (dry-humour
+  background news) were defined in data.js but **never surfaced anywhere** — the ticker only ever showed the
+  latest *real* news, so during quiet stretches it just held a stale repeat. Now: when there's been no real
+  news for over a "week", the ticker **rotates the idle lines** (every ~5 in-game days), so the campus feed
+  always has something wry to read. Added **9 fresh lines** in the Kairosoft-dry register (the "Đổi mới sáng
+  tạo" hội thảo that clashes with the "Tư duy đột phá" hội thảo; căng-tin rebranding cơm as "trải nghiệm ẩm
+  thực bản địa"; the 'Quyết tâm' banner up three years running; the năm-tư student who "thật ra cũng không
+  biết em muốn gì" — right on schedule).
+- ui.js: the ticker picks an idle line when the latest news is stale (cosmetic, reads `totalDays` — no rng).
+  data.js: +9 idle lines. No engine/balance/save change → gate & sweep untouched. Verified: parse · `./gate.sh`
+  GREEN · `./bot.sh` BOTOK (fresh news still shows; idle only fills genuine quiet) · a stale-news probe
+  confirming an idle line surfaces.
+- Plateau-mode safe value (per iter-92): POLISH → `SMALL_SHIPS_SINCE_EPIC 0→1`. Bar: **completeness/charm 4**.
+
 ## 2026-06-14 — Architecture review + an honest plateau call (loop iter 92)
 - The cadence forced an epic; the rigorous **architecture re-review** (also the ~10-firing review, due since
   iter 84) concluded **DEFER** the only remaining structure move. Findings: layering still clean (engine pure

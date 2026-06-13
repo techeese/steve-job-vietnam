@@ -459,7 +459,16 @@ var CONTENT = {
       "Bác Tâm quét sân. Sân sạch. Không có gì để đưa tin.",
       "Phòng Đào Tạo thông báo: mã ngành vẫn đang chờ duyệt.",
       "Wifi trường: 'kết nối được, theo nghĩa triết học'.",
-      "Một sinh viên hỏi thư viện ở đâu. Câu hỏi được ghi nhận."
+      "Một sinh viên hỏi thư viện ở đâu. Câu hỏi được ghi nhận.",
+      "Hội thảo 'Đổi mới sáng tạo' hoãn vì trùng lịch hội thảo 'Tư duy đột phá'.",
+      "Máy photo tầng 2 đã biết tự kẹt giấy mà không cần ai bấm.",
+      "Căng tin đổi tên món 'cơm' thành 'trải nghiệm ẩm thực bản địa'. Giá giữ nguyên… một thời gian.",
+      "Khoa Sống Ảo đạt 10k follow. Chưa ai nhớ trường dạy ngành gì.",
+      "Một phụ huynh gọi hỏi điểm. Tổng đài chuyển máy đúng bốn vòng rồi về chỗ cũ.",
+      "Tấm băng-rôn 'Quyết tâm' đã treo sang năm thứ ba. Quyết tâm gì thì không ai chắc.",
+      "Sinh viên năm tư bắt đầu nói 'thật ra em cũng không biết em muốn gì'. Đúng tiến độ.",
+      "Bảng tin trường: một thông báo cũ, một thông báo cũ hơn, và một con gián.",
+      "Đồng hồ ở hội trường lại chạy nhanh 7 phút — đúng bằng thời lượng phần 'phát biểu ngắn gọn'."
     ],
     flagpole: "Bác Tâm đọc lại đề Văn 2026 ở cột cờ. Không ai bình luận.",
     thptJune: "2,1 triệu thí sinh vừa được hỏi câu hỏi của trường bạn.",
