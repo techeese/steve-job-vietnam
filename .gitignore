@@ -2,3 +2,4 @@ brainstorm-raw.json
 /tmp-*
 *.png
 !icon-*.png
+node_modules/
