@@ -6,9 +6,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 2`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS. **(At 2 — one more polish and the next firing MUST be an epic.)**
-- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ the next epic **MUST be a STRUCTURE-epic**. Reset on a structure-epic ship.
-- `LAST_EPIC: iter 59 — FEATURE: character art step-change (24×32 premium chibis, owner-picked dir C)`
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ the next firing is **HARD-LOCKED to the EPIC track** (polish illegal). Reset to 0 only when an epic SHIPS.
+- `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ **the next epic MUST be a STRUCTURE-epic** (a structure-epic is now due). Reset on a structure-epic ship.
+- `LAST_EPIC: iter 63 — FEATURE: festivals (Tết petals + June confetti)`
 
 ## Epic in progress
 _(none — the art step-change shipped iter 59. Possible veto-driven follow-up: if the 24×32 characters
@@ -19,7 +19,7 @@ on owner reaction.)_
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
 1. ~~[FEATURE] Character art step-change~~ SHIPPED iter 59 (owner-picked Direction C: premium 24×32 volumetric chibis with separated arms, expressive faces, contact shadows).
 2. **[FEATURE] Weather + time-of-day lighting** — JUICE; the campus becomes a *place*, not a board.
-3. **[FEATURE] Festivals / set-pieces** — Tết, graduation, a scandal-day the campus reacts to. JUICE.
+3. ~~[FEATURE] Festivals (Tết petals + June confetti)~~ SHIPPED iter 63. Remaining set-piece idea: a satirical **scandal-day** the campus visibly reacts to (news-van, gloomy banner, gathered crowd) when an alumnus is arrested / a phốt blows up — BITE. Queued.
 4. **[FEATURE] Player-customizable students** — owner-hinted ("characters are customize"). FUN + individuality.
 5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
 6. **[FEATURE] Shareable end-card** of the player's answer to the đề Văn — BITE + shareability.

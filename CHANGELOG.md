@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Festivals: the campus celebrates (Tết petals + graduation confetti, loop iter 63)
+- The campus now comes ALIVE for the year's big moments. New festive-particle layer keyed to the
+  calendar: **Tết (months 1–2) drifts đào-pink & mai-yellow blossom petals**; **June rains multi-colour
+  graduation confetti** — both falling + swaying over the existing static décor (Tết lanterns/blossom
+  pots; June red carpet/mortarboards/bunting). Mirrors the flyers/clouds ambient pattern
+  (festMode/updateFest/drawFest in the live layer; self-populates on paint so it's screenshot-verifiable).
+  Pure ui.js, no engine/balance touch; gates green; both modes verified via `_renderLiveOnce`. With the
+  day-arc (62) and cloud-shadows (61), the grounds are now a living, sunny, *celebrating* place.
+- FEATURE-epic shipped → `SMALL_SHIPS_SINCE_EPIC 0`, `EPICS_SINCE_STRUCTURE 2` (a STRUCTURE-epic is now
+  due next). Bar: BEAUTY 4 / JUICE 4 / FUN 3 / CLARITY 3 / **BITE 4** (Tết + graduation are the cultural
+  beats of the satirical living world). Queued: a satirical scandal-day set-piece (the campus reacts).
+
 ## 2026-06-13 — Time-of-day light: a felt sunny day-arc (loop iter 62)
 - The campus now lives through a day. The per-period tint was flat-warm and barely felt; it's now a
   legible **arc — fresh cool morning → bright neutral noon → golden afternoon → a warm golden-hour glow

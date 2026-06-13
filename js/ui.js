@@ -198,7 +198,7 @@
     else { toast("Đã xây " + d.name + "."); sfx("build"); }
   }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
-  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [];
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [], fest = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
@@ -372,6 +372,7 @@
     for (i = 0; i < cats.length; i++) if (alive) updateCat(cats[i], ts);
     if (alive) updateFlyers(ts);
     if (alive) updateClouds(ts);
+    if (alive) updateFest(ts);
   }
   function drawLive(ctx, ts, period) {
     var i;
@@ -391,6 +392,7 @@
       ctx.fillStyle = gh; ctx.fillRect(0, 0, GW * T, GH * T);
     }
     ctx.fillStyle = TINTS[period] || TINTS[2]; ctx.fillRect(0, 0, GW * T, GH * T); // time-of-day warmth (subtle, never dark)
+    drawFest(ctx, ts); // festive petals (Tết) / confetti (June) fall in front of everything
   }
   // schedule: students are routed to the right room's door-ring each period, then do the activity
   function assignActivity(a, period) {
@@ -503,6 +505,35 @@
       var c = clouds[i], g = ctx.createRadialGradient(c.x, c.y, c.r * 0.18, c.x, c.y, c.r);
       g.addColorStop(0, "rgba(26,36,16,.13)"); g.addColorStop(1, "rgba(26,36,16,0)");
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r, c.r * 0.6, 0, 0, 6.2832); ctx.fill();
+    }
+  }
+  /* festive falling particles — Tết blossom petals (đào/mai) and June graduation confetti; keyed to the calendar */
+  var FEST_PETAL = ["#ffc0d0", "#ff9ec0", "#ffd24a", "#ffe07a"]; // đào pink + mai yellow
+  var FEST_CONF = ["#e0584a", "#f2c14e", "#5fd0c5", "#4a8fe0", "#b48ef0", "#ffffff"]; // graduation confetti
+  function festMode() { var m = S().month; return (m === 1 || m === 2) ? "tet" : (m === 6 ? "june" : null); }
+  function newFestP(conf) {
+    var pal = conf ? FEST_CONF : FEST_PETAL;
+    return { x: Math.random() * GW * T, y: Math.random() * (GH * T + 12) - 6, vy: (conf ? 0.4 : 0.22) + Math.random() * 0.35,
+      sway: 0.4 + Math.random() * 0.7, ph: Math.random() * 6.28, rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.22,
+      c: pal[(Math.random() * pal.length) | 0], s: conf ? 2 + (Math.random() * 2 | 0) : 2, conf: conf };
+  }
+  function updateFest(ts) {
+    var mode = festMode();
+    if (!mode) { if (fest.length) fest = []; return; }
+    var conf = mode === "june", target = conf ? 30 : 22;
+    while (fest.length < target) fest.push(newFestP(conf));
+    for (var i = 0; i < fest.length; i++) {
+      var p = fest[i]; p.y += p.vy; p.x += Math.sin(ts / 600 + p.ph) * p.sway * 0.5; p.rot += p.vr;
+      if (p.y > GH * T + 6) { var np = newFestP(p.conf); np.y = -6; fest[i] = np; } // recycle from the top
+    }
+  }
+  function drawFest(ctx, ts) {
+    if (!fest.length && festMode()) updateFest(ts); // populate on first paint (real play populates via stepLive)
+    for (var i = 0; i < fest.length; i++) {
+      var p = fest[i], x = p.x | 0, y = p.y | 0;
+      ctx.fillStyle = p.c;
+      if (p.conf) { var w = 1 + (Math.abs(Math.cos(p.rot)) * p.s | 0); ctx.fillRect(x, y, w, p.s); } // tumbling confetti (width flutters)
+      else { ctx.fillRect(x, y, 2, 2); ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.fillRect(x + (Math.sin(p.rot) > 0 ? 2 : -1), y, 1, 1); } // soft petal + glint
     }
   }
   /* a wandering campus cat — pure "love watching" charm */
