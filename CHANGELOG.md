@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-13 — Mobile tap polish + reset button (loop iter 35)
+- Following up the owner's "map selection still not clear" across all three dimensions, not just the
+  visual marker (iter 34): (1) **tap ripple** — every tap now spawns a brief expanding gold ring at
+  the touch point, so a tap visibly registers (no hover on mobile); (2) **more forgiving targets** —
+  the open-ground student hit radius went 11→14px and the in-room radius 7→9px, so imprecise finger
+  taps land (the new on-map marker confirms the hit, so a generous radius is safe). Together with the
+  iter-34 selection marker, tapping the world now feels responsive and unambiguous on a phone.
+- **Reset button** (owner request — "reset to reload the game to the latest version to test"): the
+  Trường tab now has a "🔄 Chơi lại từ đầu (xoá lưu)" button with a confirm modal that wipes the
+  localStorage save and reloads, so the latest build always shows from a clean start-from-nothing
+  boot (no stale save hiding new changes). Guarded with a `resetting` flag so the 4-second autosave
+  and the visibility-hide autosave can't re-write the save between the wipe and the reload.
+  Verified the button + confirm flow render; gates green.
+
 ## 2026-06-13 — On-map selection marker + maintenance audit (loop iter 34)
 - **Owner feedback: "map selection on mobile still not clear."** Tapping worked, but nothing on the
   map showed *what* you'd selected — the inspect card just appeared at the bottom. Added a clear,

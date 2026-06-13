@@ -106,6 +106,8 @@
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
   var selStudent = null, selRoom = null; // what the player has tapped (drives the on-map selection marker)
+  var tapFx = null; // transient tap ripple (immediate touch feedback on mobile)
+  var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
   var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
@@ -127,10 +129,10 @@
     // font gate: redraw the static layer once 'Be Vietnam Pro' is ready so room labels aren't a fallback face
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { S()._mapDirty = true; });
     setInterval(loopTick, CONFIG.TICK_MS);
-    setInterval(function () { HVS.saveGame(); }, 4000);
+    setInterval(function () { if (!resetting) HVS.saveGame(); }, 4000);
     $("soundBtn").onclick = toggleSound;
     $("mapStatic").addEventListener("click", onMapClick);
-    document.addEventListener("visibilitychange", function () { if (document.hidden) HVS.saveGame(); });
+    document.addEventListener("visibilitychange", function () { if (document.hidden && !resetting) HVS.saveGame(); });
     // autoplay-unlock: browsers block audio until a gesture; start (or resume persisted) music on first tap
     var unlock = function () { if (soundOn) startSound(); document.removeEventListener("pointerdown", unlock); };
     document.addEventListener("pointerdown", unlock, { once: true });
@@ -241,6 +243,7 @@
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
     drawSelection(ctx, ts); // on-map marker for the tapped student/room
+    drawTapFx(ctx, ts);     // expanding ripple at the last tap (touch feedback)
     if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     if (alive) updateFlyers(ts); drawFlyers(ctx, ts);
@@ -428,7 +431,7 @@
       }
     }
     if (selStudent != null) {
-      var a = null; for (var i = 0; i < actors.length; i++) if (actors[i].id === selStudent) { a = actors[i]; break; }
+      var a = null; for (var si = 0; si < actors.length; si++) if (actors[si].id === selStudent) { a = actors[si]; break; }
       if (a) {
         var x = a.px | 0, y = a.py | 0;
         ctx.strokeStyle = "rgba(240,198,116," + (0.6 + 0.4 * pulse).toFixed(2) + ")"; ctx.lineWidth = 1.5;
@@ -709,6 +712,14 @@
     ctx.fillStyle = "#55ab5d"; ctx.fillRect(cx - 5, cy - 13, 7, 2); ctx.fillRect(cx - 6, cy - 11, 5, 2);
     ctx.fillStyle = "#2f6e3a"; ctx.fillRect(cx + 2, cy - 8, 4, 3);
   }
+  function drawTapFx(ctx, ts) {
+    if (!tapFx) return;
+    var age = ts - tapFx.t0;
+    if (age < 0 || age > 380) { if (age > 380) tapFx = null; return; }
+    var k = age / 380, rad = 4 + k * 13, al = (1 - k) * 0.8;
+    ctx.strokeStyle = "rgba(240,198,116," + al.toFixed(2) + ")"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(tapFx.x, tapFx.y, rad, 0, 6.2832); ctx.stroke();
+  }
   function bush(ctx, cx, cy) {
     ctx.fillStyle = "rgba(28,48,18,.15)"; ctx.fillRect(cx - 4, cy + 2, 9, 1);
     ctx.fillStyle = PX.out; ctx.fillRect(cx - 4, cy - 4, 10, 2); ctx.fillRect(cx - 5, cy - 2, 12, 4);
@@ -744,13 +755,15 @@
       else toast(res.msg);
       return;
     }
+    tapFx = { x: pt.px, y: pt.py, t0: (typeof performance !== "undefined" ? performance.now() : 0) }; // tap ripple feedback
     resolveTap(pt.px, pt.py, pt.gx, pt.gy);
   }
   function resolveTap(px, py, gx, gy) {
-    // tap-the-world: inside a room, the room wins unless you tap right on a
-    // student (tight 7px); on open grounds students grab a looser 11px.
+    // tap-the-world: inside a room the room wins unless you tap right on a student (9px);
+    // on open grounds students grab a forgiving 14px (fingers are imprecise — the on-map
+    // marker then confirms the hit, so a generous radius is safe).
     var r = roomAt(gx, gy);
-    var a = nearestActor(px, py, r ? 7 : 11);
+    var a = nearestActor(px, py, r ? 9 : 14);
     if (a) { showInspectStudent(a.id); return; }
     if (r) { showInspectRoom(r); return; }
     hideInspect();
@@ -1102,9 +1115,28 @@
       });
       wrap.appendChild(h);
     }
+    // reset — wipe the save and reload the latest build (so changes show up from a clean start)
+    var rc = el("div", "card"); rc.appendChild(el("h3", null, "Kiểm thử"));
+    rc.appendChild(el("div", "tiny", "Xoá lưu và tải lại bản mới nhất để chơi lại từ con số 0.")).style.marginBottom = "8px";
+    var rb = el("button", "btn", "🔄 Chơi lại từ đầu (xoá lưu)"); rb.style.width = "100%";
+    rb.onclick = confirmReset;
+    rc.appendChild(rb); wrap.appendChild(rc);
+
     var d = el("div", "card"); d.appendChild(el("div", "tiny", CONTENT.disclaimer));
     wrap.appendChild(d);
     return wrap;
+  }
+  function confirmReset() {
+    var w = el("div");
+    w.appendChild(el("div", "kic", "Kiểm thử"));
+    w.appendChild(el("h2", null, "Chơi lại từ đầu?"));
+    w.appendChild(el("div", "lead", "Xoá toàn bộ tiến trình hiện tại và tải lại bản mới nhất. Trường bắt đầu lại từ một khoảnh sân trống. Không thể hoàn tác."));
+    var row = el("div"); row.style.display = "flex"; row.style.gap = "8px";
+    var no = el("button", "btn ghost", "Huỷ"); no.style.flex = "1"; no.onclick = hideModal;
+    var yes = el("button", "btn gold", "Xoá & chơi lại"); yes.style.flex = "1";
+    yes.onclick = function () { resetting = true; try { localStorage.removeItem(CONFIG.SAVE_KEY); } catch (e) {} location.reload(); };
+    row.appendChild(no); row.appendChild(yes); w.appendChild(row);
+    openModal(w);
   }
 
   /* === The Player's Answer — "Bản nháp bài luận của hiệu trưởng" (DESIGN §1: reflect, never verdict) === */
