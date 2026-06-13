@@ -281,7 +281,7 @@
   function assignActivity(a, period) {
     var roomKey = null, act = null, duAn = (S().month >= 2 && S().month <= 5);
     if (period === 0) { roomKey = "phonghoc"; act = (a.tell === "sky") ? "daydream" : "study"; }
-    else if (period === 1) { roomKey = "san"; act = (a.tell === "hype") ? "perform" : "recess"; }
+    else if (period === 1) { roomKey = "san"; act = (a.tell === "hype") ? "perform" : ((a.id % 5 < 2) ? "chat" : (a.id % 5 === 2 ? "read" : "recess")); } // recess is now social: chat clusters, readers, milling
     else if (period === 2) { roomKey = "cangtin"; act = "eat"; }
     else if (period === 3) {
       // afternoon KHOA PRACTICUM — each major works in its own room, its own way (read a khoa by watching)
@@ -291,7 +291,7 @@
       else if (a.grade === 4) { roomKey = duAn ? "xuong" : "phongmay"; act = "tinker"; }
       else { roomKey = "lab"; act = "study"; }
     }
-    else { roomKey = null; act = (((a.id + period) % 3) === 0) ? "zzz" : "home"; }
+    else { roomKey = null; var m3 = (a.id + period) % 3; act = (m3 === 0) ? "zzz" : (m3 === 1 ? "phone" : "home"); } // tan học: nap, doom-scroll, or head home
     var ring = roomKey ? ringsByKey[roomKey] : null;
     if (ring && ring.length) { var t = ring[(a.id + period) % ring.length]; a.tx = t[0]; a.ty = t[1]; a.act = act; }
     else { var rt = randWalkTile(); a.tx = rt[0]; a.ty = rt[1]; a.act = (period === 4) ? act : null; } // graceful fallback when the room isn't built
@@ -329,6 +329,9 @@
     if (a.act === "code") return Math.random() < 0.55 ? "idea" : "dots";   // debugging the loop
     if (a.act === "craft") return Math.random() < 0.6 ? "spark" : "idea";  // sparks off the workpiece
     if (a.act === "stream") return Math.random() < 0.6 ? "heart" : "spark"; // likes + clout
+    if (a.act === "chat") return Math.random() < 0.5 ? "heart" : "dots";   // gossip & laughter
+    if (a.act === "read") return Math.random() < 0.6 ? "idea" : "dots";
+    if (a.act === "phone") return Math.random() < 0.55 ? "heart" : "dots"; // the feed
     if (a.act === "daydream") return Math.random() < 0.5 ? "dots" : "music";
     return EMOTES[(Math.random() * EMOTES.length) | 0];
   }
@@ -601,6 +604,23 @@
       var hy = (y - 15 - (ts / 130 % 9)) | 0;                                          // like-hearts floating up
       ctx.fillStyle = "#f15a7a"; ctx.fillRect((x - 5 + Math.sin(ts / 200) * 1.5) | 0, hy, 2, 2);
       ctx.fillStyle = "#f2c14e"; ctx.fillRect((x - 7 + Math.sin(ts / 165 + 1) * 1.5) | 0, (hy + 4) | 0, 1, 1);
+    } else if (a.act === "chat") {
+      // recess social: a speech bubble with dots that fill in, so clustered students read as a conversation
+      ctx.fillStyle = "rgba(255,255,255,.94)"; roundRect(ctx, x + 2, y - 26, 13, 8, 3); ctx.fill();
+      var nd = 1 + (Math.floor(ts / 300 + a.id) % 3);
+      ctx.fillStyle = "#566071"; for (k = 0; k < nd; k++) ctx.fillRect(x + 4 + k * 3, y - 23, 2, 2);
+      ctx.fillStyle = "rgba(255,255,255,.94)"; ctx.fillRect(x + 3, y - 19, 3, 2); // bubble tail
+    } else if (a.act === "read") {
+      // an open book, pages lit, a line of text scanning down
+      ctx.fillStyle = PX.out; ctx.fillRect(x - 5, y - 10, 11, 6);
+      ctx.fillStyle = "#f3ead0"; ctx.fillRect(x - 4, y - 9, 4, 4); ctx.fillRect(x + 1, y - 9, 4, 4);
+      ctx.fillStyle = "#fbf5e4"; ctx.fillRect(x - 4, y - 9, 4, 1); ctx.fillRect(x + 1, y - 9, 4, 1); // lit top edge
+      var ro = Math.floor(ts / 650) % 3; ctx.fillStyle = "#9c8657"; ctx.fillRect(x - 3, y - 7 + ro, 2, 1); ctx.fillRect(x + 2, y - 7 + ((ro + 1) % 3), 2, 1);
+    } else if (a.act === "phone") {
+      // doom-scroll: a phone glow on the face, the feed sliding by (the sống-ảo undertow, everywhere)
+      ctx.fillStyle = "rgba(180,210,255,.14)"; ctx.fillRect(x - 4, y - 14, 9, 8);
+      ctx.fillStyle = PX.out; ctx.fillRect(x + 1, y - 11, 4, 7);
+      ctx.fillStyle = (Math.floor(ts / 240) % 2) ? "#bfe9ff" : "#8fc8ef"; ctx.fillRect(x + 2, y - 10, 2, 5);
     }
   }
   // a little pickup football game on the Sân — the ball gets kicked around the pitch

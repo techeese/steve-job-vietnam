@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-06-14 — EPIC: the campus comes alive socially (loop iter 88)
+- The cadence-forced epic, spent on the owner's **standing pre-authorised** category (*"deepening the activity
+  layer is ALWAYS a valid pick — the living campus is the soul"*) — the one substantial autonomous move that
+  doesn't need fresh taste signal. Until now students did **solo** activities; now they **interact**, so recess
+  reads like a real schoolyard:
+  - **Chat clusters** (recess): students show conversation bubbles whose dots fill in, so the groups gathered on
+    the sân read as *talking to each other* — the first student-to-student social layer.
+  - **Readers** (recess): some sit with an open book, a line of text scanning down.
+  - **Doom-scroll** (tan học): instead of just napping/heading home, some students stand glued to a glowing
+    phone — the sống-ảo undertow, everywhere, as quiet satire.
+  - Each new act gets matching emotes (chat → 💬/❤, read → 💡, phone → ❤/…).
+- Pure ui.js draw + routing in `assignActivity`/`drawActivity`/`pickEmote` — cosmetic (`Math.random`/`ts`),
+  reads only `a.act`, **no engine/balance/save change** (gate & sweep untouched). Verified: parse · `./gate.sh`
+  GREEN · `./bot.sh` **BOTOK** (11y, all periods rendered, zero JSERR) · a recess screenshot showing chat
+  bubbles across the clustered students.
+- EPIC shipped → cadence resets: **`SMALL_SHIPS_SINCE_EPIC 3→0`, `EPICS_SINCE_STRUCTURE 0→1`**. Bar:
+  **CHARM 4** (the #1 dimension — the schoolyard finally *socialises*).
+- NOTE: the genuinely *big* remaining epics — a passive **late-game economic pressure**, a recurring
+  **character arc** (e.g. Mai Sương), or another **graphics step-change** — all reshape feel/balance/art
+  direction and stay **queued for owner steer** (a wrong high-effort direction is the costliest miss). Not
+  claiming those; this epic is the safe, owner-blessed living-campus deepening.
+
 ## 2026-06-14 — Cựu sinh viên come back to visit — biographies, made flesh on campus (loop iter 87)
 - The owner's deepest soul ("people and trajectories, doing things you like to *watch*") reaching the living
   campus, not just the panels: every so often a **graduate strolls back through the cổng**, walks up the central
