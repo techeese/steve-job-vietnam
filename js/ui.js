@@ -95,7 +95,7 @@
 
   /* ---------------- boot ---------------- */
   var tab = "ops", placingKey = null, lastSig = "", soundOn = false;
-  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [];
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null;
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
 
@@ -202,7 +202,7 @@
     for (i = 0; i < actors.length; i++) updateActor(actors[i], alive, ts, period);
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
-    if (period === 1 || period === 3) drawSanBall(ctx, ts); // ball out at recess / afternoon
+    if (period === 1) { if (alive) updateBall(ts); drawBall(ctx); } // pickup football at recess
     for (i = 0; i < cats.length; i++) { if (alive) updateCat(cats[i], ts); drawCat(ctx, cats[i], ts); }
     requestAnimationFrame(liveLoop);
   }
@@ -295,14 +295,24 @@
       ctx.fillStyle = "#e2e9d4"; ctx.fillRect(x + 3, zy, 3, 1); ctx.fillRect(x + 5, zy + 1, 1, 1); ctx.fillRect(x + 3, zy + 2, 3, 1);
     }
   }
-  function drawSanBall(ctx, ts) {
+  // a little pickup football game on the Sân — the ball gets kicked around the pitch
+  function updateBall(ts) {
     var san = null, rooms = S().rooms; for (var i = 0; i < rooms.length; i++) if (rooms[i].key === "san") { san = rooms[i]; break; }
-    if (!san) return;
-    var d = CONFIG.ROOMS.san, cx = (san.x + d.w / 2) * T, cy = (san.y + d.h / 2) * T;
-    var bx = cx + Math.sin(ts / 700) * (d.w * T * 0.3), by = cy + 4 - Math.abs(Math.sin(ts / 350)) * 8;
-    ctx.fillStyle = "rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(bx, cy + 8, 2.5, 1, 0, 0, 6.28); ctx.fill();
-    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(bx, by, 2.2, 0, 6.28); ctx.fill();
-    ctx.fillStyle = "#333"; ctx.fillRect((bx - 1) | 0, (by - 1) | 0, 1, 1);
+    if (!san) { ball = null; return; }
+    var d = CONFIG.ROOMS.san, x0 = san.x * T + 6, y0 = san.y * T + 6, x1 = (san.x + d.w) * T - 6, y1 = (san.y + d.h) * T - 6;
+    if (!ball) ball = { px: (x0 + x1) / 2, py: (y0 + y1) / 2, tx: (x0 + x1) / 2, ty: (y0 + y1) / 2, wait: 0, hop: 0 };
+    var dx = ball.tx - ball.px, dy = ball.ty - ball.py, dd = Math.hypot(dx, dy);
+    if (dd < 2) { if (ball.wait > 0) ball.wait--; else { ball.tx = x0 + Math.random() * (x1 - x0); ball.ty = y0 + Math.random() * (y1 - y0); ball.wait = 8 + (Math.random() * 16 | 0); } } // "kicked" to a new spot
+    else { ball.px += (dx / dd) * 1.8; ball.py += (dy / dd) * 1.8; }
+    ball.hop = Math.abs(Math.sin(ts / 110)) * 5;
+  }
+  function drawBall(ctx) {
+    if (!ball) return;
+    var x = ball.px | 0, y = (ball.py - ball.hop) | 0;
+    ctx.fillStyle = "rgba(0,0,0,.22)"; ctx.fillRect(x - 2, (ball.py + 2) | 0, 5, 1);
+    ctx.fillStyle = PX.out; ctx.fillRect(x - 2, y - 2, 6, 6);
+    ctx.fillStyle = "#fff"; ctx.fillRect(x - 1, y - 2, 4, 6); ctx.fillRect(x - 2, y - 1, 6, 4);
+    ctx.fillStyle = PX.out; ctx.fillRect(x, y, 1, 1); ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 2, y + 1, 1, 1); ctx.fillRect(x, y + 2, 1, 1); // pentagon spots
   }
   // chibi student — flat primitives only, no per-frame strings/gradients/save (60fps × 48)
   function drawActor(ctx, a, ts) {
