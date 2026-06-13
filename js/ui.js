@@ -175,6 +175,16 @@
     ATLAS = [];
     for (var g = 0; g < 4; g++) { ATLAS[g] = []; var sh = shade(GRADE_C[g + 1], -0.28); for (var v = 0; v < VARIANTS.length; v++) { ATLAS[g][v] = []; for (var fr = 0; fr < 2; fr++) ATLAS[g][v][fr] = bakeChar(GRADE_C[g + 1], sh, VARIANTS[v], fr); } }
   }
+  // player-customized looks (arbitrary skin/hair/style/accessory combos) — baked on demand + cached
+  var customCache = {};
+  function clampLook(lc) { return { s: ((lc.s % SKINS.length) + SKINS.length) % SKINS.length, h: ((lc.h % HAIRSET.length) + HAIRSET.length) % HAIRSET.length, y: ((lc.y % HAIRSTYLE.length) + HAIRSTYLE.length) % HAIRSTYLE.length, a: ((lc.a % ACC.length) + ACC.length) % ACC.length }; }
+  function customSprite(grade, lc, frame) {
+    var c = clampLook(lc), key = grade + ":" + c.s + "." + c.h + "." + c.y + "." + c.a + ":" + frame;
+    if (!customCache[key]) customCache[key] = bakeChar(GRADE_C[grade], shade(GRADE_C[grade], -0.28), c, frame);
+    return customCache[key];
+  }
+  // the effective look object {s,h,y,a} for a student: their custom override, else their VARIANT
+  function effLook(st) { return st.lookC || VARIANTS[(typeof st.look === "number" && st.look >= 0 && st.look < VARIANTS.length) ? st.look : hashId(st.id) % VARIANTS.length]; }
 
   /* === ART: Sơn Mài Diorama (lacquer-night campus, gold-leaf pavilions) === */
   // per-room style: wall hue, roof silhouette, window temperature, gable sigil, short map label
@@ -334,7 +344,9 @@
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id);
       a.tell = s.tell || ""; a.seed = s.seed;
       a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < VARIANTS.length) ? s.look : hashId(s.id) % VARIANTS.length;
-      a.skin = SKINS[VARIANTS[a.variantIdx].s][0]; a.glasses = ACC[VARIANTS[a.variantIdx].a] === "glasses";
+      a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
+      var el0 = a.lookC ? clampLook(a.lookC) : VARIANTS[a.variantIdx];
+      a.skin = SKINS[el0.s][0]; a.glasses = ACC[el0.a] === "glasses";
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
     }
@@ -622,7 +634,7 @@
     // (contact shadow is baked into the 24×32 sprite now)
     var frame = a._moving ? (Math.sin(ts / 150 + a.ph) > 0 ? 0 : 1) : 0;
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
-    var spr = ATLAS[a.grade - 1][a.variantIdx][frame];
+    var spr = a.lookC ? customSprite(a.grade, a.lookC, frame) : ATLAS[a.grade - 1][a.variantIdx][frame];
     if (spr) ctx.drawImage(spr, x - 12, y - 30 + bob); // 24×32 sprite; feet at (x,y)
     // idle blink — eyes close briefly every few seconds when standing still (eyes at canvas y6-8 → screen y-24)
     if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
@@ -791,12 +803,22 @@
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
-      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>";
-    if (ATLAS) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(ATLAS[st.grade - 1][lookIdx][0], 0, 0); }
+      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>" +
+      "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +
+        "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
+        "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +
+        "<button class='czb' id='cz_r'>🎲</button></div>";
+    if (ATLAS) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(st.lookC ? customSprite(st.grade, st.lookC, 0) : ATLAS[st.grade - 1][lookIdx][0], 0, 0); }
     $("ixBtn").onclick = hideInspect;
     $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); };
     $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
-    $("lookBtn").onclick = function () { st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); };
+    $("lookBtn").onclick = function () { delete st.lookC; st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); }; // cycle presets (clears custom)
+    var cyc = function (axis, n) { st.lookC = Object.assign({}, st.lookC || effLook(st)); st.lookC[axis] = (st.lookC[axis] + 1) % n; syncActors(); showInspectStudent(id); };
+    $("cz_s").onclick = function () { cyc("s", SKINS.length); };
+    $("cz_h").onclick = function () { cyc("h", HAIRSET.length); };
+    $("cz_y").onclick = function () { cyc("y", HAIRSTYLE.length); };
+    $("cz_a").onclick = function () { cyc("a", ACC.length); };
+    $("cz_r").onclick = function () { st.lookC = { s: (Math.random() * SKINS.length) | 0, h: (Math.random() * HAIRSET.length) | 0, y: (Math.random() * HAIRSTYLE.length) | 0, a: (Math.random() * ACC.length) | 0 }; syncActors(); showInspectStudent(id); };
     ins.classList.add("show"); $("mapHint").textContent = "";
   }
   function showDedication(dedKey) {

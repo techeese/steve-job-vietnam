@@ -1050,6 +1050,7 @@ function sanitize() {
     s.seed = clamp(Math.round(s.seed) || 1, 1, 5);
     ["kt", "tn", "st", "cm", "vet", "mood"].forEach(function (k) { s[k] = clamp(s[k], 0, 100); });
     if (!s.flags) s.flags = {}; if (!s.flags.vt) s.flags.vt = [];
+    if (s.lookC && (typeof s.lookC !== "object" || !Number.isFinite(s.lookC.s) || !Number.isFinite(s.lookC.h) || !Number.isFinite(s.lookC.y) || !Number.isFinite(s.lookC.a))) delete s.lookC; // custom look (UI clamps ranges on use)
     return s;
   }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP);
   if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;

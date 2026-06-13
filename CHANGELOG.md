@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-13 — Customize your students (the "characters are customize" hint, loop iter 66)
+- Delivers the owner's verbatim north-star — *"the characters are customize."* The student inspect card
+  now has a **per-axis look customizer**: 🎨 Da (skin) · 💇 Tóc (hair colour) · ✂️ Kiểu (hairstyle) ·
+  👓 Đồ (accessory) · 🎲 (shuffle), plus 🔄 to cycle presets. Any of 3×6×3×6 = 324 combos (vs the 12
+  presets), baked **on demand and cached**, so your customized student is instantly recognisable walking
+  the campus — individuality you can *see*, now that the 24×32 art rewards it.
+- Clean + save-safe: an optional `s.lookC` override (absent = the student's VARIANT, so old saves are
+  untouched); whole-object serialize round-trips it; sanitize guards malformed values; the UI clamps
+  ranges on use. Verified: customizer renders at 390px, custom look shows on map + avatar, no JSERR,
+  gates green (incl GATE_COMPAT). FEATURE-epic → `EPICS_SINCE_STRUCTURE 1`. Bar: **FUN 4** / BEAUTY 3 /
+  JUICE 3 / CLARITY 3 / BITE 3.
+
 ## 2026-06-13 — STRUCTURE-epic: audio extracted to js/audio.js (loop iter 65)
 - The cadence-due structure-epic (EPICS_SINCE_STRUCTURE hit 2). The generative-music + SFX subsystem
   (MOODS, the pad/pluck/bass scheduler, `sfx`, start/stop/toggle) is relocated verbatim from ui.js into a
