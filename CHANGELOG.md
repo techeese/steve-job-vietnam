@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-14 — Finish the alumni-line variety (the one path that missed it) (loop iter 100)
+- A loose end from iter 98: `pickLine` (used only by the garage→KY_SU recovery path) always returned line
+  `[0]`, so those few alumni were stuck on a fixed line while everyone else now rotates the 4-line pool. Made
+  it pick a **deterministic per-alumnus index** (`(id + fs.seed) % len`) — replay-stable and, crucially,
+  derived from existing fields rather than an rng draw, so **GATE_ALUM determinism holds and the sweep is
+  byte-for-byte unchanged** (0 bankruptcy, distributions identical). Now every code path to a state draws from
+  the varied pool.
+- engine.js 1-liner. Verified: parse · `./gate.sh` GREEN · `./bot.sh` BOTOK · sweep spot-check unchanged.
+  Plateau-mode completeness → `SMALL_SHIPS_SINCE_EPIC 2→3` (next firing → review-defer; epic awaits steer).
+
 ## 2026-06-14 — Returning-grad bubbles now vary (loop iter 99)
 - Same repetition-reduction as iter 98, on the visitor feature (iter 87): a cựu SV strolling back showed a
   **single fixed line per fate**, so repeat visits of the same type read identically. Converted `visitLines`

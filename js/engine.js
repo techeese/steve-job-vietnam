@@ -1039,7 +1039,7 @@ function resolveContract(accept) {
 }
 
 /* ---------- flavor line helpers ---------- */
-function pickLine(state, a) { var b = CONTENT.alumLines[state] || ["—"]; return b[0].replace(/\{ten\}/g, a.ten); }
+function pickLine(state, a) { var b = CONTENT.alumLines[state] || ["—"]; var i = ((a.id | 0) + ((a.fs && a.fs.seed) | 0)) % b.length; return b[i].replace(/\{ten\}/g, a.ten); } // deterministic per-alumnus index (replay-stable, no rng draw) so even the garage→KY_SU path gets the iter-98 variety
 function pickLineIdx(state, a, idx) { var b = CONTENT.alumLines[state] || ["—"]; return b[idx % b.length].replace(/\{ten\}/g, a.ten); }
 function tpl(str, o) { return String(str).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
 
