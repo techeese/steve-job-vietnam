@@ -403,6 +403,7 @@
     drawFlyers(ctx, ts);
     drawSmoke(ctx, ts);
     if (scandalMood()) drawNewsVan(ctx, ts); // the media camps out when the school's phốt pile up
+    drawChampPennant(ctx, ts);              // the reigning Cúp Khoa champion flies its colours over its own building
 
     if (period >= 3) { // golden-hour: warm directional light from the low sun (upper-left), strongest at tan học
       var sunR = GW * T * 0.95, ga = (period === 4) ? 0.17 : 0.085;
@@ -583,6 +584,25 @@
     ctx.stroke();
     ctx.strokeStyle = "rgba(220,230,250,.5)";                          // tiny splash ticks where drops land
     for (i = 0; i < splash.length; i++) { var p = splash[i]; ctx.beginPath(); ctx.moveTo(p.x - 2, p.y); ctx.lineTo(p.x + 2, p.y); ctx.stroke(); }
+  }
+  /* Cúp Khoa champion pennant — the reigning khoa flies its colours on a little pole atop its OWN building,
+     so you can SEE who's winning the pennant race from the campus itself. Pure cosmetic (Math.sin wave). */
+  function drawChampPennant(ctx, ts) {
+    var s = S(); if (!s.khoaCup || !s.khoaCup.champ) return;
+    var mj = null, M = CONFIG.MAJORS; for (var i = 0; i < M.length; i++) if (M[i].key === s.khoaCup.champ) { mj = M[i]; break; }
+    if (!mj) return;
+    var room = null, R = s.rooms; for (var r = 0; r < R.length; r++) if (R[r].key === mj.room) { room = R[r]; break; }
+    if (!room) return;
+    var col = mj.color || "#f0c674", px = room.x * T + 4, roof = room.y * T, poleTop = roof - 15;
+    ctx.fillStyle = "#33383e"; ctx.fillRect(px, poleTop, 2, roof - poleTop + 2);     // pole
+    ctx.fillStyle = "#f0c674"; ctx.fillRect(px - 1, poleTop - 1, 2, 2);              // gold finial
+    var baseY = poleTop + 1, L = 12;                                                 // waving triangular pennant
+    for (var c = 0; c < L; c++) {
+      var hh = Math.max(1, Math.round(7 * (1 - c / L)));
+      var yo = Math.round(Math.sin(ts / 220 + c * 0.55) * (c / L) * 2.2);
+      ctx.fillStyle = col; ctx.fillRect(px + 2 + c, baseY + yo, 1, hh);
+      ctx.fillStyle = "rgba(255,255,255,.28)"; ctx.fillRect(px + 2 + c, baseY + yo, 1, 1); // top glint
+    }
   }
   /* festive falling particles — Tết blossom petals (đào/mai) and June graduation confetti; keyed to the calendar */
   var FEST_PETAL = ["#ffc0d0", "#ff9ec0", "#ffd24a", "#ffe07a"]; // đào pink + mai yellow

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — The champion flies its colours over campus (loop iter 81)
+- Weaves iter-80's Cúp Khoa into the **watchable campus layer** (the game's soul): the reigning champion khoa now
+  flies a small **waving pennant in its own colour on its own building** — Khoa Lập trình winning means a blue
+  pennant on the Phòng máy roof; Thiết kế Chế tạo → gold on the Xưởng; Sống Ảo → purple on the Lab. So you can
+  *see* who holds the cup just by watching the school, not only by opening a panel.
+- Pure ui.js cosmetic: `drawChampPennant(ctx, ts)` in `drawLive` (reads `S.khoaCup.champ` → its MAJOR colour →
+  its room → a Math.sin-waved pixel pennant on a little pole above the roof; guarded to nothing when there's no
+  champion). No engine/data/save change → gate & sweep untouched. Verified: parse · `./bot.sh` **BOTOK** (11y,
+  zero JSERR, pennant exercised across champ changes) · zoom-overlay screenshot confirming the blue pennant on
+  the champion's building.
+- POLISH ship → `SMALL_SHIPS_SINCE_EPIC 0→1`, `EPICS_SINCE_STRUCTURE 2` (unchanged; the next *epic* is still the
+  forced ui.js→screens.js STRUCTURE move). Bar: **CHARM 4** (the campus tells the cup story by itself).
+
 ## 2026-06-14 — EPIC: Cúp Khoa — the khoas now race for a trophy across the years (loop iter 80)
 - The cadence-forced EPIC (after 3 polish ships). Turns iter-79's soft khoa standing into a real **annual
   inter-khoa competition** with a multi-year **pennant race** — deeper khoa life, the top VISION next-tier item.
