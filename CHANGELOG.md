@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-13 — Drifting cloud-shadows: the campus feels like a place (loop iter 61)
+- A small, sunny ambient touch — soft **cloud-shadows drift slowly across the grounds** (4 of them,
+  gentle radial-gradient patches, wrapping around), the classic Kairosoft "alive world" beat. Strictly
+  drawn BENEATH the actors so they never obscure the little people you're watching, and kept light so the
+  day stays bright (never darkens — the sunny north-star). Mirrors the existing flyers/cats ambient
+  pattern (initClouds/updateClouds/drawClouds in the live layer). Pure ui.js, no engine/balance touch;
+  gates green; verified in-game via `_renderLiveOnce`. Bar: JUICE 4 (the campus now has weather-like
+  motion), BEAUTY 3 / FUN 3 / CLARITY 3 / BITE 3. A palate-cleanser between big swings; next up the
+  bigger atmosphere/feature swings (time-of-day light, festivals).
+
 ## 2026-06-13 — The art step-change: premium 24×32 characters (owner-picked, loop iter 59)
 - The #1 priority — graphics, "not yet met" — takes its biggest swing yet. The flat 16×22 chibis are
   replaced by **premium 24×32 volumetric characters**: one consistent upper-left light with a 4-step

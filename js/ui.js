@@ -198,7 +198,7 @@
     else { toast("Đã xây " + d.name + "."); sfx("build"); }
   }
   var resetting = false; // set when wiping the save → blocks autosave so the reset actually sticks
-  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [];
+  var actors = [], walk = null, ringsByKey = {}, curPeriod = -1, forcePeriod = -1, cats = [], ball = null, flyers = [], clouds = [];
   // campus-life day clock: 5 real-time periods × 16s = 80s day (animates even while paused, for chill ambiance)
   var PERIOD_MS = 16000, N_PERIODS = 5; // 0 class · 1 recess · 2 lunch · 3 afternoon · 4 tan học
   // gentle time-of-day warmth per period (low alpha, warm — never darkens the sunny look)
@@ -243,7 +243,7 @@
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
     buildAtlas(); // bake pixel-art sprite atlas once
-    rebuildWalk(); syncActors(true); initCats(); initFlyers();
+    rebuildWalk(); syncActors(true); initCats(); initFlyers(); initClouds();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
     // font gate: redraw the static layer once 'Be Vietnam Pro' is ready so room labels aren't a fallback face
@@ -370,9 +370,11 @@
     if (period === 1 && alive) updateBall(ts);
     for (i = 0; i < cats.length; i++) if (alive) updateCat(cats[i], ts);
     if (alive) updateFlyers(ts);
+    if (alive) updateClouds(ts);
   }
   function drawLive(ctx, ts, period) {
     var i;
+    drawClouds(ctx);  // soft cloud-shadows drifting over the grounds, beneath the actors
     actors.sort(function (a, b) { return a.py - b.py; });
     for (i = 0; i < actors.length; i++) { drawActor(ctx, actors[i], ts); if (actors[i]._atDest && actors[i].act) drawActivity(ctx, actors[i], ts); if (actors[i].emote) drawEmote(ctx, actors[i].emote, actors[i].px | 0, actors[i].py | 0); }
     drawSelection(ctx, ts); // on-map marker for the tapped student/room
@@ -479,6 +481,21 @@
       if (flap) { ctx.fillRect(x - 2, y - 1, 2, 2); ctx.fillRect(x + 1, y - 1, 2, 2); }
       else { ctx.fillRect(x - 1, y, 1, 2); ctx.fillRect(x + 1, y, 1, 2); }
       ctx.fillStyle = PX.out; ctx.fillRect(x, y, 1, 2);
+    }
+  }
+  /* soft cloud-shadows drifting across the grounds — sunny-day "alive" ambience (never darkens, just passes) */
+  function initClouds() {
+    clouds = [];
+    for (var i = 0; i < 4; i++) clouds.push({ x: (Math.random() * (GW + 4) - 2) * T, y: (0.1 + Math.random() * 0.7) * GH * T, r: 54 + Math.random() * 50, v: 0.07 + Math.random() * 0.06 });
+  }
+  function updateClouds(ts) {
+    for (var i = 0; i < clouds.length; i++) { var c = clouds[i]; c.x += c.v; if (c.x - c.r > GW * T) { c.x = -c.r; c.y = (0.1 + Math.random() * 0.7) * GH * T; c.r = 52 + Math.random() * 48; } }
+  }
+  function drawClouds(ctx) {
+    for (var i = 0; i < clouds.length; i++) {
+      var c = clouds[i], g = ctx.createRadialGradient(c.x, c.y, c.r * 0.18, c.x, c.y, c.r);
+      g.addColorStop(0, "rgba(26,36,16,.13)"); g.addColorStop(1, "rgba(26,36,16,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r, c.r * 0.6, 0, 0, 6.2832); ctx.fill();
     }
   }
   /* a wandering campus cat — pure "love watching" charm */
