@@ -185,7 +185,7 @@
       }
       a.grade = s.grade; a.bodyC = GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb);
       a.tell = s.tell || ""; a.seed = s.seed;
-      a.variantIdx = hashId(s.id) % VARIANTS.length;
+      a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < VARIANTS.length) ? s.look : hashId(s.id) % VARIANTS.length;
       a.skin = SKINS[VARIANTS[a.variantIdx].s][0]; a.glasses = ACC[VARIANTS[a.variantIdx].a] === "glasses";
       a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
       next.push(a);
@@ -615,13 +615,19 @@
     var ins = $("inspect");
     var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
     var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
+    var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < VARIANTS.length) ? st.look : hashId(st.id) % VARIANTS.length;
     ins.innerHTML =
-      "<div class='ihead'><div class='av' style='background:" + (GRADE_C[st.grade] + "22") + "'>" + seedFace(st.seed) + "</div>" +
-      "<div><div class='iname'>" + esc(st.ten) + (st.ten === "Mai Sương" ? " 🔧" : "") + "</div><div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + "</div></div>" +
+      "<div class='ihead'><canvas id='iav' width='16' height='22' style='width:22px;height:30px;image-rendering:pixelated;background:" + (GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
+      "<div class='grow'><input id='renameIn' value='" + esc(st.ten).replace(/'/g, "&#39;") + "' maxlength='18' style='width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 7px;font-family:inherit;font-weight:700;font-size:12px'/>" +
+      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + "</div></div>" +
+      "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
       "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>";
+    if (ATLAS) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(ATLAS[st.grade - 1][lookIdx][0], 0, 0); }
     $("ixBtn").onclick = hideInspect;
+    $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
+    $("lookBtn").onclick = function () { st.look = (lookIdx + 1) % VARIANTS.length; syncActors(); showInspectStudent(id); };
     ins.classList.add("show"); $("mapHint").textContent = "";
   }
   function showInspectRoom(r) {

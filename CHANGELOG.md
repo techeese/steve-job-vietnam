@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-13 — Character customization (loop iter 19, owner-hinted)
+- Tap a student → their inspect card now shows the ACTUAL pixel sprite (live canvas avatar) and
+  lets you RENAME them (inline field) and CHANGE THEIR LOOK (🔄 cycles the 12 baked variants —
+  skin/hair/accessory). Persisted on the student (s.look + ten); invalid look falls back to the
+  id-hash, so saves stay safe. Makes the people personal — your students. Gates green.
+
 ## 2026-06-13 — Balance: money sink — sweep now fully clean (loop iter 18)
 - Late-game cash inflated to ~2,800tr (no sink). Added a reserve-protecting sink: surplus
   ABOVE 300tr is reinvested into operations at 3%/mo (normal saving untouched, hoarding capped)
