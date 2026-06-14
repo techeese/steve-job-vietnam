@@ -57,6 +57,15 @@ function growStudents() {
     s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
     s.tn = clamp(s.tn + ptn * g * mm * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
     s.st = clamp(s.st + pst * g * mm * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
+    // Phase 1.5: in an OPEN/unstructured preset (NOT cram), a severe grain-mismatch leaves a kid ADRIFT —
+    // modest talent caps below the realization floor (tn/st/kt), the gifted partly shine, mentoring rescues
+    // (it lifted mm above the floor). This is what lets CRAFT waste the structure-needer (§C-2). Cram is
+    // excluded: its mismatch is rote/distortion (văn-mẫu / coin shark), already handled by the cascade —
+    // capping it there just over-produced arrests.
+    if (mm < CONFIG.MISMATCH_MM && S.presets["n" + s.grade] !== "luyende") {
+      var ceil = CONFIG.MISMATCH_CEIL(s.seed);
+      if (s.tn > ceil) s.tn = ceil; if (s.st > ceil) s.st = ceil; if (s.kt > ceil) s.kt = ceil;
+    }
     var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
     s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");

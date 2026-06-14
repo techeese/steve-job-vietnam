@@ -85,6 +85,13 @@ var CONFIG = {
   // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.
   MENTOR_SLOTS: 3,
   MENTOR_MM: 1.3,
+  // MENTOR'S LEDGER Phase 1.5 (iter 116, the [EVOLUTION] craft-symmetry fix) — a SEVERE grain-mismatch
+  // (MATCH < MISMATCH_MM) caps how far MODEST talent grows: the gifted (high seed) still partly shine, the
+  // modest go ADRIFT (capped below the realization floor → thất nghiệp). Makes craft waste the structure-
+  // needer it's mismatched with (§C-2 symmetry, was fails-nobody). Talent magnitude still decides (ceiling
+  // scales with seed); MENTORING rescues (it lifts mm above MISMATCH_MM, so a mentored kid escapes the cap).
+  MISMATCH_MM: 0.7,
+  MISMATCH_CEIL: function (seed) { return 11 + seed * 7; }, // seed1→18 seed2→25 seed3→32 (all < LUONG_ON tn-floor 40 → adrift) · seed4→39 (borderline) · seed5→46 (the gifted still scrape a realized life)
 
   ROOMS: {
     phonghoc: { name: "Phòng học", w: 3, h: 2, cost: 0, desc: "Nơi mọi giấc mơ bắt đầu bằng điểm danh. Nâng cấp: +Mood." },

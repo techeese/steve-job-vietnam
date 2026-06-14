@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-14 — craft can finally WASTE: the mismatch-adrift ceiling (loop iter 116)
+- Person-sim balance fix on the [EVOLUTION]-flagged gap (craft realizes ~everyone → §B-1/§C-2 collapse).
+  NEW mechanic in `js/sim/person.js` `growStudents` + `CONFIG.MISMATCH_CEIL`: in a NON-cram preset, a
+  severe grain-mismatch (`MATCH < MISMATCH_MM` 0.7) caps tn/st/kt at `11+seed*7` — modest talent goes
+  **ADRIFT** (→ thất nghiệp), the gifted partly shine, and **MENTORING rescues** (it lifts mm above the
+  floor → escapes the cap). Cram excluded (its mismatch = rote/distortion, already handled — capping it
+  over-produced arrests). The clean `person.js` module (iter 114) made this a one-spot change.
+- Sweep-verified: craft 97/3/0 → **95/5/0** — the "đồ án costs ~0% / invariant #2 broken" flag CLEARED;
+  🍎 13% preserved; cram + default + arrests (22) UNCHANGED; no dominance; all bands hold; mentor-rescue
+  +6pts intact. gate green, bot BOTOK.
+- HONEST SCOPE: this is a PARTIAL fix — craft is still 95% realized because ADMISSIONS skews the cohort
+  HIGH-SEED, so a seed-gated ceiling barely bites. The remaining work (seed-INDEPENDENT "lost in the open"
+  stall so even gifted structure-needers can flounder, + give `canbang` its own mismatch) is specced in the
+  [EVOLUTION] epic. The mechanic + mentor-rescue are the foundation it builds on.
+- `SHIPS_SINCE_PERSONSIM` 1→0 (person-sim ship), `SMALL_SHIPS_SINCE_EPIC` 1→2, `SHIPS_SINCE_DEPLOY` 5→6
+  (first deploy still HELD for owner go).
+
 ## 2026-06-14 — faster clock + "subtraction is design" + queued legibility (via feedback.md) (loop iter 115)
 - Ingested 5 `feedback.md` notes. SHIPPED two: (1) **faster clock** — `TICK_MS` 100→70, so a month is ~21s
   at 1× (was 30s); pure wall-clock pace, zero sim/balance change (sweep/gate drive `dayTick` directly). gate
