@@ -70,14 +70,19 @@ function growStudents() {
     s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");
     s.vet = clamp(s.vet + vetGain, 0, 100);
-    s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);
+    var moodDrain = (mm < CONFIG.MISMATCH_MM) ? CONFIG.MISMATCH_MOOD_DRAIN : 0; // lệch tạng wears them down; mentoring (mm≥MENTOR_MM) already spares them
+    s.mood = clamp(s.mood + (p.mood + tf.mood - moodDrain) / dpm, 0, 100);
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
     if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
       var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster
       s[smj.stat] = clamp(s[smj.stat] + CONFIG.SYN_GROW + (headed ? CONFIG.HEAD_BONUS : 0), 0, 100);
       if (thriving >= 2 && smj.cross) s[smj.cross] = clamp(s[smj.cross] + CONFIG.SYN_CROSS, 0, 100); // liên khoa: cross-pollinate a 2nd stat
     }
-    if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) s._drop = true;
+    if (s.mood < CONFIG.DROPOUT_MOOD && rnd() < CONFIG.DROPOUT_P / dpm) {
+      s._drop = true; S.META.dropped = (S.META.dropped || 0) + 1; // iter-131: the burnout loss — a kid worn down and lost, now COUNTED and NAMED (not silently filtered)
+      if (S.META.favId === s.id) { news("💔 " + s.ten + " — em bạn dõi theo từ đầu — đã bỏ học. Kiệt sức, trường không giữ được."); S.META.favId = null; }
+      else news("😔 " + rpick(CONTENT.dropoutLines).replace("{ten}", s.ten));
+    }
   }
   if (n) S.students = S.students.filter(function (x) { return !x._drop; });
 }

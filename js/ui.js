@@ -1562,6 +1562,7 @@
         else if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + "<br>“" + esc(line) + "”");
       });
+      if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned (the uncounted waste)
       P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);
       P("lead", E.ledgerHead);
       P("lead", tpl(E.ledgerBank, { cash: cash }));

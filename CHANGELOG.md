@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — EPIC: MOOD made live — the cram grind burns out the worst-served (loop iter 131)
+**PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 5 · CLARITY 3 ·
+BEAUTY/JUICE n/a.** The owner asked for "including mood" — but mood was a dead dimension: it drifted high and
+never reached crisis (probe: ~0.15 burnout/run cram, 0 elsewhere). So the most human waste — a kid worn down by
+the wrong school and *lost* — couldn't happen, and a kid who burned out just silently vanished (filtered, never
+named).
+- **The drain** (`CONFIG.MISMATCH_MOOD_DRAIN`, growStudents): a severe grain-mismatch (lệch, mm<0.7) wears a kid
+  down each month — making the iter-130 match-read "đang nguội dần" *literally true*. Mentoring (mm≥1.3) spares
+  them; cảng-tin / a kind teacher buffer it.
+- **Burnout is now reachable — but a bounded TAIL, and thematically sharp:** tuned to 0.5 (2.5 mass-culled cram
+  79/run — caught + reverted). At 0.5 the **cram grind** burns out ~3-4 of its worst-suited kids/run (grads stay
+  ~76); a **project school doesn't** (0) — the văn-mẫu critique, mechanized. The realize/waste spread holds.
+- **The loss, named + mourned:** a dropout fires a feed line ("😔 {ten} kiệt sức, rời trường — trường đã không
+  đỡ được em"), the followed protégé a 💔 line, and `S.META.dropped` is counted → the epilogue mourns them
+  ("N em đã rời sân trường giữa chừng — những cái tên tôi không kịp ghi vào sổ").
+- **Systemic payoff:** mentoring's inaction-cost rose +6→+9pts — attention now ALSO saves kids from burnout.
+- Verified: gate GREEN, bot BOTOK, sweep spread + all 5 flags ✓ / 0 breakage, headless render confirms the
+  dropout feed line + the epilogue mourning. Pure-add dimension; high-cutoff/good-match play unaffected.
+
 ## 2026-06-15 — The match model, made legible: grain × learning style, per kid (loop iter 130)
 **PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 5 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE
 n/a.** The grain↔preset match (`CONFIG.MATCH`, the E2a HEART) drove every realize/waste outcome but was

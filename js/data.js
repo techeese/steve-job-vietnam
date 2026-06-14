@@ -92,6 +92,7 @@ var CONFIG = {
   // needer it's mismatched with (§C-2 symmetry, was fails-nobody). Talent magnitude still decides (ceiling
   // scales with seed); MENTORING rescues (it lifts mm above MISMATCH_MM, so a mentored kid escapes the cap).
   MISMATCH_MM: 0.7,
+  MISMATCH_MOOD_DRAIN: 0.5, // iter-131 — MOOD made live (owner: "including mood"): a severe grain-mismatch (lệch) wears a kid down each month — the "đang nguội dần" read made literally true. Tuned to a BOUNDED tail: the cram GRIND burns out its worst-suited (~3-4/run); a project school doesn't (thematically sharp). Mentoring lifts mm above MISMATCH_MM → spares them. (2.5 mass-culled cram 79/run — reverted to 0.5.)
   MISMATCH_CEIL: function (seed) { return 11 + seed * 7; }, // seed1→18 seed2→25 seed3→32 (all < LUONG_ON tn-floor 40 → adrift) · seed4→39 (borderline) · seed5→46 (the gifted still scrape a realized life)
 
   ROOMS: {
@@ -305,6 +306,14 @@ var CONTENT = {
     vetUp: ["thuộc làu mọi dạng bài — mà bài nào cũng giống bài nào.", "điểm đều răm rắp, nhưng hỏi 'vì sao' thì lặng.", "chép mẫu nhanh hơn cả nghĩ. Thầy khen, em cười gượng."],
     mentored: ["bắt đầu có thầy kèm riêng — như được tiếp sức.", "có người để mắt tới. Khác hẳn."]
   },
+  // iter-131 — MOOD made live: a kid worn down by the wrong learning style burns out and leaves. The most human
+  // waste (the one you LOST), now named in the feed instead of silently vanishing.
+  dropoutLines: [
+    "{ten} bỏ học giữa chừng — lối học này bào mòn em mỗi ngày.",
+    "{ten} nghỉ học, không một lời tạm biệt. Bàn trống từ sáng thứ Hai.",
+    "{ten} xin 'bảo lưu một thời gian' — ai cũng hiểu là sẽ không quay lại.",
+    "{ten} kiệt sức, rời trường. Trường đã không đỡ được em."
+  ],
   bacTamTiemNang: "Bác Tâm: “Đứa này… để xem.”",
   entryLine: "Trạng thái đầu đời: {chip}",
 
