@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-06-15 — WHY the 🍎 column is empty — the đề Văn's central trade-off, FELT at the payoff (loop iter 148)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
+The sweep proves a beautiful mechanic that was INVISIBLE to the player: **a balanced, even-handed school
+(`cân bằng`) realizes 97% / wastes 3% — and produces ZERO Steves (🍎 0%); the maker's path (`đồ án`) wastes
+more (6% thất nghiệp) but is the ONLY one that makes Steves (🍎 18%).** That is the đề Văn made flesh — the
+peak vs the median — but a player running balance saw "97% realized, 64% kỹ sư, 12% founder" and felt they'd
+won, never seeing they'd structurally foreclosed greatness. The closing essay's empty-🍎 line was generic
+("chỗ đó tôi chừa") — it conflated two OPPOSITE causes. Now it names WHICH:
+- **even** (safe school, most kids reach a solid life, little waste): *"sổ tôi gần như không có dòng nào hỏng…
+  chính vì tôi không để đứa nào chông chênh, nên cũng chẳng đứa nào bứt lên. Tôi dạy an toàn quá chăng?"* — the
+  very safety foreclosed the peak.
+- **grind** (cram, high waste/distort): *"tôi đẩy các em qua hết đề này đến đề khác… đứa nào có chút khác người
+  cũng nguội mất… có thứ càng mài càng mòn."* — the spark ground out.
+- **mixed**: the prior line, for schools that are neither.
+Naming the cause turns balance's abstract trade-off line (the choice-time hint shipped iter-118) into a FELT
+epilogue PAYOFF, and keeps "no single right way" open (THESIS §D-3 — the COMPLETENESS axis, previously flat
+here). **Zero balance risk:** the mechanic is unchanged (and verified ideal — craft 18% / balance 0% Steve);
+this is pure prose selected from the existing `byState` cohort shape — no new state, no number, no meter
+(VISION "prose not a meter"). Verified: content+ui syntax OK, gate GREEN, bot BOTOK, sweep 5✓/0 breakage
+(neutral), and `./lives.sh` confirms `cân bằng`→even / `luyện đề`→grind both fire correctly in context.
+
 ## 2026-06-15 — The two BIGGEST alumni moments pop too — 🍎 keynote & 🚔 arrest (loop iter 147)
 **PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** iter-146 made the protégé (⭐)
 and loss (😔/💔) ticker lines pop, but the two LOUDEST destinies a kid can reach still went to the feed

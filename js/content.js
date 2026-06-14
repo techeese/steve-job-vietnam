@@ -394,7 +394,13 @@ var CONTENT = {
     nameWithSteve: "Đề hỏi Steve Jobs ở đâu. Có lẽ là mấy đứa này — tôi chỉ dám chỉ tay, không dám kết luận:",
     nameNoSteve: "Đề hỏi Steve Jobs ở đâu. Tôi không có. Tôi chỉ có thể chỉ vào mấy đứa này:",
     castRowArrestTail: " — khoá này tốt nghiệp thời chủ cũ, nhưng tên vẫn nằm trong sổ tôi.",
-    steveColEmpty: "Cột “🍎” vẫn để trống — chỗ đó tôi chừa, chưa gạch.",
+    // iter-148 — an empty 🍎 column has two OPPOSITE causes; naming which makes the đề Văn's peak-vs-median
+    // trade-off felt at the payoff, and keeps the question open (§D-3). Picked in essayDraft from the cohort shape.
+    steveColEmpty: {
+      even: "Cột “🍎” vẫn để trống. Mà lạ — sổ tôi gần như không có dòng nào hỏng. Cả khoá nên người, đều tay, vững vàng. Có lẽ chính vì tôi không để đứa nào chông chênh, nên cũng chẳng đứa nào bứt lên. Tôi dạy an toàn quá chăng?",
+      grind: "Cột “🍎” vẫn để trống. Tôi đẩy các em qua hết đề này đến đề khác — qua môn thì nhiều, nhưng đứa nào có chút khác người cũng nguội mất. Có lẽ tôi mài, mà quên rằng có thứ càng mài càng mòn.",
+      mixed: "Cột “🍎” vẫn để trống — chỗ đó tôi chừa, chưa gạch."
+    },
     steveColFull: "Cột “🍎” có {steves} dòng. Tôi vẫn không chắc là tôi viết ra nó, hay tôi chỉ tình cờ không xoá nó đi.",
     ledgerHead: "Rồi tôi đặt ba quyển sổ cạnh nhau.",
     ledgerBank: "Sổ ngân hàng: {cash}tr.",

@@ -1610,7 +1610,16 @@
         var coda = pcls === "loud" ? "tài năng ấy, mình đã không giữ được" : pcls === "under" ? "đáng lẽ em đã có thể hơn — mình vẫn nghĩ thế" : flourishOf(pg.state) >= 4 ? "em nên người — mình có góp một tay" : "một cuộc đời tử tế, mình mừng cho em";
         P("lead", "Và " + esc(pg.ten) + " — đứa em dõi theo từ ngày đầu — giờ là " + CONFIG.ALUM.CHIPS[pg.state] + ". " + coda + ".", true);
       }
-      P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);
+      if (s.META.steves > 0) { P("lead", tpl(E.steveColFull, { steves: s.META.steves })); }
+      else { // iter-148 — the đề Văn's central trade-off FELT at the payoff: WHY is the 🍎 column empty? A safe,
+        // even-handed school (most kids reach a solid life, little waste) forecloses the peak by never letting
+        // anyone teeter; a grind wastes the spark. Naming which keeps "no single right way" open (§D-3). Prose-only.
+        var tot148 = Math.max(1, total);
+        var realz148 = (byState.KY_SU || 0) + (byState.FOUNDER || 0) + (byState.LUONG_ON || 0);
+        var harm148 = (byState.THAT_NGHIEP || 0) + (byState.QUAN_VAN_MAU || 0) + (byState.CA_MAP_COIN || 0) + (byState.BI_BAT || 0);
+        var emptyKey = (realz148 / tot148 >= 0.6 && harm148 / tot148 <= 0.2) ? "even" : (harm148 / tot148 >= 0.4) ? "grind" : "mixed";
+        P("lead", E.steveColEmpty[emptyKey] || E.steveColEmpty.mixed);
+      }
       P("lead", E.ledgerHead);
       P("lead", tpl(E.ledgerBank, { cash: cash }));
       var endowTail = (majorityKey === "KY_SU" || (byState.KY_SU || 0) > 0) ? " phần lớn mấy đứa kỹ sư gửi về," : (tenSteve ? (" phần lớn là của " + esc(tenSteve) + ",") : "");
