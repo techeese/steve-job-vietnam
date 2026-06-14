@@ -31,6 +31,19 @@ function adaptPresets() {
   S.presets = { n1: P, n2: P, n3: P, n4: P };
 }
 
+// mentor play (Phase 2): each year spend the scarce attention budget rescuing the most-mismatched, highest-gift
+// kids first — the spread the PLAYER controls. Proves inaction-cost: a mentored school realizes more than the
+// no-attention baseline (the gap = what you lose by doing nothing).
+function mentorPlay() {
+  var cur = 0; S.students.forEach(function (s) { if (s.mentored) cur++; });
+  var free = CONFIG.MENTOR_SLOTS - cur; if (free <= 0) return;
+  var cand = S.students.filter(function (s) { return !s.mentored; }).map(function (s) {
+    var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    return { s: s, pri: (1 - mm) * s.seed }; // most-mismatched × highest gift first
+  }).sort(function (a, b) { return b.pri - a.pri; });
+  for (var i = 0; i < free && i < cand.length; i++) cand[i].s.mentored = true;
+}
+
 // run ONE playthrough; strat = {presets, build:[{key,x,y}], tuition, grant, years}
 function play(seed, strat) {
   freshState(seed);
@@ -42,6 +55,7 @@ function play(seed, strat) {
   var years = strat.years || 11, totalDays = years * DPY;
   for (var d = 0; d < totalDays; d++) {
     if (strat.adaptive && d % DPY === 0) adaptPresets();
+    if (strat.mentor && d % DPY === 0) mentorPlay();
     dayTick();
     if (S.cash < minCash) minCash = S.cash;
     if (S.cash < -60) bankrupt = true;
@@ -94,7 +108,8 @@ var STRATS = {
   "đồ án (craft)":  { presets: "duan", grant: 1000, build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] },
   "cân bằng":       { presets: "canbang" },
   "đồ án nghèo (no rooms)": { presets: "duan" },
-  "khớp tạng (adaptive v0)": { adaptive: true, grant: 1000, build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] }
+  "khớp tạng (adaptive v0)": { adaptive: true, grant: 1000, build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] },
+  "dìu dắt (mentor)": { mentor: true } // same cram default as 'default (honest)', but you spend scarce attention → inaction-cost control
 };
 
 line("================ Học viện Steve — GAMEPLAY SWEEP ================");
@@ -194,6 +209,12 @@ for (var nm3 in realz) { var Z = realz[nm3]; if (Z.realPct < 3) FLAGS.push("'" +
 // the poignant core: a gifted kid (seed≥4) wasted on your watch must be REACHABLE
 var totProd = 0; for (var nm4 in realz) totProd += realz[nm4].prod;
 if (totProd === 0) FLAGS.push("WASTED-PRODIGY unreachable across ALL strategies — the poignant core never fires");
+// inaction-cost (Phase 2 fail-state): scarce mentoring must lift realized vs the no-attention baseline (same cram preset)
+if (realz["dìu dắt (mentor)"] && realz["default (honest)"]) {
+  var mg = realz["dìu dắt (mentor)"].realPct - realz["default (honest)"].realPct;
+  if (mg >= 3) FLAGS.push("inaction-cost ✓: mentoring lifts realized " + f0(realz["default (honest)"].realPct) + "%→" + f0(realz["dìu dắt (mentor)"].realPct) + "% (+" + f0(mg) + "pts on the SAME preset) — attention rescues, inaction wastes");
+  else FLAGS.push("inaction-cost WEAK: mentoring moves realized only +" + f1(mg) + "pts — attention not yet worth spending (raise MENTOR_MM/SLOTS)");
+}
 // adaptive grain-match must NOT dominate (open-question law / E2 #1 control)
 var ADK = "khớp tạng (adaptive v0)";
 if (results[ADK]) {

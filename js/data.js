@@ -80,6 +80,11 @@ var CONFIG = {
   },
   // a showy kid crammed doesn't realize — they curdle toward gaming-the-system (cá mập): boost hustle growth
   MATCH_CM: function (tell, preset) { return (tell === "hype" && preset === "luyende") ? 1.6 : 1.0; },
+  // MENTOR'S LEDGER Phase 2 — the headmaster's scarce ATTENTION. You can actively mentor only a FEW kids;
+  // a mentored kid's craft multiplier is lifted (focused attention overcomes a grain mismatch — you RESCUE
+  // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.
+  MENTOR_SLOTS: 3,
+  MENTOR_MM: 1.3,
 
   ROOMS: {
     phonghoc: { name: "Phòng học", w: 3, h: 2, cost: 0, desc: "Nơi mọi giấc mơ bắt đầu bằng điểm danh. Nâng cấp: +Mood." },

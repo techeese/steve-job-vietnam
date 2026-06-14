@@ -68,6 +68,15 @@ function studentMajor(s) { var m = majorByTell(s.tell); return (m && hasRoom(m.r
 function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }
 function teacherById(id) { for (var i = 0; i < S.teachers.length; i++) if (S.teachers[i].id === id) return S.teachers[i]; return null; }
+// MENTOR'S LEDGER Phase 2 — the headmaster's scarce attention (player verb + helpers; UI wiring lands next)
+function mentorCount() { var c = 0, st = S.students; for (var i = 0; i < st.length; i++) if (st[i].mentored) c++; return c; }
+function mentorStudent(id) {
+  var st = S.students, s = null; for (var i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
+  if (!s) return { ok: false, why: "gone" };
+  if (s.mentored) { s.mentored = false; return { ok: true, mentored: false }; } // toggle off → free a slot
+  if (mentorCount() >= CONFIG.MENTOR_SLOTS) return { ok: false, why: "full" };
+  s.mentored = true; return { ok: true, mentored: true };
+}
 // assign teacher `tid` as head of khoa `key` (null = vacate). One teacher heads at most one khoa.
 function setKhoaHead(key, tid) {
   if (!S.khoaHead) S.khoaHead = {};
@@ -161,7 +170,7 @@ function genStudent(grade, opts) {
   var s = {
     id: nid(), ten: opts.ten || genName(), grade: grade, seed: seed,
     kt: 20, tn: 15, st: 18, cm: 15, vet: 5, mood: 70,
-    tell: opts.tell || rollTell(), flags: { vt: [] }
+    tell: opts.tell || rollTell(), mentored: false, flags: { vt: [] }
   };
   for (var k in opts) if (k !== "seed" && k !== "ten" && k !== "tell") s[k] = opts[k];
   return s;
@@ -382,9 +391,11 @@ function growStudents() {
     var roomF = (S.presets["n" + s.grade] === "duan" && !hasRoom("phongmay")) ? 0.5 : 1;
     var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm;
     var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
+    var ptn = p.tn, pst = p.st;
+    if (s.mentored) { mm = Math.max(mm, CONFIG.MENTOR_MM); ptn = Math.max(ptn, CONFIG.PRESETS.duan.tn); pst = Math.max(pst, CONFIG.PRESETS.duan.st); } // Phase 2: scarce attention = personal project-tutoring that overrides the school's policy for THIS kid
     s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
-    s.tn = clamp(s.tn + p.tn * g * mm * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
-    s.st = clamp(s.st + p.st * g * mm * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
+    s.tn = clamp(s.tn + ptn * g * mm * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
+    s.st = clamp(s.st + pst * g * mm * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
     var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
     s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");
@@ -1122,10 +1133,12 @@ function sanitize() {
     s.grade = clamp(Math.round(s.grade) || 1, 1, 4);
     s.seed = clamp(Math.round(s.seed) || 1, 1, 5);
     ["kt", "tn", "st", "cm", "vet", "mood"].forEach(function (k) { s[k] = clamp(s[k], 0, 100); });
+    s.mentored = !!s.mentored; // Phase 2 attention flag (defaults false on older saves)
     if (!s.flags) s.flags = {}; if (!s.flags.vt) s.flags.vt = [];
     if (s.lookC && (typeof s.lookC !== "object" || !Number.isFinite(s.lookC.s) || !Number.isFinite(s.lookC.h) || !Number.isFinite(s.lookC.y) || !Number.isFinite(s.lookC.a))) delete s.lookC; // custom look (UI clamps ranges on use)
     return s;
   }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP);
+  var _mc = 0; S.students.forEach(function (s) { if (s.mentored) { _mc++; if (_mc > CONFIG.MENTOR_SLOTS) s.mentored = false; } }); // Phase 2: never exceed the attention budget (heals a corrupted save)
   if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;
   S.endow.milestonesClaimed = clamp(Math.round(S.endow.milestonesClaimed) || 0, 0, 3);
   // meters: the recovery layer for a corrupted/out-of-range save (mergeInto rejects NaN but copies finite
