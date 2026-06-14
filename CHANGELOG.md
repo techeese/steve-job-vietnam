@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-14 — STRUCTURE EPIC: js/sim/person.js carve (loop iter 114)
+- Cadence-forced structure epic (SMALL_SHIPS_SINCE_EPIC=3 epic-lock + EPICS_SINCE_STRUCTURE=2). Carved the
+  **person-sim core out of the 1,220-line engine.js into `js/sim/person.js`**: `growStudents` (talent ×
+  education → realize/waste/distort growth) + `genStudent`/`genName`/`rollTell` (person creation). Functions
+  moved VERBATIM; they stay globals in the one concat-eval scope, so cross-refs (clamp/rnd/CONFIG/studentMajor/…)
+  just work. Wired all three loaders: `index.html` <script>, `gate.js` + `sweep.js` concat.
+- **Proven behavior-neutral (the gold standard):** `node sweep.js` and `node gate.js` output **byte-identical**
+  before/after (captured baselines, diffed → clean); `./bot.sh` BOTOK; all files `node --check` clean. Zero
+  intended behavior change = zero diff.
+- WHY: tends the growing codebase (owner's standing "architecture is a living deliverable" directive) AND
+  **de-risks E11** — the walk-in-rooms/activity→development epic will modify `growStudents`, far cleaner in a
+  dedicated person module than buried in engine.js. The arc blesses this carve as people-dev infrastructure.
+- Resets: `SHIPS_SINCE_PERSONSIM` 4→0 (person-sim infra), `SMALL_SHIPS_SINCE_EPIC` 3→0, `EPICS_SINCE_STRUCTURE`
+  2→0 (follow-up structure move queued: the alumni FSM → person.js too). `SHIPS_SINCE_DEPLOY` 3→4 — **the next
+  ship triggers the first live deploy.** Next person-sim epic: E4 / E11 / the [EVOLUTION] craft-symmetry.
+
 ## 2026-06-14 — de-synchronized campus movement (via feedback.md) (loop iter 113)
 - Ingested 2 `feedback.md` notes. SHIPPED the bounded one: **organic, de-synchronized movement** (owner:
   "people start/stop at the same time, in too-similar directions"). Three cohesive tweaks in `updateActor`/

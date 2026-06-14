@@ -4,6 +4,7 @@ const fs = require("fs");
 const dir = __dirname;
 const dataSrc = fs.readFileSync(dir + "/js/data.js", "utf8");
 const engineSrc = fs.readFileSync(dir + "/js/engine.js", "utf8");
+const personSrc = fs.readFileSync(dir + "/js/sim/person.js", "utf8"); // iter 114 structure carve — person creation + growth
 
 const shim = "var localStorage={_d:{},getItem:function(k){return this._d[k]!=null?this._d[k]:null;},setItem:function(k,v){this._d[k]=v;}};";
 
@@ -140,7 +141,7 @@ return OUT.join('\\n');
 `;
 
 try {
-  const fn = new Function(shim + "\n" + dataSrc + "\n" + engineSrc + "\n" + harness);
+  const fn = new Function(shim + "\n" + dataSrc + "\n" + engineSrc + "\n" + personSrc + "\n" + harness);
   console.log(fn());
 } catch (e) {
   console.log("HARNESS PARSE/RUN ERROR: " + e.message);

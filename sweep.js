@@ -12,12 +12,14 @@ const fs = require("fs");
 const dir = __dirname;
 const dataSrc = fs.readFileSync(dir + "/js/data.js", "utf8");
 const engineSrc = fs.readFileSync(dir + "/js/engine.js", "utf8");
+const personSrc = fs.readFileSync(dir + "/js/sim/person.js", "utf8"); // iter 114 structure carve — person creation + growth
 const shim = "var localStorage={_d:{},getItem:function(k){return this._d[k]!=null?this._d[k]:null;},setItem:function(k,v){this._d[k]=v;}};";
 
 const harness = `
 ${shim}
 ${dataSrc}
 ${engineSrc}
+${personSrc}
 
 var DPY = CONFIG.DAYS_PER_MONTH * 12; // days per year
 
