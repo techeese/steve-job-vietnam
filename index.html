@@ -119,7 +119,7 @@ window.onerror = function (m, src, ln) {
   /* ---------- map ---------- */
   .mapwrap{position:relative;width:100%;background:#0a0d12;border-bottom:1px solid var(--line)}
   .mapwrap canvas{display:block;width:100%;image-rendering:pixelated;touch-action:manipulation}
-  #mapLive{position:absolute;inset:0}
+  #mapLive{position:absolute;inset:0;pointer-events:none} /* live actor layer is overlay-only — taps must fall through to #mapStatic (which owns the click handler), or "tap to inspect" silently dies */
   #mapHint{position:absolute;left:0;right:0;bottom:0;padding:5px 9px;font-size:10.5px;color:var(--gold);
     background:linear-gradient(0deg,rgba(10,13,18,.92),transparent);pointer-events:none;font-weight:600;min-height:10px}
   .placing #mapStatic{cursor:crosshair}

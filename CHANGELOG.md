@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-14 — BUGFIX SWEEP: tap-to-inspect, head marker, room count, speed labels (via feedback.md) (loop iter 110)
+- First iteration to ingest `feedback.md` — owner reported 4 issues async; all FIXED + verified headless (mobile + desktop), repro→fix→confirm:
+  1. **Tap student/building showed nothing** (despite the "Chạm vào…" hint) — the `#mapLive` actor canvas overlaid `#mapStatic` (which owns the click handler) without `pointer-events:none`, so taps never reached `onMapClick`. Added `pointer-events:none`. Latent since the S1 canvas split. (`index.html`)
+  2. **Yellow square on a character's head** — Mai Sương's `a.special` marker was a 15×14 gold `strokeRect` that framed the old chibi but reads as a stray box over the new Jephed sprite; replaced with a small gold sparkle above the head. (`js/ui.js` drawActor)
+  3. **Classroom always showed "0 students nearby"** — `showInspectRoom` counted actors only INSIDE the room footprint, but `assignActivity` gathers students on the door-RING around it; now counts footprint + 1-cell ring. Verified 0→14 at study period. (`js/ui.js`)
+  4. **Top-right ⏸ / 1 / 2 not intuitive** — relabeled ⏸ / 1× / 2× / 3× with tooltips + aria-labels so they read as speed. (`js/ui.js` buildSpeeds)
+- Bugfixes (debt-valve exempt). Not person-sim → `SHIPS_SINCE_PERSONSIM` 1→2 (lock persists, iter 111 = person-sim), `SMALL_SHIPS_SINCE_EPIC` 0→1, `SHIPS_SINCE_DEPLOY` 0→1 (local, not deployed). gate green, bot BOTOK.
+
 ## 2026-06-14 — FLOW: feedback.md async owner inbox (OWNER-STEERED) (loop iter 109)
 - Owner asked for an **async feedback channel** so he can pile on steer without interrupting the agent's
   thought process. Built `feedback.md` (inbox at repo root) + wired **SKILL Step 0.0**: the loop READS it

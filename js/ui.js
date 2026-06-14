@@ -689,7 +689,11 @@
     }
     // idle blink — eyes close briefly every few seconds when standing still (eyes at canvas y6-8 → screen y-24)
     if (!drew && !a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
-    if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 7.5, y - 30.5, 15, 14); } // Mai Sương — gold frame
+    if (a.special) { // Mai Sương — a small gold sparkle above the head (the old gold frame strokeRect read as a stray "yellow square" on the new sprite — iter 110 bugfix)
+      var spy = (y - 35 + Math.sin(ts / 340 + a.ph)) | 0;
+      ctx.fillStyle = PX.gold; ctx.fillRect(x, spy, 1, 5); ctx.fillRect(x - 2, spy + 2, 5, 1);
+      ctx.fillStyle = "#fff3c0"; ctx.fillRect(x, spy + 2, 1, 1);
+    }
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 34, 2, 2); ctx.fillRect(x - 2, y - 33, 1, 1); ctx.fillRect(x + 1, y - 33, 1, 1); } // scholarship star
     if (a.mentored) { // Mentor's Ledger D2 — a kid you're pouring scarce attention into: a small teal mortarboard, gold tassel (distinct from the gold fav star; the two can coexist)
       var my = (y - 30 + Math.sin(ts / 320 + a.ph) * 1) | 0;
@@ -933,7 +937,7 @@
     var d = CONFIG.ROOMS[r.key], sk = ROOM_SKIN[r.key] || { e: "▫" }, ins = $("inspect");
     selRoom = { x: r.x, y: r.y, key: r.key }; selStudent = null; // mark the selection on the map
     var cnt = 0;
-    for (var i = 0; i < actors.length; i++) { var gx = Math.floor(actors[i].px / T), gy = Math.floor(actors[i].py / T); if (gx >= r.x && gx < r.x + d.w && gy >= r.y && gy < r.y + d.h) cnt++; }
+    for (var i = 0; i < actors.length; i++) { var gx = Math.floor(actors[i].px / T), gy = Math.floor(actors[i].py / T); if (gx >= r.x - 1 && gx <= r.x + d.w && gy >= r.y - 1 && gy <= r.y + d.h) cnt++; } // footprint + 1-cell door-ring: students gather ON the ring (assignActivity), not inside — counting only inside read ~0 always (iter 110 bugfix)
     ins.innerHTML =
       "<div class='ihead'><div class='av' style='background:rgba(255,255,255,.06)'>" + sk.e + "</div>" +
       "<div><div class='iname'>" + esc(d.name) + "</div><div class='imeta'>" + d.w + "×" + d.h + (d.cost ? " · xây " + d.cost + "tr" : " · miễn phí") + "</div></div>" +
@@ -951,8 +955,9 @@
   var MONTHS = ["", "Một", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười", "Mười Một", "Mười Hai"];
   function buildSpeeds() {
     var wrap = $("speeds"); wrap.innerHTML = "";
-    [["⏸", 0], ["1", 1], ["2", 2], ["3", 3]].forEach(function (p) {
-      var b = el("button", "spd"); b.textContent = p[0]; b.dataset.v = p[1];
+    // labels read as SPEED, not bare numbers (owner: "pause/1/2 not intuitive") — × multiplier + a hover/long-press tooltip
+    [["⏸", 0, "Tạm dừng"], ["1×", 1, "Tốc độ thường"], ["2×", 2, "Nhanh gấp đôi"], ["3×", 3, "Nhanh gấp ba — mở khoá sau Lễ Tốt Nghiệp"]].forEach(function (p) {
+      var b = el("button", "spd"); b.textContent = p[0]; b.dataset.v = p[1]; b.title = p[2]; b.setAttribute("aria-label", p[2]);
       b.onclick = function () { var s = S(); if (p[1] === 3 && !s.speed3Unlocked) { toast("Mở khoá 3× sau Lễ Tốt Nghiệp đầu tiên."); return; } s.speed = p[1]; renderHUD(); };
       wrap.appendChild(b);
     });

@@ -12,7 +12,11 @@ Write as much as you want, in any format (bullets, paragraphs, half-thoughts). P
 iterations; the loop absorbs it without you having to break its flow.
 
 **Ingest log** (newest first):
-- _(nothing ingested yet)_
+- 2026-06-14 (iter 110) — bug sweep, all 4 FIXED + verified headless (mobile + desktop):
+  1. tap student/building shows nothing → `#mapLive` overlay ate clicks; added `pointer-events:none`.
+  2. yellow square on a character's head → Mai Sương's boxy gold `strokeRect` frame; replaced with a gold sparkle.
+  3. classroom always shows 0 students nearby → count checked only INSIDE the footprint; now includes the door-ring (where students gather). Confirmed 0→14.
+  4. top-right pause/1/2 not intuitive → relabeled ⏸ / 1× / 2× / 3× + tooltips.
 
 === FEEDBACK ===
 <!-- ↓↓↓ type your feedback below this line; the loop will read, apply, and clear it ↓↓↓ -->
