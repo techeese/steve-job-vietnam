@@ -186,16 +186,20 @@ var REAL_ST = { STEVE: 1, FOUNDER: 1, KY_SU: 1, LUONG_ON: 1 }, DISTORT_ST = { CA
 var STATE_R = { STEVE: 1.0, FOUNDER: 0.9, KY_SU: 0.8, LUONG_ON: 0.6, QUAN_VAN_MAU: 0.2, THAT_NGHIEP: 0.1, CA_MAP_COIN: 0.0, BI_BAT: 0.0 };
 function classify(L) { if (DISTORT_ST[L.state]) return "distorted"; if (REAL_ST[L.state]) return "realized"; return "wasted"; }
 function realizationOf(nm) {
-  var L = results[nm].lives, n = L.length || 1, c = { realized: 0, wasted: 0, distorted: 0 }, rs = [], prod = 0;
-  L.forEach(function (x) { var k = classify(x); c[k]++; rs.push(STATE_R[x.state] != null ? STATE_R[x.state] : 0); if (x.seed >= 4 && k === "wasted") prod++; });
+  var L = results[nm].lives, n = L.length || 1, c = { realized: 0, wasted: 0, distorted: 0 }, rs = [], prod = 0, uprod = 0;
+  L.forEach(function (x) {
+    var k = classify(x); c[k]++; rs.push(STATE_R[x.state] != null ? STATE_R[x.state] : 0);
+    if (x.seed >= 4 && k === "wasted") prod++;
+    if (realClass(x.state, x.seed) === "under") uprod++; // E4 §C-2: a prodigy who SETTLED into 💼 — counted "realized" by destiny above, but the gift went unrealized (craft's quiet grief)
+  });
   var mean = rs.reduce(function (a, b) { return a + b; }, 0) / n;
-  return { realPct: c.realized / n * 100, wastePct: c.wasted / n * 100, distPct: c.distorted / n * 100, mean: mean, prod: prod };
+  return { realPct: c.realized / n * 100, wastePct: c.wasted / n * 100, distPct: c.distorted / n * 100, uPct: uprod / n * 100, mean: mean, prod: prod, uProd: uprod };
 }
-line("  strategy".padEnd(26) + "real%".padStart(6) + "waste%".padStart(7) + "dist%".padStart(6) + "meanR".padStart(7) + "  wProdigy");
+line("  strategy".padEnd(26) + "real%".padStart(6) + "waste%".padStart(7) + "dist%".padStart(6) + "meanR".padStart(7) + "  wProdigy  uSettle");
 var realz = {};
 for (var nm2 in results) {
   var R = realz[nm2] = realizationOf(nm2);
-  line("  " + nm2.padEnd(24) + f0(R.realPct).toString().padStart(6) + f0(R.wastePct).toString().padStart(7) + f0(R.distPct).toString().padStart(6) + f1(R.mean).padStart(7) + "    " + R.prod);
+  line("  " + nm2.padEnd(24) + f0(R.realPct).toString().padStart(6) + f0(R.wastePct).toString().padStart(7) + f0(R.distPct).toString().padStart(6) + f1(R.mean).padStart(7) + "    " + String(R.prod).padStart(4) + "    " + String(R.uProd).padStart(4));
 }
 line("");
 // FLAT-SPREAD — the keystone "is the SOUL there?": does the SAME (default) school produce a felt RANGE —
@@ -207,10 +211,18 @@ else if (dR.realPct < 5) FLAGS.push("FLAT-SPREAD (SOUL THIN): default school rea
 else if (dR.wastePct + dR.distPct < 5) FLAGS.push("FLAT-SPREAD (SOUL THIN): default school costs only " + f0(dR.wastePct + dR.distPct) + "% — no one is failed, no stakes");
 else FLAGS.push("realization spread present on default: realized " + f0(dR.realPct) + "% / wasted " + f0(dR.wastePct) + "% / distorted " + f0(dR.distPct) + "% (meanR " + f1(dR.mean) + ") — talent visibly meets the school ✓");
 // symmetry-of-waste (VISION invariant #2): every preset must REALIZE some AND cost (waste/distort) some
-for (var nm3 in realz) { var Z = realz[nm3]; if (Z.realPct < 3) FLAGS.push("'" + nm3 + "' realizes ~0% — no one reaches a good life under this preset"); if (Z.wastePct + Z.distPct < 3) FLAGS.push("'" + nm3 + "' costs ~0% (fails no one) — invariant #2 broken: a preset with no symmetry of waste"); }
+// E4: a preset "costs" someone if it fails them LOUDLY (waste/distort) OR QUIETLY (under-realizes a prodigy
+// who settled into 💼). Craft's grief used to be invisible to this check — now the quiet waste counts as cost.
+for (var nm3 in realz) { var Z = realz[nm3]; if (Z.realPct < 3) FLAGS.push("'" + nm3 + "' realizes ~0% — no one reaches a good life under this preset"); if (Z.wastePct + Z.distPct + Z.uPct < 3) FLAGS.push("'" + nm3 + "' costs ~0% (fails no one — loud OR quiet) — invariant #2 broken: a preset with no symmetry of waste"); }
 // the poignant core: a gifted kid (seed≥4) wasted on your watch must be REACHABLE
 var totProd = 0; for (var nm4 in realz) totProd += realz[nm4].prod;
 if (totProd === 0) FLAGS.push("WASTED-PRODIGY unreachable across ALL strategies — the poignant core never fires");
+// E4 §C-2 — the QUIET waste, craft's previously-invisible grief: a prodigy who merely SETTLED into 💼 lương ổn.
+// The open question needs craft/balance to cost SOMETHING, not just cram — else đồ án is the implicit right answer.
+var totU = 0; for (var nmU in realz) totU += realz[nmU].uProd;
+var craU = realz["đồ án (craft)"], balU = realz["cân bằng"];
+if (totU === 0) FLAGS.push("E4 UNDER-REALIZED prodigy unreachable — the gifted who SETTLE into lương ổn never appear (craft's quiet grief not firing)");
+else FLAGS.push("E4 quiet-waste reachable ✓: " + totU + " prodigies settled into 💼 lương ổn" + (craU ? " (đồ án " + f0(craU.uPct) + "%" + (balU ? ", cân bằng " + f0(balU.uPct) + "%" : "") + ")" : "") + " — craft now wastes too; the open question holds (THESIS §D-3)");
 // inaction-cost (Phase 2 fail-state): scarce mentoring must lift realized vs the no-attention baseline (same cram preset)
 if (realz["dìu dắt (mentor)"] && realz["default (honest)"]) {
   var mg = realz["dìu dắt (mentor)"].realPct - realz["default (honest)"].realPct;

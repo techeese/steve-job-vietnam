@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-06-15 — EPIC E4: realization-aware destiny — craft's QUIET waste, named (loop iter 123)
+**PERSON-SIM EPIC (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 5 · FUN/DEPTH 4 · CLARITY 4 · BITE 4 ·
+BEAUTY/JUICE n/a (prose).** Resolves the parked [EVOLUTION] gap "the craft thesis fails nobody — đồ án is the
+implicit right answer" — at the RIGHT layer (perception of waste), NOT the growth balance four attempts proved
+intractable. The fix is balance-neutral: destiny distribution, economy, 🍎-rate, arrests (22) all UNCHANGED.
+- **The insight:** realization is RELATIVE to the gift. The engine labelled outcomes (KY_SU/LUONG_ON = "realized")
+  with no record of *potential-vs-realized*, so a seed-5 prodigy funnelled into 💼 lương ổn read as a success.
+  That is exactly why craft scored "97% realized": its waste — prodigies who merely **settled** — was literally
+  unnameable. Cram's waste is loud (văn-mẫu/coin/unemployed); craft's is quiet (the gifted kid who coasted into a
+  comfortable salaried life). Both waste; differently. The open question reopens.
+- **`CONFIG.ALUM.FLOURISH/EXPECT` + `flourishOf`/`realFrac`/`realClass`** (engine.js, pure over CONFIG → engine,
+  ui AND sweep share one definition): realFrac = how high the destiny stands ÷ what the gift's magnitude deserved.
+  `realClass` → `loud` (seed≥4 failed/turned) · `under` (seed≥4 settled into 💼) · `lift` (seed≤2 raised to kỹ
+  sư+) · "" (on-target). **Orthogonal to the 🍎 gate — `aLua` stays = seed only, never fed by realization.**
+- **Carried gap:** `makeAlumnus` freezes `a.fs.real` (graduation realization %); `sanitize` backfills pre-E4 saves.
+- **Epilogue (ui.js):** the named cast now reads the gift-vs-fate — `realGap` suffixes "— tài năng bỏ phí trên
+  tay bạn" (loud) / "— đáng lẽ đã có thể hơn thế" (the prodigy who settled) / "— vượt xa điểm xuất phát" (the
+  modest kid the school lifted). `buildCast`'s poignant-core slot surfaces a loud OR (failing that) a settled
+  prodigy, so a craft-heavy school's essay finally NAMES one gift it failed. One quiet line per life — never a meter.
+- **Sweep sensor (sweep.js):** new `uSettle` column + "E4 quiet-waste reachable" flag; the symmetry-of-waste check
+  now counts quiet waste as a cost. Result: đồ án 12% / cân bằng 5% under-realized prodigies — the old "'đồ án'
+  costs ~0% — invariant #2 broken" flag **clears**. Verified: gate GREEN, bot BOTOK (arrests 22 unchanged),
+  lives.sh duan now shows "đáng lẽ đã có thể hơn thế", luyende loud waste intact.
+
 ## 2026-06-15 — tuition re-scoped (design gap, not legibility); E15 legibility DONE (loop iter 122)
 - Investigated E15's last bit (tuition trade-off). Finding: tuition is **pure upside** (engine uses it only as
   `income = tuition × SV`, no admissions/reputation downside) → "always max it" is a mild dominant choice and

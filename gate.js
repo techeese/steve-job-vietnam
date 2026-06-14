@@ -61,6 +61,7 @@ try {
       flags:{tiemNang:(i===3), coinPath:(st==='CA_MAP_COIN'), garage:false, vt:[]} };
   });
   localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize()));
+  loadGame();           // both replays start from the SAME loaded+sanitized state (so determinism, not fixture shape, is what's tested)
   __test.almYears(5);
   var snapA = JSON.stringify(S.alumni);
   loadGame();           // restore from localStorage

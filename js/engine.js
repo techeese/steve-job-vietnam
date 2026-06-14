@@ -46,6 +46,19 @@ function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }
 function aHustle(a) { return a.fs.cm; }
 function aHollow(a) { return a.fs.vet; }
 function aLua(a) { return a.fs.seed; }
+// E4 — realization RELATIVE to the gift's magnitude (see CONFIG.ALUM.FLOURISH). Pure over CONFIG → engine, ui
+// AND sweep share one definition. realClass tells the epilogue WHICH grief/cheer line a life earned. Never a
+// 🍎 gate (aLua = seed only); this only colours how fully the gift got to flower under the school you ran.
+function flourishOf(state) { var F = CONFIG.ALUM.FLOURISH; return F[state] != null ? F[state] : 0; }
+function realFrac(state, seed) { return clamp(flourishOf(state) / CONFIG.ALUM.EXPECT(seed), 0, 2); }
+function realClass(state, seed) { // "loud" | "under" | "lift" | "" — the wasted/lifted readings, else nothing notable
+  var WASTE = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
+  if (seed >= 4 && WASTE[state]) return "loud";                                              // a prodigy outright failed/turned
+  var rf = realFrac(state, seed);
+  if (seed >= 4 && rf < CONFIG.ALUM.UNDER_REAL) return "under";                              // a prodigy who merely settled (💼)
+  if (seed <= 2 && rf >= CONFIG.ALUM.OVER_REAL && flourishOf(state) >= 4) return "lift";     // a modest kid raised to kỹ sư+
+  return "";
+}
 
 /* ---------- room / grid helpers ---------- */
 function roomRect(r) { var d = CONFIG.ROOMS[r.key]; return { x: r.x, y: r.y, w: d.w, h: d.h }; }
@@ -617,7 +630,7 @@ function makeAlumnus(s, row, diem, tiem) {
   var a = {
     id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry, history: [entry],
     yearsInState: 0, annMonth: annMonthFor(id),
-    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed },
+    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap (what the SCHOOL did) — separate from seed, never a 🍎 gate
     grat: r1(grat), gifts: 0, flags: flags, line: ""
   };
   S.alumni.push(a);
@@ -1104,6 +1117,7 @@ function sanitize() {
     if (!(a.annMonth >= 1 && a.annMonth <= 12) || a.annMonth === 6) a.annMonth = annMonthFor(a.id);
     ["kt", "tn", "st", "cm", "vet"].forEach(function (k) { a.fs[k] = clamp(a.fs[k] || 0, 0, 100); });
     a.fs.seed = clamp(Math.round(a.fs.seed) || 1, 1, 5);
+    if (a.fs.real == null) a.fs.real = Math.round(realFrac(a.state, a.fs.seed) * 100); else a.fs.real = clamp(Math.round(a.fs.real), 0, 200); // E4: backfill carried realization on pre-E4 saves
     a.grat = clamp(a.grat || 0, 0, 100); a.gifts = Math.max(0, a.gifts || 0);
     if (!a.flags) a.flags = { vt: [] };
     return a;
