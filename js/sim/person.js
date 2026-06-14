@@ -153,7 +153,7 @@ function statLabel(k) { return { kt: "Kiến Thức", tn: "Tay Nghề", st: "Sá
 
 function makeAlumnus(s, row, diem, tiem) {
   var entry = CONFIG.ALUM.ENTRY_MAP[row.key] || "THAT_NGHIEP";
-  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, vt: (s.flags.vt || []).slice() }; // E4.1: carry whether the player spent scarce attention on this kid (the mentor's hand, named in the epilogue)
+  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, diamond: !!s.diamond, vt: (s.flags.vt || []).slice() }; // E4.1 carry the mentor's hand · E-UNDERDOG carry "ngọc thô" (overlooked at entry) — both named in the epilogue
   var ef = CONFIG.ALUM.ENTRY_FLAGS[row.key]; if (ef) flags[ef] = true;
   if (s.flags.hb) flags.hb = s.flags.hb;
   var id = nid();

@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-06-15 — EPIC ⭐ E-UNDERDOG: the gem the entrance exam overlooked (loop iter 128)
+**PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 5 · CLARITY 3 ·
+BEAUTY/JUICE n/a.** The most inspiring transformation — an underdog the system overlooked, who rises — was
+STRUCTURALLY IMPOSSIBLE (iter-124 finding: admissions admits top-score→high-seed only; modest/overlooked kids
+never enter). This is the capstone that makes E5 (discover) + the protégé-arc + the mentor-credit COMPOSE into
+"you saw what the test didn't, invested, and they rose."
+- **Rough diamonds in the pool** (`derivedPool`, `CONFIG.ADMIT.DIAMOND_P/SCOREMAX`): a fraction of LOW-score
+  applicants carry a real gift (seed 4-5) the entrance exam underrates. The override draws AFTER score/tell and
+  only for sub-threshold scorers (each applicant has its own RNG stream) → **high-cutoff admissions are
+  byte-identical**; the gift stays HIDDEN (E5 — you find it by teaching, not from the number).
+- **The crux (a real finding):** lowering the cutoff does NOT catch them — the quota skims the TOP scorers, so a
+  low-score gem is always outranked. Admitting an overlooked kid requires the school to *look past the score*.
+- **Holistic admission, tied to THỰC CHẤT** (`CONFIG.ADMIT.DAX`, `declareAdmissions`): a SUBSTANTIVE school
+  extends a few "đặc cách" offers below the bar (≥55 TC → 1, ≥80 → 2) — a GAMBLE (most are ordinary, ~1 in 5 a
+  gem). A score-obsessed (hype) school takes only top scorers and never meets them. **This connects the systems**
+  (substance → finding the next Steve) — directly answering the owner's "systems feel separate" steer.
+- **The payoff, named:** `makeAlumnus` carries `flags.diamond`; a realized diamond (kỹ sư+) gets the epilogue
+  suffix **"· ngọc thô — vào bằng cửa hẹp"** (the exam was wrong; you weren't).
+- Verified: high-cutoff sweep byte-identical; substantive schools catch 1-2 gems/run that realize (canbang TC95
+  → 1 kỹ sư, duan TC100 → 2); all sweep flags ✓ (0% bankrupt, spread holds, no dominance); 🍎 13→18% for
+  substantive craft (substance finds gems — gated, aspirational, not a flood — WATCH-ITEM, tune DIAMOND_P if the
+  owner finds 🍎 too common); gate GREEN, bot BOTOK, headless epilogue render confirms the diamond suffix.
+
 ## 2026-06-15 — STRUCTURE: the person lifecycle consolidated into person.js (loop iter 127)
 **STRUCTURE epic — BEHAVIOR-NEUTRAL (proven byte-identical). Scores N/A (refactor).** `EPICS_SINCE_STRUCTURE`
 was 2 (E4 + E5 feature-epics) → the cadence required a structure move before the next feature-epic. Done, and

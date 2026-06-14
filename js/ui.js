@@ -1549,7 +1549,8 @@
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
         var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
         var gap = CONTENT.realGap[realClass(a.state, seed)] || ""; // E4 §C-2: name the gift-vs-fate — loud waste, or the prodigy who SETTLED (one quiet line; the on-target realized get their nod via stars + chip)
-        if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
+        if (!gap && a.flags && a.flags.diamond && flourishOf(a.state) >= 4) gap = CONTENT.diamondCredit; // E-UNDERDOG: overlooked at entry, realized anyway — the exam was wrong (takes precedence over the mentor credit)
+        else if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + "<br>“" + esc(line) + "”");
       });
       P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);

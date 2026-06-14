@@ -582,7 +582,14 @@ function derivedPool() {
     var pr = mulberry32((S.admissions.poolSeed ^ Math.imul(i + 1, 0x9E3779B9)) >>> 0);
     var score = clamp(r2(gauss(pr) * sigma + mu), 3, 30);
     var seedW = 1 + Math.round((score - 12) / 4.5); seedW = clamp(seedW, 1, 5);
-    pool.push({ score: score, seed: seedW, tell: pr() < 0.3 ? "spark" : (pr() < 0.5 ? "hype" : "") });
+    var tell = pr() < 0.3 ? "spark" : (pr() < 0.5 ? "hype" : "");
+    // E-UNDERDOG: a "ngọc thô" — a low scorer the exam underrates but who carries a real gift. The seed override
+    // draws AFTER score/tell and ONLY for sub-threshold scorers (a high scorer short-circuits → no extra draw),
+    // and each applicant has its own pr stream → high-cutoff admissions stay byte-identical; only an opened door
+    // catches them. The gift is still HIDDEN (E5) — you find it by teaching, not from the entrance number.
+    var diamond = false;
+    if (score < CONFIG.ADMIT.DIAMOND_SCOREMAX && pr() < CONFIG.ADMIT.DIAMOND_P) { seedW = pr() < 0.5 ? 4 : 5; diamond = true; }
+    pool.push({ score: score, seed: seedW, tell: tell, diamond: diamond });
   }
   pool.sort(function (a, b) { return b.score - a.score; });
   return pool;
@@ -615,10 +622,22 @@ function declareAdmissions(cutoff, quota, auto) {
   var take = qualified.slice(0, Math.min(quota, CONFIG.ROSTER_CAP - S.students.length));
   for (i = 0; i < take.length; i++) {
     var ap = take[i];
-    var s = genStudent(1, { seed: ap.seed, tell: ap.tell, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) });
+    var s = genStudent(1, { seed: ap.seed, tell: ap.tell, diamond: !!ap.diamond, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) });
     // Mai Sương — the founder's first believer joins the very first non-empty intake.
     if (S._maiPending) { s.ten = "Mai Sương"; s.seed = 5; s.kt = 22; s.tn = 16; s.st = 35; s.cm = 12; s.mood = 72; s.vet = 4; s.tell = "sky"; S._maiPending = false; }
     S.students.push(s);
+  }
+  // E-UNDERDOG: a substantive school looks PAST the score — a few "đặc cách" offers below the bar, where the
+  // ngọc thô hide. A gamble (the gift is hidden, E5): most are ordinary low-scorers, ~1 in 5 a real talent the
+  // exam underrated. A hype school (low Thực Chất) extends none and never meets them.
+  var dax = CONFIG.ADMIT.DAX(S.thucChat), daxFill = 0;
+  if (dax > 0) {
+    var below = []; for (i = 0; i < pool.length; i++) if (pool[i].score < cutoff) below.push(pool[i]);
+    for (var dq = 0; dq < dax && below.length && S.students.length < CONFIG.ROSTER_CAP; dq++) {
+      var dp = below.splice(Math.floor(rnd() * below.length), 1)[0];
+      S.students.push(genStudent(1, { seed: dp.seed, tell: dp.tell, diamond: !!dp.diamond, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) }));
+      daxFill++;
+    }
   }
   // scholarship auto-award to top holder-with-tell
   awardScholarships(take);
@@ -631,7 +650,7 @@ function declareAdmissions(cutoff, quota, auto) {
   S.admissions.declaredHistory.push({ year: S.year, cutoff: cutoff, fill: take.length, rank: rank });
   if (S.admissions.declaredHistory.length > 20) S.admissions.declaredHistory.shift();
   S.examHistory.push({ year: S.year, cutoff: cutoff, rank: rank, fill: take.length });
-  news("Công bố điểm chuẩn " + cutoff.toFixed(2) + " — " + take.length + "/" + quota + " nhập học. Hạng " + rank + "/4.");
+  news("Công bố điểm chuẩn " + cutoff.toFixed(2) + " — " + take.length + "/" + quota + " nhập học" + (daxFill ? " (+" + daxFill + " đặc cách)" : "") + ". Hạng " + rank + "/4.");
   S.pendingAdmit = null;
   checkMilestones(); // a fresh intake can complete cohort1 / grow20
   return { fill: take.length, rank: rank };

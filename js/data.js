@@ -118,6 +118,16 @@ var CONFIG = {
     POOL: function (tt) { return Math.max(24, Math.min(180, Math.round(24 + 1.6 * tt))); },
     MU: function (ut, tt, year) { return 17 + 0.05 * ut + 0.015 * tt + 0.25 * (year - 1); },
     SIGMA: 3.2,
+    // E-UNDERDOG: a fraction of LOW-score applicants are "ngọc thô" — a real gift the entrance exam underrates.
+    // Below the typical cutoff, so they're caught only when you OPEN THE DOOR (lower điểm chuẩn) — the đề Văn
+    // bite (a score doesn't measure talent) made playable. Dormant for high-cutoff play; you discover the gift
+    // the usual way (teach/mentor — E5), and a realized one is named in the epilogue ("ngọc thô — vào cửa hẹp").
+    DIAMOND_P: 0.20, DIAMOND_SCOREMAX: 16,
+    // E-UNDERDOG admit path: a SUBSTANTIVE school (cao Thực Chất) runs a holistic intake — it extends a few
+    // "đặc cách" offers BELOW the score bar (looking past the entrance number), where the ngọc thô hide. A score-
+    // obsessed (hype) school takes only top scorers and misses them. This ties the underdog to the substance
+    // thesis (connecting systems, owner's steer). A GAMBLE — most đặc cách are ordinary, ~1 in 5 a real gift.
+    DAX: function (tc) { return tc >= 80 ? 2 : (tc >= 55 ? 1 : 0); },
     HONBA_P: 0.25,
     SEED_BASE: [0.30, 0.30, 0.20, 0.13, 0.07],
     CLC_P: 0.08, CLC_P_HI: 0.12, CLC_TT: 50,
@@ -281,6 +291,7 @@ var CONTENT = {
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
+  diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't
   // iter-125 — the followed protégé's IN-SCHOOL arc, as caused moments (THESIS mark 5: felt WHILE playing).
   // Surfaced ~once a season when a real transition happens — watch the kid you chose actually become someone.
   favMoments: {
