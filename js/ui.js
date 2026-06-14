@@ -1241,9 +1241,11 @@
     if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + cpay + "tr", "var(--green)"));
     c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + sal + "tr", "var(--red)"));
     c.appendChild(fundRow("🛠️ Bảo trì", "−" + maint + "tr", "var(--red)"));
+    var ops = Math.round((CONFIG.OPS.base + CONFIG.OPS.perSV * s.students.length) * CONFIG.OPS.rate * Math.max(0, s.year - 1)); // rising overhead w/ size & age
+    if (ops > 0) c.appendChild(fundRow("🏛️ Vận hành (trường lớn, càng tốn)", "−" + ops + "tr", "var(--red)"));
     var reinvest = Math.max(0, Math.round((s.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN));
-    if (reinvest > 0) c.appendChild(fundRow("🏫 Vận hành (tái đầu tư phần dư)", "−" + reinvest + "tr", "var(--red)"));
-    var net = income + cpay - sal - maint - reinvest;
+    if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + reinvest + "tr", "var(--red)"));
+    var net = income + cpay - sal - maint - ops - reinvest;
     c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + Math.round(net) + "tr</div>";
     wrap.appendChild(c);
 

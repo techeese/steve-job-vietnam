@@ -415,7 +415,8 @@ function economyTick() {
   for (i = 0; i < S.students.length; i++) if (S.presets["n" + S.students[i].grade] === "duan") materials += CONFIG.DUAN_COST_PER_SV;
   var contractPay = 0;
   S.contracts = S.contracts.filter(function (c) { contractPay += c.pay; c.mLeft -= 1; return c.mLeft > 0; });
-  S.cash = r1(S.cash + income + contractPay - salaries - maint - materials);
+  var ops = r1((CONFIG.OPS.base + CONFIG.OPS.perSV * n) * CONFIG.OPS.rate * Math.max(0, S.year - 1)); // vận hành: ~0 at founding, rises with size & age
+  S.cash = r1(S.cash + income + contractPay - salaries - maint - materials - ops);
   if (S.cash > CONFIG.CASH_KEEP) S.cash = r1(S.cash - (S.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN); // reinvest surplus (money sink)
 
   // endowment compounds (DESIGN ruling 3) — keep full precision; r1 would round the 0.4% away

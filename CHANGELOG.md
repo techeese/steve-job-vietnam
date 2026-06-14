@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-14 — EPIC: late-game economic pressure (OWNER-STEERED) (loop iter 107)
+- The plateau broke: surfaced the steer decision via a question, owner picked **late-game economic pressure**
+  and endorsed "a bit more demanding." Added a scaling **"Vận hành" (operations) overhead** to `economyTick`:
+  `(OPS.base + OPS.perSV·students) · OPS.rate · (year−1)` — **zero in the founding year, rising with size AND
+  age** (institutional bloat, satirical: the bigger/older place always costs more to run). Late-game cash now
+  has to be *tended* — income (tuition/contracts/reputation) must keep pace, a real management loop where
+  before you just coasted on a 2,600tr pile.
+- **Tuned via the sweep (rate 0.22):** the hoard is cut to ~⅓ — auto-play end-cash **2,636→892tr** (default),
+  **2,933→1,146tr** (honest, who manages better) — while **0% bankruptcy** holds across all 5 strategies, min-cash
+  stays 182tr, Y1 net stays 4.9tr (in band), and the **destiny distribution + pluralism are byte-identical**
+  (the bot's fixed strategies never re-spend cash, so cash is a scalar that doesn't feed the FSM — the thesis
+  was provably safe). bot.sh full-game cash 2,711→930.
+- Surfaced in the Tài chính Thu–Chi card (🏛️ Vận hành line) so the player sees it; sweep flag reworded to
+  confirm the pressure is working. Verified: parse · `./gate.sh` GREEN · `node sweep.js` (0 bankruptcy,
+  pluralism intact) · `./bot.sh` BOTOK · 390px Fund screenshot. EPIC shipped → `SMALL_SHIPS_SINCE_EPIC →0`,
+  `EPICS_SINCE_STRUCTURE →1`. Bar: **DEPTH/balance 4** (late game finally asks something of you).
+
 ## 2026-06-14 — Harden sanitize against corrupted saves (loop iter 105)
 - Robustness probe #3: injected garbage (NaN/Infinity/wrong-type/out-of-range) across a save and loaded it.
   sanitize recovered almost everything — but found a gap: **the three meters weren't clamped on load.**

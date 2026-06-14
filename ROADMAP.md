@@ -6,7 +6,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ epic locks (→ review-defer; epic AWAITS OWNER STEER, per iter-92). (Reset iter 105: locked slot resolved via review-defer; shipped sanitize corruption-hardening alongside.) **Plateau mode**: robustness vein (103–105) closed — save is LOSSLESS + corruption-resilient, both GATE_SAVE-guarded. Features/content/coverage/distribution/robustness ALL done; genuine safe value is exhausted. Default to periodic maintenance + awaiting steer; only ship on a genuine find.
+- `SMALL_SHIPS_SINCE_EPIC: 0`   → ≥3 ⇒ epic locks. (Reset iter 107: the owner-steered economic-pressure FEATURE epic shipped.)
+- `EPICS_SINCE_STRUCTURE: 1`    → ≥2 ⇒ next epic must be STRUCTURE (ui.js→screens.js, deferred per iter-92). (iter 107 economic-pressure = 1 FEATURE epic since.)
+- **Plateau ENDED iter 107** — owner returned + steered. Remaining queued epics still need steer: Mai Sương character arc · another graphics step-change · the ui→screens.js split. Between steers, plateau mode (safe value + maintenance + active bug-hunting, which found 3 real save bugs in 103–105).
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be a STRUCTURE move. (Reset iter 92 via the structure review — see `## Architecture`. The panels/modals→screens.js split stays QUEUED for "when ui.js strains / owner OKs".)
 - **NEXT TRUE EPIC AWAITS OWNER STEER.** All remaining epics need taste/feel input: late-game economic *feel* (and the sweep "inflation" is partly a bot artifact — a real player has the memorial gardens + góp-quỹ as sinks), a Mai Sương **character arc** (tone), another **graphics step-change** (art direction / divergence workflow), or the **panels→screens.js** split (do when straining/owner-OK). Until steer: ship safe value/completeness/maintenance/content; don't force a risky or make-work epic.
 - **Big epics QUEUED FOR OWNER STEER** (each reshapes feel/balance/art — costly to get wrong autonomously, owner away ~15 firings): (a) passive **late-game economic pressure** (the standing sweep flag; needs a difficulty/feel call + careful sweep tuning to keep 0-bankruptcy/pluralism); (b) a recurring **character arc** (Mai Sương multi-beat story — tone is a taste call); (c) another **graphics step-change** (wants a divergence workflow / ultracode to de-risk the art direction). Until steer: keep shipping safe, owner-blessed living-campus/charm/content + low-risk structure.
@@ -15,9 +17,9 @@ Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EV
 - `LAST_MAINTENANCE: iter 97 — CLEAN. sweep green (0 bankrupt, pluralism holds, bands stable) · bot.sh BOTOK · perf clean (2 intervals, 699 DOM nodes heaviest tab) · full 390px audit of all 5 tabs → no regressions after the plateau-run additions (ticker-idle/visitor/bio-card/meter-help/share-card/chime/giftVt-fix). Game coheres; healthy. (Priors: iter 86, iter 78 — both clean.)`
 
 ## Epic in progress
-_(none — **Cúp Khoa SHIPPED iter 80**: annual inter-khoa contest + trophy pennant race, reward kept
-story-not-power so the sweep bands held. NEXT epic is FORCED to STRUCTURE: ui.js→screens.js, see
-`## Architecture`. A dedicated khoa SCREEN remains a possible later FEATURE epic if it earns its slot.)_
+_(none — **late-game economic pressure SHIPPED iter 107**, owner-steered: "Vận hành" overhead rising with
+size & age, hoard cut ~⅓, 0 bankruptcy, pluralism intact. OWNER veto options if too much: lower
+`CONFIG.OPS.rate` (0.22) or `OPS.perSV` (0.6).)_
 
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
