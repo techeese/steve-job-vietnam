@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-15 — EPIC E8: faculty drawn by standing — connecting the systems (loop iter 136)
+**PERSON-SIM-serving epic ("the school you shape"). SOUL 4 · BITE 4 · FUN/DEPTH 4 · CLARITY 4 · BEAUTY/JUICE
+n/a.** Directly answers the owner's steers: "teachers automatic based on ranking" + "systems feel separate." The
+hire pool was a fixed list always available; now teachers are **drawn by the school's standing** — TT draws the
+famous, UT the trusted, TC the substantive.
+- Each pool teacher carries `req:{m,v}` (a meter must reach v before they'll consider you). At boot only the
+  self-taught Coder is hireable (no req → a weak-start school is never doomed); as you build standing, the
+  prestigious arrive. **Visible aspiration, not hidden** — locked teachers show "🔒 … cần Tiếng Tăm ≥ 40"; the
+  available float to the top.
+- **+2 teachers** (owner's "more teacher names"): Cô Giáo Viral Triệu View (TT≥60), GS Đầu Ngành Về Hưu (UT≥65)
+  — pool 4→6, spanning all three standings.
+- **Connects systems:** your reputation now shapes WHO teaches your kids → the growth pipeline → who realizes.
+  The macro (standing) feeds the micro (the person-sim).
+- **Soft gate, sweep-NEUTRAL** (availability/UI only — the sweep never hires via the UI; growth math untouched).
+  Verified: gate GREEN, bot BOTOK (identical metrics), headless render confirms boot = only Coder hireable / rest
+  locked with reqs, high-standing (70/70/70) = all six drawn.
+- **Checkpoint 2 (deferred, owner-playtest):** grain-flavored teacher trade-offs (a prestige engineer realizes
+  coders, neglects makers) — that's a `teacherFactor` grain-specific change = a real balance change (sweep uses
+  teacherFactor), best with owner feel-check. This checkpoint is the safe reputation-gating half.
+
 ## 2026-06-15 — The protégé's follow-journal: their story, persistent on their card (loop iter 135)
 **PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 4 (mark 5) · CLARITY 4 · BEAUTY/JUICE
 n/a.** The protégé's in-school moments (iter-125) fired in the *fleeting* news ticker and scrolled away — the kid

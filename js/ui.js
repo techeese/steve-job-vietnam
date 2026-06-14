@@ -1160,15 +1160,26 @@
       r.innerHTML = "<div class='av' style='background:rgba(106,169,240,.15)'>🧑‍🏫</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + t.luong + "tr/th" + (t.bienChe ? " · biên chế" : "") + "</div></div>";
       c4.appendChild(r);
     });
-    var pool = CONTENT.teachers.pool.filter(function (t) { return !have[t.id]; });
+    // E8 — teachers are DRAWN by standing: TT/UT/TC must reach a teacher's req before they'll consider you.
+    // Locked ones show as visible aspiration ("cần Tiếng Tăm ≥ 40"), not hidden; available ones float to the top.
+    var STAND = { tt: ["Tiếng Tăm", s.tiengTam], ut: ["Uy Tín", s.uyTin], tc: ["Thực Chất", s.thucChat] };
+    var teaLocked = function (t) { return t.req && STAND[t.req.m] && STAND[t.req.m][1] < t.req.v; };
+    var pool = CONTENT.teachers.pool.filter(function (t) { return !have[t.id]; })
+      .sort(function (a, b) { return (teaLocked(a) ? 1 : 0) - (teaLocked(b) ? 1 : 0); });
     if (pool.length) {
-      c4.appendChild(el("div", "tiny", "Tuyển thêm:")).style.margin = "8px 0 5px";
+      c4.appendChild(el("div", "tiny", "Tuyển thêm — giảng viên tìm về theo tiếng tăm của trường:")).style.margin = "8px 0 5px";
       pool.forEach(function (t) {
-        var r = el("div", "srow");
-        r.innerHTML = "<div class='av' style='background:rgba(240,198,116,.12)'>＋</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + esc(t.note) + "</div></div>";
-        var b = el("button", "btn", t.luong + "tr"); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
-        b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); HVS.checkMilestones(); render(); };
-        r.appendChild(b); c4.appendChild(r);
+        var locked = teaLocked(t);
+        var r = el("div", "srow"); if (locked) r.style.opacity = ".55";
+        r.innerHTML = "<div class='av' style='background:rgba(240,198,116,.12)'>" + (locked ? "🔒" : "＋") + "</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + esc(t.note) + "</div></div>";
+        if (locked) {
+          var lk = el("div", "tiny", "cần " + STAND[t.req.m][0] + " ≥ " + t.req.v); lk.style.cssText = "color:var(--faint);white-space:nowrap;align-self:center"; r.appendChild(lk);
+        } else {
+          var b = el("button", "btn", t.luong + "tr"); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
+          b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); HVS.checkMilestones(); render(); };
+          r.appendChild(b);
+        }
+        c4.appendChild(r);
       });
     }
     wrap.appendChild(c4);

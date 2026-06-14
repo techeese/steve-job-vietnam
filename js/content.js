@@ -149,11 +149,17 @@ var CONTENT = {
       { id: "gtm", ten: "Cô Giáo Trình Mẫu", day: 2, dien: 9, luong: 22, trait: "", note: "biên chế cũ: không tăng lương, không nghỉ việc", bienChe: true },
       { id: "isi", ten: "GS Đếm Bài Báo ISI", day: 3, dien: 5, luong: 28, trait: "isi", note: "biên chế — +0,5 Tiếng Tăm/tháng; lớp ông dạy -10%", bienChe: true }
     ],
+    // E8 (iter 136) — teachers are DRAWN by the school's standing (owner: "automatic based on ranking"): TT draws
+    // the famous, UT the trusted, TC the substantive. `req:{m,v}` = a meter (tt/ut/tc) must reach v before they'll
+    // consider you (shown as visible aspiration, NOT hidden). The self-taught coder has no req → a weak-start
+    // school is never doomed. Soft gate (availability only); manual hire still legal; sweep-neutral (no UI hiring).
     pool: [
       { id: "coder", ten: "Thầy Coder Tự Học", day: 9, dien: 1, luong: 15, trait: "tch", note: "không bằng cấp, rẻ vì thị trường định giá tờ giấy" },
-      { id: "diengia", ten: "Thầy Diễn Giả Truyền Cảm Hứng", day: 1, dien: 10, luong: 25, trait: "hype", note: "+5 Mood khi vào, -3 sau hai tháng" },
-      { id: "ielts", ten: "Cô IELTS Pitch Deck", day: 5, dien: 8, luong: 35, trait: "", note: "dạy thật lẫn diễn thật" },
-      { id: "kysu", ten: "Thầy Cựu Kỹ Sư Phương Đông", day: 9, dien: 3, luong: 38, trait: "tch", note: "đắt. đáng." }
+      { id: "diengia", ten: "Thầy Diễn Giả Truyền Cảm Hứng", day: 1, dien: 10, luong: 25, trait: "hype", req: { m: "tt", v: 40 }, note: "+5 Mood khi vào, -3 sau hai tháng — chỉ ghé trường có tiếng" },
+      { id: "viral", ten: "Cô Giáo Viral Triệu View", day: 2, dien: 9, luong: 30, trait: "hype", req: { m: "tt", v: 60 }, note: "trường nổi mới mời nổi — vào lớp như lên sóng" },
+      { id: "ielts", ten: "Cô IELTS Pitch Deck", day: 5, dien: 8, luong: 35, trait: "", req: { m: "ut", v: 45 }, note: "dạy thật lẫn diễn thật — chọn trường đàng hoàng" },
+      { id: "gshuu", ten: "GS Đầu Ngành Về Hưu", day: 8, dien: 6, luong: 40, trait: "tch", req: { m: "ut", v: 65 }, note: "danh ông gắn với tên trường — chỉ về nơi có uy tín" },
+      { id: "kysu", ten: "Thầy Cựu Kỹ Sư Phương Đông", day: 9, dien: 3, luong: 38, trait: "tch", req: { m: "tc", v: 55 }, note: "đắt. đáng. chỉ ở lại trường có thực chất." }
     ]
   },
 
