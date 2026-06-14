@@ -17,6 +17,7 @@
   // --- Art epic: Kenney Tiny Town tilemap (real 16x16 pixel-art tiles), loaded async; procedural fallback if absent ---
   var TILES = null, TPX = 16; // the 12-wide tilesheet image once loaded + tile size
   function tileXY(idx) { return [(idx % 12) * TPX, ((idx / 12) | 0) * TPX]; } // src x,y of tile #idx
+  function kTile(ctx, idx, cx, baseY, w, h) { if (!TILES) return; var s = tileXY(idx); ctx.drawImage(TILES, s[0], s[1], TPX, TPX, (cx - w / 2) | 0, (baseY - h) | 0, w, h); } // blit tile #idx centered-x, base at baseY
   var $ = function (id) { return document.getElementById(id); };
   var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   function S() { return HVS.S(); }
@@ -805,8 +806,8 @@
     for (x = 0; x < GW; x++) for (y = 0; y < GH; y++) { if (!(walk[x] && walk[x][y])) continue; if (y === rowY || x === colX) continue; free.push([x, y]); }
     for (i = free.length - 1; i > 0; i--) { var j = (rng() * (i + 1)) | 0, t = free[i]; free[i] = free[j]; free[j] = t; }
     var edge = function (t) { return t[0] < 2 || t[0] > GW - 3 || t[1] < 2 || t[1] > GH - 3; };
-    var nT = 0; for (i = 0; i < free.length && nT < 5; i++) { var f = free[i]; if (!f.u && edge(f)) { tree(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 5) | 0); f.u = 1; nT++; } }   // trees hug the border
-    var nB = 0; for (i = 0; i < free.length && nB < 5; i++) { f = free[i]; if (!f.u) { bush(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 4) | 0); f.u = 1; nB++; } }
+    var nT = 0; for (i = 0; i < free.length && nT < 8; i++) { var f = free[i]; if (!f.u && edge(f)) { var tx = (f[0] * T + T / 2) | 0, ty = (f[1] * T + T / 2 + 8) | 0; if (TILES) kTile(ctx, 4, tx, ty, 26, 26); else tree(ctx, tx, ty - 3); f.u = 1; nT++; } }   // trees hug the border
+    var nB = 0; for (i = 0; i < free.length && nB < 7; i++) { f = free[i]; if (!f.u) { var bx = (f[0] * T + T / 2) | 0, by = (f[1] * T + T / 2 + 6) | 0; if (TILES) kTile(ctx, 5, bx, by, 18, 18); else bush(ctx, bx, by - 2); f.u = 1; nB++; } }
     var nF = 0; for (i = 0; i < free.length && nF < 8; i++) { f = free[i]; if (!f.u) { flowers(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 6) | 0, rng); f.u = 1; nF++; } }
     var nBe = 0; for (i = 0; i < free.length && nBe < 3; i++) { f = free[i]; if (!f.u) { bench(ctx, (f[0] * T + T / 2) | 0, (f[1] * T + T / 2 + 3) | 0); f.u = 1; nBe++; } }
     // fountain centerpiece at the path plaza (skip if a room was built over it)
