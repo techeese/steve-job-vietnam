@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-15 — The honored student the system still failed (loop iter 144)
+**PERSON-SIM polish (people-first arc). SOUL 4 · BITE 5 · CLARITY 4 · BEAUTY/JUICE n/a.** The game's sharpest đề
+Văn moment — an award-winning standout who still ended up wasted (e.g. "★★★★★ — 🪪 Thất nghiệp — tài năng bỏ phí
+🏅 Giải Tay Nghề Vàng") — wore only a generic flavor line. Now a prized + loud-waste kid gets a pointed flavor:
+"Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác." — the certificate gleams, the gold-medalist's
+life turned elsewhere. The system wastes even its best, said plainly. Rare-but-real (a high-stat kid who failed
+the June defense / curdled). Pure prose, sweep-NEUTRAL. Verified: ui syntax OK, gate GREEN, lives.sh (duan 7)
+renders it on Tú 'Compiler'.
+
 ## 2026-06-15 — A face on the answer: the share card carries a life (loop iter 143)
 **PERSON-SIM polish (people-first arc). SOUL 4 · BITE 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The shareable summary
 card — the game's self-representation when shared — showed only stats (🎓/🍎/🚔) + a verdict icon, no *soul*,
