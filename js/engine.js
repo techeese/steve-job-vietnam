@@ -494,7 +494,7 @@ function openJune() {
   S.pendingJune = {
     stage: "policy",
     de: rpick(CONTENT.dePool),
-    foreshadow: tpl(CONTENT.ticker.poolForeshadow, { n: CONFIG.ADMIT.POOL(S.tiengTam) }),
+    foreshadow: tpl(CONTENT.ticker.poolForeshadow, { n: CONFIG.ADMIT.POOL(S.tiengTam, S.tuition) }),
     gradIds: grads.map(function (s) { return s.id; }),
     deadline: S.totalDays + 18, policy: null, results: null
   };
@@ -575,8 +575,8 @@ function buildAdmitPool() {
   S.admissions.poolSeed = (Math.floor(rnd() * 4294967296)) >>> 0;
 }
 function derivedPool() {
-  var n = CONFIG.ADMIT.POOL(S.tiengTam);
-  var mu = CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year), sigma = CONFIG.ADMIT.SIGMA;
+  var n = CONFIG.ADMIT.POOL(S.tiengTam, S.tuition);
+  var mu = CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year, S.tuition), sigma = CONFIG.ADMIT.SIGMA;
   var pool = [];
   for (var i = 0; i < n; i++) {
     var pr = mulberry32((S.admissions.poolSeed ^ Math.imul(i + 1, 0x9E3779B9)) >>> 0);
@@ -600,7 +600,7 @@ function openAdmissions() {
   var a = S.admissions;
   S.pendingAdmit = {
     year: S.year, pool: pool, n: pool.length,
-    cut: clamp(r025(CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year) - 1), CONFIG.ADMIT.CUT_MIN, CONFIG.ADMIT.CUT_MAX),
+    cut: clamp(r025(CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year, S.tuition) - 1), CONFIG.ADMIT.CUT_MIN, CONFIG.ADMIT.CUT_MAX),
     quota: Math.min(CONFIG.ADMIT.QUOTA_MAX, Math.max(CONFIG.ADMIT.QUOTA_MIN, Math.min(CONFIG.COHORT_NOMINAL, CONFIG.ROSTER_CAP - S.students.length))),
     lastCutoff: a.lastCutoff, lastFill: a.lastFill, lastQuota: a.lastQuota,
     rivals: CONFIG.ADMIT.RIVALS(S.year), deadline: S.totalDays + 18

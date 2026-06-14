@@ -116,8 +116,18 @@ var CONFIG = {
   ADMIT: {
     CUT_MIN: 12, CUT_MAX: 30.5, CUT_STEP: 0.25,
     QUOTA_MIN: 4, QUOTA_MAX: 14,
-    POOL: function (tt) { return Math.max(24, Math.min(180, Math.round(24 + 1.6 * tt))); },
-    MU: function (ut, tt, year) { return 17 + 0.05 * ut + 0.015 * tt + 0.25 * (year - 1); },
+    // E15c (iter 137) — the TUITION trade-off the owner flagged: a pricey school draws FEWER hồ sơ (access cost),
+    // so "always max it" stops being free. NEUTRAL at the boot default (2) → the sweep (fixed tuition 2) is
+    // unaffected; the trade-off only bites when the PLAYER moves tuition (income/SV ↑ vs applicant volume ↓).
+    POOL: function (tt, tuition) {
+      var base = Math.max(24, Math.min(180, Math.round(24 + 1.6 * tt)));
+      var acc = Math.max(0.5, Math.min(1.15, 1 - 0.12 * ((tuition == null ? 2 : tuition) - 2)));
+      return Math.round(base * acc);
+    },
+    // E15c — tuition also lowers applicant QUALITY: a pricey school prices out the gifted-but-poor (who have
+    // scholarship options elsewhere), leaving richer-but-weaker applicants. This is the lever that BITES (pool
+    // SIZE doesn't — it stays above quota); together they = "fewer AND weaker", the owner's words. NEUTRAL at 2.
+    MU: function (ut, tt, year, tuition) { return 17 + 0.05 * ut + 0.015 * tt + 0.25 * (year - 1) - 0.6 * ((tuition == null ? 2 : tuition) - 2); },
     SIGMA: 3.2,
     // E-UNDERDOG: a fraction of LOW-score applicants are "ngọc thô" — a real gift the entrance exam underrates.
     // Below the typical cutoff, so they're caught only when you OPEN THE DOOR (lower điểm chuẩn) — the đề Văn

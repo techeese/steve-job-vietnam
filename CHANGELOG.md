@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-15 — The tuition trade-off: cash vs the souls you can reach (loop iter 137)
+**PERSON-SIM-serving balance fix (debt-valve, floor-exempt). SOUL 3 · BITE 4 · FUN/DEPTH 4 · CLARITY 4.** Closes
+the gap the owner flagged ("no trade-off guideline for tuition; financials positive, always max it"): tuition was
+pure income (`tuition × SV`), the pool ignored it. Now a pricey school pays an **access cost**:
+- `ADMIT.POOL(tt, tuition)` — fewer hồ sơ apply (a pricey school deters applicants);
+- `ADMIT.MU(ut, tt, year, tuition)` — and they're WEAKER (it prices out the gifted-but-poor, who have options
+  elsewhere) — the lever that BITES (pool size alone doesn't: it stays above quota).
+- Both **NEUTRAL at the boot default (2)** → the sweep (fixed tuition 2) is byte-identical; the trade-off only
+  bites when the PLAYER moves tuition. Together = "fewer AND weaker", the owner's exact words.
+- **The real downside is on SOULS, not cash** (the game's win is souls): probed across tuition, a pricier school
+  yields a weaker cohort (avgSeed 4.0→3.2) and **fewer Steves under craft (🍎/run 0.25→0.17)** + a more mediocre
+  spread (more settle at kỹ sư, fewer peak). So the soul-player keeps tuition moderate; the cash-optimiser maxes
+  it — but cash isn't the win. Connects tuition→admissions→souls (the "systems separate" theme).
+- **Made legible** (owner's "no guideline"): the funding panel now reads "↑ Học phí = nhiều thu hơn mỗi SV, nhưng
+  ít hồ sơ nộp về hơn … ~N em nộp" (projected applicants at the current price).
+- **Honestly partial:** this does NOT eliminate the pure-cash dominance (income is linear in tuition; countering
+  it needs a steep enrollment-affordability decline — a punishing-feel knob that wants OWNER PLAYTEST). Shipped
+  the soul-cost + legibility half; the enrollment-decline half stays queued.
+- Verified: gate GREEN, bot BOTOK (tuition-2 identical metrics), sweep byte-identical at default.
+
 ## 2026-06-15 — EPIC E8: faculty drawn by standing — connecting the systems (loop iter 136)
 **PERSON-SIM-serving epic ("the school you shape"). SOUL 4 · BITE 4 · FUN/DEPTH 4 · CLARITY 4 · BEAUTY/JUICE
 n/a.** Directly answers the owner's steers: "teachers automatic based on ranking" + "systems feel separate." The

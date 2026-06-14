@@ -1115,6 +1115,9 @@
     minus.onclick = function () { S().tuition = Math.max(CONFIG.TUITION_MIN, +(S().tuition - CONFIG.TUITION_STEP).toFixed(1)); renderPanel(); };
     plus.onclick = function () { S().tuition = Math.min(CONFIG.TUITION_MAX, +(S().tuition + CONFIG.TUITION_STEP).toFixed(1)); renderPanel(); };
     stp.appendChild(minus); stp.appendChild(val); stp.appendChild(plus); row.appendChild(stp); c2.appendChild(row);
+    // E15c — the tuition TRADE-OFF made legible (owner: "no guideline for tuition"): ↑ học phí = ↑ thu/SV nhưng
+    // ↓ hồ sơ (a pricey school deters applicants). Show the projected applicant pool at the current price.
+    c2.appendChild(el("div", "tiny", "↑ Học phí = nhiều thu hơn mỗi SV, nhưng <b>ít hồ sơ nộp về</b> hơn (trường đắt, kén người ghi danh). Mùa tới ước tính <b style='color:var(--gold)'>~" + CONFIG.ADMIT.POOL(s.tiengTam, s.tuition) + " em</b> nộp.")).style.marginTop = "6px";
     wrap.appendChild(c2);
 
     // build & upgrade — one building per type on the map; buying more upgrades it in place
