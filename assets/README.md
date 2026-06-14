@@ -18,7 +18,7 @@ The game is moving from procedural code-drawn art → real pixel-art sprites/til
 Keep original filenames — I'll write the atlas mapping in code to match.
 
 ## Credits (keep this list accurate — some licenses appreciate/require attribution)
-- Characters: **Jephed — Game Between The Lines** (itch.io) — free, credit appreciated.
+- Characters: **Jephed, Game Between The Lines, https://gamebetweenthelines.com/** — free commercial, credit appreciated (this is the exact string the license asks for).
 - Tiles: _<pack · author · license — fill in once chosen>_
 
 ## Integration plan (what I do once the files are here)
