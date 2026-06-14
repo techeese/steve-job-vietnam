@@ -191,7 +191,7 @@
         // clear the arrival mark once they've actually stepped onto the grounds
         if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
-      a.grade = s.grade; a.bodyC = SPRITES.GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.ten = s.ten;
+      a.grade = s.grade; a.bodyC = SPRITES.GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.mentored = !!s.mentored; a.ten = s.ten;
       a.tell = s.tell || ""; a.seed = s.seed;
       a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < SPRITES.VARIANTS.length) ? s.look : SPRITES.hashId(s.id) % SPRITES.VARIANTS.length;
       a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
@@ -322,6 +322,11 @@
   }
   var EMOTES = ["music", "excl", "dots", "heart", "spark", "idea", "sweat", "q"];
   function pickEmote(a) {
+    // D2 — make the person-sim SOUL visible on the sân: who you're lifting, whom the school is wasting
+    if (a.mentored && Math.random() < 0.6) return Math.random() < 0.5 ? "idea" : "spark";            // a kid you pour attention into lights up
+    var _pre = S().presets["n" + a.grade], _mm = CONFIG.MATCH ? CONFIG.MATCH(a.tell, _pre) : 1;
+    if (_mm <= 0.6 && Math.random() < 0.6) return "sweat";                                            // grain the school is wasting → visible strain
+    if (_mm >= 1.3 && !a.act && Math.random() < 0.5) return Math.random() < 0.5 ? "idea" : "spark";   // grain the school fits → thriving
     if (a.act === "perform") return "music";
     if (a.act === "eat") return Math.random() < 0.6 ? "heart" : "spark";
     if (a.act === "study") return Math.random() < 0.5 ? "idea" : "dots";
@@ -667,6 +672,12 @@
     if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 7.5, y - 30.5, 15, 14); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 34, 2, 2); ctx.fillRect(x - 2, y - 33, 1, 1); ctx.fillRect(x + 1, y - 33, 1, 1); } // scholarship star
+    if (a.mentored) { // Mentor's Ledger D2 — a kid you're pouring scarce attention into: a small teal mortarboard, gold tassel (distinct from the gold fav star; the two can coexist)
+      var my = (y - 30 + Math.sin(ts / 320 + a.ph) * 1) | 0;
+      ctx.fillStyle = "#1c6f68"; ctx.fillRect(x - 3, my + 2, 7, 1); ctx.fillRect(x - 2, my, 5, 2); // cap brim + top
+      ctx.fillStyle = "#63e6d6"; ctx.fillRect(x - 1, my, 3, 1);                                    // cap highlight
+      ctx.fillStyle = "#1c6f68"; ctx.fillRect(x + 3, my + 2, 1, 3); ctx.fillStyle = PX.gold; ctx.fillRect(x + 3, my + 5, 1, 1); // tassel + gold bead
+    }
     if (a.fav) { // followed student — a gold star + a name label overhead, so you bond with your protégé
       var fsy = (y - 39 + Math.sin(ts / 300 + a.ph) * 1.2) | 0;
       if (a.ten) { // floating name pill above the star
