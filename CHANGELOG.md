@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — Telegraph the burnout: a loss you can fight, not a surprise (loop iter 132)
+**PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 5 · BITE 3 · BEAUTY/JUICE n/a.** iter-131 made burnout
+possible but the player got NO warning — a kid just vanished. Now the inspect card telegraphs the risk WHILE the
+kid can still be saved, and names the levers:
+- mood < ~42 → **"⚠ kiệt sức — nguy cơ bỏ học (dìu dắt hoặc đổi lối học GẤP)"** (red)
+- mood < 50 → "tinh thần đang kém — học hành chậm lại" (orange)
+- healthy → nothing (no clutter — the warning only appears for an at-risk kid).
+Completes the mood dimension's legibility loop: mismatch (match-read "nguội dần") → mood erodes (the bar) →
+burnout WARNING + the two saves (mentor / change the year's style) → you fight for the kid, or mourn them.
+Pure display, **sweep-NEUTRAL** (only ui.js). Verified: ui syntax OK, gate GREEN, bot BOTOK, headless render
+confirms the warning shows at mood 25/45 and is absent at 75.
+- *(Structure note: assessed ui.js (1781 ln) for the owed EPICS_SINCE_STRUCTURE=2 extraction — it's one tightly-
+  coupled IIFE (the ~430-ln render cluster + panels/modals all share closure state/canvas/helpers); no clean leaf
+  without the shared-UI-context refactor (high-effort, zero immediate value — future UI features owner-gated). Left
+  the debt owed for the next feature-epic rather than force a risky zero-value refactor; did a polish this firing.)*
+
 ## 2026-06-15 — EPIC: MOOD made live — the cram grind burns out the worst-served (loop iter 131)
 **PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 5 · CLARITY 3 ·
 BEAUTY/JUICE n/a.** The owner asked for "including mood" — but mood was a dead dimension: it drifted high and

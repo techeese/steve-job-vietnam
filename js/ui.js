@@ -895,6 +895,10 @@
       : _mm >= 1.3 ? { t: "hợp lối học này — đang nở rộ", c: "var(--green)" }
       : _mm >= 0.9 ? { t: "lối học này tạm hợp", c: "var(--faint)" }
       : { t: "lệch lối học này — tài năng dễ nguội dần (đổi lối học, hoặc dìu dắt)", c: "#f2994a" };
+    // iter-132 — TELEGRAPH the burnout (iter-131 made it possible): warn while the kid can still be SAVED, and
+    // name the levers — so a dropout is a loss you could fight, not a silent surprise. Only shows when at risk.
+    var moodRisk = st.mood < CONFIG.DROPOUT_MOOD + 12 ? { t: "⚠ kiệt sức — nguy cơ bỏ học (dìu dắt hoặc đổi lối học GẤP)", c: "#e57373" }
+      : st.mood < CONFIG.MOOD_PENALTY_BELOW ? { t: "tinh thần đang kém — học hành chậm lại", c: "#f2994a" } : null;
     var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < SPRITES.VARIANTS.length) ? st.look : SPRITES.hashId(st.id) % SPRITES.VARIANTS.length;
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (SPRITES.GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
@@ -908,6 +912,7 @@
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
       "<div class='iflav'>Tiềm năng (hạt giống): " + tr.txt + (tr.lvl < 2 ? " <span class='tiny' style='color:var(--faint)'>(dìu dắt để biết rõ)</span>" : "") + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='iflav' style='color:" + fit.c + "'>Tạng × lối học: " + fit.t + "</div>" +
+      (moodRisk ? "<div class='iflav' style='color:" + moodRisk.c + "'>" + moodRisk.t + "</div>" : "") +
       "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +
         "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
         "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +
