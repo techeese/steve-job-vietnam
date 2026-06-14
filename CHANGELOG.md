@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: the pure epilogue helpers split out — js/epilogue.js (loop iter 149) + DEPLOY
+**STRUCTURE epic — BEHAVIOR-NEUTRAL (proven byte-identical). Scores N/A (refactor).** The epic-lock
+(SMALL_SHIPS_SINCE_EPIC=3) forced an epic; every FEATURE epic remains genuinely owner-gated (E6 overrides
+Decision #2; E7-majors is tell-bound; E11 needs an owner divergence pick) and the person-sim MECHANIC spread
+is verified-healthy (iter-148) — so the autonomous-safe, deploy-safe structure move was the right call (same
+situation as iter-145). I took the CLEAN, AVAILABLE slice of the long-queued epilogue extraction (iter-141
+review-escape) — NOT the high-coupling part:
+- `js/epilogue.js` (NEW) — the PURE, stateless epilogue/end-card helpers carved from ui.js: `buildCast` (the
+  ~handful of named lives the closing essay points at), `cardLife` (the face for the share card), `shareCard`
+  (the screenshot-able end-card canvas). Zero closure-private deps — params + globals only (`CONFIG`,
+  `realClass`/`flourishOf` from person.js, the DOM constructors). Globals, loaded after person.js & before ui.js.
+- **What STAYED in ui.js (honest separation of pure-from-stateful):** `essayDraft` (the essay ASSEMBLY — needs
+  the IIFE's `S`/`tpl`/`numWord`/`isOldCohort`/`hideModal`) and `saveShareCard` (needs `toast`). The iter-141
+  verdict on the high-coupling shared-context refactor STANDS — this is the verifiable leaf, not that.
+- **Why:** continues the modularization pattern (uikit.js → epilogue.js); separates the pure end-card logic
+  from the 1800-line stateful view; and `epilogue.js` becomes the home for future share/export features.
+- **Proof of behavior-neutral:** `./lives.sh` essay output across 4 preset×seed runs is **byte-identical**
+  before/after (md5 7b135beb…) — and that path exercises `buildCast` + `shareCard` via the real `essayDraft`
+  render. Plus: epilogue+ui syntax OK, gate GREEN, bot BOTOK, sweep 5✓/0 breakage (engine untouched), clean
+  headless boot (title intact, no runtime JSERR).
+- **DEPLOYED** (ITERS_SINCE_DEPLOY hit 10): pushed `mentors-ledger` → `main` (ff-only) → github.io. ~10 commits
+  go public: the soul-ticker highlights (146/147), the empty-🍎 cause prose (148), and this structure carve.
+
 ## 2026-06-15 — WHY the 🍎 column is empty — the đề Văn's central trade-off, FELT at the payoff (loop iter 148)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
 The sweep proves a beautiful mechanic that was INVISIBLE to the player: **a balanced, even-handed school
