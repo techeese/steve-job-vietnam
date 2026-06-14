@@ -913,6 +913,7 @@
       "<div class='iflav'>Tiềm năng (hạt giống): " + tr.txt + (tr.lvl < 2 ? " <span class='tiny' style='color:var(--faint)'>(dìu dắt để biết rõ)</span>" : "") + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='iflav' style='color:" + fit.c + "'>Tạng × lối học: " + fit.t + "</div>" +
       (moodRisk ? "<div class='iflav' style='color:" + moodRisk.c + "'>" + moodRisk.t + "</div>" : "") +
+      ((S().META.favId === st.id && S().META.favLog && S().META.favLog.length) ? "<div class='iflav' style='color:var(--gold)'>⭐ Nhật ký dõi theo: " + esc(S().META.favLog.join(" · ")) + "</div>" : "") + // iter-135: the protégé's story-so-far, persistent on their card (only for the kid you follow)
       "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +
         "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
         "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +

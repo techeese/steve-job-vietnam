@@ -1076,6 +1076,7 @@ function sanitize() {
   if (!Array.isArray(S.META.goalsHit)) S.META.goalsHit = [];
   if (!Array.isArray(S.META.majorsUnlocked)) S.META.majorsUnlocked = [];
   S.META.dropped = Math.max(0, Math.round(S.META.dropped) || 0); // iter-131 burnout-loss counter
+  if (!Array.isArray(S.META.favLog)) S.META.favLog = []; // iter-135 protégé follow-journal
   if (S.META.favId != null && !S.students.some(function (s) { return s.id === S.META.favId; })) S.META.favId = null; // protégé gone (graduated/left) → clear
   // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
   if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};

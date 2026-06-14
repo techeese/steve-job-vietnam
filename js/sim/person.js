@@ -184,7 +184,7 @@ function favBeat() {
   var s = null, st = S.students, i; for (i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
   if (!s) return;
   var snap = S.META.favSnap;
-  if (!snap || snap.id !== id) { S.META.favSnap = favSnapOf(id, s); S.META.favSeen = {}; return; } // baseline on first sighting / new protégé — no moment yet
+  if (!snap || snap.id !== id) { S.META.favSnap = favSnapOf(id, s); S.META.favSeen = {}; S.META.favLog = []; return; } // baseline on first sighting / new protégé — no moment yet (clear the journal too)
   if (S.totalDays - (S.META.favMomentDay != null ? S.META.favMomentDay : -9999) < CONFIG.FAV_MOMENT_GAP) return; // throttle
   var mile = CONFIG.FAV_MILE, crossed = function (a, b) { for (var k = 0; k < mile.length; k++) if (a < mile[k] && b >= mile[k]) return true; return false; };
   var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
@@ -200,6 +200,7 @@ function favBeat() {
   else if (crossed(snap.vet, s.vet)) type = "vetUp";                                             // the rote grind — văn-mẫu in the making
   else if (crossed(snap.kt, s.kt)) type = "ktUp";                                                // knowledge milestone (lowest priority)
   if (!type) return;
-  var arr = CONTENT.favMoments[type], c = seen[type] || 0; news("⭐ " + s.ten + " — " + arr[c % arr.length]);
+  var arr = CONTENT.favMoments[type], c = seen[type] || 0, mline = arr[c % arr.length]; news("⭐ " + s.ten + " — " + mline);
+  (S.META.favLog = S.META.favLog || []).unshift("Năm " + s.grade + ": " + mline); if (S.META.favLog.length > 3) S.META.favLog.pop(); // iter-135: a persistent follow-journal (the moments outlive the fleeting ticker — the protégé's story, on their card)
   seen[type] = c + 1; S.META.favSnap = favSnapOf(id, s); S.META.favMomentDay = S.totalDays;
 }

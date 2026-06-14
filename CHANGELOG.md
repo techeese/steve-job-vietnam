@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — The protégé's follow-journal: their story, persistent on their card (loop iter 135)
+**PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 4 (mark 5) · CLARITY 4 · BEAUTY/JUICE
+n/a.** The protégé's in-school moments (iter-125) fired in the *fleeting* news ticker and scrolled away — the kid
+you follow for years had no persistent story view. Now `favBeat` keeps a 3-deep **follow-journal** (`S.META.favLog`,
+newest first, year-stamped), cleared when you switch protégés; the inspect card shows it **for the followed kid
+only**: "⭐ Nhật ký dõi theo: Năm 4: … · Năm 3: … · Năm 3: …". Reads as an arc — e.g. a creative kid's slow curdle
+under cram (vẽ sổ ý tưởng → điểm răm rắp → chép mẫu, em cười gượng). Makes "watch them become" tangible +
+reviewable in the detail view (mark 5), not just a moment you might miss.
+- Pure display + a small capped log (favBeat only runs when a protégé is followed → sweep/gate UNAFFECTED).
+  Verified: gate GREEN, bot BOTOK (identical metrics), headless probe confirms favLog populates (3 year-stamped
+  moments) and the inspect card renders the journal for the followed kid.
+
 ## 2026-06-15 — STRUCTURE: copy split from config — data.js → data.js + content.js (loop iter 134)
 **STRUCTURE epic — BEHAVIOR-NEUTRAL (proven). Scores N/A (refactor).** `EPICS_SINCE_STRUCTURE` was 2 (E-UNDERDOG
 + mood). Rather than review-escape the genuinely high-coupling ui.js (one tightly-coupled IIFE — confirmed again),
