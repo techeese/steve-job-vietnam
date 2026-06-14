@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — Maintenance: epilogue quality-read + structure review-escape (loop iter 141)
+**Maintenance/cadence firing (no code).** Two owed checks:
+- **Epilogue quality-read (completeness critic):** read the full essays across presets now that a lot has piled
+  into the payoff (E4 suffixes + mourning + protégé capstone + prizes). Verdict: **coherent and rich, not
+  overloaded** — most lives carry 0-1 distinction (clean); the dense cases are poignant, not glitchy. The
+  standout one: an award-winner the system still failed — *"★★★★★ — 🪪 Thất nghiệp — tài năng bỏ phí 🏅 Giải Tay
+  Nghề Vàng"* — the sharpest đề Văn bite (talent ≠ outcome; the system wastes even its gold-medalists). No fix needed.
+- **Structure review-escape (EPICS_SINCE_STRUCTURE 2→0):** rigorous review of the owed ui.js structure — 1824 ln,
+  one IIFE, ~229 closure-helper uses (dense coupling), render cluster rAF-driven (can't be byte-identical-verified
+  headlessly), the clean leaf already taken (iter-134 data/content). Verdict: no clean+safe+verifiable+worthwhile
+  extraction now; the shared-UI-context refactor is high-effort + low-immediate-value (UI features it enables are
+  owner-gated). Queued for when a UI feature needs it (extract the lives.sh-verifiable epilogue cluster first).
+  Counter reset — stops the multi-firing re-deferral.
+
 ## 2026-06-15 — E7p: prizes & awards — a standout's honor, a line in their life (loop iter 140)
 **PERSON-SIM-serving feature (biographical texture, owner-requested). SOUL 4 · BITE 3 · CLARITY 4 · BEAUTY/JUICE
 n/a.** Closes part of the owner's "too few prizes, awards." A graduating cohort's genuine standouts earn an
