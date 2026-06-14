@@ -735,7 +735,7 @@ function becomeSteve(a) {
   S.META.jobsEver = true; S.META.steves++;
   S.endow.bal = r1(S.endow.bal + CONFIG.ALUM.MEGA_GIFT); // mega-gift to quỹ
   a.line = tpl(CONTENT.keynoteLine, { ten: a.ten });
-  news(a.line); bacTamNod();
+  news("🍎 " + a.line); bacTamNod();
 }
 function transition(a, draw, ysg) {
   var rows = [];
@@ -780,7 +780,7 @@ function arrestAlumnus(a) {
   gainUT(-2, false);
   S.META.arrested++;
   a.line = rpick(CONTENT.alumLines.BI_BAT).replace("{ten}", a.ten);
-  news("Cựu sinh viên " + a.ten + " bị bắt. Tiếng Tăm −" + Math.round(dmg) + ".");
+  news("🚔 Cựu sinh viên " + a.ten + " bị bắt. Tiếng Tăm −" + Math.round(dmg) + ".");
 }
 function scriptedArrest() {
   for (var i = 0; i < S.alumni.length; i++) {

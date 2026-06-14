@@ -1037,8 +1037,8 @@
       var stale = (s.totalDays - (n.t || 0)) > 8 && idle.length;       // no real news for over a "week"
       var line = stale ? idle[Math.floor(s.totalDays / 5) % idle.length] : n.s; // rotate every ~5 days
       $("ticker").innerHTML = "▸ " + esc(line);
-      var c0 = line.charAt(0); // iter-146: a person-sim MOMENT pops in the feed so it isn't lost among mechanical news (mark 5)
-      $("ticker").style.color = c0 === "⭐" ? "var(--gold)" : (c0 === "😔" || c0 === "💔") ? "var(--red)" : "";
+      var c0 = line.charAt(0); // iter-146/147: a person-sim MOMENT pops in the feed so it isn't lost among mechanical news (mark 5)
+      $("ticker").style.color = (c0 === "⭐" || c0 === "🍎") ? "var(--gold)" : (c0 === "😔" || c0 === "💔" || c0 === "🚔") ? "var(--red)" : "";
     }
   }
   function meter(cls, lab, v, max, key) {

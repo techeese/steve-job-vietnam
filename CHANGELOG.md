@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-15 — The two BIGGEST alumni moments pop too — 🍎 keynote & 🚔 arrest (loop iter 147)
+**PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** iter-146 made the protégé (⭐)
+and loss (😔/💔) ticker lines pop, but the two LOUDEST destinies a kid can reach still went to the feed
+UNMARKED: a former student walking onto a keynote stage (the 🍎 triumph — "MỘT THỨ NỮA… {ten} bước ra sân khấu")
+and a former student arrested (the 🚔 fall). Now both are glyph-prefixed in the newsfeed — 🍎 keynote tinted gold,
+🚔 arrest tinted red — so the realized-talent peak and the distorted-talent collapse both POP when they land
+("watching = development", mark 5). The 🍎/🚔 live ONLY in the news string; `a.line` stays clean, so the
+epilogue/essay text is untouched (no leak into the biography). Pure surfacing: 2 one-token `news()` prefixes in
+engine.js + the iter-146 ticker colour rule extended by two glyphs. Sweep-NEUTRAL. Verified: engine+ui syntax OK,
+gate GREEN, bot BOTOK (arrested=23 exercised the 🚔 path), sweep 5✓/0 breakage.
+
 ## 2026-06-15 — Soul moments pop in the news feed (loop iter 146)
 **PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The ticker shows the latest news
 in one uniform style — so a protégé moment (⭐) or a loss (😔/💔) blended in with mechanical news (admissions,
