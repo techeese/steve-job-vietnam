@@ -1493,6 +1493,15 @@
     return cast;
   }
   // a beautiful, screenshot-able summary card of the player's answer to the đề Văn (shareability + BITE)
+  // iter-143 — the most salient FACE to put on the shareable card (the game is a playable essay → the đề Văn
+  // answer should carry a person, not just stats): a 🍎 if any, else the poignant wasted prodigy, else the top gift.
+  function cardLife(s) {
+    var al = (s.alumni || []).filter(function (a) { return a && a.fs; });
+    var steve = al.filter(function (a) { return a.state === "STEVE"; })[0]; if (steve) return steve;
+    var W = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
+    var prod = al.filter(function (a) { return a.fs.seed >= 4 && W[a.state]; }).sort(function (a, b) { return b.fs.seed - a.fs.seed; })[0]; if (prod) return prod;
+    return al.slice().sort(function (a, b) { return (b.fs.seed || 0) - (a.fs.seed || 0); })[0];
+  }
   function shareCard(s, branch) {
     var V = { steve: ["🍎", "Có. Ít nhất một quả táo đã chín."], coin: ["🪙", "Có 'Steve' — nhưng là Steve chốt đơn hội nhóm."],
       vanmau: ["📋", "Trường dạy giỏi. Đời cần bản sao đẹp."], that: ["🌧️", "Tiềm năng thì nhiều, chỗ đứng thì ít."],
@@ -1510,6 +1519,8 @@
     x.font = "62px system-ui,sans-serif"; x.fillText(V[0], 32, 184);
     F("700", 19, "#eef1f5"); // wrap the verdict to the right of the icon
     (function () { var words = V[1].split(" "), line = "", yy = 156; for (var i = 0; i < words.length; i++) { var t = line + words[i] + " "; if (x.measureText(t).width > W - 150 && line) { x.fillText(line.trim(), 116, yy); line = words[i] + " "; yy += 26; } else line = t; } x.fillText(line.trim(), 116, yy); })();
+    var life = cardLife(s); // iter-143: a named face on the answer (the soul, not just stats)
+    if (life) { F("600", 13.5, "#cfd6df"); x.textAlign = "left"; x.fillText("Một gương mặt trong sổ: " + life.ten + " — " + CONFIG.ALUM.CHIPS[life.state], 30, 214); }
     F("600", 16, "#9aa4b2"); x.fillText("🎓 " + s.META.graduated + "    🍎 " + s.META.steves + "    🚔 " + s.META.arrested, 30, 244);
     F("500", 12, "#6b7484"); x.fillText("techeese.github.io/steve-job-vietnam", 30, 276);
     F("600", 12, "#f0c674"); x.textAlign = "right"; x.fillText("#HọcViệnSteve · đề Văn 2026", W - 30, 276);

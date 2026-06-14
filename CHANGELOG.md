@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-15 — A face on the answer: the share card carries a life (loop iter 143)
+**PERSON-SIM polish (people-first arc). SOUL 4 · BITE 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The shareable summary
+card — the game's self-representation when shared — showed only stats (🎓/🍎/🚔) + a verdict icon, no *soul*,
+despite the game being a playable essay whose whole point is the biographies. Now it names one salient life:
+"Một gương mặt trong sổ: {ten} — {chip}". `cardLife` picks the most telling face — a 🍎 STEVE if the school made
+one, else the poignant wasted prodigy (seed≥4 in a waste/distort state), else the top gift. So the shared đề Văn
+answer carries a *person* (craft → a wasted ★4 prodigy; cram → a ★5 coin-shark; a triumphant 🍎 where earned).
+- Pure display (canvas text), sweep-NEUTRAL. Verified: ui syntax OK, lives.sh exercises shareCard with 0
+  LIVESFAIL (renders clean), bot BOTOK, cardLife probe picks sensible faces across presets.
+
 ## 2026-06-15 — The whole cohort, felt: a prose summary of the wide range (loop iter 142)
 **PERSON-SIM polish (people-first arc). SOUL 4 · BITE 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The epilogue NAMED 4
 lives but reduced the other ~92 to a bare count ("sổ ghi 96 cái tên") — so the owner's "wide range outcomes"
