@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-15 — Soul moments pop in the news feed (loop iter 146)
+**PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The ticker shows the latest news
+in one uniform style — so a protégé moment (⭐) or a loss (😔/💔) blended in with mechanical news (admissions,
+gifts, the cup) and could be missed. Now soul-moment lines are tinted — ⭐ gold (your kid becoming someone),
+😔/💔 red (a loss) — so they POP when they happen ("watching = development", mark 5). Pure styling (a 2-line
+colour rule keyed off the line's leading glyph), sweep-NEUTRAL. Verified: ui syntax OK, bot BOTOK, gate GREEN.
+
 ## 2026-06-15 — STRUCTURE: the UI toolkit split out — js/uikit.js (loop iter 145)
 **STRUCTURE epic — BEHAVIOR-NEUTRAL (proven). Scores N/A (refactor).** The epic-lock (SMALL_SHIPS_SINCE_EPIC=3)
 forced an epic, but every FEATURE epic is genuinely blocked (E6 overrides Decision #2; E-UNDERDOG ckpt2's
