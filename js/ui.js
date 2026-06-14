@@ -734,6 +734,25 @@
     if (other >= 3) return 1; // established (built out the basics)
     return 0;
   }
+  // --- Art epic phase 2: Kenney building composition from 3x3 house blocks (top/mid/base x left/mid/right), native 16px. ---
+  var KBLD = {
+    grey: [[48, 49, 50], [60, 61, 62], [72, 73, 74]],
+    red:  [[52, 53, 54], [64, 65, 66], [76, 77, 78]]
+  };
+  var KENNEY_BLD = { phonghoc: "red", cangtin: "red", lab: "grey", phongmay: "grey", xuong: "grey" };
+  function drawRoomKenney(ctx, r) {
+    var d = CONFIG.ROOMS[r.key], B = KBLD[KENNEY_BLD[r.key]];
+    var px = r.x * T, py = r.y * T, pw = d.w * T, ph = d.h * T;
+    var cols = Math.max(2, Math.round(pw / 16)), rows = Math.max(2, Math.round(ph / 16));
+    var ox = px + ((pw - cols * 16) >> 1), oy = py + (ph - rows * 16); // h-centered, base-aligned
+    for (var cy = 0; cy < rows; cy++) for (var cx = 0; cx < cols; cx++) {
+      var brow = cy === 0 ? 0 : (cy === rows - 1 ? 2 : 1);
+      var lane = cx === 0 ? 0 : (cx === cols - 1 ? 2 : 1);
+      var s = tileXY(B[brow][lane]);
+      ctx.drawImage(TILES, s[0], s[1], 16, 16, ox + cx * 16, oy + cy * 16, 16, 16);
+    }
+    roomLabel(ctx, (ROOM_STYLE[r.key] && ROOM_STYLE[r.key].short) || d.name, px, py, pw, ph);
+  }
   function drawStatic() {
     var ctx = $("mapStatic").getContext("2d"), W = GW * T, H = GH * T;
     ctx.imageSmoothingEnabled = false;
@@ -757,7 +776,7 @@
     pathBand(ctx, (GW >> 1) * T, 0, T, H, false, tier);
     // rooms — y-sorted so lower buildings overlap upper
     var rooms = S().rooms.slice().sort(function (p, q) { return (p.y - q.y) || (p.x - q.x); });
-    for (i = 0; i < rooms.length; i++) drawRoom(ctx, rooms[i]);
+    for (i = 0; i < rooms.length; i++) { if (TILES && KENNEY_BLD[rooms[i].key]) drawRoomKenney(ctx, rooms[i]); else drawRoom(ctx, rooms[i]); }
     // ambient props (seeded, capped, off walk lanes)
     drawProps(ctx, rng, rooms);
     if (tier >= 2) { var gpx = ((GW >> 1) * T + T / 2) | 0; lampPost(ctx, gpx - 44, H - 3); lampPost(ctx, gpx + 44, H - 3); } // prestige: lamps flank the cổng
