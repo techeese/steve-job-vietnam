@@ -14,6 +14,9 @@
     drawGarden = ART.drawGarden, drawSan = ART.drawSan, drawGate = ART.drawGate, fountain = ART.fountain,
     bench = ART.bench, lamp = ART.lamp, flagpole = ART.flagpole, tree = ART.tree, bush = ART.bush, flowers = ART.flowers;
   var sfx = AUDIO.sfx; // audio layer lives in js/audio.js (STRUCTURE-epic iter 65)
+  // --- Art epic: Kenney Tiny Town tilemap (real 16x16 pixel-art tiles), loaded async; procedural fallback if absent ---
+  var TILES = null, TPX = 16; // the 12-wide tilesheet image once loaded + tile size
+  function tileXY(idx) { return [(idx % 12) * TPX, ((idx / 12) | 0) * TPX]; } // src x,y of tile #idx
   var $ = function (id) { return document.getElementById(id); };
   var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   function S() { return HVS.S(); }
@@ -104,6 +107,7 @@
     $("schoolSub").textContent = CONTENT.schoolSub;
     buildSpeeds(); buildTabs();
     SPRITES.build(); // bake pixel-art sprite atlas once (js/sprites.js)
+    (function () { var im = new Image(); im.onload = function () { TILES = im; if (S()) S()._mapDirty = true; }; im.src = "assets/tiles/tinytown_tilemap.png?v=1"; })(); // load real tiles; redraw when ready
     rebuildWalk(); syncActors(true); initCats(); initFlyers(); initClouds();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
@@ -734,15 +738,19 @@
     var ctx = $("mapStatic").getContext("2d"), W = GW * T, H = GH * T;
     ctx.imageSmoothingEnabled = false;
     var rng = mb(1337), i, x, y, tier = campusTier();
-    // PASS 1 — bright daytime grass (flat pixel base, no gloom)
-    ctx.fillStyle = tier >= 1 ? PX.grassL : PX.grass; ctx.fillRect(0, 0, W, H); // a touch brighter once established
-    // PASS 2 — grass pixel texture: seeded tufts + dapple
-    for (i = 0; i < (tier >= 1 ? 360 : 520); i++) { // fewer weeds as the grounds get tended
-      x = (rng() * W) | 0; y = (rng() * H) | 0; var r = rng();
-      ctx.fillStyle = r < 0.5 ? PX.grassD : (r < 0.82 ? PX.grassL : PX.grassT);
-      ctx.fillRect(x, y, r < 0.7 ? 1 : 2, 1);
+    // PASS 1 — ground. Real Kenney grass tiles when loaded; procedural grass as fallback (never breaks).
+    if (TILES) {
+      var g0 = tileXY(0); // base grass tile
+      for (y = 0; y < H; y += TPX) for (x = 0; x < W; x += TPX) ctx.drawImage(TILES, g0[0], g0[1], TPX, TPX, x, y, TPX, TPX);
+    } else {
+      ctx.fillStyle = tier >= 1 ? PX.grassL : PX.grass; ctx.fillRect(0, 0, W, H); // a touch brighter once established
+      for (i = 0; i < (tier >= 1 ? 360 : 520); i++) { // fewer weeds as the grounds get tended
+        x = (rng() * W) | 0; y = (rng() * H) | 0; var r = rng();
+        ctx.fillStyle = r < 0.5 ? PX.grassD : (r < 0.82 ? PX.grassL : PX.grassT);
+        ctx.fillRect(x, y, r < 0.7 ? 1 : 2, 1);
+      }
+      for (i = 0; i < 70; i++) { x = (rng() * W) | 0; y = (rng() * H) | 0; ctx.fillStyle = PX.grassL; ctx.fillRect(x, y, 1, 2); ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 1, y + 1, 1, 1); } // little grass blades
     }
-    for (i = 0; i < 70; i++) { x = (rng() * W) | 0; y = (rng() * H) | 0; ctx.fillStyle = PX.grassL; ctx.fillRect(x, y, 1, 2); ctx.fillRect(x - 1, y + 1, 1, 1); ctx.fillRect(x + 1, y + 1, 1, 1); } // little grass blades
     if (tier >= 1) { ctx.fillStyle = "rgba(255,255,255,.05)"; for (y = 8; y < H; y += 16) ctx.fillRect(0, y, W, 3); } // manicured mow stripes
     // PASS 3 — path spine (dirt → stone-edged → fully paved as the school's value rises)
     pathBand(ctx, 0, (GH >> 1) * T, W, T, true, tier);
