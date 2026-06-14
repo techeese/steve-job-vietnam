@@ -14,6 +14,7 @@ var CONFIG = {
   ROSTER_CAP: 48, COHORT_NOMINAL: 12,
   RUN_CAP_YEARS: 12,
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
+  PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
   ROOM_MAX_LEVEL: 3,            // buildings upgrade in place (one on the map) up to this level
   SYN_MIN: 4,                   // a khoa needs this many students for its synergy bonus to kick in
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)

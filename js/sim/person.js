@@ -158,7 +158,7 @@ function statLabel(k) { return { kt: "Kiến Thức", tn: "Tay Nghề", st: "Sá
 
 function makeAlumnus(s, row, diem, tiem) {
   var entry = CONFIG.ALUM.ENTRY_MAP[row.key] || "THAT_NGHIEP";
-  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, diamond: !!s.diamond, protege: (S.META.favId != null && s.id === S.META.favId), vt: (s.flags.vt || []).slice() }; // E4.1 mentor's hand · E-UNDERDOG ngọc thô · iter-133 the followed protégé (⭐) — named in the capstone essay
+  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, diamond: !!s.diamond, protege: (S.META.favId != null && s.id === S.META.favId), prize: s._prize || null, vt: (s.flags.vt || []).slice() }; // E4.1 mentor's hand · E-UNDERDOG ngọc thô · iter-133 protégé · E7p prize honor
   var ef = CONFIG.ALUM.ENTRY_FLAGS[row.key]; if (ef) flags[ef] = true;
   if (s.flags.hb) flags.hb = s.flags.hb;
   var id = nid();

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — E7p: prizes & awards — a standout's honor, a line in their life (loop iter 140)
+**PERSON-SIM-serving feature (biographical texture, owner-requested). SOUL 4 · BITE 3 · CLARITY 4 · BEAUTY/JUICE
+n/a.** Closes part of the owner's "too few prizes, awards." A graduating cohort's genuine standouts earn an
+honor, shown in their life in the epilogue — celebrating the realization, the soul-positive counterweight to all
+the waste-naming.
+- `awardPrizes(grads)` (engine, at June): the cohort's top in a dimension, IF they clear `PRIZE_BAR` (78), wins
+  it — Giải Sáng Tạo Trẻ (st) · Giải Tay Nghề Vàng (tn) · Thủ Khoa khoá (kt). Bar-gated → a weak cohort wins
+  nothing; one prize per kid (the most fitting); deterministic (no rng).
+- A **line in a life, never a count** (VISION invariant #3) — no leaderboard, no sortable tally. Carried as
+  `flags.prize`; surfaced in the epilogue cast line ("👷 Kỹ sư 🏅 Giải Tay Nghề Vàng"). `buildCast` now biases
+  its picks toward honored kids so the essay actually shows them.
+- **Pure flavor, no balance** (prizes grant nothing): sweep byte-identical, gate GREEN, bot BOTOK. Probe: ~22-26%
+  of alumni earn an honor across presets; lives.sh confirms they render (e.g. "🏅 Giải Sáng Tạo Trẻ" on a kỹ sư).
+- Preset-flavored: craft schools mint Sáng Tạo / Tay Nghề honors; cram schools mint Thủ Khoa — the school's
+  character shows in what it celebrates.
+
 ## 2026-06-15 — 🚀 DEPLOY: the connected-systems + mood arc goes live (loop iter 139)
 Third public deploy (every-10 cadence). `main 40916f7..559adaf` pushed → live at
 https://techeese.github.io/steve-job-vietnam/, verified serving `?v=1781467721271`. Now public (iter-130→138):

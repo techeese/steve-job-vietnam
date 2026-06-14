@@ -1466,7 +1466,7 @@
   function numWord(n) { var o = CONTENT.essay.ones; return (n >= 1 && n <= 9) ? o[n] : String(n); }
   function isOldCohort(a) { if (a._tpl) return true; var sc = CONFIG.ALUM.SCRIPTED || []; for (var i = 0; i < sc.length; i++) if (sc[i].ten === a.ten) return true; return false; }
   function buildCast(s, byState, majorityKey, C) {
-    function pick(arr) { return arr.slice().sort(function (a, b) { return (b.grat - a.grat) || ((b.gifts || 0) - (a.gifts || 0)); }); }
+    function pick(arr) { return arr.slice().sort(function (a, b) { return ((b.flags && b.flags.prize ? 1 : 0) - (a.flags && a.flags.prize ? 1 : 0)) || (b.grat - a.grat) || ((b.gifts || 0) - (a.gifts || 0)); }); } // E7p: an honored standout is essay-worthy → floats up in each cast pick (so the epilogue shows the prizes)
     var cast = [], used = {}, total = s.alumni.length, i;
     pick(s.alumni.filter(function (a) { return a.state === "STEVE"; })).slice(0, C.STEVE_CAP).forEach(function (a) { cast.push(a); used[a.id] = 1; });
     // THESIS §D2 — the poignant core: the essay MUST name one gift the school failed to realize. Loud waste
@@ -1581,7 +1581,8 @@
         var gap = CONTENT.realGap[realClass(a.state, seed)] || ""; // E4 §C-2: name the gift-vs-fate — loud waste, or the prodigy who SETTLED (one quiet line; the on-target realized get their nod via stars + chip)
         if (!gap && a.flags && a.flags.diamond && flourishOf(a.state) >= 4) gap = CONTENT.diamondCredit; // E-UNDERDOG: overlooked at entry, realized anyway — the exam was wrong (takes precedence over the mentor credit)
         else if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
-        P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + "<br>“" + esc(line) + "”");
+        var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p: a standout's earned honor, on their life
+        P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
       });
       if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned (the uncounted waste)
       // iter-133 — the FOLLOW-LOOP's capstone payoff: the kid you watched across the years, named in the final

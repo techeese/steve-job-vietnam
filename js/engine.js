@@ -510,6 +510,14 @@ function foundingJune() {
   news(CONTENT.ticker.foundingJune);
 }
 // policy: "dam" (đồ án mẫu) | "thuc" (bảo vệ thật)
+// E7p (iter 140) — PRIZES: a graduating standout earns an honor (owner: "too few prizes/awards"). A line in a
+// life, NEVER a sortable count (VISION invariant #3). Bar-gated → a weak cohort wins nothing; one prize per kid
+// (the most fitting). Pure flavor (no growth/destiny effect) → deterministic, sweep-neutral. Surfaced in the epilogue.
+function awardPrizes(grads) {
+  var bar = CONFIG.PRIZE_BAR, claimed = {};
+  function topBy(stat) { var best = null; for (var i = 0; i < grads.length; i++) { var g = grads[i]; if (g[stat] >= bar && !claimed[g.id] && (!best || g[stat] > best[stat])) best = g; } return best; }
+  [["st", "sangtao"], ["tn", "taynghe"], ["kt", "thukhoa"]].forEach(function (d) { var g = topBy(d[0]); if (g) { g._prize = d[1]; claimed[g.id] = 1; } });
+}
 function finalizeJune(policy) {
   if (!S.pendingJune) return;
   var pj = S.pendingJune;
@@ -520,6 +528,7 @@ function finalizeJune(policy) {
   if (policy === "dam") { bonus = pd.bonus; for (var k = 0; k < grads.length; k++) grads[k].vet = clamp(grads[k].vet + pd.vetCohort, 0, 100); seedPhot(pd.seedSev, "dam"); gainTT(rnd() < 0.5 ? pd.ttWin : pd.ttLose); }
   else { viralX = 2; }
 
+  awardPrizes(grads); // E7p: honor the cohort's genuine standouts (a line in their life — see awardPrizes)
   var results = [];
   for (var i = 0; i < grads.length; i++) {
     var s = grads[i];
