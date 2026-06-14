@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-15 — tuition re-scoped (design gap, not legibility); E15 legibility DONE (loop iter 122)
+- Investigated E15's last bit (tuition trade-off). Finding: tuition is **pure upside** (engine uses it only as
+  `income = tuition × SV`, no admissions/reputation downside) → "always max it" is a mild dominant choice and
+  there's nothing to make *legible*. RE-SCOPED: the tuition trade-off is a real DESIGN/BALANCE gap (needs e.g.
+  higher tuition → fewer/weaker applicants), delicate + owner-gated → deferred to a balance epic, not this UI
+  item. So **E15's legibility scope is complete** (preset iter-118, money/time iter-121).
+- Doc/diagnosis only — no code. The loop has now reached the **bottom of clean safe-value autonomous work**:
+  everything remaining (tuition balance · craft-symmetry upstream · E11 visual · E4 FSM/prose · E12–14
+  identity) is delicate or owner-gated. Holding for owner re-engagement.
+
 ## 2026-06-15 — money/time legibility (E15) + maturity-plateau hold (loop iter 121)
 - Owner-flagged safe value (E15): a line under the funding "Thu — Chi" card explaining **how long a month is**
   (~21s at 1×, computed from CONFIG) and **why the bank doesn't balloon** (surplus >300tr auto-reinvests
