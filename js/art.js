@@ -4,12 +4,12 @@
 (function () {
   "use strict";
   var T = CONFIG.TILE, GW = CONFIG.GRID_W, GH = CONFIG.GRID_H;
-  var PX = { // bright daytime palette
-    grass: "#7fb84a", grassD: "#72a83f", grassL: "#8cc457", grassT: "#6a9c3a",
-    path: "#d8b779", pathD: "#bd9a5c", pathHi: "#e7cf9b",
-    out: "#2c2738", skin: "#f4c79c", skinD: "#e2a878", eye: "#3a2f3a",
+  var PX = { // bright daytime palette — Art-Polish bold swing: warmer + brighter + more saturated (cheerful Kairosoft register)
+    grass: "#84c247", grassD: "#6da836", grassL: "#a3e463", grassT: "#5a9a2d",
+    path: "#e9c98c", pathD: "#cfa766", pathHi: "#f7e0ad",
+    out: "#33304a", skin: "#f4c79c", skinD: "#e2a878", eye: "#3a2f3a",
     pants: "#46506a", pantsD: "#343c52", shoe: "#2c2535", mouth: "#a85248",
-    gold: "#f5cd6a", roof: "#caa24a"
+    gold: "#f5cd6a", roof: "#d8ad4e"
   };
   var ROOM_STYLE = { // bright pixel-art buildings
     phonghoc: { wall: "#f0dcab", wallD: "#d4bd86", roof: "gabled",   rc: "#e0584a", rcD: "#bf4439", win: "warm",  short: "Phòng học" },
