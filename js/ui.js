@@ -1437,6 +1437,12 @@
       || s.alumni.filter(function (a) { return !used[a.id] && a.fs && realClass(a.state, a.fs.seed) === "under"; }).sort(byReal)[0];
     if (prodigy && cast.length < C.CAST_CAP) { cast.push(prodigy); used[prodigy.id] = 1; }
     pick(s.alumni.filter(function (a) { return a.state === "BI_BAT"; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });
+    // E4.1 — the mentor's hand, named: a kid you spent scarce attention on who reached a realized life (💼 lương
+    // ổn or better) WITHOUT a grief reading — your attention rescued them. Turns the inaction-cost (a sweep
+    // number) into the felt attachment payoff: your invested kid, seen by name. Prefer the strongest realization.
+    var mentee = s.alumni.filter(function (a) { return !used[a.id] && a.flags && a.flags.mentored && flourishOf(a.state) >= 2 && !realClass(a.state, a.fs.seed); })
+      .sort(function (a, b) { return (flourishOf(b.state) - flourishOf(a.state)) || (b.grat - a.grat); })[0];
+    if (mentee && cast.length < C.CAST_CAP) { cast.push(mentee); used[mentee.id] = 1; }
     if (majorityKey) {
       var maj = pick(s.alumni.filter(function (a) { return a.state === majorityKey && !used[a.id]; }));
       if (maj[0] && cast.length < C.CAST_CAP) { cast.push(maj[0]); used[maj[0].id] = 1; }
@@ -1532,7 +1538,8 @@
         var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
         var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
-        var gap = CONTENT.realGap[realClass(a.state, seed)] || ""; // E4 §C-2: name the gift-vs-fate — loud waste, the prodigy who SETTLED, or the modest kid LIFTED (one quiet line; the on-target realized get their nod via stars + chip)
+        var gap = CONTENT.realGap[realClass(a.state, seed)] || ""; // E4 §C-2: name the gift-vs-fate — loud waste, or the prodigy who SETTLED (one quiet line; the on-target realized get their nod via stars + chip)
+        if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + "<br>“" + esc(line) + "”");
       });
       P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);

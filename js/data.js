@@ -199,8 +199,7 @@ var CONFIG = {
     // (the school LIFTED them). Orthogonal to the 🍎 gate — aLua stays = seed only, never fed by realization.
     FLOURISH: { STEVE: 5, FOUNDER: 5, KY_SU: 4, LUONG_ON: 2, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, THAT_NGHIEP: 0, BI_BAT: 0 },
     EXPECT: function (seed) { return seed < 1 ? 1 : seed > 5 ? 5 : seed; },
-    UNDER_REAL: 0.6,   // realFrac < this AND seed≥4 (and NOT already a loud-waste state) → under-realized prodigy
-    OVER_REAL: 1.5     // realFrac ≥ this AND seed≤2 → over-realized (the school raised them past their start)
+    UNDER_REAL: 0.6    // realFrac < this AND seed≥4 (and NOT already a loud-waste state) → under-realized prodigy
   },
 
   PANTHEON: [
@@ -278,9 +277,9 @@ var CONTENT = {
   // E4 — the epilogue's gift-vs-fate suffix, by realization (a quiet line on a named life; never a meter):
   realGap: {
     loud: " — tài năng bỏ phí trên tay bạn",      // seed≥4 → thất nghiệp/lệch hướng: the loud waste
-    under: " — đáng lẽ đã có thể hơn thế",          // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
-    lift: " — vượt xa điểm xuất phát"               // seed≤2 → kỹ sư+: a modest gift the school raised
+    under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
+  mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   bacTamTiemNang: "Bác Tâm: “Đứa này… để xem.”",
   entryLine: "Trạng thái đầu đời: {chip}",
 

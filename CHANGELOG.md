@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-15 — E4.1: honest realization poles — cut the dead "lift", name the mentor's hand (loop iter 124)
+**PERSON-SIM polish (people-first arc). SOUL 4 · COMPLETENESS-VS-DREAM 4 · CLARITY 4 · BITE 3 · BEAUTY/JUICE n/a.**
+A probe of iter-123's "lift" pole (a modest kid seed≤2 raised to kỹ sư+) revealed it was **structurally
+unreachable**: across 40 seeds × 3 presets, lift fired ~1/10000 — because **admissions excludes modest-talent
+kids almost entirely** (the cutoff admits high-score → high-seed; seed≤2 students barely exist in the cohort).
+The "transform an underdog" arc is impossible by construction. Two honest responses:
+- **Cut the dead "lift" pole** (`realClass` "lift" branch, `realGap.lift`, `CONFIG.ALUM.OVER_REAL`). Beyond being
+  unreachable it was off-VISION: realization is *appropriate to the gift's magnitude*, not *exceeding* it (the
+  school realizes talent, it doesn't manufacture it). Owner explicitly blessed removing unsuitable functionality.
+- **Name the mentor's hand** — the reachable positive beat on the cohort that DOES exist. `makeAlumnus` now carries
+  `flags.mentored`; the epilogue cast surfaces a mentored kid who reached a realized life and credits your scarce
+  attention: "💼 Lương ổn · nhờ thầy không buông tay em". Turns the mentoring inaction-cost (previously only a
+  sweep number, +6pts realized) into the FELT attachment payoff — your invested kid, seen by name (VISION
+  grief/cheer-by-name). Conditional by design: fires when the investment paid off, not every run.
+- Verified: gate GREEN, bot BOTOK (arrests 22, balance-neutral — pure prose/classification), sweep E4 quiet-waste
+  symmetry unchanged by the removal, lives.sh canbang+mentor shows "🚀 Founder · nhờ thầy không buông tay em".
+- **Queued (ROADMAP): the UNDERDOG admissions epic** — a scarce "take a chance on a modest kid" admit lever so the
+  transform-an-underdog arc becomes reachable (also the upstream fix the craft-symmetry saga kept pointing at). A
+  real balance change touching the economy → a deliberate, owner-in-the-loop epic, evidence-backed, not deferred-as-dodge.
+
 ## 2026-06-15 — EPIC E4: realization-aware destiny — craft's QUIET waste, named (loop iter 123)
 **PERSON-SIM EPIC (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 5 · FUN/DEPTH 4 · CLARITY 4 · BITE 4 ·
 BEAUTY/JUICE n/a (prose).** Resolves the parked [EVOLUTION] gap "the craft thesis fails nobody — đồ án is the

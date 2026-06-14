@@ -51,13 +51,12 @@ function aLua(a) { return a.fs.seed; }
 // 🍎 gate (aLua = seed only); this only colours how fully the gift got to flower under the school you ran.
 function flourishOf(state) { var F = CONFIG.ALUM.FLOURISH; return F[state] != null ? F[state] : 0; }
 function realFrac(state, seed) { return clamp(flourishOf(state) / CONFIG.ALUM.EXPECT(seed), 0, 2); }
-function realClass(state, seed) { // "loud" | "under" | "lift" | "" — the wasted/lifted readings, else nothing notable
+function realClass(state, seed) { // "loud" | "under" | "" — the wasted readings of the gift, else nothing notable
   var WASTE = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
-  if (seed >= 4 && WASTE[state]) return "loud";                                              // a prodigy outright failed/turned
-  var rf = realFrac(state, seed);
-  if (seed >= 4 && rf < CONFIG.ALUM.UNDER_REAL) return "under";                              // a prodigy who merely settled (💼)
-  if (seed <= 2 && rf >= CONFIG.ALUM.OVER_REAL && flourishOf(state) >= 4) return "lift";     // a modest kid raised to kỹ sư+
-  return "";
+  if (seed >= 4 && WASTE[state]) return "loud";                  // a prodigy outright failed/turned
+  if (seed >= 4 && realFrac(state, seed) < CONFIG.ALUM.UNDER_REAL) return "under"; // a prodigy who merely settled (💼)
+  return ""; // NB: no "exceed-the-gift" pole — realization is APPROPRIATE to magnitude (VISION), and the cohort
+             // has ~no modest kids to lift anyway (admissions excludes seed≤2 — see ROADMAP underdog epic).
 }
 
 /* ---------- room / grid helpers ---------- */
@@ -622,7 +621,7 @@ function statLabel(k) { return { kt: "Kiến Thức", tn: "Tay Nghề", st: "Sá
 
 function makeAlumnus(s, row, diem, tiem) {
   var entry = CONFIG.ALUM.ENTRY_MAP[row.key] || "THAT_NGHIEP";
-  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, vt: (s.flags.vt || []).slice() };
+  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, vt: (s.flags.vt || []).slice() }; // E4.1: carry whether the player spent scarce attention on this kid (the mentor's hand, named in the epilogue)
   var ef = CONFIG.ALUM.ENTRY_FLAGS[row.key]; if (ef) flags[ef] = true;
   if (s.flags.hb) flags.hb = s.flags.hb;
   var id = nid();
