@@ -831,13 +831,14 @@
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (SPRITES.GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
       "<div class='grow'><input id='renameIn' value='" + esc(st.ten).replace(/'/g, "&#39;") + "' maxlength='18' style='width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 7px;font-family:inherit;font-weight:700;font-size:12px'/>" +
-      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + "</div>" +
+      "<div class='imeta'>Năm " + st.grade + " · " + esc(TELL_TXT[st.tell] || TELL_TXT[""]) + (hb ? " · 🏵️ " + esc(hb) : "") + (st.ten === "Mai Sương" ? " · 🔧" : "") + (S().META.favId === st.id ? " · ⭐ đang theo dõi" : "") + (st.mentored ? " · 🎓 đang dìu dắt" : "") + "</div>" +
       (sjMajor ? "<div class='imeta' style='color:var(--gold)'>" + sjMajor.icon + " " + esc(sjMajor.name) + "</div>" : "") + "</div>" +
       "<button class='ix' id='favBtn' title='Theo dõi'>" + (S().META.favId === st.id ? "⭐" : "☆") + "</button>" +
+      "<button class='ix' id='mentorBtn' title='Dìu dắt — dồn tâm sức (tối đa " + CONFIG.MENTOR_SLOTS + ")'>" + (st.mentored ? "🎓" : "➕") + "</button>" +
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
-      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + "</div>" +
+      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +
         "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
         "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +
@@ -845,6 +846,13 @@
     if (SPRITES.ready()) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(st.lookC ? SPRITES.custom(st.grade, st.lookC, 0) : SPRITES.sprite(st.grade, lookIdx, 0), 0, 0); }
     $("ixBtn").onclick = hideInspect;
     $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); };
+    $("mentorBtn").onclick = function () {
+      var r = HVS.mentorStudent(id);
+      if (!r.ok) { if (r.why === "full") toast("Hết suất dìu dắt — bạn chỉ dồn tâm sức cho " + CONFIG.MENTOR_SLOTS + " em một lúc. Phải chọn."); return; }
+      syncActors();
+      toast(r.mentored ? ("🎓 Bắt đầu dìu dắt " + st.ten + " — tâm sức có hạn, không cứu được tất cả.") : ("Thôi dìu dắt " + st.ten + " — một suất tâm sức được giải phóng."));
+      showInspectStudent(id);
+    };
     $("renameIn").onchange = function () { var v = this.value.trim().slice(0, 18); if (v) { st.ten = v; syncActors(); renderPanel(); } };
     $("lookBtn").onclick = function () { delete st.lookC; st.look = (lookIdx + 1) % SPRITES.VARIANTS.length; syncActors(); showInspectStudent(id); }; // cycle presets (clears custom)
     var cyc = function (axis, n) { st.lookC = Object.assign({}, st.lookC || SPRITES.effLook(st)); st.lookC[axis] = (st.lookC[axis] + 1) % n; syncActors(); showInspectStudent(id); };
