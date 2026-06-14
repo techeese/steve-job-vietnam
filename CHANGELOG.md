@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-14 — the learning-style fork, made legible (E15d) (loop iter 118)
+- Person-sim legibility (owner iter-115: "no trade-off guideline for the learning style each year"). Added a
+  `tradeoff` line to each `CONFIG.PRESETS` entry and rendered all three under the "Hướng dạy" selector, so the
+  philosophy fork is FELT (§D-5): cram (điểm/vẹt cao, mài mòn sáng tạo, dễ thành vẹt/cá mập) · balance (đều
+  tay, hiếm 🍎) · craft (thắp sáng maker/🍎, nhưng trò cần khuôn dễ lạc). Layer-law clean (text in data.js).
+- UI-only + data text → sweep/balance unchanged (craft still 95/5/0); gate green, bot BOTOK. A legibility
+  ship that serves the sim (makes the realize/waste CHOICE legible) → `SHIPS_SINCE_PERSONSIM` stays 0.
+- `SMALL_SHIPS_SINCE_EPIC` 2→3 → **iter 119 is EPIC-LOCKED** (E11 walk-in-rooms is the front candidate).
+  `ITERS_SINCE_DEPLOY` 1 (next deploy ≈ iter 127). E15 remaining: time read · money-model · tuition trade-off.
+
 ## 2026-06-14 — 🚀 FIRST LIVE DEPLOY + deploy-every-10 cadence (loop iter 117)
 - Owner DIRECTLY authorized (user message): *"can you help push to the github.io link after each 10
   iteration?"* — sets the deploy cadence 5-6 → **every ~10 loop iterations** (`ITERS_SINCE_DEPLOY`) AND

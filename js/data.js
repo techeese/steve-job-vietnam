@@ -61,9 +61,9 @@ var CONFIG = {
   CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
 
   PRESETS: {
-    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0.4, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0 }, // cram → gaming-the-system hustle (breeds some cá mập). tn floor 0.4 (was 0): cram suppresses craft but no longer ZEROES it, so the gift still leaves a gift-shaped gap (Mentor's Ledger talent-coupling)
-    canbang: { label: "Cân Bằng", kt: 2.5, tn: 1, st: 0.5, cm: 0.5, mood: 0, vet: 0.5, cost: 0 },
-    duan:    { label: "Đồ Án & Lab", kt: 1, tn: 2, st: 1.5, cm: 1.5, mood: 1, vet: -1, cost: 1 }
+    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0.4, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0, tradeoff: "Điểm & Vẹt cao, mài mòn sáng tạo — hợp trò cần khuôn; người mơ mộng dễ thành vẹt văn mẫu hoặc cá mập." }, // cram → gaming-the-system hustle (breeds some cá mập). tn floor 0.4 (was 0): cram suppresses craft but no longer ZEROES it, so the gift still leaves a gift-shaped gap (Mentor's Ledger talent-coupling)
+    canbang: { label: "Cân Bằng", kt: 2.5, tn: 1, st: 0.5, cm: 0.5, mood: 0, vet: 0.5, cost: 0, tradeoff: "Đều tay, an toàn — nhiều kỹ sư vững; nhưng hiếm ai bứt phá thành 🍎." },
+    duan:    { label: "Đồ Án & Lab", kt: 1, tn: 2, st: 1.5, cm: 1.5, mood: 1, vet: -1, cost: 1, tradeoff: "Thắp sáng người sáng tạo (🍎/maker), cần Phòng Máy — nhưng trò cần khuôn dễ lạc lối, bỏ phí." }
   },
   // MENTOR'S LEDGER Phase 1 — grain↔preset coupling: each teaching style REALIZES the grains it fits and
   // WASTES the rest (VISION invariant #2). Multiplies CRAFT growth (tn/st) so the GIFT, not the policy,

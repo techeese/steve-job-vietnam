@@ -1088,7 +1088,8 @@
       });
       row.appendChild(seg); c1.appendChild(row);
     });
-    c1.appendChild(el("div", "tiny", "Luyện đề: điểm cao, Vẹt cao. Đồ Án &amp; Lab: tay nghề thật, cần Phòng Máy."));
+    // the philosophy fork made LEGIBLE (owner: "no trade-off guideline for learning style") — each style realizes some, wastes others (DESIGN §1 open question)
+    PRESET_KEYS.forEach(function (k) { var pr = CONFIG.PRESETS[k]; if (pr.tradeoff) c1.appendChild(el("div", "tiny", "<b>" + esc(pr.label) + "</b> — " + esc(pr.tradeoff))); });
     wrap.appendChild(c1);
 
     // tuition
