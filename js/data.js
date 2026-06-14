@@ -9,7 +9,7 @@ var CONFIG = {
   V: 2,
   SAVE_KEY: "hoc-vien-steve-v3", // v3: start-from-nothing reframe — old v2 saves (42-SV school) are retired so the new boot shows
   // clock: 10 ticks = 1 day; 1 day = 1.0s at 1x
-  TICK_MS: 100, TICKS_PER_DAY: 10, DAYS_PER_MONTH: 30,
+  TICK_MS: 70, TICKS_PER_DAY: 10, DAYS_PER_MONTH: 30, // TICK_MS 100→70 (iter 115, owner "1 month too long in real clock"): a month is now ~21s at 1× (was 30s) — pure WALL-CLOCK pace, no sim/balance change (sweep/gate drive dayTick directly)
   GRID_W: 15, GRID_H: 12, TILE: 26,
   ROSTER_CAP: 48, COHORT_NOMINAL: 12,
   RUN_CAP_YEARS: 12,

@@ -537,9 +537,13 @@ realization-sweep is an un-verifiable balance change. **STRUCTURE-epic redirect:
 MUST target the person-sim's own files (carve `growStudents` + the alumni FSM into `sim/person.js` — that IS
 people-dev infrastructure); the `ui.js→screens.js` split is DEFERRED until the arc releases.
 
-**Deletion is a first-class move.** Dead code, parked experiments, stale rules, superseded systems —
-delete them (you have git). Before deleting something you didn't create or that's described as load-
-bearing, look at it and confirm; otherwise, prune freely. A leaner codebase is part of "incredible."
+**Deletion is a first-class move (REINFORCED by owner 2026-06-14: "allow yourself to remove functionality
+if it no longer suits the development").** Not just DEAD code — a LIVE feature/mechanic that's confusing,
+inert, unused, or that dilutes the soul/open-question is DEBT too. PRUNE it (you have git): cut it, or fold
+it into something that fits. Removal is a legitimate person-sim/quality SHIP (gate-verified like any change),
+not only a cleanup chore — treat "what should this game STOP doing?" as a real iteration question. THESIS §E
+backs it (the implementation is disposable). Before deleting something you didn't create or that's described
+as load-bearing, look at it and confirm; otherwise, prune freely. A leaner, legible game is part of "incredible."
 
 ## Step 2 — Implement (engineering laws; violations have caused production incidents)
 - PRODUCTION ERROR TRAP: an inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l` for

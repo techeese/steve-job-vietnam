@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — faster clock + "subtraction is design" + queued legibility (via feedback.md) (loop iter 115)
+- Ingested 5 `feedback.md` notes. SHIPPED two: (1) **faster clock** — `TICK_MS` 100→70, so a month is ~21s
+  at 1× (was 30s); pure wall-clock pace, zero sim/balance change (sweep/gate drive `dayTick` directly). gate
+  green, bot BOTOK. (2) **"Subtraction is design"** — owner empowered the loop to REMOVE functionality that
+  no longer fits; added as a VISION principle + reinforced SKILL's deletion rule (removal is a legitimate
+  ship, not just cleanup; THESIS §E already backs it).
+- QUEUED the legibility cluster as **E15** (time/money model + tuition trade-off + learning-style trade-off
+  made legible — the preset part is the philosophy fork made felt, highest-soul). The "always 0đ" is the
+  endowment being hidden <200tr + surplus-drain making cash hover — a legibility gap, not a bug (cash is
+  positive ~500tr+).
+- `SHIPS_SINCE_PERSONSIM` 0→1, `SMALL_SHIPS_SINCE_EPIC` 0→1, `SHIPS_SINCE_DEPLOY` 4→5 → **first live deploy
+  DUE but HELD** for an explicit owner go (tentative cadence + owner active local + outward-facing first-time).
+
 ## 2026-06-14 — STRUCTURE EPIC: js/sim/person.js carve (loop iter 114)
 - Cadence-forced structure epic (SMALL_SHIPS_SINCE_EPIC=3 epic-lock + EPICS_SINCE_STRUCTURE=2). Carved the
   **person-sim core out of the 1,220-line engine.js into `js/sim/person.js`**: `growStudents` (talent ×

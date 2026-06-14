@@ -162,6 +162,13 @@ locked" (see 20 teachers, hire 3; see 6 majors, build 2). Breadth without weight
 up. Every added item must earn its place by adding a *felt trade-off*, measured by the sweep + a wasted life
 in the epilogue — not by enlarging a menu.
 
+**Subtraction is design (owner directive 2026-06-14: "allow yourself to remove functionality if it no longer
+suits the development").** The game gets better by PRUNING what doesn't serve the soul, not only by adding.
+A mechanic that's confusing, inert, unused, or that dilutes the open question is DEBT — cut it (you have git).
+THESIS §E already says the implementation is *disposable*; this makes it active practice. When a feature no
+longer fits the current direction, the loop should REMOVE it (or fold it into something that does) the same
+way it adds — boldly, gate-verified. A leaner, legible game beats a feature-stuffed one.
+
 ## The graphics bar — MET ENOUGH; it now SERVES, it no longer LEADS
 For ~50 iterations graphics was the #1 dimension and won every contested slot. **That bar is now met
 enough.** Shipped and good: premium 24×32 volumetric characters, crafted material buildings, a felt sunny
