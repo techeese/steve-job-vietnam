@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — The protégé, named in the final essay + a biography quality pass (loop iter 133)
+**PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 4 · CLARITY 4 · BITE 4 · BEAUTY/JUICE
+n/a.** Two things:
+- **Quality pass (the arc's release-gate criterion b):** read the biographies across the three theses as a
+  stranger would. Cram → vivid grief (a ★★★★★ ground into a coin-shark "tài năng bỏ phí", an arrest, a burnout,
+  one surviving engineer); craft → gentle realization (engineers, a decent life, even a ★☆☆☆☆ lifted to kỹ sư);
+  balance → the mix (a wasted ★★★★★ thất nghiệp *and* a Founder). The §D marks (become someone · name a wasted +
+  realized kid · no single right way) are clearly met — the theses produce genuinely different felt lives. **The
+  arc is measurably release-ready** (gate a [sweep spread + waste reachable] ✓, b [biographies] ✓); only c
+  [owner EXPLICITLY confirms] is pending.
+- **The follow-loop's capstone payoff:** the kid you watched across the years was nodded at *graduation* but
+  never named in the 10-year *keepsake essay*. Now `makeAlumnus` carries `flags.protege`, and the capstone names
+  them with a personal coda woven from their fate: "Và {ten} — đứa em dõi theo từ ngày đầu — giờ là {chip}.
+  {coda}" — coda ∈ {em nên người, mình có góp một tay / đáng lẽ em đã có thể hơn / tài năng ấy mình đã không giữ
+  được / một cuộc đời tử tế, mình mừng cho em}. The emotional close to the attachment loop.
+- Pure display + a derived flag (favId never set in headless → sweep/gate UNAFFECTED). Verified: gate GREEN, bot
+  BOTOK, sweep flags ✓ unchanged, headless capstone render confirms the protégé line ("Và Phát 'Founder' … giờ
+  là 👷 Kỹ sư. em nên người — mình có góp một tay").
+
 ## 2026-06-15 — Telegraph the burnout: a loss you can fight, not a surprise (loop iter 132)
 **PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 5 · BITE 3 · BEAUTY/JUICE n/a.** iter-131 made burnout
 possible but the player got NO warning — a kid just vanished. Now the inspect card telegraphs the risk WHILE the
