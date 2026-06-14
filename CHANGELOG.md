@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — craft-symmetry: 4th attempt parked; bottleneck found UPSTREAM (loop iter 120)
+- Epic-locked turn; took the objective [EVOLUTION] craft-symmetry gap (E11's visual is taste-blocked on the
+  absent owner, so chose the sweep-verifiable work). Tried a seed-INDEPENDENT adrift roll (flatter ADRIFT_P)
+  — craft waste held at 5% again → reverted to the iter-116 ceiling (gate green, flag still cleared).
+- **Root cause finally pinned (probe):** all 4 attempts (knob · seed-ceiling · kt-cap · adrift-roll) stall at
+  ~5% because **the cohort reaching craft is only ~27% generalist, not the 54% `rollTell` produces** — most
+  craft alumni max tn→KY_SU. No in-`growStudents` mechanic can move the aggregate; the fix is **upstream**
+  (admissions tell-distribution / the LUONG_ON net), and it's delicate balance that wants **owner playtesting**,
+  not more headless knob-tuning. Parked with that diagnosis; STOP knob-tuning craft-symmetry.
+- **LOOP STATUS — a real wall:** the deepest soul gap (craft-symmetry) is autonomously-intractable, the other
+  big epic (E11) is taste-blocked on owner direction (D1–D3), and it's been ~6 iterations of owner silence
+  across 13 autonomous iterations + the live deploy. Recommending the owner re-engage (playtest the live build
+  + steer E11 / craft-symmetry) rather than grind further. No game code shipped this turn (revert).
+
 ## 2026-06-14 — PLANNED the E11 epic (walk-in rooms + activity→development) (loop iter 119)
 - Epic-locked turn (SMALL_SHIPS_SINCE_EPIC=3). E11 is a MAJOR feature (room-interior rendering + an
   activity→growth balance link), so per PLAN-FIRST + the divergence mandate I wrote the `## Epic: E11`
