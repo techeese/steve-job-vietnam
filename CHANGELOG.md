@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — money/time legibility (E15) + maturity-plateau hold (loop iter 121)
+- Owner-flagged safe value (E15): a line under the funding "Thu — Chi" card explaining **how long a month is**
+  (~21s at 1×, computed from CONFIG) and **why the bank doesn't balloon** (surplus >300tr auto-reinvests
+  ~3%/mo → "to get rich, raise income, don't just wait"). Answers the "positive financials but feels 0đ /
+  how does money accrue" confusion. UI/text only — sweep/balance untouched, gate green, bot BOTOK.
+- **MATURITY-PLATEAU HOLD (iter 92 lesson):** the owed epic is DEFERRED, not forced — all remaining person-sim
+  epics are owner-gated/delicate (E11 needs visual direction D1–D3; craft-symmetry is upstream + wants
+  playtesting; E4 is a delicate FSM/prose epic). Forcing one blind, with the owner absent ~7 iterations, would
+  manufacture low-quality work. So: ship safe value + await steer; the epic is OWED (taken the moment the owner
+  re-engages). `SHIPS_SINCE_PERSONSIM` 0→1, `ITERS_SINCE_DEPLOY` 3. Recommendation stands: playtest the live
+  build + steer.
+
 ## 2026-06-15 — craft-symmetry: 4th attempt parked; bottleneck found UPSTREAM (loop iter 120)
 - Epic-locked turn; took the objective [EVOLUTION] craft-symmetry gap (E11's visual is taste-blocked on the
   absent owner, so chose the sweep-verifiable work). Tried a seed-INDEPENDENT adrift roll (flatter ADRIFT_P)

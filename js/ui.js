@@ -1317,6 +1317,9 @@
     if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + reinvest + "tr", "var(--red)"));
     var net = income + cpay - sal - maint - ops - reinvest;
     c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + Math.round(net) + "tr</div>";
+    // legibility (owner: "not clear how time passes / how money accrues — positive but feels 0đ"): how long a month is + why the bank doesn't balloon
+    var monSec = Math.round(CONFIG.TICK_MS * CONFIG.TICKS_PER_DAY * CONFIG.DAYS_PER_MONTH / 1000);
+    c.appendChild(el("div", "tiny", "Một <b>tháng</b> ≈ " + monSec + "s ở tốc độ 1× — thu/chi cộng dồn cuối mỗi tháng. Tiền dư trên " + CONFIG.CASH_KEEP + "tr tự tái đầu tư (~3%/th) nên ngân hàng không phình mãi: muốn giàu phải <b>tăng thu</b> (học phí · hợp đồng · uy tín), không chỉ chờ."));
     wrap.appendChild(c);
 
     // contracts
