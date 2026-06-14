@@ -18,6 +18,51 @@ _(none — **late-game economic pressure SHIPPED iter 107**, owner-steered: "V�
 size & age, hoard cut ~⅓, 0 bankruptcy, pluralism intact. OWNER veto options if too much: lower
 `CONFIG.OPS.rate` (0.22) or `OPS.perSV` (0.6).)_
 
+## Epic: Art & Polish + Responsive (Pocket-Academy-bar look, mobile + PC)
+<!-- Owner-directed 2026-06-14 — OVERRIDES the arc's "graphics = production-broken-only" (the owner explicitly
+     asked for the art/polish + works-on-PC pass). Built on branch `mentors-ledger`. Sourced from a Kairosoft
+     art/polish DEEP-RESEARCH report (Derek Yu / SLYNYRD / MDN / "Juice It or Lose It" — transferable pixel-art
+     FUNDAMENTALS, not Kairosoft-specific; one audio-juice claim refuted). Every technique is CODE-ONLY (no asset files). -->
+
+**Goal (one Bar-moving sentence):** raise the game to "looks like a real cute game" (Pocket Academy bar) on
+BOTH mobile (390px gate holds) AND PC, via code-only procedural craft — lifting BEAUTY + JUICE while the new
+SOUL (Mentor's Ledger realize/waste) stays legible.
+
+**Load-bearing decisions (owner answers 2026-06-14):**
+- **D1 = SIDE-BY-SIDE map + panel on wide screens** (desktop-native; mobile stays stacked at the 390px gate). Two layouts via media query — keep them in sync.
+- **D2 = KAIROSOFT-HYBRID** *(recommended; pending final owner nod)*. Pocket Academy does NOT use detailed faces — tiny chibis + personality via ANIMATION + EMOTE BUBBLES + per-role COLOR + names/data. So: keep the 24×32 crowd, add emote bubbles + livelier animation + per-role silhouette/palette, and a richer INSPECT-PANEL PORTRAIT for the few FOCUSED (mentored/followed) kids — deep bonding for the few (serves the thesis), Kairosoft charm for the crowd. NOT a full 32×40 redraw.
+- **D3 = YES** — temporary visual regression allowed mid-overhaul; ship green rough checkpoints, endpoint clears the bar.
+
+**Technique stack (research-backed, ranked by leverage):**
+1. **Palette ramps** — HSB ramps: hue warm→highlight / cool→shadow, desaturate highlights (bright AND cohesive). `art.js` `ramp()` helper applied everywhere.
+2. **Integer-crisp scaling** — native-res canvas + `imageSmoothingEnabled=false` + `image-rendering:pixelated` + integer scale (2× mobile / 3–4× desktop). The BRIDGE between polish and works-on-PC.
+3. **Selout** — outline = 1 shade darker than neighbor, lighter top-lit, dropped at background; bakeable in the sprite generator.
+4. **Expressive chibi** — big head/eyes, 2×2 pupil+highlight, eyes+mouth toggled for emotions (fixes the diagnosis's "faces 2px / never bond").
+5. **Role silhouette + per-archetype palette** — coin-shark / maker / clerk read at a glance (reinforces the soul).
+6. **Fake 2.5D + modular tiles** — 3/4 or iso geometry; tiles recombined via rotate/reflect/color-swap → distinct, lived-in rooms.
+7. **Juice** — stacked squash/stretch + scale-on-impact + number-pops + damped wobble + particles on key interactions; **beware over-juice**.
+
+**UI-rework call: YES** — responsive desktop layout (integer scale-up + D1). Mobile 390px stays the RELEASE GATE.
+
+**Files (engine UNTOUCHED — pure visual/UI; sim, L1 sensor, gates unaffected):** `art.js` (ramp + selout + tile/building redraws), `sprites.js` (chibi proportions, expression variants, role silhouette/palette), `index.html` + `js/ui.js` (integer scaling, responsive CSS/media queries, desktop layout, juice in render loop), `data.js` (palette/juice CONFIG).
+
+**Phases (each ships a green checkpoint on the branch):**
+- **A — Foundation:** `ramp()` + integer-crisp scaling + selout. Biggest jump; lands desktop scaling. Verify 390px + desktop screenshots + gate/bot green.
+- **B — Characters:** DIVERGE ≥3 directions → screenshot → judge → synthesize (SKILL law); expressive chibi + role silhouette/palette + `tools/gallery.html` re-render.
+- **C — World depth:** fake 2.5D + modular tiles.
+- **D — Juice pass:** interaction feedback (place room / mentor / graduate).
+- **E — Responsive desktop layout** (D1) + confirm the 390px gate still passes.
+  *(A and E are coupled via integer scaling — A lays it, E adds the desktop layout.)*
+
+**Verification:** screenshots READ at 390px AND ~1280px; gallery re-render; `./gate.sh` green; `./bot.sh` BOTOK;
+`node sweep.js` unaffected (engine untouched); score vs Bar rubric (BEAUTY+JUICE up, CLARITY holds, SOUL legible).
+
+**Rollback:** branch `mentors-ledger`, one commit per phase, `git revert` per phase; nothing pushed.
+
+**Risks:** over-juice → cap; bigger characters crowd 390px → mind density; palette overhaul clashes → apply
+systematically + allow temp regression (D3); desktop layout breaks mobile → media-query-gate, keep 390px gate;
+non-integer screen widths → use the largest integer scale that fits, letterbox the remainder.
+
 ## Epic backlog
 <!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
 
