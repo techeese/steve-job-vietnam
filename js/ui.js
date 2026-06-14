@@ -1584,6 +1584,16 @@
         var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p: a standout's earned honor, on their life
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
       });
+      // iter-142 — the WHOLE cohort beyond the 4 named, felt as a headmaster's qualitative reflection (VISION
+      // "prose not a meter" — NO per-fate counts). Makes the "wide range of outcomes" land for the other ~92.
+      if (s.alumni.length > 6) {
+        var fOf = function (ks) { var n = 0; ks.forEach(function (k) { n += byState[k] || 0; }); return n; }, tot = s.alumni.length;
+        var rz = fOf(["KY_SU", "FOUNDER", "LUONG_ON", "STEVE"]), wz = fOf(["THAT_NGHIEP", "QUAN_VAN_MAU"]), dz = fOf(["CA_MAP_COIN", "BI_BAT"]), ps = [];
+        if (rz > tot * 0.4) ps.push("phần lớn nên người tử tế, đi làm đều"); else if (rz > tot * 0.12) ps.push("một số thành người tử tế");
+        if (wz > tot * 0.25) ps.push("nhiều đứa tài năng cứ thế nguội dần"); else if (wz > 0) ps.push("vài đứa tài năng nguội dần");
+        if (dz > tot * 0.18) ps.push("không ít đứa lạc sang đường tắt"); else if (dz > 0) ps.push("một hai đứa lạc sang đường tắt");
+        if (ps.length) P("lead", "Còn lại trong sổ: " + ps.join("; ") + ".", true);
+      }
       if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned (the uncounted waste)
       // iter-133 — the FOLLOW-LOOP's capstone payoff: the kid you watched across the years, named in the final
       // essay with a personal coda woven from their fate (the grad-results nod is transient; THIS is the keepsake).

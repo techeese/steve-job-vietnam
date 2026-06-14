@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — The whole cohort, felt: a prose summary of the wide range (loop iter 142)
+**PERSON-SIM polish (people-first arc). SOUL 4 · BITE 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The epilogue NAMED 4
+lives but reduced the other ~92 to a bare count ("sổ ghi 96 cái tên") — so the owner's "wide range outcomes"
+only landed for the named few. Now a headmaster's qualitative reflection on the FULL cohort follows the cast:
+"Còn lại trong sổ: phần lớn nên người tử tế, đi làm đều; vài đứa tài năng nguội dần; không ít đứa lạc sang đường
+tắt." Composed from the alumni distribution but as PROSE — qualitative quantifiers (phần lớn / một số / nhiều /
+vài / không ít / một hai), **no per-fate counts** (VISION invariant #3: prose not a meter).
+- Reflects each school's character: a craft school reads gentle (mostly decent, a few wasted); a cram school
+  adds the grimmer distortion clause (đường tắt). The wide range, felt for the whole school — not just the 4 named.
+- Pure display (derived from byState), sweep-NEUTRAL (ui only). Verified: ui syntax OK, gate GREEN, bot BOTOK,
+  lives.sh confirms it renders + differentiates by preset.
+
 ## 2026-06-15 — Maintenance: epilogue quality-read + structure review-escape (loop iter 141)
 **Maintenance/cadence firing (no code).** Two owed checks:
 - **Epilogue quality-read (completeness critic):** read the full essays across presets now that a lot has piled
