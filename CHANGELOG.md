@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-14 — de-synchronized campus movement (via feedback.md) (loop iter 113)
+- Ingested 2 `feedback.md` notes. SHIPPED the bounded one: **organic, de-synchronized movement** (owner:
+  "people start/stop at the same time, in too-similar directions"). Three cohesive tweaks in `updateActor`/
+  `syncActors`: (1) STAGGER the period bell — each kid retargets after a per-kid delay `(id*41)%70` frames,
+  so they peel off at different beats instead of a synchronized stampede; (2) WIDER fan-out (`_ox/_oy` ±3→±6px)
+  so a cohort scatters instead of marching in a column; (3) per-kid PACE variation (`sp` 0.30 + `(id*17)%7`·0.012)
+  so they don't move in lockstep. Verified: actors still reach rooms (phonghoc nearby=14 after settle), gate
+  green, bot BOTOK. The motion *feel* is owner-verified on the live build (temporal quality, can't screenshot).
+- QUEUED the variety idea as **epic E14** (procedural character variety — recolor/part-mix the 40 sheets,
+  weighted toward originals; pairs with E12/E13 as the "character identity" cluster).
+- Campus-life ship under explicit-owner-ask preemption → `SHIPS_SINCE_PERSONSIM` 3→4 (badly overdue),
+  `SMALL_SHIPS_SINCE_EPIC` 2→3 (**EPIC-LOCKED — iter 114 must be the EPIC track**), `SHIPS_SINCE_DEPLOY` 2→3.
+  iter 114 = the `sim/person.js` STRUCTURE epic (EPICS_SINCE_STRUCTURE=2 + the lock), which also de-risks E11.
+
 ## 2026-06-14 — campus stroll speed + queued 3 owner epics (via feedback.md) (loop iter 112)
 - Ingested 2 `feedback.md` notes. SHIPPED the bounded one: **characters move at a gentler stroll** (walk
   0.5→0.32 px/frame, graduate-exit 0.55→0.42) — owner said "moving too fast." Still reach their period

@@ -207,7 +207,7 @@
       a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
       var el0 = a.lookC ? SPRITES.clampLook(a.lookC) : SPRITES.VARIANTS[a.variantIdx];
       a.skin = SPRITES.SKINS[el0.s][0]; a.glasses = SPRITES.ACC[el0.a] === "glasses";
-      a._ox = ((s.id * 37) % 7) - 3; a._oy = ((s.id * 53) % 7) - 3; // small fan-out so clustered students don't perfectly overlap
+      a._ox = ((s.id * 37) % 13) - 6; a._oy = ((s.id * 53) % 13) - 6; // wider fan-out so a cohort heading to one room scatters instead of marching in a tight column (owner: "too-similar directions")
       next.push(a);
     }
     // graduated / departed students: keep their actor and walk it OUT through the cổng (mirror of the
@@ -316,12 +316,15 @@
       a.bob = Math.sin(ts / 180 + a.ph) * 1.2;
       return;
     }
-    if (a._period !== period) { a._period = period; assignActivity(a, period); }
+    // owner: "people start and stop at the same time, in too-similar directions" — STAGGER the bell so each
+    // kid peels off at a slightly different beat (no synchronized stampede); they linger at their old spot until then.
+    if (a._period !== period) { a._period = period; a._actDelay = (a.id * 41) % 70; a._pend = 1; }
+    if (a._pend) { if (a._actDelay > 0) { a._actDelay--; } else { assignActivity(a, period); a._pend = 0; } }
     var tgx = a.tx * T + T / 2 + a._ox, tgy = a.ty * T + T / 2 + a._oy;
     var dx = tgx - a.px, dy = tgy - a.py, dist = Math.hypot(dx, dy);
     if (dist < 1.5 || !alive) { a._moving = false; a._atDest = a._atDest || dist < 1.5; }
     else {
-      var sp = 0.32 + (a.grade === 1 ? 0.06 : 0); // gentler stroll (owner: "moving too fast") — still reaches the period destination well within 16s
+      var sp = 0.30 + ((a.id * 17) % 7) * 0.012 + (a.grade === 1 ? 0.05 : 0); // gentle stroll + per-kid pace variation so a cohort doesn't move in lockstep
       a.px += (dx / dist) * sp; a.py += (dy / dist) * sp; a.dir = dx < 0 ? -1 : 1; a._moving = true;
     }
     var amp = (a.act === "perform" && a._atDest) ? 2.6 : (a._moving ? 1.4 : 0.4);
