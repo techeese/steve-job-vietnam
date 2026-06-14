@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-14 — FLOW: batched-deploy ship cadence (OWNER-STEERED) (loop iter 108)
+- First autonomous loop iteration after activation. Owner steered mid-iteration: *"may be we still need to
+  ship after 5-6 iteration"* — refining the LOCAL-DEV guard from "never push" to a **batched deploy**: develop
+  local on `mentors-ledger`, commit + verify each iteration, and **deploy to the live Pages site every 5–6
+  ships** (new `SHIPS_SINCE_DEPLOY` cadence counter, threshold 5; deploy = bump → ff-merge `mentors-ledger`→
+  `main` → push). Encoded across ROADMAP top banner + `## Cadence`, SKILL ship-cadence directive + Owner Model.
+- A Step-6 flow self-correction (explicit owner ask preempts the track); no deployable code touched, so
+  `SHIPS_SINCE_DEPLOY` and `SHIPS_SINCE_PERSONSIM` stay put — the person-sim lock persists, so **iter 109 is
+  the person-sim work** (the evolution-engine-flagged §C-2 gap: the đồ án/craft preset fails nobody, or E4).
+- Bar (flow turn, debt-valve exempt): no game change — serves the owner's visible-progress need without
+  breaking local-dev. gate green.
+
 ## 2026-06-14 — EPIC: late-game economic pressure (OWNER-STEERED) (loop iter 107)
 - The plateau broke: surfaced the steer decision via a question, owner picked **late-game economic pressure**
   and endorsed "a bit more demanding." Added a scaling **"Vận hành" (operations) overhead** to `economyTick`:

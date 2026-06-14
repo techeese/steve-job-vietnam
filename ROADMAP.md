@@ -3,14 +3,15 @@
 Ordered; the loop takes from the top. Add freely, prune ruthlessly.
 Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` same file.
 
-> **🖥️ LOCAL-DEV MODE (owner directive 2026-06-14 — OVERRIDES "push every iteration").** The owner is
-> developing LOCAL at the desktop on branch **`mentors-ledger`** (a large unpushed backlog: art, the
-> Evolution Engine, this VISION steer). **Do NOT `git push` or deploy** — `git push` to the public Pages
-> site is outward-facing and is the OWNER'S call to make (he merges `mentors-ledger`→`main` himself when
-> ready). Each iteration: commit LOCALLY on `mentors-ledger`, and **verify locally** (`node gate.js` /
-> `./gate.sh`, `./bot.sh`, `node sweep.js`, `./shot.sh` for visuals) INSTEAD of `./bump.sh`+push+polling
-> the live URL. The "push every iteration / poll the live link" rule below is SUSPENDED until the owner
-> says to go live.
+> **🖥️ LOCAL-DEV + BATCHED DEPLOY (owner directive 2026-06-14: "may be we still need to ship after 5-6
+> iteration").** Develop LOCAL on branch **`mentors-ledger`**; commit each iteration locally and **verify
+> locally** (`node gate.js`/`./gate.sh`, `./bot.sh`, `node sweep.js`, `./shot.sh` for visuals). Do NOT push
+> every iteration. **DEPLOY to the live Pages site every 5–6 ships** — tracked by `SHIPS_SINCE_DEPLOY` in
+> `## Cadence`: when it reaches **5**, that ship ALSO goes live, then reset it to 0. Deploy recipe (run on
+> the deploy ship only — `main` stays a strict fast-forward of `mentors-ledger`):
+> `./bump.sh && git add -A && git commit -m "…" && git checkout main && git merge --ff-only mentors-ledger && git push && git checkout mentors-ledger`
+> then verify the live URL. The very FIRST deploy carries the whole current backlog (art + Evolution Engine
+> + VISION) — that's expected; it's ~5 ships out, so the owner can veto/adjust the cadence before it fires.
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
@@ -19,6 +20,7 @@ Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` s
 - `EPICS_SINCE_STRUCTURE: 2`    → ≥2 ⇒ next epic must be STRUCTURE — **this arc the STRUCTURE epic is `sim/person.js` (carve growStudents + alumni FSM), NOT ui.js→screens.js, which is DEFERRED until the arc releases.** (=2: Mentor's Ledger + Art epics shipped since the last structure move.)
 - `FIRINGS_SINCE_FRAME_RESET: 0` → **(EVOLUTION ENGINE) ≥12 ⇒ the next firing HARD-LOCKS to a frame-reset beat (run `./evolve.sh`, dequeue the `[EVOLUTION]` gap).** Reset 0 on a frame-reset. DORMANT behind the people-first arc — `SHIPS_SINCE_PERSONSIM` outranks it; the beat only fires once the arc has released OR a frame-reset is independently due AND no person-sim lock is active. (Engine wired 2026-06-14; see docs/EVOLUTION-ENGINE.md, `evolve.sh`, `critic-prompt.md`.)
 - **★ PEOPLE-FIRST ARC ACTIVE (2026-06-14, owner course-correction).** The game's SOUL = the deep simulation of a person becoming themselves (talent × education → realized/wasted/distorted). Plateau rule SUSPENDED: the person-sim (E4–E6 below) IS the epic supply; "awaiting steer" is illegal as a reason to ship polish. Graphics/distribution/audio = production-broken-only. Arc releases only on a MEASURED gate + EXPLICIT owner confirm (see SKILL.md PEOPLE-FIRST MANDATE + VISION.md). **E2 match-model RESOLVED — the Mentor's Ledger soul-loop SHIPPED (E1+E2a+E2b+E3: grain↔preset `CONFIG.MATCH` coupling + scarce mentor attention + epilogue NAMES the waste; sweep L1 realize/waste/distort spread verified). The pause is LIFTED; next person-sim epic is E4.**
+- `SHIPS_SINCE_DEPLOY: 0`       → **(LOCAL-DEV + BATCHED DEPLOY, owner 2026-06-14) ≥5 ⇒ this ship ALSO deploys to live (run the deploy recipe in the top banner), then reset 0.** +1 every ship (local commit on `mentors-ledger`). Between deploys: commit + verify locally, do NOT push. First deploy carries the whole current backlog.
 - `LAST_EPIC: Art & Polish — Kenney+Jephed real-pixel-art + responsive desktop (owner-directed override, branch mentors-ledger, see docs/ART-PIPELINE.md). Prior: Mentor's Ledger person-sim soul-loop (E1 L1 sensor + E2 grain↔preset match + scarce attention + epilogue names waste).`
 - `LAST_MAINTENANCE: iter 97 — CLEAN (sweep green, bot OK, perf clean, 390px audit clean).`
 

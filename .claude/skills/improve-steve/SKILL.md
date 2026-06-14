@@ -293,7 +293,10 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   disconnected systems make the person-sim's INPUTS thin, so deepening them IS people-first work. **Resolve
   "add content/upgrades" forks toward MORE TRADE-OFF TEXTURE (more ways a kid is realized/wasted), never a
   strictly-better ladder.** He STEERS THE FRAME (VISION/ROADMAP) and expects the loop to develop it — the
-  meta-system working as designed.
+  meta-system working as designed. **FLOW (2026-06-14):** develops LOCAL at the desktop but still wants
+  visible progress — DEPLOY every 5–6 ships (`SHIPS_SINCE_DEPLOY`), not every iteration and not never. He
+  tunes cadence in flight ("ship after 5-6 iteration") — a middle gear between push-every-iter and
+  local-forever; batch the deploys, keep developing local between them.
 - *(2026-06-13)* Thinks in PEOPLE AND TRAJECTORIES, not meters: outcomes that span years,
   states that switch ("scammer 2 years after graduate"), named characters, real-world
   talent honored by name. Systems should produce biographies, not scores.
@@ -371,11 +374,12 @@ content = broken-only UNLESS the line is GENERATED FROM a kid's realized-vs-pote
 | 12 | Audio & distribution | WebAudio (none yet), PWA later, Pages health |
 
 Standing owner directives (always in scope, never skipped):
-- **PUSH EVERY ITERATION** — *(⚠ SUSPENDED 2026-06-14 — LOCAL-DEV MODE, see ROADMAP top banner: owner is
-  developing local on branch `mentors-ledger`; commit locally + verify locally, do NOT push/deploy — going
-  live is the owner's manual call. The rest of this bullet applies again once he releases local-dev.)* —
-  the owner follows the live link remotely; an unpushed
-  improvement does not exist. Ship pattern: `./gate.sh && ./bump.sh && git add -A && git commit … && git push`,
+- **SHIP CADENCE — BATCHED DEPLOY (⚠ 2026-06-14, owner "ship after 5-6 iteration", see ROADMAP top banner +
+  `SHIPS_SINCE_DEPLOY`):** NOT every iteration. Develop local on `mentors-ledger`: each iteration `./gate.sh`
+  + commit LOCALLY + verify locally (gate/bot/sweep/shot). Every 5–6 ships (`SHIPS_SINCE_DEPLOY ≥ 5`) the ship
+  ALSO deploys to live via the banner recipe (bump → commit → ff-merge `mentors-ledger`→`main` → push), then
+  reset the counter + poll the live URL. The original rule (the owner follows the live link remotely; an
+  unpushed improvement does not exist; `./gate.sh && ./bump.sh && git add -A && git commit … && git push`),
   then `curl` the live URL for a unique new string until deployed. **`./bump.sh` is MANDATORY**
   before every commit: it rewrites `?v=<n>` on the `<script>` tags to a fresh timestamp so the
   browser/CDN re-fetch the JS — WITHOUT it the owner sees a stale cached build and thinks
