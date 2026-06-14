@@ -12,18 +12,12 @@ Write as much as you want, in any format (bullets, paragraphs, half-thoughts). P
 iterations; the loop absorbs it without you having to break its flow.
 
 **Ingest log** (newest first):
-- 2026-06-14 (iter 115) — 5 notes:
-  • "1 month too long in real clock" → **SHIPPED**: `TICK_MS` 100→70, a month is ~21s at 1× now (no balance change).
-  • "allow yourself to remove functionality that no longer suits" → **SHIPPED** to the frame: VISION "Subtraction
-    is design" + SKILL's deletion rule reinforced (removal is a legitimate ship; THESIS §E already backs it).
-  • "how time passes / how money accrues / financials positive but 0đ" → **QUEUED as E15** (money-model + time
-    legibility; "0đ" is the endowment being small/hidden <200tr + surplus-drain making cash hover — not a bug).
-  • "no trade-off guideline for tuition" → **QUEUED as E15**.
-  • "no trade-off guideline for learning-style each year" → **QUEUED as E15** (the philosophy fork made legible — highest-soul part).
-  • ⏳ FIRST LIVE DEPLOY is due (SHIPS_SINCE_DEPLOY hit 5) but HELD for your go — reply "deploy" here to push the
-    whole backlog public, or "hold" to keep developing local. (After your first confirm, the 5-6 cadence auto-deploys.)
-- 2026-06-14 (iter 113) — de-sync movement SHIPPED; E14 queued.
-- 2026-06-14 (iter 112) — stroll SHIPPED; E11/E12/E13 queued.
+- 2026-06-14 (iter 117) — "push to github.io after every 10 iteration" → **DONE + cadence set**: this both
+  resolves the held first deploy (you want it live) and revises the cadence 5-6 → **every ~10 loop iterations**.
+  Deploying the whole backlog (28 commits: art + Jephed + Mentor's Ledger soul-loop + Evolution Engine + all
+  the campus/clock/bug fixes) to the live link now; next deploy ≈ iter 127.
+- 2026-06-14 (iter 116) — craft mismatch-adrift ceiling SHIPPED (craft can now waste; partial — see [EVOLUTION] epic).
+- 2026-06-14 (iter 115) — faster clock + "subtraction is design" SHIPPED; E15 queued.
 
 === FEEDBACK ===
 <!-- ↓↓↓ type your feedback below this line; the loop will read, apply, and clear it ↓↓↓ -->

@@ -3,15 +3,14 @@
 Ordered; the loop takes from the top. Add freely, prune ruthlessly.
 Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` same file.
 
-> **🖥️ LOCAL-DEV + BATCHED DEPLOY (owner directive 2026-06-14: "may be we still need to ship after 5-6
-> iteration").** Develop LOCAL on branch **`mentors-ledger`**; commit each iteration locally and **verify
+> **🖥️ LOCAL-DEV + DEPLOY EVERY 10 ITERATIONS (owner directive 2026-06-14: "push to github.io after every
+> 10 iteration").** Develop LOCAL on branch **`mentors-ledger`**; commit each iteration locally and **verify
 > locally** (`node gate.js`/`./gate.sh`, `./bot.sh`, `node sweep.js`, `./shot.sh` for visuals). Do NOT push
-> every iteration. **DEPLOY to the live Pages site every 5–6 ships** — tracked by `SHIPS_SINCE_DEPLOY` in
-> `## Cadence`: when it reaches **5**, that ship ALSO goes live, then reset it to 0. Deploy recipe (run on
-> the deploy ship only — `main` stays a strict fast-forward of `mentors-ledger`):
+> every iteration. **DEPLOY to the live Pages site every ~10 loop iterations** — tracked by `ITERS_SINCE_DEPLOY`
+> in `## Cadence`: at **≥10**, that iteration ALSO goes live, then reset 0. Deploy recipe (`main` stays a strict
+> fast-forward of `mentors-ledger`):
 > `./bump.sh && git add -A && git commit -m "…" && git checkout main && git merge --ff-only mentors-ledger && git push && git checkout mentors-ledger`
-> then verify the live URL. The very FIRST deploy carries the whole current backlog (art + Evolution Engine
-> + VISION) — that's expected; it's ~5 ships out, so the owner can veto/adjust the cadence before it fires.
+> then verify the live URL (`curl` for a unique new string). FIRST deploy SHIPPED iter 117 (the whole backlog).
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
@@ -20,7 +19,7 @@ Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` s
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be STRUCTURE. (=0: iter-114 `sim/person.js` carve was the structure move — `growStudents` + creation extracted, behavior byte-identical. **Follow-up structure move available: the alumni FSM → `sim/person.js` too**, when next due.)
 - `FIRINGS_SINCE_FRAME_RESET: 0` → **(EVOLUTION ENGINE) ≥12 ⇒ the next firing HARD-LOCKS to a frame-reset beat (run `./evolve.sh`, dequeue the `[EVOLUTION]` gap).** Reset 0 on a frame-reset. DORMANT behind the people-first arc — `SHIPS_SINCE_PERSONSIM` outranks it; the beat only fires once the arc has released OR a frame-reset is independently due AND no person-sim lock is active. (Engine wired 2026-06-14; see docs/EVOLUTION-ENGINE.md, `evolve.sh`, `critic-prompt.md`.)
 - **★ PEOPLE-FIRST ARC ACTIVE (2026-06-14, owner course-correction).** The game's SOUL = the deep simulation of a person becoming themselves (talent × education → realized/wasted/distorted). Plateau rule SUSPENDED: the person-sim (E4–E6 below) IS the epic supply; "awaiting steer" is illegal as a reason to ship polish. Graphics/distribution/audio = production-broken-only. Arc releases only on a MEASURED gate + EXPLICIT owner confirm (see SKILL.md PEOPLE-FIRST MANDATE + VISION.md). **E2 match-model RESOLVED — the Mentor's Ledger soul-loop SHIPPED (E1+E2a+E2b+E3: grain↔preset `CONFIG.MATCH` coupling + scarce mentor attention + epilogue NAMES the waste; sweep L1 realize/waste/distort spread verified). The pause is LIFTED; next person-sim epic is E4.**
-- `SHIPS_SINCE_DEPLOY: 6`       → **≥5 ⇒ DEPLOY DUE.** ⏳ **HELD: the FIRST public deploy awaits an explicit owner go** (tentative "may be ship after 5-6" + owner active local mid-clarity-burst + outward-facing first-time → confirm, don't auto-push). Owner says "deploy" in feedback.md → run the banner recipe (bump → ff-merge `mentors-ledger`→`main` → push) + reset 0; after that first confirm, the 5-6 cadence auto-deploys. Between deploys: commit + verify locally.
+- `ITERS_SINCE_DEPLOY: 0`       → **(owner 2026-06-14: "push to github.io after every 10 iteration") ≥10 ⇒ DEPLOY (run the banner recipe), then reset 0.** +1 per loop iteration. (=0: iter-117 FIRST deploy DONE — the whole backlog went live; next deploy ≈ iter 127.) Supersedes the old 5-6 `SHIPS_SINCE_DEPLOY`.
 - `LAST_EPIC: iter 114 STRUCTURE — js/sim/person.js carve (growStudents + genStudent/genName/rollTell extracted from engine.js; behavior byte-identical: sweep+gate diff clean, bot BOTOK). De-risks E11. Prior: Art & Polish (Kenney+Jephed), Mentor's Ledger soul-loop.`
 - `LAST_MAINTENANCE: iter 97 — CLEAN (sweep green, bot OK, perf clean, 390px audit clean).`
 

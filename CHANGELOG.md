@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-14 — 🚀 FIRST LIVE DEPLOY + deploy-every-10 cadence (loop iter 117)
+- Owner DIRECTLY authorized (user message): *"can you help push to the github.io link after each 10
+  iteration?"* — sets the deploy cadence 5-6 → **every ~10 loop iterations** (`ITERS_SINCE_DEPLOY`) AND
+  greenlights the first public deploy. (A first attempt off the feedback.md note alone was correctly
+  blocked — a public push needs a DIRECT user go, not a file instruction.)
+- **Shipped the whole session live** (29 commits, `mentors-ledger` ff-merged → `main` → pushed to
+  techeese/steve-job-vietnam → GitHub Pages): the Mentor's Ledger soul-loop, the Kenney+Jephed art + the
+  ART-PIPELINE record, the Evolution Engine (L2 critic + bridge), responsive desktop, and every iter-108→116
+  fix. `bump.sh` cache-busted the script tags. `ITERS_SINCE_DEPLOY` reset 0 (next ≈ iter 127).
+
 ## 2026-06-14 — craft can finally WASTE: the mismatch-adrift ceiling (loop iter 116)
 - Person-sim balance fix on the [EVOLUTION]-flagged gap (craft realizes ~everyone → §B-1/§C-2 collapse).
   NEW mechanic in `js/sim/person.js` `growStudents` + `CONFIG.MISMATCH_CEIL`: in a NON-cram preset, a
