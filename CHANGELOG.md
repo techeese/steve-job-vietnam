@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-06-15 — The protégé's graduation now carries its meaning — the arc's culmination, felt (loop iter 150)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
+VISION's #1 unmet frontier is the *felt transformation arc — watchable beat by beat, with the destiny FSM as
+the CULMINATION of a visible arc, not a dice-roll* (§77-79, §114). The followed protégé already gets mid-game
+beats (favBeat) AND a graduation beat — but that graduation beat, the arc's literal culmination, only announced
+the DESTINY (`tốt nghiệp: Kỹ sư.`), while the realization READING (was the gift realized, settled, or lost?)
+appeared only in the epilogue capstone 10 sim-years later. Now the graduation beat carries the SAME coda the
+capstone does, so the culmination is felt the moment it happens:
+- realized → *"em nên người — mình có góp một tay"* · settled (a prodigy into 💼) → *"đáng lẽ em đã có thể hơn
+  — mình vẫn nghĩ thế"* · lost (failed/turned) → *"tài năng ấy, mình đã không giữ được"* · a modest kid's
+  decent life → *"một cuộc đời tử tế, mình mừng cho em"*.
+- **Centralized (DRY):** the coda strings now live once in `CONTENT.protegeCoda`, keyed by a new
+  `protegeCodaKey(state, seed)` in person.js (reused by BOTH the engine graduation beat AND the ui.js capstone)
+  — one source of truth, so the moment and the keepsake can never drift apart.
+**Scope-respecting** (the ONE followed protégé — broadening turning-point beats to all 48 would break VISION
+invariant #3 "glimpsed, not metered"). **Zero balance risk:** prose from the existing realClass/flourishOf
+reading, no mechanic change. Verified: 4-file syntax OK, gate GREEN, bot BOTOK, sweep 5✓/0 breakage, epilogue
+byte-identical (the capstone refactor is neutral — md5 unchanged), and a node probe confirms the beat coda is
+correct across all realization classes.
+> **50-firing reflection (iter 150 crosses the mark):** the SAFE person-sim space is now genuinely MATURE —
+> talent ceiling+grain, the protégé watchable arc (now incl. its culmination), discoverable talent, E-UNDERDOG,
+> live mood, realization-aware destiny, and the trade-off legibility (146-148) are all shipped; the remaining
+> big frontiers are owner-gated (E6 multi-axis, E7 majors, E11 walk-in rooms) or graphics-adjacent (campus
+> rendering the soul — the owner steered away). Recent ships trend SMALL because that's what's safely available
+> on a verified-healthy, release-ready build — the loop is correctly picking highest-value-safe person-sim +
+> owed structure rather than forcing a risky epic or holding. The real unlock is OWNER RE-ENGAGEMENT (play the
+> fresh live build → confirm the arc, or steer). That is surfaced (ROADMAP OWNER line); the loop cannot force it.
+
 ## 2026-06-15 — STRUCTURE: the pure epilogue helpers split out — js/epilogue.js (loop iter 149) + DEPLOY
 **STRUCTURE epic — BEHAVIOR-NEUTRAL (proven byte-identical). Scores N/A (refactor).** The epic-lock
 (SMALL_SHIPS_SINCE_EPIC=3) forced an epic; every FEATURE epic remains genuinely owner-gated (E6 overrides

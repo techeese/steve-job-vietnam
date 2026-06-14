@@ -1548,8 +1548,8 @@
       // essay with a personal coda woven from their fate (the grad-results nod is transient; THIS is the keepsake).
       var proteges = s.alumni.filter(function (a) { return a.flags && a.flags.protege; }).sort(function (a, b) { return (b.gradYear || 0) - (a.gradYear || 0); });
       if (proteges[0]) {
-        var pg = proteges[0], pseed = (pg.fs && pg.fs.seed) || 0, pcls = realClass(pg.state, pseed);
-        var coda = pcls === "loud" ? "tài năng ấy, mình đã không giữ được" : pcls === "under" ? "đáng lẽ em đã có thể hơn — mình vẫn nghĩ thế" : flourishOf(pg.state) >= 4 ? "em nên người — mình có góp một tay" : "một cuộc đời tử tế, mình mừng cho em";
+        var pg = proteges[0], pseed = (pg.fs && pg.fs.seed) || 0;
+        var coda = CONTENT.protegeCoda[protegeCodaKey(pg.state, pseed)]; // iter-150: ONE source of truth, shared with the graduation beat (engine.js)
         P("lead", "Và " + esc(pg.ten) + " — đứa em dõi theo từ ngày đầu — giờ là " + CONFIG.ALUM.CHIPS[pg.state] + ". " + coda + ".", true);
       }
       if (s.META.steves > 0) { P("lead", tpl(E.steveColFull, { steves: s.META.steves })); }

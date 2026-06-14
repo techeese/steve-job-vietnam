@@ -110,6 +110,10 @@ function realClass(state, seed) { // "loud" | "under" | "" — the wasted readin
   return ""; // NB: no "exceed-the-gift" pole — realization is APPROPRIATE to magnitude (VISION), and the cohort
              // has ~no modest kids to lift anyway (admissions excludes seed≤2 — see ROADMAP underdog epic).
 }
+// iter-150 — the followed protégé's coda KEY (the realization reading of a life): loud waste / quiet settle /
+// realized / a kind-enough life. Shared by the graduation BEAT (engine.js) and the epilogue CAPSTONE (ui.js) so
+// the arc's culmination reads the SAME both at the moment and in the keepsake. Strings live in CONTENT.protegeCoda.
+function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c === "loud" ? "loud" : c === "under" ? "under" : flourishOf(state) >= 4 ? "realized" : "kind"; }
 
 function cascadeRow(key) { for (var i = 0; i < CONFIG.CASCADE.length; i++) if (CONFIG.CASCADE[i].key === key) return CONFIG.CASCADE[i]; return CONFIG.CASCADE[CONFIG.CASCADE.length - 1]; }
 function cascadeOutcome(s) {

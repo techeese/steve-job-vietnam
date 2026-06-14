@@ -63,6 +63,15 @@ var CONTENT = {
     loud: " — tài năng bỏ phí trên tay bạn",      // seed≥4 → thất nghiệp/lệch hướng: the loud waste
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
+  // iter-150 — the followed protégé's coda, keyed by protegeCodaKey() (person.js). ONE source of truth, used at
+  // BOTH the graduation BEAT (engine.js — the arc's culmination, felt the moment it happens, VISION §114) and the
+  // epilogue CAPSTONE (ui.js — the keepsake 10 years on). The mid-game beat used to announce only the destiny.
+  protegeCoda: {
+    loud: "tài năng ấy, mình đã không giữ được",            // a prodigy who failed/turned — your grief
+    under: "đáng lẽ em đã có thể hơn — mình vẫn nghĩ thế",   // a prodigy who settled — the quiet ache
+    realized: "em nên người — mình có góp một tay",          // a realized life — the attention paid off
+    kind: "một cuộc đời tử tế, mình mừng cho em"             // a decent life — simple gladness
+  },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't
   prizes: { sangtao: "Giải Sáng Tạo Trẻ", taynghe: "Giải Tay Nghề Vàng", thukhoa: "Thủ Khoa khoá" }, // E7p: a standout's honor — a line in their life (owner: "more prizes/awards")
