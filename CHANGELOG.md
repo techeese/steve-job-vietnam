@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-15 — 🚀 DEPLOY: the soul arc goes live (loop iter 129)
+Second public deploy (cadence: every ~10 iterations). `main d8cc425..40916f7` pushed → live at
+https://techeese.github.io/steve-job-vietnam/, verified serving `?v=1781463105023`. Now public (the iter-118→128
+backlog): **E4** realization-aware destiny · **E4.1** mentor's-hand naming · **the protégé in-school arc** ·
+**E5** discoverable talent · **STRUCTURE** person-lifecycle carve · **⭐ E-UNDERDOG** the overlooked gem — i.e.
+the whole "you saw what the test didn't, invested, and they rose" loop. Pre-deploy gate GREEN, bot BOTOK, 5
+sweep ✓ / 0 breakage. No code change this firing — the deploy IS the iteration. `ITERS_SINCE_DEPLOY`→0.
+
 ## 2026-06-15 — EPIC ⭐ E-UNDERDOG: the gem the entrance exam overlooked (loop iter 128)
 **PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 5 · CLARITY 3 ·
 BEAUTY/JUICE n/a.** The most inspiring transformation — an underdog the system overlooked, who rises — was
