@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-14 — campus stroll speed + queued 3 owner epics (via feedback.md) (loop iter 112)
+- Ingested 2 `feedback.md` notes. SHIPPED the bounded one: **characters move at a gentler stroll** (walk
+  0.5→0.32 px/frame, graduate-exit 0.55→0.42) — owner said "moving too fast." Still reach their period
+  destination well within the 16s period (gate green, bot BOTOK).
+- QUEUED the three bigger asks as specced epics (each genuinely epic-shaped, several are downstream
+  consequences of the Jephed art integration): **E11** walk-in roofless rooms where activity EARNS
+  development (campus-life × person-sim — the standout); **E12** reconcile the inspect portrait/customizer
+  with the fixed Jephed sprites (with an OWNER design Q on keeping customization); **E13** gender-matched
+  names ↔ sprite.
+- Cosmetic/campus-life ship under explicit-owner-ask preemption → `SHIPS_SINCE_PERSONSIM` 2→3 (OVERDUE —
+  next non-preempted firing must be a person-sim epic), `SMALL_SHIPS_SINCE_EPIC` 1→2 (one more polish forces
+  the EPIC track), `SHIPS_SINCE_DEPLOY` 1→2.
+
 ## 2026-06-14 — DIAGNOSIS (Step 4.5 park): craft symmetry-of-waste is epic-shaped (loop iter 111)
 - Attempted the person-sim pick — the evolution-engine-flagged §C-2 gap (đồ án/craft realizes ~everyone,
   wastes nobody → collapses §B-1). Tried the `MATCH("","duan")` knob 0.5→0.25→0.15; craft waste only moved

@@ -311,7 +311,7 @@
     if (a._leaving) { // graduate heading out the cổng — ignore activity routing
       var ggx = (GW >> 1) * T + T / 2 + a._ox, ggy = GH * T + 20;
       var ldx = ggx - a.px, ldy = ggy - a.py, ld = Math.hypot(ldx, ldy);
-      if (alive) { var ls = 0.55; a.px += (ldx / ld) * ls; a.py += (ldy / ld) * ls; a.dir = ldx < 0 ? -1 : 1; a._moving = true; a._leaveT++; }
+      if (alive) { var ls = 0.42; a.px += (ldx / ld) * ls; a.py += (ldy / ld) * ls; a.dir = ldx < 0 ? -1 : 1; a._moving = true; a._leaveT++; }
       if (a.py > GH * T + 12 || a._leaveT > 1600) a._gone = true; // exited (or safety timeout) → dropped next sync
       a.bob = Math.sin(ts / 180 + a.ph) * 1.2;
       return;
@@ -321,7 +321,7 @@
     var dx = tgx - a.px, dy = tgy - a.py, dist = Math.hypot(dx, dy);
     if (dist < 1.5 || !alive) { a._moving = false; a._atDest = a._atDest || dist < 1.5; }
     else {
-      var sp = 0.5 + (a.grade === 1 ? 0.1 : 0);
+      var sp = 0.32 + (a.grade === 1 ? 0.06 : 0); // gentler stroll (owner: "moving too fast") — still reaches the period destination well within 16s
       a.px += (dx / dist) * sp; a.py += (dy / dist) * sp; a.dir = dx < 0 ? -1 : 1; a._moving = true;
     }
     var amp = (a.act === "perform" && a._atDest) ? 2.6 : (a._moving ? 1.4 : 0.4);
