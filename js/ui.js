@@ -202,7 +202,7 @@
         if (a.py < GH * T - 6) { a._arriving = false; a.emote = null; a.emoteUntil = 0; }
       }
       a.grade = s.grade; a.bodyC = SPRITES.GRADE_C[s.grade] || "#9aa4b2"; a.special = (s.ten === "Mai Sương"); a.hb = !!(s.flags && s.flags.hb); a.fav = (S().META.favId === s.id); a.mentored = !!s.mentored; a.ten = s.ten;
-      a.tell = s.tell || ""; a.seed = s.seed;
+      a.tell = s.tell || ""; a.seed = s.seed; a.mood = s.mood; // iter-138: mood synced so the sân shows who's struggling
       a.variantIdx = (typeof s.look === "number" && s.look >= 0 && s.look < SPRITES.VARIANTS.length) ? s.look : SPRITES.hashId(s.id) % SPRITES.VARIANTS.length;
       a.lookC = s.lookC || null; // player-customized override (else the VARIANT)
       var el0 = a.lookC ? SPRITES.clampLook(a.lookC) : SPRITES.VARIANTS[a.variantIdx];
@@ -336,6 +336,7 @@
   var EMOTES = ["music", "excl", "dots", "heart", "spark", "idea", "sweat", "q"];
   function pickEmote(a) {
     // D2 — make the person-sim SOUL visible on the sân: who you're lifting, whom the school is wasting
+    if (a.mood != null && a.mood < CONFIG.MOOD_PENALTY_BELOW && Math.random() < 0.6) return "sweat"; // iter-138: low mood (esp. burning out) → visible strain on the sân — the mood dimension, made watchable (owner: "watching")
     if (a.mentored && Math.random() < 0.6) return Math.random() < 0.5 ? "idea" : "spark";            // a kid you pour attention into lights up
     var _pre = S().presets["n" + a.grade], _mm = CONFIG.MATCH ? CONFIG.MATCH(a.tell, _pre) : 1;
     if (_mm <= 0.6 && Math.random() < 0.6) return "sweat";                                            // grain the school is wasting → visible strain

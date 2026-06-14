@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — Mood made watchable: struggling kids strain on the sân (loop iter 138)
+**PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The campus emotes already showed
+the soul (D2: a wasted kid sweats, a mentored/thriving one sparks) — but they keyed off match/mentoring, not the
+iter-131 MOOD dimension, so a kid burning out looked normal while you watched. Now `syncActors` carries `a.mood`
+and `pickEmote` surfaces it: a low-mood kid (< MOOD_PENALTY_BELOW, esp. near burnout) visibly STRAINS ("sweat")
+on the sân. Completes the campus-soul-visibility with the newest dimension — watching the campus now shows the
+mood/burnout struggle (mark 5; the owner's "watching = development"), not just the inspect card + news feed.
+Accurate to the school's nature: a cram school visibly strains; a kind one doesn't.
+- Pure display (existing emote system + a synced field). Verified: ui syntax OK, gate GREEN, bot BOTOK (identical
+  metrics). NB: the campus rAF render isn't headless-testable (true of all campus visuals) — the emote logic is
+  trivial + guarded (`a.mood != null`); owner-verified live.
+
 ## 2026-06-15 — The tuition trade-off: cash vs the souls you can reach (loop iter 137)
 **PERSON-SIM-serving balance fix (debt-valve, floor-exempt). SOUL 3 · BITE 4 · FUN/DEPTH 4 · CLARITY 4.** Closes
 the gap the owner flagged ("no trade-off guideline for tuition; financials positive, always max it"): tuition was
