@@ -281,6 +281,19 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   vetoes and silence are both signal. Track which predictions miss.
 
 **Current distillation (update in place; date the edits):**
+- *(2026-06-14)* Wants the school to feel like ONE COHESIVE ORGANISM THAT GROWS, not separate tabs. Named
+  the mature game's systems as "separate from each other," early choices as "too much but too little"
+  (overwhelming yet shallow), everything "displayed too early," and each element too thin (few majors/
+  teachers/prizes/awards); wants teacher acquisition AUTOMATIC (derived from school ranking + metrics, not
+  hand-picked). DECODED → he wants the **nurture levers around the person textured, woven, and revealed over
+  time**: more TRADE-OFF variety (not power upgrades), fewer-but-weightier early forks, less busywork
+  (derive-don't-handpick), progression as the "one more unlock" pull. Translated to design law in VISION
+  "The school you shape" (texture-not-gradient; horizontal-not-vertical; visibility≠accessibility; cohesion
+  at output) + ROADMAP epics E7–E10. The trap he's pointing at is the same surface-over-soul one — thin,
+  disconnected systems make the person-sim's INPUTS thin, so deepening them IS people-first work. **Resolve
+  "add content/upgrades" forks toward MORE TRADE-OFF TEXTURE (more ways a kid is realized/wasted), never a
+  strictly-better ladder.** He STEERS THE FRAME (VISION/ROADMAP) and expects the loop to develop it — the
+  meta-system working as designed.
 - *(2026-06-13)* Thinks in PEOPLE AND TRAJECTORIES, not meters: outcomes that span years,
   states that switch ("scammer 2 years after graduate"), named characters, real-world
   talent honored by name. Systems should produce biographies, not scores.

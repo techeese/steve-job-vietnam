@@ -118,6 +118,50 @@ Build it inside the existing engine (`growStudents`, the alumni FSM, `genStudent
   strings, the honored-educator pantheon. Policy inputs that shape *who everyone becomes.*
 - **The essay frame** — intro, recurring characters, the epilogue assembled from *your* graduates.
 
+## The school you shape — TEXTURE · COHESION · PROGRESSION (owner steer, 2026-06-14)
+*The owner felt the mature game's systems are "separate from each other," its early choices "too much but
+too little," everything "displayed too early," and each element too thin (3 majors, 7 hand-picked teachers,
+3 scholarships, no award ladder). This is the **nurture half** of the person-sim — the levers through which
+talent is realized or wasted — and it is underbuilt. Deepening it is **people-first work** (more levers =
+more ways a named kid is realized or wasted), bound by one law so it never becomes a school-optimizer that
+solves itself:*
+
+**THE BINDING LAW — texture, never gradient.** Every new major, teacher, prize, or unlock must MULTIPLY THE
+FORMS OF WASTE (more ways a grain fits or doesn't), never create a strictly-better path. Reframe the owner's
+"too few upgrades" as **too few trade-off moments** — the cure is *texture within each system*, not power
+ladders:
+- **Horizontal, not vertical (on the talent-shaping levers).** Expand by adding MORE ITEMS at the same tier
+  (more majors, more named teachers, more prizes), each a distinct trade-off (realizes some grains, wastes
+  others). On the levers that decide WHO is realized/wasted (pedagogy, teacher grain-fit, major-fit), **no
+  power ladders / strict-better tiers / level-ups** — a "best rung" breeds the dominant strategy §B-1
+  forbids, and an upgrade that lets the player *avoid waste* breaks §C-2. *(SCALE/capacity/cosmetic
+  progression is fine — a bigger classroom, a tended campus, a research unlock that adds CONTENT — because
+  it doesn't make one philosophy win; the test is "does this rung make a thesis dominate or let me dodge
+  waste?" If yes, forbidden.) Sweep: new-content-ONLY must hold pluralism; any progression that lets one
+  strategy pull ahead on both 🍎 and cash is forbidden.*
+- **Every item ships with its waste.** A new major/teacher/prize is legal only if the epilogue can show
+  BOTH a realized AND a wasted life from it. *Produces only winners → it's a pure upgrade → forbidden*
+  (§C-2 symmetry of waste). Each ships a prose bank covering both fates.
+- **Visibility ≠ accessibility.** Keep every THESIS legible at fork-time (the player must SEE cram/craft/
+  hustle + the options to feel the weight, §D-5). Gate by STRUCTURAL cost (cash / quỹ / prereq room /
+  endowment) and normal scope-gating (a khoa's content appears when its building exists) — **never
+  mystery-hide a path.** The cure for "too much, too early" is **fewer, deeper, more-consequential early
+  decisions** (one or two weighty philosophy forks, not a wall of shallow toggles) + content that's
+  visible-as-priced-aspiration (the Kairosoft "one more unlock" pull), NOT hiding the choices.
+- **Cohesion at OUTPUT, not INPUT.** Systems ripple through *results* — the school's standing changes WHO
+  applies (students AND teachers) — but one system's unlock is **never gated behind another's completion**
+  (that breeds a solved build-order). The player sets policy; the engine derives who shows up.
+- **Teachers: a reputation-shaped POOL the player still chooses from.** Replace the hand-picked list with
+  applicants who arrive by the school's standing — TT draws the famous, UT the trusted, TC the substantive
+  — each archetype a trade-off (the prestige engineer realizes coders, neglects makers). High-tier teachers
+  are EXPENSIVE (affordability rises with reputation), **not hard-unlocked**; the player still picks whom to
+  hire and whom to mentor. Cuts busywork, tightens cohesion, keeps the fork.
+
+**The danger to avoid — VISIBILITY COLLAPSE:** "overwhelming yet shallow" must not become "overwhelming yet
+locked" (see 20 teachers, hire 3; see 6 majors, build 2). Breadth without weight is the same disease dressed
+up. Every added item must earn its place by adding a *felt trade-off*, measured by the sweep + a wasted life
+in the epilogue — not by enlarging a menu.
+
 ## The graphics bar — MET ENOUGH; it now SERVES, it no longer LEADS
 For ~50 iterations graphics was the #1 dimension and won every contested slot. **That bar is now met
 enough.** Shipped and good: premium 24×32 volumetric characters, crafted material buildings, a felt sunny
