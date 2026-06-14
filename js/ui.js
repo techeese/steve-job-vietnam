@@ -18,6 +18,10 @@
   var TILES = null, TPX = 16; // the 12-wide tilesheet image once loaded + tile size
   function tileXY(idx) { return [(idx % 12) * TPX, ((idx / 12) | 0) * TPX]; } // src x,y of tile #idx
   function kTile(ctx, idx, cx, baseY, w, h) { if (!TILES) return; var s = tileXY(idx); ctx.drawImage(TILES, s[0], s[1], TPX, TPX, (cx - w / 2) | 0, (baseY - h) | 0, w, h); } // blit tile #idx centered-x, base at baseY
+  // --- Art epic: Jephed top-down characters (40 sheets, 64×128 each = 3 walk-cols × 4 dir-rows of 20×32 cells; x-stride 22, y-stride 32). Rows: 0=down 1=left 2=right 3=up. Loaded async; chibi fallback if absent. ---
+  var CHARS = [], CHARS_N = 0, CW = 20, CH = 32; // sprite frames once loaded + count + cell size
+  function loadChars() { for (var i = 0; i < 40; i++) (function (idx) { var im = new Image(); im.onload = function () { CHARS[idx] = im; CHARS_N++; }; im.src = "assets/characters/" + ("00" + idx).slice(-3) + ".png?v=1"; })(i); }
+  function charFrame(ctx, ci, row, col, x, topY) { var im = CHARS[ci]; if (!im) return false; ctx.drawImage(im, col * 22, row * 32, CW, CH, (x - CW / 2) | 0, topY | 0, CW, CH); return true; } // blit 20×32 frame, top-left at (x-10, topY)
   var $ = function (id) { return document.getElementById(id); };
   var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   function S() { return HVS.S(); }
@@ -109,6 +113,7 @@
     buildSpeeds(); buildTabs();
     SPRITES.build(); // bake pixel-art sprite atlas once (js/sprites.js)
     (function () { var im = new Image(); im.onload = function () { TILES = im; if (S()) S()._mapDirty = true; }; im.src = "assets/tiles/tinytown_tilemap.png?v=1"; })(); // load real tiles; redraw when ready
+    loadChars(); // load the 40 Jephed character sheets; the live layer picks them up next frame (no _mapDirty — actors are on mapLive)
     rebuildWalk(); syncActors(true); initCats(); initFlyers(); initClouds();
     drawStatic(); render(); requestAnimationFrame(liveLoop);
     $("mapHint").textContent = "Chạm vào sinh viên hoặc phòng để xem chi tiết.";
@@ -661,8 +666,17 @@
     // (contact shadow is baked into the 24×32 sprite now)
     var frame = a._moving ? (Math.sin(ts / 150 + a.ph) > 0 ? 0 : 1) : 0;
     var bob = (a.bob || 0) < -0.6 ? -1 : 0;
-    var spr = a.lookC ? SPRITES.custom(a.grade, a.lookC, frame) : SPRITES.sprite(a.grade, a.variantIdx, frame);
-    if (spr) ctx.drawImage(spr, x - 12, y - 30 + bob); // 24×32 sprite; feet at (x,y)
+    var drew = false;
+    if (CHARS_N > 0) { // Jephed sprite: face walk direction (left/right rows), front-facing when idle; stride alternates cols 0/2, neutral = col 1
+      var ci = ((a.id % 40) + 40) % 40, row, col;
+      if (a._moving) { row = a.dir < 0 ? 1 : 2; col = Math.sin(ts / 150 + a.ph) > 0 ? 0 : 2; } else { row = 0; col = 1; }
+      ctx.fillStyle = "rgba(0,0,0,.16)"; ctx.fillRect(x - 5, y + 1, 10, 2); ctx.fillRect(x - 3, y, 6, 1); // cheap contact shadow (Jephed sheets have none)
+      drew = charFrame(ctx, ci, row, col, x, y - 30 + bob); // 20×32 frame; feet at (x,y+2)
+    }
+    if (!drew) { // chibi fallback when the sheets haven't loaded / are absent
+      var spr = a.lookC ? SPRITES.custom(a.grade, a.lookC, frame) : SPRITES.sprite(a.grade, a.variantIdx, frame);
+      if (spr) ctx.drawImage(spr, x - 12, y - 30 + bob); // 24×32 sprite; feet at (x,y)
+    }
     // rain: the little people out in it (walking, or at recess on the sân) pop a cheerful umbrella; ~75% carry
     // one, the rest scurry bare-headed. Pure draw, reads the weather layer (iter 77) — ties weather to people.
     if (weather === "rain" && (a.id % 4 !== 0) && (a._moving || a.act === "recess" || a.act === "perform")) {
@@ -674,7 +688,7 @@
       ctx.fillStyle = "rgba(255,255,255,.32)"; ctx.fillRect(x - 3, uy, 2, 1); // glint
     }
     // idle blink — eyes close briefly every few seconds when standing still (eyes at canvas y6-8 → screen y-24)
-    if (!a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
+    if (!drew && !a._moving && !a.glasses && ((ts * 0.0009 + a.ph * 2) % 4.3) < 0.12) { ctx.fillStyle = a.skin; ctx.fillRect(x - 4, y - 24 + bob, 3, 3); ctx.fillRect(x + 1, y - 24 + bob, 3, 3); }
     if (a.special) { ctx.strokeStyle = PX.gold; ctx.lineWidth = 1; ctx.strokeRect(x - 7.5, y - 30.5, 15, 14); } // Mai Sương — gold frame
     if (a.hb) { ctx.fillStyle = PX.gold; ctx.fillRect(x - 1, y - 34, 2, 2); ctx.fillRect(x - 2, y - 33, 1, 1); ctx.fillRect(x + 1, y - 33, 1, 1); } // scholarship star
     if (a.mentored) { // Mentor's Ledger D2 — a kid you're pouring scarce attention into: a small teal mortarboard, gold tassel (distinct from the gold fav star; the two can coexist)
@@ -1712,6 +1726,7 @@
     firstStudentId: function () { return S().students[0] && S().students[0].id; },
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
+    _assetsReady: function () { return { tiles: !!TILES, chars: CHARS_N }; }, // test hook: has the art (Kenney tiles / Jephed sheets) finished loading?
     setWeather: function (w) { setWeather(w); weatherT = 1e15; }, // test hook: pin weather (rays/rain/clear) + freeze auto-cycle
     checkModals: function () { checkModals(); }, // test hook: render whatever modal the current pending* state implies
     spawnVisitor: function (state) { var ok = spawnVisitor(state); if (ok && visitor) { visitor.py = visitor.ty; visitor.phase = "pause"; visitor.pause = 0; } return ok; }, // test hook: pose a returning alum at the bubble
