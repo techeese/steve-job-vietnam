@@ -2,7 +2,15 @@
 
 Ordered; the loop takes from the top. Add freely, prune ruthlessly.
 Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` same file.
-Owner follows https://techeese.github.io/steve-job-vietnam/ remotely — PUSH EVERY ITERATION.
+
+> **🖥️ LOCAL-DEV MODE (owner directive 2026-06-14 — OVERRIDES "push every iteration").** The owner is
+> developing LOCAL at the desktop on branch **`mentors-ledger`** (a large unpushed backlog: art, the
+> Evolution Engine, this VISION steer). **Do NOT `git push` or deploy** — `git push` to the public Pages
+> site is outward-facing and is the OWNER'S call to make (he merges `mentors-ledger`→`main` himself when
+> ready). Each iteration: commit LOCALLY on `mentors-ledger`, and **verify locally** (`node gate.js` /
+> `./gate.sh`, `./bot.sh`, `node sweep.js`, `./shot.sh` for visuals) INSTEAD of `./bump.sh`+push+polling
+> the live URL. The "push every iteration / poll the live link" rule below is SUSPENDED until the owner
+> says to go live.
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->

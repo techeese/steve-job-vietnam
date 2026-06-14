@@ -371,7 +371,10 @@ content = broken-only UNLESS the line is GENERATED FROM a kid's realized-vs-pote
 | 12 | Audio & distribution | WebAudio (none yet), PWA later, Pages health |
 
 Standing owner directives (always in scope, never skipped):
-- **PUSH EVERY ITERATION** — the owner follows the live link remotely; an unpushed
+- **PUSH EVERY ITERATION** — *(⚠ SUSPENDED 2026-06-14 — LOCAL-DEV MODE, see ROADMAP top banner: owner is
+  developing local on branch `mentors-ledger`; commit locally + verify locally, do NOT push/deploy — going
+  live is the owner's manual call. The rest of this bullet applies again once he releases local-dev.)* —
+  the owner follows the live link remotely; an unpushed
   improvement does not exist. Ship pattern: `./gate.sh && ./bump.sh && git add -A && git commit … && git push`,
   then `curl` the live URL for a unique new string until deployed. **`./bump.sh` is MANDATORY**
   before every commit: it rewrites `?v=<n>` on the `<script>` tags to a fresh timestamp so the
