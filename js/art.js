@@ -25,10 +25,23 @@
     vuoncva:  { garden: true, accent: "#b48ef0", short: "Chu Văn An" }
   };
   function shade(hex, pct) {
-    var n = parseInt(hex.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-    if (pct > 0) { r += (255 - r) * pct; g += (255 - g) * pct; b += (255 - b) * pct; }
-    else { r *= (1 + pct); g *= (1 + pct); b *= (1 + pct); }
-    return "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
+    // Hue-shifted HSL ramp (Art-Polish Phase A — SLYNYRD/Derek-Yu recipe): toward HIGHLIGHTS warm the hue +
+    // DESATURATE (so it doesn't burn to white); toward SHADOWS cool the hue + hold saturation. This is what
+    // keeps a bright palette COHESIVE instead of washing to white/black. Drop-in for the old brightness lerp.
+    var n = parseInt(hex.slice(1), 16), r = ((n >> 16) & 255) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+    var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, L = (mx + mn) / 2, h = 0, s = 0;
+    if (d) {
+      s = L > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      h = (mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60;
+    }
+    var amt = pct < 0 ? -pct : pct;
+    function towards(a, t, k) { var dd = ((t - a + 540) % 360) - 180; return (a + dd * k + 360) % 360; }
+    if (pct > 0) { h = towards(h, 50, amt * 0.20); s = Math.max(0, s * (1 - amt * 0.30)); L = L + (1 - L) * pct * 0.85; }
+    else { h = towards(h, 245, amt * 0.18); s = Math.min(1, s * (1 + amt * 0.12)); L = L * (1 + pct); }
+    var C = (1 - Math.abs(2 * L - 1)) * s, X = C * (1 - Math.abs(((h / 60) % 2) - 1)), m = L - C / 2, R, G, B;
+    if (h < 60) { R = C; G = X; B = 0; } else if (h < 120) { R = X; G = C; B = 0; } else if (h < 180) { R = 0; G = C; B = X; }
+    else if (h < 240) { R = 0; G = X; B = C; } else if (h < 300) { R = X; G = 0; B = C; } else { R = C; G = 0; B = X; }
+    return "rgb(" + (((R + m) * 255) | 0) + "," + (((G + m) * 255) | 0) + "," + (((B + m) * 255) | 0) + ")";
   }
   function glow(ctx, cx, cy, col) { var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 8); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.fillRect(cx - 8, cy - 8, 16, 16); }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
