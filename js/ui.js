@@ -898,6 +898,15 @@
     // name the levers — so a dropout is a loss you could fight, not a silent surprise. Only shows when at risk.
     var moodRisk = st.mood < CONFIG.DROPOUT_MOOD + 12 ? { t: "⚠ kiệt sức — nguy cơ bỏ học (dìu dắt hoặc đổi lối học GẤP)", c: "#e57373" }
       : st.mood < CONFIG.MOOD_PENALTY_BELOW ? { t: "tinh thần đang kém — học hành chậm lại", c: "#f2994a" } : null;
+    // iter-151 — the PER-KID peak-vs-median read (the individual face of iter-148's cohort finding). The `fit`
+    // line above reads DIRECTION (grain×style), blind to MAGNITUDE: a discovered BIG gift (seed≥4) sitting in a
+    // merely-ADEQUATE style ("tạm hợp", mm 0.9–1.3, e.g. cân bằng) looks fine but is being quietly CAPPED — it'll
+    // make a fine kỹ sư, not the phi thường it could. Name the cost + the lever WHILE you can still act
+    // (VISION: watching=development). Gated on tr.lvl≥2 (gift KNOWN — no E5 leak) and !mentored (the rescue lever
+    // isn't already pulled). Not shown when fit is "nở rộ" (mm≥1.3, already pushed) or "lệch" (mm<0.9, the
+    // nguội-dần warning already fires) — only the deceptive adequate middle.
+    var peakRisk = (tr.lvl >= 2 && st.seed >= 4 && !st.mentored && _mm >= 0.9 && _mm < 1.3)
+      ? { t: "tài năng lớn, lối học mới chỉ vừa đủ — em dễ dừng ở “giỏi”, khó tới “phi thường” (dìu dắt, hoặc lối học hợp tạng hơn)", c: "#f2994a" } : null;
     var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < SPRITES.VARIANTS.length) ? st.look : SPRITES.hashId(st.id) % SPRITES.VARIANTS.length;
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (SPRITES.GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
@@ -911,6 +920,7 @@
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
       "<div class='iflav'>Tiềm năng (hạt giống): " + tr.txt + (tr.lvl < 2 ? " <span class='tiny' style='color:var(--faint)'>(dìu dắt để biết rõ)</span>" : "") + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='iflav' style='color:" + fit.c + "'>Tạng × lối học: " + fit.t + "</div>" +
+      (peakRisk ? "<div class='iflav' style='color:" + peakRisk.c + "'>⚠ " + peakRisk.t + "</div>" : "") +
       (moodRisk ? "<div class='iflav' style='color:" + moodRisk.c + "'>" + moodRisk.t + "</div>" : "") +
       ((S().META.favId === st.id && S().META.favLog && S().META.favLog.length) ? "<div class='iflav' style='color:var(--gold)'>⭐ Nhật ký dõi theo: " + esc(S().META.favLog.join(" · ")) + "</div>" : "") + // iter-135: the protégé's story-so-far, persistent on their card (only for the kid you follow)
       "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +

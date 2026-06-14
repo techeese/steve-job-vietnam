@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-15 — "A big gift, only an adequate school" — the peak-suppression warning, per kid (loop iter 151)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
+iter-148 surfaced the đề Văn's peak-vs-median trade-off at the COHORT level (a balanced school makes solid
+engineers and zero Steves). This brings that insight to the INDIVIDUAL, *while you can still act*. The inspect
+card's `Tạng × lối học` read judged DIRECTION (grain×style) but was blind to MAGNITUDE — so a discovered
+**big gift (seed≥4) sitting in a merely-adequate style** ("tạm hợp", mm 0.9–1.3, e.g. `cân bằng`) showed a
+neutral "tạm hợp" when it was actually being quietly CAPPED: that kid will make a fine kỹ sư, not the phi
+thường they could be. Now a gifted kid in that deceptive adequate-middle gets an amber warning:
+*"tài năng lớn, lối học mới chỉ vừa đủ — em dễ dừng ở 'giỏi', khó tới 'phi thường' (dìu dắt, hoặc lối học hợp
+tạng hơn)"* — naming the cost AND the lever.
+- **Fires only in the deceptive middle:** silent when fit is "nở rộ" (mm≥1.3, already pushed → on track to
+  peak) or "lệch" (mm<0.9 — the existing nguội-dần warning already fires). It fills the gap between them.
+- **Respects the laws:** gated on `talentReveal` lvl≥2 (the gift is KNOWN — no E5 leak of hidden talent) and
+  `!mentored` (the rescue lever isn't already pulled); it's the inspect card (per-kid intentional, not metering
+  all 48 → invariant #3); prose, not a number.
+- **Zero balance risk:** a display read off the existing MATCH×seed — no mechanic change.
+Verified: ui syntax OK, gate GREEN, bot BOTOK, sweep 5✓/0 breakage, a fire-logic probe confirms it triggers
+for spark/sky/generalist gifts under `cân bằng` and stays silent for well-matched / mismatched / modest /
+unrevealed / mentored kids, and the epilogue is byte-identical (the essay path is untouched).
+
 ## 2026-06-15 — The protégé's graduation now carries its meaning — the arc's culmination, felt (loop iter 150)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
 VISION's #1 unmet frontier is the *felt transformation arc — watchable beat by beat, with the destiny FSM as
