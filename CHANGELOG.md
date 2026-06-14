@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-14 — FLOW: feedback.md async owner inbox (OWNER-STEERED) (loop iter 109)
+- Owner asked for an **async feedback channel** so he can pile on steer without interrupting the agent's
+  thought process. Built `feedback.md` (inbox at repo root) + wired **SKILL Step 0.0**: the loop READS it
+  FIRST every iteration, distills each note to its intent, applies it to the right file(s) (VISION/SKILL/
+  ROADMAP/CHANGELOG/DESIGN; THESIS only as an `OWNER:` proposal), prepends a dated line to its Ingest log,
+  and CLEARS the inbox — all in that iteration's commit. Feedback PREEMPTS the normal pick (explicit owner
+  ask). Owner Model updated: he steers in async bursts; the inbox is now the primary steer channel.
+- Step-6 flow self-correction (explicit owner ask preempts). No deployable code touched → `SHIPS_SINCE_DEPLOY`
+  and the person-sim lock persist; **iter 110 = the person-sim work** (craft-symmetry §C-2 gap or E4). gate green.
+
 ## 2026-06-14 — FLOW: batched-deploy ship cadence (OWNER-STEERED) (loop iter 108)
 - First autonomous loop iteration after activation. Owner steered mid-iteration: *"may be we still need to
   ship after 5-6 iteration"* — refining the LOCAL-DEV guard from "never push" to a **batched deploy**: develop

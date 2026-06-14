@@ -174,6 +174,17 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
   taste sharpens. If it doesn't exist yet, the next EPIC turn creates it.
 
 ## Step 0 — Orient (always)
+0. **READ `feedback.md` FIRST — the async owner inbox (owner directive 2026-06-14).** The owner drops steer
+   here BETWEEN iterations instead of interrupting mid-thought. If it has content below its `=== FEEDBACK ===`
+   line, that is owner steer waiting and it **PREEMPTS this iteration's normal pick** (an explicit owner ask):
+   (a) distill EACH note to its underlying intent; (b) route it to the right file(s) — `VISION.md` (dream/taste),
+   `SKILL.md` (this playbook + Owner Model distillation), `ROADMAP.md` (epics/backlog/`## Cadence`),
+   `CHANGELOG.md` (log it), `DESIGN.md` (settled law) — and for anything implying a `THESIS.md` change, DO NOT
+   edit THESIS; surface it as an `OWNER:` proposal; (c) **CLEAR the inbox** back to its empty template and
+   prepend a one-line dated entry to its "Ingest log" so the owner sees it landed — all in THIS iteration's
+   commit. Many items: apply the load-bearing ones now, queue the rest in ROADMAP (don't drop any). Ingesting
+   feedback IS a legitimate iteration (it's how the owner steers); the person-sim lock persists unless a note
+   resolves it. If `feedback.md` is empty, proceed normally.
 1. Read `DESIGN.md` (v2 charter — SUPREME authority; its §0 "17 canonical rulings" are
    settled law, never re-litigate), `CONVERSION-SPEC.md` (current sitting spec; raw numbers
    win there), `ROADMAP.md` (the queue, `## Cadence`, `## Epic backlog`, `## Epic in progress`, `## Debt`).
@@ -296,7 +307,10 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   meta-system working as designed. **FLOW (2026-06-14):** develops LOCAL at the desktop but still wants
   visible progress — DEPLOY every 5–6 ships (`SHIPS_SINCE_DEPLOY`), not every iteration and not never. He
   tunes cadence in flight ("ship after 5-6 iteration") — a middle gear between push-every-iter and
-  local-forever; batch the deploys, keep developing local between them.
+  local-forever; batch the deploys, keep developing local between them. He STEERS IN ASYNC BURSTS and
+  dislikes interrupting the agent's flow — so he commissioned `feedback.md` (an inbox the loop reads at
+  Step 0 every iteration, distills, applies, and clears). Treat that inbox as the primary steer channel;
+  check it first, always.
 - *(2026-06-13)* Thinks in PEOPLE AND TRAJECTORIES, not meters: outcomes that span years,
   states that switch ("scammer 2 years after graduate"), named characters, real-world
   talent honored by name. Systems should produce biographies, not scores.
