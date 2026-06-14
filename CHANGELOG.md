@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-15 — 🚀 DEPLOY: the connected-systems + mood arc goes live (loop iter 139)
+Third public deploy (every-10 cadence). `main 40916f7..559adaf` pushed → live at
+https://techeese.github.io/steve-job-vietnam/, verified serving `?v=1781467721271`. Now public (iter-130→138):
+**match-model legibility** (Tạng × lối học) · **MOOD made live** (the cram grind burns out the worst-served) +
+its **warning** + **watchable strain** on the sân · the **protégé** follow-journal + capstone naming · **E8**
+faculty drawn by standing · the **tuition trade-off** (cash vs souls) · the **content.js** split. Three of the
+owner's systems now visibly connect (substance→admissions, standing→faculty, tuition→cohort) — answering "systems
+feel separate". Pre-deploy gate GREEN, bot BOTOK, 5 sweep ✓ / 0 breakage. No code change this firing — the deploy
+IS the iteration. `ITERS_SINCE_DEPLOY`→0.
+
 ## 2026-06-15 — Mood made watchable: struggling kids strain on the sân (loop iter 138)
 **PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 4 · BEAUTY/JUICE n/a.** The campus emotes already showed
 the soul (D2: a wasted kid sweats, a mentored/thriving one sparks) — but they keyed off match/mentoring, not the
