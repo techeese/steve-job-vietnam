@@ -1727,6 +1727,7 @@
     setTab: function (t) { tab = t; render(); },
     setPeriod: function (p) { forcePeriod = p; }, // test hook: pin a day-period for screenshots
     _assetsReady: function () { return { tiles: !!TILES, chars: CHARS_N }; }, // test hook: has the art (Kenney tiles / Jephed sheets) finished loading?
+    _essayText: function () { return essayDraft(true).textContent; }, // evolution-engine sensor: the player-facing epilogue essay (named biographies + the waste lines) as plain text, for the L2 critic's biography-read (THESIS §D marks 1/2/4)
     setWeather: function (w) { setWeather(w); weatherT = 1e15; }, // test hook: pin weather (rays/rain/clear) + freeze auto-cycle
     checkModals: function () { checkModals(); }, // test hook: render whatever modal the current pending* state implies
     spawnVisitor: function (state) { var ok = spawnVisitor(state); if (ok && visitor) { visitor.py = visitor.ty; visitor.phase = "pause"; visitor.pause = 0; } return ok; }, // test hook: pose a returning alum at the bubble

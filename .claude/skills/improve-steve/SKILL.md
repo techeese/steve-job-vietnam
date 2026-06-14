@@ -154,6 +154,13 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
   6. **SOUL/PERSONHOOD** *(people-first arc, 2026-06-14 — now the lead axis)* — does this make a talent's
      REALIZATION / WASTE / DISTORTION more visible, felt, or attachable? Can the player watch a NAMED kid
      become someone *because of* this ship? Bar = the grief-and-cheer test (VISION).
+  7. **COMPLETENESS-VS-DREAM** *(evolution-engine axis — scored vs `THESIS.md` §D, NOT vs craft)* — after this
+     ship, is the game closer to the FIVE MARKS of a true answer to the đề Văn: a stranger would (1) see a
+     person become someone, (2) care BY NAME, (3) find no single right way, (4) leave with their OWN answer,
+     (5) have felt the weight WHILE PLAYING? This axis goes **RED when BEAUTY/JUICE are high but a §D mark is
+     flat** — the success-shaped-failure / local-optimum alarm the fast loop is blind to. A 5-on-craft with a
+     flat §D is exactly what this axis exists to catch. (The L1 sweep + `./lives.sh` biographies measure it;
+     the slow beat `./evolve.sh` re-derives it from scratch.)
   - **THE PEOPLE-FIRST FLOOR (this arc):** a FEATURE or POLISH ship is legal only if it **lifts SOUL to 4+**
     (a BEAUTY/JUICE-only lift no longer clears the floor) **and no axis drops below 3 — EXCEPT BEAUTY/JUICE,
     whose "≥3" clause is RELAXED this arc** (a quieter, sadder, truer screen may be less juicy in service of
@@ -177,6 +184,13 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
    - **(people-first arc) if `SHIPS_SINCE_PERSONSIM ≥ 1` → HARD-LOCKED to a PERSON-SIM pick or epic
      (Compass area 1/2); a non-person-sim pick is ILLEGAL this turn. This lock OUTRANKS the branches below
      and may only be preempted by PRODUCTION breakage named with its symptom (see the Cadence preemption rule);**
+   - else if the people-first arc has RELEASED **and** `FIRINGS_SINCE_FRAME_RESET ≥ 12` → **FRAME-RESET firing
+     (THE EVOLUTION BEAT):** run `./evolve.sh` — it spawns the input-blind critic, which re-derives from the đề
+     Văn (THESIS.md) and writes the single biggest anchored gap to the `## Epic backlog` top as `[EVOLUTION]`.
+     Take that gap as this firing's epic. **Anchor-or-reject:** if the critic wrote "frame holds", there is NO
+     forced jump — the counter still resets, pick the next-best epic. (`FIRINGS_SINCE_FRAME_RESET` +1 every
+     firing but is DORMANT — it never preempts — during the ACTIVE people-first arc; the owner's arc IS the
+     current frame. See docs/EVOLUTION-ENGINE.md.);
    - else if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → **HARD-LOCKED to the EPIC track** (polish is illegal this turn);
    - else if an `## Epic in progress` exists → continue it (ship its next green checkpoint);
    - else POLISH is permitted (but an epic is still allowed if it's the biggest-value move) — **and during
@@ -641,6 +655,14 @@ prevent recurrence) before/instead of a normal pick:**
 - **QUALITY STALL** — recent ships' Bar-rubric scores are flat/declining, or all green-but-boring →
   the picks aren't aiming at the Bar; re-point them. *(People-first arc: a flat line of SOUL-3s IS the
   alarm even when each ship was "fine.")*
+- **WRONG-HILL (THE EVOLUTION BEAT's early trigger)** — ~8 consecutive ships all green + the craft axes
+  (BEAUTY/JUICE) 4+ + the COMPLETENESS-VS-DREAM / §D gap FLAT + owner silent = the local-optimum signature
+  (success-shaped failure: the build looks done but a mark of a true answer is missing). This is the decay the
+  fast loop is structurally blind to — "never re-litigate DESIGN" means it can't conclude the whole hill is
+  wrong. → Run `./evolve.sh`: the input-blind critic re-derives from the đề Văn and either confirms "frame
+  holds" (keep climbing this hill — a valid, counter-resetting result) or writes an anchored `[EVOLUTION]`
+  frame-reset gap to the backlog with an OWNER: veto line. Fires EARLY (before the FIRINGS counter threshold)
+  when this signature trips. Do NOT manufacture a jump — anchor-or-reject; a "frame holds" verdict is a success.
 - **POLISH DRIFT (people-first arc, 2026-06-14)** — `SHIPS_SINCE_PERSONSIM ≥ 1` shipped a non-person-sim
   turn, OR ≥2 of the last ~8 ships were graphics/juice/audio/distribution/cosmetic-content while the
   PERSON-simulation (Compass 1/2) was untouched → the loop is sliding back into the exact surface-over-soul
