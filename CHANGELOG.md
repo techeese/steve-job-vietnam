@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-14 — DIAGNOSIS (Step 4.5 park): craft symmetry-of-waste is epic-shaped (loop iter 111)
+- Attempted the person-sim pick — the evolution-engine-flagged §C-2 gap (đồ án/craft realizes ~everyone,
+  wastes nobody → collapses §B-1). Tried the `MATCH("","duan")` knob 0.5→0.25→0.15; craft waste only moved
+  3%→4%→6% (two failed attempts → reverted to HEAD per Step 4.5).
+- **Finding (valuable):** the knob CANNOT do it — a generalist's `tn` SATURATES over a 4-year career
+  regardless of the growth-RATE multiplier, so they always clear KY_SU or the LUONG_ON net; craft's stat
+  profile also dodges the cá-mập/văn-mẫu waste gates. The fix needs a STRUCTURAL mechanic (seed-aware
+  ceiling / mismatch regression / a new "adrift" cascade gate), and `canbang` shares the same issue — so
+  it's a real EPIC, not a polish. Promoted the [EVOLUTION] backlog entry with this precise diagnosis +
+  3 design candidates + a sweep gate. No game code shipped (reverted) → cadence counters unchanged; the
+  person-sim lock persists. gate/sweep back at baseline (craft 97/3/0).
+- NOTE: new feedback arrived in `feedback.md` mid-iteration (characters too fast / not doing stuff) —
+  left for iter 112's Step-0 ingest (the async channel working as designed; not derailing this turn).
+
 ## 2026-06-14 — BUGFIX SWEEP: tap-to-inspect, head marker, room count, speed labels (via feedback.md) (loop iter 110)
 - First iteration to ingest `feedback.md` — owner reported 4 issues async; all FIXED + verified headless (mobile + desktop), repro→fix→confirm:
   1. **Tap student/building showed nothing** (despite the "Chạm vào…" hint) — the `#mapLive` actor canvas overlaid `#mapStatic` (which owns the click handler) without `pointer-events:none`, so taps never reached `onMapClick`. Added `pointer-events:none`. Latent since the S1 canvas split. (`index.html`)
