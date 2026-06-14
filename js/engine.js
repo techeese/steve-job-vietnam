@@ -198,7 +198,7 @@ function freshState(seed) {
     // meters
     tiengTam: CONFIG.BOOT_TT, uyTin: CONFIG.BOOT_UT, thucChat: CONFIG.BOOT_TC,
     utYearNet: 0, pierceDefense: false, pierceKeynote: false,
-    presets: { n1: "canbang", n2: "luyende", n3: "luyende", n4: "luyende" },
+    presets: { n1: "canbang", n2: "luyende", n3: "luyende", n4: "luyende" }, // the un-attended baseline WASTES (Mentor's Ledger: inaction loses); the realize/waste spread comes from per-child attention, not the global preset
     rooms: [],
     students: [],
     teachers: [],
@@ -381,11 +381,12 @@ function growStudents() {
     var moodF = s.mood < CONFIG.MOOD_PENALTY_BELOW ? 0.7 : 1;
     var roomF = (S.presets["n" + s.grade] === "duan" && !hasRoom("phongmay")) ? 0.5 : 1;
     var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm;
+    var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
     s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
-    s.tn = clamp(s.tn + p.tn * g * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
-    s.st = clamp(s.st + p.st * g * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
+    s.tn = clamp(s.tn + p.tn * g * mm * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
+    s.st = clamp(s.st + p.st * g * mm * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
     var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
-    s.cm = clamp(s.cm + p.cm * gCm, 0, 100);
+    s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");
     s.vet = clamp(s.vet + vetGain, 0, 100);
     s.mood = clamp(s.mood + (p.mood + tf.mood) / dpm, 0, 100);

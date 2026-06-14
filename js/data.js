@@ -61,10 +61,25 @@ var CONFIG = {
   CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
 
   PRESETS: {
-    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0 }, // cram → gaming-the-system hustle (breeds some cá mập)
+    luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0.4, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0 }, // cram → gaming-the-system hustle (breeds some cá mập). tn floor 0.4 (was 0): cram suppresses craft but no longer ZEROES it, so the gift still leaves a gift-shaped gap (Mentor's Ledger talent-coupling)
     canbang: { label: "Cân Bằng", kt: 2.5, tn: 1, st: 0.5, cm: 0.5, mood: 0, vet: 0.5, cost: 0 },
     duan:    { label: "Đồ Án & Lab", kt: 1, tn: 2, st: 1.5, cm: 1.5, mood: 1, vet: -1, cost: 1 }
   },
+  // MENTOR'S LEDGER Phase 1 — grain↔preset coupling: each teaching style REALIZES the grains it fits and
+  // WASTES the rest (VISION invariant #2). Multiplies CRAFT growth (tn/st) so the GIFT, not the policy,
+  // decides whose life each thesis realizes. No stored state (computed each tick from tell + preset).
+  MATCH: function (tell, preset) {
+    var T = {
+      spark: { duan: 1.4, canbang: 1.0, luyende: 0.5 }, // tinkerer: thrives in the lab, ground down by cram
+      sky:   { duan: 1.4, canbang: 1.0, luyende: 0.5 }, // dreamer: same
+      hype:  { duan: 1.0, canbang: 1.4, luyende: 0.6 }, // showy: shines in a balanced room, curdles under cram
+      "":    { duan: 0.5, canbang: 1.0, luyende: 1.3 }  // generalist: needs the ladder cram gives, lost in open projects
+    };
+    var row = T[tell || ""] || T[""];
+    return row[preset] != null ? row[preset] : 1.0;
+  },
+  // a showy kid crammed doesn't realize — they curdle toward gaming-the-system (cá mập): boost hustle growth
+  MATCH_CM: function (tell, preset) { return (tell === "hype" && preset === "luyende") ? 1.6 : 1.0; },
 
   ROOMS: {
     phonghoc: { name: "Phòng học", w: 3, h: 2, cost: 0, desc: "Nơi mọi giấc mơ bắt đầu bằng điểm danh. Nâng cấp: +Mood." },

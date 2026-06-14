@@ -21,6 +21,16 @@ ${engineSrc}
 
 var DPY = CONFIG.DAYS_PER_MONTH * 12; // days per year
 
+// adaptive grain-match (v0 — provisional, pending E2 #1 grain-vs-preset): each year set the school
+// preset to match the cohort's modal tell (spark/sky → đồ án craft; hype → luyện đề; else cân bằng).
+// A guardrail CONTROL: per the open-question law it must NOT dominate the pure single-philosophy theses.
+function adaptPresets() {
+  var tally = {}; S.students.forEach(function (s) { var t = s.tell || ""; tally[t] = (tally[t] || 0) + 1; });
+  var modal = "", best = -1; for (var t in tally) if (tally[t] > best) { best = tally[t]; modal = t; }
+  var P = (modal === "spark" || modal === "sky") ? "duan" : (modal === "hype" ? "luyende" : "canbang");
+  S.presets = { n1: P, n2: P, n3: P, n4: P };
+}
+
 // run ONE playthrough; strat = {presets, build:[{key,x,y}], tuition, grant, years}
 function play(seed, strat) {
   freshState(seed);
@@ -31,6 +41,7 @@ function play(seed, strat) {
   var y1cashStart = S.cash, y1Net = null, minCash = S.cash, bankrupt = false;
   var years = strat.years || 11, totalDays = years * DPY;
   for (var d = 0; d < totalDays; d++) {
+    if (strat.adaptive && d % DPY === 0) adaptPresets();
     dayTick();
     if (S.cash < minCash) minCash = S.cash;
     if (S.cash < -60) bankrupt = true;
@@ -38,17 +49,22 @@ function play(seed, strat) {
   }
   var byState = {}; CONFIG.ALUM.STATES.forEach(function (k) { byState[k] = 0; });
   S.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
+  // per-life realization inputs (E1/L1): innate seed + final genuine craft + hustle/hollow + destiny
+  var lives = S.alumni.map(function (a) {
+    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state };
+  });
   return {
     cash: S.cash, minCash: minCash, bankrupt: bankrupt, y1Net: y1Net,
     tt: S.tiengTam, ut: S.uyTin, tc: S.thucChat, endow: S.endow.bal,
     grad: S.META.graduated, steves: S.META.steves, arrested: S.META.arrested,
-    alumni: S.alumni.length, byState: byState
+    alumni: S.alumni.length, byState: byState, lives: lives
   };
 }
 
 function agg(seeds, strat) {
   var runs = seeds.map(function (s) { return play(s, strat); });
   var n = runs.length, sum = function (f) { return runs.reduce(function (a, r) { return a + f(r); }, 0); };
+  var lives = []; runs.forEach(function (r) { lives.push.apply(lives, r.lives); });
   var states = {}; CONFIG.ALUM.STATES.forEach(function (k) { states[k] = sum(function (r) { return r.byState[k]; }); });
   var totalAlum = sum(function (r) { return r.alumni; }) || 1;
   var pct = {}; for (var k in states) pct[k] = (states[k] / totalAlum * 100);
@@ -60,7 +76,7 @@ function agg(seeds, strat) {
     avgEndow: sum(function (r) { return r.endow; }) / n,
     steveRate: sum(function (r) { return r.steves > 0 ? 1 : 0; }) / n, avgSteves: sum(function (r) { return r.steves; }) / n,
     avgArrested: sum(function (r) { return r.arrested; }) / n,
-    avgAlumni: totalAlum / n, statePct: pct
+    avgAlumni: totalAlum / n, statePct: pct, lives: lives
   };
 }
 
@@ -77,7 +93,8 @@ var STRATS = {
   "luyện đề (cram)": { presets: "luyende" },
   "đồ án (craft)":  { presets: "duan", grant: 1000, build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] },
   "cân bằng":       { presets: "canbang" },
-  "đồ án nghèo (no rooms)": { presets: "duan" }
+  "đồ án nghèo (no rooms)": { presets: "duan" },
+  "khớp tạng (adaptive v0)": { adaptive: true, grant: 1000, build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] }
 };
 
 line("================ Học viện Steve — GAMEPLAY SWEEP ================");
@@ -138,6 +155,53 @@ var maxCoin = Math.max.apply(null, names.map(function (nm) { return results[nm].
 if (maxCoin < 1.5) FLAGS.push("CA_MAP_COIN (cá mập coin) only ~" + f1(maxCoin) + "% across ALL strategies — the satire's dark mirror barely fires; cram should breed some sharks");
 var dead = keys.filter(function (k) { return k !== "STEVE" && names.every(function (nm) { return results[nm].statePct[k] < 0.5; }); }); // STEVE is meant to be rare per-capita (tracked via 🍎rate)
 if (dead.length) FLAGS.push("end-states that essentially never occur: " + dead.join(", ") + " — content/cascade gates may be unreachable");
+line("");
+
+// ---- REALIZATION sensor (E1 / L1): innate talent × school → realized / wasted / distorted ----
+// Classified by DESTINY (the outcome state IS the life — VISION: realization is a good life appropriate to the
+// gift, "a steady kỹ sư as realized as the maker"). realized = STEVE / founder / kỹ sư / lương ổn; wasted =
+// thất nghiệp / quán quân văn mẫu (talent latent or rote); distorted = cá mập coin / bị bắt (talent turned).
+// meanR = mean life-value (STEVE 1.0 … bị bắt 0.0). wasted-PRODIGY = a high-gift (seed≥4) kid wasted. No stored state.
+// [refactored: the prior craft-ratio metric mis-scored grain-appropriate realization — a generalist who reaches a
+//  steady kỹ sư life has modest craft yet IS realized; destiny is what VISION actually defines as realized.]
+line("--- REALIZATION (innate seed × school → realized / wasted / distorted, by destiny) ---");
+var REAL_ST = { STEVE: 1, FOUNDER: 1, KY_SU: 1, LUONG_ON: 1 }, DISTORT_ST = { CA_MAP_COIN: 1, BI_BAT: 1 };
+var STATE_R = { STEVE: 1.0, FOUNDER: 0.9, KY_SU: 0.8, LUONG_ON: 0.6, QUAN_VAN_MAU: 0.2, THAT_NGHIEP: 0.1, CA_MAP_COIN: 0.0, BI_BAT: 0.0 };
+function classify(L) { if (DISTORT_ST[L.state]) return "distorted"; if (REAL_ST[L.state]) return "realized"; return "wasted"; }
+function realizationOf(nm) {
+  var L = results[nm].lives, n = L.length || 1, c = { realized: 0, wasted: 0, distorted: 0 }, rs = [], prod = 0;
+  L.forEach(function (x) { var k = classify(x); c[k]++; rs.push(STATE_R[x.state] != null ? STATE_R[x.state] : 0); if (x.seed >= 4 && k === "wasted") prod++; });
+  var mean = rs.reduce(function (a, b) { return a + b; }, 0) / n;
+  return { realPct: c.realized / n * 100, wastePct: c.wasted / n * 100, distPct: c.distorted / n * 100, mean: mean, prod: prod };
+}
+line("  strategy".padEnd(26) + "real%".padStart(6) + "waste%".padStart(7) + "dist%".padStart(6) + "meanR".padStart(7) + "  wProdigy");
+var realz = {};
+for (var nm2 in results) {
+  var R = realz[nm2] = realizationOf(nm2);
+  line("  " + nm2.padEnd(24) + f0(R.realPct).toString().padStart(6) + f0(R.wastePct).toString().padStart(7) + f0(R.distPct).toString().padStart(6) + f1(R.mean).padStart(7) + "    " + R.prod);
+}
+line("");
+// FLAT-SPREAD — the keystone "is the SOUL there?": does the SAME (default) school produce a felt RANGE —
+// realizing some AND failing some (symmetry-of-waste) — or a degenerate one-note outcome?
+var dR = realz["default (honest)"] || realz[Object.keys(realz)[0]];
+var topShare = Math.max(dR.realPct, dR.wastePct, dR.distPct);
+if (topShare > 80) FLAGS.push("FLAT-SPREAD (SOUL THIN): default school is one-note (" + f0(topShare) + "% in a single destiny category) — no felt range of lives");
+else if (dR.realPct < 5) FLAGS.push("FLAT-SPREAD (SOUL THIN): default school realizes only " + f0(dR.realPct) + "% — it fails kids but never lifts one (symmetry-of-waste broken)");
+else if (dR.wastePct + dR.distPct < 5) FLAGS.push("FLAT-SPREAD (SOUL THIN): default school costs only " + f0(dR.wastePct + dR.distPct) + "% — no one is failed, no stakes");
+else FLAGS.push("realization spread present on default: realized " + f0(dR.realPct) + "% / wasted " + f0(dR.wastePct) + "% / distorted " + f0(dR.distPct) + "% (meanR " + f1(dR.mean) + ") — talent visibly meets the school ✓");
+// symmetry-of-waste (VISION invariant #2): every preset must REALIZE some AND cost (waste/distort) some
+for (var nm3 in realz) { var Z = realz[nm3]; if (Z.realPct < 3) FLAGS.push("'" + nm3 + "' realizes ~0% — no one reaches a good life under this preset"); if (Z.wastePct + Z.distPct < 3) FLAGS.push("'" + nm3 + "' costs ~0% (fails no one) — invariant #2 broken: a preset with no symmetry of waste"); }
+// the poignant core: a gifted kid (seed≥4) wasted on your watch must be REACHABLE
+var totProd = 0; for (var nm4 in realz) totProd += realz[nm4].prod;
+if (totProd === 0) FLAGS.push("WASTED-PRODIGY unreachable across ALL strategies — the poignant core never fires");
+// adaptive grain-match must NOT dominate (open-question law / E2 #1 control)
+var ADK = "khớp tạng (adaptive v0)";
+if (results[ADK]) {
+  var ad = results[ADK], pn = Object.keys(results).filter(function (x) { return x !== ADK; });
+  var domS = pn.every(function (b) { return ad.avgSteves >= results[b].avgSteves; }), domC = pn.every(function (b) { return ad.avgCash >= results[b].avgCash; });
+  if (domS && domC) FLAGS.push("ADAPTIVE grain-match DOMINATES pure theses on 🍎+cash — 'just optimize per cohort' would win, collapsing the open question (E2 #1 risk)");
+  else FLAGS.push("adaptive grain-match does NOT dominate (🍎 " + f1(ad.avgSteves) + ", cash " + f0(ad.avgCash) + "tr) — open-question holds under matching ✓ (v0 policy, refine after E2 #1)");
+}
 line("");
 
 line("--- FLAGS ---");
