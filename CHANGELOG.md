@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-06-15 — The protégé's in-school arc — watch the kid you chose BECOME someone (loop iter 125)
+**PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 5 (THESIS mark 5: felt WHILE playing) ·
+CLARITY 4 · BITE 4 · BEAUTY/JUICE n/a.** The followed protégé (⭐) used to deliver its payoff only at GRADUATION
+(a news line + epilogue spotlight) — for the years in between you watched a star float over a kid who never
+visibly *changed*. Now the kid you chose has a felt, caused, in-school arc.
+- **`favBeat()`** (engine.js, in `monthRollover`): at most ~once a season (`FAV_MOMENT_GAP=90` days), when a REAL
+  transition happens to your protégé, a personal line lands in the news feed — caused by the sim, never generic:
+  - **craftUp / stUp** — a craft or creative breakthrough (a stat crosses 40/60/80): "bắt đầu sửa được thứ ba
+    người trước bỏ cuộc.", "dám làm khác đề bài — và nó đẹp."
+  - **cmUp** — hustle rising, the coin-shark forming (a distortion *warning* you can act on): "lập một nhóm kín
+    'làm giàu', khoá dưới đã gọi bằng anh."
+  - **vetUp** — the văn-mẫu grind: "chép mẫu nhanh hơn cả nghĩ. Thầy khen, em cười gượng."
+  - **moodDown / moodUp** — a slump (a warning) / blooming; **adrift** (one-shot, E4-linked: the gift not finding
+    its form); **mentored** (the turning point you caused); **ktUp** (knowledge milestone).
+  - Each successive same-type moment cycles to a fresh line (a *deepening* arc, never a literal repeat). Every
+    preset produces an arc now — incl. cram (a creative kid oscillating spark↔grind, then blooming, reads
+    beautifully). One protégé at a time; pure observation; deterministic line pick → replay-safe.
+- **Why this matters:** the owner's north-star is "watch a student transform from a student to the people they
+  become, including mood, learning." The transformation was simulated but *invisible during play* — only summarized
+  at the end. This is the in-school delivery (THESIS mark 5), and it makes the mood/adrift warnings ACTIONABLE
+  (mentor them, change the preset) — watching → intervening.
+- Verified: gate GREEN, bot BOTOK (arrests 22 — balance-neutral, favBeat is dormant with no protégé followed),
+  sweep all flags ✓ unchanged; probe over 5 follows shows 2–5 varied caused moments per kid across all presets.
+
 ## 2026-06-15 — E4.1: honest realization poles — cut the dead "lift", name the mentor's hand (loop iter 124)
 **PERSON-SIM polish (people-first arc). SOUL 4 · COMPLETENESS-VS-DREAM 4 · CLARITY 4 · BITE 3 · BEAUTY/JUICE n/a.**
 A probe of iter-123's "lift" pole (a modest kid seed≤2 raised to kỹ sư+) revealed it was **structurally

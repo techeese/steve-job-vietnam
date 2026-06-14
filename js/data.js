@@ -58,6 +58,7 @@ var CONFIG = {
   VET_MULT: function (v) { return 1 - v / 150; },
   KT_SATURATE: 70, KT_RUST: 0.5,
   MOOD_PENALTY_BELOW: 50, DROPOUT_MOOD: 30, DROPOUT_P: 0.10,
+  FAV_MOMENT_GAP: 90, FAV_MILE: [40, 60, 80], FAV_MOOD_LOW: 45, FAV_MOOD_HI: 70, // E5-watch: the followed protégé's in-school arc — a caused moment at most ~once a season (THESIS mark 5)
   CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
 
   PRESETS: {
@@ -280,6 +281,19 @@ var CONTENT = {
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
+  // iter-125 — the followed protégé's IN-SCHOOL arc, as caused moments (THESIS mark 5: felt WHILE playing).
+  // Surfaced ~once a season when a real transition happens — watch the kid you chose actually become someone.
+  favMoments: {
+    craftUp: ["lần đầu làm ra một thứ chạy được — tay nghề đang thành hình.", "hàn xong cái mạch mà không cần ai chỉ.", "bắt đầu sửa được thứ ba người trước bỏ cuộc.", "tay đã quen đồ nghề. Nhìn là biết em đang lớn."],
+    stUp: ["nói một ý làm cả lớp ồ lên — bắt đầu có giọng riêng.", "vẽ kín một quyển sổ ý tưởng, có cái điên có cái hay.", "dám làm khác đề bài — và nó đẹp.", "đặt một câu hỏi mà thầy cũng phải nghĩ."],
+    ktUp: ["đọc hết giáo trình trước cả lớp một học kỳ.", "giảng lại bài cho bạn rõ hơn cả thầy."],
+    moodDown: ["dạo này ít nói hẳn. Có gì đó đang nặng.", "ngồi cuối lớp, mắt để đâu đâu.", "bỏ một buổi học — lần đầu tiên.", "hỏi thăm thì chỉ cười nhạt."],
+    moodUp: ["cười nhiều hơn hẳn, như tìm lại được mình.", "kéo cả nhóm ở lại làm tới khuya, vui ra mặt.", "lại là đứa tới sớm nhất sân trường."],
+    adrift: ["loay hoay mãi không vào nhịp — kiểu học này như chưa hợp với em.", "giỏi mà cứ lửng lơ, hình như chưa tìm đúng đường.", "ngồi giữa lớp mà như người ngoài cuộc."],
+    cmUp: ["bắt đầu rao 'kèo thơm' cho khoá dưới. Lo lo là.", "khoe một cú 'x3 tài khoản' — không ai hỏi tiền đâu ra.", "lập một nhóm kín 'làm giàu', khoá dưới đã gọi bằng anh."],
+    vetUp: ["thuộc làu mọi dạng bài — mà bài nào cũng giống bài nào.", "điểm đều răm rắp, nhưng hỏi 'vì sao' thì lặng.", "chép mẫu nhanh hơn cả nghĩ. Thầy khen, em cười gượng."],
+    mentored: ["bắt đầu có thầy kèm riêng — như được tiếp sức.", "có người để mắt tới. Khác hẳn."]
+  },
   bacTamTiemNang: "Bác Tâm: “Đứa này… để xem.”",
   entryLine: "Trạng thái đầu đời: {chip}",
 

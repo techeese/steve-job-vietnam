@@ -296,11 +296,41 @@ function monthRollover() {
   if (S.month === 6 && S.lastJuneYear !== S.year) { S.lastJuneYear = S.year; news(CONTENT.ticker.thptJune); openJune(); } // June = the real THPT exam season; anchor it before the school's own ceremony
   if (S.month === 7 && !S.pendingAdmit && !hasResolvedAdmitThisYear()) openAdmissions();
   if (S.month === 11) flushGifts();
+  favBeat(); // iter-125: the followed protégé's in-school arc — a caused moment ~once a season (THESIS mark 5)
   // scripted Offer 1 — Tập đoàn Trứng Vàng (≈one month after boot)
   if (S.offersSeen.indexOf("trungvang") < 0 && S.year === 1 && S.month >= 10) { S.offersSeen.push("trungvang"); offerContract(CONTENT.contract.trungvang); }
   endowMilestones();
   // decade capstone: once the school reaches its run-cap year, arm the "Mười năm sau" reflection
   if (S.year >= CONFIG.RUN_CAP_YEARS && !S.META.decadeShown && !S._decadeHit) S._decadeHit = true;
+}
+// iter-125 — surface the FOLLOWED protégé's becoming, as a CAUSED moment at most ~once a season. The sim already
+// produces the stat/mood arc; this just lets the player FEEL it WHILE playing (THESIS mark 5) for the kid they
+// chose — attachment + watch-them-become. Pure observation (no balance change); deterministic line pick (no rnd
+// draw → replay-safe; gate's alumni replay follows no kid so its determinism is untouched).
+function favSnapOf(id, s) { return { id: id, tn: s.tn, st: s.st, kt: s.kt, cm: s.cm, vet: s.vet, mood: s.mood, mentored: !!s.mentored }; }
+function favBeat() {
+  var id = S.META.favId; if (id == null) return;
+  var s = null, st = S.students, i; for (i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
+  if (!s) return;
+  var snap = S.META.favSnap;
+  if (!snap || snap.id !== id) { S.META.favSnap = favSnapOf(id, s); S.META.favSeen = {}; return; } // baseline on first sighting / new protégé — no moment yet
+  if (S.totalDays - (S.META.favMomentDay != null ? S.META.favMomentDay : -9999) < CONFIG.FAV_MOMENT_GAP) return; // throttle
+  var mile = CONFIG.FAV_MILE, crossed = function (a, b) { for (var k = 0; k < mile.length; k++) if (a < mile[k] && b >= mile[k]) return true; return false; };
+  var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+  var seen = S.META.favSeen || (S.META.favSeen = {}); // per-type fire COUNT → consecutive same-type lines cycle (a deepening arc, never a repeat)
+  var type = null;
+  if (s.mentored && !snap.mentored) type = "mentored";                                           // the turning point you caused
+  else if (crossed(snap.tn, s.tn)) type = "craftUp";                                             // a craft breakthrough
+  else if (crossed(snap.st, s.st)) type = "stUp";                                                // a creative breakthrough
+  else if (crossed(snap.cm, s.cm)) type = "cmUp";                                                // hustle rising — the coin-shark forming (a distortion warning)
+  else if (s.mood < CONFIG.FAV_MOOD_LOW && snap.mood >= CONFIG.FAV_MOOD_LOW) type = "moodDown";  // a slump — a warning you can act on
+  else if (s.mood >= CONFIG.FAV_MOOD_HI && snap.mood < CONFIG.FAV_MOOD_HI) type = "moodUp";      // blooming
+  else if (!seen.adrift && mm < CONFIG.MISMATCH_MM && s.grade >= 2 && s.tn < 40 && s.st < 40) type = "adrift"; // E4-link: the gift not finding its form (one-shot)
+  else if (crossed(snap.vet, s.vet)) type = "vetUp";                                             // the rote grind — văn-mẫu in the making
+  else if (crossed(snap.kt, s.kt)) type = "ktUp";                                                // knowledge milestone (lowest priority)
+  if (!type) return;
+  var arr = CONTENT.favMoments[type], c = seen[type] || 0; news("⭐ " + s.ten + " — " + arr[c % arr.length]);
+  seen[type] = c + 1; S.META.favSnap = favSnapOf(id, s); S.META.favMomentDay = S.totalDays;
 }
 function hasResolvedAdmitThisYear() {
   var h = S.admissions.declaredHistory;
