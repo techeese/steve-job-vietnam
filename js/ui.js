@@ -886,7 +886,7 @@
     var ins = $("inspect");
     var hb = (st.flags && st.flags.hb) ? pantheonName(st.flags.hb) : null;
     var sjMajor = HVS.studentMajor ? HVS.studentMajor(st) : null; // the khoa this student belongs to (if any)
-    var stars = "★".repeat(st.seed) + "☆".repeat(5 - st.seed);
+    var tr = talentReveal(st); // E5: the gift, only as far as the school has discovered it
     var lookIdx = (typeof st.look === "number" && st.look >= 0 && st.look < SPRITES.VARIANTS.length) ? st.look : SPRITES.hashId(st.id) % SPRITES.VARIANTS.length;
     ins.innerHTML =
       "<div class='ihead'><canvas id='iav' width='24' height='32' style='width:27px;height:36px;image-rendering:pixelated;background:" + (SPRITES.GRADE_C[st.grade] + "22") + ";border-radius:7px;flex-shrink:0'></canvas>" +
@@ -898,7 +898,7 @@
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
-      "<div class='iflav'>Tiềm năng (hạt giống): " + stars + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
+      "<div class='iflav'>Tiềm năng (hạt giống): " + tr.txt + (tr.lvl < 2 ? " <span class='tiny' style='color:var(--faint)'>(dìu dắt để biết rõ)</span>" : "") + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='custz'><span class='tiny' style='color:var(--faint)'>Tùy biến:</span>" +
         "<button class='czb' id='cz_s'>🎨 Da</button><button class='czb' id='cz_h'>💇 Tóc</button>" +
         "<button class='czb' id='cz_y'>✂️ Kiểu</button><button class='czb' id='cz_a'>👓 Đồ</button>" +
@@ -1231,7 +1231,8 @@
         var r = el("div", "srow");
         var mini = "<div class='mini'>" + statBar("Tay nghề", st.tn, "#6fcf97") + statBar("Sáng tạo", st.st, "#6aa9f0") + statBar("Cá mập", st.cm, "#f2994a") + "</div>";
         var marks = (st.flags && st.flags.hb ? " ✦" : "") + (st.ten === "Mai Sương" ? " 🔧" : "");
-        r.innerHTML = "<div class='av' style='background:" + (SPRITES.GRADE_C[g] + "22") + "'>" + seedFace(st.seed) + "</div><div class='grow'><div class='nm'>" + esc(st.ten) + marks + "</div>" + mini + "</div><div class='tiny'>mood " + Math.round(st.mood) + "</div>";
+        var face = talentReveal(st).lvl >= 2 ? seedFace(st.seed) : "🌱"; // E5: undiscovered gift = a seedling (hạt giống chưa lộ)
+        r.innerHTML = "<div class='av' style='background:" + (SPRITES.GRADE_C[g] + "22") + "'>" + face + "</div><div class='grow'><div class='nm'>" + esc(st.ten) + marks + "</div>" + mini + "</div><div class='tiny'>mood " + Math.round(st.mood) + "</div>";
         sl.appendChild(r);
       });
       c.appendChild(sl); wrap.appendChild(c);
@@ -1240,6 +1241,15 @@
     return wrap;
   }
   function seedFace(seed) { return ["·", "🙂", "🙂", "😀", "😎", "🤩"][seed] || "🙂"; }
+  // E5 — DISCOVERABLE TALENT: a kid's gift is not a number you read off on day one. It reveals as the school
+  // SEES them — by years in (grade), or instantly when you MENTOR (pour attention → you learn who they are).
+  // The đề Văn bite: an entrance score doesn't measure talent; you have to teach the kid to find out. Pure
+  // display — the sim still runs on the true seed; only what the PLAYER knows changes (sweep-neutral).
+  function talentReveal(s) {
+    if (s.mentored || s.grade >= 3) return { lvl: 2, txt: "★".repeat(s.seed) + "☆".repeat(5 - s.seed) };
+    if (s.grade >= 2) { var band = s.seed <= 2 ? "khiêm tốn" : (s.seed === 3 ? "khá" : "có gì đó khác thường"); return { lvl: 1, txt: "đang lộ dần — có vẻ " + band }; }
+    return { lvl: 0, txt: "chưa rõ — phải dạy mới biết" };
+  }
 
   // the founder's old cram-school star (Trần Phi Lợi) is seeded for his scripted arrest, but he isn't
   // THIS school's graduate — keep him out of the Sổ until he's actually "lên báo" (arrested).

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-15 — EPIC E5: discoverable talent — you can't read a gift off a number (loop iter 126)
+**PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · CLARITY 4 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 4 ·
+BEAUTY/JUICE n/a.** Talent magnitude (seed) used to be printed as stars on day one — so you instantly knew who
+the gifted kids were and just mentored the 5-stars. No discovery, no investing-in-uncertainty, and it quietly
+contradicted the đề Văn's core: an entrance number doesn't measure talent.
+- **`talentReveal(s)`** (ui.js) — the gift reveals only as far as the school has SEEN the kid:
+  - grade 1, unmentored → **"chưa rõ — phải dạy mới biết"** (unknown — a 🌱 seedling in the roster)
+  - grade 2 → a **fuzzy band** ("đang lộ dần — có vẻ khá / có gì đó khác thường")
+  - grade 3+ → **full stars** (years in school reveal the gift)
+  - **MENTOR a kid → instant full reveal** (pour scarce attention → you learn who they are). This gives
+    mentoring a second reason to exist and rewards investing in the unknown — the underdog mechanic in seed form.
+- Resolves OPEN DECISION #3 (discoverable, owner-leaned). Sets up ⭐ E-UNDERDOG (spotting an overlooked gift).
+- **Pure display — sweep-NEUTRAL** (the sim still runs on the true seed; only what the PLAYER knows changes).
+  Admissions already showed only a score histogram, so the "exam shows a number, not the gift" framing is now
+  consistent end-to-end. Verified: ui.js syntax OK, bot BOTOK (arrests 22), gate GREEN, sweep flags ✓ unchanged;
+  headless inspect-card render confirmed all four reveal states (unknown · mentor-reveal · fuzzy · full).
+
 ## 2026-06-15 — The protégé's in-school arc — watch the kid you chose BECOME someone (loop iter 125)
 **PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 5 (THESIS mark 5: felt WHILE playing) ·
 CLARITY 4 · BITE 4 · BEAUTY/JUICE n/a.** The followed protégé (⭐) used to deliver its payoff only at GRADUATION
