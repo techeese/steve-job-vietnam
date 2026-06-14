@@ -3,6 +3,7 @@
 const fs = require("fs");
 const dir = __dirname;
 const dataSrc = fs.readFileSync(dir + "/js/data.js", "utf8");
+const contentSrc = fs.readFileSync(dir + "/js/content.js", "utf8"); // iter 134 STRUCTURE — CONTENT split out of data.js
 const engineSrc = fs.readFileSync(dir + "/js/engine.js", "utf8");
 const personSrc = fs.readFileSync(dir + "/js/sim/person.js", "utf8"); // iter 114 structure carve — person creation + growth
 
@@ -142,7 +143,7 @@ return OUT.join('\\n');
 `;
 
 try {
-  const fn = new Function(shim + "\n" + dataSrc + "\n" + engineSrc + "\n" + personSrc + "\n" + harness);
+  const fn = new Function(shim + "\n" + dataSrc + "\n" + contentSrc + "\n" + engineSrc + "\n" + personSrc + "\n" + harness);
   console.log(fn());
 } catch (e) {
   console.log("HARNESS PARSE/RUN ERROR: " + e.message);

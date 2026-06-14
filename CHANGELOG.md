@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: copy split from config — data.js → data.js + content.js (loop iter 134)
+**STRUCTURE epic — BEHAVIOR-NEUTRAL (proven). Scores N/A (refactor).** `EPICS_SINCE_STRUCTURE` was 2 (E-UNDERDOG
++ mood). Rather than review-escape the genuinely high-coupling ui.js (one tightly-coupled IIFE — confirmed again),
+took the CLEAN leaf that WAS available: data.js mixed CONFIG (balance knobs) and CONTENT (414 lines of Vietnamese
+copy) — two **fully independent** globals (neither references the other). Split them:
+- `js/data.js` → CONFIG only (233 ln, the balance surface).
+- `js/content.js` → CONTENT (all player-facing text — the prose pools, names, ticker, epilogue copy).
+- Wired: index.html (`<script>` after data.js), gate.js + sweep.js concat (contentSrc before engineSrc).
+- **Why:** config/copy separation — the balance knobs are no longer buried under 400 lines of copy; the copy is
+  one navigable file (helps future content work + reads cleanly). Clean, low-risk (vs the deferred ui.js refactor).
+- **Proof of neutrality:** gate ALL GREEN, sweep 5 ✓ flags, bot BOTOK with metrics identical to iter-133
+  (arrests 23, grad 87, cash 900). CONTENT is text used in prose/news only — it cannot change sim math; bot's
+  identical metrics confirm. No other harness reads data.js directly (bot/shot/lives use index.html).
+- ui.js (1807 ln) structure debt re-noted: the shared-UI-context refactor remains the queued move for when a UI
+  feature (E11/E12-14, owner-gated) actually needs it.
+
 ## 2026-06-15 — The protégé, named in the final essay + a biography quality pass (loop iter 133)
 **PERSON-SIM polish (people-first arc). SOUL 5 · COMPLETENESS-VS-DREAM 4 · CLARITY 4 · BITE 4 · BEAUTY/JUICE
 n/a.** Two things:
