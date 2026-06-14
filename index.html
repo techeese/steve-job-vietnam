@@ -245,6 +245,26 @@ window.onerror = function (m, src, ln) {
     background:#1b2230;border:1px solid var(--gold);color:var(--ink);padding:9px 15px;border-radius:11px;
     font-size:12px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;transition:opacity .3s, transform .3s;max-width:90%;pointer-events:none}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+
+  /* ---------- DESKTOP: side-by-side responsive layout (Art-Polish E / D1 — works on PC) ---------- */
+  /* Below 940px nothing changes — the 390px mobile gate is untouched. At ≥940px the phone column becomes a
+     two-pane desktop app: a bigger map on the left, tabs/panel/ticker on the right. */
+  @media (min-width: 940px) {
+    body { align-items: flex-start; padding: 20px 16px; }
+    #app {
+      max-width: 940px; min-height: 0; height: calc(100vh - 40px);
+      display: grid;
+      grid-template-columns: 585px minmax(320px, 1fr);
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas: "head head" "map tabs" "map panel" "map ticker";
+      border-radius: 14px; overflow: hidden;
+    }
+    #app > header { grid-area: head; }
+    #app > .mapwrap { grid-area: map; align-self: start; border-right: 1px solid var(--line); }
+    #app > nav { grid-area: tabs; }
+    #app > #panel { grid-area: panel; min-height: 0; }
+    #app > #ticker { grid-area: ticker; }
+  }
 </style>
 </head>
 <body>
