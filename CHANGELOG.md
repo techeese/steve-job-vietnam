@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-15 — The match model, made legible: grain × learning style, per kid (loop iter 130)
+**PERSON-SIM polish (people-first arc). SOUL 4 · CLARITY 5 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE
+n/a.** The grain↔preset match (`CONFIG.MATCH`, the E2a HEART) drove every realize/waste outcome but was
+INVISIBLE during play — the player only learned a kid was mismatched at graduation. Directly answers the owner's
+original steer ("systems feel separate"): now the inspect card shows, per kid, whether their **tạng (grain) ×
+the learning style you set** is thriving or adrift.
+- New inspect line "**Tạng × lối học:**" — `hợp lối học này — đang nở rộ` (green, fit) / `lối học này tạm hợp`
+  (neutral) / `lệch lối học này — tài năng dễ nguội dần (đổi lối học, hoặc dìu dắt)` (orange, actionable) /
+  `🎓 có thầy dìu — tạng nào cũng gỡ lại được phần nào` (gold, mentored rescue).
+- **Mark 5 (felt WHILE playing) + cohesion + actionable:** you see WHO is being wasted by the current style and
+  the two levers to fix it (change the year's learning style, or spend a mentor slot) — *before* graduation.
+- **Orthogonal to E5** (it reads grain×preset DIRECTION, not talent MAGNITUDE — a mismatched seed-5 and seed-2
+  both read "adrift"), so it's safe to always show and it surfaces waste-risk before you know how gifted they are.
+  Correctly shows the satire: a generalist THRIVES in cram, a tinkerer WASTES in it.
+- Pure display, **sweep-NEUTRAL** (only ui.js touched). Verified: ui.js syntax OK, gate GREEN, bot BOTOK,
+  headless inspect render confirmed all four bands (fit · mismatch · mentor-rescue · generalist-in-cram).
+
 ## 2026-06-15 — 🚀 DEPLOY: the soul arc goes live (loop iter 129)
 Second public deploy (cadence: every ~10 iterations). `main d8cc425..40916f7` pushed → live at
 https://techeese.github.io/steve-job-vietnam/, verified serving `?v=1781463105023`. Now public (the iter-118→128
