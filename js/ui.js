@@ -1364,6 +1364,11 @@
     function pick(arr) { return arr.slice().sort(function (a, b) { return (b.grat - a.grat) || ((b.gifts || 0) - (a.gifts || 0)); }); }
     var cast = [], used = {}, total = s.alumni.length, i;
     pick(s.alumni.filter(function (a) { return a.state === "STEVE"; })).slice(0, C.STEVE_CAP).forEach(function (a) { cast.push(a); used[a.id] = 1; });
+    // THESIS §D2 — the poignant core: the essay must NAME a wasted prodigy (a high-gift kid your school failed)
+    var WASTE_P = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
+    s.alumni.filter(function (a) { return !used[a.id] && a.fs && a.fs.seed >= 4 && WASTE_P[a.state]; })
+      .sort(function (a, b) { return (b.fs.seed - a.fs.seed) || (b.grat - a.grat); })
+      .slice(0, 1).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });
     pick(s.alumni.filter(function (a) { return a.state === "BI_BAT"; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });
     if (majorityKey) {
       var maj = pick(s.alumni.filter(function (a) { return a.state === majorityKey && !used[a.id]; }));
@@ -1456,10 +1461,13 @@
     } else {
       P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
       P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
+      var WASTE_ST = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
       buildCast(s, byState, majorityKey, C).forEach(function (a) {
         var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
-        P("lead", esc(a.ten) + " — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + "<br>“" + esc(line) + "”");
+        var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
+        var gap = (seed >= 4 && WASTE_ST[a.state]) ? " — tài năng bỏ phí trên tay bạn" : ""; // THESIS §D2: name the waste (one quiet line; the realized get their nod via the gift-stars + chip)
+        P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + "<br>“" + esc(line) + "”");
       });
       P("lead", s.META.steves > 0 ? tpl(E.steveColFull, { steves: s.META.steves }) : E.steveColEmpty);
       P("lead", E.ledgerHead);
