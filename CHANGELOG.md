@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-14 — PLANNED the E11 epic (walk-in rooms + activity→development) (loop iter 119)
+- Epic-locked turn (SMALL_SHIPS_SINCE_EPIC=3). E11 is a MAJOR feature (room-interior rendering + an
+  activity→growth balance link), so per PLAN-FIRST + the divergence mandate I wrote the `## Epic: E11`
+  plan instead of autonomously committing a big visual+balance direction unsupervised: goal, 4 phases
+  (1 divergence → 2 render interiors → 3 activity→growth link, sweep-gated → 4 juice), verification,
+  rollback, and 3 load-bearing OWNER decisions (D1 visual direction → divergence; D2 which rooms;
+  D3 the activity→growth mechanic, capped + sweep-gated).
+- No game code shipped (a plan does NOT reset SMALL_SHIPS_SINCE_EPIC) — the epic stays locked; phase-1
+  divergence is the next build step. Surfaced D1–D3 for owner confirm/redirect; absent a steer the loop
+  runs the divergence (generating 3 interior options to pick from). `ITERS_SINCE_DEPLOY` 2.
+
 ## 2026-06-14 — the learning-style fork, made legible (E15d) (loop iter 118)
 - Person-sim legibility (owner iter-115: "no trade-off guideline for the learning style each year"). Added a
   `tradeoff` line to each `CONFIG.PRESETS` entry and rendered all three under the "Hướng dạy" selector, so the

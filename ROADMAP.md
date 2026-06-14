@@ -19,16 +19,42 @@ Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` s
 - `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be STRUCTURE. (=0: iter-114 `sim/person.js` carve was the structure move — `growStudents` + creation extracted, behavior byte-identical. **Follow-up structure move available: the alumni FSM → `sim/person.js` too**, when next due.)
 - `FIRINGS_SINCE_FRAME_RESET: 0` → **(EVOLUTION ENGINE) ≥12 ⇒ the next firing HARD-LOCKS to a frame-reset beat (run `./evolve.sh`, dequeue the `[EVOLUTION]` gap).** Reset 0 on a frame-reset. DORMANT behind the people-first arc — `SHIPS_SINCE_PERSONSIM` outranks it; the beat only fires once the arc has released OR a frame-reset is independently due AND no person-sim lock is active. (Engine wired 2026-06-14; see docs/EVOLUTION-ENGINE.md, `evolve.sh`, `critic-prompt.md`.)
 - **★ PEOPLE-FIRST ARC ACTIVE (2026-06-14, owner course-correction).** The game's SOUL = the deep simulation of a person becoming themselves (talent × education → realized/wasted/distorted). Plateau rule SUSPENDED: the person-sim (E4–E6 below) IS the epic supply; "awaiting steer" is illegal as a reason to ship polish. Graphics/distribution/audio = production-broken-only. Arc releases only on a MEASURED gate + EXPLICIT owner confirm (see SKILL.md PEOPLE-FIRST MANDATE + VISION.md). **E2 match-model RESOLVED — the Mentor's Ledger soul-loop SHIPPED (E1+E2a+E2b+E3: grain↔preset `CONFIG.MATCH` coupling + scarce mentor attention + epilogue NAMES the waste; sweep L1 realize/waste/distort spread verified). The pause is LIFTED; next person-sim epic is E4.**
-- `ITERS_SINCE_DEPLOY: 1`       → **(owner 2026-06-14: "push to github.io after every 10 iteration") ≥10 ⇒ DEPLOY (run the banner recipe), then reset 0.** +1 per loop iteration. (=1: +iter-118; first deploy was iter-117 → next deploy ≈ iter 127.) Note: the public push needs a DIRECT owner go OR a `Bash(git push origin main)` allow-rule (the classifier blocks a feedback.md-only authorization).
+- `ITERS_SINCE_DEPLOY: 2`       → **(owner 2026-06-14: "push to github.io after every 10 iteration") ≥10 ⇒ DEPLOY (run the banner recipe), then reset 0.** +1 per loop iteration. (=2: +iter-119; first deploy was iter-117 → next deploy ≈ iter 127.) Note: the public push needs a DIRECT owner go OR a `Bash(git push origin main)` allow-rule (the classifier blocks a feedback.md-only authorization).
 - `LAST_EPIC: iter 114 STRUCTURE — js/sim/person.js carve (growStudents + genStudent/genName/rollTell extracted from engine.js; behavior byte-identical: sweep+gate diff clean, bot BOTOK). De-risks E11. Prior: Art & Polish (Kenney+Jephed), Mentor's Ledger soul-loop.`
 - `LAST_MAINTENANCE: iter 97 — CLEAN (sweep green, bot OK, perf clean, 390px audit clean).`
 
 ## Epic in progress
-_(none. Recently shipped on branch `mentors-ledger` (local): the **Mentor's Ledger** person-sim soul-loop
-(E1–E3), the **Art & Polish** epic (Kenney+Jephed), and the **Evolution Engine** beat (L2 critic `evolve.sh` +
-`critic-prompt.md` + the `FIRINGS_SINCE_FRAME_RESET` bridge — see docs/EVOLUTION-ENGINE.md). Next person-sim
-epic = **E4**. Earlier: late-game economic pressure SHIPPED iter 107 — OWNER veto if too much: lower
-`CONFIG.OPS.rate` (0.22) or `OPS.perSV` (0.6).)_
+**E11 — Walk-in roofless rooms where activity earns development** (PLANNED iter 119; epic-locked turn). The
+owner's vision: "bigger classrooms, not show the roof, people walk in and do stuff and earn development."
+Phase 1 (NEXT) = a DIVERGENCE workflow for the room-interior look; building waits on the owner picking a
+direction (SKILL: divergence + PLAN-FIRST for a major/visual feature). See `## Epic: E11` below.
+
+> _(Recently shipped on `mentors-ledger`, now LIVE on github.io: Mentor's Ledger soul-loop (E1–E3), Art &
+> Polish (Kenney+Jephed), the Evolution Engine beat, responsive desktop, and the iter-108→118 fixes.)_
+
+## Epic: E11 — Walk-in roofless rooms where activity earns development
+**Goal (one Bar-moving sentence):** turn key rooms into bigger TOP-DOWN INTERIORS (no roof) where students
+walk in and do visible activities that CONTRIBUTE to their growth — so *watching the campus IS watching
+development happen* (the living campus fused with the person-sim soul).
+
+**Load-bearing decisions — OWNER, please confirm/redirect (I won't build the visual until you pick):**
+- **D1 (visual direction):** how the roofless interior reads — pick via a DIVERGENCE workflow (3 options
+  screenshotted at 390px) per the SKILL's #1-visual-dimension rule. *Default if silent: run the divergence
+  and show you 3 to choose from.*
+- **D2 (scope of rooms):** all rooms as interiors, or just the teaching/activity rooms (phòng học, xưởng,
+  phòng máy, căng tin)? *Lean: the activity rooms first.*
+- **D3 (activity→growth link):** the soul mechanic — a kid's per-period activity nudges its matching stat
+  (study→kt, xưởng/đồ-án→tn/st, etc.), sweep-gated so it does NOT create a dominant strategy or break the
+  realize/waste spread. *Lean: a SMALL per-activity nudge on top of the preset growth, capped, sweep-verified.*
+
+**Phases (each ships a green checkpoint):**
+1. **Divergence** — 3 room-interior visual prototypes → screenshot 390px + desktop → owner picks (or I judge).
+2. **Render the interiors** — the chosen direction (no-roof, desks/benches, students visible inside) for the D2 rooms; mobile 390px + desktop verified; procedural fallback intact.
+3. **Activity→growth link** (D3) — wire the per-period activity to a capped stat nudge in `js/sim/person.js` `growStudents`; **sweep-gate**: pluralism holds, no dominant strategy, realize/waste spread intact, 🍎 stays rare.
+4. **Polish/juice** — the "doing stuff" reads delightfully (the owner's "love to watch").
+
+**Verification:** screenshots READ at 390px + ~1280px (per `shot.sh`); `node sweep.js` bands hold (phase 3); `./gate.sh` + `./bot.sh` green. **Rollback:** branch `mentors-ledger`, one commit per phase, `git revert` per phase.
+OWNER: this is the standout campus-life × soul epic from your feedback — confirm the direction (D1–D3) or steer; absent a steer, the loop runs phase-1 divergence next.
 
 ## Epic: Art & Polish + Responsive — ✅ SHIPPED (branch mentors-ledger, 2026-06-14)
 **DONE:** Kenney Tiny Town tiles + buildings + props + Jephed characters (real pixel-art, procedural fallback
