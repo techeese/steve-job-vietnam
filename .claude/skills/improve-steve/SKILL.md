@@ -14,7 +14,59 @@ additive features, zero restructures, zero overhauls, zero bold swings, while th
 real cute game / the graphics is the most important thing and not yet met") stays unmet and the
 codebase silently rots (a 1693-line ui.js; a production error trap that went missing unnoticed).
 
-Four standing biases now correct that, in priority order:
+### ★ THE PEOPLE-FIRST MANDATE (owner course-correction 2026-06-14 — OUTRANKS every dimension below until the owner says the SOUL is there)
+
+The owner steered hard: *"the current game works for a while, but somehow its spirit is not quite good.
+I want it to focus on PEOPLE DEVELOPMENT — like how a student can transform from a student to the people
+they become, including mood, learning, etc. … each person even has their own TALENT score, that later
+interacts with the education system; he/she will improve."* Root cause he named: *"we focused too much on
+other stuff like graphics and some adjustment."* This is the owner DEEPENING his original north-star
+(**biographies, not scores**): the loop made a SHALLOW person-model (6 drifting numbers) look beautiful
+instead of making the person-model DEEP.
+
+**For this arc the iteration slot is governed by ONE question, which REPLACES "what is the single biggest
+change toward incredible?" as the first thing you ask:**
+
+> **"What single change would most DEEPEN the simulation of a person becoming themselves — talent
+> realized, wasted, or distorted by the school you run?"**
+
+The model to build toward (nature × nurture): each person has innate TALENT — **magnitude** (≈ existing
+`seed`) and **direction** (≈ existing `tell`) — INTERACTING with the education system (presets, khoa,
+teachers, mentorship, mood/wellbeing) to **REALIZE** it (good match → toward potential → a maker, an
+engineer, *or a respected employed kỹ sư — realization is NOT "became a founder"*), **WASTE** it
+(mismatch/cram → latent or curdled → a gifted kid ground into a văn-mẫu clerk), or **DISTORT** it (high
+hustle + neglect → coin shark). The poignant core is **VISIBLE WASTED TALENT** the player feels
+responsible for, surfaced as EMERGENT per-life NARRATIVE (generated FROM the realized-vs-potential gap,
+not generic strings) + ATTACHMENT to named kids. Honor the four PERSON-SIM INVARIANTS in VISION.md
+("Laws the person-sim must not break"): (1) whose-life-not-which-strategy, (2) symmetry-of-waste,
+(3) prose-not-a-meter, (4) waste-is-done-TO-them. Scope: a WATCH-and-SET-POLICY sim with ~48 students —
+SYSTEMIC/policy inputs that shape everyone + ONE protégé the player follows; NEVER per-student micromanage
+of all 48 (placement stays systemic). Build it in `growStudents` / the alumni FSM / `genStudent`, sweep-tunable.
+
+**THE ANTI-DRIFT RULE (binding — the "graphics WINS" mechanism, repointed):** for this arc graphics, juice,
+distribution, audio, and cosmetic content are DEMOTED to **production-broken-only** (they win the slot ONLY
+when a NAMED production symptom proves breakage — a JSERR title string, a failed load, a corrupted-save
+repro, mobile-unusable — or an explicit owner ask). *"Looks rough / could be prettier / a nicer icon / a
+stale share preview"* is NOT broken and may NOT preempt. A polish/graphics FEATURE-epic is ILLEGAL this
+arc. Enforcement is MECHANICAL, not vibes: the `SHIPS_SINCE_PERSONSIM` counter (Cadence, threshold 1) + the
+SOUL rubric floor + the narrowed preemption lane — prose alone lost seven times, so the teeth live in the
+ledger and the floor.
+
+**THE PLATEAU RULE IS SUSPENDED this arc.** The iter-92 maturity-plateau lesson was *"the remaining depth
+was never on the surface — it is in the PERSON."* The owner's steer RESOLVES it: "no available epic" is now
+false by construction — the person-sim epic supply (E1–E6 in ROADMAP `## Epic backlog`) is explicit and
+owner-blessed. A "taste-blocked" person-sim fork is resolved by DECIDING (decide→ship→veto-by-reaction) on
+the SMALLEST viable version (E1 is instrumentation-only, zero-balance — never blocked), NOT by falling back
+to polish. **"Awaiting owner steer" is ILLEGAL as a reason to ship non-person-sim work this arc.**
+
+**RELEASE OF THE ARC is a MEASURED gate, not a vibe** (the loop may NOT self-release; owner is often away
+~15 firings): the arc lifts ONLY when (a) `node sweep.js` reports the realize/waste/distort distribution is
+visibly spread AND wasted-talent is reachable (the E1 metrics/flags), AND (b) reading ~5 simulated
+biographies a stranger can name a kid who was wasted and one who was realized (incl. a realized kỹ sư, not
+only an 🍎), AND (c) **the owner EXPLICITLY confirms.** Log the release in the Owner Model + Playbook changelog.
+
+Four standing biases now correct timidity — but for this arc, **point them at person-simulation depth, not
+surface charm:**
 1. **BIGGER beats smaller.** Every turn, before picking, ask: *"What is the single biggest change that
    would move this game most toward incredible right now?"* Default to that, not the next tidy roadmap
    tick. A turn may legitimately be a multi-day EPIC run as a workflow (see "The two tracks").
@@ -52,6 +104,14 @@ cadence ledger (below), because soft "shoulds" lost seven times running.
 **THE COUNTED CADENCE (binding — replaces the old soft "every 4th should be an epic," which the loop
 dodged 7×):** ROADMAP carries a machine-readable `## Cadence` ledger. Step 0 READS it and it DICTATES
 the track — you don't get to choose timid:
+- `SHIPS_SINCE_PERSONSIM` — **(people-first arc, 2026-06-14; binding, OUTRANKS the counters below)** +1 on
+  every ship that did NOT touch Compass area 1 or 2 (talent / growth pipeline / mood economy / destiny FSM /
+  biography / legibility-of-a-transformation / attachment-to-a-named-kid). **Reset to 0 ONLY when a
+  person-sim ship lands. If ≥ 1, this firing is HARD-LOCKED to a person-sim pick or epic — a non-person-sim
+  pick is ILLEGAL.** Threshold is **1, not "≥2 of last 8"** — anything looser is people-occasionally, not
+  people-FIRST. This is the "graphics WINS" mechanism literally repointed at people. A *preempting*
+  non-person-sim ship still increments this (preemption can't dodge the soul forever). Lift the lock ONLY
+  when the owner releases the arc (THE PEOPLE-FIRST MANDATE).
 - `SMALL_SHIPS_SINCE_EPIC` — +1 on every polish ship; **reset to 0 only when an EPIC actually SHIPS**
   (a *planned* epic does NOT reset it — that's the "plan forever, build never" escape the Khoa system
   used: planned, then 7 small phases). **If this counter is ≥ 3, this firing is HARD-LOCKED to the
@@ -69,8 +129,12 @@ the track — you don't get to choose timid:
   ui.js's panels/modals = ~25-symbol bidirectional closure coupling, `el` used 146×; a real refactor via
   a shared-UI-context object, queued — not a clean leaf, and ui.js at ~1560 isn't yet painful).
 - Update the ledger in the SAME commit as every ship. Broken-always-wins and explicit owner asks
-  preempt the track — but a preempting *small* ship still increments `SMALL_SHIPS_SINCE_EPIC`, so
-  preemption can't be used to dodge epics forever.
+  preempt the track — but a preempting *small* ship still increments `SMALL_SHIPS_SINCE_EPIC` AND
+  `SHIPS_SINCE_PERSONSIM`, so preemption can't be used to dodge epics or the soul forever.
+  **(People-first arc) "broken" is NARROWED to PRODUCTION breakage only** — a proven JSERR / white-screen /
+  save-loss / mobile-unusable / sweep floor-drop, NAMED with its symptom. *"Looks rough / could be prettier
+  / a nicer icon / a stale share preview"* is NOT broken and may NOT preempt the person-sim lock; a
+  graphics/distribution/audio ship claiming "broken" without a named production symptom is ILLEGAL this arc.
 
 ## The Bar — what "INCREDIBLE" means (score every ship against this)
 
@@ -87,12 +151,17 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
   3. **FUN/DEPTH** — meaningful choices, momentum, the "one more year" pull; no dominant strategy.
   4. **CLARITY/UX** — legible at 390px in 10 seconds; a new player isn't lost.
   5. **SATIRICAL BITE** — anchored in real Vietnamese-education culture; the open question stays open.
-  - **THE FLOOR:** a FEATURE or POLISH ship is legal only if it **lifts ≥1 axis to 4+ while no axis
-    drops below 3.** If your pick can't name the axis it raises to 4+, it's too timid — diverge and
-    pick bolder (this is the divergence rule with teeth). **Debt valve:** bugfixes, balance/sweep
-    fixes, and `## Debt`-paydown ships are EXEMPT from the floor (they keep the machine healthy; score
-    them but don't block). The ~10-firing reflection reads the score TREND — a long flat line of 3s is
-    the timidity alarm even when each ship was individually "fine."
+  6. **SOUL/PERSONHOOD** *(people-first arc, 2026-06-14 — now the lead axis)* — does this make a talent's
+     REALIZATION / WASTE / DISTORTION more visible, felt, or attachable? Can the player watch a NAMED kid
+     become someone *because of* this ship? Bar = the grief-and-cheer test (VISION).
+  - **THE PEOPLE-FIRST FLOOR (this arc):** a FEATURE or POLISH ship is legal only if it **lifts SOUL to 4+**
+    (a BEAUTY/JUICE-only lift no longer clears the floor) **and no axis drops below 3 — EXCEPT BEAUTY/JUICE,
+    whose "≥3" clause is RELAXED this arc** (a quieter, sadder, truer screen may be less juicy in service of
+    the soul). If your pick can't name how it raises SOUL to 4+, it's not a people-first pick — diverge and
+    pick bolder. **Debt valve:** bugfixes, balance/sweep fixes, and `## Debt`-paydown ships are EXEMPT (score
+    them, don't block). The ~10-firing reflection reads the SOUL trend specifically — a flat line of SOUL-3s
+    is this arc's timidity alarm. *(Pre-arc floor, for when the owner releases the arc: lift ≥1 axis to 4+
+    while no axis drops below 3.)*
 - Keep a living **`VISION.md`** in the repo: the 1-page picture of this game at its most incredible —
   the pillars, the feel, the dream features. Maintain it; mine it for epics; revise it when the owner's
   taste sharpens. If it doesn't exist yet, the next EPIC turn creates it.
@@ -105,9 +174,13 @@ The owner judges this as ART and as a TOY, not as correct software. "Incredible"
    didn't make, a background build may be in flight — STOP and investigate before touching
    anything (check for running agents/tasks first).
 3. **READ `## Cadence` AND RUN THE FAILURE DETECTOR — this sets the track before you look at any idea:**
-   - if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → **HARD-LOCKED to the EPIC track** (polish is illegal this turn);
+   - **(people-first arc) if `SHIPS_SINCE_PERSONSIM ≥ 1` → HARD-LOCKED to a PERSON-SIM pick or epic
+     (Compass area 1/2); a non-person-sim pick is ILLEGAL this turn. This lock OUTRANKS the branches below
+     and may only be preempted by PRODUCTION breakage named with its symptom (see the Cadence preemption rule);**
+   - else if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → **HARD-LOCKED to the EPIC track** (polish is illegal this turn);
    - else if an `## Epic in progress` exists → continue it (ship its next green checkpoint);
-   - else POLISH is permitted (but an epic is still allowed if it's the biggest-value move).
+   - else POLISH is permitted (but an epic is still allowed if it's the biggest-value move) — **and during
+     the people-first arc that polish must itself be a person-sim pick.**
    Then scan the last ~8 CHANGELOG entries against the FAILURE MODES (see "Failure-mode detection"); if
    one trips, this firing is a SKILL REVIEW. If the latest "loop iter N" crosses a ~50-mark → the
    50-firing skill review.
@@ -132,6 +205,22 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
   striking miss teaches the model more than a timid hit. Silence after a push = tacit accept.
 
 **Taste north-star (owner-seeded — the autonomy fuel; resolve design forks against THIS):**
+- *(THE COURSE-CORRECTION 2026-06-14 — NOW THE SINGLE MOST WEIGHTED SIGNAL, supersedes graphics-#1)* The
+  owner judged the mature game's SPIRIT *"not quite good"* and steered from surface to SOUL. Verbatim:
+  *"I want it to focus on PEOPLE DEVELOPMENT — like how a student can transform from a student to the
+  people they become, including mood, learning, etc."* and *"each person even has their own TALENT score,
+  that later interacts with the education system; he/she will improve."* Root cause he named: *"we focused
+  too much on … graphics and some adjustment."* DECODED — he wants the **simulation of a person becoming
+  themselves**: innate TALENT (magnitude ≈ `seed`, direction ≈ `tell`) × education (presets/khoa/teachers/
+  mentorship/mood) → REALIZED (the 🍎, the maker, *or a respected employed kỹ sư*), WASTED (the gifted kid
+  ground into a văn-mẫu clerk), or DISTORTED (the coin shark) — the missing soul is **VISIBLE WASTED
+  TALENT you feel responsible for**, as emergent per-life narrative + attachment to named kids. This is the
+  owner DEEPENING his original "biographies, not scores" instinct. → **Resolve every design fork toward the
+  option that lets the player watch a NAMED person transform.** It DEMOTES the "graphics is the #1
+  dimension / graphics WINS the slot" signal below to "met enough; serves the sim; production-broken-only"
+  until the owner says the soul is there (see THE PEOPLE-FIRST MANDATE + the SHIPS_SINCE_PERSONSIM counter).
+  The SUNNY-school seed below still governs HOW the campus looks/feels (the body); people-development is now
+  WHAT to deepen (the soul). Scope guard: ~48 students → systemic/policy inputs + ONE focus protégé.
 - *(SEEDED 2026-06-13, owner verbatim)* **"It should feel a sunny, slightly chaotic little school
   you love watching, the characters are customize, and doing stuff that you like to see."**
   → NORTH STAR = **a SUNNY, LIVELY little school that is a JOY TO WATCH.** Decoded:
@@ -193,9 +282,11 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 - *(2026-06-13)* FEEL-FIRST: animation, graphics, walking people doing things, background
   music — liveliness outranks mechanical elegance. A screen that breathes beats a system
   that's clever.
-- *(2026-06-13)* GRAPHICS IS THE #1 DIMENSION, judged as ART, bar HIGH and NOT YET MET ("graphic
-  still ugly… this game is more important in graphic"). Graphics WINS the slot when it competes —
-  unless the cadence rule calls an epic of equal weight. Permanent technique that works (the v2 unlock):
+- *(2026-06-13 — SUPERSEDED 2026-06-14 by THE COURSE-CORRECTION above; kept for the technique recipe only)*
+  Graphics WAS the declared #1 dimension ("graphic still ugly… this game is more important in graphic") and
+  WON the slot. NO LONGER: it is "met enough / serves the sim / production-broken-only" until the owner says
+  the soul is there — the over-investment this directive drove is the root cause the owner named. The
+  TECHNIQUE below still applies whenever a production-broken graphics repair is legitimately picked (the v2 unlock):
   PRE-BAKED sprite atlas (bake chibis WITH FACES once → blit), BRIGHT daytime palette (figure-ground so
   characters pop), crafted BUILDINGS (framed windows, distinct roofs, 1px outlines), crisp discipline
   (`imageSmoothingEnabled=false`, flat fills, no gradients/arcs on sprites). Procedural canvas at 26px
@@ -229,18 +320,26 @@ The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owne
 
 ## Improvement Compass — 12 areas (rotate; broken always wins)
 
-| # | Area | Covers |
-|---|---|---|
-| 1 | Simulation depth | dayTick, growth pipeline, presets, crowding, mood economy |
-| 2 | Alumni lifecycle | FSM states/transitions, gifts, Sổ Cựu SV, the 🍎 pipeline, epilogue |
-| 3 | Admissions | điểm chuẩn modal, pool, stunts, BXH, tuyển thẳng, ảo/bổ sung |
-| 4 | Funding | tuition, endowment, contracts + strings, scholarships draws |
-| 5 | Pantheon & content | scholarships/dedications/prizes, events, ticker, cast arcs, đề pool |
-| 6 | Graphics & charm | art.js sprites/tiles/animations, tells, motes, gallery loop — owner priority |
-| 7 | UI & mobile | 390px layouts, sheets, modals, HUD; mobile is a RELEASE GATE |
-| 8 | Balance | engine.js mirror + sweep bands (Y1 cash, keynote Y7–9, temptation ratios) |
-| 9 | Tech quality | perf (canvas, 48 sprites walking), save robustness, layer discipline |
-| 10 | Testing & tooling | gate coverage, GATE_ALUM determinism, bot playthroughs, gallery |
+**THIS ARC'S RANKING (people-first mandate, 2026-06-14):** Areas **1 + 2 are the WINNING dimension** — the
+person-simulation (talent → growth → mood → destiny → biography → attachment) is what every slot is for
+until the owner releases the arc. Area **6 (Graphics & charm) is DEMOTED from "owner priority" to
+"production-broken-only / serves the sim."** A non-area-1/2 ship "serves the sim" ONLY if it changes a
+MECHANIC of talent/growth/mood/destiny OR makes a specific talent's realize/waste/distort more LEGIBLE — not
+if it merely adds a string about a person (a new ticker line / alumni one-liner / đề event is cosmetic
+content = broken-only UNLESS the line is GENERATED FROM a kid's realized-vs-potential gap).
+
+| # | Area | Covers | This-arc weight |
+|---|---|---|---|
+| 1 | **Simulation depth** | growth pipeline, presets, **talent (magnitude/direction) × education → realize/waste/distort**, mood economy | **#1 — WINS the slot** |
+| 2 | **Alumni lifecycle** | FSM, Sổ Cựu SV, the 🍎 pipeline, epilogue, **biographies, emergent gap-generated narrative, attachment to named kids** | **#1 — WINS the slot** |
+| 3 | Admissions | điểm chuẩn, pool, stunts, BXH, tuyển thẳng — *serves the sim only when it deepens who arrives / who you can shape* | serves the sim |
+| 4 | Funding | tuition, endowment, contracts + strings, scholarships — *only when it creates a person-shaping tension (mentorship, neglect)* | serves the sim |
+| 5 | Pantheon & content | scholarships/dedications/prizes, events, ticker, cast arcs, đề pool — *gap-generated life-narrative is in scope; a plain new string is broken-only* | serves / broken-only |
+| 6 | Graphics & charm | art.js sprites/tiles/animations, tells, motes, gallery loop | **DEMOTED — production-broken-only / serves the sim** |
+| 7 | UI & mobile | 390px layouts, sheets, modals, HUD — *legibility of a TRANSFORMATION is in scope; cosmetic chrome is broken-only*; mobile is a RELEASE GATE |
+| 8 | Balance | engine.js mirror + sweep bands — keeps pluralism + the realize/waste/distort spread honest | always (debt valve) |
+| 9 | Tech quality | perf (canvas, 48 sprites walking), save robustness, layer discipline | broken-only |
+| 10 | Testing & tooling | gate coverage, GATE_ALUM determinism, **the new realization/waste sweep metrics**, bot playthroughs | as needed (E1 lives here) |
 | 11 | Docs & presentation | README, CHANGELOG, ROADMAP hygiene, screenshots, repo metadata |
 | 12 | Audio & distribution | WebAudio (none yet), PWA later, Pages health |
 
@@ -380,6 +479,15 @@ upward plan, and never leave the live link rough at an epic's END.
 `EPICS_SINCE_STRUCTURE` — if ≥2, take the top STRUCTURE entry), expands it into a `## Epic: <name>`
 plan, and starts phase 1. Keep the backlog full by mining VISION.md; an empty backlog on an epic turn
 is itself a planning failure (invent the next one from VISION.md on the spot).
+**PEOPLE-FIRST GATE (2026-06-14, binding this arc):** every FEATURE-epic dequeued or invented MUST DEEPEN
+the person-simulation (Compass area 1 or 2); a graphics/juice/distribution/audio/cosmetic-content
+FEATURE-epic is ILLEGAL until the owner releases the arc. If the top backlog entry is a polish epic, SKIP it
+and dequeue (or invent) the top person-sim epic (E1–E6 are pre-ranked on top). A person-sim epic is illegal
+to ship without EXTENDING `sweep.js` to verify the open-question law on the realization axis (the realization
+metric + adaptive-grain-match dominance flag + waste-reachability) — a talent mechanic with no
+realization-sweep is an un-verifiable balance change. **STRUCTURE-epic redirect:** a STRUCTURE epic this arc
+MUST target the person-sim's own files (carve `growStudents` + the alumni FSM into `sim/person.js` — that IS
+people-dev infrastructure); the `ui.js→screens.js` split is DEFERRED until the arc releases.
 
 **Deletion is a first-class move.** Dead code, parked experiments, stale rules, superseded systems —
 delete them (you have git). Before deleting something you didn't create or that's described as load-
@@ -531,7 +639,17 @@ prevent recurrence) before/instead of a normal pick:**
 - **TASTE MISS** — owner vetoes/corrections cluster in the reactions ledger → the Owner Model failed to
   predict; sharpen it.
 - **QUALITY STALL** — recent ships' Bar-rubric scores are flat/declining, or all green-but-boring →
-  the picks aren't aiming at the Bar; re-point them.
+  the picks aren't aiming at the Bar; re-point them. *(People-first arc: a flat line of SOUL-3s IS the
+  alarm even when each ship was "fine.")*
+- **POLISH DRIFT (people-first arc, 2026-06-14)** — `SHIPS_SINCE_PERSONSIM ≥ 1` shipped a non-person-sim
+  turn, OR ≥2 of the last ~8 ships were graphics/juice/audio/distribution/cosmetic-content while the
+  PERSON-simulation (Compass 1/2) was untouched → the loop is sliding back into the exact surface-over-soul
+  rut the owner named as the root cause. Force the next slot to a person-sim pick/epic and strengthen
+  whatever rule let polish through. This trip OUTRANKS a normal pick.
+- **VERDICT DRIFT (people-first arc)** — biography/waste/event strings disproportionately frame ONE preset
+  as the cause of waste (cram = bad), OR any waste-line blames the KID not the system, OR a pantheon name
+  appears near a scandal/waste string → the satire is becoming a thesis / cruel / irreverent. Re-balance per
+  the person-sim invariants (symmetry-of-waste; waste-done-TO-them; pantheon firewall).
 - **DEBT CREEP** — a file blew past its split threshold, a queued refactor has rotted N turns, prod
   robustness slipped (e.g. the missing onerror) → queue the paydown epic NOW.
 - **STALENESS** — the skill itself has grown bloated/contradictory/wrong → prune and reconcile.
@@ -692,3 +810,18 @@ This is the loop's "annual physical" — the deepest self-improvement beat, and 
   counter there manufactures the exact low-quality work the cadence was built to prevent. (Anti-timidity
   still binds: this only applies after the real epics are genuinely shipped or genuinely blocked, proven by
   analysis — not as a standing excuse.)
+- 2026-06-14 (THE PEOPLE-FIRST REORIENTATION, owner course-correction, authored via a 7-agent reorient
+  workflow): owner judged the mature game's SPIRIT "not quite good" and steered from surface to SOUL —
+  *"focus on PEOPLE DEVELOPMENT … how a student can transform from a student to the people they become …
+  each person even has their own TALENT score that interacts with the education system,"* root-causing it as
+  *"focused too much on … graphics and some adjustment."* This RESOLVES the iter-92 plateau (the depth was
+  never on the surface — it's in the PERSON), so the plateau rule is SUSPENDED this arc. Reoriented with HARD
+  mechanisms (prior reorientations failed prose-only): a `SHIPS_SINCE_PERSONSIM` Cadence counter (threshold
+  1, wired into Step 0) = the "graphics WINS" counter repointed; a SOUL rubric axis as THIS ARC'S FLOOR
+  (BEAUTY/JUICE-only lifts no longer clear it; BEAUTY/JUICE ≥3 relaxed); narrowed broken-only preemption to
+  NAMED production breakage; Compass areas 1+2 are the winner, graphics demoted to production-broken-only;
+  Owner-Model top signal = the dated COURSE-CORRECTION (supersedes graphics-#1); POLISH-DRIFT + VERDICT-DRIFT
+  failure trips; the four person-sim INVARIANTS live in VISION.md; the person-sim epic backlog E1–E6 +
+  STRUCTURE-redirect (sim/person.js, NOT screens.js) live in ROADMAP. Release of the arc is a MEASURED gate
+  (sweep realize/waste spread + readable biographies + EXPLICIT owner confirm) — the loop may not self-release.
+  Owner-blessed; loop currently PAUSED for the talent-design discussion (E2 match-model decision pending).
