@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: the UI toolkit split out — js/uikit.js (loop iter 145)
+**STRUCTURE epic — BEHAVIOR-NEUTRAL (proven). Scores N/A (refactor).** The epic-lock (SMALL_SHIPS_SINCE_EPIC=3)
+forced an epic, but every FEATURE epic is genuinely blocked (E6 overrides Decision #2; E-UNDERDOG ckpt2's
+player-agency conflicts with E5's hidden talent + the headless sweep; grain-teachers is a core-balance quagmire;
+E10 may be counterproductive now the early choices are deepened) — so the autonomous-safe structure move was the
+right call. I'd review-escaped the full ui.js refactor (iter-141, genuinely high-coupling); this took the CLEAN,
+SAFE slice of it that WAS available:
+- `js/uikit.js` (NEW) — the pure UI PRIMITIVES carved out of ui.js: `$`, `el`, `esc`, `ibar`, `statBar`, `chip`,
+  `fundRow` (no closure state — just DOM/HTML builders). Globals, loaded before ui.js (one IIFE that uses them).
+- **Why:** separates the toolkit from the 1800-line view; and crucially it's the **shared-context foundation** —
+  a future epilogue/render extraction can now reuse these globals instead of ui.js's closure-private copies
+  (the iter-141 blocker), making the deferred big refactor lower-churn when a UI feature (E11+) finally needs it.
+- **Proof of neutrality:** bot BOTOK (identical metrics — the ~200 el/esc/$ call sites resolve to the new
+  globals), gate ALL GREEN, lives.sh 0 LIVESFAIL (the epilogue's esc/el resolve), node --check clean. Headless
+  harnesses (gate/sweep) don't load uikit.js — they touch no DOM.
+- NB: the epic-lock mis-fired here (the loop has shipped many real epics; the remaining are owner-gated) — this
+  is a modest-but-real clean structure move, NOT a dodge, and it doesn't risk the payoff (unlike a blind epilogue
+  refactor).
+
 ## 2026-06-15 — The honored student the system still failed (loop iter 144)
 **PERSON-SIM polish (people-first arc). SOUL 4 · BITE 5 · CLARITY 4 · BEAUTY/JUICE n/a.** The game's sharpest đề
 Văn moment — an award-winning standout who still ended up wasted (e.g. "★★★★★ — 🪪 Thất nghiệp — tài năng bỏ phí

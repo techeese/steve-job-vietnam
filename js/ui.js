@@ -22,8 +22,7 @@
   var CHARS = [], CHARS_N = 0, CW = 20, CH = 32; // sprite frames once loaded + count + cell size
   function loadChars() { for (var i = 0; i < 40; i++) (function (idx) { var im = new Image(); im.onload = function () { CHARS[idx] = im; CHARS_N++; }; im.src = "assets/characters/" + ("00" + idx).slice(-3) + ".png?v=1"; })(i); }
   function charFrame(ctx, ci, row, col, x, topY) { var im = CHARS[ci]; if (!im) return false; ctx.drawImage(im, col * 22, row * 32, CW, CH, (x - CW / 2) | 0, topY | 0, CW, CH); return true; } // blit 20×32 frame, top-left at (x-10, topY)
-  var $ = function (id) { return document.getElementById(id); };
-  var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  // $ / el / esc / ibar / statBar / chip / fundRow → js/uikit.js (iter 145 STRUCTURE; globals, loaded before ui.js)
   function S() { return HVS.S(); }
 
   var ROOM_SKIN = {
@@ -879,7 +878,6 @@
   }
   function pantheonName(key) { for (var i = 0; i < CONFIG.PANTHEON.length; i++) if (CONFIG.PANTHEON[i].key === key) return CONFIG.PANTHEON[i].name; return null; }
   var TELL_TXT = { spark: "hay tháo đồ ra xem nó chạy thế nào", hype: "thích sân khấu hơn bảng đen", sky: "hay nhìn lên trời giữa giờ", "": "chưa lộ điều gì đặc biệt" };
-  function ibar(l, v, c) { return "<div class='ib'>" + esc(l) + " " + Math.round(v) + "<div class='bar2'><b style='width:" + Math.max(0, Math.min(100, v)) + "%;background:" + c + "'></b></div></div>"; }
   function showInspectStudent(id) {
     var st = null, list = S().students; for (var i = 0; i < list.length; i++) if (list[i].id === id) { st = list[i]; break; }
     if (!st) { hideInspect(); return; }
@@ -1041,7 +1039,6 @@
       $("ticker").innerHTML = "▸ " + esc(line);
     }
   }
-  function chip(cls, ic, v) { var c = el("div", "chip " + cls); c.innerHTML = ic + " <span class='v'>" + v + "</span>"; return c; }
   function meter(cls, lab, v, max, key) {
     var d = el("div", "meter " + cls);
     d.innerHTML = "<div class='lab'>" + lab + " <b>" + Math.round(v) + "</b></div><div class='bar'><i style='width:" + Math.max(0, Math.min(100, v / max * 100)) + "%'></i></div>";
@@ -1190,9 +1187,6 @@
     return wrap;
   }
 
-  function statBar(label, v, color) {
-    return "<i title='" + label + "'><b style='width:" + Math.max(0, Math.min(100, v)) + "%;background:" + color + "'></b></i>";
-  }
   // P4b — cycle the trưởng-khoa: vacate → each free teacher → vacate. setKhoaHead enforces one khoa/teacher.
   function cycleKhoaHead(key) {
     var s = S();
@@ -1408,7 +1402,6 @@
     wrap.appendChild(ce);
     return wrap;
   }
-  function fundRow(l, v, col) { var r = el("div", "row"); r.innerHTML = "<div class='grow muted'>" + l + "</div><div style='font-weight:700;color:" + col + "'>" + v + "</div>"; return r; }
 
   function panelInfo() {
     var s = S(), wrap = el("div");
@@ -1809,7 +1802,6 @@
 
 
   /* ---------------- utils ---------------- */
-  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   var toastTimer = null;
   function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove("show"); }, 1900); }
 
