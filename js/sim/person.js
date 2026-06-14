@@ -81,3 +81,120 @@ function growStudents() {
   }
   if (n) S.students = S.students.filter(function (x) { return !x._drop; });
 }
+
+/* ============================================================================
+   THE PERSON BECOMES SOMEONE (iter 127 STRUCTURE carve from engine.js): the
+   destiny resolution (cascade → makeAlumnus), the realization reading (E4:
+   talent realized/wasted/distorted, RELATIVE to the gift), and the followed
+   protégé's in-school arc (favBeat). Pure over the global S/CONFIG/CONTENT +
+   engine helpers (clamp/r1/tpl/nid/hashStr/news/…); loaded in one scope
+   (index.html <script> after engine.js · gate.js/sweep.js concat-eval). The
+   alumni-WORLD FSM (transition/alumYear/gifts) stays in engine.js — it sims the
+   alumni inside the SCHOOL's economy; this file decides WHO the person becomes.
+   ========================================================================== */
+
+// E4 — realization RELATIVE to the gift's magnitude (see CONFIG.ALUM.FLOURISH). Pure over CONFIG → engine, ui
+// AND sweep share one definition. realClass tells the epilogue WHICH grief/cheer line a life earned. Never a
+// 🍎 gate (aLua = seed only); this only colours how fully the gift got to flower under the school you ran.
+function flourishOf(state) { var F = CONFIG.ALUM.FLOURISH; return F[state] != null ? F[state] : 0; }
+function realFrac(state, seed) { return clamp(flourishOf(state) / CONFIG.ALUM.EXPECT(seed), 0, 2); }
+function realClass(state, seed) { // "loud" | "under" | "" — the wasted readings of the gift, else nothing notable
+  var WASTE = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
+  if (seed >= 4 && WASTE[state]) return "loud";                  // a prodigy outright failed/turned
+  if (seed >= 4 && realFrac(state, seed) < CONFIG.ALUM.UNDER_REAL) return "under"; // a prodigy who merely settled (💼)
+  return ""; // NB: no "exceed-the-gift" pole — realization is APPROPRIATE to magnitude (VISION), and the cohort
+             // has ~no modest kids to lift anyway (admissions excludes seed≤2 — see ROADMAP underdog epic).
+}
+
+function cascadeRow(key) { for (var i = 0; i < CONFIG.CASCADE.length; i++) if (CONFIG.CASCADE[i].key === key) return CONFIG.CASCADE[i]; return CONFIG.CASCADE[CONFIG.CASCADE.length - 1]; }
+function cascadeOutcome(s) {
+  for (var i = 0; i < CONFIG.CASCADE.length; i++) if (gatePass(CONFIG.CASCADE[i].gate, s)) return CONFIG.CASCADE[i];
+  return CONFIG.CASCADE[CONFIG.CASCADE.length - 1];
+}
+function gatePass(gate, s) {
+  var hasOr = ("ktOr" in gate) || ("tnOr" in gate);
+  for (var k in gate) {
+    var spec = gate[k];
+    if (k === "tnMax") { if (!(s.tn <= spec[0])) return false; continue; }
+    if (k === "ktOr" || k === "tnOr") continue;
+    var val = s[k];
+    if (val == null) return false;
+    if (spec[1] > 0) { if (!(val >= spec[0])) return false; } else { if (!(val <= spec[0])) return false; }
+  }
+  if (hasOr) {
+    var ok = false;
+    if (gate.ktOr && s.kt >= gate.ktOr[0]) ok = true;
+    if (gate.tnOr && s.tn >= gate.tnOr[0]) ok = true;
+    if (!ok) return false;
+  }
+  return true;
+}
+// the pure rote profile: memorized everything (high knowledge), drilled to death (high cram),
+// no spark of their own (near-zero creativity) — the văn-mẫu champion.
+function isVanMau(s) { return s.kt >= 70 && s.vet >= 55 && s.st <= 25; }
+function isTiemNang(s) {
+  var t = CONFIG.TIEMNANG;
+  return s.st >= t.st && s.tn >= t.tn && s.cm >= t.cm && s.vet <= t.vetMax && S.thucChat >= t.tcMin;
+}
+function nearMiss(s, row) {
+  // closest missed cascade tier (for the wistful one-liner)
+  for (var i = 0; i < CONFIG.CASCADE.length; i++) {
+    var g = CONFIG.CASCADE[i].gate;
+    for (var k in g) {
+      if (k === "ktOr" || k === "tnOr" || k === "tnMax") continue;
+      var spec = g[k]; if (spec[1] <= 0) continue;
+      var miss = spec[0] - (s[k] || 0);
+      if (miss > 0 && miss <= 6 && CONFIG.CASCADE[i].key !== row.key) return tpl(CONTENT.nearMiss, { n: Math.ceil(miss), stat: statLabel(k) });
+    }
+  }
+  return null;
+}
+function statLabel(k) { return { kt: "Kiến Thức", tn: "Tay Nghề", st: "Sáng Tạo", cm: "Cá Mập", vet: "Vẹt" }[k] || k; }
+
+function makeAlumnus(s, row, diem, tiem) {
+  var entry = CONFIG.ALUM.ENTRY_MAP[row.key] || "THAT_NGHIEP";
+  var flags = { tiemNang: tiem, coinPath: row.key === "CA_MAP_COIN", garage: false, mentored: !!s.mentored, vt: (s.flags.vt || []).slice() }; // E4.1: carry whether the player spent scarce attention on this kid (the mentor's hand, named in the epilogue)
+  var ef = CONFIG.ALUM.ENTRY_FLAGS[row.key]; if (ef) flags[ef] = true;
+  if (s.flags.hb) flags.hb = s.flags.hb;
+  var id = nid();
+  var grat = clamp(0.35 * s.mood + 0.35 * (100 - s.vet) + 8 * flags.vt.length + (s.flags.hb ? 10 : 0), 0, 100);
+  var a = {
+    id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry, history: [entry],
+    yearsInState: 0, annMonth: annMonthFor(id),
+    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap (what the SCHOOL did) — separate from seed, never a 🍎 gate
+    grat: r1(grat), gifts: 0, flags: flags, line: ""
+  };
+  S.alumni.push(a);
+  return a;
+}
+function annMonthFor(id) { var months = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12]; return months[hashStr("a" + id) % 11]; }
+
+// iter-125 — surface the FOLLOWED protégé's becoming, as a CAUSED moment at most ~once a season. The sim already
+// produces the stat/mood arc; this just lets the player FEEL it WHILE playing (THESIS mark 5) for the kid they
+// chose — attachment + watch-them-become. Pure observation (no balance change); deterministic line pick (no rnd
+// draw → replay-safe; gate's alumni replay follows no kid so its determinism is untouched).
+function favSnapOf(id, s) { return { id: id, tn: s.tn, st: s.st, kt: s.kt, cm: s.cm, vet: s.vet, mood: s.mood, mentored: !!s.mentored }; }
+function favBeat() {
+  var id = S.META.favId; if (id == null) return;
+  var s = null, st = S.students, i; for (i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
+  if (!s) return;
+  var snap = S.META.favSnap;
+  if (!snap || snap.id !== id) { S.META.favSnap = favSnapOf(id, s); S.META.favSeen = {}; return; } // baseline on first sighting / new protégé — no moment yet
+  if (S.totalDays - (S.META.favMomentDay != null ? S.META.favMomentDay : -9999) < CONFIG.FAV_MOMENT_GAP) return; // throttle
+  var mile = CONFIG.FAV_MILE, crossed = function (a, b) { for (var k = 0; k < mile.length; k++) if (a < mile[k] && b >= mile[k]) return true; return false; };
+  var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+  var seen = S.META.favSeen || (S.META.favSeen = {}); // per-type fire COUNT → consecutive same-type lines cycle (a deepening arc, never a repeat)
+  var type = null;
+  if (s.mentored && !snap.mentored) type = "mentored";                                           // the turning point you caused
+  else if (crossed(snap.tn, s.tn)) type = "craftUp";                                             // a craft breakthrough
+  else if (crossed(snap.st, s.st)) type = "stUp";                                                // a creative breakthrough
+  else if (crossed(snap.cm, s.cm)) type = "cmUp";                                                // hustle rising — the coin-shark forming (a distortion warning)
+  else if (s.mood < CONFIG.FAV_MOOD_LOW && snap.mood >= CONFIG.FAV_MOOD_LOW) type = "moodDown";  // a slump — a warning you can act on
+  else if (s.mood >= CONFIG.FAV_MOOD_HI && snap.mood < CONFIG.FAV_MOOD_HI) type = "moodUp";      // blooming
+  else if (!seen.adrift && mm < CONFIG.MISMATCH_MM && s.grade >= 2 && s.tn < 40 && s.st < 40) type = "adrift"; // E4-link: the gift not finding its form (one-shot)
+  else if (crossed(snap.vet, s.vet)) type = "vetUp";                                             // the rote grind — văn-mẫu in the making
+  else if (crossed(snap.kt, s.kt)) type = "ktUp";                                                // knowledge milestone (lowest priority)
+  if (!type) return;
+  var arr = CONTENT.favMoments[type], c = seen[type] || 0; news("⭐ " + s.ten + " — " + arr[c % arr.length]);
+  seen[type] = c + 1; S.META.favSnap = favSnapOf(id, s); S.META.favMomentDay = S.totalDays;
+}

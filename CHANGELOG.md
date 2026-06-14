@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: the person lifecycle consolidated into person.js (loop iter 127)
+**STRUCTURE epic — BEHAVIOR-NEUTRAL (proven byte-identical). Scores N/A (refactor).** `EPICS_SINCE_STRUCTURE`
+was 2 (E4 + E5 feature-epics) → the cadence required a structure move before the next feature-epic. Done, and
+it's the arc's designated one: `js/sim/person.js` now holds the WHOLE person lifecycle — born (genStudent) →
+grows (growStudents) → **becomes someone** (cascadeOutcome/makeAlumnus) → **read as realized/wasted/distorted**
+(E4: flourishOf/realFrac/realClass) → **watched** (favBeat). Carved out of engine.js:
+- Moved → person.js: `flourishOf`/`realFrac`/`realClass`, `cascadeRow`/`cascadeOutcome`/`gatePass`/`isVanMau`/
+  `isTiemNang`/`nearMiss`/`statLabel`, `makeAlumnus`/`annMonthFor`, `favSnapOf`/`favBeat` (~90 lines).
+- LEFT in engine.js: the alumni-WORLD FSM (`transition`/`alumniMonth`/`becomeSteve`/`arrestAlumnus`/gifts) — it
+  sims alumni inside the SCHOOL's economy (gainTT/news/endow-coupled), a separate concern; and the tiny `aCraft`/
+  `aHustle`/`aHollow`/`aLua` accessors (the FSM's main users). engine.js 1203→1104; person.js 83→200.
+- **Why now / why this:** de-risks E6 (multi-axis aptitude — the big lifecycle rewrite) and ⭐ E-UNDERDOG by
+  putting the whole "who the person becomes" determination in one module. Load order safe (data→engine→person→ui;
+  the only module-load code in engine, the HVS/exports object, references none of the moved fns; all cross-calls
+  are runtime). 
+- **Proof of neutrality:** `node sweep.js` output **byte-identical** (diff empty), gate ALL GREEN, bot BOTOK
+  (arrests 22, every metric identical), each moved fn defined exactly once, all three files `node --check` clean,
+  and the browser epilogue (ui.js → person.js cross-file `realClass`/`flourishOf`) still renders the E4 waste lines.
+
 ## 2026-06-15 — EPIC E5: discoverable talent — you can't read a gift off a number (loop iter 126)
 **PERSON-SIM epic (people-first arc). SOUL 5 · BITE 5 · CLARITY 4 · FUN/DEPTH 4 · COMPLETENESS-VS-DREAM 4 ·
 BEAUTY/JUICE n/a.** Talent magnitude (seed) used to be printed as stars on day one — so you instantly knew who
