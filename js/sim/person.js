@@ -114,6 +114,17 @@ function realClass(state, seed) { // "loud" | "under" | "" — the wasted readin
 // realized / a kind-enough life. Shared by the graduation BEAT (engine.js) and the epilogue CAPSTONE (ui.js) so
 // the arc's culmination reads the SAME both at the moment and in the keepsake. Strings live in CONTENT.protegeCoda.
 function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c === "loud" ? "loud" : c === "under" ? "under" : flourishOf(state) >= 4 ? "realized" : "kind"; }
+// iter-154 — the realization SUFFIX of a life (the gift-vs-fate reading): loud waste / quiet settle, else the
+// E-UNDERDOG diamond credit, else the mentor's-hand credit, else "" (an on-target life needs no suffix). ONE
+// source of truth shared by the epilogue CAST (ui.js essayDraft) and the GRADUATION RESULTS screen (engine rec →
+// ui showJuneResults), so the soul reading — VISIBLE WASTED TALENT — appears at the MOMENT of graduation
+// (VISION §114), not only in the final essay. Returns "" for non-prodigies → glimpsed, not metered (invariant #3).
+function realCreditSuffix(state, seed, flags) {
+  var gap = CONTENT.realGap[realClass(state, seed)] || "";
+  if (!gap && flags && flags.diamond && flourishOf(state) >= 4) gap = CONTENT.diamondCredit;       // overlooked at entry, realized anyway
+  else if (!gap && flags && flags.mentored && flourishOf(state) >= 2) gap = CONTENT.mentorCredit;  // a realized life under your hand
+  return gap;
+}
 
 function cascadeRow(key) { for (var i = 0; i < CONFIG.CASCADE.length; i++) if (CONFIG.CASCADE[i].key === key) return CONFIG.CASCADE[i]; return CONFIG.CASCADE[CONFIG.CASCADE.length - 1]; }
 function cascadeOutcome(s) {

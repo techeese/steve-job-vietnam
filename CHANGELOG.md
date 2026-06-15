@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-06-15 — The wasted gift, named at graduation — not 10 years later (loop iter 154)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
+The game's soul is VISIBLE WASTED TALENT you feel responsible for — but the graduation RESULTS screen (the felt
+moment a cohort's fates are cast, with fanfare) only showed each grad's destiny + entry-chip. The realization
+READING — *was this gift realized, settled, or wasted relative to its magnitude* — appeared only in the final
+epilogue, 10 sim-years later. iter-150 gave the *protégé's* graduation beat its coda; this brings the reading to
+the WHOLE cohort's notable cases, at the moment it happens (VISION §114: graduation as the culmination of the
+visible arc). Now a grad's row carries the same gift-vs-fate suffix the epilogue cast does:
+- *" — tài năng bỏ phí trên tay bạn"* (a prodigy outright wasted) · *" — đáng lẽ đã có thể hơn thế"* (a prodigy
+  who settled into 💼) · *" · ngọc thô — vào bằng cửa hẹp"* (an overlooked diamond realized) · *" · nhờ thầy
+  không buông tay em"* (a realized life under your hand). An on-target / modest life gets NO suffix.
+- **Respects invariant #3** (glimpsed, not metered): `realClass` returns "" for everyone except seed≥4
+  wasted/settled prodigies, so only the poignant cases are named — the rest pass unflagged.
+- **DRY:** extracted the realization-suffix logic (previously inline in `essayDraft`) to a shared
+  `realCreditSuffix(state, seed, flags)` in person.js — now the ONE source for BOTH the epilogue cast AND the
+  graduation results screen (`engine` rec.realLine → `ui` showJuneResults). The moment and the keepsake can't drift.
+- **Zero balance risk:** pure display read off the existing realClass/flourishOf reading — no mechanic change.
+Verified: 4-file syntax OK, gate GREEN, bot BOTOK, sweep 5✓/0 breakage, the epilogue is **byte-identical** (the
+essayDraft refactor is neutral — md5 unchanged), the suffix logic is correct across all classes, and a played-out
+cram run surfaces 22 wasted/settled prodigies/run now named at their graduation (was: only in the final essay).
+
 ## 2026-06-15 — EPIC E9: the school you build shapes WHO comes to it (loop iter 153)
 **FEATURE EPIC (cohesion-at-output). SOUL 4 · CLARITY 4 · BITE 3 · COMPLETENESS 3 · BEAUTY/JUICE n/a.**
 The epic-lock (SMALL_SHIPS_SINCE_EPIC=3) forced an epic; E6 (the only unshipped person-sim epic) is owner-gated

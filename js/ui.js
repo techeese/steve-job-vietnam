@@ -1537,9 +1537,7 @@
         if (a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); // iter-144: an honored standout the system still failed — point the flavor at the award-vs-fate bite
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
         var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
-        var gap = CONTENT.realGap[realClass(a.state, seed)] || ""; // E4 §C-2: name the gift-vs-fate — loud waste, or the prodigy who SETTLED (one quiet line; the on-target realized get their nod via stars + chip)
-        if (!gap && a.flags && a.flags.diamond && flourishOf(a.state) >= 4) gap = CONTENT.diamondCredit; // E-UNDERDOG: overlooked at entry, realized anyway — the exam was wrong (takes precedence over the mentor credit)
-        else if (!gap && a.flags && a.flags.mentored && flourishOf(a.state) >= 2) gap = CONTENT.mentorCredit; // E4.1: a realized life under your hand — credit the scarce attention (never stacked on a waste suffix)
+        var gap = realCreditSuffix(a.state, seed, a.flags); // iter-154: shared with the graduation results screen (the gift-vs-fate reading — loud waste / settled / diamond / mentor's-hand; "" for an on-target life)
         var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p: a standout's earned honor, on their life
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
       });
@@ -1647,7 +1645,8 @@
       if (rc.tiem) extra += "<div class='nod'>" + CONTENT.bacTamTiemNang + "</div>";
       if (rc.viral) extra += "<div class='nod'>Phần bảo vệ lan truyền khắp mạng.</div>";
       if (rc.near) extra += "<div class='tiny' style='color:var(--faint)'>" + esc(rc.near) + "</div>";
-      r.innerHTML = "<div class='em'>" + rc.emoji + "</div><div class='grow'><div class='oc'>" + (rc.fav ? "⭐ " : "") + esc(rc.ten) + " — " + esc(rc.outcome) + "</div><div class='fl'>" + esc(rc.flavor || "") + "</div><div class='tiny' style='margin-top:2px'>Trạng thái đầu đời: " + rc.entryChip + "</div>" + extra + "</div><div class='dm'>" + rc.diem.toFixed(1) + "</div>";
+      var gap = rc.realLine ? "<span class='tiny' style='color:var(--gold)'>" + esc(rc.realLine) + "</span>" : ""; // iter-154: the gift-vs-fate reading at the moment of graduation (loud waste / settled / diamond / mentor's-hand) — same source as the epilogue; "" for an on-target life
+      r.innerHTML = "<div class='em'>" + rc.emoji + "</div><div class='grow'><div class='oc'>" + (rc.fav ? "⭐ " : "") + esc(rc.ten) + " — " + esc(rc.outcome) + gap + "</div><div class='fl'>" + esc(rc.flavor || "") + "</div><div class='tiny' style='margin-top:2px'>Trạng thái đầu đời: " + rc.entryChip + "</div>" + extra + "</div><div class='dm'>" + rc.diem.toFixed(1) + "</div>";
       w.appendChild(r);
     });
     var btn = el("button", "btn gold", "Tiếp tục →"); btn.style.width = "100%"; btn.style.marginTop = "8px";

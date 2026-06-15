@@ -570,7 +570,7 @@ function finalizeJune(policy) {
       if (rnd() < Math.min(0.95, pV)) { viral = true; gainTT(CONFIG.JUNE.DEFQ.viralTT); if (!S.pierceDefense) { gainUT(CONFIG.JUNE.DEFQ.viralUT, true); S.pierceDefense = true; } }
     }
     var a = makeAlumnus(s, row, diem, tiem);
-    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row) };
+    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row), realLine: realCreditSuffix(a.state, a.fs.seed, a.flags) }; // iter-154: the gift-vs-fate reading on the graduation results screen — the wasted/realized talent named the MOMENT it happens (VISION §114), same source as the epilogue
     if (s.id === S.META.favId) { rec.fav = true; news("⭐ " + s.ten + " — em bạn dõi theo từ ngày đầu — tốt nghiệp: " + row.name + ". " + CONTENT.protegeCoda[protegeCodaKey(a.state, a.fs.seed)] + "."); S.META.favId = null; } // iter-150: the protégé's payoff now carries the realization reading — the arc's culmination FELT the moment it happens (VISION §114), same coda as the epilogue capstone
     results.push(rec);
     if (s._tpl) a._tpl = true; // Trần Phi Lợi marker (forced arrest year 2)
