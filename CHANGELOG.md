@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: the epilogue essay carved out of ui.js (de-risk the iter-172 crash site) (loop iter 183)
+**The owed structure move (EPICS_SINCE_STRUCTURE=2), now safe + motivated.** The iter-172 incident was a use-before-init
+crash buried in `essayDraft` — a ~95-line prose-builder lost inside the 1825-line ui.js IIFE, uncovered by gate/bot.
+This carves it (plus its helpers `numWord`/`isOldCohort`) into **`js/epilogue.js`** as `buildEssay(s, cb, capstone)`,
+beside its siblings `buildCast`/`shareCard`. It's pure over the loaded state `s` + globals (CONFIG/CONTENT, el/esc/
+money/tpl, realCreditSuffix/protegeCodaKey, buildCast/shareCard) + two **callbacks** `cb` for the only ui.js-private
+bits (`cb.save`=saveShareCard→toast, `cb.fold`=hideModal). ui.js's `essayDraft` is now a **one-line wrapper**; ui.js
+1825→1759. The old iter-141/149 verdict ("essayDraft too coupled to extract") is resolved: the coupling was just 2
+callbacks + 2 tiny helpers. **Behavior-NEUTRAL, proven:** the player-facing essay is **byte-IDENTICAL** across 6
+preset×seed runs (lives.sh `_essayText` md5 unchanged), gate GREEN, bot BOTOK (cash 6689/essay 2005 unchanged), sweep
+6✓; real-browser boot verified (lives.sh/bot.sh are real Chrome → no load-order ReferenceError, the iter-163 lesson).
+The fragile crash-site epilogue now sits in a dedicated, covered module — future epilogue work is safer. Cadence:
+EPICS_SINCE_STRUCTURE 2→0 (structure paid down); the loop is now free for feature epics again.
+
 ## 2026-06-15 — Alumni give back, by name: non-monetary gifts (owner steer · economy ckpt 3) (loop iter 182)
 **Completes the owner's 3-part economy steer — "successful alumni might donate non-monetary items, for extension
 functions later."** Monetary donations already existed (`queueGift`/`flushGifts`); this adds the **item** path: a

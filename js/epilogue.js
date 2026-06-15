@@ -85,3 +85,104 @@ function shareCard(s, branch) {
   F("600", 12, "#f0c674"); x.textAlign = "right"; x.fillText("#HọcViệnSteve · đề Văn 2026", W - 30, 276);
   return cv;
 }
+
+// iter-183 STRUCTURE — the decade EPILOGUE ESSAY assembly, carved from ui.js (essayDraft). The iter-172 crash showed
+// this fragile prose-builder was buried + under-covered in the 1825-line ui.js IIFE; here it sits with its sibling
+// epilogue helpers (buildCast/shareCard), byte-verified via lives.sh `_essayText`. It is pure over the loaded state
+// `s` + globals (CONFIG/CONTENT, el/esc/money/tpl from uikit+engine, realCreditSuffix/protegeCodaKey from person.js,
+// buildCast/shareCard above) + two CALLBACKS `cb` for the only ui.js-private bits: cb.save (saveShareCard → toast)
+// and cb.fold (hideModal). ui.js's essayDraft is now a one-line wrapper passing those in.
+function numWord(n) { var o = CONTENT.essay.ones; return (n >= 1 && n <= 9) ? o[n] : String(n); }
+function isOldCohort(a) { if (a._tpl) return true; var sc = CONFIG.ALUM.SCRIPTED || []; for (var i = 0; i < sc.length; i++) if (sc[i].ten === a.ten) return true; return false; }
+function buildEssay(s, cb, capstone) {
+  var C = CONFIG.ESSAY, E = CONTENT.essay, w = el("div");
+  if (capstone) {
+    w.appendChild(el("div", "kic", "Mười năm sau · Lễ Bế Giảng"));
+    var ch = el("h2", null, "Mười năm sau ngày khai giảng đầu tiên"); w.appendChild(ch);
+    var intro = el("div", "lead", "Trường đã đi hết một chặng. Bạn ngồi xuống, lấy ra bản nháp bài luận năm xưa — câu hỏi vẫn còn đó. Lần này bạn viết bằng những gương mặt đã đi qua sân trường này."); intro.style.fontStyle = "italic"; w.appendChild(intro);
+  }
+  var de = CONTENT.dePool[0], yw = numWord(s.year), cash = money(s.cash), endow = money(s.endow.bal); // iter-159: tỷ-aware money formatting for the (now scaling) endgame numbers
+  var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
+  var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
+  var majorityKey = nonSteve.sort(function (a, b) { return byState[b] - byState[a]; })[0] || null;
+  var total = s.alumni.length;
+  var presetVote = {}; ["n1","n2","n3","n4"].forEach(function(k){ var p = s.presets[k]; presetVote[p] = (presetVote[p]||0)+1; });
+  var dominantPreset = Object.keys(presetVote).sort(function(a,b){return presetVote[b]-presetVote[a];})[0]||""; // iter-173: define presetVote BEFORE use (was a var-hoist use-before-init → Object.keys(undefined) crashed the whole epilogue)
+  var steveAlum = s.alumni.filter(function (a) { return a.state === "STEVE"; });
+  var tenSteve = steveAlum[0] ? steveAlum[0].ten : null;
+  var branchKey = (function () {
+    if (s.META.steves > 0) return "steve";
+    if (!majorityKey) return "kind";
+    var ratio = byState[majorityKey] / Math.max(1, total);
+    if (majorityKey === "CA_MAP_COIN" || (s.META.arrested > 0 && ((byState.CA_MAP_COIN || 0) + (byState.BI_BAT || 0)) / Math.max(1, total) >= C.MAJOR_RATIO)) return "coin";
+    if (majorityKey === "QUAN_VAN_MAU" && ratio >= C.MAJOR_RATIO) return "vanmau";
+    if (majorityKey === "THAT_NGHIEP" && ratio >= C.MAJOR_RATIO) return "that";
+    if (majorityKey === "KY_SU" && s.thucChat >= 55) return "kysu";
+    if (s.tiengTam - s.thucChat >= C.HYPE_GAP) return "hype";
+    if (s.thucChat >= 65 && s.tiengTam < 60) return "thuc";
+    return "kind";
+  })();
+  var card = shareCard(s, branchKey); w.appendChild(card); // a summary of the player's answer…
+  var save = el("button", "btn", "💾 Lưu / chia sẻ ảnh tổng kết"); save.style.cssText = "width:100%;margin-bottom:11px;font-size:12px"; // …now actually saveable/shareable
+  save.onclick = function () { cb.save(card); };
+  w.appendChild(save);
+  function P(cls, html, it) { var e = el("div", cls, html); if (it) e.style.fontStyle = "italic"; w.appendChild(e); }
+  P("kic", esc(E.kic.replace("{year}", s.year)));
+  var h = el("h2", null, esc(E.title)); w.appendChild(h);
+  P("lead", tpl(E.falseStart, { yearWord: yw }));
+  P("lead", tpl(E.deHeader, { de: de }), true);
+  if (s.META.graduated === 0) {
+    P("lead", tpl(E.empty, { cash: cash, endow: endow }));
+  } else {
+    P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
+    P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
+    var prizeFlavorUsed = false; // iter-176: the "honored yet failed" line is a SINGULAR gut-punch — fire it once
+    buildCast(s, byState, majorityKey, C, dominantPreset).forEach(function (a) {
+      var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
+      if (!prizeFlavorUsed && a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) { line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); prizeFlavorUsed = true; } // iter-144/176
+      var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
+      var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
+      var gap = realCreditSuffix(a.state, seed, a.flags); // iter-154: the gift-vs-fate reading
+      if (!gap && dominantPreset === "canbang" && a.state === "KY_SU" && a.fs && a.fs.tell === "sky" && seed >= 4) gap = CONTENT.channeledMaker;
+      var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p
+      P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
+    });
+    // iter-142 — the WHOLE cohort beyond the 4 named, felt as a headmaster's qualitative reflection (no per-fate counts)
+    if (s.alumni.length > 6) {
+      var fOf = function (ks) { var n = 0; ks.forEach(function (k) { n += byState[k] || 0; }); return n; }, tot = s.alumni.length;
+      var rz = fOf(["KY_SU", "FOUNDER", "LUONG_ON", "STEVE"]), wz = fOf(["THAT_NGHIEP", "QUAN_VAN_MAU"]), dz = fOf(["CA_MAP_COIN", "BI_BAT"]), ps = [];
+      if (rz > tot * 0.4) ps.push("phần lớn nên người tử tế, đi làm đều"); else if (rz > tot * 0.12) ps.push("một số thành người tử tế");
+      if (wz > tot * 0.25) ps.push("nhiều đứa tài năng cứ thế nguội dần"); else if (wz > 0) ps.push("vài đứa tài năng nguội dần");
+      if (dz > tot * 0.18) ps.push("không ít đứa lạc sang đường tắt"); else if (dz > 0) ps.push("một hai đứa lạc sang đường tắt");
+      if (ps.length) P("lead", "Còn lại trong sổ: " + ps.join("; ") + ".", true);
+    }
+    if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned
+    // iter-133 — the FOLLOW-LOOP's capstone payoff: the kid you watched, named with a personal coda
+    var proteges = s.alumni.filter(function (a) { return a.flags && a.flags.protege; }).sort(function (a, b) { return (b.gradYear || 0) - (a.gradYear || 0); });
+    if (proteges[0]) {
+      var pg = proteges[0], pseed = (pg.fs && pg.fs.seed) || 0;
+      var coda = CONTENT.protegeCoda[protegeCodaKey(pg.state, pseed)]; // iter-150: ONE source of truth w/ the graduation beat
+      P("lead", "Và " + esc(pg.ten) + " — đứa em dõi theo từ ngày đầu — giờ là " + CONFIG.ALUM.CHIPS[pg.state] + ". " + coda + ".", true);
+    }
+    if (s.META.steves > 0) { P("lead", tpl(E.steveColFull, { steves: s.META.steves })); }
+    else { // iter-148/172 — WHY is the 🍎 column empty? (craft/even/grind/mixed — keeps §D-3 open). Prose-only.
+      var tot148 = Math.max(1, total);
+      var realz148 = (byState.KY_SU || 0) + (byState.FOUNDER || 0) + (byState.LUONG_ON || 0);
+      var harm148 = (byState.THAT_NGHIEP || 0) + (byState.QUAN_VAN_MAU || 0) + (byState.CA_MAP_COIN || 0) + (byState.BI_BAT || 0);
+      var emptyKey = (realz148 / tot148 >= 0.6 && harm148 / tot148 <= 0.2) ? (dominantPreset === "duan" ? "craft" : "even") : (harm148 / tot148 >= 0.4) ? "grind" : "mixed";
+      P("lead", E.steveColEmpty[emptyKey] || E.steveColEmpty.mixed);
+    }
+    P("lead", E.ledgerHead);
+    P("lead", tpl(E.ledgerBank, { cash: cash }));
+    var endowTail = (majorityKey === "KY_SU" || (byState.KY_SU || 0) > 0) ? " phần lớn mấy đứa kỹ sư gửi về," : (tenSteve ? (" phần lớn là của " + esc(tenSteve) + ",") : "");
+    P("lead", tpl(E.ledgerEndow, { endow: endow, endowTail: endowTail }));
+    P("lead", E.ledgerThird);
+    P("lead", E.ledgerStare);
+  }
+  P("lead", tpl(E.crossOut[branchKey], {}));
+  P("nod", tpl(E.bacTam[s.META.graduated === 0 ? "empty" : branchKey], { nKySu: (byState.KY_SU || 0) }));
+  P("lead", tpl(E.echo, { de: de }), true);
+  P("tiny", esc(E.foot));
+  var btn = el("button", "btn gold", esc(E.foldBtn)); btn.style.width = "100%"; btn.style.marginTop = "10px"; btn.onclick = cb.fold; w.appendChild(btn);
+  return w;
+}
