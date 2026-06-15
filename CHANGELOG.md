@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — The rename event renames the school FOR REAL (owner request) (loop iter 186)
+**Owner: "the event where someone wants to change the academy's name — the name should change for real."** The
+`datten` event ("Nhà đầu tư đòi đặt tên trường") added money/TT/UT but never actually renamed anything. Now taking
+the investor's money **rebrands the school for real**: `datTenCo` sets a new `S.schoolName` (from a satirical
+corp-name pool — "Học viện Coin Toàn Cầu", "Học viện EduChain 4.0", …) with a 🏷️ news beat, and the name shows
+**everywhere** — the HUD brand (top-left), the epilogue share card, the about modal. The academy name is now mutable
+**state** (`S.schoolName`, persisted across reload, sanitized to never go blank; the dead `CONTENT.schoolName`
+const is now the default). Deterministic pick; the bot/sweep never trigger the player-choice fx → default name → 
+**byte-identical** (cash 7353 unchanged). Also: the event-resolution handler now calls `renderHUD()` so any
+HUD-changing event shows instantly. Verified: syntax OK, gate GREEN (save/reload), bot BOTOK, probe confirms rename
++ persists across reload + HUD shows it (screenshot: "Học viện Coin Toàn Cầu"). FUN 4 · SATIRE 4 (selling the name).
+
 ## 2026-06-15 — One speed button: a single cycling dial (owner request) (loop iter 185)
 **Owner: "the speed-up button top-right — only 1 button is needed."** Replaced the 4-button row (⏸ / 1× / 2× / 3×)
 with ONE **speed dial** that cycles on tap: ⏸ → 1× → 2× → 3× → ⏸. The label shows the current speed; the locked 3×

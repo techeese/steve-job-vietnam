@@ -8,6 +8,9 @@
 
 var CONTENT = {
   schoolName: "Học viện Steve",
+  // iter-186 (owner: "the name-change event should change the name for REAL"): the angel investor's corporate names
+  // the school gets rebranded to when you take their money (event 'datten' → fx datTenCo). Satirical VN-startup flavor.
+  corpNames: ["Học viện FinX Capital", "Học viện EduChain 4.0", "Học viện Bất Động Sản Phát Lộc", "Học viện Coin Toàn Cầu", "Học viện Sàn Việt Mall", "Học viện AI Thần Tốc", "Học viện Tài Chính Số ABC", "Học viện Khởi Nghiệp Unicorn"],
   schoolSub: "(tên đầy đủ đang chờ Bộ duyệt mã trường)",
   // iter-164 — the LIVE school tier shown under the name (grows with cash; a constant progression readout for
   // the owner's "watch it become an empire" vision). schoolTier() picks the highest reached + appends 🍎×N.

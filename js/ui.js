@@ -1011,6 +1011,7 @@
   function renderHUD() {
     var s = S();
     var bb = $("buildBadge"); if (bb && !bb.textContent) bb.textContent = "v " + buildLabel(); // deploy stamp (changes each push)
+    var bn = $("brandName"); if (bn && bn.textContent !== s.schoolName) bn.textContent = s.schoolName || "Học viện Steve"; // iter-186 (owner): academy name renamable for real by the 'datten' investor event
     $("schoolSub").textContent = schoolTier(s); // iter-164: a LIVE school tier (grows with you) — constant progression readout, ties the economy stage + the soul (🍎)
     $("clockMain").textContent = "Năm " + s.year;
     $("clockSub").textContent = "Tháng " + MONTHS[s.month];
@@ -1683,7 +1684,7 @@
       var virtuous = /tử tế|mượn|báo cáo|giữ em/.test(c.hint || "");
       var b = el("button", "choice" + (virtuous ? " virtue" : ""));
       b.innerHTML = "<div class='ttl'>" + esc(c.label) + "</div><div class='hint'>" + esc(c.hint || "") + "</div>";
-      b.onclick = function () { HVS.resolveEvent(i); checkModals(); renderPanel(); };
+      b.onclick = function () { HVS.resolveEvent(i); checkModals(); renderHUD(); renderPanel(); }; // iter-186: renderHUD too so an event that changes the HUD (e.g. the 'datten' rename) shows immediately
       ch.appendChild(b);
     });
     w.appendChild(ch);
@@ -1719,7 +1720,7 @@
   function showIntro() {
     var w = el("div");
     w.appendChild(el("div", "kic", "Tháng 6, 2026 · đề Văn tốt nghiệp THPT"));
-    w.appendChild(el("h2", null, "Học viện Steve"));
+    w.appendChild(el("h2", null, S().schoolName || "Học viện Steve")); // iter-186: the (possibly renamed) academy
     CONTENT.boot.forEach(function (b) { w.appendChild(el("div", "lead", esc(b))); });
     w.appendChild(el("div", "lead", "<span style='color:var(--gold)'>Việc đầu tiên:</span> xây căn <b>Phòng học</b> đầu tiên (nút Xây), rồi đợi <b>tháng 7</b> — đợt chiêu sinh khóa đầu sẽ mở, Mai Sương sẽ là người ghi danh đầu tiên. Chạm vào sinh viên để xem (và đặt tên). Rồi ngồi xem trường lớn lên từ con số 0."));
     var foot = el("div", "tiny", CONTENT.disclaimer + " · bản dựng " + esc(buildLabel())); foot.style.marginBottom = "10px"; w.appendChild(foot);

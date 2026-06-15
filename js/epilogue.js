@@ -72,7 +72,7 @@ function shareCard(s, branch) {
   var bg = x.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, "#17212e"); bg.addColorStop(1, "#0b1018"); x.fillStyle = bg; x.fillRect(0, 0, W, H);
   x.strokeStyle = "#f0c674"; x.lineWidth = 3; x.strokeRect(7, 7, W - 14, H - 14);
   x.textAlign = "left";
-  F("800", 31, "#f0c674"); x.fillText("Học viện Steve", 30, 54);
+  F("800", 31, "#f0c674"); x.fillText(s.schoolName || "Học viện Steve", 30, 54); // iter-186: the (possibly renamed) academy on the share card
   F("600", 15, "#9aa4b2"); x.fillText("Bản tổng kết · Năm " + s.year, 30, 78);
   F("italic 500", 13, "#6b7484"); x.fillText("“Làm thế nào để VN có những 'Steve Jobs Việt Nam'?”", 30, 106);
   x.font = "62px system-ui,sans-serif"; x.fillText(V[0], 32, 184);

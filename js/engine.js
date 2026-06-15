@@ -201,6 +201,8 @@ function freshState(seed) {
     // intake; no founding ceremony (no graduates yet). year++ at each June.
     day: 1, month: 6, year: 1, totalDays: 0, sub: 0,
     speed: 0, speed3Unlocked: false,
+    schoolName: CONTENT.schoolName, // iter-186 (owner): the academy's name — MUTABLE (the 'datten' investor event renames it for real); shown in the HUD/epilogue/share card
+
     // economy
     cash: CONFIG.BOOT_CASH, book: CONFIG.BOOK_VALUE, tuition: CONFIG.BOOT_TUITION,
     // meters
@@ -905,7 +907,9 @@ function applyFx(fx, t) {
     case "thatTha": gainUT(2, false); bacTamNod(); break;
     case "dayTu": for (var di = 0; di < S.students.length; di++) { var ds = S.students[di]; ds.kt = clamp(ds.kt + 2, 0, 100); ds.vet = clamp(ds.vet + 3, 0, 100); ds.st = clamp(ds.st - 2, 0, 100); } seedPhot(1, "daytu"); break;
     case "dayThat": for (var ti = 0; ti < S.students.length; ti++) { var ts2 = S.students[ti]; ts2.tn = clamp(ts2.tn + 2, 0, 100); ts2.mood = clamp(ts2.mood + 4, 0, 100); } gainUT(1, false); break;
-    case "datTenCo": S.cash = r1(S.cash + 30); gainTT(2); gainUT(-2, false); seedPhot(1, "datten"); break;
+    case "datTenCo": S.cash = r1(S.cash + 30); gainTT(2); gainUT(-2, false); seedPhot(1, "datten");
+      // iter-186 (owner): the rename happens FOR REAL — the school is rebranded to the investor's corp name, shown everywhere
+      S.schoolName = CONTENT.corpNames[S.totalDays % CONTENT.corpNames.length]; news("🏷️ Trường nay đổi tên thành “" + S.schoolName + "”. Logo mới treo ngay cổng."); break;
     case "datTenGiu": gainUT(2, false); bacTamNod(); break;
     // recurring moral deck
     case "muaHang": S.cash = r1(S.cash - 15); gainTT(6); seedPhot(1, "muahang"); break;
@@ -1025,6 +1029,7 @@ function sanitize() {
   ["cash", "book", "tuition", "tiengTam", "uyTin", "thucChat", "utYearNet"].forEach(function (k) { if (bad(S[k])) S[k] = 0; });
   S.day = clamp(Math.round(S.day) || 1, 1, 30); S.month = clamp(Math.round(S.month) || 1, 1, 12);
   S.year = Math.max(1, Math.round(S.year) || 1); S.speed = clamp(Math.round(S.speed) || 0, 0, 3);
+  if (typeof S.schoolName !== "string" || !S.schoolName.trim()) S.schoolName = CONTENT.schoolName; // iter-186: never a blank academy name on a corrupted/old save
   if (!CONFIG.PRESETS[S.presets.n1]) S.presets.n1 = "canbang";
   ["n1", "n2", "n3", "n4"].forEach(function (k) { if (!CONFIG.PRESETS[S.presets[k]]) S.presets[k] = "canbang"; });
   S.students = (S.students || []).map(function (s) {
