@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-06-15 — EPIC E9: the school you build shapes WHO comes to it (loop iter 153)
+**FEATURE EPIC (cohesion-at-output). SOUL 4 · CLARITY 4 · BITE 3 · COMPLETENESS 3 · BEAUTY/JUICE n/a.**
+The epic-lock (SMALL_SHIPS_SINCE_EPIC=3) forced an epic; E6 (the only unshipped person-sim epic) is owner-gated
+and the person-sim mechanic space is mature, so I dequeued **E9** — the owner's "systems feel separate" /
+"automatic based on ranking" steer. E9's other two legs already existed (teachers drawn by standing = E8 iter-136;
+donors via funding-with-strings); the missing leg was the STUDENTS. Now the school's CHARACTER shapes its intake:
+- **The tilt (bounded, non-runaway):** a substantive school (high Thực Chất) draws marginally more makers
+  (spark↑), a hype/cram one more clout-chasers (hype↑). Centered at TC 50 (the adequate middle), hard-capped at
+  ±5% on the spark share (generalist "" stays a fixed 50%). `CONFIG.ADMIT.REP_TILT`, applied in `derivedPool`.
+- **Made FELT, with a FACE:** once the character has formed (year ≥ 3), the admissions feed names a specific
+  maker the reputation drew — *"Tiếng lành đồn xa: trường thực chất — năm nay có {tên}, một em mê làm thật, tự
+  chọn trường bạn"* — attachment at intake (VISION #5; no gift shown → E5 intact). A neglected/low-substance
+  school instead reads *"trường ồn ào hơn là thực…"*.
+- **The loop:** build substance → makers come → (matched) more realized makers → substance holds. BOUNDED so it
+  can't run away (the tilt caps at ±5% even at TC 100). This completes the cohesion system: standing now shapes
+  who APPLIES (E9), who TEACHES (E8), and who FUNDS (funding-with-strings).
+**Sweep-gated & clean:** the realize/waste spread holds within ±1-3pt of iter-152, no dominant strategy, 0
+bankruptcy, 🍎 still rare — all 5 flags ✓ / 0 breakage. The epilogue is no longer byte-identical (expected — the
+cohort composition legitimately shifted; that IS the proof E9 bites), and biographies still render the full
+realize/waste range. Verified: 3-file syntax OK, gate GREEN (replay determinism holds), bot BOTOK, headless
+probe confirms the named note fires for substantive schools. (Checkpoint-2 follow-ups: the "clout" note is
+calibrated for genuinely low-TC schools — rare; an E9-specific sweep sensor; a donor→applicant link.)
+
 ## 2026-06-15 — A Tết chapter: the cohort's becoming, reflected once a year (loop iter 152)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 3 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
 VISION's #1 frontier is the *felt transformation arc — watchable beat by beat during the years, not a reveal

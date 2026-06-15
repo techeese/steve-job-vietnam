@@ -607,7 +607,8 @@ function derivedPool() {
     var pr = mulberry32((S.admissions.poolSeed ^ Math.imul(i + 1, 0x9E3779B9)) >>> 0);
     var score = clamp(r2(gauss(pr) * sigma + mu), 3, 30);
     var seedW = 1 + Math.round((score - 12) / 4.5); seedW = clamp(seedW, 1, 5);
-    var tell = pr() < 0.3 ? "spark" : (pr() < 0.5 ? "hype" : "");
+    var sparkP = 0.3 + CONFIG.ADMIT.REP_TILT(S.thucChat); // E9: a substantive school draws more makers, a hype one more clout (bounded ±5%; "" stays 50%)
+    var tell = pr() < sparkP ? "spark" : (pr() < 0.5 ? "hype" : "");
     // E-UNDERDOG: a "ngọc thô" — a low scorer the exam underrates but who carries a real gift. The seed override
     // draws AFTER score/tell and ONLY for sub-threshold scorers (a high scorer short-circuits → no extra draw),
     // and each applicant has its own pr stream → high-cutoff admissions stay byte-identical; only an opened door
@@ -645,11 +646,13 @@ function declareAdmissions(cutoff, quota, auto) {
   // resolve
   var qualified = []; for (var i = 0; i < pool.length; i++) if (pool[i].score >= cutoff) qualified.push(pool[i]);
   var take = qualified.slice(0, Math.min(quota, CONFIG.ROSTER_CAP - S.students.length));
+  var makerNames = []; // E9: makers (spark/sky) drawn this intake — to put a NAMED face on the cohesion note (no gift shown — E5)
   for (i = 0; i < take.length; i++) {
     var ap = take[i];
     var s = genStudent(1, { seed: ap.seed, tell: ap.tell, diamond: !!ap.diamond, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) });
     // Mai Sương — the founder's first believer joins the very first non-empty intake.
     if (S._maiPending) { s.ten = "Mai Sương"; s.seed = 5; s.kt = 22; s.tn = 16; s.st = 35; s.cm = 12; s.mood = 72; s.vet = 4; s.tell = "sky"; S._maiPending = false; }
+    if (s.tell === "spark" || s.tell === "sky") makerNames.push(s.ten);
     S.students.push(s);
   }
   // E-UNDERDOG: a substantive school looks PAST the score — a few "đặc cách" offers below the bar, where the
@@ -676,6 +679,13 @@ function declareAdmissions(cutoff, quota, auto) {
   if (S.admissions.declaredHistory.length > 20) S.admissions.declaredHistory.shift();
   S.examHistory.push({ year: S.year, cutoff: cutoff, rank: rank, fill: take.length });
   news("Công bố điểm chuẩn " + cutoff.toFixed(2) + " — " + take.length + "/" + quota + " nhập học" + (daxFill ? " (+" + daxFill + " đặc cách)" : "") + ". Hạng " + rank + "/4.");
+  // E9 (iter 153) — COHESION AT OUTPUT made FELT: once the school's character has formed (year ≥ 3), name who its
+  // reputation drew this year. Substance (cao Thực Chất) pulls makers; clout (thấp TC) pulls the showy. The tilt
+  // (derivedPool, REP_TILT) makes this TRUE; this line makes it SEEN — the school you built shaping who comes.
+  if (take.length && S.year >= 3) {
+    if (S.thucChat >= 60) news(makerNames.length ? tpl(CONTENT.ticker.cohesionMakers, { ten: makerNames[0] }) : CONTENT.ticker.cohesionMakersPlain);
+    else if (S.thucChat <= 40) news(CONTENT.ticker.cohesionClout);
+  }
   S.pendingAdmit = null;
   checkMilestones(); // a fresh intake can complete cohort1 / grow20
   return { fill: take.length, rank: rank };

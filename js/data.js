@@ -140,6 +140,13 @@ var CONFIG = {
     // obsessed (hype) school takes only top scorers and misses them. This ties the underdog to the substance
     // thesis (connecting systems, owner's steer). A GAMBLE — most đặc cách are ordinary, ~1 in 5 a real gift.
     DAX: function (tc) { return tc >= 80 ? 2 : (tc >= 55 ? 1 : 0); },
+    // E9 (iter 153) — COHESION AT OUTPUT: the school's character shapes WHO applies (owner: "systems feel
+    // separate" / "automatic based on ranking"). A SUBSTANTIVE school (high Thực Chất) draws marginally more
+    // makers (spark↑) and fewer clout-chasers; a hype/cram school (low TC) draws more of the showy (spark↓ →
+    // hype↑). BOUNDED & NON-RUNAWAY: centered at TC 50 (the adequate middle), hard-capped at ±5% on the spark
+    // share (generalist "" stays a fixed 50%, so spark+hype just trade within their half). Soft by design — the
+    // felt loop is the admissions NOTE; the tilt makes it true. Sweep-gated (must not break the spread/dominance).
+    REP_TILT: function (tc) { var t = (tc - 50) / 100 * 0.15; return t < -0.05 ? -0.05 : (t > 0.05 ? 0.05 : t); },
     HONBA_P: 0.25,
     SEED_BASE: [0.30, 0.30, 0.20, 0.13, 0.07],
     CLC_P: 0.08, CLC_P_HI: 0.12, CLC_TT: 50,

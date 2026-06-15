@@ -372,7 +372,12 @@ var CONTENT = {
     cutHi295: "Thủ khoa 29,9 điểm vẫn trượt vì tiêu chí phụ.",
     cutHi300: "ĐIỂM CHUẨN 30,5/30 — ba điểm 10 vẫn trượt nguyện vọng 1.",
     cutHi27: "Điểm chuẩn cao kỷ lục. Phụ huynh chụp màn hình.",
-    cutLo: "Báo gọi đợt tuyển sinh này là 'vét sàn'. iSteve đăng meme."
+    cutLo: "Báo gọi đợt tuyển sinh này là 'vét sàn'. iSteve đăng meme.",
+    // E9 (iter 153) — the school's character, made FELT at intake: who your reputation draws. Fires only once the
+    // character has formed (year ≥ 3) and is clearly one way or the other (Thực Chất high/low).
+    cohesionMakers: "Tiếng lành đồn xa: trường thực chất — năm nay có {ten}, một em mê làm thật, tự chọn trường bạn vì tiếng trường.", // E9: a NAMED maker your reputation drew (a face on the cohesion, attachment at intake — VISION #5)
+    cohesionMakersPlain: "Tiếng lành đồn xa: trường thực chất, năm nay nhiều em mê làm thật tự tìm đến.", // fallback if no maker in the intake
+    cohesionClout: "Trường ồn ào hơn là thực — năm nay phần đông hồ sơ là các em thích sân khấu hơn bảng đen."
   },
 
   modal: {
