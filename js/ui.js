@@ -1146,8 +1146,13 @@
       var lvl = r0 ? (r0.level || 1) : 0, maxed = lvl >= maxLv;
       var cost = lvl === 0 ? (d.cost || 0) : Math.round(Math.max(CONFIG.UPGRADE.BASE, d.cost || 0) * Math.pow(CONFIG.UPGRADE.COST_GROWTH, lvl - 1)); // iter-160: escalating upgrade cost (matches engine upgradeCost)
       var pr = maxed ? "Tối đa" : (lvl === 0 ? (cost ? "Xây −" + money(cost) : "Xây · miễn phí") : "Nâng Lv" + (lvl + 1) + " −" + money(cost));
+      // iter-162: show the upgrade's INCOME benefit so the growth engine is legible/strategic — each level adds a
+      // prestige premium (PRESTIGE_K × tuition × students) to monthly income. Only for upgrades (lvl≥1; building to
+      // lvl 1 = base, no premium yet). Cost vs +/month = visible ROI.
+      var benTr = Math.round(CONFIG.PRESTIGE_K * s.tuition * s.students.length);
+      var ben = (!maxed && lvl >= 1 && benTr > 0) ? " <span class='tiny' style='color:var(--green)'>+" + money(benTr) + "/th</span>" : "";
       var b = el("button", "build");
-      b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (lvl ? " <span class='tiny' style='color:var(--gold)'>Lv" + lvl + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + pr + "</div>";
+      b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (lvl ? " <span class='tiny' style='color:var(--gold)'>Lv" + lvl + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + pr + ben + "</div>";
       if (maxed || (cost > s.cash && lvl > 0) || (lvl === 0 && d.cost > s.cash)) b.disabled = true;
       b.onclick = function () { buyRoom(key); };
       grid.appendChild(b);

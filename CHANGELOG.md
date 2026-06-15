@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-15 — Upgrade ROI made legible — the growth engine becomes strategic (loop iter 162)
+**Economy polish (safe, UI-only).** The compounding engine (ckpt2) works, but upgrade buttons showed only a
+COST — so the player couldn't tell if an upgrade was worth it. Now each upgrade button also shows its **income
+benefit** (the prestige premium it adds: `+PRESTIGE_K × tuition × students`/month), e.g. *"Nâng Lv2 −75tr
++36tr/th"* — so cost-vs-gain (a ~2-month payback early) is visible and reinvestment becomes a clear strategic
+choice (the growth-engine loop, made legible). Only on upgrades (lvl≥1; building to lvl 1 is base, no premium).
+Zero balance risk (display read). Verified: ui syntax OK, gate GREEN, bot BOTOK, ROI unit-checked. Deployed.
+
 ## 2026-06-15 — ECONOMY ckpt 3: milestone fanfare "watch it grow" + FIX the ticker-tint bug (loop iter 161)
 **Owner economy epic (the "watch it grow" payoff) + a latent production bugfix.**
 - **Bank-milestone fanfare:** a one-time grand beat as the university grows into an empire — 1 / 5 / 10 / 25 /
