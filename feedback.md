@@ -12,6 +12,13 @@ Write as much as you want, in any format (bullets, paragraphs, half-thoughts). P
 iterations; the loop absorbs it without you having to break its flow.
 
 **Ingest log** (newest first):
+- 2026-06-15 (iter 157) — **"I develop on my phone now — deploy to github.io after each code change"** → **WORKFLOW
+  CHANGED:** the every-10 cadence is RETIRED → DEPLOY EVERY ITERATION (see ROADMAP ## Cadence "DEPLOY POLICY").
+  iter 157 deployed live now.
+- 2026-06-15 (iter 157) — **"the endgame should be a RIDICULOUS amount of money, not 900tr — the university
+  scales over years and years; upgrades raise students/tuition and cost more to buy"** → **NEXT EPIC (top
+  priority, preempts the arc): SCALE THE UNIVERSITY into a decades-long growth engine.** Reverses iter-107's
+  "manage the hoard down". Starting iter 158, sweep-gated. (See ROADMAP ## Cadence OWNER STEER line.)
 - 2026-06-14 (iter 117) — "push to github.io after every 10 iteration" → **DONE + cadence set**: this both
   resolves the held first deploy (you want it live) and revises the cadence 5-6 → **every ~10 loop iterations**.
   Deploying the whole backlog (28 commits: art + Jephed + Mentor's Ledger soul-loop + Evolution Engine + all

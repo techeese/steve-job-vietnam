@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-06-15 — ★ OWNER BACK (on phone): deploy-every-change + economy-scale steer (loop iter 157) + E9 ckpt2
+**Two owner directives (2026-06-15, owner re-engaged after ~40 firings):**
+1. **"I develop on my phone now — deploy to github.io after each code change."** → **WORKFLOW CHANGED:** the
+   every-10-iterations deploy cadence is RETIRED; from now EVERY iteration that changes browser-facing code
+   ff-merges `mentors-ledger`→`main` and pushes to github.io, then verifies live. (Baked into ROADMAP ## Cadence
+   + memory so it's mechanical.) This very iteration is deployed.
+2. **"The endgame should be a RIDICULOUS amount of money, not ~900tr — the university scales over years and
+   years; upgrades raise students/tuition and cost more to buy."** → recorded as the **NEXT EPIC (top priority,
+   preempts the arc — explicit owner ask): "Scale the university into a decades-long growth engine."** This
+   REVERSES the iter-107 "manage the hoard down" direction — the owner wants the big number to be the reward of a
+   compounding student×tuition×upgrade loop over a long game. Starting next iteration, done carefully (sweep-gated).
+
+**E9 checkpoint 2 (the forced epic this firing — SMALL_SHIPS_SINCE_EPIC was 3):** finished + proved-safe the
+cohesion system from iter-153.
+- **E9 sweep SENSOR** (sweep.js): the reputation→applicant feedback loop is now permanently guarded — it must be
+  DIRECTIONAL (a substantive school draws more makers than a hype/cram one) AND BOUNDED (the craft−cram maker-share
+  gap stays < 0.20; REP_TILT's ±5% cap → ~0.10 in practice). Caught my first mis-calibrated band immediately, then
+  went green: *"đồ án 0.45 vs luyện đề 0.36 (Δ0.09, capped <0.20, no runaway)"*. Manually-verified-once (iter-153)
+  is now a standing regression guard. Sweep is now **6 flags ✓**.
+- **Clout-note symmetry** (engine.js): the "trường ồn ào hơn là thực" admissions note now fires on the HYPE-GAP
+  (Tiếng Tăm − Thực Chất ≥ 30, the epilogue's own "hype" definition) instead of only a rare low-TC school — so a
+  famous-but-hollow school visibly draws clout-chasers, completing "attracts its kind" BOTH ways.
+Verified: 3-file syntax OK, gate GREEN, bot BOTOK, sweep 6✓/0 breakage, headless probe confirms the clout note
+fires once the hype-gap crosses 30. (Deferred to a future E9 leg: a donor/funding→character link.)
+
 ## 2026-06-15 — Onboarding the attachment loop — so a stranger discovers the heart of the game (loop iter 156)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · COMPLETENESS-VS-DREAM 4 · BITE 3 · BEAUTY/JUICE n/a.**
 The whole people-first arc rests on ATTACHMENT — following ⭐ a protégé across the years, pouring scarce 🎓

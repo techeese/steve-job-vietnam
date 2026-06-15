@@ -684,7 +684,7 @@ function declareAdmissions(cutoff, quota, auto) {
   // (derivedPool, REP_TILT) makes this TRUE; this line makes it SEEN — the school you built shaping who comes.
   if (take.length && S.year >= 3) {
     if (S.thucChat >= 60) news(makerNames.length ? tpl(CONTENT.ticker.cohesionMakers, { ten: makerNames[0] }) : CONTENT.ticker.cohesionMakersPlain);
-    else if (S.thucChat <= 40) news(CONTENT.ticker.cohesionClout);
+    else if (S.tiengTam - S.thucChat >= CONFIG.ESSAY.HYPE_GAP) news(CONTENT.ticker.cohesionClout); // E9 ckpt2 (iter-157): the clout note now fires on the HYPE-GAP (famous beyond substance) — same definition as the epilogue's "hype" branch — so it catches the famous-but-hollow school, not only the neglected one (completes "attracts its kind" both ways)
   }
   S.pendingAdmit = null;
   checkMilestones(); // a fresh intake can complete cohort1 / grow20

@@ -71,11 +71,14 @@ function play(seed, strat) {
   var lives = S.alumni.map(function (a) {
     return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state };
   });
+  // E9 ckpt2 (iter-157): the cohesion tilt's footprint — the maker (spark/sky) share of the current student
+  // body, which reflects the reputation→applicant tilt (REP_TILT). Used to PROVE the feedback can't run away.
+  var sk = 0, nstu = S.students.length || 1; S.students.forEach(function (x) { if (x.tell === "spark" || x.tell === "sky") sk++; });
   return {
     cash: S.cash, minCash: minCash, bankrupt: bankrupt, y1Net: y1Net,
     tt: S.tiengTam, ut: S.uyTin, tc: S.thucChat, endow: S.endow.bal,
     grad: S.META.graduated, steves: S.META.steves, arrested: S.META.arrested,
-    alumni: S.alumni.length, byState: byState, lives: lives
+    alumni: S.alumni.length, byState: byState, lives: lives, sparkShare: sk / nstu
   };
 }
 
@@ -94,6 +97,7 @@ function agg(seeds, strat) {
     avgEndow: sum(function (r) { return r.endow; }) / n,
     steveRate: sum(function (r) { return r.steves > 0 ? 1 : 0; }) / n, avgSteves: sum(function (r) { return r.steves; }) / n,
     avgArrested: sum(function (r) { return r.arrested; }) / n,
+    avgSparkShare: sum(function (r) { return r.sparkShare; }) / n, // E9 ckpt2: the cohesion tilt footprint (maker share)
     avgAlumni: totalAlum / n, statePct: pct, lives: lives
   };
 }
@@ -102,6 +106,7 @@ function agg(seeds, strat) {
 var OUT = [], FLAGS = [];
 function line(s) { OUT.push(s); }
 function f1(x) { return (Math.round(x * 10) / 10).toFixed(1); }
+function f2(x) { return (Math.round(x * 100) / 100).toFixed(2); }
 function f0(x) { return Math.round(x); }
 
 var SEEDS = []; for (var i = 0; i < 40; i++) SEEDS.push(101 + i * 7);
@@ -238,6 +243,20 @@ if (results[ADK]) {
   var domS = pn.every(function (b) { return ad.avgSteves >= results[b].avgSteves; }), domC = pn.every(function (b) { return ad.avgCash >= results[b].avgCash; });
   if (domS && domC) FLAGS.push("ADAPTIVE grain-match DOMINATES pure theses on 🍎+cash — 'just optimize per cohort' would win, collapsing the open question (E2 #1 risk)");
   else FLAGS.push("adaptive grain-match does NOT dominate (🍎 " + f1(ad.avgSteves) + ", cash " + f0(ad.avgCash) + "tr) — open-question holds under matching ✓ (v0 policy, refine after E2 #1)");
+}
+// E9 ckpt2 (iter-157) — COHESION sensor: the reputation→applicant tilt (REP_TILT) must be DIRECTIONAL (a
+// substantive school draws more makers than a hype/cram one) AND BOUNDED (no runaway: maker-share stays inside
+// [0.18, 0.42] — baseline 0.30 ± the ±5% cap + variance). This permanently guards the feedback loop manually
+// checked once at iter-153; a future change that uncaps REP_TILT or amplifies the loop trips this.
+// Spread-based (robust to the seeded-prodigy baseline that inflates absolute maker-share): the tilt must be
+// DIRECTIONAL (substance draws ≥ makers than cram) and the gap BOUNDED (REP_TILT caps at ±5% → craft−cram tilt
+// ≤ ~0.10; a gap > 0.20 means the feedback is amplifying / the cap was removed).
+var craS = results["đồ án (craft)"], cramS = results["luyện đề (cram)"];
+if (craS && cramS) {
+  var spread = craS.avgSparkShare - cramS.avgSparkShare;
+  if (spread > 0.20) FLAGS.push("E9 cohesion RUNAWAY: craft draws Δ" + f2(spread) + " more makers than cram (>0.20) — the reputation→applicant feedback is amplifying (cap REP_TILT)");
+  else if (spread < -0.005) FLAGS.push("E9 cohesion INVERTED: craft draws FEWER makers than cram (" + f2(craS.avgSparkShare) + " vs " + f2(cramS.avgSparkShare) + ") — REP_TILT sign/center is wrong");
+  else FLAGS.push("E9 cohesion ✓: substance draws more makers, bounded — đồ án " + f2(craS.avgSparkShare) + " vs luyện đề " + f2(cramS.avgSparkShare) + " (Δ" + f2(spread) + ", capped <0.20, no runaway)");
 }
 line("");
 
