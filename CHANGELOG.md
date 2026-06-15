@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-15 — Onboarding the attachment loop — so a stranger discovers the heart of the game (loop iter 156)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · COMPLETENESS-VS-DREAM 4 · BITE 3 · BEAUTY/JUICE n/a.**
+The whole people-first arc rests on ATTACHMENT — following ⭐ a protégé across the years, pouring scarce 🎓
+mentor-attention into a named kid. But those two buttons sat on the inspect card UNPROMPTED — a first-time
+player (the owner playing fresh, or any stranger) could play the entire game and never discover the loop the
+soul is built on. Now a one-time hint sits at the top of the inspect card:
+*"💡 Chạm ⭐ để DÕI THEO một em suốt hành trình, hoặc 🎓 để DÌU DẮT — đây là cách bạn gắn bó với một cuộc đời."*
+- **Self-dismissing, no nag:** keyed off a persistent `META.attachSeen` that flips true the moment the player
+  first follows OR mentors anyone — so it guides exactly once, then is gone forever. No timer, no modal.
+- **Save-safe:** `attachSeen` added to the META init; survives save/reload (gate green); old saves read it as
+  falsy → the hint shows until they engage (harmless).
+- **Zero balance risk:** pure UI/onboarding, sweep-neutral.
+Verified: engine+ui syntax OK, gate GREEN (META round-trips), bot BOTOK, sweep 5✓/0 breakage, a headless probe
+confirms the hint SHOWS on a fresh game and HIDES after the first follow/mentor.
+
 ## 2026-06-15 — Flow: mood matters BOTH ways now — a thriving kid learns faster (loop iter 155)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · COMPLETENESS-VS-DREAM 4 · BITE 3 · BEAUTY/JUICE n/a.**
 A genuine person-sim MECHANIC deepening (not surfacing) — closing the last unbuilt VISION #3 frontier

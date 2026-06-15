@@ -920,6 +920,7 @@
       "<button class='ix' id='lookBtn' title='Đổi kiểu'>🔄</button>" +
       "<button class='ix' id='ixBtn'>✕</button></div>" +
       "<div class='ibars'>" + ibar("Kiến thức", st.kt, "#bb6bd9") + ibar("Tay nghề", st.tn, "#6fcf97") + ibar("Sáng tạo", st.st, "#6aa9f0") + ibar("Cá mập", st.cm, "#f2994a") + ibar("Tâm trạng", st.mood, "#f2c14e") + "</div>" +
+      (!S().META.attachSeen ? "<div class='iflav' style='color:var(--gold)'>💡 Chạm ⭐ để DÕI THEO một em suốt hành trình, hoặc 🎓 để DÌU DẮT — đây là cách bạn gắn bó với một cuộc đời.</div>" : "") + // iter-156: one-time onboarding for the attachment loop (the heart of the people-first arc) — self-dismisses once the player follows/mentors anyone
       "<div class='iflav'>Tiềm năng (hạt giống): " + tr.txt + (tr.lvl < 2 ? " <span class='tiny' style='color:var(--faint)'>(dìu dắt để biết rõ)</span>" : "") + " &nbsp;·&nbsp; Tâm sức dìu dắt: " + (HVS.mentorCount ? HVS.mentorCount() : 0) + "/" + CONFIG.MENTOR_SLOTS + "</div>" +
       "<div class='iflav' style='color:" + fit.c + "'>Tạng × lối học: " + fit.t + "</div>" +
       (peakRisk ? "<div class='iflav' style='color:" + peakRisk.c + "'>⚠ " + peakRisk.t + "</div>" : "") +
@@ -931,10 +932,11 @@
         "<button class='czb' id='cz_r'>🎲</button></div>";
     if (SPRITES.ready()) { var cx = $("iav").getContext("2d"); cx.imageSmoothingEnabled = false; cx.drawImage(st.lookC ? SPRITES.custom(st.grade, st.lookC, 0) : SPRITES.sprite(st.grade, lookIdx, 0), 0, 0); }
     $("ixBtn").onclick = hideInspect;
-    $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); };
+    $("favBtn").onclick = function () { var m = S().META; m.favId = (m.favId === id) ? null : id; if (m.favId === id) m.attachSeen = true; syncActors(); if (m.favId === id) toast("⭐ Đang theo dõi " + st.ten + " — em ấy sẽ có sao trên sân."); showInspectStudent(id); }; // iter-156: engaging the attachment loop retires the onboarding hint
     $("mentorBtn").onclick = function () {
       var r = HVS.mentorStudent(id);
       if (!r.ok) { if (r.why === "full") toast("Hết suất dìu dắt — bạn chỉ dồn tâm sức cho " + CONFIG.MENTOR_SLOTS + " em một lúc. Phải chọn."); return; }
+      if (r.mentored) S().META.attachSeen = true; // iter-156: engaging the attachment loop retires the onboarding hint
       syncActors();
       toast(r.mentored ? ("🎓 Bắt đầu dìu dắt " + st.ten + " — tâm sức có hạn, không cứu được tất cả.") : ("Thôi dìu dắt " + st.ten + " — một suất tâm sức được giải phóng."));
       showInspectStudent(id);
