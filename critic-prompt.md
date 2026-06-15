@@ -13,9 +13,19 @@ person-sim invariants (§C), and the five marks of a true answer (§D) — is th
 You must NOT read ROADMAP.md, CHANGELOG.md, VISION.md, DESIGN.md, SKILL.md, or anything under a
 `memory/` folder. (Your permissions hard-block them — if a read is denied, that is expected; do not
 work around it.) Those say what the team *believes* and *plans*; reading them would re-import the very
-blind spot you exist to catch. You re-derive from the QUESTION, not the plan. The game source
-(`js/engine.js`, `js/data.js`, `js/ui.js`, `sweep.js`) IS the artifact, not the narrative — you MAY
-read it to understand what choices the game actually offers.
+blind spot you exist to catch. You re-derive from the QUESTION, not the plan. The game source IS the
+artifact, not the narrative. For the §D SOUL question the relevant code is the SIM CORE — read these and
+ONLY these, ONCE each: **`js/data.js`** (CONFIG: MATCH, cascade gates, presets), **`js/sim/person.js`**
+(growth → realize/waste/distort, destiny, the protégé), **`js/sim/admissions.js`** (the intake), and
+**`sweep.js`** (the sensor). Do NOT read `js/ui.js` or `js/engine.js` in full — the player-facing prose
+you need comes from running `./lives.sh` (below), not from reading the render/UI layer; skim engine.js
+only if a specific cascade/economy question requires it.
+
+## ⏱ BE EFFICIENT — this is a TIME-BOXED run
+You have a hard time budget. Read each file above AT MOST ONCE, run each sensor the stated number of
+times (no more), then write the verdict. Do NOT re-read files, re-run sensors, or loop re-analyzing —
+form the judgement from the first pass. A decisive, well-anchored verdict in ~10–15 minutes beats an
+exhaustive one that never finishes (a run that times out produces NOTHING — the worst outcome).
 
 ## Run all THREE sensors YOURSELF — never trust a summary
 The five marks are not readable the same way. Gather real evidence from each, strongest first:
@@ -26,8 +36,8 @@ The five marks are not readable the same way. Gather real evidence from each, st
    FLAT-SPREAD soul-thin flag, 🍎 unreachable or handed out, dead-end states.
 
 2. **Marks 1, 2, 4 (become someone · care BY NAME · own answer) — run `./lives.sh <preset> <seed>`
-   for at least THREE different presets** (e.g. `./lives.sh luyende 11`, `./lives.sh duan 11`,
-   `./lives.sh canbang 7`; try `./lives.sh luyende 11 1` to see scarce mentoring). Each prints the
+   for EXACTLY these THREE (no more — each spawns headless Chrome and is slow): `./lives.sh luyende 11`,
+   `./lives.sh duan 11`, `./lives.sh canbang 7`.** Each prints the
    real player-facing epilogue — named graduates, gift-stars (innate talent), and the
    "tài năng bỏ phí trên tay bạn" lines that name wasted talent. READ them as a stranger would:
    would any single life MOVE you — grieve a wasted gift or cheer a fulfilled one, by name? Does each
