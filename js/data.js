@@ -12,6 +12,11 @@ var CONFIG = {
   TICK_MS: 70, TICKS_PER_DAY: 10, DAYS_PER_MONTH: 30, // TICK_MS 100→70 (iter 115, owner "1 month too long in real clock"): a month is now ~21s at 1× (was 30s) — pure WALL-CLOCK pace, no sim/balance change (sweep/gate drive dayTick directly)
   GRID_W: 15, GRID_H: 12, TILE: 26,
   ROSTER_CAP: 48, COHORT_NOMINAL: 12,
+  // iter-166 (economy ckpt — owner: "upgrades raise students"): CLASSROOMS (phòng học) scale the school's SIZE.
+  // campusScale() = 1 + CAMPUS_SCALE_K·(phonghoc_lvl−1), capped at CAMPUS_SCALE_MAX — so roster, intake AND the
+  // crowd baseline grow TOGETHER (proportional → per-student dynamics + the realize/waste spread are preserved).
+  // Capped conservatively (~1.85× ≈ 89 students) to keep the phone smooth. Level-1 schools (sweep/bot) = 1.0×.
+  CAMPUS_SCALE_K: 0.09, CAMPUS_SCALE_MAX: 1.85,
   RUN_CAP_YEARS: 12,
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
@@ -75,7 +80,7 @@ var CONFIG = {
   // than flow helps (the open question holds).
   FLOW_MOOD: 80, FLOW_MULT: 1.06,
   FAV_MOMENT_GAP: 90, FAV_MILE: [40, 60, 80], FAV_MOOD_LOW: 45, FAV_MOOD_HI: 70, // E5-watch: the followed protégé's in-school arc — a caused moment at most ~once a season (THESIS mark 5)
-  CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
+  CROWD: function (n, base) { return Math.max(0.6, 1 - 0.02 * (n - (base || 12))); }, // iter-166: base scales with campusScale so proportionally-bigger cohorts don't incur extra crowding (spread preserved)
 
   PRESETS: {
     luyende: { label: "Học Để Qua Môn", kt: 4, tn: 0.4, st: -1, cm: 1.0, mood: -2, vet: 2, cost: 0, tradeoff: "Điểm & Vẹt cao, mài mòn sáng tạo — hợp trò cần khuôn; người mơ mộng dễ thành vẹt văn mẫu hoặc cá mập." }, // cram → gaming-the-system hustle (breeds some cá mập). tn floor 0.4 (was 0): cram suppresses craft but no longer ZEROES it, so the gift still leaves a gift-shaped gap (Mentor's Ledger talent-coupling)

@@ -92,7 +92,7 @@ function setKhoaHead(key, tid) {
 }
 function majorByKey(key) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].key === key) return M[i]; return null; }
 function enrollProdigy(m) {
-  if (S.students.length >= CONFIG.ROSTER_CAP) { news(m.icon + " Mở " + m.name + " — nhưng trường đã chật, chưa nhận thêm được."); return; }
+  if (S.students.length >= rosterCap()) { news(m.icon + " Mở " + m.name + " — nhưng trường đã chật, chưa nhận thêm được."); return; }
   var s = genStudent(1, m.prodigy); s._prodigy = true; S.students.push(s);
   news(m.icon + " Mở " + m.name + " — " + m.prodigy.ten + " tuyển thẳng về học.");
 }
@@ -127,6 +127,11 @@ function upgradeCost(d, lvl) { var U = CONFIG.UPGRADE; return Math.round(Math.ma
 // growth engine). Level-1 schools (the sweep/bot, which never upgrade) get 1.0 → economy sweep unchanged.
 function prestigeLevels() { var t = 0; for (var i = 0; i < S.rooms.length; i++) t += Math.max(0, (S.rooms[i].level || 1) - 1); return t; }
 function prestigeMult() { return 1 + CONFIG.PRESTIGE_K * prestigeLevels(); }
+// iter-166 (economy — "upgrades raise students"): CLASSROOMS scale the school's SIZE. campusScale drives roster,
+// intake AND the crowd baseline TOGETHER (proportional → the realize/waste spread is preserved). Level-1 = 1.0×
+// (sweep/bot unaffected). Capped for phone perf. rosterCap = the scaled student ceiling.
+function campusScale() { var sc = 1 + CONFIG.CAMPUS_SCALE_K * Math.max(0, roomLevel("phonghoc") - 1); return sc > CONFIG.CAMPUS_SCALE_MAX ? CONFIG.CAMPUS_SCALE_MAX : sc; }
+function rosterCap() { return Math.round(CONFIG.ROSTER_CAP * campusScale()); }
 function autoPlace(key) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
   if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
@@ -269,7 +274,7 @@ function dayTick() {
     if (S.pendingJune.stage === "policy" && S.totalDays >= S.pendingJune.deadline) finalizeJune("thuc");
     else if (S.pendingJune.stage === "results" && S.totalDays >= S.pendingJune.deadline) S.pendingJune = null;
   }
-  if (S.pendingAdmit && S.totalDays >= S.pendingAdmit.deadline) declareAdmissions(Math.max(15, S.admissions.lastCutoff - 0.5), 12, true);
+  if (S.pendingAdmit && S.totalDays >= S.pendingAdmit.deadline) declareAdmissions(Math.max(15, S.admissions.lastCutoff - 0.5), S.pendingAdmit.quota, true); // iter-166: use the (campus-scaled) pending quota, not a hardcoded 12 — so a bigger campus auto-admits bigger cohorts
 
   S.day++; S.totalDays++;
   growStudents();
@@ -976,7 +981,7 @@ function sanitize() {
     if (!s.flags) s.flags = {}; if (!s.flags.vt) s.flags.vt = [];
     if (s.lookC && (typeof s.lookC !== "object" || !Number.isFinite(s.lookC.s) || !Number.isFinite(s.lookC.h) || !Number.isFinite(s.lookC.y) || !Number.isFinite(s.lookC.a))) delete s.lookC; // custom look (UI clamps ranges on use)
     return s;
-  }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP);
+  }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP * 3); // iter-166: generous corruption guard (well above the scaled rosterCap ~89) so a big-campus save never drops enrolled students on reload
   var _mc = 0; S.students.forEach(function (s) { if (s.mentored) { _mc++; if (_mc > CONFIG.MENTOR_SLOTS) s.mentored = false; } }); // Phase 2: never exceed the attention budget (heals a corrupted save)
   if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;
   S.endow.milestonesClaimed = clamp(Math.round(S.endow.milestonesClaimed) || 0, 0, 3);

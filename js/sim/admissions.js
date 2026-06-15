@@ -37,7 +37,7 @@ function openAdmissions() {
   S.pendingAdmit = {
     year: S.year, pool: pool, n: pool.length,
     cut: clamp(r025(CONFIG.ADMIT.MU(S.uyTin, S.tiengTam, S.year, S.tuition) - 1), CONFIG.ADMIT.CUT_MIN, CONFIG.ADMIT.CUT_MAX),
-    quota: Math.min(CONFIG.ADMIT.QUOTA_MAX, Math.max(CONFIG.ADMIT.QUOTA_MIN, Math.min(CONFIG.COHORT_NOMINAL, CONFIG.ROSTER_CAP - S.students.length))),
+    quota: Math.min(Math.round(CONFIG.ADMIT.QUOTA_MAX * campusScale()), Math.max(CONFIG.ADMIT.QUOTA_MIN, Math.min(Math.round(CONFIG.COHORT_NOMINAL * campusScale()), rosterCap() - S.students.length))), // iter-166: classrooms scale the intake (bigger cohorts), gated by the scaled rosterCap
     lastCutoff: a.lastCutoff, lastFill: a.lastFill, lastQuota: a.lastQuota,
     rivals: CONFIG.ADMIT.RIVALS(S.year), deadline: S.totalDays + 18
   };
@@ -55,7 +55,7 @@ function declareAdmissions(cutoff, quota, auto) {
   else if (cutoff <= 15.5) { gainTT(-3); news(CONTENT.ticker.cutLo); }
   // resolve
   var qualified = []; for (var i = 0; i < pool.length; i++) if (pool[i].score >= cutoff) qualified.push(pool[i]);
-  var take = qualified.slice(0, Math.min(quota, CONFIG.ROSTER_CAP - S.students.length));
+  var take = qualified.slice(0, Math.min(quota, rosterCap() - S.students.length));
   var makerNames = []; // E9: makers (spark/sky) drawn this intake — to put a NAMED face on the cohesion note (no gift shown — E5)
   for (i = 0; i < take.length; i++) {
     var ap = take[i];
@@ -71,7 +71,7 @@ function declareAdmissions(cutoff, quota, auto) {
   var dax = CONFIG.ADMIT.DAX(S.thucChat), daxFill = 0;
   if (dax > 0) {
     var below = []; for (i = 0; i < pool.length; i++) if (pool[i].score < cutoff) below.push(pool[i]);
-    for (var dq = 0; dq < dax && below.length && S.students.length < CONFIG.ROSTER_CAP; dq++) {
+    for (var dq = 0; dq < dax && below.length && S.students.length < rosterCap(); dq++) {
       var dp = below.splice(Math.floor(rnd() * below.length), 1)[0];
       S.students.push(genStudent(1, { seed: dp.seed, tell: dp.tell, diamond: !!dp.diamond, kt: rint(15, 30), tn: rint(5, 20), st: rint(15, 35), cm: rint(5, 20), mood: rint(65, 80), vet: rint(0, 10) }));
       daxFill++;

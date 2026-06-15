@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-15 — "More students": the campus fills as you grow (loop iter 166)
+**Economy epic — the owner's literal "upgrades raise students" want, delivered SAFELY.** Classrooms (phòng học)
+now scale the school's SIZE: `campusScale() = 1 + 0.09·(phonghoc_lvl−1)` capped at **1.85×** (≈ 89 students,
+conservatively for phone perf). Roster, intake AND the crowd baseline grow **together** (proportional) so the
+per-student dynamics — and the realize/waste spread — are PRESERVED.
+- `rosterCap()` + scaled quota (intake) + a scaled `CROWD` baseline; the auto-admit now uses the campus-scaled
+  pending quota (was hardcoded 12 — the bug that capped the campus regardless of size).
+- **Depth, not a free win:** classrooms set the CEILING; you fill it by also being reputable (a big pool needs
+  Tiếng Tăm) — so a big full campus needs facilities AND a name.
+- **Verified SAFE:** level-1 schools (sweep/bot) are byte-IDENTICAL (campusScale 1.0× → gate GREEN, bot BOTOK
+  grad 87/cash 5168, sweep 6✓). A probe with upgraded classrooms reaches more students (48→62, toward ~89) and
+  the spread HOLDS (95/5/0 ≈ baseline 93/7/0). Load-sanitize uses a generous corruption guard so a big-campus
+  save never drops enrolled students. Perf: ≤~89 sprites (1.85×) — modest; watch-item on low-end phones.
+Deployed. (If you want the campus to fill *harder*, I can raise the cap + add sprite-culling for perf.)
+
 ## 2026-06-15 — Funding panel reads in tỷ too — money consistency at empire scale (loop iter 165)
 **Polish (safe, UI-only).** The income rows + cash/endow chips already used the `money()` tỷ formatter (159-162),
 but the funding panel's EXPENSE rows (lương / bảo trì / vận hành / tái đầu tư) and the **Cân đối** net total were

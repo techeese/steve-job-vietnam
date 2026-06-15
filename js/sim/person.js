@@ -38,7 +38,8 @@ function growStudents() {
   var counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
   var i, s;
   for (i = 0; i < n; i++) counts[S.students[i].grade]++;
-  for (var g = 1; g <= 4; g++) crowdByGrade[g] = CONFIG.CROWD(counts[g]);
+  var crowdBase = CONFIG.COHORT_NOMINAL * campusScale(); // iter-166: crowd baseline scales with the campus, so proportionally-bigger cohorts don't incur extra crowding (the realize/waste spread is preserved)
+  for (var g = 1; g <= 4; g++) crowdByGrade[g] = CONFIG.CROWD(counts[g], crowdBase);
   var tf = teacherFactor();
   var dpm = CONFIG.DAYS_PER_MONTH;
   var majorCount = {}; for (i = 0; i < n; i++) { var mm0 = studentMajor(S.students[i]); if (mm0) majorCount[mm0.key] = (majorCount[mm0.key] || 0) + 1; } // khoa headcounts for synergy
