@@ -695,9 +695,16 @@ function transition(a, draw, ysg) {
         // owner's "watch them tản đi khắp nơi" / THESIS marks 1+3: lives become someone, the wide range). THROTTLED
         // to ≤1 per 60 days and DETERMINISTIC (no rnd) so the headless sweep/bot stay byte-identical; glimpsed,
         // not metered (the steady kỹ sư shown as worthy as the founder; only out-in-the-world alumni, ysg≥1).
-        if (ysg >= 1 && CONFIG.ALUM.CHIPS[to] && S.totalDays - (S._lastAlumLifeBeat || 0) >= 60) {
-          news("📰 " + a.ten + " — giờ là " + CONFIG.ALUM.CHIPS[to] + ".");
-          S._lastAlumLifeBeat = S.totalDays;
+        if (ysg >= 1 && CONFIG.ALUM.CHIPS[to]) {
+          if (a.flags && a.flags.protege && S.totalDays - (S._lastProtegeBeat || 0) >= 30) {
+            // iter-171: the kid you FOLLOWED, out in the world — the deepest attachment payoff (mark 2, care by
+            // name). Own gentler cooldown + ⭐ (gold in the ticker) so you reliably watch YOUR protégé's life unfold.
+            news("⭐ " + a.ten + " — đứa em bạn từng dõi theo — giờ là " + CONFIG.ALUM.CHIPS[to] + ".");
+            S._lastProtegeBeat = S.totalDays;
+          } else if (S.totalDays - (S._lastAlumLifeBeat || 0) >= 60) {
+            news("📰 " + a.ten + " — giờ là " + CONFIG.ALUM.CHIPS[to] + ".");
+            S._lastAlumLifeBeat = S.totalDays;
+          }
         }
       }
       return;

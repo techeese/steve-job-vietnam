@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — The kid you followed, out in the world: a protégé post-grad life beat (loop iter 171)
+**Pays off the deepest attachment the game builds — the followed protégé's whole life (THESIS mark 2, care BY
+NAME).** Iter-170 made the alumni world audible, but YOUR protégé — the one kid you chose to follow (`META.favId`,
+flagged `protege` at graduation) — was scattered into the same anonymous 📰 stream as everyone else, on the same
+60-day throttle, so the player could easily *miss* the life-turns of the very person they were attached to. Now
+the protégé gets their OWN beat: *"⭐ {tên} — đứa em bạn từng dõi theo — giờ là 🚀 Founder"* / *"… 🪪 Thất nghiệp"*
+/ *"… 👷 Kỹ sư"* — with a gentler **30-day** cooldown (vs 60 for the crowd) and the ⭐ lead so it renders **gold**
+in the ticker. The result: you reliably watch the kid you raised become whoever they become — realized, settled,
+or wasted — out in the world, years after they left. The symmetry-of-waste invariant holds: a protégé who lands
+in 🪪/💼 is surfaced exactly as plainly as one who founds (no triumph-only filter). **Deterministic** (no RNG, key
+off `S.totalDays`/`favId`) → the headless bot/sweep stay byte-IDENTICAL (cash 5251 / arrested 15 unchanged — the
+bot follows no protégé, so the branch is inert there). Verified: engine syntax OK, gate GREEN (incl. "followed
+protégé survives reload"), bot BOTOK (identical metrics), sweep 6✓/0 breakage, probe confirms ⭐ beats fire across
+the range (Founder / Kỹ sư / Lương ổn / Thất nghiệp). SOUL 5 · COMPLETENESS-VS-DREAM 4 (mark 2 deepened) ·
+CLARITY 4 · SATIRE 3 · BEAUTY 3 · JUICE 3. Deployed.
+
 ## 2026-06-15 — Watch them scatter: former students' lives surface in the feed (loop iter 170)
 **Surfaces an invisible dimension — the alumni world (THESIS marks 1+3; the owner's "watch them tản đi khắp
 nơi").** The alumni FSM richly evolves graduates (founder, engineer, settled, văn-mẫu clerk, coin shark,
