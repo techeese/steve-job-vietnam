@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-15 — You can now WATCH a gift being bent into a shark, mid-school (loop iter 198)
+**Person-sim refinement — the live counterpart of iter-197.** iter-197 made distortion a distinct grief at the
+*epilogue*; but in-play, the cohort glimpse (`cohortBeat`) only ever surfaced gifts **blooming** (🌱) or **wilting**
+(🍂) — a gift being **bent into a coin-shark was invisible until graduation**, too late to act. Now the glimpse rotates
+all **three** poles of the owner's trichotomy (era % 3 → realize / waste / **distort**): when a real builder/maker gift
+(spark/sky) has its **cá-mập hustle overtaking its craft** (`cm ≥ COHORT_BENT_CM` and `cm >` their signature stat),
+a 🪙 beat names it — *"đầu óc lập trình sắc thế, mà đang mài vào trò lùa gà"* (a sharp coding mind grinding into scams),
+*"bàn tay khéo đang bỏ xưởng đi buôn nước bọt"* (skilled hands leaving the workshop to peddle hot air) — **while you can
+still mentor or repoint them** (Mark 5: felt, and actionable, WHILE you play). Lines are gift-keyed (iter-193 style);
+narration-only + rnd-free → **balance-neutral** (bot cash 7353/arrested 15 unchanged, gate GREEN, sweep 7✓, lives 0
+LIVESFAIL ×2). Probe: the 🪙 pole fires 39× across 45 runs alongside bloom 68 / wilt 45 — the cram/hustle environments
+where gifts actually curdle. The in-play transformation now shows all three fates, not just two. SOUL 4 · SATIRE 4.
+
 ## 2026-06-15 — Distortion is now its own grief, distinct from waste (the trichotomy's 3rd pole) (loop iter 197)
 **Person-sim refinement** (the sanctioned smallest-viable move while the arc awaits owner confirm). The owner's model
 is realize / **waste** / **distort** — but the epilogue read distortion and waste with the *same* line: a 5-star maker

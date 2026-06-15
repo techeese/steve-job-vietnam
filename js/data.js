@@ -84,6 +84,7 @@ var CONFIG = {
   FLOW_MOOD: 80, FLOW_MULT: 1.06,
   FAV_MOMENT_GAP: 90, FAV_MILE: [40, 60, 80], FAV_MOOD_LOW: 45, FAV_MOOD_HI: 70, // E5-watch: the followed protégé's in-school arc — a caused moment at most ~once a season (THESIS mark 5)
   COHORT_BEAT_GAP: 80, // iter-179: the BROADER cohort becomes someone WHILE you watch — a glimpse (one kid blooming/wilting) at most ~once a season, alternating poles (§C-2 symmetry). Rarer than the protégé arc.
+  COHORT_BENT_CM: 40, // iter-198: the 3rd in-play pole — a real builder/maker gift (spark/sky) whose cá-mập hustle (cm ≥ this AND > their signature gift) is overtaking it = the shark forming mid-school, surfaced WHILE you can still act (the epilogue's DISTORT pole, made live; the cohort counterpart of the protégé's cmUp warning).
   CROWD: function (n, base) { return Math.max(0.6, 1 - 0.02 * (n - (base || 12))); }, // iter-166: base scales with campusScale so proportionally-bigger cohorts don't incur extra crowding (spread preserved)
 
   PRESETS: {

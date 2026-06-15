@@ -135,6 +135,13 @@ var CONTENT = {
     hype:  [ "máu khởi nghiệp đang chuyển dần thành thói ăn xổi.", "khiếu thuyết phục đấy, mà đang học cách lùa hơn cách làm." ],
     _:     [ "tài năng đang nguội dần — lối học chưa hợp với em.", "ngồi đúng chỗ, mà mắt cứ nhìn ra cửa sổ." ]
   },
+  // iter-198 — the 3rd in-play pole (cohortBeat): a real gift being BENT into hustle mid-school (cá-mập overtaking the
+  // craft) — distortion made visible WHILE you can still act, the live counterpart of the epilogue's "bị bẻ cong".
+  cohortBent: {
+    spark: [ "đầu óc lập trình sắc thế, mà đang mài vào trò lùa gà.", "giỏi máy móc thật, nhưng đang học cách bán khoá học làm giàu." ],
+    sky:   [ "bàn tay khéo đang bỏ xưởng đi buôn nước bọt.", "óc sáng tạo đang quay sang nghĩ chiêu hơn nghĩ sản phẩm." ],
+    _:     [ "cái khiếu đang bị bẻ dần sang trò khôn lỏi.", "tài năng thật đang nhường chỗ cho thói ăn xổi." ]
+  },
   // iter-182 (owner steer ckpt3): NON-monetary gifts from successful alumni — the school's "kho lưu niệm", a hook for
   // extension functions later (a printer→Xưởng, servers→Lab, an internship→a kid…). For now: collected, named, kept.
   giftItems: [

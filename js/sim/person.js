@@ -242,22 +242,24 @@ function cohortBeat() {
   if (S.totalDays - (S._lastCohortBeat || 0) < CONFIG.COHORT_BEAT_GAP) return; // ~once a season, rarer than the protégé
   var st = S.students, n = st.length; if (n < 6) return;
   var era = Math.floor(S.totalDays / CONFIG.COHORT_BEAT_GAP);
-  var wantWilt = (era % 2) === 1; // alternate bloom↔wilt: grief and cheer both surface (symmetry-of-waste)
+  var pole = era % 3; // iter-198: rotate the THREE poles of the trichotomy — 0 BLOOM (realize) · 1 WILT (waste) · 2 BENT (distort), all surfaced WHILE you watch
   var best = null, bestScore = -1, i, s, mm, score;
   for (i = 0; i < n; i++) {
     s = st[i];
     if (s.id === S.META.favId || s.grade < 2 || s.seed < 4) continue; // the protégé has favBeat; the gift must be real + discoverable
     mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
-    if (wantWilt) { // a real gift cooling in a mismatch — low mood, the "đang nguội dần" made visible mid-school
+    if (pole === 1) { // WILT — a real gift cooling in a mismatch — low mood, the "đang nguội dần" made visible mid-school
       if (mm < CONFIG.MISMATCH_MM && s.mood < CONFIG.FAV_MOOD_LOW) { score = (CONFIG.MISMATCH_MM - mm) * 100 + (CONFIG.FAV_MOOD_LOW - s.mood) + s.seed * 4; if (score > bestScore) { bestScore = score; best = s; } }
-    } else { // a gift blooming under a fitting school — strong match, in flow, signature stat rising
+    } else if (pole === 2) { // BENT — a builder/maker gift (spark/sky) whose cá-mập hustle is overtaking the craft = the shark forming, while you can still act
+      if ((s.tell === "spark" || s.tell === "sky") && s.cm >= CONFIG.COHORT_BENT_CM && s.cm > Math.max(s.tn, s.st)) { score = s.cm * 2 + s.seed * 4 - Math.max(s.tn, s.st); if (score > bestScore) { bestScore = score; best = s; } }
+    } else { // BLOOM — a gift blooming under a fitting school — strong match, in flow, signature stat rising
       if (mm >= 1.3 && s.mood >= CONFIG.FLOW_MOOD && (s.tn >= 60 || s.st >= 60)) { score = Math.max(s.tn, s.st) + s.mood + s.seed * 5; if (score > bestScore) { bestScore = score; best = s; } }
     }
   }
   if (!best) return;
-  var byTell = wantWilt ? CONTENT.cohortWilt : CONTENT.cohortBloom;
+  var byTell = pole === 1 ? CONTENT.cohortWilt : pole === 2 ? CONTENT.cohortBent : CONTENT.cohortBloom;
   var variants = byTell[best.tell] || byTell._;        // iter-193: the line names THIS kid's specific gift (tell), not a generic talent
   var line = variants[era % variants.length];          // deterministic line pick (no rnd) — cycles over time
-  news((wantWilt ? "🍂 " : "🌱 ") + best.ten + " — " + line);
+  news((pole === 1 ? "🍂 " : pole === 2 ? "🪙 " : "🌱 ") + best.ten + " — " + line);
   S._lastCohortBeat = S.totalDays;
 }
