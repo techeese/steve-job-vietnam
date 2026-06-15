@@ -597,6 +597,9 @@
     } else if (a.act === "eat") {
       ctx.fillStyle = "#e8dcc2"; ctx.fillRect(x - 3, y - 9, 6, 3); ctx.fillStyle = PX.out; ctx.fillRect(x - 3, y - 6, 6, 1);
       ctx.fillStyle = "rgba(255,255,255,.5)"; for (k = 0; k < 2; k++) { var sx = x - 1 + k * 2; ctx.fillRect((sx + Math.sin(ts / 200 + k) * 1.2) | 0, (y - 13 - (ts / 130 % 3)) | 0, 1, 2); }
+      // iter-180 (owner: "each time a person eats, we get money… looks real"): a tiny gold ₫ coin rises as the
+      // meal is sold — the căng tin's live revenue, FELT per-meal (cosmetic; the cash itself accrues in economyTick)
+      var cph = (ts / 1400 + a.id * 0.37) % 1; if (cph < 0.55) { var cy = (y - 15 - cph * 13) | 0; ctx.globalAlpha = 1 - cph / 0.55; ctx.fillStyle = PX.gold; ctx.fillRect(x + 4, cy, 3, 3); ctx.fillStyle = PX.out; ctx.fillRect(x + 5, cy + 1, 1, 1); ctx.globalAlpha = 1; }
     } else if (a.act === "tinker") {
       if ((Math.floor(ts / 150) + a.id) % 2 === 0) { var n = (a.tell === "spark") ? 3 : 2; ctx.fillStyle = "#ffd34a"; for (k = 0; k < n; k++) { var an = k * 2.2 + ts / 90; ctx.fillRect((x + Math.cos(an) * 5) | 0, (y - 9 + Math.sin(an) * 4) | 0, 1, 1); } }
     } else if (a.act === "perform") {
@@ -1380,13 +1383,16 @@
     c.appendChild(fundRow("🎓 Học phí " + s.students.length + " SV × " + s.tuition.toFixed(1) + "tr", "+" + money(baseInc), "var(--green)"));
     if (prestigeBonus > 0) c.appendChild(fundRow("🏛️ Uy tín học hiệu (+" + Math.round((pm - 1) * 100) + "% nhờ nâng cấp)", "+" + money(prestigeBonus), "var(--green)")); // iter-160: the compounding premium, made legible
     if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + money(cpay), "var(--green)"));
+    var cangLv = 0; s.rooms.forEach(function (r) { if (r.key === "cangtin") cangLv = r.level || 1; });
+    var canteenInc = Math.round(CONFIG.CANTEEN_PER_SV * s.students.length * cangLv); // iter-180: the căng tin's meal revenue, made legible (a building that EARNS — owner steer)
+    if (canteenInc > 0) c.appendChild(fundRow("🍜 Căng tin (mì tôm, cấp " + cangLv + ")", "+" + money(canteenInc), "var(--green)"));
     c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + money(sal), "var(--red)")); // iter-165: money() for tỷ-consistency at scale (was raw "tr")
     c.appendChild(fundRow("🛠️ Bảo trì", "−" + money(maint), "var(--red)"));
     var ops = Math.round((CONFIG.OPS.base + CONFIG.OPS.perSV * s.students.length) * CONFIG.OPS.rate * Math.max(0, s.year - 1)); // rising overhead w/ size & age
     if (ops > 0) c.appendChild(fundRow("🏛️ Vận hành (trường lớn, càng tốn)", "−" + money(ops), "var(--red)"));
     var reinvest = Math.max(0, Math.round((s.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN));
     if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + money(reinvest), "var(--red)"));
-    var net = income + cpay - sal - maint - ops - reinvest;
+    var net = income + canteenInc + cpay - sal - maint - ops - reinvest;
     c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + money(net) + "</div>";
     // legibility (owner: "not clear how time passes / how money accrues — positive but feels 0đ"): how long a month is + why the bank doesn't balloon
     var monSec = Math.round(CONFIG.TICK_MS * CONFIG.TICKS_PER_DAY * CONFIG.DAYS_PER_MONTH / 1000);

@@ -27,6 +27,7 @@ var CONFIG = {
   PRESTIGE_K: 0.45,             // ckpt2: each building UPGRADE LEVEL (above 1) adds +45% to tuition income — a prestige premium → income COMPOUNDS HARD as you invest (a fully-upgraded campus earns ~20× a bare one → the "ridiculous" endgame). Tuned for GOOD ROI: a tỷ-scale upgrade pays back in ~1-2 sim-years. Bounded (≤ ~45 levels). Person-sim untouched (income ≠ talent).
   CASH_MILES: [1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000], // ckpt3 (iter-161): bank milestones in tr (1/5/10/25/50/100/250/500 tỷ) — a one-time grand fanfare as the university grows into an empire ("watch it grow" payoff)
   EFFECT_LVL_CAP: 3,            // ckpt2: the per-level gameplay effects (cangtin Mood / lab TT / phonghoc crowd-ease) cap here, so a tall campus doesn't inflate the meters / person-sim
+  CANTEEN_PER_SV: 0.35,        // iter-180 (owner steer): buildings EARN — the căng tin sells a meal to each student each month; revenue = PER_SV × students × cấp (UNCAPPED, like prestige → "increase as upgrade"). Made to LOOK real with live lunch coins. ~17tr/mo at lvl1×48SV.
   SYN_MIN: 4,                   // a khoa needs this many students for its synergy bonus to kick in
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)
   SYN_CROSS: 0.15,            // P4: when ≥2 khoas thrive, members cross-pollinate — bonus to a 2nd stat
@@ -120,7 +121,7 @@ var CONFIG = {
   ROOMS: {
     phonghoc: { name: "Phòng học", w: 3, h: 2, cost: 0, desc: "Nơi mọi giấc mơ bắt đầu bằng điểm danh. Nâng cấp: +Mood." },
     san:      { name: "Sân trường", w: 4, h: 3, cost: 0, once: true, desc: "Mặt sân đa năng: thể dục, khai giảng, tránh nắng." },
-    cangtin:  { name: "Căng Tin Mì Tôm", w: 2, h: 2, cost: 0, free: true, desc: "+1 Mood/tháng/cấp toàn trường. Ngân hàng tặng kèm khi bán nợ." },
+    cangtin:  { name: "Căng Tin Mì Tôm", w: 2, h: 2, cost: 0, free: true, desc: "Bán mì tôm: mỗi bữa một ít tiền tươi (tăng theo cấp). +1 Mood/tháng/cấp. Ngân hàng tặng kèm khi bán nợ." },
     lab:      { name: "Phòng Lab Sống Ảo", w: 2, h: 2, cost: 70, desc: "+0,5 Tiếng Tăm/tháng/cấp. Đẹp nhất trường. Không dạy được gì." },
     phongmay: { name: "Phòng Máy", w: 3, h: 2, cost: 120, desc: "Mở khoá toàn bộ hiệu quả Đồ Án & Lab (thiếu nó: -50%)." },
     xuong:    { name: "Xưởng Chế", w: 3, h: 3, cost: 200, desc: "+1 Tay Nghề khi học Đồ Án. +5 Thực Chất một lần. Bừa bộn, không lên hình." },

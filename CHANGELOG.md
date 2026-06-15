@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-15 — Buildings that EARN: the căng tin sells meals, live (owner steer · economy ckpt) (loop iter 180)
+**New owner steer, ckpt 1 — "buildings earn money per-action, looks real, increases with upgrade."** The owner asked
+for live building income (vs the monthly tuition lump). The **Căng Tin Mì Tôm** now sells a meal to each student:
+- **Revenue** `CANTEEN_PER_SV (0.35) × students × cấp` added to monthly income — **UNCAPPED scaling with the canteen's
+  upgrade level** (the owner's "increase as upgrade"; the căng tin finally has an economic reason to upgrade beyond
+  +Mood). Deterministic (counts × rate) → reproducible. Bot cash 5251→**6689** at yr11 (the new baseline; ~+1.4 tỷ
+  from one level-1 canteen over a decade).
+- **Legible:** the Thu–Chi panel shows a "🍜 Căng tin (mì tôm, cấp N) +Xtr" income line; the room desc names it.
+- **"Looks real":** a tiny gold ₫ coin rises off each student as they eat at lunch — the meal-by-meal revenue FELT in
+  the live view (cosmetic; cash accrues in `economyTick`).
+Person-sim untouched (canteen doesn't affect students) — sweep spread + all 6 flags hold, 0 bankruptcy (income only
+rises). Verified: syntax OK, gate GREEN, bot BOTOK (rooms/grad/alumni/arrested unchanged; cash up as designed), lunch
+screenshot renders the coins. **Owner's other two asks queued as next ckpts (see ROADMAP): (2) classroom→tuition
+multiplier (needs care vs the existing prestige premium); (3) alumni DONATIONS — the *monetary* path already exists
+(`queueGift`/`flushGifts`), so ckpt 3 = NON-monetary *item* donations + a light item system (the owner's "extension
+functions later").** SOUL n/a (economy) · FUN 4 (a building you watch earn) · CLARITY 4 · JUICE 4 (live coins).
+
 ## 2026-06-15 — Watch the WHOLE cohort become themselves, while you play (loop iter 179)
 **The owner's deepest steer, finally extended past the single protégé — "watch a student transform… WHILE playing"
 (THESIS mark 5 felt-while-playing + mark 2 by-name).** Until now, during-play transformation was surfaced only for
