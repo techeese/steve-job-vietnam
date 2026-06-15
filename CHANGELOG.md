@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-15 — Tuition decided at "công bố điểm chuẩn" — it shapes who registers (owner request) (loop iter 187)
+**Owner: "tuition should be decided the same moment as công bố điểm chuẩn, as it influences how many students
+register."** Tuition was a free-floating slider in the funding tab, disconnected from the moment it matters. Now the
+**admissions modal has a third dial — HỌC PHÍ** — alongside ĐIỂM CHUẨN and CHỈ TIÊU. Changing it **re-derives the
+applicant pool live** (`derivedPool` already keys the pool size off tuition), so you watch the trade-off at the
+decision: probe shows tuition 2→**64 hồ sơ**, 4→49, 6→**33** — raise the price, fewer/pricier apply. The forecast now
+leads with "**N hồ sơ nộp về** · Đủ điểm M → Trúng tuyển …" plus the hint "↑ Học phí → ít hồ sơ nộp hơn." The funding
+slider stays for mid-year income tuning; the *decision* now lives where it shapes registration. Re-derive uses the
+same `poolSeed` (deterministic); the bot/sweep auto-declare without touching tuition → **byte-identical** (cash 7353
+unchanged). Verified: syntax OK, gate GREEN, bot BOTOK, the modal renders the 3 dials cleanly at 390px (screenshot),
+tuition→pool monotonic. CLARITY 4 · FUN 4 (a real lever at the right moment).
+
 ## 2026-06-15 — The rename event renames the school FOR REAL (owner request) (loop iter 186)
 **Owner: "the event where someone wants to change the academy's name — the name should change for real."** The
 `datten` event ("Nhà đầu tư đòi đặt tên trường") added money/TT/UT but never actually renamed anything. Now taking

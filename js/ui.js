@@ -1642,12 +1642,19 @@
       // dials
       w.appendChild(dial("ĐIỂM CHUẨN", pa.cut.toFixed(2), function () { pa.cut = Math.max(CONFIG.ADMIT.CUT_MIN, +(pa.cut - 0.25).toFixed(2)); rerender(); }, function () { pa.cut = Math.min(CONFIG.ADMIT.CUT_MAX, +(pa.cut + 0.25).toFixed(2)); rerender(); }));
       w.appendChild(dial("CHỈ TIÊU", pa.quota, function () { pa.quota = Math.max(CONFIG.ADMIT.QUOTA_MIN, pa.quota - 1); rerender(); }, function () { pa.quota = Math.min(CONFIG.ADMIT.QUOTA_MAX, pa.quota + 1); rerender(); }));
+      // iter-187 (owner: "tuition should be decided at công bố điểm chuẩn — it influences how many register"): set
+      // HỌC PHÍ HERE; changing it re-derives the applicant pool live (↑ học phí → fewer/pricier hồ sơ), so the
+      // trade-off is FELT at the decision moment. Re-derive uses the same poolSeed → deterministic; bot/sweep auto-
+      // declare without touching tuition, so they stay byte-identical.
+      function setTuition(d) { S().tuition = Math.min(CONFIG.TUITION_MAX, Math.max(CONFIG.TUITION_MIN, +(s.tuition + d).toFixed(1))); pa.pool = HVS.derivedPool(); pa.n = pa.pool.length; rerender(); }
+      w.appendChild(dial("HỌC PHÍ (tr/SV·tháng)", s.tuition.toFixed(1), function () { setTuition(-CONFIG.TUITION_STEP); }, function () { setTuition(CONFIG.TUITION_STEP); }));
       // forecast
       var M = pa.pool.filter(function (ap) { return ap.score >= pa.cut; }).length;
       var fill = Math.min(M, pa.quota);
       var fc = el("div", "fcast");
-      fc.innerHTML = "Đủ điểm: <b>" + M + "</b> → Trúng tuyển <b>" + fill + "</b>/" + pa.quota +
-        "<br>Học phí thêm: <b style='color:var(--gold)'>+" + Math.round(fill * s.tuition) + "tr/tháng</b>";
+      fc.innerHTML = "<b>" + pa.n + "</b> hồ sơ nộp về · Đủ điểm: <b>" + M + "</b> → Trúng tuyển <b>" + fill + "</b>/" + pa.quota +
+        "<br>Học phí thêm: <b style='color:var(--gold)'>+" + Math.round(fill * s.tuition) + "tr/tháng</b>" +
+        "<br><span class='tiny'>↑ Học phí → ít hồ sơ nộp hơn (trường đắt, kén người ghi danh)</span>"; // iter-187: the tuition↔registration trade-off, felt at the decision
       if (M < pa.quota) fc.innerHTML += "<br><span class='warn'>Thiếu " + (pa.quota - M) + " — ghế trống.</span>";
       if (pa.cut >= 29.5) fc.innerHTML += "<br><span class='warn'>⚠ Nguy cơ phốt: thủ khoa vẫn trượt.</span>";
       if (pa.cut <= 15.5) fc.innerHTML += "<br><span class='warn'>⚠ Báo sẽ gọi đây là 'vét sàn'.</span>";
