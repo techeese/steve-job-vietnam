@@ -7,6 +7,7 @@ const contentSrc = fs.readFileSync(dir + "/js/content.js", "utf8"); // iter 134 
 const engineSrc = fs.readFileSync(dir + "/js/engine.js", "utf8");
 const personSrc = fs.readFileSync(dir + "/js/sim/person.js", "utf8"); // iter 114 structure carve — person creation + growth
 const admissionsSrc = fs.readFileSync(dir + "/js/sim/admissions.js", "utf8"); // iter 163 structure carve — the intake subsystem
+const saveSrc = fs.readFileSync(dir + "/js/save.js", "utf8"); // iter 199 structure carve — the persistence subsystem (save/load/sanitize)
 
 const shim = "var localStorage={_d:{},getItem:function(k){return this._d[k]!=null?this._d[k]:null;},setItem:function(k,v){this._d[k]=v;}};";
 
@@ -148,7 +149,7 @@ return OUT.join('\\n');
 `;
 
 try {
-  const fn = new Function(shim + "\n" + dataSrc + "\n" + contentSrc + "\n" + engineSrc + "\n" + personSrc + "\n" + admissionsSrc + "\n" + harness);
+  const fn = new Function(shim + "\n" + dataSrc + "\n" + contentSrc + "\n" + engineSrc + "\n" + personSrc + "\n" + admissionsSrc + "\n" + saveSrc + "\n" + harness);
   console.log(fn());
 } catch (e) {
   console.log("HARNESS PARSE/RUN ERROR: " + e.message);

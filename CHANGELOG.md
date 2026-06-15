@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: persistence carved into js/save.js (engine.js back under 1000 lines) (loop iter 199)
+**Behavior-neutral structure-epic** — the right non-gated move at the owner-gated frontier (the soul model is complete;
+keep the codebase plastic). The SAVE/LOAD/SANITIZE subsystem (`saveGame`/`serialize`/`loadGame`/`mergeInto`/`migrateV1`/
+`sanitize`, ~140 lines) is a cohesive, gate-verifiable unit — so it's now its own module `js/save.js` (150 lines),
+pulling **engine.js 1130 → 989 lines**. Globals, loaded after admissions.js; it augments `window.HVS` with
+`loadGame`/`saveGame` (the admissions.js load-order pattern — engine.js builds HVS before save.js loads). Dead exports
+(`__test.save`/`.load`/`.serialize`, no consumers) were dropped; gate.js/sweep.js concatenation + index.html script
+order wired. **Byte-identical, verified end-to-end**: the gate's save/reload assertions (incl. the iter-196
+grain-survives-reload guard, the iter-103 dynamic-map survival, corrupted-meter clamping) all GREEN now exercising
+save.js; bot BOTOK (cash 7353/arrested 15/essay 2010, unchanged); sweep 7✓; lives 0 LIVESFAIL; and the **real
+headless-Chrome boot is green** (bot.sh — ui.js's `HVS.loadGame()`/`saveGame()` work, so the browser augmentation is
+confirmed, not just the node concat). No player-visible change. Done proactively (structure wasn't yet owed) to reset
+the looming epic-lock and keep engine.js lean.
+
 ## 2026-06-15 — You can now WATCH a gift being bent into a shark, mid-school (loop iter 198)
 **Person-sim refinement — the live counterpart of iter-197.** iter-197 made distortion a distinct grief at the
 *epilogue*; but in-play, the cohort glimpse (`cohortBeat`) only ever surfaced gifts **blooming** (🌱) or **wilting**
