@@ -29,6 +29,9 @@ You have a hard time budget. Read each file above AT MOST ONCE, run each sensor 
 times (no more), then write the verdict. Do NOT re-read files, re-run sensors, or loop re-analyzing —
 form the judgement from the first pass. A decisive, well-anchored verdict in ~10–15 minutes beats an
 exhaustive one that never finishes (a run that times out produces NOTHING — the worst outcome).
+**Be TERSE — keep your thinking SHORT and each GAP-block field to 1–3 sentences, not essays. Aim for the
+FEWEST tool calls + the shortest reasoning that still anchors the verdict in real evidence. Each extra
+turn costs minutes of wall-clock (the model's turns run slow here), so brevity is what lets you finish.**
 
 ## Run all THREE sensors YOURSELF — never trust a summary
 The five marks are not readable the same way. Gather real evidence from each, strongest first:
