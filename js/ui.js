@@ -1018,7 +1018,7 @@
     var stats = $("stats"); stats.innerHTML = "";
     stats.appendChild(chip("cash", "💰", money(s.cash)));
     stats.appendChild(chip("", "🎓", s.students.length + " SV"));
-    stats.appendChild(chip("", "🧑‍🏫", s.teachers.length));
+    stats.appendChild(chip("", "🧑‍🏫", s.teachers.length + " GV")); // iter-167: unit for consistency with "N SV" (was a bare number)
     if (s.endow.bal >= 200) stats.appendChild(chip("", "🌱", money(s.endow.bal)));
     // phốt risk — qualitative (preserve mystery), surfaces the gamble as dodgy decisions pile up
     var phot = (s.photSeeds || []).reduce(function (a, p) { return a + (p.sev || 1); }, 0);

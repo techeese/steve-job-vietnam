@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-15 — Maintenance pass (health + 390px mobile audit) + chip-unit fix (loop iter 167)
+**Maintenance (overdue since iter-97) — both owner visions now delivered; verifying nothing rots.** Ran a full
+health + mobile audit:
+- **Save/reload integrity:** a big-campus save (phòng học lvl 10, 193 tỷ, 56 students, milestone-idx 5) reloads
+  **fully intact** — no dropped students (the iter-166 corruption guard holds), cash/milestones/tier preserved.
+- **390px mobile audit (owner plays on phone):** captured the HUD in an empire state — the live tier *"Đế chế
+  giáo dục · 🍎×3"* fits cleanly under the name, the tỷ numbers read well, the real Kenney/Jephed art renders
+  (iter-158 fix holds), the campus breathes. No overflow/clipping.
+- **Harnesses:** gate GREEN, bot BOTOK, sweep 6✓/0 breakage.
+- **Fix found:** the teacher HUD chip showed a bare number ("1"); now "1 GV" for consistency with "26 SV".
+The game is in a complete, polished, mobile-correct state across both delivered arcs (people-first soul +
+economy scale). `LAST_MAINTENANCE` refreshed. Deployed.
+
 ## 2026-06-15 — "More students": the campus fills as you grow (loop iter 166)
 **Economy epic — the owner's literal "upgrades raise students" want, delivered SAFELY.** Classrooms (phòng học)
 now scale the school's SIZE: `campusScale() = 1 + 0.09·(phonghoc_lvl−1)` capped at **1.85×** (≈ 89 students,
