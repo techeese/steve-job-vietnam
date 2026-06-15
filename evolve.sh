@@ -7,7 +7,15 @@
 # writes it to the TOP of ROADMAP ## Epic backlog as an [EVOLUTION] entry + an OWNER: veto line, logs it
 # to ## Frame-reset log, and resets FIRINGS_SINCE_FRAME_RESET. Anchor-or-reject: no gap ⇒ no forced epic.
 #
-#   Usage: ./evolve.sh            (CRITIC_MODEL=opus ./evolve.sh to raise the critic tier)
+#   Usage (ASYNC — the ONLY supported model): run in the BACKGROUND, never block on it.
+#     CRITIC_TIMEOUT=1800 ./evolve.sh &        # fire-and-forget; harvest the gap from ROADMAP next firing
+#   The critic genuinely takes 15–35 min (reads THESIS + source + runs sweep + 3× lives.sh + reasons). It is
+#   the SLOW beat — DO NOT foreground-block on it (proven 2026-06-15: a blocking run wedges the loop and a
+#   short cap kills it before any verdict). Launch it, do other work, and on a LATER firing read the new
+#   [EVOLUTION] entry it wrote to ## Epic backlog (or the ## Frame-reset log "frame holds" line). Since the
+#   iter-173 hardening (critic is SENSORS-ONLY: no write/exec/git/network), backgrounding it is safe — it
+#   cannot commit, push, or touch the tree; only evolve.sh's own node helper writes the gap when the critic returns.
+#   (CRITIC_MODEL=opus to raise the critic tier.)
 # Fail-safe: any failure prints a warning and leaves the tree untouched — it can never wedge the loop.
 set -uo pipefail
 cd "$(dirname "$0")"
