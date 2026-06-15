@@ -16,7 +16,7 @@
 // poignant core (one gift the school FAILED — loud waste, else the quiet E4 "settled" prodigy), then an
 // arrest, then the mentor's-hand payoff, then the majority fate + a spread of the rest. Honored standouts
 // (flags.prize) float up within each pick so the epilogue surfaces the awards.
-function buildCast(s, byState, majorityKey, C) {
+function buildCast(s, byState, majorityKey, C, dominantPreset) {
   function pick(arr) { return arr.slice().sort(function (a, b) { return ((b.flags && b.flags.prize ? 1 : 0) - (a.flags && a.flags.prize ? 1 : 0)) || (b.grat - a.grat) || ((b.gifts || 0) - (a.gifts || 0)); }); } // E7p: an honored standout is essay-worthy → floats up in each cast pick (so the epilogue shows the prizes)
   var cast = [], used = {}, total = s.alumni.length, i;
   pick(s.alumni.filter(function (a) { return a.state === "STEVE"; })).slice(0, C.STEVE_CAP).forEach(function (a) { cast.push(a); used[a.id] = 1; });
@@ -34,6 +34,14 @@ function buildCast(s, byState, majorityKey, C) {
   var mentee = s.alumni.filter(function (a) { return !used[a.id] && a.flags && a.flags.mentored && flourishOf(a.state) >= 2 && !realClass(a.state, a.fs.seed); })
     .sort(function (a, b) { return (flourishOf(b.state) - flourishOf(a.state)) || (b.grat - a.grat); })[0];
   if (mentee && cast.length < C.CAST_CAP) { cast.push(mentee); used[mentee.id] = 1; }
+  // iter-174 — under a BALANCED-dominant school the grief is QUIET: there's almost no loud waste, so the poignant
+  // core is a maker (sky-tell, real gift) CHANNELED into a safe engineer — realized by magnitude, but the school
+  // steered their DIRECTION (§C-4, done TO them). Surface ONE so the "even/an toàn quá chăng" close has a NAMED
+  // face, not just a generic line. essayDraft labels it with CONTENT.channeledMaker; was dead code until now.
+  if (dominantPreset === "canbang" && cast.length < C.CAST_CAP) {
+    var chan = pick(s.alumni.filter(function (a) { return !used[a.id] && a.state === "KY_SU" && a.fs && a.fs.tell === "sky" && a.fs.seed >= 4 && !realClass(a.state, a.fs.seed); }))[0];
+    if (chan) { cast.push(chan); used[chan.id] = 1; }
+  }
   if (majorityKey) {
     var maj = pick(s.alumni.filter(function (a) { return a.state === majorityKey && !used[a.id]; }));
     if (maj[0] && cast.length < C.CAST_CAP) { cast.push(maj[0]); used[maj[0].id] = 1; }

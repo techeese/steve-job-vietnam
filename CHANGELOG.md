@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — The safe school's quiet cost, named: the "channeled maker" beat goes live (loop iter 174)
+**Completes the iter-172 §D-3 feature properly — a dead soul beat, now firing (THESIS §C-4: waste done TO them, by
+name).** Iter-172 added `CONTENT.channeledMaker` ("— đúng đường mà trường vạch, chỉ vậy thôi" / "on the path the
+school drew, just that") to name the balanced school's quiet cost: a real maker (sky-tell, ≥4★) *channeled* into a
+safe engineer — realized by magnitude, but the school steered their DIRECTION. But it was **dead code**: I verified
+it fired in **0 of 5** cân bằng runs, because `buildCast` never surfaces such a kid (they're on-target so they dodge
+the loud/settled-waste picks, and the cast is capped at 4). Now `buildCast` takes `dominantPreset` and, under a
+balanced-dominant school, surfaces ONE channeled maker — so the "Cột 🍎 vẫn để trống… tôi dạy an toàn quá chăng?"
+("no one teetered, so no one broke out — did I teach too safe?") close now has a **named face** instead of a generic
+line. Typically it's Mai Sương herself (the 5★ recurring protagonist) — the safe school turning your most-watched kid
+into a fine kỹ sư rather than the 🍎. This is the responsible completion the rogue iter-172 never did (it gate-green'd
+while the beat was dead). Display-only (cast selection, sweep-neutral). Verified: channeledMaker now fires **5/5**
+cân bằng seeds, **0/5** under craft/cram (no leak), 0 LIVESFAIL; gate GREEN, bot BOTOK (cash 5251/essay 2024
+unchanged — cân bằng-only, default run untouched), sweep 6✓. SOUL 4 (§C-4 named) · COMPLETENESS-VS-DREAM 4 (§D-3
+balanced fork now felt by name) · CLARITY 4 · SATIRE 3 · BEAUTY 3 · JUICE 3.
+
 ## 2026-06-15 — INCIDENT FIX: the live epilogue was crashing; + harden the evolution engine that caused it (loop iter 173)
 **A production crash on the emotional payoff screen, caused by a runaway tool — caught, fixed, root-caused.** The
 iter-172 [EVOLUTION] feature (below) was generated *and shipped to `main`* by the input-blind critic process itself —

@@ -1559,7 +1559,7 @@
     } else {
       P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
       P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
-      buildCast(s, byState, majorityKey, C).forEach(function (a) {
+      buildCast(s, byState, majorityKey, C, dominantPreset).forEach(function (a) {
         var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
         if (a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); // iter-144: an honored standout the system still failed — point the flavor at the award-vs-fate bite
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
