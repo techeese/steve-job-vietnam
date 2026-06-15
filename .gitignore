@@ -3,6 +3,10 @@ brainstorm-raw.json
 *.png
 !icon-*.png
 !docs/*.png
+!assets/**/*.png
+# ^ iter-158 FIX: the `*.png` scratch-screenshot guard was ALSO swallowing the REAL art assets
+#   (Kenney tilemap + 40 Jephed character sheets), so they 404'd on github.io and the live game fell
+#   back to procedural "old artworks". The game loads them (ui.js loadChars + tinytown_tilemap) — they MUST ship.
 node_modules/
 # scratch verification artifacts — never commit (see SKILL.md "LEAVE NO DEBRIS")
 __*.html
