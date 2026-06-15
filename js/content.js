@@ -76,6 +76,18 @@ var CONTENT = {
   // CURRENT cohort is becoming under the player's policy — blossoming, cooling, or mixed. The "felt transformation
   // arc" (VISION §77-79) given a YEARLY chapter rhythm, mid-game, not just at the epilogue. Prose, NO counts
   // (invariant #3 — the cohort is glimpsed, not metered); the texture is qualitative.
+  // iter-161 (economy ckpt3) — the bank-milestone fanfare (one-time each), escalating in grandeur as the
+  // university grows into an institution. Index-matched to CONFIG.CASH_MILES. 🏛️ → gold in the ticker.
+  cashMiles: [
+    "🏛️ Ngân hàng cán mốc 1 tỷ — trường không còn là trường làng nữa.",
+    "🏛️ 5 tỷ trong két — bắt đầu có tiếng, có miếng.",
+    "🏛️ 10 tỷ — một học hiệu thực thụ. Báo bắt đầu gọi là 'hiện tượng'.",
+    "🏛️ 25 tỷ — các trường khác cử người sang 'tham quan học hỏi'.",
+    "🏛️ 50 tỷ — một đế chế giáo dục đang thành hình.",
+    "🏛️ 100 tỷ — một thế lực. Bộ cũng phải nhấc máy gọi.",
+    "🏛️ 250 tỷ — huyền thoại. Người ta viết case study về bạn.",
+    "🏛️ 500 tỷ — không còn gì để chứng minh nữa. Chỉ còn câu hỏi: để làm gì?"
+  ],
   tetCohort: {
     blossom: "🌸 Tết — nhìn lại một năm, phần đông các em đang hợp lối, lớn lên đúng hướng. Mừng các em thêm tuổi.",
     cool: "🌸 Tết — nhìn lại một năm, không ít em đang lệch lối, nguội dần. Năm mới, mình phải nghĩ lại cách dạy.",

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-15 — ECONOMY ckpt 3: milestone fanfare "watch it grow" + FIX the ticker-tint bug (loop iter 161)
+**Owner economy epic (the "watch it grow" payoff) + a latent production bugfix.**
+- **Bank-milestone fanfare:** a one-time grand beat as the university grows into an empire — 1 / 5 / 10 / 25 /
+  50 / 100 / 250 / 500 tỷ, each escalating in grandeur (*"🏛️ 10 tỷ — một học hiệu thực thụ"* … *"🏛️ 100 tỷ —
+  một thế lực. Bộ cũng phải nhấc máy gọi"* … *"🏛️ 500 tỷ — chỉ còn câu hỏi: để làm gì?"*). Pure news, no balance.
+  `CONFIG.CASH_MILES` + `CONTENT.cashMiles`, fired monotonically by `META.cashMileIdx` in economyTick. Probe: a
+  built-up school hit milestone-idx 5 (100 tỷ) by ~year 22 — fires correctly.
+- **FIX (latent since iter-147): the ticker soul-moment TINT never worked except for ⭐.** The colour rule used
+  `line.charAt(0)`, which returns only HALF a surrogate pair — so 🍎 (keynote), 🚔 (arrest), 😔/💔 (loss), and now
+  🏛️ never matched and stayed un-tinted. Rewrote it to prefix-match the FULL emoji (`indexOf(e)===0`), so all of
+  them now correctly pop gold (⭐🍎🏛️) / red (😔💔🚔). A whole class of "soul moment pops in the feed" beats
+  (146/147) was silently colourless until now.
+Verified: 4-file syntax OK, gate GREEN, bot BOTOK (cash unchanged — milestones are pure news), sweep 6✓/0
+breakage, ticker-tint unit-checked (all 6 emoji classify right), milestone firing confirmed via the index.
+Deployed. (The economy epic's core — ridiculous compounding endgame — is delivered ckpt1-3; literal "more
+students" stays queued for owner go-ahead, then the owed STRUCTURE move.)
+
 ## 2026-06-15 — ECONOMY EPIC ckpt 2: the compounding growth engine — invest → earn → repeat (loop iter 160)
 **Owner epic (top priority): the decades-long growth engine → "ridiculous endgame money."** Checkpoint 2 wires
 the COMPOUNDING loop the owner described ("upgrade → higher students/tuition → buy more expensive upgrade"):

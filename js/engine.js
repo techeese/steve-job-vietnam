@@ -212,7 +212,7 @@ function freshState(seed) {
     contracts: [], corpBlacklist: {}, offersSeen: [],
     photSeeds: [], examHistory: [],
     news: [],
-    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "", decadeShown: false, favId: null, campusTier: 0, majorsUnlocked: [], attachSeen: false },
+    META: { jobsEver: false, sound: false, tutorial: false, graduated: 0, arrested: 0, steves: 0, goalsHit: [], build: "", decadeShown: false, favId: null, campusTier: 0, majorsUnlocked: [], attachSeen: false, cashMileIdx: -1 },
     // transient modal state (persisted so a mid-modal reload resumes)
     pendingJune: null, pendingAdmit: null, pendingEvent: null, pendingContract: null,
     lastEventDay: -999, lastJuneYear: 0,
@@ -380,6 +380,12 @@ function economyTick() {
   var ops = r1((CONFIG.OPS.base + CONFIG.OPS.perSV * n) * CONFIG.OPS.rate * Math.max(0, S.year - 1)); // vận hành: ~0 at founding, rises with size & age
   S.cash = r1(S.cash + income + contractPay - salaries - maint - materials - ops);
   if (S.cash > CONFIG.CASH_KEEP) S.cash = r1(S.cash - (S.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN); // reinvest surplus (money sink)
+  // iter-161 (economy ckpt3): bank-milestone fanfare — a one-time grand beat as the university grows into an
+  // empire ("watch it grow" payoff for the owner's scaling vision). Monotonic by index; pure news (no balance).
+  if (S.META.cashMileIdx == null) S.META.cashMileIdx = -1;
+  while (S.META.cashMileIdx < CONFIG.CASH_MILES.length - 1 && S.cash >= CONFIG.CASH_MILES[S.META.cashMileIdx + 1]) {
+    S.META.cashMileIdx++; news(CONTENT.cashMiles[S.META.cashMileIdx]); bacTamNod();
+  }
 
   // endowment compounds (DESIGN ruling 3) — keep full precision; r1 would round the 0.4% away
   var prev = S.endow.bal;
