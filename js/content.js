@@ -9,6 +9,15 @@
 var CONTENT = {
   schoolName: "Học viện Steve",
   schoolSub: "(tên đầy đủ đang chờ Bộ duyệt mã trường)",
+  // iter-164 — the LIVE school tier shown under the name (grows with cash; a constant progression readout for
+  // the owner's "watch it become an empire" vision). schoolTier() picks the highest reached + appends 🍎×N.
+  schoolTiers: [
+    { min: 0, label: "(tên đầy đủ đang chờ Bộ duyệt mã trường)" }, // fresh — the original satirical placeholder
+    { min: 1000, label: "Học hiệu đang lên" },        // 1 tỷ — rising
+    { min: 10000, label: "Học hiệu có tiếng" },       // 10 tỷ — a name
+    { min: 50000, label: "Thế lực giáo dục" },        // 50 tỷ — a force
+    { min: 250000, label: "Đế chế giáo dục" }         // 250 tỷ — an empire
+  ],
   khoa: "Khoa Công Nghệ & Sáng Tạo (mã ngành đang chờ Bộ duyệt)",
   bought: "Trường ĐH Dân Lập Văn Mẫu Số 9",
   disclaimer: "Mọi nhân vật, công ty, học viện trong game đều là hư cấu. Mọi sự trùng hợp là do vũ trụ thích đùa. Các danh nhân lịch sử được vinh danh với lòng kính trọng, đúng như mọi mái trường Việt Nam vẫn làm.",

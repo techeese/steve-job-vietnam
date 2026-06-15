@@ -108,7 +108,7 @@
     _steveSeen = S().META.steves || 0; // baseline so a loaded save's existing Steves don't re-celebrate
     _cupSeen = (S().khoaCup && S().khoaCup.lastYear) || 0; // baseline so a loaded save's last cup doesn't re-fire
     AUDIO.init();
-    $("schoolSub").textContent = CONTENT.schoolSub;
+    $("schoolSub").textContent = schoolTier(S()); // iter-164: live tier (renderHUD keeps it updated)
     buildSpeeds(); buildTabs();
     SPRITES.build(); // bake pixel-art sprite atlas once (js/sprites.js)
     (function () { var im = new Image(); im.onload = function () { TILES = im; if (S()) S()._mapDirty = true; }; im.src = "assets/tiles/tinytown_tilemap.png?v=1"; })(); // load real tiles; redraw when ready
@@ -993,9 +993,18 @@
       wrap.appendChild(b);
     });
   }
+  // iter-164: the school's current tier (by cash, reusing the milestone stages) + the soul achievement (🍎×N).
+  // A live "how great is my school" readout in the HUD subtitle — constant progression for the long game.
+  function schoolTier(s) {
+    var T = CONTENT.schoolTiers, cash = (s && s.cash) || 0, lab = T[0].label;
+    for (var i = 0; i < T.length; i++) if (cash >= T[i].min) lab = T[i].label;
+    var st = (s && s.META && s.META.steves) || 0;
+    return lab + (st > 0 ? " · 🍎×" + st : "");
+  }
   function renderHUD() {
     var s = S();
     var bb = $("buildBadge"); if (bb && !bb.textContent) bb.textContent = "v " + buildLabel(); // deploy stamp (changes each push)
+    $("schoolSub").textContent = schoolTier(s); // iter-164: a LIVE school tier (grows with you) — constant progression readout, ties the economy stage + the soul (🍎)
     $("clockMain").textContent = "Năm " + s.year;
     $("clockSub").textContent = "Tháng " + MONTHS[s.month];
     // speeds

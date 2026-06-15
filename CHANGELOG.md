@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-15 — A living school TIER in the HUD — watch it become an empire (loop iter 164)
+**Integrated polish (safe, UI-only) — economy progression + soul, in one readout.** The HUD subtitle under the
+school name was a static joke ("tên đầy đủ đang chờ Bộ duyệt"). It's now a **live tier** that grows with the
+school: fresh → *"Học hiệu đang lên"* (1 tỷ) → *"có tiếng"* (10 tỷ) → *"Thế lực giáo dục"* (50 tỷ) → *"Đế chế
+giáo dục"* (250 tỷ), reusing the milestone stages — a constant "how great is my school" progression readout for
+the owner's "watch it grow into an empire" vision. And it carries the SOUL too: once you've made Steves it
+appends *"· 🍎×N"* (e.g. `Thế lực giáo dục · 🍎×2`), so the always-visible status blends the money empire with the
+people achievement (the đề Văn answer) — the two systems, in one glance. `CONTENT.schoolTiers` + `schoolTier()`,
+updated every HUD render. Zero balance risk (derived display). Verified: ui+content syntax OK, gate GREEN, bot
+BOTOK, tier probe correct across cash×steves. Deployed.
+
 ## 2026-06-15 — STRUCTURE: the intake subsystem split out — js/sim/admissions.js (loop iter 163)
 **STRUCTURE epic — BEHAVIOR-NEUTRAL (proven identical metrics). Scores N/A (refactor).** The owed structure
 move (EPICS_SINCE_STRUCTURE=2) — and the economy epic added enough that engine.js (the biggest sim file at 1176
