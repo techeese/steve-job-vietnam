@@ -13,6 +13,7 @@ set -uo pipefail
 cd "$(dirname "$0")"
 ROADMAP="ROADMAP.md"
 CRITIC_MODEL="${CRITIC_MODEL:-sonnet}"     # a different family member than the opus producer = weak input-independence gain (residual risk #3)
+CRITIC_TIMEOUT="${CRITIC_TIMEOUT:-720}"    # iter-173: HARD cap (s) — a runaway critic once ran 35+ min and wedged the loop; bound it always
 STAMP="$(date +%Y-%m-%d 2>/dev/null || echo 0000-00-00)"
 CRITIC_OUT="/tmp/evolve-critic-$STAMP.txt"
 GAP_FILE="/tmp/evolve-gap-$STAMP.txt"
@@ -20,18 +21,29 @@ GAP_FILE="/tmp/evolve-gap-$STAMP.txt"
 command -v claude >/dev/null 2>&1 || { echo "evolve.sh: 'claude' CLI not found — cannot run the critic."; exit 0; }
 [ -f critic-prompt.md ] && [ -f THESIS.md ] || { echo "evolve.sh: missing critic-prompt.md or THESIS.md."; exit 0; }
 
-echo "evolve.sh: spawning the input-blind critic ($CRITIC_MODEL) — it will run sweep + lives.sh itself (a few minutes)…"
-# The critic gets Read (THESIS + game source) + Bash to run the sensors; it is hard-denied the success narrative.
+echo "evolve.sh: spawning the input-blind critic ($CRITIC_MODEL) — it will run sweep + lives.sh itself (≤ ${CRITIC_TIMEOUT}s)…"
+# The critic gets Read (THESIS + game source) + Bash to run the SENSORS ONLY; it is hard-denied the success narrative.
+# iter-173 SECURITY FIX: the allowlist used to include "Bash(node:*)", which let a critic run `node -e` — i.e. arbitrary
+# code (fs writes + child_process git) — and one critic USED it to commit+push a (buggy) feature to main, breaking the
+# live epilogue. The critic must only READ + run the two named sensors. node is pinned to `node sweep.js` (exact), NOT
+# node:* ; everything not allowlisted is denied by default, so write/git/exec are impossible. NEVER re-add node:*.
 claude -p --model "$CRITIC_MODEL" \
-  --allowedTools "Read" "Bash(node sweep.js)" "Bash(./lives.sh:*)" "Bash(node:*)" "Bash(ls:*)" \
+  --allowedTools "Read" "Bash(node sweep.js)" "Bash(./lives.sh:*)" "Bash(ls:*)" \
   --disallowedTools \
     "Read(./ROADMAP.md)" "Read(ROADMAP.md)" "Read(**/ROADMAP.md)" \
     "Read(./CHANGELOG.md)" "Read(CHANGELOG.md)" \
     "Read(./VISION.md)" "Read(VISION.md)" \
     "Read(./DESIGN.md)" "Read(DESIGN.md)" "Read(./CONVERSION-SPEC.md)" \
     "Read(**/SKILL.md)" "Read(**/memory/**)" "Read(**/.claude/**)" \
-  < critic-prompt.md > "$CRITIC_OUT" 2>/dev/null
-RC=$?
+    "Bash(node:*)" "Bash(git:*)" "Write" "Edit" "Bash(rm:*)" "Bash(curl:*)" \
+  < critic-prompt.md > "$CRITIC_OUT" 2>/dev/null &
+CPID=$!
+# Portable watchdog (macOS ships no GNU `timeout`): kill the critic if it blows the cap, so it can NEVER wedge the loop.
+( sleep "$CRITIC_TIMEOUT"; kill -0 "$CPID" 2>/dev/null && { echo "evolve.sh: critic exceeded ${CRITIC_TIMEOUT}s — killing"; kill -TERM "$CPID" 2>/dev/null; sleep 3; kill -9 "$CPID" 2>/dev/null; } ) &
+WPID=$!
+wait "$CPID" 2>/dev/null; RC=$?
+kill "$WPID" 2>/dev/null  # cancel the watchdog if the critic finished on time
+wait "$WPID" 2>/dev/null || true
 if [ $RC -ne 0 ] || [ ! -s "$CRITIC_OUT" ]; then
   echo "evolve.sh: critic run failed (rc=$RC) or empty output — counter NOT reset, will retry next beat. See $CRITIC_OUT"
   exit 0

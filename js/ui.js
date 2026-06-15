@@ -1529,8 +1529,8 @@
     var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
     var majorityKey = nonSteve.sort(function (a, b) { return byState[b] - byState[a]; })[0] || null;
     var total = s.alumni.length;
-    var dominantPreset = Object.keys(presetVote).sort(function(a,b){return presetVote[b]-presetVote[a];})[0]||"";
     var presetVote = {}; ["n1","n2","n3","n4"].forEach(function(k){ var p = s.presets[k]; presetVote[p] = (presetVote[p]||0)+1; });
+    var dominantPreset = Object.keys(presetVote).sort(function(a,b){return presetVote[b]-presetVote[a];})[0]||""; // iter-173: define presetVote BEFORE use (was a var-hoist use-before-init → Object.keys(undefined) crashed the whole epilogue)
     var steveAlum = s.alumni.filter(function (a) { return a.state === "STEVE"; });
     var tenSteve = steveAlum[0] ? steveAlum[0].ten : null;
     var branchKey = (function () {

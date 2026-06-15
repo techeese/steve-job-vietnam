@@ -35,9 +35,13 @@ setTimeout(function(){
     if (/JSERR/.test(document.title)) throw new Error("midplay "+document.title);
   }
   var fin = HVS.S();
+  // iter-173: EPILOGUE smoke — the decade essay (essayDraft/_essayText) is the emotional payoff screen but no
+  // headless harness rendered it, so a use-before-init crash in it shipped GREEN (the iter-172 rogue regression).
+  // Render it now so any epilogue crash surfaces as BOTFAIL on every run.
+  var essayLen = (window.__ui._essayText() || "").length;
   var log = "rooms="+roomsBuilt+" maxStu="+sawStudents+" grad="+fin.META.graduated+" alumni="+fin.alumni.length+
-            " yr="+fin.year+" cash="+Math.round(fin.cash)+" steves="+(fin.META.steves||0)+" arrested="+(fin.META.arrested||0);
-  var pass = roomsBuilt>0 && sawStudents>0 && fin.META.graduated>0 && fin.alumni.length>1 && fin.year>=10 && !/JSERR/.test(document.title);
+            " yr="+fin.year+" cash="+Math.round(fin.cash)+" steves="+(fin.META.steves||0)+" arrested="+(fin.META.arrested||0)+" essay="+essayLen;
+  var pass = roomsBuilt>0 && sawStudents>0 && fin.META.graduated>0 && fin.alumni.length>1 && fin.year>=10 && essayLen>300 && !/JSERR/.test(document.title);
   document.title = (pass ? "BOTOK " : "BOTFAIL ") + log;
  } catch(e){ document.title = "BOTFAIL: " + e.message; }
 }, 700);
