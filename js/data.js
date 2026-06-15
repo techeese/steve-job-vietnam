@@ -15,7 +15,12 @@ var CONFIG = {
   RUN_CAP_YEARS: 12,
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
-  ROOM_MAX_LEVEL: 3,            // buildings upgrade in place (one on the map) up to this level
+  ROOM_MAX_LEVEL: 10,           // iter-160 (owner economy epic ckpt2): a LONG upgrade track (was 3) — the player pours
+                                //   escalating money into the campus for years; gameplay EFFECTS cap at lvl 3 (see economyTick),
+                                //   so high levels are a pure PRESTIGE/income play, not a meter-breaker.
+  UPGRADE: { BASE: 50, COST_GROWTH: 1.5 }, // ckpt2: upgrade cost ESCALATES per level (max(BASE,d.cost)·GROWTH^(lvl-1)) — "more expensive upgrades", but gentle enough that the income payoff beats the cost (good ROI)
+  PRESTIGE_K: 0.45,             // ckpt2: each building UPGRADE LEVEL (above 1) adds +45% to tuition income — a prestige premium → income COMPOUNDS HARD as you invest (a fully-upgraded campus earns ~20× a bare one → the "ridiculous" endgame). Tuned for GOOD ROI: a tỷ-scale upgrade pays back in ~1-2 sim-years. Bounded (≤ ~45 levels). Person-sim untouched (income ≠ talent).
+  EFFECT_LVL_CAP: 3,            // ckpt2: the per-level gameplay effects (cangtin Mood / lab TT / phonghoc crowd-ease) cap here, so a tall campus doesn't inflate the meters / person-sim
   SYN_MIN: 4,                   // a khoa needs this many students for its synergy bonus to kick in
   SYN_GROW: 0.3,               // extra growth/day on the khoa's stat when synergy is active (tuned in P3)
   SYN_CROSS: 0.15,            // P4: when ≥2 khoas thrive, members cross-pollinate — bonus to a 2nd stat

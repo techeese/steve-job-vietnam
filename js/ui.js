@@ -1141,8 +1141,8 @@
     ["phonghoc", "cangtin", "lab", "phongmay", "xuong"].forEach(function (key) {
       var d = CONFIG.ROOMS[key], sk = ROOM_SKIN[key], r0 = s.rooms.filter(function (r) { return r.key === key; })[0];
       var lvl = r0 ? (r0.level || 1) : 0, maxed = lvl >= maxLv;
-      var cost = lvl === 0 ? (d.cost || 0) : Math.max(50, d.cost || 0);
-      var pr = maxed ? "Tối đa" : (lvl === 0 ? (cost ? "Xây −" + cost + "tr" : "Xây · miễn phí") : "Nâng Lv" + (lvl + 1) + " −" + cost + "tr");
+      var cost = lvl === 0 ? (d.cost || 0) : Math.round(Math.max(CONFIG.UPGRADE.BASE, d.cost || 0) * Math.pow(CONFIG.UPGRADE.COST_GROWTH, lvl - 1)); // iter-160: escalating upgrade cost (matches engine upgradeCost)
+      var pr = maxed ? "Tối đa" : (lvl === 0 ? (cost ? "Xây −" + money(cost) : "Xây · miễn phí") : "Nâng Lv" + (lvl + 1) + " −" + money(cost));
       var b = el("button", "build");
       b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (lvl ? " <span class='tiny' style='color:var(--gold)'>Lv" + lvl + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + pr + "</div>";
       if (maxed || (cost > s.cash && lvl > 0) || (lvl === 0 && d.cost > s.cash)) b.disabled = true;
@@ -1352,13 +1352,15 @@
   function panelFund() {
     var s = S(), wrap = el("div");
     var c = el("div", "card"); c.appendChild(el("h3", null, "Thu — Chi mỗi tháng"));
-    var income = Math.round(s.tuition * s.students.length);
+    var pm = 1 + CONFIG.PRESTIGE_K * s.rooms.reduce(function (a, r) { return a + Math.max(0, (r.level || 1) - 1); }, 0); // iter-160: prestige premium from campus upgrades
+    var baseInc = Math.round(s.tuition * s.students.length), prestigeBonus = Math.round(s.tuition * s.students.length * (pm - 1)), income = baseInc + prestigeBonus;
     var sal = 0; s.teachers.forEach(function (t) { sal += t.luong; });
     var roomCost = 0; s.rooms.forEach(function (r) { roomCost += (CONFIG.ROOMS[r.key].cost || 0); });
     var maint = Math.round(CONFIG.MAINT_RATE * (s.book + roomCost) * 10) / 10;
     var cpay = 0; s.contracts.forEach(function (ct) { cpay += ct.pay; });
-    c.appendChild(fundRow("🎓 Học phí " + s.students.length + " SV × " + s.tuition.toFixed(1) + "tr", "+" + income + "tr", "var(--green)"));
-    if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + cpay + "tr", "var(--green)"));
+    c.appendChild(fundRow("🎓 Học phí " + s.students.length + " SV × " + s.tuition.toFixed(1) + "tr", "+" + money(baseInc), "var(--green)"));
+    if (prestigeBonus > 0) c.appendChild(fundRow("🏛️ Uy tín học hiệu (+" + Math.round((pm - 1) * 100) + "% nhờ nâng cấp)", "+" + money(prestigeBonus), "var(--green)")); // iter-160: the compounding premium, made legible
+    if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + money(cpay), "var(--green)"));
     c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + sal + "tr", "var(--red)"));
     c.appendChild(fundRow("🛠️ Bảo trì", "−" + maint + "tr", "var(--red)"));
     var ops = Math.round((CONFIG.OPS.base + CONFIG.OPS.perSV * s.students.length) * CONFIG.OPS.rate * Math.max(0, s.year - 1)); // rising overhead w/ size & age
@@ -1369,7 +1371,7 @@
     c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + Math.round(net) + "tr</div>";
     // legibility (owner: "not clear how time passes / how money accrues — positive but feels 0đ"): how long a month is + why the bank doesn't balloon
     var monSec = Math.round(CONFIG.TICK_MS * CONFIG.TICKS_PER_DAY * CONFIG.DAYS_PER_MONTH / 1000);
-    c.appendChild(el("div", "tiny", "Một <b>tháng</b> ≈ " + monSec + "s ở tốc độ 1× — thu/chi cộng dồn cuối mỗi tháng. Tiền dư trên " + CONFIG.CASH_KEEP + "tr tự tái đầu tư (~3%/th) nên ngân hàng không phình mãi: muốn giàu phải <b>tăng thu</b> (học phí · hợp đồng · uy tín), không chỉ chờ."));
+    c.appendChild(el("div", "tiny", "Một <b>tháng</b> ≈ " + monSec + "s ở tốc độ 1× — thu/chi cộng dồn cuối mỗi tháng. Trường càng lớn, càng <b>nâng cấp</b> thì uy tín học hiệu càng cao và thu càng nhiều — đầu tư đều tay, qua năm tháng ngân hàng lên tới hàng tỷ."));
     wrap.appendChild(c);
 
     // contracts

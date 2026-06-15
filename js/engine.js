@@ -119,7 +119,14 @@ function placeRoom(key, x, y) {
 // "buy → it just appears": find the first tidy spot (reading order, inside a border, off the central
 // path) and build there — no manual placement. Falls back to allowing the path if the grounds fill up.
 function roomLevel(key) { for (var i = 0; i < S.rooms.length; i++) if (S.rooms[i].key === key) return S.rooms[i].level || 1; return 0; }
-function upgradeCost(d, lvl) { return Math.max(50, d.cost || 0); } // flat per upgrade (decision + a small money sink)
+// iter-160 (economy ckpt2): upgrade cost ESCALATES with level — base × GROWTH^(lvl-1). Late tiers cost tỷ, so the
+// campus is a growing money sink the owner asked for ("buy more expensive upgrade"). lvl = current level (upgrading to lvl+1).
+function upgradeCost(d, lvl) { var U = CONFIG.UPGRADE; return Math.round(Math.max(U.BASE, d.cost || 0) * Math.pow(U.COST_GROWTH, Math.max(0, lvl - 1))); }
+// iter-160 (economy ckpt2): the PRESTIGE PREMIUM on tuition income — every building upgrade level above 1 adds
+// PRESTIGE_K. A taller, more-invested campus earns more per student → income COMPOUNDS with reinvestment (the
+// growth engine). Level-1 schools (the sweep/bot, which never upgrade) get 1.0 → economy sweep unchanged.
+function prestigeLevels() { var t = 0; for (var i = 0; i < S.rooms.length; i++) t += Math.max(0, (S.rooms[i].level || 1) - 1); return t; }
+function prestigeMult() { return 1 + CONFIG.PRESTIGE_K * prestigeLevels(); }
 function autoPlace(key) {
   var d = CONFIG.ROOMS[key]; if (!d) return { ok: false, msg: "Phòng không hợp lệ." };
   if (d.once && hasRoom(key)) return { ok: false, msg: "Đã có rồi." };
@@ -362,7 +369,7 @@ function ktSat(v) {
 /* ---------- monthly economy ---------- */
 function economyTick() {
   var n = S.students.length, i;
-  var income = r1(S.tuition * n);
+  var income = r1(S.tuition * n * prestigeMult()); // iter-160: prestige premium — a more-upgraded campus earns more per student (compounding growth engine)
   var salaries = 0; for (i = 0; i < S.teachers.length; i++) { salaries += S.teachers[i].luong; S.teachers[i].age += 1 / 12; }
   var roomCost = 0; for (i = 0; i < S.rooms.length; i++) roomCost += (CONFIG.ROOMS[S.rooms[i].key].cost || 0);
   var maint = r1(CONFIG.MAINT_RATE * (S.book + roomCost));
@@ -387,9 +394,12 @@ function economyTick() {
   else S.tiengTam = clamp(r1(Math.min(ttFloor, S.tiengTam + 0.5)), 0, 200); // recover toward baseline after a scandal/arrest dip
   for (i = 0; i < S.teachers.length; i++) if (S.teachers[i].trait === "isi") gainTT(0.5);
   // room effects scale with upgrade level (one building on the map, leveled up)
-  if (hasRoom("cangtin")) moodAll(roomLevel("cangtin"));        // +1 Mood/cấp
-  if (hasRoom("lab")) gainTT(0.5 * roomLevel("lab"));           // +0,5 Tiếng Tăm/cấp
-  var phLv = roomLevel("phonghoc"); if (phLv > 1) moodAll(phLv - 1); // extra classrooms ease the crowding
+  // iter-160 (economy ckpt2): the per-level gameplay effects CAP at EFFECT_LVL_CAP so a tall (economic) campus
+  // doesn't inflate Mood/Tiếng Tăm or the person-sim — high levels past the cap are PURE prestige/income (above).
+  var ecap = CONFIG.EFFECT_LVL_CAP || 3, capLv = function (k) { return Math.min(roomLevel(k), ecap); };
+  if (hasRoom("cangtin")) moodAll(capLv("cangtin"));            // +1 Mood/cấp (capped)
+  if (hasRoom("lab")) gainTT(0.5 * capLv("lab"));               // +0,5 Tiếng Tăm/cấp (capped)
+  var phLv = capLv("phonghoc"); if (phLv > 1) moodAll(phLv - 1); // extra classrooms ease the crowding (capped)
   // thực chất drifts toward (craft − cram) of student body
   if (n) {
     var tnSum = 0, vetSum = 0;

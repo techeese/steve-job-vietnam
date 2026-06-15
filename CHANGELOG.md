@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-15 — ECONOMY EPIC ckpt 2: the compounding growth engine — invest → earn → repeat (loop iter 160)
+**Owner epic (top priority): the decades-long growth engine → "ridiculous endgame money."** Checkpoint 2 wires
+the COMPOUNDING loop the owner described ("upgrade → higher students/tuition → buy more expensive upgrade"):
+- **Escalating upgrade costs** (`UPGRADE.COST_GROWTH 1.5`, `ROOM_MAX_LEVEL 3→10`): a long upgrade track where
+  each tier costs ~1.5× the last (lab L1→10: 70 … 1794tr) — "buy more expensive upgrades."
+- **Prestige premium on income** (`PRESTIGE_K 0.45`): every building upgrade-level above 1 adds +45% to tuition
+  income, so a fully-upgraded campus earns ~**20×** a bare one. Investing COMPOUNDS — surfaced as its own
+  funding line *"🏛️ Uy tín học hiệu (+X% nhờ nâng cấp)"* so the player sees the engine work.
+- **Effects capped** (`EFFECT_LVL_CAP 3`): the per-level Mood/Tiếng Tăm/crowd-ease effects cap at level 3, so a
+  tall (economic) campus is pure prestige/income and doesn't inflate the meters or the person-sim.
+- **Measured (headless probe, 25-sim-year runs):** no upgrades → 6.4 tỷ; moderate upgrading (2/yr) → **99 tỷ**;
+  aggressive (8/yr) → **223 tỷ** — all **0 bankruptcy** (upgrades only fire when affordable). Good ROI (a tỷ-scale
+  upgrade pays back in ~1-2 sim-years), so investing is the clear path to wealth — the engine the owner wanted.
+- **Sweep-safe by construction:** the bot/sweep place rooms at level 1 and never upgrade, so prestige=1× and no
+  escalation → gate GREEN, bot BOTOK (unchanged), sweep 6✓/0 breakage; person-sim spread untouched (income ≠ talent).
+Deployed. **Next:** the literal "more students" lever (ROSTER_CAP scaling) if the owner wants it, then the owed
+STRUCTURE move (EPICS_SINCE_STRUCTURE=2).
+
 ## 2026-06-15 — ECONOMY EPIC ckpt 1: the hoard grows again + reads in tỷ (loop iter 159)
 **Owner epic (top priority): "scale the university into a decades-long growth engine — ridiculous endgame money,
 not 900tr."** Checkpoint 1 of a multi-firing epic — the FOUNDATION (relax the cap so money grows; make big
