@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — A Tết chapter: the cohort's becoming, reflected once a year (loop iter 152)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 3 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
+VISION's #1 frontier is the *felt transformation arc — watchable beat by beat during the years, not a reveal
+at graduation* (§77-79). The protégé has mid-game beats and the cohort has a FINAL epilogue summary, but the
+mid-game years had no sense of the WHOLE cohort's becoming. Now Tết (the cultural turn-of-year) carries a
+headmaster's reflection on how the current cohort is growing **under the player's policy** — a yearly chapter:
+- **blossom** (most kids well-matched / mentored): *"phần đông các em đang hợp lối, lớn lên đúng hướng"*
+- **cool** (many lệch tạng or low mood): *"không ít em đang lệch lối, nguội dần. Năm mới, mình phải nghĩ lại cách dạy"*
+- **mixed**: *"đứa bừng lên, đứa chững lại. Trường nào rồi cũng thế."*
+The texture MIRRORS the policy (verified): `đồ án`→blossom (makers thrive), `cân bằng`→mixed (the adequate
+middle — the same peak-suppression theme as iter-148/151), `luyện đề`→cool (dreamers cool under cram). Extends
+the "essay frame" pillar to a yearly cadence and makes "watching = development" have a rhythm.
+- **Prose, NO counts** (invariant #3 — the cohort is glimpsed, not metered; the texture is qualitative).
+- **Zero risk:** PURE NEWS, no sim-state change — `tetBeat` already fired once a year; this adds a second line.
+  Skips the young founding school (<6 students).
+Verified: content+engine syntax OK, gate GREEN, **bot BOTOK with IDENTICAL metrics** (grad 87 / steves 0 /
+arrested 23 — the ~10 live Tết beats fired without changing any state), sweep 5✓/0 breakage, epilogue
+byte-identical, and a classification probe confirms the policy-mirroring texture above.
+
 ## 2026-06-15 — "A big gift, only an adequate school" — the peak-suppression warning, per kid (loop iter 151)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
 iter-148 surfaced the đề Văn's peak-vs-median trade-off at the COHORT level (a balanced school makes solid

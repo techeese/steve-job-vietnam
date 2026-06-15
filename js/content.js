@@ -72,6 +72,15 @@ var CONTENT = {
     realized: "em nên người — mình có góp một tay",          // a realized life — the attention paid off
     kind: "một cuộc đời tử tế, mình mừng cho em"             // a decent life — simple gladness
   },
+  // iter-152 — the Tết cohort glimpse (tetCohortBeat, engine.js): once a year, the headmaster reflects on how the
+  // CURRENT cohort is becoming under the player's policy — blossoming, cooling, or mixed. The "felt transformation
+  // arc" (VISION §77-79) given a YEARLY chapter rhythm, mid-game, not just at the epilogue. Prose, NO counts
+  // (invariant #3 — the cohort is glimpsed, not metered); the texture is qualitative.
+  tetCohort: {
+    blossom: "🌸 Tết — nhìn lại một năm, phần đông các em đang hợp lối, lớn lên đúng hướng. Mừng các em thêm tuổi.",
+    cool: "🌸 Tết — nhìn lại một năm, không ít em đang lệch lối, nguội dần. Năm mới, mình phải nghĩ lại cách dạy.",
+    mixed: "🌸 Tết — nhìn lại một năm: đứa bừng lên, đứa chững lại. Trường nào rồi cũng thế. Năm mới lại bắt đầu."
+  },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't
   prizes: { sangtao: "Giải Sáng Tạo Trẻ", taynghe: "Giải Tay Nghề Vàng", thukhoa: "Thủ Khoa khoá" }, // E7p: a standout's honor — a line in their life (owner: "more prizes/awards")

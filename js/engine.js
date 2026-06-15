@@ -420,7 +420,23 @@ function resolvePhots() {
 function seedPhot(sev, src) { S.photSeeds.push({ src: src || "", sev: sev, born: S.totalDays }); }
 
 /* ---------- Tết / scholarships / endowment milestones ---------- */
-function tetBeat() { moodAll(10); S.endow.bal = r1(S.endow.bal); S.cash = r1(S.cash + 10); news(CONTENT.modal.tet); }
+function tetBeat() { moodAll(10); S.endow.bal = r1(S.endow.bal); S.cash = r1(S.cash + 10); news(CONTENT.modal.tet); tetCohortBeat(); }
+// iter-152 — the felt transformation arc, given a YEARLY chapter (VISION §77-79: watchable beat by beat, not a
+// reveal at graduation). Once a year (Tết, the cultural turn-of-year) the headmaster reflects on how the CURRENT
+// cohort is becoming UNDER THE PLAYER'S POLICY: blossoming (well-matched / mentored), cooling (lệch tạng or
+// low mood), or mixed. PURE NEWS — no sim-state change (gate/bot/sweep/epilogue unaffected); prose, NO counts
+// (invariant #3: the cohort is glimpsed, not metered). Skips the young founding school (<6 students).
+function tetCohortBeat() {
+  var st = S.students; if (!st || st.length < 6) return;
+  var blossom = 0, cool = 0;
+  for (var i = 0; i < st.length; i++) {
+    var s = st[i], mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    if (s.mentored || mm >= 1.3) blossom++;
+    else if (mm < CONFIG.MISMATCH_MM || s.mood < CONFIG.MOOD_PENALTY_BELOW) cool++;
+  }
+  var n = st.length, key = (blossom >= n * 0.4) ? "blossom" : (cool >= n * 0.3) ? "cool" : "mixed";
+  news(CONTENT.tetCohort[key]);
+}
 function scholarshipDraw() {
   S.endow.drawnYear = false;
   for (var i = 0; i < S.scholarships.length; i++) {
