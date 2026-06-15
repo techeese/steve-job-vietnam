@@ -241,6 +241,8 @@ var CONFIG = {
     KEYNOTE_TT: 15, KEYNOTE_UT: 5, MEGA_GIFT: 500,
     GIFT_BASE: { KY_SU: 0.20, LUONG_ON: 0.02, QUAN_VAN_MAU: 0.05, STEVE: 1.0 },
     GIFT_AMT: { KY_SU: [10, 30], LUONG_ON: [2, 5], QUAN_VAN_MAU: [5, 10], STEVE: [500, 500] },
+    ITEM_P: { STEVE: 0.85, FOUNDER: 0.30, KY_SU: 0.14 },  // iter-182 (owner steer ckpt3): successful alumni occasionally give a NON-monetary ITEM (grat-scaled). A foundation for "extension functions later".
+    ITEM_CAP: 24,
     ARREST: function (sev, tt, yearsOut) { return 15 * (1 + tt / 50) * Math.max(0.5, 1 - 0.05 * yearsOut); },
     SCRIPTED: [{ ten: "Trần Phi Lợi", entry: "CA_MAP_COIN", forceYear: 2, forceMonth: 3, force: "BI_BAT" }],
     // E4 — REALIZATION-AWARE DESTINY: a gift's flowering is RELATIVE to its magnitude (seed). FLOURISH = how

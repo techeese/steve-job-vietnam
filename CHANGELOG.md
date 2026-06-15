@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-15 — Alumni give back, by name: non-monetary gifts (owner steer · economy ckpt 3) (loop iter 182)
+**Completes the owner's 3-part economy steer — "successful alumni might donate non-monetary items, for extension
+functions later."** Monetary donations already existed (`queueGift`/`flushGifts`); this adds the **item** path: a
+successful alumnus (STEVE/FOUNDER/KY_SU, grat-scaled chance) occasionally gifts the school a tangible thing — *"một
+suất thực tập cho đàn em mỗi năm"*, *"dàn máy chủ cũ của công ty em"*, *"chiếc bo mạch đầu tay, vẫn còn chạy"* — named
+in the feed (🎁) and collected in a **"Kho lưu niệm" card** in the funding panel. It's a deliberate **hook for
+extension functions later** (a printer → the Xưởng, an internship → a kid…): for now, collected/named/kept, no
+mechanical effect (the "later" is owner-gated). Implemented as a per-alum **DRAW 5** after the gift draw — since the
+per-alum rng is fresh each tick, it does NOT shift the existing draws, and items touch no tracked metric → **bot/sweep
+byte-IDENTICAL** (cash 6689 / arrested 15 unchanged). `S.giftItems` persists across reload (gate save/reload GREEN).
+Probe: ~24 items over 12 years (~2/yr), named givers. Verified: syntax OK, gate GREEN, bot BOTOK, sweep 6✓, fund
+panel renders the card. **This closes the owner's living-economy epic (ckpts 1–3: canteen income · classroom
+multiplier · alumni items). Next up: the owed STRUCTURE move (essayDraft → epilogue.js).** FUN 4 · SOUL 3 (the
+alumni-world gives back, by name) · CLARITY 4.
+
 ## 2026-06-15 — The classroom is the tuition multiplier (owner steer · economy ckpt 2) (loop iter 181)
 **Answers the owner's "the classroom can be a multiplier of the tuition?" — yes, made explicit + legible, no
 double-count.** The phòng học now drives an **explicit per-student tuition multiplier** (`classroomMult` =

@@ -1415,6 +1415,20 @@
       wrap.appendChild(cc);
     }
 
+    // alumni non-monetary gifts — the kho lưu niệm (iter-182 owner steer ckpt3): successful grads give back tangible
+    // things, named; a foundation for extension functions later (an internship → a kid, a printer → the Xưởng…).
+    if (s.giftItems && s.giftItems.length) {
+      var cg = el("div", "card"); cg.appendChild(el("h3", null, "🎁 Quà cựu sinh viên (" + s.giftItems.length + ")"));
+      cg.appendChild(el("div", "tiny", "Cựu SV thành đạt gửi về — kho lưu niệm của trường.")).style.marginBottom = "6px";
+      s.giftItems.slice(0, 8).forEach(function (g) {
+        var rr = el("div", "srow");
+        rr.innerHTML = "<div class='av' style='background:rgba(240,198,116,.15)'>🎁</div><div class='grow'><div class='nm'>" + esc(g.item) + "</div><div class='meta'>" + esc(g.ten) + " · Năm " + g.year + "</div></div>";
+        cg.appendChild(rr);
+      });
+      if (s.giftItems.length > 8) cg.appendChild(el("div", "tiny", "…và " + (s.giftItems.length - 8) + " món khác.")).style.marginTop = "4px";
+      wrap.appendChild(cg);
+    }
+
     // endowment
     var ce = el("div", "card"); ce.appendChild(el("h3", null, "Quỹ hiến tặng"));
     ce.appendChild(el("div", "row", "<div class='grow'><div style='font-size:20px;font-weight:800;color:var(--gold)'>" + money(s.endow.bal) + "</div><div class='tiny'>×1,004 mỗi tháng · không bao giờ mất giá · không mua được Uy Tín</div></div>"));

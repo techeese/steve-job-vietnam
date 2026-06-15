@@ -216,6 +216,7 @@ function freshState(seed) {
     alumni: [],
     admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
     endow: { bal: CONFIG.BOOT_ENDOW, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 },
+    giftItems: [], // iter-182 (owner steer ckpt3): non-monetary gifts from successful alumni — the "kho lưu niệm", a hook for extension functions later
     scholarships: [
       { key: "tdn", holderId: null, suspended: false },
       { key: "tqb", holderId: null, suspended: false },
@@ -667,6 +668,22 @@ function alumniTickOne(a) {
   // DRAW 4 — gift (resolved at 20/11 flush; here we just queue eligibility)
   var d4 = r();
   queueGift(a, d4);
+  // DRAW 5 — NON-monetary item gift (iter-182 owner steer ckpt3). After d4 → does NOT shift any existing draw (r is
+  // fresh per alum each tick); items touch no tracked metric → bot/sweep cash byte-identical.
+  var d5 = r();
+  maybeItemGift(a, d5);
+}
+// iter-182 (owner: "successful alumni might donate… non-monetary items… for extension functions later"). A grat-scaled
+// small chance for a successful alum to gift the school a tangible thing — collected in S.giftItems (the kho lưu niệm),
+// named in the feed. Pure hook for now (no mechanical effect; the "extension functions" are a later, owner-gated step).
+function maybeItemGift(a, draw) {
+  var P = CONFIG.ALUM.ITEM_P[a.state]; if (!P) return;            // only successful states (STEVE/FOUNDER/KY_SU) give items
+  if (draw >= clamp(P * (a.grat || 0) / 50, 0, 0.9)) return;      // grat-scaled — a grateful grad gives back
+  var pool = CONTENT.giftItems, item = pool[Math.floor(draw * 997) % pool.length]; // deterministic pick from the same draw
+  if (!S.giftItems) S.giftItems = [];
+  S.giftItems.unshift({ item: item, ten: a.ten, year: S.year, state: a.state });
+  if (S.giftItems.length > (CONFIG.ALUM.ITEM_CAP || 24)) S.giftItems.pop();
+  news("🎁 " + a.ten + " gửi tặng trường: " + item + ".");
 }
 function stevePShort(a) {
   var lua = aLua(a);

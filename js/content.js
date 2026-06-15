@@ -119,6 +119,22 @@ var CONTENT = {
     "giỏi thật, nhưng trường đang dạy sai đường em cần.",
     "mỗi ngày một lặng hơn — cái khiếu chưa tìm được lối."
   ],
+  // iter-182 (owner steer ckpt3): NON-monetary gifts from successful alumni — the school's "kho lưu niệm", a hook for
+  // extension functions later (a printer→Xưởng, servers→Lab, an internship→a kid…). For now: collected, named, kept.
+  giftItems: [
+    "một máy in 3D đời mới cho Xưởng",
+    "dàn máy chủ cũ của công ty em",
+    "tủ sách kỹ thuật, đóng thùng gửi về",
+    "một suất thực tập cho đàn em mỗi năm",
+    "bức ảnh khóa đầu tiên, lồng khung kính",
+    "chiếc cúp khởi nghiệp mạ vàng",
+    "bộ đồ nghề sửa chữa xịn nhất phố",
+    "tấm biển tên trường mới, khắc đồng",
+    "lời mời về nói chuyện truyền cảm hứng",
+    "một góc thư viện mang tên khóa cũ",
+    "chiếc bo mạch đầu tay, vẫn còn chạy",
+    "thùng mì tôm tài trợ căng tin cả năm"
+  ],
   prizes: { sangtao: "Giải Sáng Tạo Trẻ", taynghe: "Giải Tay Nghề Vàng", thukhoa: "Thủ Khoa khoá" }, // E7p: a standout's honor — a line in their life (owner: "more prizes/awards")
   prizeWastedFlavor: "Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác.", // iter-144: the honored student the system still failed — the sharpest đề Văn bite, made pointed
   // iter-125 — the followed protégé's IN-SCHOOL arc, as caused moments (THESIS mark 5: felt WHILE playing).
