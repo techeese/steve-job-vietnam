@@ -211,6 +211,15 @@ var CONTENT = {
   },
 
   events: [
+    // iter-169 — money-vs-mission, at the wealthy-school scale (the đề Văn bite tied to the new economy): a felt
+    // fork between cash/fame and integrity. Fires once the school is famous (TT≥60) — a corp courts a name.
+    { id: "taiTro", title: "💰 Một tập đoàn muốn 'đồng hành cùng nhà trường'",
+      desc: "Một tập đoàn lớn đề nghị tài trợ khủng — đổi lại: logo của họ phủ khắp trường, và 'vài suất' tuyển sinh đặc cách cho con em đối tác. Phòng tài vụ sáng mắt; Bác Tâm im lặng.",
+      pred: "famous",
+      choices: [
+        { label: "Nhận tài trợ — tiền là tiền", hint: "+200tr, +6 Tiếng Tăm, −5 Uy Tín, một mầm phốt", fx: "taiTroNhan" },
+        { label: "Cảm ơn, trường không bán cửa", hint: "+3 Uy Tín, Bác Tâm gật đầu", fx: "taiTroTuChoi" }
+      ] },
     { id: "chuong", title: "🔔 Mai Sương tháo chuông trường",
       desc: "Mai Sương tháo chuông trường ra xem — 'nó kêu lệch nửa nốt'. Bảo vệ đang chờ ý kiến hiệu trưởng.",
       scripted: true,

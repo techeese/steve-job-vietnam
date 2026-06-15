@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-15 — A new fork: money vs mission, at the wealthy-school scale (loop iter 169)
+**Content (a felt philosophy-fork — mark 5) that ties the new economy to the đề Văn.** With the economy now
+central, the richest non-decay addition is a dilemma that makes wealth-vs-integrity a *lived* choice (not just an
+epilogue reading). New event **taiTro** — *"Một tập đoàn muốn 'đồng hành cùng nhà trường'"*: a corporation offers
+a huge sponsorship in exchange for logos everywhere + "a few" đặc-cách admissions for partners' kids. The fork:
+- **Take it** — +200tr, +6 Tiếng Tăm, **−5 Uy Tín**, a phốt seed (cash & fame, integrity sold).
+- **Refuse** — +3 Uy Tín, Bác Tâm's nod (the gate stays unbought).
+Fires once the school is famous (`famous` pred, TT≥60 — a name attracts suitors). This integrates the two
+systems (the owner's "systems feel separate") and surfaces the iter-168 tension — *does money corrupt the
+mission?* — as a felt fork during play, not just the epilogue. Reuses the standard fx vocabulary; person-sim
+talent/growth untouched. Verified: 2-file syntax OK, gate GREEN, bot BOTOK, sweep 6✓/0 breakage, the event fires
++ both choices resolve correctly (take: ΔUT−5/Δcash+200/ΔTT+6; refuse: ΔUT+3). Deployed.
+
 ## 2026-06-15 — Evolution-spirit re-derivation: frame holds + the đề Văn bite at empire scale (loop iter 168)
 **Anti-decay: re-derived from the THESIS instead of shipping another micro-polish** (the owner's #1 value —
 evolution over adaptation). Honest assessment of all 5 §D marks against the current game: a stranger would

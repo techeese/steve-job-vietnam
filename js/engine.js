@@ -775,6 +775,7 @@ function eventPred(e) {
     case "nam4Duan": return S.presets.n4 === "duan" && S.students.some(function (s) { return s.grade === 4; });
     case "thang5": return S.month === 5;
     case "hasNam4": return S.students.some(function (s) { return s.grade === 4; });
+    case "famous": return S.tiengTam >= 60; // iter-169: a notable school attracts corporate suitors (the taiTro money-vs-mission fork)
     case "founding": return S.year <= 3 && S.students.length >= 1; // the from-nothing build-up years
     case "common": return S.students.length >= 10;
     default: return e.scripted === true;
@@ -877,6 +878,9 @@ function applyFx(fx, t) {
     case "ttLam": gainTT(5); for (var ki = 0; ki < S.students.length; ki++) S.students[ki].vet = clamp(S.students[ki].vet + 5, 0, 100); seedPhot(1, "thanhtich"); break;
     case "ttThat": gainUT(2, false); gainTC(1); bacTamNod(); break;
     case "batLamLai": if (t) { t.tn = clamp(t.tn + 5, 0, 100); t.st = clamp(t.st + 3, 0, 100); t.mood = clamp(t.mood - 5, 0, 100); virtue(t, "lamLai"); } break;
+    // iter-169 — money-vs-mission (the đề Văn bite at the wealthy-school scale): take the cash + fame at the cost of integrity, or keep the school's gate unbought
+    case "taiTroNhan": S.cash = r1(S.cash + 200); gainTT(6); gainUT(-5, false); seedPhot(1, "taitro"); break;
+    case "taiTroTuChoi": gainUT(3, false); bacTamNod(); break;
     default: break;
   }
 }
