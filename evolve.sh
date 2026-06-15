@@ -20,7 +20,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 ROADMAP="ROADMAP.md"
-CRITIC_MODEL="${CRITIC_MODEL:-sonnet}"     # a different family member than the opus producer = weak input-independence gain (residual risk #3)
+CRITIC_MODEL="${CRITIC_MODEL:-haiku}"      # iter-191: HAIKU is the default — diagnosed (iter-188/189/190) that sonnet's per-turn latency (3-5 min/turn × ~70-130 turns) blows past any cap → NEVER finishes; haiku runs ~4s/turn → converges in minutes. Bonus: haiku is further from the opus producer = STRONGER input-independence. (CRITIC_MODEL=sonnet to override, but expect timeouts.)
 CRITIC_TIMEOUT="${CRITIC_TIMEOUT:-720}"    # iter-173: HARD cap (s) — a runaway critic once ran 35+ min and wedged the loop; bound it always
 STAMP="$(date +%Y-%m-%d 2>/dev/null || echo 0000-00-00)"
 CRITIC_OUT="/tmp/evolve-critic-$STAMP.txt"

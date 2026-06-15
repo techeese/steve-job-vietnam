@@ -25,6 +25,10 @@ you need comes from running `./lives.sh` (below), not from reading the render/UI
 only if a specific cascade/economy question requires it.
 
 ## ⏱ BE EFFICIENT — this is a TIME-BOXED run
+⛔ **HARD STOP — after AT MOST ~20 tool calls TOTAL, you MUST stop gathering and immediately write the
+`===GAP===` block, even if your analysis feels incomplete.** The GAP block is the ONLY required output and
+the run produces NOTHING without it — emitting it ALWAYS beats one more read. Never exceed ~20 tool calls.
+
 You have a hard time budget. Read each file above AT MOST ONCE, run each sensor the stated number of
 times (no more), then write the verdict. Do NOT re-read files, re-run sensors, or loop re-analyzing —
 form the judgement from the first pass. A decisive, well-anchored verdict in ~10–15 minutes beats an
