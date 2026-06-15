@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — The epilogue grief now names WHICH gift was wasted (tell-aware) (loop iter 203)
+**Person-sim soul ship — completing the iter-193 mandate at the epilogue.** iter-193 made the *in-play* cohort beats
+name a kid's specific gift ("the line names THIS kid's gift, not a generic talent"). But the *epilogue* grief lines
+(`realGap`) — the emotional payoff — were still generic: a wasted coder and a wasted maker both read "tài năng bỏ phí
+trên tay bạn." Now `realCreditSuffix` is **tell-aware** (a new `realGapTell` keyed by class × tell), so the grief names
+the gift: a wasted **spark** reads *"tư duy lập trình sắc thế, mà bỏ phí trên tay bạn"*; a wasted **sky** *"đôi bàn tay
+khéo, đầy ý lạ, mà chẳng nơi nào cho em làm"*; a settled prodigy *"đáng lẽ thành một kỹ sư thực thụ, giờ chỉ một chân
+yên ổn"*; the distortion pole *"đầu óc lập trình sắc thế, bị bẻ thành trò lùa gà."* Covers all three grief classes
+(loud / under / bent) × spark/sky/hype, with the generic line as fallback for undirected kids (tell=""). Threaded `tell`
+through the single shared `realCreditSuffix` so the **graduation-results screen AND the epilogue cast** both name the
+gift (one source of truth). **Reading-only → balance-neutral**: cash 7353/arrested 15 unchanged, sweep 8✓ (its own
+classifier), lives 0 LIVESFAIL ×3 (essay 2010→2025, the intended richer prose). §D-1 (clear what became of WHOM) +
+§C-4 (waste done TO a specific gift). Probe: the tell-keyed lines fire across every preset, generic fallback intact.
+
 ## 2026-06-15 — BUGFIX: corrupted teachers/giftItems save no longer bricks the game (loop iter 202)
 **A real save-loss crash, found by a fan-out audit when the loop resumed from a long hold.** The iter-199 save.js
 carve left two recently-added dynamic arrays — `S.teachers` (now carrying the iter-195 grain field, read every tick)

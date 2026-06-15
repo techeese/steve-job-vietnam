@@ -76,6 +76,27 @@ var CONTENT = {
     bent: " — tài năng bị bẻ cong trong tay bạn",  // iter-197 → cá mập coin / bị bắt: the DISTORT pole — the gift grew the WRONG way, the school turned them (distinct from waste; invariant #4)
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
+  // iter-203 — the EPILOGUE grief now names WHICH gift was wasted (the tell), not just the fate — the epilogue
+  // counterpart of iter-193's in-play cohort lines (the owner's mandate: "name THIS kid's specific gift, not a
+  // generic talent"). realCreditSuffix picks realGapTell[class][tell], falling back to the generic realGap[class]
+  // (tell="" / unmapped). Reading-only → balance-neutral (§D-1 it's clear what became of WHOM; §C-4 waste done TO a specific gift).
+  realGapTell: {
+    loud: { // gift left idle / ground to rote
+      spark: " — tư duy lập trình sắc thế, mà bỏ phí trên tay bạn",
+      sky:   " — đôi bàn tay khéo, đầy ý lạ, mà chẳng nơi nào cho em làm",
+      hype:  " — máu khởi nghiệp ấy, rốt cuộc nguội trên tay bạn"
+    },
+    under: { // settled into a steady-but-lesser life
+      spark: " — đáng lẽ thành một kỹ sư thực thụ, giờ chỉ một chân yên ổn",
+      sky:   " — đôi tay ấy đáng lẽ làm ra thứ của riêng mình",
+      hype:  " — đáng lẽ dựng được gì đó của riêng em, giờ làm công ăn lương"
+    },
+    bent: { // the gift turned the wrong way
+      spark: " — đầu óc lập trình sắc thế, bị bẻ thành trò lùa gà",
+      sky:   " — bàn tay khéo ấy, giờ chỉ khéo vẽ chiêu",
+      hype:  " — khiếu thuyết phục ấy, bị bẻ cong thành thói ăn xổi"
+    }
+  },
   // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
   // exam score (đặc cách / the narrow door) and then FAILED to realize. The win was named ("vào bằng cửa hẹp"); the
   // gamble you LOST must be named too, or the đặc cách door looks like free upside. Done TO them (invariant #4): you

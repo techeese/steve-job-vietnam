@@ -137,9 +137,9 @@ function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c 
 // source of truth shared by the epilogue CAST (ui.js essayDraft) and the GRADUATION RESULTS screen (engine rec →
 // ui showJuneResults), so the soul reading — VISIBLE WASTED TALENT — appears at the MOMENT of graduation
 // (VISION §114), not only in the final essay. Returns "" for non-prodigies → glimpsed, not metered (invariant #3).
-function realCreditSuffix(state, seed, flags) {
+function realCreditSuffix(state, seed, flags, tell) {
   var rc = realClass(state, seed);
-  var gap = CONTENT.realGap[rc] || "";
+  var gap = (rc && tell && CONTENT.realGapTell[rc] && CONTENT.realGapTell[rc][tell]) || CONTENT.realGap[rc] || ""; // iter-203: name WHICH gift (tell) was wasted, not just the fate — epilogue counterpart of iter-193's in-play lines; falls back to the generic line for tell="" / unmapped
   if (gap && flags && flags.diamond) gap = (CONTENT.diamondWaste && CONTENT.diamondWaste[rc]) || gap; // iter-194: the gem admitted past the score, then let slip — name the gamble you LOST (symmetry of diamondCredit; invariant #2/#4)
   else if (!gap && flags && flags.diamond && flourishOf(state) >= 4) gap = CONTENT.diamondCredit;     // overlooked at entry, realized anyway — the gamble you WON
   else if (!gap && flags && flags.mentored && flourishOf(state) >= 2) gap = CONTENT.mentorCredit;     // a realized life under your hand
