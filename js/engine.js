@@ -689,7 +689,17 @@ function transition(a, draw, ysg) {
     if (draw < cum) {
       var to = rows[i].t;
       if (to === "BI_BAT") arrestAlumnus(a);
-      else { setAlumState(a, to); a.line = ""; }
+      else {
+        setAlumState(a, to); a.line = "";
+        // iter-170: surface the SCATTER — a former student's life out in the world, glimpsed in the feed (the
+        // owner's "watch them tản đi khắp nơi" / THESIS marks 1+3: lives become someone, the wide range). THROTTLED
+        // to ≤1 per 60 days and DETERMINISTIC (no rnd) so the headless sweep/bot stay byte-identical; glimpsed,
+        // not metered (the steady kỹ sư shown as worthy as the founder; only out-in-the-world alumni, ysg≥1).
+        if (ysg >= 1 && CONFIG.ALUM.CHIPS[to] && S.totalDays - (S._lastAlumLifeBeat || 0) >= 60) {
+          news("📰 " + a.ten + " — giờ là " + CONFIG.ALUM.CHIPS[to] + ".");
+          S._lastAlumLifeBeat = S.totalDays;
+        }
+      }
       return;
     }
   }

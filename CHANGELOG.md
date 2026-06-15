@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-15 — Watch them scatter: former students' lives surface in the feed (loop iter 170)
+**Surfaces an invisible dimension — the alumni world (THESIS marks 1+3; the owner's "watch them tản đi khắp
+nơi").** The alumni FSM richly evolves graduates (founder, engineer, settled, văn-mẫu clerk, coin shark,
+unemployed), but every life-turn except keynote (🍎) and arrest (🚔) was **silent** — the "scatter" happened
+off-screen. Now a former student's life-turn glimpses into the feed: *"📰 {tên} — giờ là 🚀 Founder"* / *"… 🪪
+Thất nghiệp"* / *"… 💼 Lương ổn"* — so over the years you watch the wide range of lives your school sent into the
+world (the steady kỹ sư shown as worthy as the founder — mark 3). **Throttled** to ≤1 per 60 days and
+**deterministic** (no RNG) → glimpsed-not-metered AND the headless sweep/bot stay byte-IDENTICAL (cash 5251 /
+arrested 15 unchanged). Only out-in-the-world alumni (ysg≥1). Verified: engine syntax OK, gate GREEN, bot BOTOK
+(identical), sweep 6✓/0 breakage, the beats fire across the range (Founder / Lương ổn / Thất nghiệp). Deployed.
+
 ## 2026-06-15 — A new fork: money vs mission, at the wealthy-school scale (loop iter 169)
 **Content (a felt philosophy-fork — mark 5) that ties the new economy to the đề Văn.** With the economy now
 central, the richest non-decay addition is a dilemma that makes wealth-vs-integrity a *lived* choice (not just an
