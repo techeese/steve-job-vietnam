@@ -110,18 +110,21 @@ var CONTENT = {
   channeledMaker: " — đúng đường mà trường vạch, chỉ vậy thôi",
   // iter-179 — the WHOLE cohort becomes someone WHILE you watch (not just the followed protégé). Glimpsed prose,
   // named, never a meter (§C-3): a real gift BLOOMING under a fitting school, or WILTING in a mismatch (§C-2).
-  cohortBloom: [
-    "đang thành chính mình — lối học này hợp với em.",
-    "mắt sáng hẳn từ ngày được học đúng tạng.",
-    "bắt đầu làm ra thứ của riêng mình.",
-    "dạo này lớp nào cũng nhắc tên em."
-  ],
-  cohortWilt: [
-    "tài năng đang nguội dần — lối học chưa hợp với em.",
-    "ngồi đúng chỗ, mà mắt cứ nhìn ra cửa sổ.",
-    "giỏi thật, nhưng trường đang dạy sai đường em cần.",
-    "mỗi ngày một lặng hơn — cái khiếu chưa tìm được lối."
-  ],
+  // iter-193 (owner mandate "emergent per-life narrative, NOT generic strings"): keyed by the kid's TELL so the
+  // line names THEIR specific gift being realized or wasted — spark (a builder/logic mind → kỹ sư), sky (a maker's
+  // hands & odd ideas → 🍎), hype (a founder's drive → cá mập), `_` = no clear direction (the old generic lines).
+  cohortBloom: {
+    spark: [ "tư duy mạch lạc hẳn ra — đang thành một kỹ sư thực thụ.", "gỡ được cái lỗi cả lớp bó tay, mắt sáng rỡ." ],
+    sky:   [ "bắt đầu làm ra thứ của riêng mình — cái khiếu đã tìm được lối.", "mấy ý lạ trong đầu em giờ thành hình được rồi." ],
+    hype:  [ "biết bán ý tưởng của mình rồi — mà vẫn là ý thật.", "đứng trước lớp thuyết trình, cả phòng tin theo." ],
+    _:     [ "đang thành chính mình — lối học này hợp với em.", "mắt sáng hẳn từ ngày được học đúng tạng." ]
+  },
+  cohortWilt: {
+    spark: [ "đầu óc mạch lạc thế, mà cứ bắt học thuộc — tư duy đang cùn dần.", "giải thuật trong đầu em sắc lắm, nhưng lớp này chỉ dạy chép." ],
+    sky:   [ "bàn tay khéo, đầy ý lạ — mà trường chưa cho em chỗ nào để làm.", "óc sáng tạo đang co lại vì chẳng có gì để chế tạo." ],
+    hype:  [ "máu khởi nghiệp đang chuyển dần thành thói ăn xổi.", "khiếu thuyết phục đấy, mà đang học cách lùa hơn cách làm." ],
+    _:     [ "tài năng đang nguội dần — lối học chưa hợp với em.", "ngồi đúng chỗ, mà mắt cứ nhìn ra cửa sổ." ]
+  },
   // iter-182 (owner steer ckpt3): NON-monetary gifts from successful alumni — the school's "kho lưu niệm", a hook for
   // extension functions later (a printer→Xưởng, servers→Lab, an internship→a kid…). For now: collected, named, kept.
   giftItems: [

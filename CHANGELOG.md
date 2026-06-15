@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-15 — The cohort glimpse names each kid's SPECIFIC gift being realized/wasted (loop iter 193)
+**Person-sim ship — correcting back to the SOUL after a 5-ship economy run.** Since iter-179, `cohortBeat` glimpses
+one non-protégé kid mid-transformation each season — a real gift BLOOMING under a fitting school or WILTING in a
+mismatch — but the line was a **generic pool string** ("tài năng đang nguội dần…"): a wasted coder and a wasted maker
+read identically. That violated the owner's explicit mandate — *"emergent per-life narrative, generated FROM the
+gap, NOT generic strings."* Now the line is **keyed to the kid's gift (`tell`)**, so each beat names the SPECIFIC
+talent meeting its fate: a **spark** (builder/logic mind) blooms "tư duy mạch lạc hẳn ra — đang thành một kỹ sư thực
+thụ" but in the cram furnace wilts "giải thuật trong đầu em sắc lắm, nhưng lớp này chỉ dạy chép"; a **sky** (maker)
+blooms "bắt đầu làm ra thứ của riêng mình — cái khiếu đã tìm được lối" but wilts "óc sáng tạo đang co lại vì chẳng có
+gì để chế tạo"; a **hype** (founder) blooms "biết bán ý tưởng của mình rồi — mà vẫn là ý thật" but distorts "khiếu
+thuyết phục đấy, mà đang học cách lùa hơn cách làm". The cram-grind's waste is now **specific and felt while you
+play**, not a generic meter (§C-3 prose-not-a-meter; §C-2 symmetry holds — bloom & wilt both gift-flavored). Pools
+restructured flat-array → tell-keyed object with a `_` default (undirected kids read as before — no regression);
+deterministic line pick (rnd-free); single consumer. **Narration-only → byte-IDENTICAL**: gate GREEN, bot BOTOK
+(cash 7353 / arrested 15 / essay 2005 unchanged), sweep 6✓ (figures identical). Probe across 30 playthroughs
+confirms the gift-specific lines fire by `tell`. SOUL 4 · SATIRE 4 (the exam grind wasting a named, specific gift).
+
 ## 2026-06-15 — Tuition decided at "công bố điểm chuẩn" — it shapes who registers (owner request) (loop iter 187)
 **Owner: "tuition should be decided the same moment as công bố điểm chuẩn, as it influences how many students
 register."** Tuition was a free-floating slider in the funding tab, disconnected from the moment it matters. Now the

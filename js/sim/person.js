@@ -245,8 +245,9 @@ function cohortBeat() {
     }
   }
   if (!best) return;
-  var pool = wantWilt ? CONTENT.cohortWilt : CONTENT.cohortBloom;
-  var line = pool[era % pool.length]; // deterministic line pick (no rnd) — cycles over time
+  var byTell = wantWilt ? CONTENT.cohortWilt : CONTENT.cohortBloom;
+  var variants = byTell[best.tell] || byTell._;        // iter-193: the line names THIS kid's specific gift (tell), not a generic talent
+  var line = variants[era % variants.length];          // deterministic line pick (no rnd) — cycles over time
   news((wantWilt ? "🍂 " : "🌱 ") + best.ten + " — " + line);
   S._lastCohortBeat = S.totalDays;
 }
