@@ -989,14 +989,14 @@
      HUD
      ========================================================================== */
   var MONTHS = ["", "Một", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười", "Mười Một", "Mười Hai"];
+  // iter-185 (owner: "only 1 button need") — ONE speed dial that cycles ⏸ → 1× → 2× → 3× → ⏸ on tap (3× skipped
+  // until it unlocks at the first Lễ Tốt Nghiệp). Replaces the 4-button row; the label shows the current speed.
+  function speedMax() { return S().speed3Unlocked ? 3 : 2; }
+  function cycleSpeed() { var s = S(); s.speed = (s.speed >= speedMax()) ? 0 : s.speed + 1; renderHUD(); }
   function buildSpeeds() {
     var wrap = $("speeds"); wrap.innerHTML = "";
-    // labels read as SPEED, not bare numbers (owner: "pause/1/2 not intuitive") — × multiplier + a hover/long-press tooltip
-    [["⏸", 0, "Tạm dừng"], ["1×", 1, "Tốc độ thường"], ["2×", 2, "Nhanh gấp đôi"], ["3×", 3, "Nhanh gấp ba — mở khoá sau Lễ Tốt Nghiệp"]].forEach(function (p) {
-      var b = el("button", "spd"); b.textContent = p[0]; b.dataset.v = p[1]; b.title = p[2]; b.setAttribute("aria-label", p[2]);
-      b.onclick = function () { var s = S(); if (p[1] === 3 && !s.speed3Unlocked) { toast("Mở khoá 3× sau Lễ Tốt Nghiệp đầu tiên."); return; } s.speed = p[1]; renderHUD(); };
-      wrap.appendChild(b);
-    });
+    var b = el("button", "spd"); b.id = "spdBtn"; b.onclick = cycleSpeed;
+    wrap.appendChild(b);
   }
   // iter-164: the school's current tier (by cash, reusing the milestone stages) + the soul achievement (🍎×N).
   // A live "how great is my school" readout in the HUD subtitle — constant progression for the long game.
@@ -1014,12 +1014,15 @@
     $("schoolSub").textContent = schoolTier(s); // iter-164: a LIVE school tier (grows with you) — constant progression readout, ties the economy stage + the soul (🍎)
     $("clockMain").textContent = "Năm " + s.year;
     $("clockSub").textContent = "Tháng " + MONTHS[s.month];
-    // speeds
-    var sb = $("speeds").children;
-    for (var i = 0; i < sb.length; i++) {
-      var v = +sb[i].dataset.v;
-      sb[i].classList.toggle("active", s.speed === v);
-      sb[i].classList.toggle("locked", v === 3 && !s.speed3Unlocked);
+    // speed dial — ONE button cycling ⏸→1×→2×→[3×]→⏸ (owner: "only 1 button"); label = current speed
+    var btn = $("spdBtn");
+    if (btn) {
+      var max = s.speed3Unlocked ? 3 : 2;
+      btn.textContent = s.speed === 0 ? "⏸" : s.speed + "×";
+      btn.classList.toggle("active", s.speed > 0);
+      var nextTxt = s.speed === 0 ? "chạy 1×" : (s.speed >= max ? "tạm dừng" : "nhanh hơn " + (s.speed + 1) + "×");
+      btn.title = "Tốc độ " + (s.speed === 0 ? "⏸ (dừng)" : s.speed + "×") + " — chạm để " + nextTxt + (s.speed3Unlocked ? "" : " · 3× mở sau Lễ Tốt Nghiệp");
+      btn.setAttribute("aria-label", btn.title);
     }
     // stats chips
     var stats = $("stats"); stats.innerHTML = "";

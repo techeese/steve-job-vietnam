@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-15 — One speed button: a single cycling dial (owner request) (loop iter 185)
+**Owner: "the speed-up button top-right — only 1 button is needed."** Replaced the 4-button row (⏸ / 1× / 2× / 3×)
+with ONE **speed dial** that cycles on tap: ⏸ → 1× → 2× → 3× → ⏸. The label shows the current speed; the locked 3×
+(until the first Lễ Tốt Nghiệp) is **skipped** in the cycle (so you never tap a dead button — when locked it wraps
+⏸→1×→2×→⏸), and the tooltip notes it unlocks. Cleaner top-right HUD, especially on the phone. UI-only — sim
+untouched (bot cash 7353 unchanged). Verified: syntax OK, gate GREEN, bot BOTOK, probe confirms the cycle (locked:
+1,2,0,1 · unlocked: 1,2,3,0,1) and the label tracks the speed. CLARITY 4 (decluttered, one obvious control).
+
 ## 2026-06-15 — The Lab Sống Ảo monetizes clout: livestream income (owner "or similar building") (loop iter 184)
 **Extends the owner's living economy to a second, characterful building — "the canteen OR similar building can work
 this way."** The **Phòng Lab Sống Ảo** (the vanity lab that "teaches nothing") now EARNS: the hype-tạng kids
