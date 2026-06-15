@@ -103,6 +103,7 @@
     if (!HVS.loadGame()) { /* fresh already set */ }
     var q = location.search.match(/seed=(\d+)/);
     if (q && (!localStorage.getItem(CONFIG.SAVE_KEY))) HVS.freshState(parseInt(q[1], 10));
+    if (/[?&]ckpt2b=1\b/.test(location.search)) { CKPT2B_ON = true; setTimeout(function () { try { news("🧪 Thử nghiệm (E8 ckpt2b): chuyên môn hoá giảng viên giờ có CÁI GIÁ — khiếu nào không có thầy dạy sẽ dễ bị bỏ phí."); } catch (e) {} }, 1200); } // iter-200: owner PLAYTEST flag for the strong faculty trade-off (off unless ?ckpt2b=1)
     var sb = S().META.build; saveIsOld = !!(sb && sb !== BUILD); // running newer code than the save was written under
     S().META.build = BUILD;
     _steveSeen = S().META.steves || 0; // baseline so a loaded save's existing Steves don't re-celebrate

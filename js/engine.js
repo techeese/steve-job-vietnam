@@ -39,6 +39,7 @@ function hashStr(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h
 /* ---------- module globals ---------- */
 var S = null;
 var _nextId = 1;
+var CKPT2B_ON = false; // iter-200 E8 ckpt2b PLAYTEST FLAG (OFF by default → live byte-identical). Set true by ?ckpt2b=1 (ui.js boot) or the sweep sensor. When ON, a DISCOVERED gift whose grain you hired NO faculty for (and didn't mentor) goes adrift → real waste: specializing your faculty has a COST. The owner's gated "strong faculty trade-off" — shipped behind a flag so the owner can PLAYTEST the FEEL (the gate's own requirement) without it touching the default live experience.
 function nid() { return _nextId++; }
 
 /* derived alumni stats (never stored — DESIGN §5a) */

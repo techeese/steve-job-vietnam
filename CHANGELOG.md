@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — ckpt2b: faculty specialization now has a COST — built behind a playtest flag (loop iter 200)
+**The strong faculty trade-off, shipped for the owner to PLAY (not decided for them).** iter-195 found that shifting
+*realization* by faculty hits the saturation wall at the growth-*rate* layer; the real teeth need a STRUCTURAL change,
+which the ROADMAP repeatedly (and rightly) gates on **owner playtest of the feel**, not headless tuning. So this ships
+the mechanic **behind a flag — `?ckpt2b=1`, OFF by default** — letting the owner play it on the live link without it
+touching anyone else's game. When ON: a **discovered** real gift (seed≥4, grade≥2) whose grain you hired **no teacher
+for**, and didn't mentor, **goes adrift** — its signature stats cap at `CKPT2B_CEIL` (30+seed×8) → it mostly
+under-realizes (KY_SU/🍎 → lương ổn), some outright waste. Eased by seed, **erased by mentoring**. Specializing your
+faculty narrowly now costs the gifts you left unstaffed — a real breadth-vs-depth choice. Tuned **moderate** (sweep's
+new ckpt2b sensor: neglected sky 88%→70%, Δ18pts, while the championed grain holds 93% — a trade-off, *not* a trap; the
+sensor flags WEAK if Δ<10 or TRAP if <35%). **OFF-by-default is byte-identical** (gate GREEN, bot 7353/15/2010, sweep
+main tables unchanged; sweep now 8 flags), and `?ckpt2b=1` is verified to arm in real Chrome. No change to the default
+live experience until the owner plays it and says go. SOUL 4 · FUN 4 (a real staffing trade-off, once greenlit).
+
 ## 2026-06-15 — STRUCTURE: persistence carved into js/save.js (engine.js back under 1000 lines) (loop iter 199)
 **Behavior-neutral structure-epic** — the right non-gated move at the owner-gated frontier (the soul model is complete;
 keep the codebase plastic). The SAVE/LOAD/SANITIZE subsystem (`saveGame`/`serialize`/`loadGame`/`mergeInto`/`migrateV1`/

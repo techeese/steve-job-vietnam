@@ -126,6 +126,7 @@ var CONFIG = {
   // (The stronger realize/waste-shifting "neglected grain goes adrift" version = ckpt2b, OWNER-GATED — the delicate
   // over-waste balance the ROADMAP flags wants owner playtest, not a headless knob.)
   TEACH_AFF_MOOD: 0.22, // mood/month per lean-unit a championed grain gains / a neglected grain loses (bounded, gentle)
+  CKPT2B_CEIL: function (seed) { return 30 + seed * 8; }, // iter-200 (E8 ckpt2b, flagged): a discovered gift with NO faculty champion + no mentor caps its signature stats here → mostly UNDER-realizes (KY_SU/🍎 → lương ổn), some waste. Tuned MODERATE (neglected grain ~65% realized vs ~90% championed — a clear ~25pt cost, not a wipeout: a real breadth-vs-depth faculty trade-off, not a trap). Eased by seed; erased by mentoring. OFF unless CKPT2B_ON (playtest); owner tunes the feel.
   // MENTOR'S LEDGER Phase 1.5 (iter 116, the [EVOLUTION] craft-symmetry fix) — a SEVERE grain-mismatch
   // (MATCH < MISMATCH_MM) caps how far MODEST talent grows: the gifted (high seed) still partly shine, the
   // modest go ADRIFT (capped below the realization floor → thất nghiệp). Makes craft waste the structure-

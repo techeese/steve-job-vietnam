@@ -73,6 +73,14 @@ function growStudents() {
       var ceil = CONFIG.MISMATCH_CEIL(s.seed);
       if (s.tn > ceil) s.tn = ceil; if (s.st > ceil) s.st = ceil; if (s.kt > ceil) s.kt = ceil;
     }
+    // iter-200 (E8 ckpt2b — PLAYTEST FLAG, OFF by default): specializing your faculty has a COST. A DISCOVERED real gift
+    // (seed≥4, grade≥2) whose grain you hired NO teacher for (faculty is specialized — ng>0 — but aff[tell]=0), and whom
+    // you didn't mentor, goes adrift — its signature stats cap below the realize floor → real waste. Eased by seed,
+    // erased by mentoring. The strong realize/waste teeth the saturation wall blocked at the RATE layer, done STRUCTURALLY.
+    if (CKPT2B_ON && tf.ng > 0 && s.seed >= 4 && s.grade >= 2 && !s.mentored && s.tell && (tf.aff[s.tell] || 0) === 0) {
+      var c2 = CONFIG.CKPT2B_CEIL(s.seed);
+      if (s.tn > c2) s.tn = c2; if (s.st > c2) s.st = c2; if (s.kt > c2) s.kt = c2;
+    }
     var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
     s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]) * (s.tell === "hype" ? grainF : 1), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");

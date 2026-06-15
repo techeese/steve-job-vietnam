@@ -285,6 +285,27 @@ if (craS && cramS) {
   if (drift > 8) FLAGS.push("E8 faculty BREAKS the floor: hiring all-spark faculty moved realize " + f0(rNone) + "%→" + f0(rSpark) + "% (Δ" + f0(drift) + "pts > 8) — the grain lean is over-shifting the realize/waste floor (lower TEACH_AFF_W, or this IS ckpt2b territory — owner-gate it)");
   else FLAGS.push("E8 faculty ✓: grain-flavored hiring is FELT (mood lean, probe-verified) but the realize/waste FLOOR holds — realize " + f0(rNone) + "%→" + f0(rSpark) + "% (Δ" + f1(drift) + "pts ≤ 8). The strong realize-shifting teeth (ckpt2b) are owner-gated.");
 })();
+
+// iter-200 E8 ckpt2b (PLAYTEST FLAG) — when ON + faculty specialized narrowly, an UNCHAMPIONED gift must take a real
+// but PARTIAL cost (a breadth-vs-depth trade-off, not a trap). Sensor turns the flag on, hires all-spark faculty in a
+// craft school, and checks: the neglected grain (sky) drops MEANINGFULLY (≥10pts — the teeth bite) yet SURVIVES
+// (≥35% — not a wipeout), while the championed grain (spark) holds. Restores the flag after (never leaks).
+(function () {
+  function fac(g) { var a = []; for (var i = 0; i < 3; i++) a.push({ id: "c2_" + g + "_" + i, ten: "GV " + g, day: 8, dien: 3, luong: 0, trait: "tch", grain: g, bienChe: false, age: 0 }); return a; }
+  var build = [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }];
+  function realizeByTell(flag) {
+    CKPT2B_ON = flag;
+    var t = { spark: { g: 0, r: 0 }, sky: { g: 0, r: 0 } };
+    SEEDS.forEach(function (sd) { play(sd, { presets: "duan", build: build, hire: fac("spark") }).lives.forEach(function (L) { if (L.seed >= 4 && t[L.tell]) { t[L.tell].g++; if (L.real) t[L.tell].r++; } }); });
+    return { spark: t.spark.g ? 100 * t.spark.r / t.spark.g : 0, sky: t.sky.g ? 100 * t.sky.r / t.sky.g : 0 };
+  }
+  var off = realizeByTell(false), on = realizeByTell(true);
+  CKPT2B_ON = false; // restore — the flag must never leak into the rest of the sweep
+  var drop = off.sky - on.sky;
+  if (drop < 10) FLAGS.push("E8 ckpt2b (flag) WEAK: neglected sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (Δ" + f1(drop) + " < 10) — the teeth don't bite; lower CKPT2B_CEIL");
+  else if (on.sky < 35) FLAGS.push("E8 ckpt2b (flag) TRAP: neglected sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (<35% — a wipeout, not a trade-off); raise CKPT2B_CEIL");
+  else FLAGS.push("E8 ckpt2b (flag) ✓ [OFF by default; ?ckpt2b=1]: narrow faculty COSTS the unchampioned gift — sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (Δ" + f0(drop) + "pts) while championed spark holds " + f0(on.spark) + "%. A real breadth-vs-depth trade-off; owner playtests the FEEL.");
+})();
 line("");
 
 line("--- FLAGS ---");
