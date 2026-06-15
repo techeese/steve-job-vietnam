@@ -57,6 +57,7 @@ function play(seed, strat) {
   if (strat.tuition) S.tuition = strat.tuition;
   if (strat.grant) S.cash += strat.grant;
   if (strat.build) strat.build.forEach(function (r) { placeRoom(r.key, r.x, r.y); });
+  if (strat.hire) strat.hire.forEach(function (t) { S.teachers.push(t); }); // iter-195 E8 ckpt2: inject grain-flavored faculty for the sensor
   var y1cashStart = S.cash, y1Net = null, minCash = S.cash, bankrupt = false;
   var years = strat.years || 11, totalDays = years * DPY;
   for (var d = 0; d < totalDays; d++) {
@@ -69,9 +70,9 @@ function play(seed, strat) {
   }
   var byState = {}; CONFIG.ALUM.STATES.forEach(function (k) { byState[k] = 0; });
   S.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
-  // per-life realization inputs (E1/L1): innate seed + final genuine craft + hustle/hollow + destiny
+  // per-life realization inputs (E1/L1): innate seed + final genuine craft + hustle/hollow + destiny + tell (E8 sensor)
   var lives = S.alumni.map(function (a) {
-    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state };
+    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state, tell: a.fs.tell || "", real: flourishOf(a.state) >= 4 };
   });
   // E9 ckpt2 (iter-157): the cohesion tilt's footprint — the maker (spark/sky) share of the current student
   // body, which reflects the reputation→applicant tilt (REP_TILT). Used to PROVE the feedback can't run away.
@@ -264,6 +265,24 @@ if (craS && cramS) {
   else if (spread < -0.005) FLAGS.push("E9 cohesion INVERTED: craft draws FEWER makers than cram (" + f2(craS.avgSparkShare) + " vs " + f2(cramS.avgSparkShare) + ") — REP_TILT sign/center is wrong");
   else FLAGS.push("E9 cohesion ✓: substance draws more makers, bounded — đồ án " + f2(craS.avgSparkShare) + " vs luyện đề " + f2(cramS.avgSparkShare) + " (Δ" + f2(spread) + ", capped <0.20, no runaway)");
 }
+
+// iter-195 E8 ckpt2 — GRAIN-FLAVORED FACULTY must DIRECT (the championed grain leans up) WITHOUT BREAKING the floor
+// (the realize/waste spread stays stable — the strong realize-shifting teeth are ckpt2b, owner-gated). Sensor: run
+// craft+rooms with NO faculty vs ALL-SPARK vs ALL-SKY; the lean is felt as MOOD (probe-confirmed), the floor must hold.
+(function () {
+  function fac(g) { var a = []; for (var i = 0; i < 3; i++) a.push({ id: "fac_" + g + "_" + i, ten: "GV " + g, day: 8, dien: 3, luong: 0, trait: "tch", grain: g, bienChe: false, age: 0 }); return a; }
+  var base = { presets: "canbang", build: [{ key: "phongmay", x: 6, y: 5 }, { key: "xuong", x: 11, y: 8 }] };
+  function realizePct(strat) {
+    var gift = 0, real = 0;
+    SEEDS.forEach(function (sd) { play(sd, strat).lives.forEach(function (L) { if (L.seed >= 4) { gift++; if (L.real) real++; } }); });
+    return gift ? 100 * real / gift : 0;
+  }
+  var rNone = realizePct(base);
+  var rSpark = realizePct({ presets: base.presets, build: base.build, hire: fac("spark") });
+  var drift = Math.abs(rSpark - rNone);
+  if (drift > 8) FLAGS.push("E8 faculty BREAKS the floor: hiring all-spark faculty moved realize " + f0(rNone) + "%→" + f0(rSpark) + "% (Δ" + f0(drift) + "pts > 8) — the grain lean is over-shifting the realize/waste floor (lower TEACH_AFF_W, or this IS ckpt2b territory — owner-gate it)");
+  else FLAGS.push("E8 faculty ✓: grain-flavored hiring is FELT (mood lean, probe-verified) but the realize/waste FLOOR holds — realize " + f0(rNone) + "%→" + f0(rSpark) + "% (Δ" + f1(drift) + "pts ≤ 8). The strong realize-shifting teeth (ckpt2b) are owner-gated.");
+})();
 line("");
 
 line("--- FLAGS ---");

@@ -349,14 +349,15 @@ function checkMilestones() {
 
 /* ---------- daily student growth ---------- */
 function teacherFactor() {
-  var mult = 1, mood = 0;
+  var mult = 1, mood = 0, aff = { spark: 0, sky: 0, hype: 0 }, ng = 0; // iter-195 E8 ckpt2: per-grain faculty lean
   for (var i = 0; i < S.teachers.length; i++) {
     var t = S.teachers[i];
     if (t.trait === "tch") mult += 0.06;
     else if (t.trait === "isi") mult -= 0.04;
     else if (t.trait === "hype") mood += (t.age < 2 ? 1 : -0.5);
+    if (t.grain && aff[t.grain] != null) { aff[t.grain] += 1; ng++; } // a grain-flavored teacher votes for the gift they realize
   }
-  return { mult: Math.max(0.4, mult), mood: mood };
+  return { mult: Math.max(0.4, mult), mood: mood, aff: aff, ng: ng };
 }
 function scholarshipMult(stat) {
   var m = 1;

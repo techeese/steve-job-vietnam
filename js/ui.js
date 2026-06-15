@@ -1200,11 +1200,26 @@
 
     // hire
     var c4 = el("div", "card"); c4.appendChild(el("h3", null, "Giảng viên"));
+    // iter-195 (E8 ckpt2): each teacher REALIZES one gift & neglects the rest — surface the lean so hiring is a felt trade-off.
+    var grainLean = { spark: "↗ realize Lập trình", sky: "↗ realize Chế tạo", hype: "↗ realize Khởi nghiệp" };
     var have = {}; s.teachers.forEach(function (t) { have[t.id] = 1; });
     s.teachers.forEach(function (t) {
       var r = el("div", "srow");
-      r.innerHTML = "<div class='av' style='background:rgba(106,169,240,.15)'>🧑‍🏫</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + t.luong + "tr/th" + (t.bienChe ? " · biên chế" : "") + "</div></div>";
+      var lean = grainLean[t.grain] ? " · <span style='color:var(--gold)'>" + grainLean[t.grain] + "</span>" : "";
+      r.innerHTML = "<div class='av' style='background:rgba(106,169,240,.15)'>🧑‍🏫</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + t.luong + "tr/th" + (t.bienChe ? " · biên chế" : "") + lean + "</div></div>";
       c4.appendChild(r);
+    });
+    // iter-195 (E8 ckpt2) — the FELT trade-off, made legible: a gift present in your cohort with NO faculty champion
+    // is being neglected (you feel WHO you didn't hire). Only flags a real gap (≥2 gifted kids of a grain, none of
+    // your teachers realizes it) — not noise. The strong realize/waste teeth (ckpt2b) are owner-gated; this is the read.
+    var grainGap = { spark: "khiếu Lập trình", sky: "khiếu Chế tạo", hype: "khiếu Khởi nghiệp" };
+    var facG = {}; s.teachers.forEach(function (t) { if (t.grain) facG[t.grain] = 1; });
+    var cohG = {}; s.students.forEach(function (st) { if (st.tell && st.seed >= 4 && talentReveal(st).lvl >= 1) cohG[st.tell] = (cohG[st.tell] || 0) + 1; }); // only count gifts the school has DISCOVERED (E5) — you can't miss what you haven't seen
+    Object.keys(grainGap).forEach(function (gk) {
+      if ((cohG[gk] || 0) >= 2 && !facG[gk]) {
+        var w = el("div", "tiny", "⚠ Chưa có giảng viên cho " + grainGap[gk] + " — " + cohG[gk] + " em có khiếu đang thiếu người dẫn.");
+        w.style.cssText = "color:var(--faint);margin:5px 0 0;line-height:1.35"; c4.appendChild(w);
+      }
     });
     // E8 — teachers are DRAWN by standing: TT/UT/TC must reach a teacher's req before they'll consider you.
     // Locked ones show as visible aspiration ("cần Tiếng Tăm ≥ 40"), not hidden; available ones float to the top.
@@ -1217,12 +1232,13 @@
       pool.forEach(function (t) {
         var locked = teaLocked(t);
         var r = el("div", "srow"); if (locked) r.style.opacity = ".55";
-        r.innerHTML = "<div class='av' style='background:rgba(240,198,116,.12)'>" + (locked ? "🔒" : "＋") + "</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + esc(t.note) + "</div></div>";
+        var pLean = grainLean[t.grain] ? " · <span style='color:var(--gold)'>" + grainLean[t.grain] + "</span>" : "";
+        r.innerHTML = "<div class='av' style='background:rgba(240,198,116,.12)'>" + (locked ? "🔒" : "＋") + "</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + esc(t.note) + pLean + "</div></div>";
         if (locked) {
           var lk = el("div", "tiny", "cần " + STAND[t.req.m][0] + " ≥ " + t.req.v); lk.style.cssText = "color:var(--faint);white-space:nowrap;align-self:center"; r.appendChild(lk);
         } else {
           var b = el("button", "btn", t.luong + "tr"); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
-          b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); HVS.checkMilestones(); render(); };
+          b.onclick = function () { S().teachers.push({ id: t.id, ten: t.ten, day: t.day, dien: t.dien, luong: t.luong, trait: t.trait, grain: t.grain || "", bienChe: false, age: 0 }); toast("Đã tuyển " + t.ten + "."); HVS.checkMilestones(); render(); };
           r.appendChild(b);
         }
         c4.appendChild(r);

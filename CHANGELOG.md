@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-06-15 — EPIC: grain-flavored faculty — WHO you hire shapes WHICH gifts flower (E8 ckpt2a) (loop iter 195)
+**Feature-epic.** Teachers were interchangeable growth-multipliers. Now each hired teacher **realizes a specific
+gift and neglects the rest** — a self-taught coder grows coder-minds (spark/Lập trình), a hands-on craft-master grows
+makers (sky/Chế tạo), a viral speaker grows hustlers (hype/Khởi nghiệp), the IELTS pitch-coach is neutral. Mechanically
+`teacherFactor()` tallies a per-grain lean and `growStudents` directs each kid's signature-stat growth + mood by
+`(lean[their gift] − mean)` — **zero-sum across grains**, so it's aggregate-neutral (the economy and the realize/waste
+floor stay put) but **directed** (hire all-coder faculty and your makers are nurtured less, in flow less, wilt more).
+Made **legible**: each teacher's lean shows in the faculty panel ("↗ realize Chế tạo"), and a **faculty-gap note**
+warns when a *discovered* gift in your cohort has no champion ("⚠ chưa có giảng viên cho khiếu Chế tạo — 3 em đang
+thiếu người dẫn") — you feel WHO you didn't hire.
+
+**Honest finding:** shifting end-state *realization* by faculty hits the saturation wall this codebase has documented
+4× (a saturating signature stat absorbs a ±growth-rate nudge — probe: all-spark vs all-sky faculty produce near-identical
+realization in every preset). So ckpt2a keeps the trade-off **felt** (mood/in-play wilt + legibility) with the **floor
+stable** (new E8 sweep sensor: realize 91%→92%, Δ1pt). The **strong realize/waste teeth** — a championless grain goes
+adrift into real waste (ckpt2b) — is the delicate over-waste balance the ROADMAP repeatedly flags as needing **owner
+playtest, not a headless knob**, so it's owner-gated (and it bears on §D-3). Only player-hired POOL teachers carry a
+grain; the inherited faculty stay neutral, so the **headless baseline is byte-identical** (sweep/bot never auto-hire).
+Verified: gate GREEN, bot BOTOK (cash 7353/arrested 15/essay 2005 unchanged), sweep **7✓** (new E8 floor sensor),
+panelOps browser-rendered at 390px (screenshot, 0 JSERR), probes confirm the mood lean + floor stability. SOUL 4 ·
+FUN 4 (a real hiring trade-off) · CLARITY 4 (the lean + the gap are legible).
+
 ## 2026-06-15 — The "đặc cách" gamble now has a visible COST — the gem you let slip (loop iter 194)
 **Person-sim ship — completing the symmetry of the E-UNDERDOG door (invariant #2).** A substantive school can admit
 "ngọc thô" — rough gems the entrance exam underrates — by looking PAST the score (the đặc cách narrow door). When one

@@ -56,9 +56,14 @@ function growStudents() {
     var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
     var ptn = p.tn, pst = p.st;
     if (s.mentored) { mm = Math.max(mm, CONFIG.MENTOR_MM); ptn = Math.max(ptn, CONFIG.PRESETS.duan.tn); pst = Math.max(pst, CONFIG.PRESETS.duan.st); } // Phase 2: scarce attention = personal project-tutoring that overrides the school's policy for THIS kid
+    // iter-195 (E8 ckpt2) — faculty grain-lean directs SIGNATURE-stat growth: a kid whose gift the faculty favors
+    // flowers; a neglected grain languishes. ZERO-SUM across grains (subtract the mean lean) → aggregate-neutral
+    // (economy/spread held) but DIRECTED. No grain teachers → grainF=1 → byte-identical headless baseline.
+    var grainF = 1;
+    if (tf.ng > 0 && s.tell && tf.aff[s.tell] != null) grainF = 1 + clamp(CONFIG.TEACH_AFF_W * (tf.aff[s.tell] - tf.ng / 3), -CONFIG.TEACH_AFF_CAP, CONFIG.TEACH_AFF_CAP);
     s.kt = ktSat(s.kt + p.kt * g * hbMult(s, "kt"));
-    s.tn = clamp(s.tn + ptn * g * mm * scholarshipMult("tn") * hbMult(s, "tn"), 0, 100);
-    s.st = clamp(s.st + pst * g * mm * scholarshipMult("st") * hbMult(s, "st"), 0, 100);
+    s.tn = clamp(s.tn + ptn * g * mm * scholarshipMult("tn") * hbMult(s, "tn") * (s.tell === "spark" ? grainF : 1), 0, 100);
+    s.st = clamp(s.st + pst * g * mm * scholarshipMult("st") * hbMult(s, "st") * (s.tell === "sky" ? grainF : 1), 0, 100);
     // Phase 1.5: in an OPEN/unstructured preset (NOT cram), a severe grain-mismatch leaves a kid ADRIFT —
     // modest talent caps below the realization floor (tn/st/kt), the gifted partly shine, mentoring rescues
     // (it lifted mm above the floor). This is what lets CRAFT waste the structure-needer (§C-2). Cram is
@@ -69,11 +74,12 @@ function growStudents() {
       if (s.tn > ceil) s.tn = ceil; if (s.st > ceil) s.st = ceil; if (s.kt > ceil) s.kt = ceil;
     }
     var gCm = sm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm; // cá-mập (gaming-the-system hustle) isn't slowed by the cram/vet drag
-    s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]), 0, 100);
+    s.cm = clamp(s.cm + p.cm * gCm * CONFIG.MATCH_CM(s.tell, S.presets["n" + s.grade]) * (s.tell === "hype" ? grainF : 1), 0, 100);
     var vetGain = p.vet / dpm * hbMult(s, "vet");
     s.vet = clamp(s.vet + vetGain, 0, 100);
     var moodDrain = (mm < CONFIG.MISMATCH_MM) ? CONFIG.MISMATCH_MOOD_DRAIN : 0; // lệch tạng wears them down; mentoring (mm≥MENTOR_MM) already spares them
-    s.mood = clamp(s.mood + (p.mood + tf.mood - moodDrain) / dpm, 0, 100);
+    var facMood = (tf.ng > 0 && s.tell && tf.aff[s.tell] != null) ? CONFIG.TEACH_AFF_MOOD * (tf.aff[s.tell] - tf.ng / 3) : 0; // iter-195: faculty champions/neglects a grain → felt as mood (a neglected gift wilts more visibly in-play). Zero-sum, no grain teachers → 0 → byte-identical.
+    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood - moodDrain) / dpm, 0, 100);
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
     if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
       var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster

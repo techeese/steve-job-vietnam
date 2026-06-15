@@ -111,6 +111,20 @@ var CONFIG = {
   // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.
   MENTOR_SLOTS: 3,
   MENTOR_MM: 1.3,
+  // E8 ckpt2 (iter 195) — GRAIN-FLAVORED FACULTY: a hired teacher realizes the gift they fit and neglects the rest
+  // (a coder-teacher grows coders, a craft-master grows makers, a speaker grows hustlers). teacherFactor() tallies
+  // each grain-flavored teacher into aff{spark,sky,hype}; growStudents directs a kid's SIGNATURE-stat growth by
+  // (aff[tell] − mean) so it's ZERO-SUM across grains → aggregate-neutral (economy/spread held) but DIRECTED (WHO
+  // you hire shapes WHICH talents flower). No grain teachers (the headless baseline never hires the pool) → factor
+  // 1 → byte-identical. The trade-off (every lever wastes a life): hire all-coder faculty and your makers languish.
+  TEACH_AFF_W: 0.07, TEACH_AFF_CAP: 0.28, // per-lean growth weight + a bound on the swing (≈4 same-grain teachers)
+  // The growth-rate lean above barely moves END-STATE realization (the documented saturation wall — a saturating
+  // signature stat absorbs a ±rate nudge), so the trade-off is made FELT IN-PLAY instead: a kid whose grain the
+  // faculty NEGLECTS loses a little mood (no champion for their gift), so they WILT more visibly (cohortBeat 🍂)
+  // — you feel WHO you hired in the cohort, while the realize/waste FLOOR stays stable (sweep-gated). Zero-sum.
+  // (The stronger realize/waste-shifting "neglected grain goes adrift" version = ckpt2b, OWNER-GATED — the delicate
+  // over-waste balance the ROADMAP flags wants owner playtest, not a headless knob.)
+  TEACH_AFF_MOOD: 0.22, // mood/month per lean-unit a championed grain gains / a neglected grain loses (bounded, gentle)
   // MENTOR'S LEDGER Phase 1.5 (iter 116, the [EVOLUTION] craft-symmetry fix) — a SEVERE grain-mismatch
   // (MATCH < MISMATCH_MM) caps how far MODEST talent grows: the gifted (high seed) still partly shine, the
   // modest go ADRIFT (capped below the realization floor → thất nghiệp). Makes craft waste the structure-
