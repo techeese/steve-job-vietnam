@@ -122,9 +122,11 @@ function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c 
 // ui showJuneResults), so the soul reading — VISIBLE WASTED TALENT — appears at the MOMENT of graduation
 // (VISION §114), not only in the final essay. Returns "" for non-prodigies → glimpsed, not metered (invariant #3).
 function realCreditSuffix(state, seed, flags) {
-  var gap = CONTENT.realGap[realClass(state, seed)] || "";
-  if (!gap && flags && flags.diamond && flourishOf(state) >= 4) gap = CONTENT.diamondCredit;       // overlooked at entry, realized anyway
-  else if (!gap && flags && flags.mentored && flourishOf(state) >= 2) gap = CONTENT.mentorCredit;  // a realized life under your hand
+  var rc = realClass(state, seed);
+  var gap = CONTENT.realGap[rc] || "";
+  if (gap && flags && flags.diamond) gap = (CONTENT.diamondWaste && CONTENT.diamondWaste[rc]) || gap; // iter-194: the gem admitted past the score, then let slip — name the gamble you LOST (symmetry of diamondCredit; invariant #2/#4)
+  else if (!gap && flags && flags.diamond && flourishOf(state) >= 4) gap = CONTENT.diamondCredit;     // overlooked at entry, realized anyway — the gamble you WON
+  else if (!gap && flags && flags.mentored && flourishOf(state) >= 2) gap = CONTENT.mentorCredit;     // a realized life under your hand
   return gap;
 }
 

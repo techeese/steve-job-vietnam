@@ -75,6 +75,14 @@ var CONTENT = {
     loud: " — tài năng bỏ phí trên tay bạn",      // seed≥4 → thất nghiệp/lệch hướng: the loud waste
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
+  // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
+  // exam score (đặc cách / the narrow door) and then FAILED to realize. The win was named ("vào bằng cửa hẹp"); the
+  // gamble you LOST must be named too, or the đặc cách door looks like free upside. Done TO them (invariant #4): you
+  // saw the gift the exam missed — then let it slip under the school you ran. Replaces the generic realGap line for diamonds.
+  diamondWaste: {
+    loud: " — ngọc thô lọt cửa hẹp, rồi cũng bỏ phí trên tay bạn",
+    under: " — cửa hẹp đã mở đúng người, mà rồi vẫn để tuột"
+  },
   // iter-150 — the followed protégé's coda, keyed by protegeCodaKey() (person.js). ONE source of truth, used at
   // BOTH the graduation BEAT (engine.js — the arc's culmination, felt the moment it happens, VISION §114) and the
   // epilogue CAPSTONE (ui.js — the keepsake 10 years on). The mid-game beat used to announce only the destiny.

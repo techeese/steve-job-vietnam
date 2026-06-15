@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-15 — The "đặc cách" gamble now has a visible COST — the gem you let slip (loop iter 194)
+**Person-sim ship — completing the symmetry of the E-UNDERDOG door (invariant #2).** A substantive school can admit
+"ngọc thô" — rough gems the entrance exam underrates — by looking PAST the score (the đặc cách narrow door). When one
+*realizes*, the epilogue names the win: *"· ngọc thô — vào bằng cửa hẹp"* (the exam was wrong, you weren't). But when
+a gambled-on gem **didn't pan out**, it earned only the *generic* waste line — so the door read as free upside, and
+the **cost of the gamble was invisible**. Now a wasted diamond earns a **diamond-specific grief line** (`CONTENT.diamondWaste`):
+an outright failure → *"— ngọc thô lọt cửa hẹp, rồi cũng bỏ phí trên tay bạn"*; a settle → *"— cửa hẹp đã mở đúng
+người, mà rồi vẫn để tuột."* You saw the gift the exam missed — then let it slip under the school you ran (invariant
+#4, done TO them). Both the gamble you **won** and the one you **lost** are now named, so opening the narrow door is a
+real bet, not free upside. Reachable but glimpsed (probe: 23 realized / 8 wasted diamonds per 90 playthroughs —
+invariant #3, never a meter). Shared by the epilogue cast AND the graduation-results screen (one `realCreditSuffix`).
+**Balance-neutral**: only the suffix STRING changes for a wasted diamond — gate GREEN, bot BOTOK (cash 7353 / arrested
+15 / essay 2005 unchanged), sweep distributions identical, lives 0 LIVESFAIL ×3 presets. SOUL 4 · SATIRE 4 (the exam
+overlooks a gift; you admit it, then waste it anyway — the question stays open).
+
 ## 2026-06-15 — The cohort glimpse names each kid's SPECIFIC gift being realized/wasted (loop iter 193)
 **Person-sim ship — correcting back to the SOUL after a 5-ship economy run.** Since iter-179, `cohortBeat` glimpses
 one non-protégé kid mid-transformation each season — a real gift BLOOMING under a fitting school or WILTING in a
