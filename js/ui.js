@@ -1559,9 +1559,10 @@
     } else {
       P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
       P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
+      var prizeFlavorUsed = false; // iter-176: the "honored yet failed" line is a SINGULAR gut-punch — fire it once
       buildCast(s, byState, majorityKey, C, dominantPreset).forEach(function (a) {
         var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
-        if (a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); // iter-144: an honored standout the system still failed — point the flavor at the award-vs-fate bite
+        if (!prizeFlavorUsed && a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) { line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); prizeFlavorUsed = true; } // iter-144: an honored standout the system still failed — the award-vs-fate bite. iter-176: gate to ONCE/cast (was verbatim-repeated when 2 prized-wasted appeared, e.g. a coin-shark + an arrested Thủ Khoa — identical sentences flattened §D-2 "care by name"); later prized-wasted keep their distinct natural line + the 🏅 badge.
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
         var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
         var gap = realCreditSuffix(a.state, seed, a.flags); // iter-154: shared with the graduation results screen (the gift-vs-fate reading — loud waste / settled / diamond / mentor's-hand; "" for an on-target life)

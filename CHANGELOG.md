@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — Two wasted prodigies, two distinct lines: de-duplicate the climax (loop iter 176)
+**A quality fix on the most important screen — restores §D-2 "care BY NAME" where it was quietly flattened.** The
+decade essay's `prizeWastedFlavor` line ("Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác." — the
+honored-yet-failed gut-punch) was applied to EVERY prized-wasted cast member, so when two appeared — common under
+cram, e.g. a coin-shark Thủ Khoa AND an arrested Thủ Khoa — the climax printed the **verbatim same sentence twice**,
+reducing two distinct tragedies to one template. Now it's gated to fire ONCE per cast (on the most poignant — the
+poignant-core prodigy, first in cast); later prized-wasted keep their own distinct natural line + the 🏅 badge + the
+"tài năng bỏ phí" suffix. The climax is now richer: e.g. Vũ Đức Vy (🪙 coin shark) gets the award-vs-fate line, while
+Trần Thanh Oanh (🚔 arrested, also Thủ Khoa) gets her own — "kháng cáo. Đơn viết tay, lập luận chặt như hồi làm
+văn." Two distinct lives, not one sentence twice. Display-only, sweep-neutral. Verified: prizeWastedFlavor now 1×
+(was 2×) in cram, 0 LIVESFAIL across cram/craft/balance, gate GREEN, bot BOTOK (cash 5251/arrested 15 unchanged),
+sweep 6✓. SOUL 4 (§D-2 distinctness restored on the climax) · CLARITY 4 · others n/a. *(Spotted while reading
+biographies this session; the background frame-reset critic is separately re-deriving the next big frontier.)*
+
 ## 2026-06-15 — The safe school's quiet cost, named: the "channeled maker" beat goes live (loop iter 174)
 **Completes the iter-172 §D-3 feature properly — a dead soul beat, now firing (THESIS §C-4: waste done TO them, by
 name).** Iter-172 added `CONTENT.channeledMaker` ("— đúng đường mà trường vạch, chỉ vậy thôi" / "on the path the
