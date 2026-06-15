@@ -72,7 +72,8 @@ var CONTENT = {
   nearMiss: "Thiếu {n} điểm {stat} nữa thì… thôi, không nói nữa.",
   // E4 — the epilogue's gift-vs-fate suffix, by realization (a quiet line on a named life; never a meter):
   realGap: {
-    loud: " — tài năng bỏ phí trên tay bạn",      // seed≥4 → thất nghiệp/lệch hướng: the loud waste
+    loud: " — tài năng bỏ phí trên tay bạn",      // seed≥4 → thất nghiệp / quán quân văn mẫu: the loud WASTE (gift left idle / ground to rote)
+    bent: " — tài năng bị bẻ cong trong tay bạn",  // iter-197 → cá mập coin / bị bắt: the DISTORT pole — the gift grew the WRONG way, the school turned them (distinct from waste; invariant #4)
     under: " — đáng lẽ đã có thể hơn thế"           // seed≥4 → 💼 lương ổn: the prodigy who settled (craft's quiet grief)
   },
   // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
@@ -87,7 +88,8 @@ var CONTENT = {
   // BOTH the graduation BEAT (engine.js — the arc's culmination, felt the moment it happens, VISION §114) and the
   // epilogue CAPSTONE (ui.js — the keepsake 10 years on). The mid-game beat used to announce only the destiny.
   protegeCoda: {
-    loud: "tài năng ấy, mình đã không giữ được",            // a prodigy who failed/turned — your grief
+    loud: "tài năng ấy, mình đã không giữ được",            // a prodigy left idle / ground down — your grief
+    bent: "tài năng ấy, mình đã uốn cong mất rồi",          // iter-197: a prodigy DISTORTED — turned into a shark/fraud under your school (done TO them)
     under: "đáng lẽ em đã có thể hơn — mình vẫn nghĩ thế",   // a prodigy who settled — the quiet ache
     realized: "em nên người — mình có góp một tay",          // a realized life — the attention paid off
     kind: "một cuộc đời tử tế, mình mừng cho em"             // a decent life — simple gladness

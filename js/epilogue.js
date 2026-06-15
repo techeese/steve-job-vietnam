@@ -24,7 +24,7 @@ function buildCast(s, byState, majorityKey, C, dominantPreset) {
   // first (thất nghiệp / lệch hướng); if the school produced none, the QUIET waste E4 surfaces — a prodigy
   // who merely SETTLED into 💼 lương ổn (craft's grief, previously invisible). Either way the question stays open.
   var byReal = function (a, b) { return (b.fs.seed - a.fs.seed) || (b.grat - a.grat); };
-  var prodigy = s.alumni.filter(function (a) { return !used[a.id] && a.fs && realClass(a.state, a.fs.seed) === "loud"; }).sort(byReal)[0]
+  var prodigy = s.alumni.filter(function (a) { return !used[a.id] && a.fs && (function (rc) { return rc === "loud" || rc === "bent"; })(realClass(a.state, a.fs.seed)); }).sort(byReal)[0] // iter-197: a wasted OR distorted prodigy carries the grief cast
     || s.alumni.filter(function (a) { return !used[a.id] && a.fs && realClass(a.state, a.fs.seed) === "under"; }).sort(byReal)[0];
   if (prodigy && cast.length < C.CAST_CAP) { cast.push(prodigy); used[prodigy.id] = 1; }
   pick(s.alumni.filter(function (a) { return a.state === "BI_BAT"; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });

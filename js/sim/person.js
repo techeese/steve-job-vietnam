@@ -111,9 +111,11 @@ function growStudents() {
 // 🍎 gate (aLua = seed only); this only colours how fully the gift got to flower under the school you ran.
 function flourishOf(state) { var F = CONFIG.ALUM.FLOURISH; return F[state] != null ? F[state] : 0; }
 function realFrac(state, seed) { return clamp(flourishOf(state) / CONFIG.ALUM.EXPECT(seed), 0, 2); }
-function realClass(state, seed) { // "loud" | "under" | "" — the wasted readings of the gift, else nothing notable
-  var WASTE = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 };
-  if (seed >= 4 && WASTE[state]) return "loud";                  // a prodigy outright failed/turned
+function realClass(state, seed) { // "loud" | "bent" | "under" | "" — the gift-vs-fate readings (idle waste / distorted / settled / nothing)
+  var IDLE = { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1 }; // gift never grew or ground to rote — the loud WASTE (idle on your hands)
+  var BENT = { CA_MAP_COIN: 1, BI_BAT: 1 };       // iter-197: gift grew the WRONG way — the school TURNED them (the owner's DISTORT pole, distinct from waste; invariant #4 done-TO-them)
+  if (seed >= 4 && IDLE[state]) return "loud";                  // a prodigy left idle / ground to a clerk
+  if (seed >= 4 && BENT[state]) return "bent";                  // a prodigy bent into a coin-shark / fraud — distorted, not merely wasted
   if (seed >= 4 && realFrac(state, seed) < CONFIG.ALUM.UNDER_REAL) return "under"; // a prodigy who merely settled (💼)
   return ""; // NB: no "exceed-the-gift" pole — realization is APPROPRIATE to magnitude (VISION), and the cohort
              // has ~no modest kids to lift anyway (admissions excludes seed≤2 — see ROADMAP underdog epic).
@@ -121,7 +123,7 @@ function realClass(state, seed) { // "loud" | "under" | "" — the wasted readin
 // iter-150 — the followed protégé's coda KEY (the realization reading of a life): loud waste / quiet settle /
 // realized / a kind-enough life. Shared by the graduation BEAT (engine.js) and the epilogue CAPSTONE (ui.js) so
 // the arc's culmination reads the SAME both at the moment and in the keepsake. Strings live in CONTENT.protegeCoda.
-function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c === "loud" ? "loud" : c === "under" ? "under" : flourishOf(state) >= 4 ? "realized" : "kind"; }
+function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c === "loud" ? "loud" : c === "bent" ? "bent" : c === "under" ? "under" : flourishOf(state) >= 4 ? "realized" : "kind"; }
 // iter-154 — the realization SUFFIX of a life (the gift-vs-fate reading): loud waste / quiet settle, else the
 // E-UNDERDOG diamond credit, else the mentor's-hand credit, else "" (an on-target life needs no suffix). ONE
 // source of truth shared by the epilogue CAST (ui.js essayDraft) and the GRADUATION RESULTS screen (engine rec →

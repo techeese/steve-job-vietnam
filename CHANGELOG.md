@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — Distortion is now its own grief, distinct from waste (the trichotomy's 3rd pole) (loop iter 197)
+**Person-sim refinement** (the sanctioned smallest-viable move while the arc awaits owner confirm). The owner's model
+is realize / **waste** / **distort** — but the epilogue read distortion and waste with the *same* line: a 5-star maker
+the cram school **bent into a coin-shark or a fraud** ("cá mập coin" / "bị bắt") got the identical "tài năng bỏ phí
+trên tay bạn" as one simply left **idle/unemployed**. Those are different tragedies. Now `realClass` splits the lumped
+"loud" into **idle waste** (thất nghiệp / quán quân văn mẫu → "tài năng bỏ phí trên tay bạn" — the gift never grew /
+ground to rote) and **distortion** (cá mập coin / bị bắt → new **"tài năng bị bẻ cong trong tay bạn"** — the gift grew
+the *wrong way*, the school turned them; invariant #4, done TO them). The followed protégé gets its own distortion coda
+too ("tài năng ấy, mình đã uốn cong mất rồi"). In the wild the new reading lands hard — it attaches to *prize-winners*
+("🏅 Thủ Khoa", "🏅 Giải Sáng Tạo Trẻ") whom the school still bent into sharks. **Reading-only → balance-neutral**:
+destiny/economy/sweep untouched (sweep uses its own classifier — distributions identical, 7✓), bot cash 7353/arrested
+15 unchanged (essay 2005→2010, the intended prose). Probe: distortion reachable 28/80 prodigy-runs, distinct from the
+119 idle-waste and 315 settled; lives 0 LIVESFAIL ×3. SOUL 4 · SATIRE 4 (the school that bends a gift, not just wastes it).
+
 ## 2026-06-15 — EPIC: grain-flavored faculty — WHO you hire shapes WHICH gifts flower (E8 ckpt2a) (loop iter 195)
 **Feature-epic.** Teachers were interchangeable growth-multipliers. Now each hired teacher **realizes a specific
 gift and neglects the rest** — a self-taught coder grows coder-minds (spark/Lập trình), a hands-on craft-master grows
