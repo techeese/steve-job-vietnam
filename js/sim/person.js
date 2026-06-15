@@ -221,3 +221,32 @@ function favBeat() {
   (S.META.favLog = S.META.favLog || []).unshift("Năm " + s.grade + ": " + mline); if (S.META.favLog.length > 3) S.META.favLog.pop(); // iter-135: a persistent follow-journal (the moments outlive the fleeting ticker — the protégé's story, on their card)
   seen[type] = c + 1; S.META.favSnap = favSnapOf(id, s); S.META.favMomentDay = S.totalDays;
 }
+
+// iter-179 — THE WHOLE COHORT BECOMES SOMEONE WHILE YOU WATCH (the owner's deepest steer: "watch a student
+// transform… while playing" — mark 5 + mark 2, extended past the single protégé). A throttled GLIMPSE names one
+// non-protégé kid mid-transformation: a real gift (seed≥4, discoverable at grade≥2) BLOOMING under a fitting school,
+// or WILTING in a mismatch — alternating poles by elapsed beats so neither dominates (§C-2 symmetry). Read-only +
+// rnd-FREE (never draws from the seeded stream) + narration-only (news() touches no tracked metric) → the headless
+// bot/sweep stay byte-IDENTICAL. Watching the school IS watching them become themselves (NOT micromanage — glimpse).
+function cohortBeat() {
+  if (S.totalDays - (S._lastCohortBeat || 0) < CONFIG.COHORT_BEAT_GAP) return; // ~once a season, rarer than the protégé
+  var st = S.students, n = st.length; if (n < 6) return;
+  var era = Math.floor(S.totalDays / CONFIG.COHORT_BEAT_GAP);
+  var wantWilt = (era % 2) === 1; // alternate bloom↔wilt: grief and cheer both surface (symmetry-of-waste)
+  var best = null, bestScore = -1, i, s, mm, score;
+  for (i = 0; i < n; i++) {
+    s = st[i];
+    if (s.id === S.META.favId || s.grade < 2 || s.seed < 4) continue; // the protégé has favBeat; the gift must be real + discoverable
+    mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    if (wantWilt) { // a real gift cooling in a mismatch — low mood, the "đang nguội dần" made visible mid-school
+      if (mm < CONFIG.MISMATCH_MM && s.mood < CONFIG.FAV_MOOD_LOW) { score = (CONFIG.MISMATCH_MM - mm) * 100 + (CONFIG.FAV_MOOD_LOW - s.mood) + s.seed * 4; if (score > bestScore) { bestScore = score; best = s; } }
+    } else { // a gift blooming under a fitting school — strong match, in flow, signature stat rising
+      if (mm >= 1.3 && s.mood >= CONFIG.FLOW_MOOD && (s.tn >= 60 || s.st >= 60)) { score = Math.max(s.tn, s.st) + s.mood + s.seed * 5; if (score > bestScore) { bestScore = score; best = s; } }
+    }
+  }
+  if (!best) return;
+  var pool = wantWilt ? CONTENT.cohortWilt : CONTENT.cohortBloom;
+  var line = pool[era % pool.length]; // deterministic line pick (no rnd) — cycles over time
+  news((wantWilt ? "🍂 " : "🌱 ") + best.ten + " — " + line);
+  S._lastCohortBeat = S.totalDays;
+}

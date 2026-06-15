@@ -105,6 +105,20 @@ var CONTENT = {
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't
   channeledMaker: " — đúng đường mà trường vạch, chỉ vậy thôi",
+  // iter-179 — the WHOLE cohort becomes someone WHILE you watch (not just the followed protégé). Glimpsed prose,
+  // named, never a meter (§C-3): a real gift BLOOMING under a fitting school, or WILTING in a mismatch (§C-2).
+  cohortBloom: [
+    "đang thành chính mình — lối học này hợp với em.",
+    "mắt sáng hẳn từ ngày được học đúng tạng.",
+    "bắt đầu làm ra thứ của riêng mình.",
+    "dạo này lớp nào cũng nhắc tên em."
+  ],
+  cohortWilt: [
+    "tài năng đang nguội dần — lối học chưa hợp với em.",
+    "ngồi đúng chỗ, mà mắt cứ nhìn ra cửa sổ.",
+    "giỏi thật, nhưng trường đang dạy sai đường em cần.",
+    "mỗi ngày một lặng hơn — cái khiếu chưa tìm được lối."
+  ],
   prizes: { sangtao: "Giải Sáng Tạo Trẻ", taynghe: "Giải Tay Nghề Vàng", thukhoa: "Thủ Khoa khoá" }, // E7p: a standout's honor — a line in their life (owner: "more prizes/awards")
   prizeWastedFlavor: "Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác.", // iter-144: the honored student the system still failed — the sharpest đề Văn bite, made pointed
   // iter-125 — the followed protégé's IN-SCHOOL arc, as caused moments (THESIS mark 5: felt WHILE playing).

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-15 — Watch the WHOLE cohort become themselves, while you play (loop iter 179)
+**The owner's deepest steer, finally extended past the single protégé — "watch a student transform… WHILE playing"
+(THESIS mark 5 felt-while-playing + mark 2 by-name).** Until now, during-play transformation was surfaced only for
+the ONE followed protégé (`favBeat`) + dropouts; the other ~47 kids became someone INVISIBLY, their fate first seen
+at graduation. New `cohortBeat()` (js/sim/person.js) names ONE non-protégé kid mid-transformation, ~once a season,
+alternating poles for symmetry (§C-2): a real gift (seed≥4, discoverable at grade≥2) **BLOOMING** under a fitting
+school (🌱 "đang thành chính mình — lối học này hợp với em") or **WILTING** in a mismatch (🍂 "ngồi đúng chỗ, mà mắt
+cứ nhìn ra cửa sổ"). The poles fall out of the curriculum you chose — so you SEE your philosophy act on real kids in
+real time: probe across 12-year runs shows **craft blooms (6🌱/0🍂), balance blooms (5/0), cram wilts (0/4🍂)**.
+This makes the §D-3 fork FELT during play, not just read at the epilogue — directly strengthening the mark the
+input-blind critic called weakest (mark 5: "felt the weight WHILE playing"). Glimpsed, never a meter (§C-3); never
+micromanage (read-only narration). **rnd-free + narration-only → headless bot/sweep byte-IDENTICAL** (cash 5251 /
+arrested 15 / essay 2005 unchanged; sweep 6✓). Verified: syntax OK, gate GREEN, both poles fire across presets,
+0 LIVESFAIL. SOUL 5 (the owner's core ask, by name, while playing) · COMPLETENESS-VS-DREAM 4 (mark 5 deepened) ·
+CLARITY 4 · SATIRE 3 · BEAUTY 3 · JUICE 3.
+
 ## 2026-06-15 — Two wasted prodigies, two distinct lines: de-duplicate the climax (loop iter 176)
 **A quality fix on the most important screen — restores §D-2 "care BY NAME" where it was quietly flattened.** The
 decade essay's `prizeWastedFlavor` line ("Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác." — the
