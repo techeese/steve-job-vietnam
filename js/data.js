@@ -41,10 +41,12 @@ var CONFIG = {
   // economy
   BOOT_CASH: 200, BOOK_VALUE: 40, BOOT_ENDOW: 10, BOOT_TUITION: 2, // start-from-nothing: a small pot, near-empty grounds
   MAINT_RATE: 0.007,            // %/month of book+builds
-  CASH_KEEP: 300, CASH_DRAIN: 0.03, // surplus above CASH_KEEP reinvested into operations/mo (money sink; protects normal saving)
-  // late-game economic pressure (iter 107, owner-steered): "vận hành" overhead rising with size AND age —
-  // erodes the hoard so income must be tended late-game. Tuned so functioning schools never go bankrupt.
-  OPS: { base: 4, perSV: 0.6, rate: 0.22 }, // monthly: (base + perSV·students) · rate · (year−1) — ZERO in the founding year, ramps with age
+  CASH_KEEP: 800, CASH_DRAIN: 0.005, // iter-159 (owner: "ridiculous endgame money, not 900tr"): the iter-107 hoard-cap is RELAXED — keep more working capital + a much gentler surplus reinvestment, so wealth ACCUMULATES over a long game instead of being pinned ~813tr. (Was 300 / 0.03.)
+  // iter-159 — the iter-107 "vận hành" late-game over-drain is RELAXED (owner reversed the hoard-management
+  // direction): still rises with size & age (some pressure / realism) but no longer eats the hoard, so the
+  // university can grow into a money machine. (rate was 0.22 → 0.09.) The compounding income engine + escalating
+  // upgrade sink land in checkpoint 2.
+  OPS: { base: 4, perSV: 0.6, rate: 0.09 }, // monthly: (base + perSV·students) · rate · (year−1) — ZERO in the founding year, ramps with age
   DUAN_COST_PER_SV: 1,          // tr/sv/th for Đồ Án & Lab preset
   TUITION_MIN: 1, TUITION_MAX: 6, TUITION_STEP: 0.5,
 

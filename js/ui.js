@@ -1007,10 +1007,10 @@
     }
     // stats chips
     var stats = $("stats"); stats.innerHTML = "";
-    stats.appendChild(chip("cash", "💰", Math.round(s.cash) + "tr"));
+    stats.appendChild(chip("cash", "💰", money(s.cash)));
     stats.appendChild(chip("", "🎓", s.students.length + " SV"));
     stats.appendChild(chip("", "🧑‍🏫", s.teachers.length));
-    if (s.endow.bal >= 200) stats.appendChild(chip("", "🌱", Math.round(s.endow.bal) + "tr"));
+    if (s.endow.bal >= 200) stats.appendChild(chip("", "🌱", money(s.endow.bal)));
     // phốt risk — qualitative (preserve mystery), surfaces the gamble as dodgy decisions pile up
     var phot = (s.photSeeds || []).reduce(function (a, p) { return a + (p.sev || 1); }, 0);
     if (phot > 0) {
@@ -1385,12 +1385,12 @@
 
     // endowment
     var ce = el("div", "card"); ce.appendChild(el("h3", null, "Quỹ hiến tặng"));
-    ce.appendChild(el("div", "row", "<div class='grow'><div style='font-size:20px;font-weight:800;color:var(--gold)'>" + Math.round(s.endow.bal) + "tr</div><div class='tiny'>×1,004 mỗi tháng · không bao giờ mất giá · không mua được Uy Tín</div></div>"));
+    ce.appendChild(el("div", "row", "<div class='grow'><div style='font-size:20px;font-weight:800;color:var(--gold)'>" + money(s.endow.bal) + "</div><div class='tiny'>×1,004 mỗi tháng · không bao giờ mất giá · không mua được Uy Tín</div></div>"));
     // góp quỹ — the player turns surplus bank cash into endowment (one-way; funds the scholarships
     // below). Late-game money finally has a meaningful decision: invest in the institution's future.
     var surplus = Math.max(0, Math.round(s.cash - CONFIG.CASH_KEEP));
     var gq = el("div", "row"); gq.style.gap = "6px"; gq.style.flexWrap = "wrap";
-    gq.appendChild(el("div", "tiny grow", "Góp tiền trường vào quỹ — đổi tiền hôm nay lấy thế hệ mai sau (không rút lại được). Bank: " + Math.round(s.cash) + "tr."));
+    gq.appendChild(el("div", "tiny grow", "Góp tiền trường vào quỹ — đổi tiền hôm nay lấy thế hệ mai sau (không rút lại được). Bank: " + money(s.cash) + "."));
     function gopBtn(label, amtOf) {
       var b = el("button", "btn", label); b.style.fontSize = "11px"; b.style.padding = "6px 9px";
       b.onclick = function () {
@@ -1503,7 +1503,7 @@
       var ch = el("h2", null, "Mười năm sau ngày khai giảng đầu tiên"); w.appendChild(ch);
       var intro = el("div", "lead", "Trường đã đi hết một chặng. Bạn ngồi xuống, lấy ra bản nháp bài luận năm xưa — câu hỏi vẫn còn đó. Lần này bạn viết bằng những gương mặt đã đi qua sân trường này."); intro.style.fontStyle = "italic"; w.appendChild(intro);
     }
-    var de = CONTENT.dePool[0], yw = numWord(s.year), cash = Math.round(s.cash), endow = Math.round(s.endow.bal);
+    var de = CONTENT.dePool[0], yw = numWord(s.year), cash = money(s.cash), endow = money(s.endow.bal); // iter-159: tỷ-aware money formatting for the (now scaling) endgame numbers
     var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
     var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
     var majorityKey = nonSteve.sort(function (a, b) { return byState[b] - byState[a]; })[0] || null;

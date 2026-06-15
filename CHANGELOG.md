@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-15 — ECONOMY EPIC ckpt 1: the hoard grows again + reads in tỷ (loop iter 159)
+**Owner epic (top priority): "scale the university into a decades-long growth engine — ridiculous endgame money,
+not 900tr."** Checkpoint 1 of a multi-firing epic — the FOUNDATION (relax the cap so money grows; make big
+numbers read right). The compounding income engine is checkpoint 2.
+- **Reversed the iter-107 hoard-cap.** `CASH_KEEP 300→800`, `CASH_DRAIN 0.03→0.005`, and the late-game Vận hành
+  over-drain `OPS.rate 0.22→0.09` — so wealth ACCUMULATES over the game instead of being pinned ~813tr. Sweep:
+  the default school's endgame cash now grows to **~5 tỷ** (was ~0.8 tỷ), **0% bankruptcy**, min cash still
+  positive (~182tr), and the realize/waste spread + E9 cohesion are UNTOUCHED (economy ≠ person-sim).
+- **`money()` formatter** (uikit.js): values in triệu now read idiomatically — `5400→"5,4 tỷ"`, `123456→"123 tỷ"`,
+  `1.5M tr→"1,5k tỷ"`; small per-month flows keep "tr". Applied to the HUD cash/endowment chips, the funding/
+  endowment panels, and the epilogue ledger (which now closes on e.g. *"Sổ ngân hàng: 1,6 tỷ"*).
+- **Sweep flag reframed**: the old "hoard managed-down ✓" (iter-107's now-reversed intent) is replaced by an
+  "ECONOMY scaling ✓" check — it flags bankruptcy (relaxed too far) OR failure-to-grow (relaxation didn't take),
+  and confirms the growth direction. Sweep now **6✓**.
+Verified: 5-file syntax OK, gate GREEN, bot BOTOK (cash ~5.2 tỷ), sweep 6✓/0 breakage, money() unit-checked,
+epilogue renders tỷ. Deployed (owner's deploy-every-change workflow).
+**Next (ckpt 2): the compounding engine** — escalating upgrade costs that raise student capacity + tuition
+ceiling, a longer game (years and years), so wealth climbs from "big" to genuinely "ridiculous".
+
 ## 2026-06-15 — PROD FIX: the real art was 404ing on the web ("old artworks") (loop iter 158)
 **Production bugfix (owner-reported, on phone). Preempts the economy epic.** Owner: *"in the web it still use old
 artworks."* ROOT CAUSE: `.gitignore` line 3 `*.png` — a guard meant for scratch screenshots — was ALSO swallowing
