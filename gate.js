@@ -140,6 +140,20 @@ try {
   var cor = JSON.parse(JSON.stringify(serialize())); cor.uyTin = -999; cor.thucChat = 999; cor.tiengTam = 9999;
   localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(cor)); loadGame();
   ok(S.uyTin >= 0 && S.uyTin <= 100 && S.thucChat >= 0 && S.thucChat <= 100 && S.tiengTam >= 0 && S.tiengTam <= 200, 'corrupted meters clamped on load');
+  // iter-202 BUGFIX regression guard: a corrupted S.teachers / S.giftItems (null entry, NaN→null luong, dup id) +
+  // a trưởng-khoa must NOT crash loadGame or the next tick (was: permanently-unplayable save). sanitize() heals it.
+  __test.fresh(7); __test.place('phonghoc',1,1); __test.days(120);
+  S.teachers.push({ id:'cdr', ten:'X', day:9, dien:1, luong:15, trait:'tch', grain:'spark', bienChe:false, age:1 });
+  var corT = JSON.parse(JSON.stringify(serialize()));
+  corT.teachers.push(null); corT.teachers.push({ id:'cdr', ten:'Dup', day:9, dien:1, luong:null, trait:'tch', grain:'spark', bienChe:false, age:0 }); // null + dup-id + NaN→null luong
+  corT.khoaHead = { code:'cdr' };
+  corT.giftItems = [null, { nope:1 }, { item:'sách', ten:'Cũ' }]; // corrupted gift entries
+  localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(corT));
+  var crashed = false; try { loadGame(); for (var _t=0; _t<5; _t++) dayTick(); } catch(e){ crashed = true; }
+  ok(!crashed, 'corrupted teachers/giftItems save does NOT crash loadGame+tick');
+  ok(S.teachers.every(function(t){ return t && typeof t==='object' && Number.isFinite(t.luong); }), 'corrupted teachers healed (no null, finite luong)');
+  ok(Number.isFinite(S.cash), 'cash stays finite after a corrupted-teacher save (no NaN salary)');
+  ok(S.giftItems.every(function(g){ return g && typeof g==='object' && g.item; }), 'corrupted giftItems healed');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
 OUT.push('');

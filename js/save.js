@@ -125,6 +125,25 @@ function sanitize() {
   S.META.dropped = Math.max(0, Math.round(S.META.dropped) || 0); // iter-131 burnout-loss counter
   if (!Array.isArray(S.META.favLog)) S.META.favLog = []; // iter-135 protégé follow-journal
   if (S.META.favId != null && !S.students.some(function (s) { return s.id === S.META.favId; })) S.META.favId = null; // protégé gone (graduated/left) → clear
+  // iter-202 BUGFIX: VALIDATE S.teachers — the iter-199 carve left this dynamic array (now carrying the iter-195
+  // grain field, read EVERY tick) unsanitized. mergeInto copies arrays wholesale, so a null entry or a NaN→null
+  // luong from a JSON round-trip survived loadGame and then crashed sanitize() ITSELF (the khoaHead prune below calls
+  // teacherById → S.teachers[i].id on null) AND every dayTick (teacherFactor reads t.trait/t.grain; the salary loop
+  // sums t.luong → NaN cash) — a permanently-unplayable save. Heal here, mirroring the students/alumni patterns.
+  var seenTid = {};
+  S.teachers = (S.teachers || []).filter(function (t) { return t && typeof t === "object" && t.id != null && !seenTid[t.id] && (seenTid[t.id] = 1); }).map(function (t) {
+    t.luong = Math.max(0, Math.round(t.luong) || 0);
+    t.day = clamp(Math.round(t.day) || 0, 0, 10); t.dien = clamp(Math.round(t.dien) || 0, 0, 10);
+    t.age = Math.max(0, Number(t.age) || 0);
+    t.trait = (typeof t.trait === "string") ? t.trait : "";
+    t.grain = (t.grain === "spark" || t.grain === "sky" || t.grain === "hype") ? t.grain : ""; // iter-195 faculty grain
+    t.bienChe = !!t.bienChe;
+    if (typeof t.ten !== "string" || !t.ten) t.ten = "Giảng viên";
+    return t;
+  }).slice(0, 24);
+  // iter-202 BUGFIX: heal S.giftItems (iter-182, also left unsanitized) — a corrupted/non-object entry crashed the
+  // Fund-tab render (esc(g.item) on null). Filter to well-formed entries so render can't throw.
+  S.giftItems = (S.giftItems || []).filter(function (g) { return g && typeof g === "object" && g.item; }).slice(0, (CONFIG.ALUM && CONFIG.ALUM.ITEM_CAP) || 24);
   // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
   if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};
   var seenT = {};

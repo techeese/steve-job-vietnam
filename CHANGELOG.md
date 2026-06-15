@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-15 — BUGFIX: corrupted teachers/giftItems save no longer bricks the game (loop iter 202)
+**A real save-loss crash, found by a fan-out audit when the loop resumed from a long hold.** The iter-199 save.js
+carve left two recently-added dynamic arrays — `S.teachers` (now carrying the iter-195 grain field, read every tick)
+and `S.giftItems` (iter-182) — **unvalidated by `sanitize()`**. Since `mergeInto` copies arrays wholesale, a null
+element or a `NaN→null` `luong` from a JSON round-trip survived `loadGame` and then crashed: (1) `sanitize()` itself
+via the khoaHead prune's `teacherById` (`.id` on null) — a crash *inside loadGame* → error trap → reload → same crash
+= **permanently unplayable save**; (2) every `dayTick` via `teacherFactor` (`t.trait`/`t.grain` on null) and a NaN
+salary sum (`+= t.luong`) → NaN cash. Reproduced both, then fixed: a teachers-validation block in `sanitize()` (drop
+null/dup-id entries, coerce `luong`/`day`/`dien`/`age` to finite, default `grain`/`bienChe`/`ten`) placed **before**
+the khoaHead prune, plus a `giftItems` filter — mirroring the existing students/alumni/contracts patterns, closing the
+last two unvalidated collections. **Strict no-op on valid saves** (gate GREEN, bot BOTOK cash 7353/arrested 15/essay
+2010 unchanged, sweep 8✓ unchanged). Added 4 gate.js regression assertions (corrupted teachers+giftItems+trưởng-khoa
+→ no crash, teachers healed, finite cash, giftItems healed). This protects the person-sim's faculty layer and the
+save-is-lossless promise the loop has been hardening. The loop is **back to shipping** after a too-long hold.
+
 ## 2026-06-15 — ckpt2b: faculty specialization now has a COST — built behind a playtest flag (loop iter 200)
 **The strong faculty trade-off, shipped for the owner to PLAY (not decided for them).** iter-195 found that shifting
 *realization* by faculty hits the saturation wall at the growth-*rate* layer; the real teeth need a STRUCTURAL change,
