@@ -999,7 +999,9 @@
     var T = CONTENT.schoolTiers, cash = (s && s.cash) || 0, lab = T[0].label;
     for (var i = 0; i < T.length; i++) if (cash >= T[i].min) lab = T[i].label;
     var st = (s && s.META && s.META.steves) || 0;
-    return lab + (st > 0 ? " · 🍎×" + st : "");
+    if (st > 0) return lab + " · 🍎×" + st;                       // the đề Văn answered — the apple(s) you grew
+    if (cash >= 50000) return lab + " · chưa có 🍎";              // iter-168 (THESIS marks 3/4): a big empire that hasn't grown a Steve carries the BITE — wealth is the body, never the answer
+    return lab;
   }
   function renderHUD() {
     var s = S();

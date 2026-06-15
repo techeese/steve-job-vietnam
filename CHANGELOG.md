@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-15 — Evolution-spirit re-derivation: frame holds + the đề Văn bite at empire scale (loop iter 168)
+**Anti-decay: re-derived from the THESIS instead of shipping another micro-polish** (the owner's #1 value —
+evolution over adaptation). Honest assessment of all 5 §D marks against the current game: a stranger would
+(1) see a person become someone, (2) care by name, (3) find no single right way, (4) leave with their own
+answer, (5) feel the weight — and both owner visions (people-first soul + economy scale) are delivered. **The
+frame HOLDS — the game is a true answer to the đề Văn.** No forced feature.
+- **The one real reinforcement it surfaced (ships):** the empire tier read as pure triumph ("Đế chế giáo dục")
+  even with **zero Steves** — letting WEALTH feel like the answer, which §D marks 3/4 forbid (money is the body,
+  never the answer). Now a big-cash school that hasn't grown a Steve carries the BITE: *"Đế chế giáo dục · chưa
+  có 🍎"* (≥50 tỷ, 0 steves). A fresh/small school isn't nagged; an answered one shows "· 🍎×N". So at any scale
+  the title reflects the SOUL status, keeping the đề Văn question central amid the money.
+Safe (display read). Verified: ui syntax OK, gate GREEN, bot BOTOK, tier probe correct across cash×steves. Deployed.
+
 ## 2026-06-15 — Maintenance pass (health + 390px mobile audit) + chip-unit fix (loop iter 167)
 **Maintenance (overdue since iter-97) — both owner visions now delivered; verifying nothing rots.** Ran a full
 health + mobile audit:
