@@ -628,6 +628,8 @@
       var hy = (y - 15 - (ts / 130 % 9)) | 0;                                          // like-hearts floating up
       ctx.fillStyle = "#f15a7a"; ctx.fillRect((x - 5 + Math.sin(ts / 200) * 1.5) | 0, hy, 2, 2);
       ctx.fillStyle = "#f2c14e"; ctx.fillRect((x - 7 + Math.sin(ts / 165 + 1) * 1.5) | 0, (hy + 4) | 0, 1, 1);
+      // iter-184 (owner: buildings earn, looks real): livestream → ad money — a tiny gold ₫ rises off the streamer
+      var lph = (ts / 1300 + a.id * 0.41) % 1; if (lph < 0.5) { var lcy = (y - 17 - lph * 12) | 0; ctx.globalAlpha = 1 - lph / 0.5; ctx.fillStyle = PX.gold; ctx.fillRect(x - 7, lcy, 3, 3); ctx.fillStyle = PX.out; ctx.fillRect(x - 6, lcy + 1, 1, 1); ctx.globalAlpha = 1; }
     } else if (a.act === "chat") {
       // recess social: a speech bubble with dots that fill in, so clustered students read as a conversation
       ctx.fillStyle = "rgba(255,255,255,.94)"; roundRect(ctx, x + 2, y - 26, 13, 8, 3); ctx.fill();
@@ -1391,13 +1393,17 @@
     var cangLv = 0; s.rooms.forEach(function (r) { if (r.key === "cangtin") cangLv = r.level || 1; });
     var canteenInc = Math.round(CONFIG.CANTEEN_PER_SV * s.students.length * cangLv); // iter-180: the căng tin's meal revenue, made legible (a building that EARNS — owner steer)
     if (canteenInc > 0) c.appendChild(fundRow("🍜 Căng tin (mì tôm, cấp " + cangLv + ")", "+" + money(canteenInc), "var(--green)"));
+    var labLv = 0; s.rooms.forEach(function (r) { if (r.key === "lab") labLv = r.level || 1; });
+    var hypeN2 = 0; s.students.forEach(function (x) { if (x.tell === "hype") hypeN2++; });
+    var labInc = labLv ? Math.round(CONFIG.LAB_PER_HYPE * hypeN2 * labLv) : 0; // iter-184: the Lab Sống Ảo's livestream/clout revenue, made legible
+    if (labInc > 0) c.appendChild(fundRow("📣 Lab Sống Ảo (" + hypeN2 + " em livestream · cấp " + labLv + ")", "+" + money(labInc), "var(--green)"));
     c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + money(sal), "var(--red)")); // iter-165: money() for tỷ-consistency at scale (was raw "tr")
     c.appendChild(fundRow("🛠️ Bảo trì", "−" + money(maint), "var(--red)"));
     var ops = Math.round((CONFIG.OPS.base + CONFIG.OPS.perSV * s.students.length) * CONFIG.OPS.rate * Math.max(0, s.year - 1)); // rising overhead w/ size & age
     if (ops > 0) c.appendChild(fundRow("🏛️ Vận hành (trường lớn, càng tốn)", "−" + money(ops), "var(--red)"));
     var reinvest = Math.max(0, Math.round((s.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN));
     if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + money(reinvest), "var(--red)"));
-    var net = income + canteenInc + cpay - sal - maint - ops - reinvest;
+    var net = income + canteenInc + labInc + cpay - sal - maint - ops - reinvest;
     c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + money(net) + "</div>";
     // legibility (owner: "not clear how time passes / how money accrues — positive but feels 0đ"): how long a month is + why the bank doesn't balloon
     var monSec = Math.round(CONFIG.TICK_MS * CONFIG.TICKS_PER_DAY * CONFIG.DAYS_PER_MONTH / 1000);

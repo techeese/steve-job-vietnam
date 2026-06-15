@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-15 — The Lab Sống Ảo monetizes clout: livestream income (owner "or similar building") (loop iter 184)
+**Extends the owner's living economy to a second, characterful building — "the canteen OR similar building can work
+this way."** The **Phòng Lab Sống Ảo** (the vanity lab that "teaches nothing") now EARNS: the hype-tạng kids
+livestream for ad money — `LAB_PER_HYPE(0.6) × (số em Sống Ảo) × cấp`, scaling with the lab's upgrade level. It's
+distinct from the canteen (clout-driven, not headcount): income reflects how many **hype-grain** kids you admitted, so
+the economy is **tied to the person-sim** (the soul stays present in the money) and carries the đề-Văn **satire** —
+*clout pays CASH, never a 🍎*. Made legible (a "📣 Lab Sống Ảo (N em livestream · cấp X)" Thu–Chi line) and "looks
+real" (a gold ₫ rises off each streamer, beside the existing like-hearts). Deterministic; person-sim untouched. Bot
+cash 6689→**7353** (new baseline; ~10tr/mo from 17 streamers at lvl1). Verified: syntax OK, gate GREEN, bot BOTOK
+(rooms/grad/alumni/arrested unchanged), sweep 6✓, probe labRev=10.2. FUN 4 · SATIRE 4 (the clout economy) · CLARITY 4.
+**The living economy is now richly alive (canteen meals · lab clout · classroom tuition · alumni gifts). Holding the
+per-building-income pattern here — further buildings only on owner reaction (avoid an "every building earns" grind).**
+
 ## 2026-06-15 — STRUCTURE: the epilogue essay carved out of ui.js (de-risk the iter-172 crash site) (loop iter 183)
 **The owed structure move (EPICS_SINCE_STRUCTURE=2), now safe + motivated.** The iter-172 incident was a use-before-init
 crash buried in `essayDraft` — a ~95-line prose-builder lost inside the 1825-line ui.js IIFE, uncovered by gate/bot.

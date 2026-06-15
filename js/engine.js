@@ -389,6 +389,11 @@ function economyTick() {
   // surfaced as a legible income line + LIVE lunch coins (ui) so it FEELS real-time, not an end-of-month lump.
   var canteenRev = (n && hasRoom("cangtin")) ? r1(CONFIG.CANTEEN_PER_SV * n * roomLevel("cangtin")) : 0;
   S.META.canteenRev = canteenRev; // for the funding panel's income breakdown + the live coin feedback
+  // iter-184 (owner "canteen OR similar building"): the Phòng Lab Sống Ảo monetizes CLOUT — the hype-tạng kids
+  // livestream for ad money (scales with cấp). Satire: clout pays cash, never a 🍎. Ties income to the person-sim.
+  var hypeN = 0; for (i = 0; i < n; i++) if (S.students[i].tell === "hype") hypeN++;
+  var labRev = (hypeN && hasRoom("lab")) ? r1(CONFIG.LAB_PER_HYPE * hypeN * roomLevel("lab")) : 0;
+  S.META.labRev = labRev; // funding-panel income line + the live ❤️ floats over streamers
   var salaries = 0; for (i = 0; i < S.teachers.length; i++) { salaries += S.teachers[i].luong; S.teachers[i].age += 1 / 12; }
   var roomCost = 0; for (i = 0; i < S.rooms.length; i++) roomCost += (CONFIG.ROOMS[S.rooms[i].key].cost || 0);
   var maint = r1(CONFIG.MAINT_RATE * (S.book + roomCost));
@@ -397,7 +402,7 @@ function economyTick() {
   var contractPay = 0;
   S.contracts = S.contracts.filter(function (c) { contractPay += c.pay; c.mLeft -= 1; return c.mLeft > 0; });
   var ops = r1((CONFIG.OPS.base + CONFIG.OPS.perSV * n) * CONFIG.OPS.rate * Math.max(0, S.year - 1)); // vận hành: ~0 at founding, rises with size & age
-  S.cash = r1(S.cash + income + canteenRev + contractPay - salaries - maint - materials - ops);
+  S.cash = r1(S.cash + income + canteenRev + labRev + contractPay - salaries - maint - materials - ops);
   if (S.cash > CONFIG.CASH_KEEP) S.cash = r1(S.cash - (S.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN); // reinvest surplus (money sink)
   // iter-161 (economy ckpt3): bank-milestone fanfare — a one-time grand beat as the university grows into an
   // empire ("watch it grow" payoff for the owner's scaling vision). Monotonic by index; pure news (no balance).
