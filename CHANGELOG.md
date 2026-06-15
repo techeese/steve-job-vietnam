@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-15 — STRUCTURE: the intake subsystem split out — js/sim/admissions.js (loop iter 163)
+**STRUCTURE epic — BEHAVIOR-NEUTRAL (proven identical metrics). Scores N/A (refactor).** The owed structure
+move (EPICS_SINCE_STRUCTURE=2) — and the economy epic added enough that engine.js (the biggest sim file at 1176
+ln) earned a carve. Took the cleanest available cluster: the **ADMISSIONS / intake subsystem** —
+`buildAdmitPool · derivedPool · openAdmissions · declareAdmissions · admitRank · awardScholarships` (the
+deterministic applicant pool off poolSeed, incl. the E9 reputation tilt + E-UNDERDOG diamonds/đặc cách, the
+cutoff/quota resolve, BXH rank, scholarships) → **`js/sim/admissions.js`** (engine.js 1176→1063). Mirrors the
+person.js (iter-127) carve; globals, loaded after engine.js & person.js; harness loaders wired (gate/sweep
+concat + index.html script tag; bot via the page).
+- **Caught a real bug before it shipped:** node-concat (gate/sweep) hoists all functions into one scope, so it
+  passed — but the BROWSER loads separate scripts in order, and engine.js's `window.HVS = {…declareAdmissions,
+  derivedPool…}` literal evaluated those *as values at engine-load*, before admissions.js defined them →
+  ReferenceError at boot (masked to "Script error" over file://). Only the in-browser bot caught it. Fix:
+  engine.js's HVS no longer lists them; admissions.js augments `window.HVS` after they're defined. Lesson:
+  a structure carve must verify the real BROWSER boot, not just node gate/sweep.
+- **Proven behavior-neutral:** gate GREEN, **bot BOTOK with IDENTICAL metrics** (grad 87 / alumni 88 / steves 0 /
+  arrested 17 / cash 5168), sweep 6✓/0 breakage, browser boots clean (bot's no-JSERR check passes). 4-file syntax OK.
+
 ## 2026-06-15 — Upgrade ROI made legible — the growth engine becomes strategic (loop iter 162)
 **Economy polish (safe, UI-only).** The compounding engine (ckpt2) works, but upgrade buttons showed only a
 COST — so the player couldn't tell if an upgrade was worth it. Now each upgrade button also shows its **income
