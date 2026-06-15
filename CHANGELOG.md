@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-15 — Funding panel reads in tỷ too — money consistency at empire scale (loop iter 165)
+**Polish (safe, UI-only).** The income rows + cash/endow chips already used the `money()` tỷ formatter (159-162),
+but the funding panel's EXPENSE rows (lương / bảo trì / vận hành / tái đầu tư) and the **Cân đối** net total were
+still raw "tr" — so at empire scale they'd read inconsistently ("−5000tr" next to a "5 tỷ" cash chip). Now all of
+them use `money()`, so the whole funding panel is consistent at any scale (e.g. net *"+5,4 tỷ"*). Zero balance
+risk (display). Verified: ui syntax OK, gate GREEN, bot BOTOK, net-format probe correct. Deployed.
+
 ## 2026-06-15 — A living school TIER in the HUD — watch it become an empire (loop iter 164)
 **Integrated polish (safe, UI-only) — economy progression + soul, in one readout.** The HUD subtitle under the
 school name was a static joke ("tên đầy đủ đang chờ Bộ duyệt"). It's now a **live tier** that grows with the

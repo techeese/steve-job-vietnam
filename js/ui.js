@@ -1378,14 +1378,14 @@
     c.appendChild(fundRow("🎓 Học phí " + s.students.length + " SV × " + s.tuition.toFixed(1) + "tr", "+" + money(baseInc), "var(--green)"));
     if (prestigeBonus > 0) c.appendChild(fundRow("🏛️ Uy tín học hiệu (+" + Math.round((pm - 1) * 100) + "% nhờ nâng cấp)", "+" + money(prestigeBonus), "var(--green)")); // iter-160: the compounding premium, made legible
     if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + money(cpay), "var(--green)"));
-    c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + sal + "tr", "var(--red)"));
-    c.appendChild(fundRow("🛠️ Bảo trì", "−" + maint + "tr", "var(--red)"));
+    c.appendChild(fundRow("🧑‍🏫 Lương giảng viên", "−" + money(sal), "var(--red)")); // iter-165: money() for tỷ-consistency at scale (was raw "tr")
+    c.appendChild(fundRow("🛠️ Bảo trì", "−" + money(maint), "var(--red)"));
     var ops = Math.round((CONFIG.OPS.base + CONFIG.OPS.perSV * s.students.length) * CONFIG.OPS.rate * Math.max(0, s.year - 1)); // rising overhead w/ size & age
-    if (ops > 0) c.appendChild(fundRow("🏛️ Vận hành (trường lớn, càng tốn)", "−" + ops + "tr", "var(--red)"));
+    if (ops > 0) c.appendChild(fundRow("🏛️ Vận hành (trường lớn, càng tốn)", "−" + money(ops), "var(--red)"));
     var reinvest = Math.max(0, Math.round((s.cash - CONFIG.CASH_KEEP) * CONFIG.CASH_DRAIN));
-    if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + reinvest + "tr", "var(--red)"));
+    if (reinvest > 0) c.appendChild(fundRow("🏫 Tái đầu tư phần dư", "−" + money(reinvest), "var(--red)"));
     var net = income + cpay - sal - maint - ops - reinvest;
-    c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + Math.round(net) + "tr</div>";
+    c.appendChild(el("div", "row")).innerHTML = "<div class='grow' style='font-weight:700;font-size:12px;border-top:1px solid var(--line);padding-top:7px'>Cân đối</div><div style='font-weight:700;border-top:1px solid var(--line);padding-top:7px;color:" + (net >= 0 ? "var(--green)" : "var(--red)") + "'>" + (net >= 0 ? "+" : "") + money(net) + "</div>";
     // legibility (owner: "not clear how time passes / how money accrues — positive but feels 0đ"): how long a month is + why the bank doesn't balloon
     var monSec = Math.round(CONFIG.TICK_MS * CONFIG.TICKS_PER_DAY * CONFIG.DAYS_PER_MONTH / 1000);
     c.appendChild(el("div", "tiny", "Một <b>tháng</b> ≈ " + monSec + "s ở tốc độ 1× — thu/chi cộng dồn cuối mỗi tháng. Trường càng lớn, càng <b>nâng cấp</b> thì uy tín học hiệu càng cao và thu càng nhiều — đầu tư đều tay, qua năm tháng ngân hàng lên tới hàng tỷ."));
