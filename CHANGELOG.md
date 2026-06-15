@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-15 — PROD FIX: the real art was 404ing on the web ("old artworks") (loop iter 158)
+**Production bugfix (owner-reported, on phone). Preempts the economy epic.** Owner: *"in the web it still use old
+artworks."* ROOT CAUSE: `.gitignore` line 3 `*.png` — a guard meant for scratch screenshots — was ALSO swallowing
+the REAL art: the Kenney tilemap (`assets/tiles/tinytown_tilemap.png`) and all 40 Jephed character sheets
+(`assets/characters/000–039.png`). They were never committed → **404 on github.io** (verified) → the live game
+silently fell back to the OLD procedural art. (Locally the files existed, so it looked fine on the desktop — only
+the deployed site was starved.) FIX: `.gitignore` now excepts `!assets/**/*.png`; committed all 42 art PNGs
+(328K). The game loads them via `ui.js` `loadChars()` + the tilemap loader, so they MUST ship. **Verified LIVE:**
+tilemap + char000 + char039 now return **HTTP 200** on github.io (were 404). Deployed immediately. *(On the phone,
+a refresh picks them up — the assets 404'd before, so nothing stale is cached.)*
+
 ## 2026-06-15 — ★ OWNER BACK (on phone): deploy-every-change + economy-scale steer (loop iter 157) + E9 ckpt2
 **Two owner directives (2026-06-15, owner re-engaged after ~40 firings):**
 1. **"I develop on my phone now — deploy to github.io after each code change."** → **WORKFLOW CHANGED:** the
