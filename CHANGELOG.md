@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-15 — Flow: mood matters BOTH ways now — a thriving kid learns faster (loop iter 155)
+**PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · COMPLETENESS-VS-DREAM 4 · BITE 3 · BEAUTY/JUICE n/a.**
+A genuine person-sim MECHANIC deepening (not surfacing) — closing the last unbuilt VISION #3 frontier
+("burnout vs flow"; the owner's "including mood"). Until now mood was asymmetric: below 50 it penalized growth
+(×0.7), but high mood did NOTHING. Now a genuinely thriving kid (mood ≥ FLOW_MOOD 80) is absorbed and learns a
+little faster (×1.06) — **FLOW**. Mood is finally wellbeing-with-consequences in BOTH directions.
+- **Genuine growth only:** the flow bonus applies to kt/tn/st, NOT to cá-mập hustle (gCm) — flow is being
+  absorbed in real work, never gaming the system.
+- **Felt, both ways, on the campus:** symmetric with the iter-138 burnout "sweat" emote, a flow kid now visibly
+  lights up (✨ spark/idea) on the sân — the mood dimension watchable BOTH ways ("watching = development"). The
+  inspect card's mood read gained a flow tier too: *"✨ đang nhập tâm — tâm trạng tốt, học nhanh hơn"* (alongside
+  the existing burnout warnings) — so the player SEES that keeping a kid well now pays off.
+- **Bounded & sweep-clean (the critical gate):** small (+6%) and high-bar (mood ≥ 80), and the penalty (−30%)
+  still dwarfs it, so mismatch hurts more than flow helps — the open question holds. Verified: craft 🍎 stays
+  **18%** (flow did NOT balloon Steves — the 🍎 gate is seed-based, orthogonal to growth-rate), `cân bằng` 0%,
+  the adaptive matcher still does NOT dominate (invariant #1 intact), the realize/waste spread holds, 0
+  bankruptcy — all 5 flags ✓. gate GREEN, bot BOTOK, 4-file syntax OK.
+
 ## 2026-06-15 — The wasted gift, named at graduation — not 10 years later (loop iter 154)
 **PERSON-SIM (people-first arc). SOUL 4 · CLARITY 4 · BITE 4 · COMPLETENESS-VS-DREAM 4 · BEAUTY/JUICE n/a.**
 The game's soul is VISIBLE WASTED TALENT you feel responsible for — but the graduation RESULTS screen (the felt

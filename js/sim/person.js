@@ -49,8 +49,9 @@ function growStudents() {
     var sm = CONFIG.SEED_MULT(s.seed);
     var vm = CONFIG.VET_MULT(s.vet);
     var moodF = s.mood < CONFIG.MOOD_PENALTY_BELOW ? 0.7 : 1;
+    var flowF = s.mood >= CONFIG.FLOW_MOOD ? CONFIG.FLOW_MULT : 1; // iter-155: a kid in FLOW (high mood) learns a little faster — genuine growth only (NOT cá-mập gCm below)
     var roomF = (S.presets["n" + s.grade] === "duan" && !hasRoom("phongmay")) ? 0.5 : 1;
-    var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * roomF / dpm;
+    var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * flowF * roomF / dpm;
     var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
     var ptn = p.tn, pst = p.st;
     if (s.mentored) { mm = Math.max(mm, CONFIG.MENTOR_MM); ptn = Math.max(ptn, CONFIG.PRESETS.duan.tn); pst = Math.max(pst, CONFIG.PRESETS.duan.st); } // Phase 2: scarce attention = personal project-tutoring that overrides the school's policy for THIS kid

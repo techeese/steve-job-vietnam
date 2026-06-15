@@ -336,6 +336,7 @@
   function pickEmote(a) {
     // D2 — make the person-sim SOUL visible on the sân: who you're lifting, whom the school is wasting
     if (a.mood != null && a.mood < CONFIG.MOOD_PENALTY_BELOW && Math.random() < 0.6) return "sweat"; // iter-138: low mood (esp. burning out) → visible strain on the sân — the mood dimension, made watchable (owner: "watching")
+    if (a.mood != null && a.mood >= CONFIG.FLOW_MOOD && Math.random() < 0.5) return Math.random() < 0.5 ? "spark" : "idea"; // iter-155: FLOW — a kid in the zone visibly lights up (symmetric with the burnout sweat; mood watchable BOTH ways)
     if (a.mentored && Math.random() < 0.6) return Math.random() < 0.5 ? "idea" : "spark";            // a kid you pour attention into lights up
     var _pre = S().presets["n" + a.grade], _mm = CONFIG.MATCH ? CONFIG.MATCH(a.tell, _pre) : 1;
     if (_mm <= 0.6 && Math.random() < 0.6) return "sweat";                                            // grain the school is wasting → visible strain
@@ -897,7 +898,8 @@
     // iter-132 — TELEGRAPH the burnout (iter-131 made it possible): warn while the kid can still be SAVED, and
     // name the levers — so a dropout is a loss you could fight, not a silent surprise. Only shows when at risk.
     var moodRisk = st.mood < CONFIG.DROPOUT_MOOD + 12 ? { t: "⚠ kiệt sức — nguy cơ bỏ học (dìu dắt hoặc đổi lối học GẤP)", c: "#e57373" }
-      : st.mood < CONFIG.MOOD_PENALTY_BELOW ? { t: "tinh thần đang kém — học hành chậm lại", c: "#f2994a" } : null;
+      : st.mood < CONFIG.MOOD_PENALTY_BELOW ? { t: "tinh thần đang kém — học hành chậm lại", c: "#f2994a" }
+      : st.mood >= CONFIG.FLOW_MOOD ? { t: "✨ đang nhập tâm — tâm trạng tốt, học nhanh hơn", c: "var(--green)" } : null; // iter-155: mood read BOTH ways — flow (high mood → faster genuine growth) made legible, not just the burnout warning
     // iter-151 — the PER-KID peak-vs-median read (the individual face of iter-148's cohort finding). The `fit`
     // line above reads DIRECTION (grain×style), blind to MAGNITUDE: a discovered BIG gift (seed≥4) sitting in a
     // merely-ADEQUATE style ("tạm hợp", mm 0.9–1.3, e.g. cân bằng) looks fine but is being quietly CAPPED — it'll

@@ -59,6 +59,13 @@ var CONFIG = {
   VET_MULT: function (v) { return 1 - v / 150; },
   KT_SATURATE: 70, KT_RUST: 0.5,
   MOOD_PENALTY_BELOW: 50, DROPOUT_MOOD: 30, DROPOUT_P: 0.10,
+  // iter-155 — MOOD as wellbeing-with-consequences BOTH ways (VISION #3 "burnout vs flow"; owner: "including
+  // mood"). Until now low mood penalized growth (×0.7) but high mood did nothing. FLOW: a genuinely thriving kid
+  // (mood ≥ FLOW_MOOD) is absorbed and learns a little faster (×FLOW_MULT) — applied to GENUINE growth only, NOT
+  // cá-mập hustle (flow ≠ gaming). Small + high-bar so it doesn't balloon 🍎 or let the matcher dominate
+  // (invariant #1) — sweep-gated. The penalty (×0.7, −30%) still dwarfs the bonus (+6%), so mismatch hurts more
+  // than flow helps (the open question holds).
+  FLOW_MOOD: 80, FLOW_MULT: 1.06,
   FAV_MOMENT_GAP: 90, FAV_MILE: [40, 60, 80], FAV_MOOD_LOW: 45, FAV_MOOD_HI: 70, // E5-watch: the followed protégé's in-school arc — a caused moment at most ~once a season (THESIS mark 5)
   CROWD: function (n) { return Math.max(0.6, 1 - 0.02 * (n - 12)); },
 
