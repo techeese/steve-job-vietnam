@@ -1163,7 +1163,8 @@
       // iter-162: show the upgrade's INCOME benefit so the growth engine is legible/strategic — each level adds a
       // prestige premium (PRESTIGE_K × tuition × students) to monthly income. Only for upgrades (lvl≥1; building to
       // lvl 1 = base, no premium yet). Cost vs +/month = visible ROI.
-      var benTr = Math.round(CONFIG.PRESTIGE_K * s.tuition * s.students.length);
+      var benK = (key === "phonghoc") ? CONFIG.CLASSROOM_TUITION_K : CONFIG.PRESTIGE_K; // iter-181: phòng học → tuition multiplier; other buildings → prestige premium
+      var benTr = Math.round(benK * s.tuition * s.students.length) + (key === "cangtin" ? Math.round(CONFIG.CANTEEN_PER_SV * s.students.length) : 0); // iter-180: căng tin upgrade also adds a meal-revenue level
       var ben = (!maxed && lvl >= 1 && benTr > 0) ? " <span class='tiny' style='color:var(--green)'>+" + money(benTr) + "/th</span>" : "";
       var b = el("button", "build");
       b.innerHTML = "<div class='nm'>" + sk.e + " " + d.name + (lvl ? " <span class='tiny' style='color:var(--gold)'>Lv" + lvl + "</span>" : "") + "</div><div class='ds'>" + d.desc + "</div><div class='pr'>" + pr + ben + "</div>";
@@ -1374,13 +1375,17 @@
   function panelFund() {
     var s = S(), wrap = el("div");
     var c = el("div", "card"); c.appendChild(el("h3", null, "Thu — Chi mỗi tháng"));
-    var pm = 1 + CONFIG.PRESTIGE_K * s.rooms.reduce(function (a, r) { return a + Math.max(0, (r.level || 1) - 1); }, 0); // iter-160: prestige premium from campus upgrades
-    var baseInc = Math.round(s.tuition * s.students.length), prestigeBonus = Math.round(s.tuition * s.students.length * (pm - 1)), income = baseInc + prestigeBonus;
+    var pm = 1 + CONFIG.PRESTIGE_K * s.rooms.reduce(function (a, r) { return a + (r.key === "phonghoc" ? 0 : Math.max(0, (r.level || 1) - 1)); }, 0); // iter-181: prestige = NON-classroom upgrades (reputation)
+    var phLv2 = 0; s.rooms.forEach(function (r) { if (r.key === "phonghoc") phLv2 = r.level || 1; });
+    var cm = 1 + CONFIG.CLASSROOM_TUITION_K * Math.max(0, phLv2 - 1); // iter-181 (owner): the classroom IS the tuition multiplier — better/bigger phòng học → charge more per SV
+    var baseInc = Math.round(s.tuition * s.students.length);
+    var prestigeBonus = Math.round(baseInc * (pm - 1)), classroomBonus = Math.round(baseInc * pm * (cm - 1)), income = Math.round(baseInc * pm * cm);
     var sal = 0; s.teachers.forEach(function (t) { sal += t.luong; });
     var roomCost = 0; s.rooms.forEach(function (r) { roomCost += (CONFIG.ROOMS[r.key].cost || 0); });
     var maint = Math.round(CONFIG.MAINT_RATE * (s.book + roomCost) * 10) / 10;
     var cpay = 0; s.contracts.forEach(function (ct) { cpay += ct.pay; });
     c.appendChild(fundRow("🎓 Học phí " + s.students.length + " SV × " + s.tuition.toFixed(1) + "tr", "+" + money(baseInc), "var(--green)"));
+    if (classroomBonus > 0) c.appendChild(fundRow("🏫 Phòng học cấp " + phLv2 + " (+" + Math.round((cm - 1) * 100) + "% học phí)", "+" + money(classroomBonus), "var(--green)")); // iter-181: the classroom tuition multiplier, made legible (owner steer)
     if (prestigeBonus > 0) c.appendChild(fundRow("🏛️ Uy tín học hiệu (+" + Math.round((pm - 1) * 100) + "% nhờ nâng cấp)", "+" + money(prestigeBonus), "var(--green)")); // iter-160: the compounding premium, made legible
     if (cpay) c.appendChild(fundRow("🤝 Hợp đồng (" + s.contracts.length + ")", "+" + money(cpay), "var(--green)"));
     var cangLv = 0; s.rooms.forEach(function (r) { if (r.key === "cangtin") cangLv = r.level || 1; });

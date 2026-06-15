@@ -125,8 +125,15 @@ function upgradeCost(d, lvl) { var U = CONFIG.UPGRADE; return Math.round(Math.ma
 // iter-160 (economy ckpt2): the PRESTIGE PREMIUM on tuition income — every building upgrade level above 1 adds
 // PRESTIGE_K. A taller, more-invested campus earns more per student → income COMPOUNDS with reinvestment (the
 // growth engine). Level-1 schools (the sweep/bot, which never upgrade) get 1.0 → economy sweep unchanged.
-function prestigeLevels() { var t = 0; for (var i = 0; i < S.rooms.length; i++) t += Math.max(0, (S.rooms[i].level || 1) - 1); return t; }
+// iter-181 (owner steer ckpt2): the phòng học is carved OUT of the generic prestige — it is now the EXPLICIT
+// TUITION multiplier (classroomMult below), the owner's mental model ("classroom = a multiplier of the tuition").
+// Prestige = every OTHER building's upgrade levels (reputation). No double-count: phonghoc drives ONLY classroomMult.
+function prestigeLevels() { var t = 0; for (var i = 0; i < S.rooms.length; i++) if (S.rooms[i].key !== "phonghoc") t += Math.max(0, (S.rooms[i].level || 1) - 1); return t; }
 function prestigeMult() { return 1 + CONFIG.PRESTIGE_K * prestigeLevels(); }
+// iter-181: better/bigger classrooms let you charge more per student — an explicit, legible tuition multiplier driven
+// by phòng học level (compounds WITH prestige → the owner's compounding growth engine). Level-1 = 1.0× (bot/sweep
+// never upgrade → unaffected; only real upgraded play sees it). Surfaced as a Thu–Chi line + an upgrade benefit.
+function classroomMult() { return 1 + CONFIG.CLASSROOM_TUITION_K * Math.max(0, roomLevel("phonghoc") - 1); }
 // iter-166 (economy — "upgrades raise students"): CLASSROOMS scale the school's SIZE. campusScale drives roster,
 // intake AND the crowd baseline TOGETHER (proportional → the realize/waste spread is preserved). Level-1 = 1.0×
 // (sweep/bot unaffected). Capped for phone perf. rosterCap = the scaled student ceiling.
@@ -375,7 +382,7 @@ function ktSat(v) {
 /* ---------- monthly economy ---------- */
 function economyTick() {
   var n = S.students.length, i;
-  var income = r1(S.tuition * n * prestigeMult()); // iter-160: prestige premium — a more-upgraded campus earns more per student (compounding growth engine)
+  var income = r1(S.tuition * n * prestigeMult() * classroomMult()); // iter-160 prestige premium × iter-181 classroom tuition multiplier (the owner's "classroom = tuition multiplier"); both compound the per-student income
   // iter-180 (owner steer "buildings earn money, looks real, increases with upgrade"): the căng tin sells a meal
   // to each student — live tiền tươi, scaling with its cấp (UNCAPPED). Deterministic (counts × rate) → reproducible;
   // surfaced as a legible income line + LIVE lunch coins (ui) so it FEELS real-time, not an end-of-month lump.

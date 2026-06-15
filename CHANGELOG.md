@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-15 — The classroom is the tuition multiplier (owner steer · economy ckpt 2) (loop iter 181)
+**Answers the owner's "the classroom can be a multiplier of the tuition?" — yes, made explicit + legible, no
+double-count.** The phòng học now drives an **explicit per-student tuition multiplier** (`classroomMult` =
+1 + CLASSROOM_TUITION_K(0.20) × (cấp−1)) — better/bigger classrooms → charge more — and it **compounds with the
+prestige premium** (the multiplier he asked for). Crucially, the phòng học is **carved OUT of the generic prestige**
+(`prestigeLevels` now skips it) so it's NOT double-counted: classroom = the tuition lever, other buildings = prestige
+(reputation). Made legible: the Thu–Chi panel shows a distinct "🏫 Phòng học cấp N (+X% học phí)" line, and each
+classroom upgrade's button shows its tuition benefit (other rooms still show their prestige benefit; căng tin shows
+its meal-revenue benefit). **Level-1 schools (bot/sweep) have both multipliers = 1 → byte-IDENTICAL** (cash 6689
+unchanged); only upgraded real-play schools see it. Probe (25y, all rooms at level): lv1 8 tỷ / lv4 175 tỷ / lv8 563
+tỷ — monotonic, 0 bankruptcy, on-theme "ridiculous money," gated by escalating upgrade costs in real play. Verified:
+syntax OK, gate GREEN, bot BOTOK, sweep 6✓, upgraded fund panel renders the new line. Person-sim untouched.
+FUN 4 (a clear lever) · CLARITY 4 (the economy loop reads). **Next: ckpt 3 — alumni non-monetary item donations.**
+
 ## 2026-06-15 — Buildings that EARN: the căng tin sells meals, live (owner steer · economy ckpt) (loop iter 180)
 **New owner steer, ckpt 1 — "buildings earn money per-action, looks real, increases with upgrade."** The owner asked
 for live building income (vs the monthly tuition lump). The **Căng Tin Mì Tôm** now sells a meal to each student:
