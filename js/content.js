@@ -104,6 +104,7 @@ var CONTENT = {
   },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't
+  channeledMaker: " — đúng đường mà trường vạch, chỉ vậy thôi",
   prizes: { sangtao: "Giải Sáng Tạo Trẻ", taynghe: "Giải Tay Nghề Vàng", thukhoa: "Thủ Khoa khoá" }, // E7p: a standout's honor — a line in their life (owner: "more prizes/awards")
   prizeWastedFlavor: "Tấm bằng khen năm ấy vẫn sáng. Đường đời {ten} thì đã rẽ lối khác.", // iter-144: the honored student the system still failed — the sharpest đề Văn bite, made pointed
   // iter-125 — the followed protégé's IN-SCHOOL arc, as caused moments (THESIS mark 5: felt WHILE playing).
@@ -451,6 +452,7 @@ var CONTENT = {
     // trade-off felt at the payoff, and keeps the question open (§D-3). Picked in essayDraft from the cohort shape.
     steveColEmpty: {
       even: "Cột “🍎” vẫn để trống. Mà lạ — sổ tôi gần như không có dòng nào hỏng. Cả khoá nên người, đều tay, vững vàng. Có lẽ chính vì tôi không để đứa nào chông chênh, nên cũng chẳng đứa nào bứt lên. Tôi dạy an toàn quá chăng?",
+      craft: "Cột “🍎” vẫn để trống — lần này. Sổ có vài dòng gãy. Có em lạc trong Xưởng, tôi chưa kịp kéo về — không phải vì thiếu tài, mà vì tôi để quá nhiều cửa mở. Mà cũng có thứ chỉ mọc lên khi không ai can thiệp. Không biết thế là đúng hay sai.",
       grind: "Cột “🍎” vẫn để trống. Tôi đẩy các em qua hết đề này đến đề khác — qua môn thì nhiều, nhưng đứa nào có chút khác người cũng nguội mất. Có lẽ tôi mài, mà quên rằng có thứ càng mài càng mòn.",
       mixed: "Cột “🍎” vẫn để trống — chỗ đó tôi chừa, chưa gạch."
     },

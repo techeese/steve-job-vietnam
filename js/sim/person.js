@@ -183,7 +183,7 @@ function makeAlumnus(s, row, diem, tiem) {
   var a = {
     id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry, history: [entry],
     yearsInState: 0, annMonth: annMonthFor(id),
-    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap (what the SCHOOL did) — separate from seed, never a 🍎 gate
+    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, tell: s.tell || "", real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap + tell (the SCHOOL’s shaping of direction) — separate from seed, never a 🍎 gate
     grat: r1(grat), gifts: 0, flags: flags, line: ""
   };
   S.alumni.push(a);

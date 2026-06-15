@@ -1529,6 +1529,8 @@
     var nonSteve = Object.keys(byState).filter(function (k) { return k !== "STEVE" && k !== "BI_BAT"; });
     var majorityKey = nonSteve.sort(function (a, b) { return byState[b] - byState[a]; })[0] || null;
     var total = s.alumni.length;
+    var dominantPreset = Object.keys(presetVote).sort(function(a,b){return presetVote[b]-presetVote[a];})[0]||"";
+    var presetVote = {}; ["n1","n2","n3","n4"].forEach(function(k){ var p = s.presets[k]; presetVote[p] = (presetVote[p]||0)+1; });
     var steveAlum = s.alumni.filter(function (a) { return a.state === "STEVE"; });
     var tenSteve = steveAlum[0] ? steveAlum[0].ten : null;
     var branchKey = (function () {
@@ -1563,6 +1565,7 @@
         var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
         var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
         var gap = realCreditSuffix(a.state, seed, a.flags); // iter-154: shared with the graduation results screen (the gift-vs-fate reading — loud waste / settled / diamond / mentor's-hand; "" for an on-target life)
+        if (!gap && dominantPreset === "canbang" && a.state === "KY_SU" && a.fs && a.fs.tell === "sky" && seed >= 4) gap = CONTENT.channeledMaker;
         var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p: a standout's earned honor, on their life
         P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
       });
@@ -1592,7 +1595,7 @@
         var tot148 = Math.max(1, total);
         var realz148 = (byState.KY_SU || 0) + (byState.FOUNDER || 0) + (byState.LUONG_ON || 0);
         var harm148 = (byState.THAT_NGHIEP || 0) + (byState.QUAN_VAN_MAU || 0) + (byState.CA_MAP_COIN || 0) + (byState.BI_BAT || 0);
-        var emptyKey = (realz148 / tot148 >= 0.6 && harm148 / tot148 <= 0.2) ? "even" : (harm148 / tot148 >= 0.4) ? "grind" : "mixed";
+        var emptyKey = (realz148 / tot148 >= 0.6 && harm148 / tot148 <= 0.2) ? (dominantPreset === "duan" ? "craft" : "even") : (harm148 / tot148 >= 0.4) ? "grind" : "mixed";
         P("lead", E.steveColEmpty[emptyKey] || E.steveColEmpty.mixed);
       }
       P("lead", E.ledgerHead);
