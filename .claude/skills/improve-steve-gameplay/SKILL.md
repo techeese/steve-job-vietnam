@@ -91,12 +91,20 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
 
 ## THE LOOP (lean — this skill reloads every firing; keep it fast)
 
-0. **Orient.** Read `ROADMAP.md` (`## Cadence`, `## Epic backlog`, `## Now`) and `feedback.md` (owner
+0. **Orient.** Read `ROADMAP.md` (`## Cadence`, `## Epic backlog`, `## Now`), `feedback.md` (owner
    inbox — if it has content below its `=== FEEDBACK ===` line, that owner steer PREEMPTS this pick;
-   distill it, route it, clear the inbox in this commit). Skim the last ~5 CHANGELOG entries.
+   distill it, route it, clear the inbox in this commit), and `MODEL.md` (the factor model — the map of
+   real-world factors × interactions × mechanics the game is built against). Skim the last ~5 CHANGELOG entries.
+   **MODEL-FIRST + PLASTIC (owner 2026-06-21):** the game ANSWERS the real đề-Văn question by MODELING the
+   factors that realize/waste a gift — place every new/changed mechanic in `MODEL.md` first (what real factor,
+   how it interacts, how it stays plural+fun), and keep the architecture PLASTIC (clean, headless-testable,
+   cheap to change — expect to retune/remake mechanics as the model sharpens; don't over-polish what may change).
+   The freeze HOLDS until the model + its narrative are deeply right — graphics are the last pass, not a deadline.
+   The work splits into two tracks the loop ALTERNATES: SYSTEMS (the LATTICE / factors) and NARRATIVE/WRITING.
 1. **Pick — biggest gameplay/story move available**, ranked: (a) production-broken, (b) explicit owner
-   ask, (c) the LATTICE epics (archetypes / eras / progression / legacy), (d) person-sim depth,
-   (e) balance from the sweep, (f) content. Prefer ONE coherent shippable change; if it's big, it's an
+   ask, (c) the LATTICE epics (archetypes / eras / progression / legacy) + the NARRATIVE/WRITING track
+   (alternate the two), (d) person-sim depth, (e) balance from the sweep, (f) content. Prefer ONE coherent
+   shippable change; if it's big, it's an
    EPIC — plan it in ROADMAP `## Epic: <name>` (decide the load-bearing forks; ask the owner only on a
    truly expensive-to-undo one), isolate in a git worktree if it moves files, ship a green checkpoint
    each firing. For non-trivial design forks, DIVERGE before converge: 3 candidates, one line each,
