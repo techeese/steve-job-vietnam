@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — L4 TECHNOLOGY ckpt1: the AI era extends the teacher's reach (the safe, non-thesis slice) (loop iter 239)
+**Owner re-engaged ("continue") → shipped the first real slice of the queued TECHNOLOGY factor — the part that needs no
+thesis-call.** The genuine fork in L4 (what tech does to the APEX / the making of a 🍎) is thesis-level and stays
+owner-gated. But "future technology reshapes EDUCATION" has a safe, defensible reading that doesn't touch the apex: in
+the smartphone/AI decades (era ≥ 3) an AI **trợ giảng** extends the headmaster's reach — **+1 mentor slot**
+(`CONFIG.AI_TUTOR {minEra:3, bonus:1}`). It's "tech changes teaching CAPACITY," not "tech caps genius." Mechanics:
+`mentorSlots()` = `MENTOR_SLOTS` + era-bonus (deterministic from `S.year` → replay-safe, NO new save state, reversible);
+the mentor gate + all UI caps now read it; a one-time news beat fires at the era crossing (*"🤖 Trợ giảng AI về trường
+— thầy kèm sát được thêm một em mỗi lúc… Máy lo phần lặp lại; thầy dành tâm sức cho đứa cần."*). It composes with the
+verified mentorship×origin equalizer — the AI era lets you lift one more poor kid past their circumstance. Verified:
+parse clean, **gate GREEN (byte-identical replay — no state added)**, bot BOTOK, **sweep 0 bad flags**, slots scale
+3→3→3→4→4 across the decades. Deployed. **Still owner-gated:** the apex thesis-fork (does tech lower/raise/leave the
+🍎 ceiling) — ckpt2 when the owner picks.
 ## 2026-06-22 — Audit complete: the opening reads clean, and the mentoring×LATTICE model is verified deep (loop iter 235)
 **A true-verification firing (no manufactured change — per the completion-plateau posture).** Two checks closed the
 comprehensive player-facing + model audit this session ran (iter-222→234, which fixed the real gaps: cast-quote dup,

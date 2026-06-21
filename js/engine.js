@@ -56,7 +56,7 @@ function eraFav(tell) { if (!tell) return 1; var f = curEra().fav; return (f && 
 // iter-205 ckpt2: lets the epilogue/graduation name the DECADE's hand on a life (wrong-era waste / right-era flourish).
 function eraFavAt(tell, year) { if (!tell || year == null) return 1; var f = CONFIG.ERAS[eraIndex(year)].fav; return (f && f[tell] != null) ? f[tell] : 1; }
 // the era-shift story beat — fires once at a year rollover that crosses an era boundary (pure derive, no state).
-function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); } }
+function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); if (pe < CONFIG.AI_TUTOR.minEra && ce >= CONFIG.AI_TUTOR.minEra) news("🤖 Trợ giảng AI về trường — thầy kèm sát được thêm một em mỗi lúc (suất dìu dắt +" + CONFIG.AI_TUTOR.bonus + "). Máy lo phần lặp đi lặp lại; thầy dành tâm sức cho đứa cần."); } } // iter-239 L4 ckpt1: the AI era extends the teacher's reach
 
 /* derived alumni stats (never stored — DESIGN §5a) */
 function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }
@@ -88,11 +88,13 @@ function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MI
 function teacherById(id) { for (var i = 0; i < S.teachers.length; i++) if (S.teachers[i].id === id) return S.teachers[i]; return null; }
 // MENTOR'S LEDGER Phase 2 — the headmaster's scarce attention (player verb + helpers; UI wiring lands next)
 function mentorCount() { var c = 0, st = S.students; for (var i = 0; i < st.length; i++) if (st[i].mentored) c++; return c; }
+// iter-239 (L4 ckpt1): the effective attention cap — the AI era's trợ-giảng adds reach (CONFIG.AI_TUTOR.bonus). Deterministic from S.year → replay-safe; no new state.
+function mentorSlots() { return CONFIG.MENTOR_SLOTS + (eraIndex(S.year) >= CONFIG.AI_TUTOR.minEra ? CONFIG.AI_TUTOR.bonus : 0); }
 function mentorStudent(id) {
   var st = S.students, s = null; for (var i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
   if (!s) return { ok: false, why: "gone" };
   if (s.mentored) { s.mentored = false; return { ok: true, mentored: false }; } // toggle off → free a slot
-  if (mentorCount() >= CONFIG.MENTOR_SLOTS) return { ok: false, why: "full" };
+  if (mentorCount() >= mentorSlots()) return { ok: false, why: "full" };
   s.mentored = true; return { ok: true, mentored: true };
 }
 // assign teacher `tid` as head of khoa `key` (null = vacate). One teacher heads at most one khoa.
@@ -858,5 +860,5 @@ var __test = {
   config: function () { return CONFIG; }
 };
 
-if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, checkMilestones: checkMilestones, studentMajor: studentMajor, khoaHeaded: khoaHeaded, khoaThreshold: khoaThreshold, setKhoaHead: setKhoaHead, teacherById: teacherById, contributeQuy: contributeQuy, mentorStudent: mentorStudent, mentorCount: mentorCount }; } // loadGame/saveGame added by js/save.js · declareAdmissions/derivedPool by js/sim/admissions.js (both defined after this runs)
+if (typeof window !== "undefined") { window.__test = __test; window.HVS = { S: function () { return S; }, freshState: freshState, clockTick: clockTick, dayTick: dayTick, placeRoom: placeRoom, autoPlace: autoPlace, canPlace: canPlace, finalizeJune: finalizeJune, resolveEvent: resolveEvent, resolveContract: resolveContract, checkMilestones: checkMilestones, studentMajor: studentMajor, khoaHeaded: khoaHeaded, khoaThreshold: khoaThreshold, setKhoaHead: setKhoaHead, teacherById: teacherById, contributeQuy: contributeQuy, mentorStudent: mentorStudent, mentorCount: mentorCount, mentorSlots: mentorSlots }; } // loadGame/saveGame added by js/save.js · declareAdmissions/derivedPool by js/sim/admissions.js (both defined after this runs)
 if (typeof module !== "undefined" && module.exports) { module.exports = { freshState: freshState, dayTick: dayTick, get S() { return S; }, __test: __test, setConfig: function (c, t) { CONFIG = c; CONTENT = t; } }; }

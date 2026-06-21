@@ -32,7 +32,7 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
 | **Mood / wellbeing** | LIVE | burnout, flow, dropping out | `mood` (FLOW/penalty/dropout) | cram-drain, mismatch, origin, education |
 | **ERA (the decade)** | LIVE | the world re-values gifts over time | `eraIndex(year)` → eraFav[tell] | **talent-direction (right kid / wrong era)**, the apex ceiling |
 | **Family origin** | LIVE | class advantage/disadvantage at the start | `origin` nghèo/tb/khá-giả (ORIGIN_GROW) | **mentorship (counters it)**, talent-realization, era (triple-wrong) |
-| **Technology / tools** | QUEUED | the tools of an age reshape *how you teach* AND *what a gift can build* | (idea) rides ERA: each decade unlocks tools (no-computer → PC → internet → smartphone → AI → ?) | **era (its native axis)**, education (new pedagogy/access), origin (tools can democratize OR widen the gap), the apex conditions |
+| **Technology / tools** | ckpt1 LIVE | the tools of an age reshape *how you teach* AND *what a gift can build* | **ckpt1 (iter-239):** the AI era (era≥3) adds an AI trợ-giảng → `mentorSlots()` = `MENTOR_SLOTS` + `AI_TUTOR.bonus` (more teaching REACH; deterministic, replay-safe). The apex slice (what tech does to the 🍎 ceiling) is the owner-gated thesis-fork → ckpt2. | **era (its native axis)**, **mentorship/origin equalizer (ckpt1 scales it)**, education, the apex conditions (ckpt2) |
 | **Geography / archetype** | LIVE | where the school is sets its whole world | (L2) `CONFIG.ARCHETYPES` — 4 schools: boot economy/prestige + default culture + cohort origin-mix (tinh_le/que_ngheo/lo_thanhpho/truong_nghe) | **origin-mix** (rural contains more poor), endowment, prestige, teaching-culture, era |
 | **Peers / contagion** | QUEUED | a cohort lifts or drags its members | (idea) | cohort composition, mood, realize/waste |
 | **Luck** | QUEUED | the same gift, different break | (idea, bounded) | era, the apex (keep rare + earned) |
@@ -54,7 +54,11 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
   (the "triple-wrong"), always done TO them (invariant #4).
 - **GEOGRAPHY → ORIGIN-MIX** (queued) — a rural school simply *contains* more poor kids; place pre-loads
   circumstance before the player makes a single choice.
-- **TECHNOLOGY × ERA × EDUCATION × APEX** (queued, owner steer 2026-06-21) — each era's *tools* reshape the
+- **TECHNOLOGY × ERA × MENTORSHIP** (ckpt1 LIVE, iter-239) — the AI era's trợ-giảng extends the headmaster's
+  reach (+1 mentor slot), so the verified mentorship×origin equalizer scales: in the AI decades you can lift one
+  more poor kid past their circumstance. This is the SAFE half of the factor (teaching CAPACITY), built on the
+  owner's "continue" without touching the thesis. The apex half (below) stays owner-gated.
+- **TECHNOLOGY × ERA × EDUCATION × APEX** (ckpt2, owner-gated thesis-fork, owner steer 2026-06-21) — each era's *tools* reshape the
   game twice over: (a) **education** — the AI era could offer an AI-tutor that changes the economics of
   scarce mentorship (does it democratize attention to the poor, or only the rich school affords it? → ties to
   ORIGIN), online learning that widens access; (b) **the apex conditions** — tech lowers the barrier to
