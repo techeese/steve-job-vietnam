@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-21 — Owner tone fixes: a real ceiling fan (not a school "bell"), and no jabs at the Ministry (loop iter 226)
+**Direct owner feedback, applied.** (1) *"tháo chuông trường" sounds unreal — Vietnamese schools don't have a chuông
+(bell).* True. Changed it to **`quạt trần lớp`** (the classroom ceiling fan — universal in VN schools, and a curious
+tinkerer taking it apart to fix the rattle is a real, charming image) across all three linked references: the founding
+event (*"🌀 Mai Sương tháo quạt trần lớp… 'nó quay lệch, nghe lạch cạch'"*) and the Bác Tâm Steve-callback (*"Đứa đó hồi
+xưa hay tháo quạt trần lớp ra sửa. Sổ này có nó là đủ dày"*) — which actually tightens the spark-tinkerer → Steve thread.
+(2) *"be less sarcastic about the education Ministry (Bộ), or none."* Removed **all five** Bộ references: the capstone's
+climax `…để Bộ duyệt` → *"…ai mà cân cho được"* (more poignant — you can't weigh money against lives, no bureaucratic
+jab); the 100-tỷ milestone `Bộ cũng phải nhấc máy gọi` → "ai trong ngành cũng phải biết tên trường"; the school-name +
+khoa placeholders `…chờ Bộ duyệt` → "trường vừa mở, còn đang hoàn thiện." The satire now sits squarely on the SYSTEM and
+cram-culture, never the Ministry. Logged the tone rule (feedback ingest + SKILL) so future writing keeps it. Content-only
+→ balance-neutral (gate GREEN, bot BOTOK, essay renders); deployed.
+
 ## 2026-06-21 — Verified the 🍎-success capstone IS moving + flaw-free; the polish sweep is complete (loop iter 225)
 **The owner's marquee goal — "the essay when we have the first Steve should be very good, people read it should be
 moved" — is now read and confirmed.** Steves are rare, so a node probe found seeds that mint one (duan+mentor → 60/65/76),

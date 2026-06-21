@@ -160,6 +160,9 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
   load/sanitize/build/demolish. `dayTick()` stays a pure function of (S, rnd).
 - Pantheon tone law: honored real names are reverent-only; no honoree name in any phốt/scandal/waste
   string. Grep before ship.
+- TONE (owner 2026-06-21): NO sarcasm/jabs at the education MINISTRY (Bộ) — ideally don't mention it at all; keep the
+  satire on the SYSTEM, the cram-culture, the đề. And keep details REAL to a Vietnamese school (e.g. quạt trần / trống
+  trường, NOT a "chuông"/bell). Grep new text for `Bộ` before ship.
 - Layer discipline: sim/mechanics → engine.js/CONFIG/tables, text → content.js, NEVER inline. (Art →
   art.js is FROZEN — don't add to it.)
 - LEAVE NO DEBRIS: scratch/harness/dump files written to `/tmp` or `rm`'d the same turn; `git status`

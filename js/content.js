@@ -11,17 +11,17 @@ var CONTENT = {
   // iter-186 (owner: "the name-change event should change the name for REAL"): the angel investor's corporate names
   // the school gets rebranded to when you take their money (event 'datten' → fx datTenCo). Satirical VN-startup flavor.
   corpNames: ["Học viện FinX Capital", "Học viện EduChain 4.0", "Học viện Bất Động Sản Phát Lộc", "Học viện Coin Toàn Cầu", "Học viện Sàn Việt Mall", "Học viện AI Thần Tốc", "Học viện Tài Chính Số ABC", "Học viện Khởi Nghiệp Unicorn"],
-  schoolSub: "(tên đầy đủ đang chờ Bộ duyệt mã trường)",
+  schoolSub: "(trường vừa mở — tên đầy đủ còn đang hoàn thiện)",
   // iter-164 — the LIVE school tier shown under the name (grows with cash; a constant progression readout for
   // the owner's "watch it become an empire" vision). schoolTier() picks the highest reached + appends 🍎×N.
   schoolTiers: [
-    { min: 0, label: "(tên đầy đủ đang chờ Bộ duyệt mã trường)" }, // fresh — the original satirical placeholder
+    { min: 0, label: "(trường vừa mở — tên đầy đủ còn đang hoàn thiện)" }, // fresh — placeholder while the school finds its feet
     { min: 1000, label: "Học hiệu đang lên" },        // 1 tỷ — rising
     { min: 10000, label: "Học hiệu có tiếng" },       // 10 tỷ — a name
     { min: 50000, label: "Thế lực giáo dục" },        // 50 tỷ — a force
     { min: 250000, label: "Đế chế giáo dục" }         // 250 tỷ — an empire
   ],
-  khoa: "Khoa Công Nghệ & Sáng Tạo (mã ngành đang chờ Bộ duyệt)",
+  khoa: "Khoa Công Nghệ & Sáng Tạo (ngành mới mở, hồ sơ đang hoàn thiện)",
   bought: "Trường ĐH Dân Lập Văn Mẫu Số 9",
   disclaimer: "Mọi nhân vật, công ty, học viện trong game đều là hư cấu. Mọi sự trùng hợp là do vũ trụ thích đùa. Các danh nhân lịch sử được vinh danh với lòng kính trọng, đúng như mọi mái trường Việt Nam vẫn làm.",
   boot: [
@@ -151,7 +151,7 @@ var CONTENT = {
     "🏛️ 10 tỷ — một học hiệu thực thụ. Báo bắt đầu gọi là 'hiện tượng'.",
     "🏛️ 25 tỷ — các trường khác cử người sang 'tham quan học hỏi'.",
     "🏛️ 50 tỷ — một đế chế giáo dục đang thành hình.",
-    "🏛️ 100 tỷ — một thế lực. Bộ cũng phải nhấc máy gọi.",
+    "🏛️ 100 tỷ — một thế lực. Ai trong ngành cũng phải biết tên trường.",
     "🏛️ 250 tỷ — huyền thoại. Người ta viết case study về bạn.",
     "🏛️ 500 tỷ — không còn gì để chứng minh nữa. Chỉ còn câu hỏi: để làm gì?"
   ],
@@ -395,8 +395,8 @@ var CONTENT = {
         { label: "Nhận tài trợ — tiền là tiền", hint: "+200tr, +6 Tiếng Tăm, −5 Uy Tín, một mầm phốt", fx: "taiTroNhan" },
         { label: "Cảm ơn, trường không bán cửa", hint: "+3 Uy Tín, Bác Tâm gật đầu", fx: "taiTroTuChoi" }
       ] },
-    { id: "chuong", title: "🔔 Mai Sương tháo chuông trường",
-      desc: "Mai Sương tháo chuông trường ra xem — 'nó kêu lệch nửa nốt'. Bảo vệ đang chờ ý kiến hiệu trưởng.",
+    { id: "chuong", title: "🌀 Mai Sương tháo quạt trần lớp",
+      desc: "Mai Sương tháo cái quạt trần trên lớp ra xem — 'nó quay lệch, nghe lạch cạch'. Bảo vệ đang chờ ý kiến hiệu trưởng.",
       scripted: true,
       choices: [
         { label: "Kỷ luật trước toàn trường", hint: "+2 KT cả lớp, Sương -5 ST", fx: "chuongKyLuat" },
@@ -645,7 +645,7 @@ var CONTENT = {
     ledgerBank: "Sổ ngân hàng: {cash}.",
     ledgerEndow: "Quỹ hiến tặng: {endow} — tiền của lòng biết ơn,{endowTail} không tiêu được vào quảng cáo.",
     ledgerThird: "Sổ thứ ba không in được thành tiền: là cái danh sách ở trên.",
-    ledgerStare: "Ba quyển nằm cạnh nhau trên bàn. Quyển nào to hơn thì… để Bộ duyệt.",
+    ledgerStare: "Ba quyển nằm cạnh nhau trên bàn. Quyển nào to hơn thì… ai mà cân cho được.",
     crossOut: {
       steve: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi định viết “thành công rồi”, nhìn lại thấy chữ đó không phải của mình, xoá. Tôi—",
       coin: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “trường tôi dạy làm giàu”, rồi đọc lại cái dòng 🚔, để dấu ba chấm. Tôi—",
@@ -657,7 +657,7 @@ var CONTENT = {
       kind: "Vậy làm thế nào để có một Steve Jobs Việt Nam. Tôi viết “một ngôi trường tử tế”, nghe hơi tự khen, để xem mai có xoá không. Tôi—"
     },
     bacTam: {
-      steve: "Bác Tâm để ấm trà xuống: “Đứa đó hồi xưa hay tháo chuông trường. Sổ này có nó là đủ dày.”",
+      steve: "Bác Tâm để ấm trà xuống: “Đứa đó hồi xưa hay tháo quạt trần lớp ra sửa. Sổ này có nó là đủ dày.”",
       coin: "Bác Tâm để ấm trà xuống: “Có đứa gửi quà Tết to lắm. Tôi để nguyên hộp, chưa mở.”",
       vanmau: "Bác Tâm để ấm trà xuống: “Đồ án mẫu của cô Trình treo ở phòng truyền thống. Đẹp thật.”",
       kysu: "Bác Tâm để ấm trà xuống: “{nKySu} đứa sửa máy. Sổ này đọc cũng được.”",
