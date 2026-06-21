@@ -137,8 +137,16 @@ function buildEssay(s, cb, capstone) {
     P("lead", tpl(E.ledger, { yearWord: yw, graduated: s.META.graduated }));
     P("lead", s.META.steves > 0 ? E.nameWithSteve : E.nameNoSteve);
     var prizeFlavorUsed = false; // iter-176: the "honored yet failed" line is a SINGULAR gut-punch — fire it once
+    var usedLines = {}; // iter-222: no two cast members read the IDENTICAL quote (the Steve-keynote dup, at the cast level)
     buildCast(s, byState, majorityKey, C, dominantPreset).forEach(function (a) {
       var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
+      // dedup on the TEMPLATE (the kid's name normalised out) — two kids reading the same line modulo their name IS the dup
+      var norm = a.ten ? line.split(a.ten).join("◊") : line;
+      if (usedLines[norm]) { // a collision (two kids, same state×tell) — pick an unused variant from their own gift-pool
+        var pool = (a.fs && a.fs.tell && CONTENT.alumLinesByTell[a.state] && CONTENT.alumLinesByTell[a.state][a.fs.tell]) || CONTENT.alumLines[a.state] || [];
+        for (var pi = 0; pi < pool.length; pi++) { var altNorm = pool[pi].split("{ten}").join("◊"); if (!usedLines[altNorm]) { line = tpl(pool[pi], { ten: a.ten }); norm = altNorm; break; } }
+      }
+      usedLines[norm] = true;
       if (!prizeFlavorUsed && a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) { line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); prizeFlavorUsed = true; } // iter-144/176
       var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
       var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);

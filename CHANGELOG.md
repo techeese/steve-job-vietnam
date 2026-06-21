@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-21 — No two graduates in the capstone read the same line (cast-quote dedup) (loop iter 222)
+**A real quality flaw in the marquee artifact, found by reading the WHOLE essay end-to-end (not just verifying each
+section fires).** The capstone now flows well as a coherent, moving piece — but the full read surfaced the same class of
+flaw the owner caught at the Steve keynote (iter-208), one level down: **two cast members with the same outcome × gift
+got the IDENTICAL quote** — *"Đỗ Phương Thảo bỏ nghề bán hàng… pitch được vì sản phẩm có thật"* and *"Phát 'Founder' bỏ
+nghề bán hàng… sản phẩm có thật"* (both KY_SU × hype → same pooled line). In the emotional payload, two kids reading
+identically cheapens it. Now `buildEssay` dedupes the cast: it keys on the line's TEMPLATE (the kid's name normalised
+out, so "two kids reading the same line modulo their name" IS the collision), and on a hit picks an unused variant from
+that kid's own gift-pool (`alumLinesByTell[state][tell]`). Result: *"…bỏ nghề bán hàng, quay ra làm thật"* vs *"…đứng
+giữa khách và kỹ thuật, dịch hai bên hiểu nhau"* — distinct lives. Deterministic (cast order is deterministic) →
+replay-safe; gate GREEN, bot BOTOK (essay 2766→2776 = the deduped variant). The capstone — the đề-Văn's answer in faces
+— now reads with every graduate a distinct person, end to end.
+
 ## 2026-06-21 — lives.sh reads across archetypes; the gameplay-first EXIT GATE is now measurably MET (a/b/c) (loop iter 221)
 **Closed the one exit-gate criterion that couldn't be checked headlessly — and it passes.** The gameplay-first phase's
 release gate (SKILL.md) has four parts; (b) — "read ~5 biographies across ≥2 archetypes × ≥2 eras; a stranger can name a
