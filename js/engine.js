@@ -989,8 +989,11 @@ function resolveContract(accept) {
 }
 
 /* ---------- flavor line helpers ---------- */
-function pickLine(state, a) { var b = CONTENT.alumLines[state] || ["—"]; var i = ((a.id | 0) + ((a.fs && a.fs.seed) | 0)) % b.length; return b[i].replace(/\{ten\}/g, a.ten); } // deterministic per-alumnus index (replay-stable, no rng draw) so even the garage→KY_SU path gets the iter-98 variety
-function pickLineIdx(state, a, idx) { var b = CONTENT.alumLines[state] || ["—"]; return b[idx % b.length].replace(/\{ten\}/g, a.ten); }
+// iter-209 (N1): the gift-specific vignette pool — a coder's KY_SU reads unlike a maker's. Prefer alumLinesByTell[state][tell]
+// (the kid's gift), fall back to the generic alumLines[state] for tell="" / uncovered states. Pure lookup → replay-stable.
+function alumPool(state, a) { var t = a.fs && a.fs.tell; var bt = t && CONTENT.alumLinesByTell[state] && CONTENT.alumLinesByTell[state][t]; return bt || CONTENT.alumLines[state] || ["—"]; }
+function pickLine(state, a) { var b = alumPool(state, a); var i = ((a.id | 0) + ((a.fs && a.fs.seed) | 0)) % b.length; return b[i].replace(/\{ten\}/g, a.ten); } // deterministic per-alumnus index (replay-stable, no rng draw) so even the garage→KY_SU path gets the iter-98 variety
+function pickLineIdx(state, a, idx) { var b = alumPool(state, a); return b[idx % b.length].replace(/\{ten\}/g, a.ten); }
 function tpl(str, o) { return String(str).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
 
 // SAVE / LOAD / SANITIZE  → js/save.js (iter-199 STRUCTURE carve — the persistence subsystem; loaded after engine.js, augments window.HVS with loadGame/saveGame there).

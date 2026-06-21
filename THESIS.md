@@ -29,7 +29,10 @@ little people grow up and scatter into the world.
 2. **Reflect consequences; never impose a verdict.** The game shows what each choice does to real
    lives. It does not tell the player which choice was right.
 3. **The ending mirrors the player back.** The closing essay is assembled from *their* graduates —
-   the question answered by the faces that crossed their sân, never by a stated moral.
+   the question answered by the faces that crossed their sân, never by a stated moral. That essay is the
+   game's true payoff: it should be **long, personal to the run, and genuinely moving** — the headmaster
+   thinking aloud, built across annual letters to the climactic *"how to have a Steve Jobs Vietnam"* essay
+   when the first 🍎 appears. **It wrestles with the question; it never answers it.**
 
 ## §C — The four person-sim invariants (design law — these protect the charter)
 

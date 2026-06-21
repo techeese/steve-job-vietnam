@@ -247,6 +247,43 @@ var CONTENT = {
     STEVE: ["Bài keynote của {ten} được chiếu lại trong giờ Văn.", "{ten} từ chối lên bìa tạp chí. Tạp chí tự in.",
       "{ten} mở mã nguồn thứ từng làm nên tên tuổi. Cả ngành lặng đi một nhịp.", "Một đứa trẻ ở tỉnh xa bảo: 'lớn lên con làm như {ten}'."]
   },
+  // iter-209 (NARRATIVE/WRITING N1) — GIFT-SPECIFIC alumni vignettes: the same outcome reads differently for a coder
+  // (spark), a maker (sky), a persuader (hype), so each kid is a PERSON, not "a THẤT_NGHIỆP". pickLine/pickLineIdx
+  // prefer alumLinesByTell[state][tell], falling back to the generic alumLines[state] (tell="" / uncovered state).
+  // Drafted by a 3-writer multi-agent fan-out (concrete / ironic / tender lenses), synthesized best-per-cell. The
+  // simulation's depth (tell × outcome) finally shows in the prose — the foundation the long capstone essay assembles from.
+  alumLinesByTell: {
+    THAT_NGHIEP: {
+      spark: ["Laptop của {ten} mở sẵn một dự án dang dở, ba năm chưa ai trả tiền để nó chạy.", "Repo của {ten} có hai nghìn sao trên mạng. Trên giấy tờ vẫn là 'chưa có việc làm'."],
+      sky: ["Trên bàn {ten} là cái máy tự chế từng đoạt giải, giờ làm chỗ gác chìa khoá.", "{ten} sửa đồ miễn phí cho cả xóm. Không nghề nào trên đời chịu trả lương cho đôi tay ấy."],
+      hype: ["{ten} có bốn mươi nghìn người theo dõi 'hành trình tìm việc'. Sang năm thứ hai.", "{ten} có tài kéo người ta nghe, mà chẳng có gì để bán. Cả nhóm bạn dần thưa."]
+    },
+    LUONG_ON: {
+      spark: ["{ten} tự động hoá hết việc của mình bằng một đoạn script. Vẫn ngồi đủ tám tiếng cho phải phép.", "Code của {ten} chạy âm thầm sau mỗi báo cáo. Không ai biết, em cũng quen rồi."],
+      sky: ["{ten} sửa cái máy in cả công ty chịu thua. Hết giờ lại về, đúng giờ.", "{ten} kê lại cái bàn lung lay của cả phòng bằng một miếng nêm tự tiện. Không ai để ý."],
+      hype: ["{ten} chốt đơn đều tay, KPI tháng nào cũng xanh. Hoa hồng vừa đủ một ly trà chiều.", "{ten} bán ý tưởng giỏi đến nỗi sếp nhận làm của mình. {ten} được tăng 8%."]
+    },
+    KY_SU: {
+      spark: ["{ten} viết lại phần lõi, hệ thống nhanh gấp đôi. Bản ghi commit chỉ đề một dòng: 'sửa tí'.", "Hệ thống nửa đêm sập, điện thoại {ten} sáng đầu tiên. Năm phút sau, nó lại chạy."],
+      sky: ["{ten} tiện một con ốc không hãng nào còn bán, máy già hai chục năm chạy lại.", "Cái đồ gá {ten} chế nằm trong xưởng, không tên không bằng, nhưng thiếu nó là tắc cả dây chuyền."],
+      hype: ["{ten} đứng giữa khách và kỹ thuật, dịch hai bên hiểu nhau. Dự án nào có em là trôi.", "{ten} bỏ nghề bán hàng, quay ra làm thật. Giờ em pitch được vì sản phẩm có thật."]
+    },
+    FOUNDER: {
+      spark: ["{ten} tự code cả sản phẩm đầu, ngủ cạnh server. Vòng hạt giống đã chốt — hạt rất nhỏ.", "Bản demo {ten} tự code chạy ngon trên một máy. Nhà đầu tư hỏi: thế còn một triệu máy?"],
+      sky: ["Slide của {ten} xấu, nhưng em đặt sản phẩm thật lên bàn. Cả phòng im lặng cầm thử.", "Xưởng nhỏ của {ten} thơm mùi nhựa in 3D. Em pitch lần thứ chín, vẫn tin vào thứ mình làm."],
+      hype: ["{ten} pitch lần thứ chín, slide mượt như nước. Nhà đầu tư gật gù rồi xin 'để em xem thêm'.", "{ten} gọi vốn bằng một câu chuyện hay đến rơi nước mắt. Demo thì 'để lần sau'."]
+    },
+    CA_MAP_COIN: {
+      spark: ["Hợp đồng thông minh của {ten} không có lỗi nào — trừ cái cửa hậu cố tình để lại.", "{ten} viết con bot 'auto x3 tài khoản'. Code thì chuẩn, đằng sau là một cái hố."],
+      sky: ["Đôi tay từng chế ra đồ thật, giờ {ten} dùng để dựng gian hàng giả long lanh trên livestream.", "{ten} làm bao bì đẹp đến mức ai cũng tin. Bên trong hộp, chẳng có gì."],
+      hype: ["Tài hùng biện của {ten} giờ rót vào khoá 'tư duy triệu đô', học phí bốn số.", "Cái duyên kéo người của {ten} giờ kéo họ vào nhóm kín, đổi tên lần thứ tư cho 'tránh tai tiếng'."]
+    },
+    QUAN_VAN_MAU: {
+      spark: ["{ten} từng tự nghĩ ra thuật toán riêng. Giờ điền đúng mẫu, đúng ô, đúng người ký.", "Cái đầu logic của {ten} giờ dùng để rà cho biên bản khớp quy trình. Sạch, và lặng."],
+      sky: ["Đôi tay từng chế ra cái mới, nay {ten} xếp hồ sơ thẳng hàng đẹp nhất phòng.", "{ten} nộp bản vẽ đúng khung mẫu, từng nét chuẩn quy chuẩn. Cái khung ấy không chừa chỗ cho ý của riêng em."],
+      hype: ["Giọng nói từng làm cả lớp ồ lên, nay {ten} đọc báo cáo điển hình, đúng từng câu mẫu.", "{ten} thuyết trình thành tích trơn tru, ai cũng khen. Về chỗ, em cười gượng một mình."]
+    }
+  },
   garageLine: "Công ty của {ten} sa thải 90% nhân sự. {ten} đang ngủ trong ga-ra.",
   // iter-208 (NARRATIVE/WRITING track ckpt1) — a POOL so two Steves never read identically (the owner caught the dup).
   // keynoteFor(a) picks per-alum by id (deterministic, replay-safe). Varied angles, same voice: the reveal, the awe,
