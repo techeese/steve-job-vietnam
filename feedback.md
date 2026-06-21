@@ -12,6 +12,7 @@ Write as much as you want, in any format (bullets, paragraphs, half-thoughts). P
 iterations; the loop absorbs it without you having to break its flow.
 
 **Ingest log** (newest first):
+- 2026-06-21 (iter 208) — **owner design conversation on NARRATIVE (3 steers):** (1) "the epilogue writing can be better — which aspect of dev does it belong to?" → answered: NARRATIVE/WRITING (content.js = words, epilogue.js = assembly); owner chose a **PARALLEL writing track** alongside LATTICE systems. (2) **VISION:** the headmaster's writing should be LONG + REASONED ("like LLM reasoning") + ALIGNED WITH THE PLAYER'S CHOICES — an "annual letter to students" recurring beat → CAPSTONE "how to have a Steve Jobs Vietnam" essay (when first 🍎) that is GENUINELY MOVING; + a few unlockable PATHS/EVENTS. (3) **"what is a Steve?"** — THESIS-adjacent/frozen (deliberately open). → **APPLIED to ROADMAP `### ★ NARRATIVE / WRITING` track (N0-N4 + the Steve-definition note).** SHIPPED N0 (iter-208 keynote variation pool). **OPEN FORK for owner:** the capstone essay = AUTHORED-ASSEMBLY (offline/deterministic/free) vs RUNTIME-LLM (adaptive but needs API on a static site). Recommend authored-first.
 - 2026-06-21 (iter 206) — **"to fast-track gameplay development, is the current process the best?"** → I assessed it
   and the owner picked ALL four accelerators (use workflows · build tune.js · keep the serial loop · finish ERAS+L2
   depth). **APPLIED to SKILL.md `## VELOCITY`:** (1) WORKFLOWS now owner-authorized (standing opt-in) for BREADTH work
