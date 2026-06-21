@@ -42,6 +42,34 @@ The poignant core is **VISIBLE WASTED TALENT** — you should be able to watch a
 less than they could have been, year by year, and know you did it. That is the emotional payload the đề
 Văn deserves, and it is what "people development" means here.
 
+## The narrative payoff — the game is experienced AS the headmaster's writing (owner steer 2026-06-21)
+The simulation generates the lives; the **writing is how the player FEELS them**. This is a first-class
+pillar, not decoration — the đề Văn is an *essay*, so the game's payoff is *prose*.
+- **An ANNUAL-LETTER rhythm.** The headmaster writes — periodically (each year / each era turn) — a short
+  letter that reflects **the player's recent choices** and the cohort's becoming. A recurring narrative
+  spine, so the story accumulates rather than arriving only at the end.
+- **The CAPSTONE: the "how to have a Steve Jobs Vietnam" essay.** When the first 🍎 appears (and at the
+  decade close), the letters build to the real essay — **long, reasoned (it thinks aloud, weighs, doubts —
+  like a mind working a hard question), personalized to THEIR run, and genuinely MOVING.** A stranger should
+  read it and be moved. It is assembled from *their* graduates and *their* policies (THESIS §B-3 — it
+  mirrors the player back); it **wrestles, never lectures** (the open-question law holds — it raises the
+  question with the faces that crossed the sân, it does not declare the answer).
+- **A few UNLOCKABLE PATHS / EVENTS** give different runs different stories to tell (ties to eras /
+  archetypes / progression).
+- *Open build fork (owner to decide): the capstone as **authored-assembly** (deterministic, offline, free —
+  scale the template approach with deep run-conditioning) vs **runtime-LLM** (adaptive/"reasoning-like", but
+  needs an API on a static site). Default lean: authored-first, LLM as an optional later layer.*
+
+## What a "🍎 Steve" IS — an articulation, NOT the answer (owner Q 2026-06-21)
+The thesis keeps the *how* open (the game never tells you how to grow a Steve — you feel your own answer).
+But the writing and design can still say **what a 🍎 represents**, because naming the apex ≠ prescribing the
+recipe: a 🍎 is **the rare person who made something authentically THEIR OWN that the world came to need** —
+*earned, not manufactured; orthogonal to wealth, credentials, or fame* (the văn-mẫu clerk and the coin shark
+are the bright traps that look like success and aren't). And the game's quiet **counter-thesis** stands
+beside it: maybe the truest answer isn't *minting a Steve* at all, but **a school that lets each kid become
+themselves** — the realized kỹ sư and the honest maker are lives of equal dignity. The capstone essay should
+hold both in tension ("did I make this one — or did I just happen not to erase them?"), never resolve it.
+
 ## Laws the person-sim must not break (these protect the charter)
 The new depth is powerful enough to break the open-question / reflect-not-verdict / biographies-not-scores
 laws by accident. These four invariants keep it honest — they are *design law*, not preference:
