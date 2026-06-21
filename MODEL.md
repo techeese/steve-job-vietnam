@@ -34,7 +34,7 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
 | **Family origin** | LIVE | class advantage/disadvantage at the start | `origin` nghèo/tb/khá-giả (ORIGIN_GROW) | **mentorship (counters it)**, talent-realization, era (triple-wrong) |
 | **Technology / tools** | ckpt1 LIVE | the tools of an age reshape *how you teach* AND *what a gift can build* | **ckpt1 (iter-239→240):** each tech wave COMPOUNDS teaching REACH → `mentorSlots()` = `MENTOR_SLOTS` + `(eraIdx−TECH_REACH.minEra+1)·perEra` (3→4 smartphone→5 AI; deterministic, replay-safe; era-true beats). The apex slice (what tech does to the 🍎 ceiling) is the owner-gated thesis-fork → ckpt2. | **era (its native axis)**, **mentorship/origin equalizer (ckpt1 scales it)**, education, the apex conditions (ckpt2) |
 | **Geography / archetype** | LIVE | where the school is sets its whole world | (L2) `CONFIG.ARCHETYPES` — 4 schools: boot economy/prestige + default culture + cohort origin-mix (tinh_le/que_ngheo/lo_thanhpho/truong_nghe) | **origin-mix** (rural contains more poor), endowment, prestige, teaching-culture, era |
-| **Peers / contagion** | QUEUED | a cohort lifts or drags its members | (idea) | cohort composition, mood, realize/waste |
+| **Peers / contagion** | ckpt1 LIVE | a cohort lifts or drags its members | **ckpt1 (iter-241):** the cohort's atmosphere pulls each kid's mood toward the school mean (`CONFIG.PEER.PULL`, a deterministic variance-reducing pass in `growStudents`) — a thriving class buffers strugglers, a demoralized one drags stars out of FLOW. Aggregate-neutral (sweep PEER sensor: realize Δ0.3pts, apex held); named once a year (`tetCohortBeat` warm/cold). | **mood (its native axis)**, cohort composition, FLOW/mismatch-burnout, realize/waste |
 | **Luck** | QUEUED | the same gift, different break | (idea, bounded) | era, the apex (keep rare + earned) |
 | **Progression / legacy** | QUEUED | one generation seeds the next | (L3) past-run alumni → next world | archetype, era-chain |
 | **World economy** | LIVE | the school's body, not its soul | cash / endow / upgrades | enables scale; must NOT become a back-door to 🍎 |
@@ -54,6 +54,12 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
   (the "triple-wrong"), always done TO them (invariant #4).
 - **GEOGRAPHY → ORIGIN-MIX** (queued) — a rural school simply *contains* more poor kids; place pre-loads
   circumstance before the player makes a single choice.
+- **PEERS × MOOD × FLOW** (ckpt1 LIVE, iter-241) — the cohort's atmosphere pulls each kid's mood toward the school
+  mean, so the môi trường (the class you're in) decides whether your gift catches FLOW or gets dragged out of it. A
+  star in a demoralized class is wasted by the *room*, not by themselves (invariant #4); a struggler in a thriving
+  one is buffered. Tuned as a *partial* environment (not a homogenizer) and aggregate-neutral, so it adds a social
+  layer to the realize/waste reading without becoming a dominant strategy. The player shapes it only indirectly —
+  through admissions + the policy that sets the whole cohort's mood.
 - **TECHNOLOGY × ERA × MENTORSHIP** (ckpt1 LIVE, iter-239) — the AI era's trợ-giảng extends the headmaster's
   reach (+1 mentor slot), so the verified mentorship×origin equalizer scales: in the AI decades you can lift one
   more poor kid past their circumstance. This is the SAFE half of the factor (teaching CAPACITY), built on the

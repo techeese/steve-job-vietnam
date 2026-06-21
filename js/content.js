@@ -288,6 +288,12 @@ var CONTENT = {
   },
   // iter-131 — MOOD made live: a kid worn down by the wrong learning style burns out and leaves. The most human
   // waste (the one you LOST), now named in the feed instead of silently vanishing.
+  // iter-241 PEERS/CONTAGION ckpt1 — the cohort's pull named once a year (tetCohortBeat) when the school's atmosphere
+  // leans strongly warm or cold. The mechanical contagion lives in growStudents; this makes the môi trường legible.
+  peer: {
+    warm: "🤝 Năm nay cả trường dễ thở. Đứa vững kéo đứa chông chênh đi lên — cái không khí ấy tự nó dạy, thầy đỡ phần nào.",
+    cold: "🥀 Năm nay trường nặng nề. Cả lớp cắm cúi, uể oải — đứa sáng nhất cũng bị cuốn theo cái mỏi mệt chung của bạn bè."
+  },
   dropoutLines: [
     "{ten} bỏ học giữa chừng — lối học này bào mòn em mỗi ngày.",
     "{ten} nghỉ học, không một lời tạm biệt. Bàn trống từ sáng thứ Hai.",

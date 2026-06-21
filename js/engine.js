@@ -42,6 +42,7 @@ var _nextId = 1;
 var CKPT2B_ON = false; // iter-200 E8 ckpt2b PLAYTEST FLAG (OFF by default → live byte-identical). Set true by ?ckpt2b=1 (ui.js boot) or the sweep sensor. When ON, a DISCOVERED gift whose grain you hired NO faculty for (and didn't mentor) goes adrift → real waste: specializing your faculty has a COST. The owner's gated "strong faculty trade-off" — shipped behind a flag so the owner can PLAYTEST the FEEL (the gate's own requirement) without it touching the default live experience.
 var ERA_OVERRIDE = null; // iter-204 L1: testing-only era pin (sweep era-sensor sets it to measure one era in isolation). null in production → era follows S.year. NOT serialized; never read by a save.
 var ARCH_OVERRIDE = null; // iter-210 L2: testing-only archetype pin (sweep archetype-sensor / ?arch= can also set it). null → freshState uses archKey arg or ARCH_DEFAULT. NOT serialized.
+var PEER_OFF = false; // iter-241 PEERS/CONTAGION: testing-only kill of peer mood-contagion (sweep on/off sensor sets it true for a baseline). false in production → contagion live. NOT serialized.
 function nid() { return _nextId++; }
 
 /* ---------- L1 ERAS (iter-204) — the authored decade spine ---------- */
@@ -518,6 +519,11 @@ function tetCohortBeat() {
   if (!S.letters) S.letters = [];
   S.letters.push({ year: S.year, era: curEra().name, culture: culture, worry: state + "/" + culture, text: body });
   if (S.letters.length > 16) S.letters.shift();
+  // iter-241 PEERS/CONTAGION ckpt1 — name the cohort's pull when the school's atmosphere leans strongly one way (the
+  // môi trường the contagion in growStudents enacts, made legible once a year). Deterministic (mood mean) → replay-safe; news-only.
+  var pmAll = 0; for (var pmi = 0; pmi < n; pmi++) pmAll += st[pmi].mood; var pmMean = pmAll / n;
+  if (pmMean >= CONFIG.PEER.WARM) news(CONTENT.peer.warm);
+  else if (pmMean <= CONFIG.PEER.COLD) news(CONTENT.peer.cold);
 }
 function scholarshipDraw() {
   S.endow.drawnYear = false;

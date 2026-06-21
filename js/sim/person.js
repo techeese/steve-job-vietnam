@@ -123,6 +123,19 @@ function growStudents() {
     }
   }
   if (n) S.students = S.students.filter(function (x) { return !x._drop; });
+  // iter-241 — PEERS / CONTAGION ckpt1: the cohort's atmosphere pulls each kid's mood toward the school mean — a
+  // thriving class buffers its strugglers, a demoralized one drags its stars down ("chọn bạn mà chơi"; the môi
+  // trường that decides whether a gift realizes). Deterministic (NO rnd → replay-safe; runs AFTER the dropout draws
+  // so it never perturbs the rng stream), variance-reducing → ~aggregate-mood-neutral (the SOUL is the redistribution,
+  // not a free lift). Daily-scaled (÷ dpm) since growStudents runs each dayTick. Skips the young founding cohort.
+  if (!PEER_OFF) {
+    var pc = S.students, pn = pc.length;
+    if (pn >= CONFIG.PEER.MIN_COHORT) {
+      var msum = 0; for (var pi = 0; pi < pn; pi++) msum += pc[pi].mood;
+      var pmean = msum / pn, pull = CONFIG.PEER.PULL / dpm;
+      for (var pj = 0; pj < pn; pj++) { var ps = pc[pj]; ps.mood = clamp(ps.mood + (pmean - ps.mood) * pull, 0, 100); }
+    }
+  }
 }
 
 /* ============================================================================

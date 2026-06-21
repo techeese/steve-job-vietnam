@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-22 — NEW FACTOR: PEERS / CONTAGION ckpt1 — the cohort lifts or drags its members (loop iter 241)
+**A genuinely new LATTICE/MODEL.md factor, not a refinement of the last two L4 ships** (the loop's own guard against
+stacking small ships). The most culturally-central force in the đề-Văn that wasn't yet modeled: *môi trường* / "chọn
+bạn mà chơi" — the class you're in shapes whether your gift realizes. **Mechanic:** the cohort's atmosphere pulls each
+kid's mood toward the **school mean** each month — a thriving class buffers its strugglers; a demoralized one drags its
+stars down out of FLOW. `CONFIG.PEER {PULL:0.05, MIN_COHORT:6, WARM:72, COLD:50}`, applied as a deterministic
+variance-reducing pass at the end of `growStudents` (runs AFTER the dropout `rnd()` draws so it never perturbs the rng
+stream → **replay-safe**). **Legibility:** once a year (`tetCohortBeat`) the môi trường is named when the cohort mean
+leans strongly — 🤝 *"cả trường dễ thở… đứa vững kéo đứa chông chênh"* / 🥀 *"trường nặng nề… đứa sáng nhất cũng bị
+cuốn theo cái mỏi mệt chung."* **Designed to be an ENVIRONMENT, not a lever** (invariant #1): tuned via probe so it's a
+*partial* pull (mood variance 272→147 over a run, ~46% — a star is dragged *somewhat* in a weak class, not flattened;
+PULL=0.35 over-converged to var 10 and was rejected), so per-kid texture + the mismatch-burnout tail survive. **New
+sweep PEER sensor** (`PEER_OFF` on/off toggle, like `CKPT2B_ON`/`ERA_OVERRIDE`): proves contagion is **aggregate-neutral**
+(realize Δ0.3pts ≤ 6 — not a free realize lift) and the **apex survives** (13.0%→13.1%). Verified: parse clean, gate
+GREEN (byte-identical replay), bot BOTOK (7337/87/14 — near baseline), sweep 0 bad flags incl. the new PEER ✓, lives 0
+LIVESFAIL, probe confirms variance reduction + warm/cold beats fire. Deployed. **NEXT (ckpt2 candidates):** name an
+individual kid lifted/dragged by peers at the payoff (the epilogue counterpart, like ERAS got iter-205); a toxic-elite
+vs warm-mixed cohort tension that interacts with the lo_thanhpho archetype.
+
 ## 2026-06-22 — L4 TECHNOLOGY ckpt1, CORRECTED: tech-reach now COMPOUNDS, era-true (loop iter 240)
 **Fixing a theme/reachability bug I shipped in iter-239.** With `ERA_LEN=3`, era3 = **smartphone**
 (years 10–12, reached in a normal 12-year run) and era4 = **AI** (year 13+, *past* `RUN_CAP_YEARS=12`). iter-239

@@ -198,6 +198,8 @@ var CONFIG = {
   // scales with seed); MENTORING rescues (it lifts mm above MISMATCH_MM, so a mentored kid escapes the cap).
   MISMATCH_MM: 0.7,
   MISMATCH_MOOD_DRAIN: 0.5, // iter-131 — MOOD made live (owner: "including mood"): a severe grain-mismatch (lệch) wears a kid down each month — the "đang nguội dần" read made literally true. Tuned to a BOUNDED tail: the cram GRIND burns out its worst-suited (~3-4/run); a project school doesn't (thematically sharp). Mentoring lifts mm above MISMATCH_MM → spares them. (2.5 mass-culled cram 79/run — reverted to 0.5.)
+  // iter-241 — PEERS / CONTAGION (a queued MODEL.md factor): the cohort's atmosphere pulls each kid's mood toward the school mean each month ("chọn bạn mà chơi"; môi trường shapes whether a gift realizes). VARIANCE-REDUCING → ~aggregate-mood-neutral: a thriving class buffers its strugglers, a demoralized one drags its stars out of FLOW. PULL = monthly e-fold toward the mean (applied daily ÷ DAYS_PER_MONTH in growStudents); deterministic (no rnd → replay-safe), bounded; sweep PEER sensor proves it's an environment, not a dominant lever. WARM/COLD = the cohort-mean thresholds that name the pull once a year (tetCohortBeat).
+  PEER: { PULL: 0.05, MIN_COHORT: 6, WARM: 72, COLD: 50 }, // PULL=0.05 → mood VARIANCE 272→147 over a run (a clear but PARTIAL ~46% pull toward the cohort mean; a star is dragged SOMEWHAT in a weak class, not flattened) — keeps per-kid texture + the mismatch-burnout tail intact. (PULL=0.35 over-converged to var 10 — near-total homogenization; rejected.)
   MISMATCH_CEIL: function (seed) { return 11 + seed * 7; }, // seed1→18 seed2→25 seed3→32 (all < LUONG_ON tn-floor 40 → adrift) · seed4→39 (borderline) · seed5→46 (the gifted still scrape a realized life)
 
   ROOMS: {

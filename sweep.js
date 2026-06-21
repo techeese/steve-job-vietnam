@@ -309,6 +309,29 @@ if (craS && cramS) {
   else if (on.sky < 35) FLAGS.push("E8 ckpt2b (flag) TRAP: neglected sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (<35% — a wipeout, not a trade-off); raise CKPT2B_CEIL");
   else FLAGS.push("E8 ckpt2b (flag) ✓ [OFF by default; ?ckpt2b=1]: narrow faculty COSTS the unchampioned gift — sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (Δ" + f0(drop) + "pts) while championed spark holds " + f0(on.spark) + "%. A real breadth-vs-depth trade-off; owner playtests the FEEL.");
 })();
+
+// iter-241 PEERS / CONTAGION — the cohort's atmosphere pulls each kid's mood toward the school mean ("chọn bạn mà chơi";
+// the môi trường that shapes whether a gift realizes). It must be an ENVIRONMENT, not a lever: ~AGGREGATE-NEUTRAL on
+// realization (a variance-reducer, NOT a free lift → no dominant strategy, invariant #1) AND it must not collapse the
+// apex (stars dragged out of FLOW). Sensor: run identical schools with contagion OFF vs ON across the 3 cultures;
+// assert |Δrealize| small and the apex survives. Restores PEER_OFF after (never leaks).
+(function () {
+  var APEX = { FOUNDER: 1, STEVE: 1 };
+  function peerAgg(off) {
+    PEER_OFF = off;
+    var real = 0, apex = 0, n = 0;
+    ["luyende", "canbang", "duan"].forEach(function (pr) {
+      SEEDS.forEach(function (sd) { play(sd, { presets: pr }).lives.forEach(function (L) { n++; if (L.real) real++; if (APEX[L.state]) apex++; }); });
+    });
+    return { real: n ? 100 * real / n : 0, apex: n ? 100 * apex / n : 0 };
+  }
+  var onC = peerAgg(false), offC = peerAgg(true);
+  PEER_OFF = false; // restore — the toggle must NEVER leak into the rest of the sweep
+  var dR = Math.abs(onC.real - offC.real);
+  if (dR > 6) FLAGS.push("PEERS contagion SHIFTS the floor: realize off " + f0(offC.real) + "%→on " + f0(onC.real) + "% (Δ" + f1(dR) + " > 6) — it's behaving as a lever, not an environment; lower PEER.PULL");
+  else if (offC.apex > 0.5 && onC.apex < offC.apex * 0.6) FLAGS.push("PEERS contagion CRUSHES the apex: " + f1(offC.apex) + "%→" + f1(onC.apex) + "% (>40% drop) — stars dragged out of FLOW; lower PEER.PULL or shield FLOW from the pull");
+  else FLAGS.push("PEERS ✓ a felt environment, not a lever: realize Δ" + f1(dR) + "pts ≤ 6 (aggregate-neutral), apex " + f1(offC.apex) + "%→" + f1(onC.apex) + "% holds. The cohort redistributes mood (buffers the struggler, drags the star in a weak class) — soul, not a dominant strategy.");
+})();
 line("");
 
 // iter-204 L1 ERAS — the authored decade spine. Each era RE-WEIGHTS which gift the world realizes vs wastes, so the
