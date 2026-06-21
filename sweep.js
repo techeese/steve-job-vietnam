@@ -367,6 +367,17 @@ line("");
       if (sw < 10) FLAGS.push("L1 ERAS: '" + t + "' apex% barely swings across eras (Δ" + f0(sw) + " < 10) — the decade doesn't lift/cap this gift (right-kid-wrong-era weak for " + t + ")");
       else FLAGS.push("L1 ERAS ✓ '" + t + "': apex% swings Δ" + f0(sw) + "pts across decades — a founder in its golden era, a solid kỹ sư in the wrong one (right kid, wrong era holds)"); }
   });
+  // iter-214 ckpt2 — the WORLD sends era-flavored COHORTS: measure RAW intake (rollTell) per pinned era. Each gift's
+  // share of the directed cohort should tilt toward the decades that reward it (a dot-com era draws more would-be coders).
+  var intake = CONFIG.ERAS.map(function (e, i) { ERA_OVERRIDE = i; freshState(101); var c = { spark: 0, sky: 0, hype: 0 }; for (var k = 0; k < 4000; k++) { var tl = rollTell(); if (c[tl] != null) c[tl]++; } return c; });
+  ERA_OVERRIDE = null;
+  ["spark", "sky", "hype"].forEach(function (t) {
+    var shares = intake.map(function (c) { var d = c.spark + c.sky + c.hype; return d ? 100 * c[t] / d : 0; });
+    var hi = shares.indexOf(Math.max.apply(null, shares)), sw = Math.max.apply(null, shares) - Math.min.apply(null, shares);
+    if (sw < 5) FLAGS.push("L1 ERAS ckpt2: '" + t + "' intake barely tilts across eras (Δ" + f1(sw) + "pts) — the world isn't sending era-flavored cohorts (raise ERA_TELL_TILT)");
+    else if (CONFIG.ERAS[hi].fav[t] < 1) FLAGS.push("L1 ERAS ckpt2: '" + t + "' intake peaks in " + CONFIG.ERAS[hi].key + " where its fav<1 — the cohort tilt points the WRONG way");
+    else FLAGS.push("L1 ERAS ckpt2 ✓ '" + t + "': intake share swings Δ" + f0(sw) + "pts (peaks in its golden decade " + CONFIG.ERAS[hi].key + ") — the world sends more of the gift the decade rewards");
+  });
 })();
 line("");
 

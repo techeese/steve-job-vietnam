@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-21 — Each decade now sends a different cohort: the world chases the hot field (ERAS L1 ckpt2) (loop iter 214)
+**Completes the "each era is a different world" promise — the era now shapes the INTAKE, not just the outcomes.** iter-204
+made the decade re-weight which gift gets realized; but the same cohort walked in every era. Now `rollTell` tilts the
+gift-mix of each new cohort toward what its decade rewards (`ERA_TELL_TILT` × the era's `fav[tell]`, bounded ×0.5–1.6,
+with "" absorbing the slack): a **dot-com era draws more would-be coders** (spark intake share peaks there/AI), the
+**1990s more makers** (sky peaks in scarcity), the **smartphone/Đổi-Mới era more hustlers** (hype peaks in Đổi Mới). So
+recruiting *feels* different each decade — kids chase the field the world is hot on — and combined with the realization
+re-weighting, a decade becomes a coherent world (more coders AND they thrive in the dot-com boom). ONE rnd() draw
+(stream-aligned), thresholds shift by era → deterministic, replay-safe (era from S.year), no save change.
+
+**Sweep-gated** (new L1 ERAS ckpt2 intake sensor, measuring raw rollTell per pinned era): spark intake swings **Δ15pts**
+(peaks in AI), sky **Δ12pts** (peaks 1990s), hype **Δ14pts** (peaks Đổi Mới) — each gift peaks in its golden decade, the
+tilt points the right way, bounded so no era's cohort dominates. **Verification:** gate GREEN, bot BOTOK (cash
+7392→7206 — the shifted cohort mix changes gift income slightly, within band, 0 bankruptcy), `node sweep.js` 0 bad flags
+(the no-dominant-decade + realize/waste + economy sensors all still green), lives clean. The ERA axis is now complete:
+the decade decides who walks IN, who realizes, and names the wrong-era waste at the payoff.
+
 ## 2026-06-21 — The capstone essay now re-reads the headmaster's own letters, year by year (NARRATIVE N3 ckpt1) (loop iter 213)
 **The "long, reasoned, personalized, moving" capstone the owner asked for — built from the annual letters (N2).** The
 yearly letters now PERSIST (`S.letters`), and the decade-capstone essay re-reads them before writing its final answer —

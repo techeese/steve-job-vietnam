@@ -26,9 +26,15 @@ function genName() {
 }
 function rollTell() {
   var r = rnd();
-  if (r < 0.18) return "spark";   // tinkerer
-  if (r < 0.34) return "hype";    // showy
-  if (r < 0.46) return "sky";     // dreamer
+  // iter-214 (ERAS ckpt2): the WORLD sends era-flavored cohorts — kids lean toward the gift their decade rewards (a
+  // dot-com era draws more would-be coders, the 1990s more makers). ONE rnd() draw (stream-aligned); the THRESHOLDS
+  // shift by the era's fav. Deterministic (era from S.year) → replay-safe. "" (undirected, the everyman) absorbs the slack.
+  var f = (typeof curEra === "function" && S) ? curEra().fav : null, t = CONFIG.ERA_TELL_TILT;
+  function p(base, tell) { return (f && f[tell] != null) ? clamp(base * (1 + t * (f[tell] - 1)), base * 0.5, base * 1.6) : base; }
+  var ps = p(0.18, "spark"), ph = p(0.16, "hype"), psk = p(0.12, "sky");
+  if (r < ps) return "spark";           // tinkerer / coder
+  if (r < ps + ph) return "hype";       // showy / hustler
+  if (r < ps + ph + psk) return "sky";  // maker / dreamer
   return "";
 }
 // iter-206 (L2 DEMOGRAPHIC) — a kid's family ORIGIN, derived deterministically from the stable student id (like

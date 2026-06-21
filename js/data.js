@@ -45,6 +45,7 @@ var CONFIG = {
   ERA_RISE: 0.55,              // L1 era MOBILITY: per-year upward pull (×(fav−1)) on a settled life in its GOLDEN decade — the world finally has a place for the gift (thất nghiệp→lương ổn→kỹ sư)
   ERA_WRONG: 0.8,              // iter-205 ckpt2 (LEGIBILITY): fav ≤ this at graduation = the gift was born into a HOSTILE decade → a wasted gift earns a "sinh nhầm thời" grief clause (right kid, wrong era, NAMED at the payoff)
   ERA_RIGHT: 1.3,             //  fav ≥ this = the gift met its GOLDEN decade → a realized gift earns a "gặp đúng thời" cheer (symmetry — the era reads on BOTH the wasted and realized sides)
+  ERA_TELL_TILT: 0.35,        // iter-214 (ERAS ckpt2): the WORLD sends era-flavored COHORTS — rollTell tilts the gift mix toward what the decade rewards (a dot-com era draws more would-be coders; the 1990s more makers). Bounded (×0.5..1.6), "" absorbs the slack → each decade's INTAKE feels different, not just its outcomes. Modest so it flavors without homogenizing (sweep-gated: no era's cohort makes it dominant).
   // ★ L2 DEMOGRAPHIC axis (owner steer 2026-06-21 "add demographic realism = interesting challenges"; iter-206 ckpt1).
   // A per-kid FAMILY ORIGIN, derived deterministically from the student id (NO save field → NO migrator; stable across
   // reloads, like annMonthFor). The school as EQUALIZER: a poor-origin kid carries a realization HEADWIND (the grind of
