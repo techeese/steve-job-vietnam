@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-06-21 — "Right kid, wrong era" is now READABLE at the payoff (ERAS L1 ckpt2 — legibility) (loop iter 205)
+**The decade's hand, named.** iter-204 made the era silently re-weight destinies (a coder founds in the AI boom, settles
+in the 1990s) — but the era was a HIDDEN hand: the player couldn't read that a kid was wronged by their *decade*. ckpt2
+closes that loop. The shared gift-vs-fate line (`realCreditSuffix`, used at BOTH the graduation-results screen AND the
+epilogue cast — one source of truth) now names the decade: a gift WASTED in a hostile era (fav ≤ `ERA_WRONG` at its
+`gradYear`) earns a "sinh nhầm thời" clause appended to the grief — *"…bàn tay khéo ấy, giờ chỉ khéo vẽ chiêu · phải chi
+sinh vào thời người ta còn quý đôi tay làm ra của cải"* (a maker wishing for the decade that still valued hands); a
+spark born too early gets *"phải chi em sinh vào thời máy tính lên ngôi"*, a hustler *"phải chi gặp thời mạng xã hội."*
+And the SYMMETRY (invariant #2): a gift that met its GOLDEN decade and flourished (fav ≥ `ERA_RIGHT`) earns *"gặp đúng
+thời của mình — tài năng nở đúng lúc."* So the era reads on BOTH the wasted and realized sides.
+
+**Mechanically:** a new `eraFavAt(tell, year)` (the decade a graduate ENTERED the world, `eraIndex(gradYear)`) + a
+`realGapEra` content block (wrong{spark,sky,hype,_} + right) + `gradYear` threaded through `realCreditSuffix` and its
+two call sites. The clause layers ONTO the existing tell-aware grief (iter-203) — a wasted spark in the wrong era now
+reads gift × fate × decade. **Reading-only → balance-neutral**: the era already moved the destiny in the FSM (iter-204);
+this just NAMES why. Deterministic (`gradYear` stored, no rng) → replay-safe; no save change.
+
+**Verification (headless):** gate GREEN, bot BOTOK (cash **7353 byte-stable**, arrested 14 unchanged; essay 1974→2039
+chars = the era clauses, expected), `node sweep.js` **0 bad flags** — the era apex sensor is IDENTICAL to iter-204
+(Δ13/14/14, confirming the destiny FSM is untouched, reading-only). lives.sh ×9 (3 presets × 3 seeds): the era clause
+fires on BOTH poles across every run — wrong-era waste AND right-era flourish, layered onto the gift-specific grief.
+SOUL 5 · STORY 5 (the era is no longer a hidden hand — "right kid, wrong era" is a named line in a life). Next: ERAS
+ckpt3 — admissions-pool era re-weight (the world sends era-flavored cohorts), then the L2 geographic/demographic axis.
+
 ## 2026-06-21 — ⭐ THE LATTICE BEGINS: the same gift now lives a different life in a different DECADE (ERAS L1 ckpt1) (loop iter 204)
 **The first axis of the story/levels LATTICE — the EPIC the strategic read demanded (no 4th tiny narrative refinement).**
 The game was one continuous person-sim with no narrative spine. ERAS gives it the authored campaign spine: a run plays

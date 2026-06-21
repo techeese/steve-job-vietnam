@@ -97,6 +97,20 @@ var CONTENT = {
       hype:  " — khiếu thuyết phục ấy, bị bẻ cong thành thói ăn xổi"
     }
   },
+  // iter-205 (ERAS L1 ckpt2 — LEGIBILITY) — name the DECADE's hand on a life, appended to the gift-vs-fate reading.
+  // `wrong` clauses are appended to an EXISTING grief when the gift was wasted in a HOSTILE era (fav ≤ ERA_WRONG at
+  // graduation) — "right kid, wrong time" made readable; `right` is the symmetric cheer when a gift met its GOLDEN
+  // decade and flourished (fav ≥ ERA_RIGHT). Reading-only → balance-neutral (the era already shaped the destiny in
+  // the FSM; this just NAMES why). The clause names the decade that WOULD have suited the gift (the ache of timing).
+  realGapEra: {
+    wrong: {
+      spark: " · phải chi em sinh vào thời máy tính lên ngôi",
+      sky:   " · phải chi sinh vào thời người ta còn quý đôi tay làm ra của cải",
+      hype:  " · phải chi gặp thời mạng xã hội, thời ai cũng nghe người nói giỏi",
+      _:     " · sinh nhầm thời, chưa kịp gặp thời của mình"
+    },
+    right: " · gặp đúng thời của mình — tài năng nở đúng lúc"
+  },
   // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
   // exam score (đặc cách / the narrow door) and then FAILED to realize. The win was named ("vào bằng cửa hẹp"); the
   // gamble you LOST must be named too, or the đặc cách door looks like free upside. Done TO them (invariant #4): you

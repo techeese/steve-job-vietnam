@@ -51,6 +51,9 @@ function curEra() { return CONFIG.ERAS[eraIdxNow()]; }
 // eraFav(tell) — how the CURRENT decade treats this gift: >1 the world realizes it, <1 it wastes it. Undirected ("")
 // kids are era-neutral. Bounded by the authored table (~0.6..1.6). The heart of "right kid, wrong era".
 function eraFav(tell) { if (!tell) return 1; var f = curEra().fav; return (f && f[tell] != null) ? f[tell] : 1; }
+// eraFavAt(tell, year) — the decade a graduate ENTERED the world (eraIndex(gradYear)) and how it treated their gift.
+// iter-205 ckpt2: lets the epilogue/graduation name the DECADE's hand on a life (wrong-era waste / right-era flourish).
+function eraFavAt(tell, year) { if (!tell || year == null) return 1; var f = CONFIG.ERAS[eraIndex(year)].fav; return (f && f[tell] != null) ? f[tell] : 1; }
 // the era-shift story beat — fires once at a year rollover that crosses an era boundary (pure derive, no state).
 function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); } }
 
@@ -627,7 +630,7 @@ function finalizeJune(policy) {
       if (rnd() < Math.min(0.95, pV)) { viral = true; gainTT(CONFIG.JUNE.DEFQ.viralTT); if (!S.pierceDefense) { gainUT(CONFIG.JUNE.DEFQ.viralUT, true); S.pierceDefense = true; } }
     }
     var a = makeAlumnus(s, row, diem, tiem);
-    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row), realLine: realCreditSuffix(a.state, a.fs.seed, a.flags, a.fs.tell) }; // iter-154: the gift-vs-fate reading on the graduation results screen — the wasted/realized talent named the MOMENT it happens (VISION §114), same source as the epilogue. iter-203: + tell → names WHICH gift
+    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row), realLine: realCreditSuffix(a.state, a.fs.seed, a.flags, a.fs.tell, a.gradYear) }; // iter-154: the gift-vs-fate reading on the graduation results screen — the wasted/realized talent named the MOMENT it happens (VISION §114), same source as the epilogue. iter-203: + tell → names WHICH gift. iter-205: + gradYear → names the DECADE's hand (right kid, wrong era)
     if (s.id === S.META.favId) { rec.fav = true; news("⭐ " + s.ten + " — em bạn dõi theo từ ngày đầu — tốt nghiệp: " + row.name + ". " + CONTENT.protegeCoda[protegeCodaKey(a.state, a.fs.seed)] + "."); S.META.favId = null; } // iter-150: the protégé's payoff now carries the realization reading — the arc's culmination FELT the moment it happens (VISION §114), same coda as the epilogue capstone
     results.push(rec);
     if (s._tpl) a._tpl = true; // Trần Phi Lợi marker (forced arrest year 2)

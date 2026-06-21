@@ -43,6 +43,8 @@ var CONFIG = {
   ERA_WASTE: { THAT_NGHIEP: 1 },                    // FSM target the era PUSHES toward for a wrong-era gift (× 1/fav). Distortions (coin/arrest/văn-mẫu) stay era-neutral — those are the SCHOOL's doing, not the decade's (invariant #4)
   ERA_REGRESS: 0.65,           // L1 era MOBILITY: per-year downward pull (×(1−fav)) on a realized life in a HOSTILE decade — the gift the world has stopped valuing slides back (kỹ sư→lương ổn→thất nghiệp)
   ERA_RISE: 0.55,              // L1 era MOBILITY: per-year upward pull (×(fav−1)) on a settled life in its GOLDEN decade — the world finally has a place for the gift (thất nghiệp→lương ổn→kỹ sư)
+  ERA_WRONG: 0.8,              // iter-205 ckpt2 (LEGIBILITY): fav ≤ this at graduation = the gift was born into a HOSTILE decade → a wasted gift earns a "sinh nhầm thời" grief clause (right kid, wrong era, NAMED at the payoff)
+  ERA_RIGHT: 1.3,             //  fav ≥ this = the gift met its GOLDEN decade → a realized gift earns a "gặp đúng thời" cheer (symmetry — the era reads on BOTH the wasted and realized sides)
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
   ROOM_MAX_LEVEL: 10,           // iter-160 (owner economy epic ckpt2): a LONG upgrade track (was 3) — the player pours
