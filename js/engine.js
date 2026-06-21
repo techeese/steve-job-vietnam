@@ -620,7 +620,7 @@ function finalizeJune(policy) {
   else { viralX = 2; }
 
   awardPrizes(grads); // E7p: honor the cohort's genuine standouts (a line in their life — see awardPrizes)
-  var results = [];
+  var results = [], gradLines = {}; // iter-227: dedup grad flavor across the cohort (was outcomeFlavor — identical for every same-outcome grad)
   for (var i = 0; i < grads.length; i++) {
     var s = grads[i];
     var qvm = Math.min(d.qvmCap, d.qvmPer * Math.floor(s.vet / 20));
@@ -645,7 +645,14 @@ function finalizeJune(policy) {
       if (rnd() < Math.min(0.95, pV)) { viral = true; gainTT(CONFIG.JUNE.DEFQ.viralTT); if (!S.pierceDefense) { gainUT(CONFIG.JUNE.DEFQ.viralUT, true); S.pierceDefense = true; } }
     }
     var a = makeAlumnus(s, row, diem, tiem);
-    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: CONTENT.outcomeFlavor[row.key], tiem: tiem, viral: viral, near: nearMiss(s, row), realLine: realCreditSuffix(a.state, a.fs.seed, a.flags, a.fs.tell, a.gradYear, a.fs.origin) }; // iter-154: the gift-vs-fate reading on the graduation results screen — the wasted/realized talent named the MOMENT it happens (VISION §114), same source as the epilogue. iter-203: + tell. iter-205: + gradYear (the DECADE). iter-206: + origin (family circumstance)
+    // iter-227: GIFT-SPECIFIC grad flavor (a coder's kỹ sư reads unlike a maker's), DEDUPED across the cohort — was
+    // CONTENT.outcomeFlavor[row.key], one line per outcome shown for EVERY same-outcome grad (a wall of identical lines).
+    // Reuses the epilogue's gift-pool (alumPool); falls back to the generic outcome flavor if the gift-pool is exhausted.
+    var gpool = (a.fs.tell && CONTENT.alumLinesByTell[a.state] && CONTENT.alumLinesByTell[a.state][a.fs.tell]) || [];
+    var cands = gpool.concat(CONTENT.alumLines[a.state] || []), gflav = ""; // gift-specific first, then the generic state pool
+    for (var fi = 0; fi < cands.length; fi++) { var fnorm = cands[fi].split("{ten}").join("◊"); if (!gradLines[fnorm]) { gflav = tpl(cands[fi], { ten: s.ten }); gradLines[fnorm] = 1; break; } }
+    if (!gflav) gflav = CONTENT.outcomeFlavor[row.key] || ""; // only if a cohort has MORE same-state grads than the whole pool
+    var rec = { ten: s.ten, emoji: row.emoji, outcome: row.name, entryChip: CONFIG.ALUM.CHIPS[a.state], diem: diem, flavor: gflav, tiem: tiem, viral: viral, near: nearMiss(s, row), realLine: realCreditSuffix(a.state, a.fs.seed, a.flags, a.fs.tell, a.gradYear, a.fs.origin) }; // iter-154: the gift-vs-fate reading on the graduation results screen — the wasted/realized talent named the MOMENT it happens (VISION §114), same source as the epilogue. iter-203: + tell. iter-205: + gradYear (the DECADE). iter-206: + origin (family circumstance)
     if (s.id === S.META.favId) { rec.fav = true; news("⭐ " + s.ten + " — em bạn dõi theo từ ngày đầu — tốt nghiệp: " + row.name + ". " + CONTENT.protegeCoda[protegeCodaKey(a.state, a.fs.seed)] + "."); S.META.favId = null; } // iter-150: the protégé's payoff now carries the realization reading — the arc's culmination FELT the moment it happens (VISION §114), same coda as the epilogue capstone
     results.push(rec);
     if (s._tpl) a._tpl = true; // Trần Phi Lợi marker (forced arrest year 2)

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-21 — The graduation screen now reads every grad as a distinct person (gift-specific, deduped) (loop iter 227)
+**Fixed a real repetition in a RECURRING player-facing moment — the June results screen — and brought it up to the
+epilogue's quality.** The graduation screen showed `CONTENT.outcomeFlavor[outcome]`: ONE line per outcome, rendered for
+EVERY grad of that outcome. So a cohort with 10 kỹ-sư grads was a wall of 10 identical *"Đang sửa cái loa bị rè"* lines —
+and it was the only player-facing surface NOT upgraded to the gift-specific lives the epilogue got (iter-209). Now each
+grad's flavor is drawn from the **gift pool** (`alumLinesByTell[state][tell]` — a coder's kỹ sư reads unlike a maker's),
+then the generic state pool, **deduped across the cohort** (the same name-normalised template logic as the epilogue
+cast-dedup, iter-222); only an extreme overflow falls back to the generic outcome line. Probe (a 10-kỹ-sư cohort):
+**1 → 10 distinct flavors.** Deterministic (grad order + pool order, no rnd) → replay-safe, GATE_ALUM unaffected;
+balance-neutral (display-only). gate GREEN, bot BOTOK 7206 byte-stable. The moment a cohort scatters into the world now
+shows ten different lives, not one line ten times — consistent with the essay it builds toward.
+
 ## 2026-06-21 — Owner tone fixes: a real ceiling fan (not a school "bell"), and no jabs at the Ministry (loop iter 226)
 **Direct owner feedback, applied.** (1) *"tháo chuông trường" sounds unreal — Vietnamese schools don't have a chuông
 (bell).* True. Changed it to **`quạt trần lớp`** (the classroom ceiling fan — universal in VN schools, and a curious
