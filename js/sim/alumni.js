@@ -210,7 +210,7 @@ function flushGifts() {
 /* ---------- L3 LEGACY (iter 217) — your past school's standout seeds your next run ---------- */
 // pickLegacy() — at the decade, the run's most NOTABLE graduate: a real success (flourish≥4) if any, else a dark
 // notable (coin-shark / arrested) as a cautionary echo, else the best modest life. Written cross-run by the decade trap.
-function legacyRec(a, kind) { return { ten: a.ten, state: a.state, schoolName: S.schoolName, year: S.year, kind: kind, flourish: flourishOf(a.state) }; }
+function legacyRec(a, kind) { return { ten: a.ten, state: a.state, tell: (a.fs && a.fs.tell) || "", schoolName: S.schoolName, year: S.year, kind: kind, flourish: flourishOf(a.state) }; }
 function pickLegacy() {
   var al = (S.alumni || []).filter(function (a) { return a && !a._tpl && a.fs; });
   if (!al.length) return null;
@@ -228,7 +228,11 @@ function seedLegacy() {
   S.legacy = lg;
   if (lg.kind === "bright") {
     S.endow.bal = r1(S.endow.bal + CONFIG.LEGACY.BOON_ENDOW);
-    news("🎓 " + lg.ten + " — cựu sinh viên trường " + lg.schoolName + " của thầy, nay đã thành đạt — nghe thầy mở trường mới, gửi về " + CONFIG.LEGACY.BOON_ENDOW + "tr dựng quỹ.");
+    // iter-218 (L3 ckpt2): the named figure RETURNS — a successful grad of your last school comes back to TEACH at the
+    // new one, free, tenured, grain-matched to their own gift (a returning coder grows coders). The legacy made present.
+    if (!S.teachers) S.teachers = [];
+    S.teachers.push({ id: nid(), ten: lg.ten, day: 10, dien: 3, luong: 0, trait: "tch", grain: lg.tell || "", bienChe: true, age: 0, legacy: true });
+    news("🎓 " + lg.ten + " — cựu sinh viên trường " + lg.schoolName + " của thầy, nay đã thành đạt — quay về DẠY ở trường mới (không lấy lương) và gửi " + CONFIG.LEGACY.BOON_ENDOW + "tr dựng quỹ.");
   } else {
     S.tiengTam = clamp(r1(S.tiengTam - CONFIG.LEGACY.ECHO_TT), 0, 200);
     news("📰 Người ta còn nhớ " + lg.ten + " của trường " + lg.schoolName + " cũ. Tiếng cũ theo thầy sang trường mới — Tiếng Tăm khởi điểm thấp hơn một chút.");

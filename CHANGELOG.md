@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-21 — Your old Steve comes back to TEACH at your new school (L3 Legacy ckpt2 — the named figure returns) (loop iter 218)
+**The cross-run legacy is now a PRESENT figure, not just a number.** iter-217 made a past run's standout seed the next as a
+founding gift (bright) or a reputation echo (dark). Now the BRIGHT legacy **returns as a named founding teacher** — a
+successful graduate of your last school (a 🍎 / founder / kỹ sư) comes back to teach at the new one: free (`luong 0`),
+tenured (`bienChe`), and **grain-matched to their own gift** (a returning coder grows coders, via the E8 faculty system).
+The legacy record now carries the alum's `tell` so the returning teacher has the right grain. The beat: *"🎓 {ten} — cựu
+sinh viên trường {schoolName} của thầy, nay đã thành đạt — quay về DẠY ở trường mới (không lấy lương) và gửi 40tr dựng
+quỹ."* So the "one more run" ladder isn't just a number — the people you raised come back to raise the next generation.
+
+Still keeps `freshState` PURE (the teacher is added by `seedLegacy()` at ui-boot, NEW-game only → gate/sweep byte-
+identical); the returning teacher is a valid record (passes the iter-202 sanitize). **Verification:** GATE_LEGACY now
+asserts the returning teacher (named, grain-matched, free) + the corrupted-teacher heal still passes; ALL GATES GREEN;
+bot BOTOK byte-stable (empty store); the founding boon is bounded (one free teacher + 40tr, only in real cross-run play).
+**L3 ckpt3+ (## Epic: L3): the DARK legacy haunts admissions** (the scandal name surfaces as a wary applicant beat) +
+UNLOCKS (a completed run opens a harder archetype) — the ladder's gamey rungs.
+
 ## 2026-06-21 — Your past school's standout now seeds your next run (L3 LEGACY ckpt1 — the last LATTICE pillar opens) (loop iter 217)
 **The first cross-run thread — the "one more run" ladder begins.** When a run reaches its decade, its most NOTABLE
 graduate is written to a SEPARATE localStorage key (`LEGACY_KEY`, surviving past the single-game save). A NEW run then

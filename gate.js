@@ -164,10 +164,13 @@ try {
   // BRIGHT legacy seeds the next school's endowment
   freshState();
   var endow0 = S.endow.bal;
-  writeLegacy({ ten:'Cựu Sáng', state:'KY_SU', schoolName:'Trường Cũ', year:12, kind:'bright', flourish:4 });
+  writeLegacy({ ten:'Cựu Sáng', state:'KY_SU', tell:'spark', schoolName:'Trường Cũ', year:12, kind:'bright', flourish:4 });
+  var nt0 = S.teachers.length;
   freshState(); seedLegacy();
   ok(S.legacy && S.legacy.ten === 'Cựu Sáng', 'bright legacy is read onto S.legacy at seed');
   ok(r1(S.endow.bal) === r1(endow0 + CONFIG.LEGACY.BOON_ENDOW), 'bright legacy gifts the new quỹ (+'+CONFIG.LEGACY.BOON_ENDOW+'tr)');
+  var lt = S.teachers.filter(function(t){ return t.legacy; })[0];
+  ok(lt && lt.ten === 'Cựu Sáng' && lt.grain === 'spark' && lt.luong === 0, 'bright legacy RETURNS AS A TEACHER (named, grain-matched, free) — iter-218');
   // DARK legacy echoes as a lower starting Tiếng Tăm
   freshState(); var tt0 = S.tiengTam;
   writeLegacy({ ten:'Cựu Tối', state:'BI_BAT', schoolName:'Trường Cũ', year:12, kind:'dark', flourish:0 });
