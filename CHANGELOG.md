@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-22 — L4 TECHNOLOGY ckpt1, CORRECTED: tech-reach now COMPOUNDS, era-true (loop iter 240)
+**Fixing a theme/reachability bug I shipped in iter-239.** With `ERA_LEN=3`, era3 = **smartphone**
+(years 10–12, reached in a normal 12-year run) and era4 = **AI** (year 13+, *past* `RUN_CAP_YEARS=12`). iter-239
+gated the reach bonus at `minEra:3` but labeled it "Trợ giảng AI" — so the AI beat fired one era too early (greeting
+players entering the *smartphone* era), and the actual AI era barely exists in standard play. Corrected to make
+TECHNOLOGY a **compounding axis** — exactly the MODEL.md vision ("each era's tools reshape how you teach"):
+`CONFIG.TECH_REACH {minEra:3, perEra:1}`, `mentorSlots()` = `MENTOR_SLOTS + (eraIdx − minEra + 1)·perEra`, so the cap
+climbs **3 → 4 (smartphone, yr10) → 5 (AI, yr13+)**. Each wave fires its own **era-true** beat (`CONTENT.techReach`
+keyed by era index): 📱 *"Internet và học liệu trực tuyến… thầy kèm sát thêm được một em"* at the smartphone crossing,
+🤖 *"Trợ giảng AI… thầy lại kèm sát thêm một em nữa… lo phần không máy nào thay được — hiểu cho thấu một đứa trẻ"* at
+the AI crossing. Still deterministic by `S.year` (replay-safe, **no save state**, reversible), still touches teaching
+CAPACITY not the apex (the apex thesis-fork stays owner-gated as ckpt2), still composes with the verified
+mentorship×origin equalizer. Verified: parse clean, **gate GREEN (byte-identical replay)**, bot BOTOK, **sweep 0 bad
+flags**, lives 0 LIVESFAIL (capstone still cuts off), probe confirms slots 3→4→5 and each crossing fires its own beat.
+Deployed.
+
 ## 2026-06-22 — L4 TECHNOLOGY ckpt1: the AI era extends the teacher's reach (the safe, non-thesis slice) (loop iter 239)
 **Owner re-engaged ("continue") → shipped the first real slice of the queued TECHNOLOGY factor — the part that needs no
 thesis-call.** The genuine fork in L4 (what tech does to the APEX / the making of a 🍎) is thesis-level and stays

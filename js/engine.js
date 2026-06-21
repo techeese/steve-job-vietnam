@@ -56,7 +56,7 @@ function eraFav(tell) { if (!tell) return 1; var f = curEra().fav; return (f && 
 // iter-205 ckpt2: lets the epilogue/graduation name the DECADE's hand on a life (wrong-era waste / right-era flourish).
 function eraFavAt(tell, year) { if (!tell || year == null) return 1; var f = CONFIG.ERAS[eraIndex(year)].fav; return (f && f[tell] != null) ? f[tell] : 1; }
 // the era-shift story beat — fires once at a year rollover that crosses an era boundary (pure derive, no state).
-function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); if (pe < CONFIG.AI_TUTOR.minEra && ce >= CONFIG.AI_TUTOR.minEra) news("🤖 Trợ giảng AI về trường — thầy kèm sát được thêm một em mỗi lúc (suất dìu dắt +" + CONFIG.AI_TUTOR.bonus + "). Máy lo phần lặp đi lặp lại; thầy dành tâm sức cho đứa cần."); } } // iter-239 L4 ckpt1: the AI era extends the teacher's reach
+function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); var add = techReach(S.year) - techReach(prevYear); if (add > 0 && CONTENT.techReach[ce]) news(tpl(CONTENT.techReach[ce], { n: add })); } } // iter-240 L4 ckpt1: each tech wave (era-true) compounds the teacher's reach
 
 /* derived alumni stats (never stored — DESIGN §5a) */
 function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }
@@ -88,8 +88,9 @@ function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MI
 function teacherById(id) { for (var i = 0; i < S.teachers.length; i++) if (S.teachers[i].id === id) return S.teachers[i]; return null; }
 // MENTOR'S LEDGER Phase 2 — the headmaster's scarce attention (player verb + helpers; UI wiring lands next)
 function mentorCount() { var c = 0, st = S.students; for (var i = 0; i < st.length; i++) if (st[i].mentored) c++; return c; }
-// iter-239 (L4 ckpt1): the effective attention cap — the AI era's trợ-giảng adds reach (CONFIG.AI_TUTOR.bonus). Deterministic from S.year → replay-safe; no new state.
-function mentorSlots() { return CONFIG.MENTOR_SLOTS + (eraIndex(S.year) >= CONFIG.AI_TUTOR.minEra ? CONFIG.AI_TUTOR.bonus : 0); }
+// iter-240 (L4 ckpt1): the effective attention cap — each tech wave (era ≥ TECH_REACH.minEra) compounds the teacher's reach. Deterministic from S.year → replay-safe; no new state.
+function techReach(year) { var e = eraIndex(year), m = CONFIG.TECH_REACH.minEra; return e >= m ? (e - m + 1) * CONFIG.TECH_REACH.perEra : 0; }
+function mentorSlots() { return CONFIG.MENTOR_SLOTS + techReach(S.year); }
 function mentorStudent(id) {
   var st = S.students, s = null; for (var i = 0; i < st.length; i++) if (st[i].id === id) { s = st[i]; break; }
   if (!s) return { ok: false, why: "gone" };

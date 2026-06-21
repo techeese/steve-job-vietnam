@@ -174,7 +174,7 @@ var CONFIG = {
   // a mentored kid's craft multiplier is lifted (focused attention overcomes a grain mismatch — you RESCUE
   // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.
   MENTOR_SLOTS: 3,
-  AI_TUTOR: { minEra: 3, bonus: 1 }, // iter-239 (L4 TECHNOLOGY ckpt1, NON-thesis slice): from the smartphone/AI decades an AI trợ-giảng extends the teacher's REACH — +1 mentor slot (deterministic by era, replay-safe, reversible). "Tech reshapes EDUCATION" in its safest form (teaching CAPACITY, not a claim about genius); the apex thesis-fork stays owner-gated. Interacts with the verified mentorship×origin equalizer (more reach → lift more poor kids).
+  TECH_REACH: { minEra: 3, perEra: 1 }, // iter-240 (L4 TECHNOLOGY ckpt1, NON-thesis slice; corrected from iter-239's AI_TUTOR): each tech wave from the smartphone era (era3, ed-tech) onward extends the teacher's REACH by perEra mentor slots, COMPOUNDING into the AI era (era4). bonus = (eraIndex − minEra + 1) × perEra → era3 +1, era4 +2. Deterministic by era, replay-safe, reversible. "Tech reshapes EDUCATION" in its safest form (teaching CAPACITY, not a claim about genius); the apex thesis-fork stays owner-gated. NB era3=smartphone is reached in a normal 12-yr run; era4=AI is the extended-play peak (starts yr13). Interacts with the verified mentorship×origin equalizer (more reach → lift more poor kids).
   MENTOR_MM: 1.3,
   // E8 ckpt2 (iter 195) — GRAIN-FLAVORED FACULTY: a hired teacher realizes the gift they fit and neglects the rest
   // (a coder-teacher grows coders, a craft-master grows makers, a speaker grows hustlers). teacherFactor() tallies

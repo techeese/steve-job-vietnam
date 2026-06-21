@@ -590,6 +590,11 @@ var CONTENT = {
       ] }
   ],
 
+  // iter-240 L4 ckpt1-fix: the tech-reach beat fires when a new tech era extends the teacher's reach — keyed by era index so it's ERA-TRUE (era3 = smartphone/ed-tech, era4 = AI), not the iter-239 mislabel. {n} = the era's bonus to the mentor cap.
+  techReach: {
+    3: "📱 Internet và học liệu trực tuyến về trường — thầy kèm sát thêm được một em mỗi lúc (suất dìu dắt +{n}). Bài giảng số gánh phần lặp đi lặp lại; thầy dồn sức cho đứa thật cần.",
+    4: "🤖 Trợ giảng AI về trường — thầy lại kèm sát thêm một em nữa (suất dìu dắt +{n}). Máy tự viết, tự chấm; thầy chỉ còn lo phần không máy nào thay được — hiểu cho thấu một đứa trẻ."
+  },
   ticker: {
     idle: [
       "Khuôn viên đạt chuẩn quốc tế (1/100 quy mô).",
