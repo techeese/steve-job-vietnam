@@ -14,6 +14,7 @@ const dataSrc = fs.readFileSync(dir + "/js/data.js", "utf8");
 const contentSrc = fs.readFileSync(dir + "/js/content.js", "utf8"); // iter 134 STRUCTURE — CONTENT split out of data.js
 const engineSrc = fs.readFileSync(dir + "/js/engine.js", "utf8");
 const personSrc = fs.readFileSync(dir + "/js/sim/person.js", "utf8"); // iter 114 structure carve — person creation + growth
+const alumniSrc = fs.readFileSync(dir + "/js/sim/alumni.js", "utf8"); // iter 212 structure carve — the alumni-world FSM
 const admissionsSrc = fs.readFileSync(dir + "/js/sim/admissions.js", "utf8"); // iter 163 structure carve — the intake subsystem
 const saveSrc = fs.readFileSync(dir + "/js/save.js", "utf8"); // iter 199 structure carve — persistence (loaded for parity; sweep doesn't save/load)
 const shim = "var localStorage={_d:{},getItem:function(k){return this._d[k]!=null?this._d[k]:null;},setItem:function(k,v){this._d[k]=v;}};";
@@ -24,6 +25,7 @@ ${dataSrc}
 ${contentSrc}
 ${engineSrc}
 ${personSrc}
+${alumniSrc}
 ${admissionsSrc}
 ${saveSrc}
 

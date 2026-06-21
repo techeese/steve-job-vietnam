@@ -23,7 +23,7 @@
    ========================================================================== */
 const fs = require("fs");
 const dir = __dirname;
-const srcFiles = ["js/data.js", "js/content.js", "js/engine.js", "js/sim/person.js", "js/sim/admissions.js", "js/save.js"];
+const srcFiles = ["js/data.js", "js/content.js", "js/engine.js", "js/sim/person.js", "js/sim/alumni.js", "js/sim/admissions.js", "js/save.js"];
 const src = srcFiles.map(function (f) { return fs.readFileSync(dir + "/" + f, "utf8"); }).join("\n");
 const shim = "var localStorage={_d:{},getItem:function(k){return this._d[k]!=null?this._d[k]:null;},setItem:function(k,v){this._d[k]=v;}};";
 

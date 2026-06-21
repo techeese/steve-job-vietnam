@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-21 — STRUCTURE: the alumni-world FSM carved into js/sim/alumni.js (engine.js back under 850) (loop iter 212)
+**Behavior-neutral structure-epic — paying the overdue debt (EPICS_SINCE_STRUCTURE was 3) the way the owner's "keep it
+PLASTIC" steer wants.** engine.js had grown back to 1033 lines with the era/archetype/annual-letter additions. The
+**alumni-world FSM** is a cohesive, gate-verifiable subsystem — once person.js decides WHO a student became, this code
+sims their life OUT in the world: the deterministic per-(alumnus, year) state machine (`transition`/`gateFn`), the 🍎
+STEVE breakthrough (`stevePShort`/`becomeSteve`/`keynoteFor`), arrests (`arrestAlumnus`/`scriptedArrest`), and the
+gratitude gifts back to the school (`queueGift`/`flushGifts`/`maybeItemGift`) — so it's now its own module **`js/sim/
+alumni.js`** (208 lines), pulling **engine.js 1033 → 844**. Globals, loaded after person.js (the established person.js/
+admissions.js/save.js carve pattern); it's coupled to the school economy (gainTT/gainUT/S.endow) ON PURPOSE — an
+alumnus's life feeds back into the school that made them. Wired into all 7 loaders (index.html script tag + gate.js/
+sweep.js/tune.js concat lists; bot.sh/lives.sh/lab.sh build from index.html).
+
+**Byte-identical, verified end-to-end:** gate GREEN (GATE_ALUM replays the relocated FSM byte-identical — determinism +
+the TPL scripted arrest + gift flush all intact); **bot BOTOK from the REAL headless-Chrome boot** (cash 7392/grad 87/
+arrested 16/essay 2148 — unchanged; the new `<script>` loads in-order, the iter-163 lesson honored: a structure carve
+must verify the browser boot, not just node-concat); `node sweep.js` 0 bad flags (ECONOMY/ERAS/ORIGIN/ARCHETYPE sensors
+all green, numbers identical); lives renders the essay; tune.js works (now concats alumni.js). No player-visible change.
+The codebase is plastic again for the N3 capstone + future factors. EPICS_SINCE_STRUCTURE reset to 0.
+
 ## 2026-06-21 — The headmaster now writes you an annual letter (NARRATIVE N2) (loop iter 211)
 **The recurring narrative rhythm the owner asked for — letters that build toward the capstone.** The yearly Tết cohort
 beat (3 generic lines) is now a real **annual letter to the students**, conditioned on three things at once: the player's
