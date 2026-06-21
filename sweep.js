@@ -393,6 +393,36 @@ line("");
 })();
 line("");
 
+// iter-210 L2 GEOGRAPHIC ARCHETYPES — WHERE the school sits pre-loads economy × prestige × teaching-CULTURE (default
+// presets) × cohort ORIGIN-MIX (a rural school contains more poor kids). Each is a different đề thesis + difficulty.
+// Gates: (#2 symmetry) each reaches BOTH a realized AND a costly life; (#1 no dominance) no archetype tops BOTH the
+// apex AND cash — a realize-vs-cash tradeoff keeps the question open; (economy) no systemic bankruptcy. Plays each
+// archetype with its DEFAULT culture (ARCH_OVERRIDE + no preset override).
+(function () {
+  var REAL = { STEVE: 1, FOUNDER: 1, KY_SU: 1, LUONG_ON: 1 }, APEX = { FOUNDER: 1, STEVE: 1 };
+  var rows = Object.keys(CONFIG.ARCHETYPES).map(function (ak) {
+    ARCH_OVERRIDE = ak;
+    var real = 0, cost = 0, n = 0, apex = 0, cashSum = 0, bank = 0, runs = 0;
+    SEEDS.forEach(function (sd) { var r = play(sd, {}); runs++; cashSum += r.cash; if (r.bankrupt) bank++;
+      r.lives.forEach(function (L) { n++; if (APEX[L.state]) apex++; if (REAL[L.state]) real++; else cost++; }); });
+    ARCH_OVERRIDE = null; n = n || 1; runs = runs || 1;
+    return { ak: ak, name: CONFIG.ARCHETYPES[ak].name, realPct: 100 * real / n, costPct: 100 * cost / n, apexPct: 100 * apex / n, cash: cashSum / runs, bank: bank };
+  });
+  line("--- L2 ARCHETYPES (where the school sits: economy × prestige × culture × cohort class) ---");
+  line("  archetype".padEnd(28) + "real%".padStart(6) + "cost%".padStart(6) + "apex%".padStart(6) + "cash(tr)".padStart(9) + "  bankrupt");
+  rows.forEach(function (r) { line("  " + r.name.padEnd(26) + f0(r.realPct).toString().padStart(6) + f0(r.costPct).toString().padStart(6) + f0(r.apexPct).toString().padStart(6) + f0(r.cash).toString().padStart(9) + "    " + r.bank + "/" + SEEDS.length); });
+  rows.forEach(function (r) {
+    if (r.bank > SEEDS.length * 0.05) FLAGS.push("L2 ARCHETYPE '" + r.name + "' BANKRUPTS " + r.bank + "/" + SEEDS.length + " runs — boot economy too thin; raise its cash");
+    if (r.realPct < 8) FLAGS.push("L2 ARCHETYPE '" + r.name + "' realizes ~" + f0(r.realPct) + "% — lifts almost no one (invariant #2)");
+    if (r.costPct < 8) FLAGS.push("L2 ARCHETYPE '" + r.name + "' costs ~" + f0(r.costPct) + "% — fails almost no one (invariant #2)");
+  });
+  var topApex = rows.slice().sort(function (a, b) { return b.apexPct - a.apexPct; })[0];
+  var topCash = rows.slice().sort(function (a, b) { return b.cash - a.cash; })[0];
+  if (topApex.ak === topCash.ak) FLAGS.push("L2 ARCHETYPE DOMINANT: '" + topApex.name + "' tops BOTH apex (" + f0(topApex.apexPct) + "%) AND cash (" + f0(topApex.cash) + "tr) — a strictly-easiest school (invariant #1); rebalance");
+  else FLAGS.push("L2 ARCHETYPES ✓: each a different world, none strictly easiest — apex-leader " + topApex.name + " (" + f0(topApex.apexPct) + "% apex) trades off against cash-leader " + topCash.name + " (" + f0(topCash.cash) + "tr); all reach realized+cost, 0 systemic bankruptcy");
+})();
+line("");
+
 line("--- FLAGS ---");
 if (FLAGS.length) FLAGS.forEach(function (x) { line("  ⚠ " + x); });
 else line("  none — economy in band, plural outcomes, 🍎 reachable, thesis holds.");

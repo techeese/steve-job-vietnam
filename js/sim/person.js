@@ -35,7 +35,10 @@ function rollTell() {
 // annMonthFor) → no save field, no migrator, no reroll on reload. Weighted by CONFIG.ORIGIN_W. NOT from the live rng
 // stream (uses hashStr, not rnd) → the cohort's gift roll is byte-identical to before (sweep/gate baselines hold).
 function studentOrigin(s) {
-  var w = CONFIG.ORIGIN_W, r = hashStr("o" + s.id) % 100, c = 0;
+  // iter-210 L2: the cohort's origin-mix is the ARCHETYPE's (a rural school contains more poor kids); falls back to
+  // CONFIG.ORIGIN_W for old saves / no archetype → tinh_le's mix is exactly ORIGIN_W, so the default stays byte-identical.
+  var A = S && CONFIG.ARCHETYPES[S.archetype];
+  var w = (A && A.originW) || CONFIG.ORIGIN_W, r = hashStr("o" + s.id) % 100, c = 0;
   for (var i = 0; i < w.length; i++) { c += w[i]; if (r < c) return CONFIG.ORIGINS[i]; }
   return CONFIG.ORIGINS[CONFIG.ORIGINS.length - 1];
 }

@@ -74,6 +74,7 @@ function sanitize() {
   S.day = clamp(Math.round(S.day) || 1, 1, 30); S.month = clamp(Math.round(S.month) || 1, 1, 12);
   S.year = Math.max(1, Math.round(S.year) || 1); S.speed = clamp(Math.round(S.speed) || 0, 0, 3);
   if (typeof S.schoolName !== "string" || !S.schoolName.trim()) S.schoolName = CONTENT.schoolName; // iter-186: never a blank academy name on a corrupted/old save
+  if (typeof S.archetype !== "string" || !CONFIG.ARCHETYPES[S.archetype]) S.archetype = CONFIG.ARCH_DEFAULT; // iter-210 L2: old saves / corrupt → baseline (tinh_le) → byte-identical; drives studentOrigin's mix
   if (!CONFIG.PRESETS[S.presets.n1]) S.presets.n1 = "canbang";
   ["n1", "n2", "n3", "n4"].forEach(function (k) { if (!CONFIG.PRESETS[S.presets[k]]) S.presets[k] = "canbang"; });
   S.students = (S.students || []).map(function (s) {

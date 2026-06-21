@@ -58,6 +58,21 @@ var CONFIG = {
   ORIGIN_W: [30, 45, 25],                     // distribution weights (Σ100) — most middle, a meaningful poor minority
   ORIGIN_MOOD: { ngheo: 0, tb: 0, kha: 1 },  // poor mood lean = 0 ON PURPOSE: a mood penalty COMPOUNDS the cram-burnout drain → the poor would drop out en masse under a cram school (waste-only). The cost lives in ORIGIN_GROW (under-realize), NOT in dropout — the poor GRADUATE-but-settle, they don't vanish. kha +1 = a harmless security touch (the well-off don't drop)
   ORIGIN_GROW: { ngheo: 0.88, tb: 1, kha: 1.04 }, // the main realize lever: the poor's legit growth drags (→ they more often SETTLE rather than flourish), erased by mentoring; well-off slight head-start. Tuned so poor under-realize by a felt ~20pt, mentoring ≈ parity, dropout barely moves
+  // ★ L2 GEOGRAPHIC ARCHETYPES (owner steer "demographic + geographic realism"; iter-210 ckpt1). WHERE the school sits
+  // pre-loads its whole world BEFORE the player chooses anything: starting economy + prestige, the default teaching
+  // CULTURE (presets), and — the soul tie to the demographic axis — the cohort's ORIGIN-MIX (a rural school simply
+  // CONTAINS more poor kids). `tinh_le` = the baseline, EXACTLY the legacy boot constants → freshState byte-identical
+  // for the default (no migrator; old saves lacking S.archetype sanitize to tinh_le). Each is a different đề-Văn thesis
+  // and intrinsic difficulty; sweep-gated so NO archetype dominates 🍎+cash and each reaches BOTH a realized + a wasted
+  // life (invariants #1/#2). The rich cram-city is NOT strictly easiest: its luyện-đề CULTURE + well-off cohort breed
+  // văn-mẫu/distortion (the cram trap pays for the cash). Chosen at boot (freshState archKey / ?arch= / ARCH_OVERRIDE).
+  ARCH_DEFAULT: "tinh_le",
+  ARCHETYPES: {
+    tinh_le:     { name: "Trường tỉnh lẻ",       cash: 200, endow: 10, tt: 25, ut: 10, tc: 30, presets: { n1: "canbang", n2: "luyende", n3: "luyende", n4: "luyende" }, originW: [30, 45, 25], blurb: "Một trường tỉnh mua lại từ đống nợ. Không giàu, không nổi, nhưng đủ chỗ để thử.", de: "Tỉnh lẻ cũng có quyền mơ một Steve Jobs chứ?" },
+    que_ngheo:   { name: "Trường quê nghèo",     cash: 135, endow: 5,  tt: 15, ut: 13, tc: 26, presets: { n1: "canbang", n2: "canbang", n3: "luyende", n4: "luyende" }, originW: [65, 30, 5],  blurb: "Trường làng cuối một con đường đất. Trò nghèo, thầy ít, nhưng nhiều đứa sáng dạ lạ thường.", de: "Đứa giỏi nhất làng — đời nó rẽ ở chỗ có ai chống lưng hay không." },
+    lo_thanhpho: { name: "Lò luyện thành phố",   cash: 320, endow: 20, tt: 45, ut: 8,  tc: 18, presets: { n1: "luyende", n2: "luyende", n3: "luyende", n4: "luyende" }, originW: [5, 35, 60],  blurb: "Lò luyện thi có tiếng giữa phố lớn. Phụ huynh xếp hàng, học phí cao, áp lực cao hơn nữa.", de: "Cả phố đổ tiền vào luyện thi — mà sao Steve Jobs vẫn chưa thấy đâu?" },
+    truong_nghe: { name: "Trường nghề khu công nghiệp", cash: 180, endow: 8, tt: 20, ut: 14, tc: 40, presets: { n1: "canbang", n2: "duan", n3: "duan", n4: "duan" }, originW: [45, 48, 7], blurb: "Trường nghề cạnh khu công nghiệp. Người ta học để có cái nghề trong tay — chứ không để lên sân khấu.", de: "Một người thợ giỏi có kém gì một Steve Jobs?" }
+  },
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
   ROOM_MAX_LEVEL: 10,           // iter-160 (owner economy epic ckpt2): a LONG upgrade track (was 3) — the player pours

@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-06-21 — WHERE the school sits now pre-loads its whole world: 4 geographic archetypes (L2 ckpt1) (loop iter 210)
+**The GEOGRAPHIC half of the owner's "demographic + geographic realism" steer — and the first factor built MODEL-FIRST.**
+Before the player chooses anything, the school's *place* sets its starting world: economy, prestige, default teaching
+CULTURE (presets), and — the soul tie to the demographic axis — the cohort's ORIGIN-MIX (a rural school simply *contains*
+more poor kids). Four archetypes, each a different đề-Văn thesis and intrinsic difficulty:
+- **Trường tỉnh lẻ** (baseline) — the legacy school; mixed cohort, mixed culture. real 14% / cost 86% / apex 1%.
+- **Trường quê nghèo** — poor + low-prestige + 65% poor cohort + the poor family's bet on late-year exam-cram. The hard
+  underdog: lots of waste (cost 65%), few apex — talent that quietly settles for lack of backing.
+- **Lò luyện thành phố** — rich + prestigious + 60% well-off + a cram culture. The *gilded trap*: highest prestige, but
+  45% distortion (the cram city breeds coin-sharks) — privilege ≠ a Steve.
+- **Trường nghề khu công nghiệp** — vocational + craft (đồ-án) culture + working-class cohort. Realizes makers (91%
+  realize, 15% apex — the most founders) but earns the LEAST cash. The craft thesis, geographically embodied.
+
+**The balance is a tradeoff, not a hierarchy** (sweep L2 ARCHETYPE sensor, GREEN): no archetype tops BOTH apex AND cash
+(truong_nghe leads apex but is cash-lowest; tinh_le leads cash but apex-lowest), each reaches both a realized and a
+costly life (#2), 0 systemic bankruptcy. A realize-vs-cash tension keeps the đề question open at the archetype level (#1).
+
+**Save-safe, ZERO migrator:** the baseline `tinh_le` archetype = EXACTLY the legacy boot constants (cash/meters/presets/
+origin-mix), so `freshState` is byte-identical for the default and old saves lacking `S.archetype` sanitize to `tinh_le`.
+`studentOrigin` reads the archetype's origin-mix (falls back to ORIGIN_W = tinh_le's mix). Chosen at boot via
+`freshState(seed, archKey)` / **`?arch=que_ngheo`** (playtest param, like ?ckpt2b) / `ARCH_OVERRIDE` (sweep). Added
+`tune.js` `arch-<bank|apex|cost|real|cash>:<key>` metrics + a sweep sensor (the velocity discipline: a metric per mechanic).
+
+**Verification:** gate GREEN (default byte-identical: bot cash 7392/essay 2148 unchanged), `node sweep.js` 0 bad flags +
+the L2 ARCHETYPE sensor, lives clean, tune.js confirms que_ngheo bankruptcy-safe even at 100 boot cash. Placed in
+`MODEL.md` (geography → LIVE) first. **Deferred to ckpt2** (owner playtest): the pick-archetype start screen, per-archetype
+mentor-slots / resource depth, the đề-thesis surfaced in the capstone essay. The "wrong place" axis of right-kid /
+wrong-era / wrong-place / wrong-class is now live.
+
 ## 2026-06-21 — tune.js: balance tuning in one command instead of N manual probe cycles (loop iter 207)
 **A velocity dev-tool — the owner's "fast-track the gameplay" steer, first delivery.** Manual balance tuning was the
 slowest serial cost in the loop: set a CONFIG knob → run sweep → eyeball → repeat (iter-206 spent ~4 fir-in-the-dark

@@ -69,10 +69,25 @@ function eraApexSwing(tell) {
   return Math.max.apply(null, ps) - Math.min.apply(null, ps);
 }
 
+// arch-<measure>:<key> — a geographic archetype's outcome under its DEFAULT culture (bank rate / apex% / cost% / real% / cash)
+function archMetric(meas, ak) {
+  if (!CONFIG.ARCHETYPES[ak]) throw new Error("unknown archetype '" + ak + "'");
+  var REAL = { STEVE: 1, FOUNDER: 1, KY_SU: 1, LUONG_ON: 1 }, APEX = { FOUNDER: 1, STEVE: 1 };
+  var real = 0, cost = 0, n = 0, apex = 0, cash = 0, bank = 0;
+  SEEDS.forEach(function (sd) { ARCH_OVERRIDE = ak; freshState(sd); S.speed = 0; var minc = S.cash;
+    for (var d = 0; d < 11 * DPY; d++) { dayTick(); if (S.cash < minc) minc = S.cash; }
+    cash += S.cash; if (minc < -60) bank++;
+    S.alumni.forEach(function (a) { n++; if (APEX[a.state]) apex++; if (REAL[a.state]) real++; else cost++; }); });
+  ARCH_OVERRIDE = null; n = n || 1;
+  return meas === "bank" ? bank : meas === "apex" ? 100 * apex / n : meas === "cost" ? 100 * cost / n : meas === "real" ? 100 * real / n : cash / SEEDS.length;
+}
+
 function measure(metric) {
   if (METRICS[metric]) return METRICS[metric]();
   var m = /^era-apex:(spark|sky|hype)$/.exec(metric);
   if (m) return eraApexSwing(m[1]);
+  var am = /^arch-(bank|apex|cost|real|cash):([a-z_]+)$/.exec(metric); // NB: [a-z_] not \w — a backslash in this template literal would be eaten
+  if (am) return archMetric(am[1], am[2]);
   throw new Error("unknown metric '" + metric + "' (try --metrics)");
 }
 
@@ -113,7 +128,7 @@ function help() {
 }
 if (!argv.length || argv[0] === "--help" || argv[0] === "-h") { help(); process.exit(0); }
 if (argv[0] === "--metrics") {
-  console.log("Available metrics:\n  origin-gap            middle − poor realize gap (canbang) — the structural cost\n  origin-poor           poor realize% (canbang) — keep above the waste-only floor\n  origin-poor-mentored  poor realize% when ALL poor are mentored — the equalizer/parity check\n  era-apex:<tell>       apex% swing across the 5 eras for spark|sky|hype — the wrong-era grip\n  steve-rate            % of craft (đồ án) runs that reach 🍎\n  cash                  avg end cash (default presets), tr\n  waste                 default waste% (canbang)\n  drop                  avg dropouts/run under all-cram (watch for spirals)");
+  console.log("Available metrics:\n  origin-gap            middle − poor realize gap (canbang) — the structural cost\n  origin-poor           poor realize% (canbang) — keep above the waste-only floor\n  origin-poor-mentored  poor realize% when ALL poor are mentored — the equalizer/parity check\n  era-apex:<tell>       apex% swing across the 5 eras for spark|sky|hype — the wrong-era grip\n  arch-<m>:<key>        a geographic archetype under its default culture; m = bank|apex|cost|real|cash\n  steve-rate            % of craft (đồ án) runs that reach 🍎\n  cash                  avg end cash (default presets), tr\n  waste                 default waste% (canbang)\n  drop                  avg dropouts/run under all-cram (watch for spirals)");
   process.exit(0);
 }
 if (argv.length < 3) { console.error("usage: node tune.js <knob> <v1,v2,...> <metric> [targetLo targetHi]   (--help / --metrics)"); process.exit(1); }

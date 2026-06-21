@@ -41,6 +41,7 @@ var S = null;
 var _nextId = 1;
 var CKPT2B_ON = false; // iter-200 E8 ckpt2b PLAYTEST FLAG (OFF by default → live byte-identical). Set true by ?ckpt2b=1 (ui.js boot) or the sweep sensor. When ON, a DISCOVERED gift whose grain you hired NO faculty for (and didn't mentor) goes adrift → real waste: specializing your faculty has a COST. The owner's gated "strong faculty trade-off" — shipped behind a flag so the owner can PLAYTEST the FEEL (the gate's own requirement) without it touching the default live experience.
 var ERA_OVERRIDE = null; // iter-204 L1: testing-only era pin (sweep era-sensor sets it to measure one era in isolation). null in production → era follows S.year. NOT serialized; never read by a save.
+var ARCH_OVERRIDE = null; // iter-210 L2: testing-only archetype pin (sweep archetype-sensor / ?arch= can also set it). null → freshState uses archKey arg or ARCH_DEFAULT. NOT serialized.
 function nid() { return _nextId++; }
 
 /* ---------- L1 ERAS (iter-204) — the authored decade spine ---------- */
@@ -206,9 +207,11 @@ function bacTamNod() { S._lastNod = S.totalDays; } // the one quiet virtue beat 
    freshState — complete shape (CONVERSION-SPEC §7). Every field also covered
    by mergeInto()/sanitize() so saves never break.
    ========================================================================== */
-function freshState(seed) {
+function freshState(seed, archKey) {
   _nextId = 1;
   var sd = (seed != null ? seed : 0x53544556) >>> 0; // "STEV"
+  var _ak = archKey || ARCH_OVERRIDE || CONFIG.ARCH_DEFAULT; // iter-210 L2: the school's archetype (geography) — pre-loads economy + meters + teaching culture + cohort origin-mix
+  var _A = CONFIG.ARCHETYPES[_ak] || CONFIG.ARCHETYPES[CONFIG.ARCH_DEFAULT];
   var s = {
     v: CONFIG.V,
     rngState: sd | 0,
@@ -219,12 +222,13 @@ function freshState(seed) {
     speed: 0, speed3Unlocked: false,
     schoolName: CONTENT.schoolName, // iter-186 (owner): the academy's name — MUTABLE (the 'datten' investor event renames it for real); shown in the HUD/epilogue/share card
 
-    // economy
-    cash: CONFIG.BOOT_CASH, book: CONFIG.BOOK_VALUE, tuition: CONFIG.BOOT_TUITION,
+    archetype: _ak, // iter-210 L2: WHERE the school is (geography) — drives boot economy/meters/culture/origin-mix below
+    // economy (boot values from the archetype; tinh_le = the legacy constants → byte-identical default)
+    cash: _A.cash, book: CONFIG.BOOK_VALUE, tuition: CONFIG.BOOT_TUITION,
     // meters
-    tiengTam: CONFIG.BOOT_TT, uyTin: CONFIG.BOOT_UT, thucChat: CONFIG.BOOT_TC,
+    tiengTam: _A.tt, uyTin: _A.ut, thucChat: _A.tc,
     utYearNet: 0, pierceDefense: false, pierceKeynote: false,
-    presets: { n1: "canbang", n2: "luyende", n3: "luyende", n4: "luyende" }, // the un-attended baseline WASTES (Mentor's Ledger: inaction loses); the realize/waste spread comes from per-child attention, not the global preset
+    presets: { n1: _A.presets.n1, n2: _A.presets.n2, n3: _A.presets.n3, n4: _A.presets.n4 }, // the archetype's default TEACHING CULTURE (player can change it); tinh_le = canbang/luyện-đề baseline (inaction WASTES — the realize/waste spread comes from per-child attention)
     rooms: [],
     students: [],
     teachers: [],
@@ -233,7 +237,7 @@ function freshState(seed) {
 
     alumni: [],
     admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
-    endow: { bal: CONFIG.BOOT_ENDOW, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 },
+    endow: { bal: _A.endow, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 }, // iter-210: archetype boot endowment (tinh_le = legacy BOOT_ENDOW)
     giftItems: [], // iter-182 (owner steer ckpt3): non-monetary gifts from successful alumni — the "kho lưu niệm", a hook for extension functions later
     scholarships: [
       { key: "tdn", holderId: null, suspended: false },

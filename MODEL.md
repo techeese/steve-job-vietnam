@@ -33,7 +33,7 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
 | **ERA (the decade)** | LIVE | the world re-values gifts over time | `eraIndex(year)` → eraFav[tell] | **talent-direction (right kid / wrong era)**, the apex ceiling |
 | **Family origin** | LIVE | class advantage/disadvantage at the start | `origin` nghèo/tb/khá-giả (ORIGIN_GROW) | **mentorship (counters it)**, talent-realization, era (triple-wrong) |
 | **Technology / tools** | QUEUED | the tools of an age reshape *how you teach* AND *what a gift can build* | (idea) rides ERA: each decade unlocks tools (no-computer → PC → internet → smartphone → AI → ?) | **era (its native axis)**, education (new pedagogy/access), origin (tools can democratize OR widen the gap), the apex conditions |
-| **Geography / archetype** | QUEUED | where the school is sets its whole world | (L2) starting-state table | origin-mix, endowment, prestige, local gift-bias, era |
+| **Geography / archetype** | LIVE | where the school is sets its whole world | (L2) `CONFIG.ARCHETYPES` — 4 schools: boot economy/prestige + default culture + cohort origin-mix (tinh_le/que_ngheo/lo_thanhpho/truong_nghe) | **origin-mix** (rural contains more poor), endowment, prestige, teaching-culture, era |
 | **Peers / contagion** | QUEUED | a cohort lifts or drags its members | (idea) | cohort composition, mood, realize/waste |
 | **Luck** | QUEUED | the same gift, different break | (idea, bounded) | era, the apex (keep rare + earned) |
 | **Progression / legacy** | QUEUED | one generation seeds the next | (L3) past-run alumni → next world | archetype, era-chain |
