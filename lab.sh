@@ -63,6 +63,7 @@ cat >> "$OUT" <<'HTML'
       '<h1>🎮 Gameplay Lab — Học viện Steve</h1>'+
       '<div class="sub">A graphics-free read of the sim. Run a school, read who it realized and who it wasted. (Generated from the live engine by ./lab.sh)</div>'+
       '<div class="row">'+
+        '<label>Trường (archetype)<select id="lab_arch">'+Object.keys(CFG.ARCHETYPES||{}).map(function(k){return '<option value="'+k+'">'+(CFG.ARCHETYPES[k].name)+'</option>';}).join('')+'</select></label>'+
         '<label>Triết lý (preset)<select id="lab_preset">'+presets.map(function(k){return '<option value="'+k+'">'+presetLabel(CFG,k)+'</option>';}).join('')+'</select></label>'+
         '<label>Seed<input id="lab_seed" type="number" value="11" style="width:80px"></label>'+
         '<label>Số năm<input id="lab_years" type="number" value="12" style="width:70px"></label>'+
@@ -87,9 +88,11 @@ cat >> "$OUT" <<'HTML'
   }
 
   function cfg(){return __test.config();}
-  function simulate(preset,seed,years,mentor){
-    __test.fresh(seed); var S=HVS.S(); S.META=S.META||{}; S.META.tutorial=true;
-    S.presets={n1:preset,n2:preset,n3:preset,n4:preset}; S.speed=0; // freeze the live clock; we advance explicitly
+  function simulate(preset,seed,years,mentor,arch){
+    try{ ARCH_OVERRIDE = arch||null; }catch(e){} // L2: start in the chosen geographic archetype (economy + prestige + cohort origin-mix); freshState reads ARCH_OVERRIDE
+    __test.fresh(seed); try{ ARCH_OVERRIDE = null; }catch(e){} // restore so it doesn't leak to other runs
+    var S=HVS.S(); S.META=S.META||{}; S.META.tutorial=true;
+    S.presets={n1:preset,n2:preset,n3:preset,n4:preset}; S.speed=0; // freeze the live clock; we advance explicitly (preset = the teaching policy you're testing, on top of the archetype's economy/class)
     ROOMS.forEach(function(k){try{HVS.autoPlace(k);}catch(e){}});
     var CFG=cfg(), per=[];
     for(var y=0;y<years;y++){
@@ -120,17 +123,26 @@ cat >> "$OUT" <<'HTML'
     return '<div class="bar">'+seg(o.realized,R)+seg(o.wasted,W)+seg(o.distorted,D)+'</div>'+
       '<div class="lg"><span class="r">● realized '+o.realized+'</span><span class="w">● wasted '+o.wasted+'</span><span class="d">● distorted '+o.distorted+'</span></div>'; }
   function chip(st){ try{ return cfg().ALUM.CHIPS[st]||st; }catch(e){ return st; } }
+  function archName(k){ try{ return (cfg().ARCHETYPES[k]||{}).name||k; }catch(e){ return k; } }
+  // L2 DEMOGRAPHIC read — the cohort's class mix + how each origin fared (realize = flourish≥4). Shows the school-as-equalizer.
+  function originDist(S){ var t={ngheo:{g:0,r:0},tb:{g:0,r:0},kha:{g:0,r:0}};
+    (S.alumni||[]).forEach(function(a){ var o=a.fs&&a.fs.origin; if(t[o]){ t[o].g++; try{ if(flourishOf(a.state)>=4) t[o].r++; }catch(e){} } });
+    function pc(o){ return t[o].g?Math.round(100*t[o].r/t[o].g):0; }
+    return 'nghèo '+t.ngheo.g+' ('+pc('ngheo')+'% nên người) · tb '+t.tb.g+' ('+pc('tb')+'%) · khá '+t.kha.g+' ('+pc('kha')+'%)'; }
 
   function runOne(){
+    var arch=el("lab_arch")?el("lab_arch").value:null;
     var preset=el("lab_preset").value, seed=+el("lab_seed").value, years=+el("lab_years").value, mentor=el("lab_mentor").checked;
-    var r=simulate(preset,seed,years,mentor), S=r.S, last=r.per[r.per.length-1]||snap(S), cl=classify(S);
+    var r=simulate(preset,seed,years,mentor,arch), S=r.S, last=r.per[r.per.length-1]||snap(S), cl=classify(S);
     var states=Object.keys(cl.byState).sort(function(a,b){return cl.byState[b]-cl.byState[a];});
     var bio=""; try{ bio=__ui._essayText(); }catch(e){ bio="(epilogue chưa sẵn — "+e.message+")"; }
     el("lab_out").innerHTML=
       '<div class="cols">'+
         '<div class="card"><h2>Run summary</h2><table>'+
+          row("Trường (archetype)",archName(arch||(S&&S.archetype)))+
           row("Triết lý",presetLabel(cfg(),preset))+row("Seed/Năm/Mentor",seed+" / "+years+" / "+(mentor?"có":"không"))+
           row("Thời đại (đầu→cuối)",(function(){var seen=[];r.per.forEach(function(p){if(p.era&&seen[seen.length-1]!==p.era)seen.push(p.era);});return seen.join(" → ")||eraName(S);})())+
+          row("Xuất thân (nghèo/tb/khá → nên người)",originDist(S))+
           row("Tiền cuối",money(last.cash))+row("Sinh viên",last.stu)+row("Tốt nghiệp",last.grad)+row("Cựu SV",last.alu)+
           row("Tiếng Tăm / Uy Tín / Thực Chất",last.TT+" / "+last.UT+" / "+last.TC)+
         '</table></div>'+
@@ -144,9 +156,10 @@ cat >> "$OUT" <<'HTML'
       '<div class="card"><h2>Biographies — who became who</h2><div class="bio">'+esc(bio)+'</div></div>';
   }
   function runDist(){
+    var arch=el("lab_arch")?el("lab_arch").value:null;
     var preset=el("lab_preset").value, years=+el("lab_years").value, mentor=el("lab_mentor").checked, K=+el("lab_seeds").value;
     var agg={realized:0,wasted:0,distorted:0}, rows=[];
-    for(var s=0;s<K;s++){ var r=simulate(preset,1+s*7,years,mentor), c=classify(r.S);
+    for(var s=0;s<K;s++){ var r=simulate(preset,1+s*7,years,mentor,arch), c=classify(r.S);
       agg.realized+=c.o.realized; agg.wasted+=c.o.wasted; agg.distorted+=c.o.distorted;
       rows.push({seed:1+s*7,o:c.o,n:c.n}); }
     el("lab_out").innerHTML='<div class="card"><h2>Distribution — '+presetLabel(cfg(),preset)+' × '+K+' seeds</h2>'+bar(agg)+
@@ -155,9 +168,10 @@ cat >> "$OUT" <<'HTML'
       '<div class="sub" style="margin-top:8px">Open-question check: every preset should reach BOTH realized and wasted lives; no preset should be waste-free or realize-free.</div></div>';
   }
   function runCmp(){
+    var arch=el("lab_arch")?el("lab_arch").value:null;
     var years=+el("lab_years").value, mentor=el("lab_mentor").checked, K=Math.max(3,Math.min(6,+el("lab_seeds").value)), CFG=cfg(), presets=Object.keys(CFG.PRESETS);
     var out=presets.map(function(p){ var agg={realized:0,wasted:0,distorted:0};
-      for(var s=0;s<K;s++){ var c=classify(simulate(p,1+s*7,years,mentor).S);
+      for(var s=0;s<K;s++){ var c=classify(simulate(p,1+s*7,years,mentor,arch).S);
         agg.realized+=c.o.realized; agg.wasted+=c.o.wasted; agg.distorted+=c.o.distorted; }
       return {p:p,o:agg}; });
     el("lab_out").innerHTML='<div class="card"><h2>Compare presets × '+K+' seeds each</h2>'+

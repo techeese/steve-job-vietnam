@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-21 — The Gameplay Lab now surfaces the new systems (archetype + class) + a whole-session consolidation (loop iter 216)
+**Paying the dynamic-Lab debt + verifying the LATTICE holds together after a heavy 12-iteration run.** The Lab is the
+owner's graphics-free window to WATCH the sim; the skill mandates surfacing each new system there, but the demographic
+(iter-206), geographic-archetype (iter-210), and era-intake (iter-214) systems shipped WITHOUT a Lab read. Now the Lab
+has: a **Trường (archetype) selector** — pick que_ngheo / lo_thanhpho / truong_nghe / tinh_le and watch that world
+(applies via `ARCH_OVERRIDE` → freshState's economy + prestige + cohort origin-mix); the run summary shows the
+**archetype name** and the **Xuất thân read** (the cohort's class mix nghèo/tb/khá + how each fared — "nên người %", the
+school-as-equalizer made visible); and the distribution + preset-compare now run within the chosen archetype. Lab JS
+parses, regenerates clean.
+
+**Consolidation (the exit-gate soul test, overdue after 12 feature iters):** a single biography now layers the narrative
+axes — *"★★★★★ — 🪪 Thất nghiệp — máu khởi nghiệp ấy, rốt cuộc nguội trên tay bạn · phải chi gặp thời mạng xã hội"* (a
+wasted **hustler gift** × **wrong era**, named together). The whole stack is GREEN end-to-end: gate, bot BOTOK (7206),
+`node sweep.js` 0 bad flags (era / demographic / geographic / economy / realize-waste sensors all hold), lives clean.
+The session's LATTICE — era × demographic × geographic atop the person-sim, with the narrative spine — composes
+cleanly. Dev-tool only (lab.sh) → correctly UNDEPLOYED (live build stays iter-215). **Next: a planned start on L3
+(progression + legacy), the last LATTICE pillar.**
+
 ## 2026-06-21 — The capstone now shows the year the headmaster's thinking TURNED (N3 ckpt2) (loop iter 215)
 **Deepens the "thinks-aloud" essay without ever answering the question (the open-question law holds — the final line still
 cuts off at "Tôi—").** iter-213 had the capstone re-read the first + last annual letter (the arc) or name the rut. ckpt2
