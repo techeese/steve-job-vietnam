@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-21 — QA: ran down a "the game looks broken" scare → a verification-tool quirk, NOT a game bug (loop iter 223)
+**The "read the real output across cases" discipline (which caught iter-222's dup) flagged something alarming and it was
+worth chasing.** Reading capstone essays across 3 archetypes in a shell LOOP, every run came out IDENTICAL — same cast,
+same fates — which would have meant the archetype/seed systems were dead. Ran it down instead of assuming: separate
+single invocations (`./lives.sh canbang 207 que_ngheo` vs `… 404 que_ngheo` vs `… 207 lo_thanhpho`) produce **clearly
+different** lives, and a direct node probe confirms `freshState(seed)` varies the cohort. **Conclusion: NO game bug —
+the sim varies correctly per seed × archetype × era.** The "identical" reads were a `lives.sh` harness quirk: **headless
+Chrome keeps a SINGLETON alive for a shell session**, so successive *in-loop* invocations render against the first run's
+state. (Confirmed a `sleep` between runs does NOT help; `--user-data-dir` isolates but leaks orphan Chrome procs — not
+worth it.) Fix: documented the gotcha in `lives.sh` (compare schools via SEPARATE invocations, not a within-shell loop)
++ added `localStorage.clear()` in the injected script (save-hygiene). Dev-tool only (lives.sh) → engine untouched, gate
+GREEN, UNDEPLOYED. The value: prevented a false "all archetypes are identical / the game is broken" conclusion, and
+hardened how the loop reads its own evidence. (The iter-221 exit-gate (b) verification stands — it used separate
+invocations, so its archetype reads were genuinely distinct.)
+
 ## 2026-06-21 — No two graduates in the capstone read the same line (cast-quote dedup) (loop iter 222)
 **A real quality flaw in the marquee artifact, found by reading the WHOLE essay end-to-end (not just verifying each
 section fires).** The capstone now flows well as a coherent, moving piece — but the full read surfaced the same class of

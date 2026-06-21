@@ -19,6 +19,11 @@ CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 PRESET="${1:-luyende}"; SEED="${2:-11}"; MENTOR="${3:-0}"; ARCH="${4:-}"
 TMP="__lives_run.html"
 trap 'rm -f "$TMP"' EXIT
+# ⚠ iter-223 gotcha (verified): DO NOT loop lives.sh inside one shell. Chrome headless keeps a SINGLETON alive for the
+# duration of a shell session, so successive in-loop invocations render against the FIRST run's state → STALE, IDENTICAL
+# reads (NOT a game bug — confirmed the sim varies correctly per seed/arch when each run is a SEPARATE shell invocation).
+# To compare schools, call lives.sh once per command (separate invocations). (--user-data-dir isolates but leaks orphan
+# Chrome procs and a sleep between in-loop runs does NOT help — only a fresh shell does.)
 cp index.html "$TMP"
 cat >> "$TMP" <<HTML
 <script>
@@ -28,6 +33,7 @@ cat >> "$TMP" <<HTML
     if(!(window.__test && window.__ui && window.HVS)) return;
     clearInterval(iv);
     try{
+      try{ localStorage.clear(); }catch(e){}                // iter-223: headless Chrome can share localStorage across rapid runs — clear any leaked SAVE so this run is isolated (fresh() below overrides S anyway; this stops it persisting forward)
       try{ if("$ARCH") ARCH_OVERRIDE="$ARCH"; }catch(e){}   // iter-221: pin the geographic archetype (economy + cohort origin-mix)
       window.__test.fresh($SEED);
       try{ ARCH_OVERRIDE=null; }catch(e){}                  // restore so it can't leak
