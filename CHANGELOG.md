@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — The annual letters now EVOLVE — the headmaster's voice ages across the run (loop iter 231)
+**The biggest real gap found by reading actual output: the owner's signature beat was nearly STATIC.** Dumping the
+annual letters across a playthrough showed the headmaster writing the IDENTICAL sentence years 2–13 (twelve copies) — yet
+this is the beat the owner asked to be *"like LLM reasoning, evolving, aligned with the player's choices,"* and the
+capstone literally claims *"người ngồi viết nó thì đã khác đi nhiều rồi."* Hollow if every letter is the same line.
+**Fix (honoring the rut's intentional poignancy):** each `annualLetter.body[state][culture]` is now a 3-variant arc
+`[early · mid · late]`, the SAME worry in the headmaster's aging voice — hopeful/tentative → the worry plain → weary and
+resigned. `tetCohortBeat` picks the variant by run-phase (`floor((year-1)*3/RUN_CAP)`, clamped) so the letters mature
+year over year. To keep the capstone's rut reading (the owner's point: *"the same worry, never dared change course"*),
+each stored letter now carries a **worry KEY** (`state×culture`, the thematic constant); the capstone detects
+rut-vs-evolved by that key, not the now-varying words (old saves lack it → graceful fall back to text). So a stable-cram
+run still reads as the rut — only now in the headmaster's weariest words (*"biết tỏng cái sai ấy rồi — mà năm sau vẫn sẽ
+mài"*), which lands harder; a run whose fortunes shifted reads as the evolved arc with its pivot. Verified: 27 new lines,
+parse clean, **gate GREEN (deterministic phase-pick → replay byte-identical; old-save compat passes)**, bot BOTOK,
+letters now 4 distinct across a run (was ~1–2), capstone renders both modes. Deployed.
+**NEXT (noted, separate pre-existing bug):** `buildCast` can list the SAME alumnus twice (seen: "Lê Hải Nam" ×2 in one
+capstone cast) — needs an id-dedup across the cast slots.
 ## 2026-06-21 — GRAPHICS-HANDOFF.md: the gameplay-first phase's payoff made legible (loop iter 230)
 **SELF-CORRECTION + consolidation.** After a productive streak of narrative-polish ships (iter-222→229: cast dedup,
 cram echo, tone, graduation flavor, ticker spam, era-gated events), the surface sweep is COMPLETE and the marginal

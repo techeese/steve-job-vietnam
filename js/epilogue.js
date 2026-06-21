@@ -175,17 +175,18 @@ function buildEssay(s, cb, capstone) {
     // iter-213 (N3) — re-read the annual letters: the headmaster's own thinking, year by year, before the final answer.
     if (s.letters && s.letters.length >= 2) {
       var lf = s.letters[0], ll = s.letters[s.letters.length - 1];
-      if (lf.text === ll.text) { // a STABLE run — the same worry, year after year (the rut, honestly named)
+      var wk = function (l) { return l.worry || l.text; }; // iter-231: compare the underlying WORRY (state×culture), not the now year-varying words; old saves lack .worry → fall back to text
+      if (wk(lf) === wk(ll)) { // a STABLE run — the same worry, year after year (the rut, honestly named — the words may have wearied, the course never changed)
         P("lead", E.lettersSameIntro, true);
         P("lead", tpl(E.lettersSame, { text: esc(ll.text) }), true);
         P("lead", tpl(E.lettersSameReflect, { n: s.letters.length }), true);
-      } else { // the thinking EVOLVED — show the arc: first → the TURNING POINT → last
+      } else { // the thinking EVOLVED — the underlying worry itself changed; show the arc: first → the TURNING POINT → last
         P("lead", E.lettersIntro, true);
         P("lead", tpl(E.lettersFirst, { y: lf.year, text: esc(lf.text) }), true);
-        // iter-214 (N3 ckpt2): the pivot — the first year the headmaster's letter changed (his thinking turned).
+        // iter-214 (N3 ckpt2): the pivot — the first year the headmaster's WORRY changed (his thinking turned), not merely the wording.
         var pivot = null;
-        for (var li = 1; li < s.letters.length; li++) { if (s.letters[li].text !== s.letters[li - 1].text) { pivot = s.letters[li]; break; } }
-        if (pivot && pivot.text !== lf.text && pivot.text !== ll.text) P("lead", tpl(E.lettersPivot, { y: pivot.year, text: esc(pivot.text) }), true);
+        for (var li = 1; li < s.letters.length; li++) { if (wk(s.letters[li]) !== wk(s.letters[li - 1])) { pivot = s.letters[li]; break; } }
+        if (pivot && wk(pivot) !== wk(lf) && wk(pivot) !== wk(ll)) P("lead", tpl(E.lettersPivot, { y: pivot.year, text: esc(pivot.text) }), true);
         P("lead", tpl(E.lettersLast, { y: ll.year, text: esc(ll.text) }), true);
         P("lead", tpl(E.lettersReflect, { n: s.letters.length, graduated: s.META.graduated }), true);
       }

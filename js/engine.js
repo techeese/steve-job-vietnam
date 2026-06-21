@@ -505,11 +505,15 @@ function tetCohortBeat() {
   var v = {}; ["n1", "n2", "n3", "n4"].forEach(function (k) { v[S.presets[k]] = (v[S.presets[k]] || 0) + 1; });
   var best = "canbang", bc = -1; for (var p in v) if (v[p] > bc) { bc = v[p]; best = p; }
   var culture = best === "luyende" ? "cram" : best === "duan" ? "craft" : "balance";
-  var L = CONTENT.annualLetter, body = L.body[state][culture];
+  var L = CONTENT.annualLetter, pool = L.body[state][culture];
+  var phase = clamp(Math.floor((S.year - 1) * 3 / CONFIG.RUN_CAP_YEARS), 0, 2); // iter-231: the letter's voice ages early→mid→late across the run (same worry, wearier words)
+  var body = Array.isArray(pool) ? pool[phase] : pool; // guard tolerates a pre-pool save/harness
   news(tpl(L.open, { era: curEra().name, year: S.year }) + body); // deterministic (cohort + presets + year, no rnd) → replay-safe; news-only → balance-neutral
   // iter-213 (N3): keep the letter so the capstone essay can re-read the headmaster's thinking, year by year.
+  // iter-231: also store the worry KEY (state×culture, the thematic constant) so the capstone reads rut-vs-evolved by
+  // the underlying worry, not the now-varying words — a stable run still reads "same nỗi, never dared change course".
   if (!S.letters) S.letters = [];
-  S.letters.push({ year: S.year, era: curEra().name, culture: culture, text: body });
+  S.letters.push({ year: S.year, era: curEra().name, culture: culture, worry: state + "/" + culture, text: body });
   if (S.letters.length > 16) S.letters.shift();
 }
 function scholarshipDraw() {

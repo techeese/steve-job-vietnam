@@ -162,21 +162,61 @@ var CONTENT = {
   // (cohort-state + presets + year, no rnd) → replay-safe. Opener names the decade; body keyed by [state][culture].
   annualLetter: {
     open: "📜 Thư gửi các em — {era}, cuối Năm {year}: ",
+    // iter-231 (N3 ckpt): each cell is a 3-variant arc [early · mid · late] — the SAME worry, the headmaster's voice
+    // aging across the run (tentative → plain → weary). Picked by run-phase in tetCohortBeat so the letters EVOLVE
+    // year over year instead of repeating one line 12×; the worry-KEY (state×culture) stays constant, so the capstone
+    // still reads a stable run as "the same nỗi, never dared change course" (the rut) — only now the words wore wearier.
     body: {
       blossom: {
-        craft: "thầy nhìn quanh sân, thấy nhiều em đang làm ra thứ của riêng mình — vụng về, nhưng là của các em. Thầy nghĩ, có lẽ đó mới là điều đề Văn hỏi.",
-        cram: "các em qua kỳ thi đều tăm tắp, thầy nở mày nở mặt với trên. Nhưng đêm về thầy tự hỏi — đều tay như nhau, thì lấy đâu ra một đứa khác người?",
-        balance: "phần đông các em đang lớn lên vững vàng, đúng hướng. Thầy chưa biết trong các em có một Steve Jobs không, nhưng thầy mừng vì các em đang là chính mình."
+        craft: [
+          "trường mới mở, thầy còn chưa chắc mình dạy đúng. Nhưng nhìn mấy em hí hoáy làm ra cái của riêng mình — vụng mà thật — thầy thấy nhen lên chút gì đó.",
+          "thầy nhìn quanh sân, thấy nhiều em đang làm ra thứ của riêng mình — vụng về, nhưng là của các em. Thầy nghĩ, có lẽ đó mới là điều đề Văn hỏi.",
+          "bao năm rồi thầy vẫn giữ cái lối này: cứ để các em làm ra thứ của mình. Thầy không chắc nó ra được một Steve Jobs — nhưng đêm về, thầy yên lòng."
+        ],
+        cram: [
+          "khoá đầu đỗ đẹp, thầy mừng. Mà đêm về đã gợn: đều tay quá, có khi nào thầy đang ép tất cả các em vào chung một khuôn?",
+          "các em qua kỳ thi đều tăm tắp, thầy nở mày nở mặt với trên. Nhưng đêm về thầy tự hỏi — đều tay như nhau, thì lấy đâu ra một đứa khác người?",
+          "năm nào bảng điểm cũng đẹp, năm nào thầy cũng tự hỏi đúng câu ấy — mà vẫn chưa dám buông cái khuôn. Đều thì đều thật; khác người thì vẫn chưa thấy."
+        ],
+        balance: [
+          "khoá này phần đông ngoan, vững. Thầy chưa dám mong gì lớn — chỉ mong các em được là chính mình đã.",
+          "phần đông các em đang lớn lên vững vàng, đúng hướng. Thầy chưa biết trong các em có một Steve Jobs không, nhưng thầy mừng vì các em đang là chính mình.",
+          "bao khoá rồi, các em lớn lên vững vàng, tử tế. Một Steve Jobs thì thầy vẫn chưa thấy — nhưng ngần ấy đứa nên người, thầy nghĩ cũng đáng."
+        ]
       },
       cool: {
-        craft: "thầy để cửa mở cho các em tự tìm đường, mà vài em lạc mất giữa sân trường, chưa ai kịp kéo về. Tự do cũng có cái giá của nó.",
-        cram: "thầy đẩy các em qua hết đề này đến đề khác; vài đứa sáng dạ nhất lại nguội đi trên tay thầy. Thầy sợ mình đang mài, mà quên rằng có thứ càng mài càng mòn.",
-        balance: "năm nay thầy thấy vài em đang nguội dần, chưa tìm thấy lối của mình. Thầy còn phải nghĩ lại cách dạy các em."
+        craft: [
+          "thầy để cửa mở cho các em tự đi. Mới năm đầu mà đã có đứa lạc giữa sân — thầy chưa biết nên siết lại hay cứ buông.",
+          "thầy để cửa mở cho các em tự tìm đường, mà vài em lạc mất giữa sân trường, chưa ai kịp kéo về. Tự do cũng có cái giá của nó.",
+          "vẫn cái cửa mở ấy; năm nào cũng có đứa đi lạc thầy không kéo về kịp. Thầy biết cái giá rồi — mà vẫn chưa biết đóng bớt lại bao nhiêu là vừa."
+        ],
+        cram: [
+          "thầy đẩy các em qua hết đề này đến đề khác. Có đứa sáng dạ tự dưng nguội đi — thầy chưa hiểu vì sao, hay tại chính tay thầy?",
+          "thầy đẩy các em qua hết đề này đến đề khác; vài đứa sáng dạ nhất lại nguội đi trên tay thầy. Thầy sợ mình đang mài, mà quên rằng có thứ càng mài càng mòn.",
+          "lại một khoá thầy mài qua đề, lại những đứa sáng nhất nguội đi trên tay thầy. Thầy biết tỏng cái sai ấy rồi — mà năm sau vẫn sẽ mài, vì thầy chỉ biết dạy thế."
+        ],
+        balance: [
+          "năm nay vài em nguội dần, chưa tìm ra lối. Thầy còn mới, thầy nghĩ mình sẽ kịp chỉnh lại cách dạy.",
+          "năm nay thầy thấy vài em đang nguội dần, chưa tìm thấy lối của mình. Thầy còn phải nghĩ lại cách dạy các em.",
+          "vẫn vài em nguội dần mỗi năm, thầy vẫn bảo mình sẽ nghĩ lại cách dạy — mà bao năm rồi, nghĩ thì nhiều, đổi thì chẳng được mấy."
+        ]
       },
       mixed: {
-        craft: "đứa làm ra được thứ của mình, đứa vẫn loay hoay tìm lối. Thầy chưa biết để mặc các em tự lớn là đúng hay sai.",
-        cram: "đứa qua đề ngon lành, đứa thì gãy. Thầy luyện cho các em cái thước chung, mà đời ngoài kia đâu chấm theo thước ấy.",
-        balance: "đứa bừng lên, đứa chững lại — trường nào rồi cũng thế. Thầy chỉ mong năm sau bớt đi một cái tên thầy không giữ được."
+        craft: [
+          "đứa đã làm ra thứ của mình, đứa còn loay hoay. Thầy mới mở trường, chưa biết để mặc các em tự lớn là đúng hay sai.",
+          "đứa làm ra được thứ của mình, đứa vẫn loay hoay tìm lối. Thầy chưa biết để mặc các em tự lớn là đúng hay sai.",
+          "năm nào cũng vậy: đứa nên hình, đứa còn loay hoay. Bao năm thầy vẫn chưa trả lời được cho mình — để mặc các em tự lớn, là thương hay là lười?"
+        ],
+        cram: [
+          "đứa qua đề ngon, đứa thì gãy. Thầy luyện các em theo một cái thước — mà chưa chắc đời ngoài kia chấm theo thước ấy.",
+          "đứa qua đề ngon lành, đứa thì gãy. Thầy luyện cho các em cái thước chung, mà đời ngoài kia đâu chấm theo thước ấy.",
+          "vẫn cái thước chung ấy: đứa vừa thước thì qua, đứa lệch thước thì gãy. Bao năm thầy biết đời chấm khác — mà bỏ thước đi thì thầy vẫn chưa dám."
+        ],
+        balance: [
+          "đứa bừng lên, đứa chững lại. Trường mới, thầy chỉ mong sang năm bớt đi một cái tên mình không giữ được.",
+          "đứa bừng lên, đứa chững lại — trường nào rồi cũng thế. Thầy chỉ mong năm sau bớt đi một cái tên thầy không giữ được.",
+          "đứa bừng, đứa chững — bao khoá rồi vẫn thế. Thầy thôi mong giữ được hết; chỉ mong mỗi năm bớt đi một cái tên mình không giữ nổi."
+        ]
       }
     }
   },
