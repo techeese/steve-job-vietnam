@@ -1,0 +1,164 @@
+---
+name: improve-steve-gameplay
+description: GAMEPLAY-FIRST PHASE for Học viện Steve — take the gameplay, person-sim, and STORY/LEVELS to state-of-the-art with GRAPHICS FROZEN and verification HEADLESS-ONLY. Use for every dev iteration on steve-job-vietnam DURING the gameplay-first phase (any add/fix/deepen of sim, story, eras, archetypes, balance, content). NOT for art — the unscoped improve-steve owns the graphics pass that comes AFTER this phase exits.
+---
+
+# GAMEPLAY-FIRST PHASE — make the *game* incredible, with graphics frozen
+
+Project: `/Users/Admin/Desktop/coding/steve-job-vietnam` · repo `techeese/steve-job-vietnam` ·
+live at https://techeese.github.io/steve-job-vietnam/.
+Phase flag / kill-switch: this skill is the active loop while `/Users/Admin/Desktop/coding/.improve-steve-gameplay-on` exists.
+Sibling skill `improve-steve` (graphics-aware) is PARKED until this phase EXITS (see "Exit gate").
+
+## Why this phase exists (the root-cause fix — read once)
+
+The owner's diagnosis: *"we focused too much on graphics… gameplay is not deep enough, so graphics
+became the blocker of development speed."* The 2026-06-14 people-first pivot demoted graphics in
+PRIORITY but left it wired into the MACHINERY — every iteration still paid a graphics tax (per-ship
+screenshots, the 390px gate, cache-bust+deploy+poll, an 888-line skill reloaded each firing). So
+pure-gameplay changes still moved at graphics speed. **This phase severs that coupling.** The engine
+is DOM-free; the sim and story are 100% testable without rendering. We develop and verify gameplay
+HEADLESS, fast, and freeze the art layer until the game underneath is state-of-the-art.
+
+## THE FREEZE (hard rules — violating these defeats the phase)
+
+- **FROZEN — do not touch except for a NAMED production break:** `js/art.js`, `js/sprites.js`, the
+  render/canvas/`liveLoop` code and panel-cosmetics inside `js/ui.js`, `tools/gallery.html`, palettes,
+  sprite atlases, animation/juice/motes, the Bar's BEAUTY/JUICE axes, the divergence-by-workflow art
+  ritual. A "looks rough / could be prettier / nicer icon" is NOT a production break and may NOT preempt.
+- **NO graphics verification in the loop:** no per-ship screenshots, no 390px screenshot gate, no
+  `_renderLiveOnce`/`_settle` dance, no gallery render. (Mobile *layout* is still respected — just not
+  re-verified every ship; a real mobile-unusable break is a production break and may preempt.)
+- **ALLOWED — the whole point of the phase:** `js/engine.js`, `js/data.js`, `js/content.js`,
+  `js/save.js`, `js/epilogue.js`, the person-sim files (`js/sim/*`), CONFIG/tables, the headless
+  harnesses, and the gameplay/story logic in `ui.js` (the menus/flows that drive sim choices — wiring a
+  new mechanic to a button is gameplay; restyling that button is frozen).
+- **Gameplay is NOT capped by current art (owner, 2026-06-21 — the DECOUPLING PRINCIPLE):** build a
+  mechanic / era / story beat even if today's sprites can't render it — ship it as text / a placeholder / a
+  minimal indicator; the later graphics pass backfills the visuals. Freezing art means "don't develop new
+  art," NOT "limit gameplay to what today's art shows." A feature with no visual yet is a valid ship.
+- **The ONE exception:** a PRODUCTION break (a JSERR title string, white-screen, save-loss repro,
+  mobile-unusable, a sweep floor-drop) named with its symptom may preempt anything — fix it, then resume.
+
+## THE GOAL — what "state-of-the-art gameplay & story" means here
+
+The game today is ONE continuous person-sim with no narrative spine. State-of-the-art = the person-sim
+deepened AND given a story/levels structure. The owner wants **all of it**, unified as ONE design — the
+**LATTICE** (build toward this; it is the epic supply for the phase):
+
+- **ARCHETYPE** = the school you're handed (scenario + difficulty in one): rural-underfunded /
+  elite-cram / vocational / gifted-academy — each a different starting endowment, prestige, and
+  **cohort talent distribution**, and a different thesis on the đề Văn. Easy→hard is intrinsic.
+- **ERA** = the decade you play through (the authored campaign spine): 1990s scarcity → Đổi Mới →
+  dot-com → smartphone → AI boom. **Each era re-weights which talents the world REALIZES vs WASTES** —
+  the same kid is a wasted misfit in one era and a god in another. This is where "story" lives.
+- **CONTINUOUS SIM** = the moment-to-moment texture inside each era cell — the existing person-sim
+  (talent magnitude `seed` × direction `tell` × education → realized/wasted/distorted), modulated by
+  era + archetype. Deepen it (more turning points, branching arcs, inner state) but keep its invariants.
+- **PROGRESSION** = a RUN threads an ARCHETYPE through a SEQUENCE of ERAS; finishing SCORES the player's
+  đề-Văn answer and unlocks harder archetypes / longer era-chains / a **legacy layer** (your alumni seed
+  the next run's world). The "one more run, harder" ladder.
+
+One sentence: **a RUN = a chosen ARCHETYPE played through a SEQUENCE of ERAS, person-sim as the texture,
+a PROGRESSION ladder threading the lattice.** It MULTIPLIES the soul (right kid / wrong era / wrong
+school), never dilutes it. Resolve every design fork toward what makes a NAMED kid's
+realization-or-waste more felt, more caused-by-the-player, more legible as a LIFE.
+
+### The person-sim invariants (design law — never break, carry from VISION.md §"Laws")
+1. **Whose-life, not which-strategy** — talent changes *whose* life a thesis realizes/wastes, never
+   *which* thesis wins. Cram/craft/hustle stay three dignified arguments. No globally dominant strategy.
+2. **Symmetry of waste** — every preset/era REALIZES some talents and WASTES others; none is waste-only
+   or realize-only. Waste is never illustrated exclusively by cram.
+3. **Prose, not a meter** — realize/waste surfaces as caused prose tied to a moment, NEVER a
+   potential-minus-realized number or a sortable 48-kid efficiency table. ~40 kids are glimpsed, not metered.
+4. **Waste is done TO the person** — blame the SYSTEM and the player's policy, never the kid. Pantheon
+   (honored real educators) names NEVER appear in any waste/distort/scandal line (grep-enforced).
+
+## THE LOOP (lean — this skill reloads every firing; keep it fast)
+
+0. **Orient.** Read `ROADMAP.md` (`## Cadence`, `## Epic backlog`, `## Now`) and `feedback.md` (owner
+   inbox — if it has content below its `=== FEEDBACK ===` line, that owner steer PREEMPTS this pick;
+   distill it, route it, clear the inbox in this commit). Skim the last ~5 CHANGELOG entries.
+1. **Pick — biggest gameplay/story move available**, ranked: (a) production-broken, (b) explicit owner
+   ask, (c) the LATTICE epics (archetypes / eras / progression / legacy), (d) person-sim depth,
+   (e) balance from the sweep, (f) content. Prefer ONE coherent shippable change; if it's big, it's an
+   EPIC — plan it in ROADMAP `## Epic: <name>` (decide the load-bearing forks; ask the owner only on a
+   truly expensive-to-undo one), isolate in a git worktree if it moves files, ship a green checkpoint
+   each firing. For non-trivial design forks, DIVERGE before converge: 3 candidates, one line each,
+   scored by soul-movement > thesis-service > fun > novelty — but this is design reasoning, NOT the
+   art-screenshot ritual (that stays frozen).
+2. **Implement** (engineering laws below).
+3. **Verify HEADLESS (non-negotiable, all fast):**
+   - node-parse every changed script.
+   - `./gate.sh` ALL GREEN (GATE_FRESH / GATE_ADMIT / GATE_ALUM replay byte-identical / GATE_COMPAT
+     old-save migrates / GATE_BUILD). When a gate exposes a sim bug, fix the GAME, regenerate the
+     harness from the fixed file, re-run.
+   - Touched CONFIG/FSM/presets/economy/eras/archetypes ⇒ mirror in `engine.js` and run `node sweep.js`;
+     the bands + flags (TT-collapse, money-inflation, dead-end-states, **dominant-strategy**,
+     🍎-unreachable, realize/waste spread) are the balance to-do list. A talent/era/archetype mechanic
+     with NO sweep coverage is an unverifiable change — EXTEND sweep.js to sense it (esp. invariant #1:
+     no archetype/era/adaptive strategy may dominate).
+   - `./bot.sh` BOTOK (full UI+engine smoke, ≥6 sim-years so graduates exist) — asserts no JSERR across
+     all tabs/late-game state. This is the only render-adjacent check kept: it proves nothing CRASHED,
+     not how it looks.
+   - `./lives.sh [preset] [seed]` under ≥2 presets — READ the biographies. The soul test: can a stranger
+     name a kid who was wasted and one realized? Different presets must produce different felt lives.
+   - `./lab.sh` — the **Gameplay Lab**: the owner's graphics-free window to WATCH the sim and discuss.
+     Regenerates `__lab.html` from index.html and runs schools interactively, reading back biographies /
+     outcome distribution / per-year arc / economy / preset-comparison. Keep it **DYNAMIC**: whenever you
+     add or deepen a gameplay system (an era, an archetype, a new mechanic), surface its read in the Lab so
+     the owner can see what changed. It's the human-facing complement to the headless gates above.
+   - **No screenshots. No 390px gate. No gallery.** If you reach for one, you're doing graphics — stop.
+4. **Record & ship.** Update `ROADMAP.md` (done out, discoveries in, `## Cadence`) and PREPEND a
+   `CHANGELOG.md` entry (loop-iter number in the heading; state which sim/story axis it deepened).
+   **Deploy: develop LOCAL, batch deploys** (the owner isn't watching pixels this phase) — accumulate on
+   the working branch, and deploy a batch via the ROADMAP banner recipe (`./bump.sh` → commit →
+   ff-merge → push → verify live `?v=`) when a coherent slice is done or the owner asks. `bump.sh` is
+   still mandatory on any deploy so the build isn't stale.
+5. **Continue.** Short status: what shipped, the one soul/story axis it moved, what's next, and `OWNER:`
+   lines for any call made on the owner's behalf (he steers by reaction).
+
+## Engineering laws (the load-bearing subset — violations have caused prod incidents)
+- PRODUCTION ERROR TRAP: the inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l`) MUST stay
+  the FIRST script in `index.html`, before the `js/*.js` tags. A silent white-screen on a phone is the
+  worst failure mode.
+- NEVER an unescaped `"` inside a double-quoted JS string (Vietnamese quotes/hyphens kill the parse).
+- Every state field: `freshState()` default + `load()` typeof-merge + `sanitize()` entry. Use
+  `Number.isFinite`, NEVER bare `isFinite` (NaN→JSON null→`isFinite(null)===true`). Schema change bumps
+  `S.v` with ONE migrator. Test-load an OLD-shaped save lacking the new field. Index-aligned arrays
+  sanitize with `.map` (null-out), never `.filter`.
+- ALL constants in CONFIG, never in state (a save must not pin a balance number). FSM rows: clamp
+  probabilities ≤0.95, row-normalize Σ≤0.95.
+- `rnd()` = mulberry32 on `S.rngState` for gameplay; `Math.random` for cosmetics only. The alumni FSM
+  derives per-alumnus-per-year streams from `S.seed0` (never the live stream) — reloads must not reroll
+  destinies; GATE_ALUM enforces byte-identical replay. **Eras/archetypes that add randomness MUST seed
+  from `S.seed0`, not the live stream, or they break replay.**
+- View/state split: sprite positions/paths/frames volatile, never serialized. `rebuildGrid()` after every
+  load/sanitize/build/demolish. `dayTick()` stays a pure function of (S, rnd).
+- Pantheon tone law: honored real names are reverent-only; no honoree name in any phốt/scandal/waste
+  string. Grep before ship.
+- Layer discipline: sim/mechanics → engine.js/CONFIG/tables, text → content.js, NEVER inline. (Art →
+  art.js is FROZEN — don't add to it.)
+- LEAVE NO DEBRIS: scratch/harness/dump files written to `/tmp` or `rm`'d the same turn; `git status`
+  shows only intended changes before any commit.
+
+## Exit gate — when this phase ENDS (the handoff to the graphics pass)
+
+The phase is NOT self-releasing. It exits ONLY when ALL hold:
+- (a) `node sweep.js` shows the realize/waste/distort spread holds ACROSS archetypes and eras, with no
+  dominant archetype/era/strategy (invariant #1) and waste reachable everywhere (invariant #2);
+- (b) reading ~5 `lives.sh` biographies across ≥2 archetypes × ≥2 eras, a stranger can name a kid wasted
+  and one realized, AND the era/archetype visibly changed who got which fate;
+- (c) the LATTICE is playable end-to-end (pick archetype → play an era-chain → scored ending →
+  progression unlock) — the gameplay/story is state-of-the-art on its own terms, sight unseen;
+- (d) **the owner EXPLICITLY confirms** the game underneath is ready to be dressed.
+On exit: log the release in CHANGELOG + ROADMAP, `rm .improve-steve-gameplay-on`, hand back to
+`improve-steve` for the concentrated GRAPHICS pass (now far easier — the game is finished, so the art
+knows exactly what it's drawing).
+
+## Self-correction (lean)
+This skill is your behavior — when the loop errs or drifts (a gate caught a bug you should have
+prevented; the owner corrected you; you slid back into touching frozen art; a streak of tiny ships with
+no story/lattice progress), edit THIS file in the same turn so it can't recur, and note `SELF-CORRECTION:
+…` in the status. Keep it LEAN — it reloads every firing; prune stale lines as you add. Mine VISION.md
+for the next lattice epic when the backlog runs dry.

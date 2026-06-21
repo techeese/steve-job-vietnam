@@ -183,6 +183,43 @@ kid visibly thriving vs wilting, an arc you can *see*), never as polish for poli
 maintained, not led-with. (Still genuinely open if the person-sim ever needs them: khoa-life facilities, a
 dedicated khoa screen — but these are SECONDARY to the soul.)
 
+## GAMEPLAY-FIRST PHASE — graphics FROZEN; the game underneath comes first (owner steer, 2026-06-21)
+The owner re-steered: developing graphics and gameplay at once made graphics the *speed blocker*, while the
+gameplay/story is not yet state-of-the-art. So for this phase the order is inverted — **take the gameplay,
+person-sim, and STORY/LEVELS to state-of-the-art with the art layer FROZEN**, then do graphics as ONE
+concentrated pass at the end (against a finished game, when the art knows exactly what it's drawing). Driven
+by the `improve-steve-gameplay` skill; verification is HEADLESS-ONLY (gate · sweep · bot · lives).
+
+**THE DECOUPLING PRINCIPLE (owner, 2026-06-21):** *gameplay/story development is NOT capped by what the
+current graphics can render.* A mechanic, era, or story beat the current art can't depict yet is **still
+valid to build now** — ship it as text / a placeholder / a minimal indicator; the later graphics pass
+backfills the visuals. Design ambition is decoupled from the art ceiling. This is the OPPOSITE of the old
+"the campus must RENDER the soul" framing: during this phase the soul may run ahead of the body. Freezing
+art means *don't develop new art* — it does **not** mean *limit gameplay to what today's art shows.*
+
+## Story & Levels — THE LATTICE (owner steer, 2026-06-21: "all of them")
+The game today is ONE continuous person-sim with no narrative spine. "State-of-the-art story/levels" =
+deepen the person-sim AND give it structure — unified as ONE design, the **LATTICE**, so it never becomes
+four disconnected systems (the owner's standing "thin, separate systems" warning):
+
+- **ARCHETYPE** — the school you're handed (scenario *and* difficulty in one): rural-underfunded /
+  elite-cram / vocational / gifted-academy, each a different starting endowment, prestige, and **cohort
+  talent distribution**, and a distinct thesis on the đề Văn. Easy→hard is intrinsic.
+- **ERA** — the decade you play through (the authored campaign spine): 1990s scarcity → Đổi Mới → dot-com →
+  smartphone → AI boom. **Each era re-weights which talents the world REALIZES vs WASTES** — the same kid is
+  a wasted misfit in one era and a god in another. This is where the *story* lives.
+- **THE PERSON-SIM** — the moment-to-moment texture inside each era cell (the existing talent × education →
+  realize/waste/distort), modulated by era + archetype. The soul; still the first place to invest.
+- **PROGRESSION + LEGACY** — a RUN threads an ARCHETYPE through a SEQUENCE of ERAS; finishing SCORES the
+  player's đề-Văn answer and unlocks harder archetypes / longer era-chains / a **legacy layer** (your alumni
+  seed the next run's world). The "one more run, harder" pull.
+
+One sentence: **a RUN = a chosen ARCHETYPE played through a SEQUENCE of ERAS, person-sim as the texture, a
+PROGRESSION ladder threading the lattice.** It MULTIPLIES the soul — "right kid, wrong era, wrong school" is
+a richer playable essay than a single timeless sim — and it MUST honor the four person-sim invariants above
+(no era/archetype/strategy may dominate; every era/archetype both realizes and wastes; prose not meters;
+waste done TO the person).
+
 ## The bar, in one test — the NEW bar
 The old test was *"would a screenshot make a stranger want to play?"* — and the answer is now yes. **That
 bar is met.** The new, harder bar — the one the loop must aim every ship at — is:
