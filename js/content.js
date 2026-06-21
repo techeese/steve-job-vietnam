@@ -207,6 +207,14 @@ var CONTENT = {
     sky:   [ "bàn tay khéo đang bỏ xưởng đi buôn nước bọt.", "óc sáng tạo đang quay sang nghĩ chiêu hơn nghĩ sản phẩm." ],
     _:     [ "cái khiếu đang bị bẻ dần sang trò khôn lỏi.", "tài năng thật đang nhường chỗ cho thói ăn xổi." ]
   },
+  // iter-219 (NARRATIVE) — the DEMOGRAPHIC axis surfaced IN-PLAY: when a glimpsed gifted kid is POOR + unbacked, name the
+  // class as a compounding force WHILE you can still act (a mentor slot is the school-as-equalizer, made felt mid-game).
+  // Appended to the cohort glimpse only for an unmentored nghèo kid → the disadvantage is no longer only a payoff line.
+  cohortPoor: {
+    wilt:  " Mà em nhà nghèo, lại càng chẳng ai đỡ — một suất dìu dắt có khi đổi được cả đời.",
+    bloom: " Nhà nghèo mà sáng đến thế — của hiếm; đừng để tuột mất.",
+    bent:  " Nhà nghèo, đường tắt lại càng dễ kéo em đi."
+  },
   // iter-182 (owner steer ckpt3): NON-monetary gifts from successful alumni — the school's "kho lưu niệm", a hook for
   // extension functions later (a printer→Xưởng, servers→Lab, an internship→a kid…). For now: collected, named, kept.
   giftItems: [

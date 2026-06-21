@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-21 — You now SEE the poor kid struggling — while you can still back them (loop iter 219)
+**Closes a real gap: the demographic axis was only named at the epilogue (too late to act).** The whole soul of the
+class system is the player CHOOSING to spend a scarce mentor slot on a kid the world stacked the deck against — but you
+could only learn a kid was poor at the final essay. Now the in-play cohort glimpse (`cohortBeat`, ~once a season) names
+the class WHEN it surfaces a gifted poor kid, while a mentor slot can still change their life: *"🍂 {ten} — đầu óc mạch
+lạc thế, mà cứ bắt học thuộc — tư duy đang cùn dần. Mà em nhà nghèo, lại càng chẳng ai đỡ — một suất dìu dắt có khi đổi
+được cả đời."* Keyed to the glimpse's pole — wilt (a poor gift cooling → "chẳng ai đỡ", the mentor nudge), bloom (thriving
+against the odds → "nhà nghèo mà sáng đến thế — của hiếm; đừng để tuột mất"), bent (the shortcut tempts the poor harder).
+Fires only for an **unmentored nghèo** kid (once you've backed them, the line stops — you answered it). Deterministic
+(origin from id, no rnd) + news-only → **bot/sweep byte-identical** (gate GREEN, bot BOTOK 7206/2766 byte-stable). The
+school-as-equalizer is now a felt, played choice mid-game — mark 5 (watch them become, while you can act), not just a
+read at the end. Probe: ~3/5 cram runs surface it.
+
+
+
 ## 2026-06-21 — Your old Steve comes back to TEACH at your new school (L3 Legacy ckpt2 — the named figure returns) (loop iter 218)
 **The cross-run legacy is now a PRESENT figure, not just a number.** iter-217 made a past run's standout seed the next as a
 founding gift (bright) or a reputation echo (dark). Now the BRIGHT legacy **returns as a named founding teacher** — a

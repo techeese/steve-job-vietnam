@@ -302,6 +302,9 @@ function cohortBeat() {
   var byTell = pole === 1 ? CONTENT.cohortWilt : pole === 2 ? CONTENT.cohortBent : CONTENT.cohortBloom;
   var variants = byTell[best.tell] || byTell._;        // iter-193: the line names THIS kid's specific gift (tell), not a generic talent
   var line = variants[era % variants.length];          // deterministic line pick (no rnd) — cycles over time
+  // iter-219: if the glimpsed kid is POOR + unbacked, name the class as a compounding force — felt IN-PLAY, while a mentor
+  // slot can still change it (the school-as-equalizer). Deterministic (origin from id, no rnd) → bot/sweep byte-identical.
+  if (!best.mentored && studentOrigin(best) === "ngheo" && CONTENT.cohortPoor) line += (CONTENT.cohortPoor[pole === 1 ? "wilt" : pole === 2 ? "bent" : "bloom"] || "");
   news((pole === 1 ? "🍂 " : pole === 2 ? "🪙 " : "🌱 ") + best.ten + " — " + line);
   S._lastCohortBeat = S.totalDays;
 }
