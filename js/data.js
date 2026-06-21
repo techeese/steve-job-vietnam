@@ -266,6 +266,7 @@ var CONFIG = {
 
   FUND: {
     ENDOW_RATE: 0.004, GIFT_TO_QUY_MIN: 30,
+    QUYLAI_BAL: 50, // iter-228: the endowment compounds monthly, but the "Quỹ hiến tặng… lãi" ticker beat fires at most ONCE A YEAR and only once the quỹ is meaningful (≥50tr) — a tiny 0.04tr monthly interest was spamming the feed (~half of it). The quiet-endowment note survives without the noise.
     SCHOL_GATES: [200, 350, 500], SCHOL_DRAW: 12,
     CONTRACT_CAP: function (tt) { return Math.min(3, 1 + Math.floor(tt / 35)); },
     MORALITY: function (sev) { return 0.5 + 0.25 * sev; },

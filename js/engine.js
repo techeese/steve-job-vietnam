@@ -442,7 +442,7 @@ function economyTick() {
   S.endow.bal = S.endow.bal * (1 + CONFIG.FUND.ENDOW_RATE);
   var lai = r2(S.endow.bal - prev);
   S.endow.log.push({ t: S.totalDays, bal: S.endow.bal }); if (S.endow.log.length > 100) S.endow.log.shift();
-  news(tpl(CONTENT.ticker.quyLai, { bal: Math.round(S.endow.bal), lai: lai }));
+  if (S.month === 12 && S.endow.bal >= CONFIG.FUND.QUYLAI_BAL) news(tpl(CONTENT.ticker.quyLai, { bal: Math.round(S.endow.bal), lai: lai })); // iter-228: yearly + meaningful-only (was monthly → ticker spam)
 
   // meters
   var ttFloor = CONFIG.TT_FLOOR(S.uyTin);

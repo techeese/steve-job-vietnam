@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-21 — Stopped the endowment-interest beat from spamming the ticker (loop iter 228)
+**A real flaw found by dumping the whole in-play NEWS feed and counting repeats.** The endowment compounds MONTHLY, and
+the "Quỹ hiến tặng: {bal}tr (+{lai}tr lãi). Không ai vỗ tay." beat fired every month — so a tiny 0.04tr monthly interest
+on a small early endowment posted ~31 near-identical lines, **over half the entire ticker feed**, drowning out the
+meaningful beats (cohort glimpses, era shifts, the annual letters). The thematic "no one applauds the quiet endowment"
+joke also wears out at 31 repeats. Now the beat fires at most **once a year (December) and only when the quỹ is
+meaningful (≥`QUYLAI_BAL` 50tr)** — so early-game (tiny endowment) it's silent, and a grown endowment gets a single
+yearly note. The compounding itself is unchanged (monthly) → economy byte-identical (gate GREEN, bot BOTOK 7206/2783).
+Re-scan: quyLai **31 → 0** on the probe run; the only remaining recurring lines are legitimate ANNUAL calendar beats
+(admissions cutoff, Tết, exam season). The ticker now surfaces the lives, not the interest ledger. Also confirmed: 0
+unfilled `{templates}` across a 14-year feed (no broken strings).
+
 ## 2026-06-21 — The graduation screen now reads every grad as a distinct person (gift-specific, deduped) (loop iter 227)
 **Fixed a real repetition in a RECURRING player-facing moment — the June results screen — and brought it up to the
 epilogue's quality.** The graduation screen showed `CONTENT.outcomeFlavor[outcome]`: ONE line per outcome, rendered for
