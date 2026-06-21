@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-21 — tune.js: balance tuning in one command instead of N manual probe cycles (loop iter 207)
+**A velocity dev-tool — the owner's "fast-track the gameplay" steer, first delivery.** Manual balance tuning was the
+slowest serial cost in the loop: set a CONFIG knob → run sweep → eyeball → repeat (iter-206 spent ~4 fir-in-the-dark
+cycles on `ORIGIN_GROW`/`ORIGIN_MOOD`). **`tune.js` collapses that to one run:** it grid-searches ONE CONFIG knob over a
+value list and reports a chosen sweep-metric for each, starring the value that hits a target band. `node tune.js
+<knob> <v1,v2,...> <metric> [lo hi]`. The knob is a dot-path into CONFIG with array indices (`ORIGIN_GROW.ngheo`,
+`ERAS.2.fav.spark`, `OPS.rate`); metrics cover the LATTICE balance surface — `origin-gap` / `origin-poor` /
+`origin-poor-mentored` (the equalizer parity check) / `era-apex:<tell>` (the wrong-era grip) / `steve-rate` / `cash` /
+`waste` / `drop` (`--metrics` lists them). It loads the engine exactly like sweep.js (concat-eval, 40 seeds), restores
+the knob + ERA_OVERRIDE after each run (no leak).
+
+**Validated against real tuning:** `node tune.js ORIGIN_GROW.ngheo 0.80,0.85,0.88,0.92 origin-gap 12 20` reproduces the
+iter-206 decision instantly — 0.80→25.5, 0.85→18.9, **0.88→14.6 ★best-fit**, 0.92→7.9 — the whole response curve in one
+view, what took 4 firings to grope toward. And it surfaced an insight free: `era-apex:spark` is flat (12.5) across
+`ERA_REGRESS` 0.4/0.55/0.7 — the wrong-era apex swing is FSM-`fav`-driven, NOT a mobility-param knob (matches the
+iter-204 finding). **Dev-tool only → engine untouched, gate/sweep/bot unchanged from iter-206, correctly UNDEPLOYED.**
+This makes every future LATTICE balance pass (archetypes, era flavor, economy) a grid-search, not a guess.
+
 ## 2026-06-21 — Where a kid is BORN now shapes their odds — and the school is the equalizer (L2 DEMOGRAPHIC ckpt1) (loop iter 206)
 **The owner's "add demographic realism = interesting challenges" steer, delivered as a real mechanic.** Every kid now
 carries a family ORIGIN — **nghèo** (poor/rural) · **trung bình** (middle) · **khá giả** (well-off) — and circumstance

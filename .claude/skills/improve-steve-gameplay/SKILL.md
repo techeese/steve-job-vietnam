@@ -80,9 +80,12 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
   out with `Workflow` (subagents author/verify each unit against the invariants in parallel; you synthesize + integrate).
   One firing then produces what serial firings would take 5-6 to do. Use the serial loop (below) for DEEP single-mechanic
   work (today's ERAS/origin ships); use a workflow for breadth. Don't workflow trivial/1-file changes.
-- **`tune.js` — a balance grid-search harness (BUILD IT, near-term).** Manual probe-cycle tuning (iter-206 spent ~4
-  cycles on ORIGIN_GROW/MOOD) is the slowest serial cost. `tune.js` should sweep a CONFIG knob over a value grid and
-  report which value hits a target sweep-metric band — collapsing N firings of hand-tuning into one run. High leverage.
+- **`tune.js` — BUILT iter-207. USE IT instead of hand-tuning.** Grid-searches a CONFIG knob against a sweep-metric:
+  `node tune.js <knob> <v1,v2,...> <metric> [lo hi]` (knob = dot-path w/ array indices, e.g. `ORIGIN_GROW.ngheo`,
+  `ERAS.2.fav.spark`, `OPS.rate`). Metrics: `origin-gap` `origin-poor` `origin-poor-mentored` `era-apex:<tell>`
+  `steve-rate` `cash` `waste` `drop` (`--metrics` to list). It stars the value hitting the target band → one run
+  replaces N probe firings. ADD a new metric to tune.js whenever you add a balance-delicate mechanic (the metric IS the
+  tuning target). Still mirror touched CONFIG into the sweep sensors for the regression floor.
 - Keep the rest of the spine: headless-verify (the freeze killed the graphics tax — that's the velocity win), sweep
   sensors, deploy-per-coherent-slice.
 
