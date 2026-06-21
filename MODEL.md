@@ -46,6 +46,10 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
   wrong era"). The era governs the *ceiling*, not the floor.
 - **ORIGIN × MENTORSHIP** — a poor kid under-realizes (68% vs 83%) UNLESS you spend scarce attention on them
   → the school as *equalizer*. The đề-Văn's truest question, made a mechanic.
+- **MENTORSHIP's CEILING** (verified iter-235) — the player's scarce-attention lever DEFEATS origin (mentoring
+  resets `orgGrow→1`, erasing the class growth-drag) but does NOT defeat era (the apex tilt still stands). A
+  teacher can lift a kid past where they came FROM, never past the decade they graduate INTO. The player's agency
+  has a limit, and that limit is the world's timing — the đề-Văn's humility, made a mechanic (not a flat rescue).
 - **ORIGIN × ERA × DIRECTION** — poor + wrong-gift + wrong-decade = the system's hardest, most-felt waste
   (the "triple-wrong"), always done TO them (invariant #4).
 - **GEOGRAPHY → ORIGIN-MIX** (queued) — a rural school simply *contains* more poor kids; place pre-loads
