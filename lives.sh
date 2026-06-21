@@ -6,15 +6,17 @@
 # own answer). Run it under SEVERAL presets to read whether different philosophies produce different
 # felt lives (part of mark 5 — did the fork carry real, uncertain stakes?).
 #
-#   Usage: ./lives.sh [preset] [seed] [mentor]
+#   Usage: ./lives.sh [preset] [seed] [mentor] [arch]
 #     preset : canbang | luyende | duan | ... (a CONFIG.PRESETS key; default luyende)
 #     seed   : integer RNG seed (default 11)
 #     mentor : 1 to pour scarce mentor attention each year (default 0)
+#     arch   : geographic archetype (tinh_le | que_ngheo | lo_thanhpho | truong_nghe; default = baseline) — iter-221:
+#              read whether a DIFFERENT starting school produces different felt lives (exit-gate (b): archetype × era soul)
 set -euo pipefail
 cd "$(dirname "$0")"
 CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 [ -x "$CHROME" ] || { echo "lives.sh: Chrome not found at \"$CHROME\" — set CHROME=/path/to/chrome"; exit 2; }
-PRESET="${1:-luyende}"; SEED="${2:-11}"; MENTOR="${3:-0}"
+PRESET="${1:-luyende}"; SEED="${2:-11}"; MENTOR="${3:-0}"; ARCH="${4:-}"
 TMP="__lives_run.html"
 trap 'rm -f "$TMP"' EXIT
 cp index.html "$TMP"
@@ -26,7 +28,9 @@ cat >> "$TMP" <<HTML
     if(!(window.__test && window.__ui && window.HVS)) return;
     clearInterval(iv);
     try{
+      try{ if("$ARCH") ARCH_OVERRIDE="$ARCH"; }catch(e){}   // iter-221: pin the geographic archetype (economy + cohort origin-mix)
       window.__test.fresh($SEED);
+      try{ ARCH_OVERRIDE=null; }catch(e){}                  // restore so it can't leak
       var s=HVS.S(); s.META.tutorial=true;
       s.presets={n1:"$PRESET",n2:"$PRESET",n3:"$PRESET",n4:"$PRESET"};
       ["phonghoc","san","cangtin","lab","phongmay","xuong","kytucxa","vuon","hoitruong"].forEach(function(k){try{HVS.autoPlace(k);}catch(e){}});
@@ -57,7 +61,7 @@ cat >> "$TMP" <<HTML
 </script>
 HTML
 DOM="$("$CHROME" --headless --disable-gpu --virtual-time-budget=30000 --dump-dom "$TMP" 2>/dev/null)"
-echo "# Học viện Steve — biographies under preset='$PRESET' seed=$SEED mentor=$MENTOR"
+echo "# Học viện Steve — biographies under preset='$PRESET' seed=$SEED mentor=$MENTOR arch='${ARCH:-baseline}'"
 printf '%s\n' "$DOM" \
   | awk '/===LIVES_END===/{f=0} f{print} /===LIVES_BEGIN===/{f=1}' \
   | sed -e 's/&amp;/\&/g' -e "s/&#39;/'/g" -e 's/&quot;/"/g' -e 's/&lt;/</g' -e 's/&gt;/>/g'

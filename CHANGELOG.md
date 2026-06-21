@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-06-21 — lives.sh reads across archetypes; the gameplay-first EXIT GATE is now measurably MET (a/b/c) (loop iter 221)
+**Closed the one exit-gate criterion that couldn't be checked headlessly — and it passes.** The gameplay-first phase's
+release gate (SKILL.md) has four parts; (b) — "read ~5 biographies across ≥2 archetypes × ≥2 eras; a stranger can name a
+wasted + a realized kid, AND the archetype/era visibly changed who got which fate" — was unverifiable because `lives.sh`
+couldn't pin an archetype. Added a 4th arg: **`./lives.sh [preset] [seed] [mentor] [arch]`** (pins `ARCH_OVERRIDE` →
+freshState's economy + cohort origin-mix; the 12-year run traverses the era chain naturally).
+
+**The read (evidence):**
+- **que_ngheo** (poor, honest): a wasted maker — *"🪪 Thất nghiệp — đôi bàn tay khéo, đầy ý lạ, mà chẳng nơi nào cho em
+  làm · phải chi sinh vào thời người ta còn quý đôi tay"* — AND a realized one — *"👷 Kỹ sư · gặp đúng thời của mình."*
+- **lo_thanhpho** (rich cram): a 5-star bent into a coin-shark — *"🪙 Cá mập coin — tài năng bị bẻ cong trong tay bạn."*
+The poor honest school wastes & realizes (the underdog); the rich cram mill DISTORTS (the gilded trap) — the archetype
+visibly decides the fate, the era clauses (`phải chi…` / `gặp đúng thời`) decide it within. A stranger names both poles.
+
+**Exit-gate status (measurable parts MET):** (a) sweep 0 bad flags — realize/waste/distort spread holds across eras,
+archetypes & origins; no dominant era/archetype/strategy; waste reachable everywhere ✓. (b) cross-archetype×era
+biographies read true ✓ (this firing). (c) the LATTICE is playable end-to-end — pick archetype (`?arch=`/Lab) → play the
+era-chain → scored capstone ending → legacy seeds the next run ✓. **(d) — explicit owner confirm — is the only part left,
+and it's owner-gated (the loop may not self-release).** Dev-tool (lives.sh) → UNDEPLOYED. The phase is, by its own
+measurable criteria, ready to be dressed — awaiting the owner's go.
+
 ## 2026-06-21 — A past scandal's name now follows you into the new school's admissions (L3 Legacy ckpt3) (loop iter 220)
 **Completes the dark side of the cross-run legacy, symmetric with the bright returning-teacher (iter-218).** When the
 inherited legacy is a scandal (a coin-shark / arrested grad was your last run's loudest mark), the new school's FIRST

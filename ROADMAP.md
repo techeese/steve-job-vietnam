@@ -21,6 +21,15 @@ Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` s
 > backfills visuals later. **New top frontier = THE LATTICE epics (L1-L3 in `## Epic backlog`).** Graphics /
 > character-identity epics (E11 render, E12-E14) are DEFERRED to the post-phase graphics pass. See VISION.md
 > "GAMEPLAY-FIRST PHASE" + "Story & Levels — THE LATTICE".
+>
+> **▶ EXIT-GATE STATUS (iter-221): the MEASURABLE criteria are MET.** (a) sweep 0 bad flags — spread holds across
+> eras × archetypes × origins, no dominant era/archetype/strategy, waste reachable ✓. (b) cross-archetype×era
+> biographies read true (a stranger names a wasted + realized kid; archetype/era visibly change fates — verified via the
+> new `./lives.sh … [arch]`) ✓. (c) LATTICE playable end-to-end (pick archetype `?arch=`/Lab → era-chain → capstone
+> ending → legacy seeds next run) ✓. **ONLY (d) — explicit owner confirm "ready to be dressed" — remains; it is
+> OWNER-GATED, the loop may NOT self-release.** The LATTICE (L1 ERAS done · L2 DEMOGRAPHIC+GEOGRAPHIC done · L3 LEGACY
+> done; progression-UI rungs deferred to the graphics pass) + the narrative spine are complete. Absent the owner's go,
+> the loop continues conservative deepening (genuine value over volume; no manufactured refinements).
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
