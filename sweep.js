@@ -308,6 +308,65 @@ if (craS && cramS) {
 })();
 line("");
 
+// iter-204 L1 ERAS — the authored decade spine. Each era RE-WEIGHTS which gift the world realizes vs wastes, so the
+// SAME kid is a founder in one decade and unemployed in another ("right kid, wrong era"). PIN each era via ERA_OVERRIDE,
+// run the default honest school, read the realize/waste mix + per-tell realize. Enforces the open-question law on the
+// NEW axis: (#1) no decade DOMINATES (realize% spread bounded — none strictly easiest); (#2) SYMMETRY — every decade
+// both realizes AND wastes; and the SOUL itself — a gift's realize% must SWING across eras (era decides its fate).
+(function () {
+  // The era governs a gift's CEILING, not just its floor. canbang gives most gifts the craft to enter kỹ sư (a decent
+  // life — flourish≥4), so the realize FLOOR is stable across decades (no era abandons a gift). What the decade decides
+  // is how HIGH the gift climbs: the APEX (🚀 founder / 🍎 Steve, flourish≥5). A brilliant coder is a world-changing
+  // FOUNDER in the AI boom and merely a solid kỹ sư in the 1990s — same gift, capped by its decade. That swing IS "right
+  // kid, wrong era". And the TAIL (thất nghiệp / distorted) widens in a hostile decade. canbang base = no cram noise.
+  var base = { presets: "canbang" };
+  var APEX = { FOUNDER: 1, STEVE: 1 };
+  function eraStats(idx) {
+    ERA_OVERRIDE = idx;
+    var real = 0, apex = 0, waste = 0, n = 0, byTell = {};
+    SEEDS.forEach(function (sd) {
+      play(sd, base).lives.forEach(function (L) {
+        n++; if (L.real) real++; if (APEX[L.state]) apex++; if (!REAL_ST[L.state]) waste++; // waste = not realized (thất nghiệp / văn mẫu / coin / arrested)
+        var t = L.tell || "_"; var b = (byTell[t] = byTell[t] || { g: 0, a: 0 }); b.g++; if (APEX[L.state]) b.a++;
+      });
+    });
+    n = n || 1;
+    return { realPct: 100 * real / n, apexPct: 100 * apex / n, wastePct: 100 * waste / n, byTell: byTell };
+  }
+  var rows = CONFIG.ERAS.map(function (e, i) { return { e: e, s: eraStats(i) }; });
+  ERA_OVERRIDE = null; // restore — the pin must NEVER leak into the rest of the sweep
+  line("--- L1 ERAS (each decade caps a gift's CEILING — apex 🚀/🍎 — and widens the wrong-era tail) ---");
+  line("  era".padEnd(24) + "real%".padStart(6) + "apex%".padStart(6) + "waste%".padStart(7) + "    spark/sky/hype apex%");
+  function tp(r, t) { var b = r.s.byTell[t]; return b && b.g ? f0(100 * b.a / b.g).toString() : "·"; }
+  rows.forEach(function (r) {
+    line("  " + r.e.name.padEnd(22) + f0(r.s.realPct).toString().padStart(6) + f0(r.s.apexPct).toString().padStart(6) + f0(r.s.wastePct).toString().padStart(7) + "       " + tp(r, "spark") + " / " + tp(r, "sky") + " / " + tp(r, "hype"));
+  });
+  // #1 no decade strictly easiest: the realize FLOOR is bounded across eras AND no single era tops the apex for EVERY
+  // gift (each decade favors a DIFFERENT gift — its apex-leader differs).
+  var reals = rows.map(function (r) { return r.s.realPct; });
+  var fSpread = Math.max.apply(null, reals) - Math.min.apply(null, reals);
+  if (fSpread > 25) FLAGS.push("L1 ERAS DOMINANT-DECADE: realize FLOOR ranges " + f0(Math.min.apply(null, reals)) + "→" + f0(Math.max.apply(null, reals)) + "% (Δ" + f0(fSpread) + " > 25) — a decade abandons/spoils gifts wholesale (invariant #1)");
+  var leaders = {}; ["spark", "sky", "hype"].forEach(function (t) { var bi = -1, bv = -1; rows.forEach(function (r, i) { var b = r.s.byTell[t]; var v = b && b.g >= 10 ? 100 * b.a / b.g : -1; if (v > bv) { bv = v; bi = i; } }); leaders[t] = bi; });
+  var distinctLeaders = {}; for (var tk in leaders) distinctLeaders[leaders[tk]] = 1;
+  if (Object.keys(distinctLeaders).length < 2) FLAGS.push("L1 ERAS DOMINANT-DECADE: one era is the apex-leader for ALL gifts (invariant #1) — spread the fav peaks across decades");
+  else FLAGS.push("L1 ERAS ✓ no dominant decade: realize floor Δ" + f0(fSpread) + " ≤ 25, and the apex-leading decade differs by gift (spark→" + CONFIG.ERAS[leaders.spark].key + " / sky→" + CONFIG.ERAS[leaders.sky].key + " / hype→" + CONFIG.ERAS[leaders.hype].key + ") — each decade a different world, none strictly easiest");
+  // #2 symmetry — every decade both LIFTS some to the apex AND fails some (the canbang base is forgiving, so the tail
+  // is thin by design — per-PRESET waste-symmetry is the existing realization sensor's job; here we just guard that no
+  // era is pure-success [everyone apex] or a dead floor [no apex / no tail]).
+  rows.forEach(function (r) {
+    if (r.s.apexPct < 2) FLAGS.push("L1 ERAS '" + r.e.name + "' lifts ~" + f0(r.s.apexPct) + "% to the apex — a decade with no ceiling for any gift (invariant #2)");
+    if (r.s.wastePct < 1.5) FLAGS.push("L1 ERAS '" + r.e.name + "' fails ~" + f0(r.s.wastePct) + "% — a decade with no stakes at all (invariant #2)");
+  });
+  // SOUL — the era must decide how HIGH each gift climbs: apex% swings hard across decades (right kid, wrong era)
+  ["spark", "sky", "hype"].forEach(function (t) {
+    var ps = rows.map(function (r) { var b = r.s.byTell[t]; return b && b.g >= 10 ? 100 * b.a / b.g : null; }).filter(function (x) { return x != null; });
+    if (ps.length >= 2) { var sw = Math.max.apply(null, ps) - Math.min.apply(null, ps);
+      if (sw < 10) FLAGS.push("L1 ERAS: '" + t + "' apex% barely swings across eras (Δ" + f0(sw) + " < 10) — the decade doesn't lift/cap this gift (right-kid-wrong-era weak for " + t + ")");
+      else FLAGS.push("L1 ERAS ✓ '" + t + "': apex% swings Δ" + f0(sw) + "pts across decades — a founder in its golden era, a solid kỹ sư in the wrong one (right kid, wrong era holds)"); }
+  });
+})();
+line("");
+
 line("--- FLAGS ---");
 if (FLAGS.length) FLAGS.forEach(function (x) { line("  ⚠ " + x); });
 else line("  none — economy in band, plural outcomes, 🍎 reachable, thesis holds.");

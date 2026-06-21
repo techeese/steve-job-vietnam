@@ -13,3 +13,5 @@ __*.html
 *.scratch
 *.dump
 _dump-*.html
+
+.DS_Store

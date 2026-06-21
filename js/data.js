@@ -18,6 +18,31 @@ var CONFIG = {
   // Capped conservatively (~1.85× ≈ 89 students) to keep the phone smooth. Level-1 schools (sweep/bot) = 1.0×.
   CAMPUS_SCALE_K: 0.09, CAMPUS_SCALE_MAX: 1.85,
   RUN_CAP_YEARS: 12,
+  // ★ THE LATTICE — L1 ERAS (iter-204): a run plays through an authored SEQUENCE of decades. Each era RE-WEIGHTS
+  // which gift (tell) the WORLD realizes vs wastes — so the SAME graduate is a founder in one era and unemployed in
+  // another ("right kid, wrong time"). `fav[tell]` >1 pulls that gift toward realize (kỹ sư / founder / 🍎), <1 pulls
+  // it toward waste (thất nghiệp) — applied in transition()/stevePShort. Era = eraIndex(S.year) (deterministic, no
+  // rng → replay-safe; reload restores S.year → same era). Invariants: each era REALIZES some tells AND WASTES some
+  // (#2 symmetry — every fav column has a >1 and a <1, every row too); no era globally dominates (#1 — means ≈1,
+  // sweep era-sensor enforces). Undirected kids (tell="") are era-NEUTRAL (the everyman, fav=1). Authored spine,
+  // chronological from the school's 1990s founding. The graphics pass later draws the decade; the soul ships now as text.
+  ERA_LEN: 3,                   // game-years per era band → years 1-3 era0 … 13+ era4 (the decade epilogue lands in the smartphone era)
+  ERAS: [
+    { key: "scarcity", name: "Thời bao cấp (199x)", fav: { spark: 0.45, sky: 1.7, hype: 0.75 },
+      shift: "Thời thiếu thốn. Đôi bàn tay biết chế ra cái gì đó từ con số không là quý nhất — còn đầu óc lập trình thì chưa có máy, chưa có chỗ dụng." },
+    { key: "doimoi", name: "Đổi Mới (mở cửa)", fav: { spark: 0.65, sky: 0.8, hype: 1.6 },
+      shift: "Chợ mở, tiền chạy. Kẻ nhanh mồm nhanh tay, biết buôn biết bán lên ngôi — thợ giỏi thành hàng rẻ, còn dân kỹ thuật vẫn đợi thời." },
+    { key: "dotcom", name: "Thời dot-com", fav: { spark: 1.7, sky: 0.7, hype: 0.8 },
+      shift: "Thế giới lên mạng. Đầu óc lập trình bỗng thành vàng ròng — bàn tay thợ thủ công dần bị máy móc và hàng ngoại lấn." },
+    { key: "smartphone", name: "Thời smartphone", fav: { spark: 1.0, sky: 0.55, hype: 1.65 },
+      shift: "Ai cũng cầm một cái điện thoại. App và người nổi tiếng hái ra tiền; nghề thủ công lặng lẽ ra rìa." },
+    { key: "ai", name: "Thời AI bùng nổ", fav: { spark: 1.75, sky: 0.8, hype: 0.6 },
+      shift: "Máy biết tự viết, tự vẽ. Kỹ sư thật sự càng được săn đón — còn trò làm màu suông thì máy làm thay trong một nốt nhạc." }
+  ],
+  ERA_REALIZE: { KY_SU: 1, FOUNDER: 1, STEVE: 1 }, // FSM targets the era PULLS UP for a favored gift (fav>1) / down for a wrong-era one (fav<1)
+  ERA_WASTE: { THAT_NGHIEP: 1 },                    // FSM target the era PUSHES toward for a wrong-era gift (× 1/fav). Distortions (coin/arrest/văn-mẫu) stay era-neutral — those are the SCHOOL's doing, not the decade's (invariant #4)
+  ERA_REGRESS: 0.65,           // L1 era MOBILITY: per-year downward pull (×(1−fav)) on a realized life in a HOSTILE decade — the gift the world has stopped valuing slides back (kỹ sư→lương ổn→thất nghiệp)
+  ERA_RISE: 0.55,              // L1 era MOBILITY: per-year upward pull (×(fav−1)) on a settled life in its GOLDEN decade — the world finally has a place for the gift (thất nghiệp→lương ổn→kỹ sư)
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
   ROOM_MAX_LEVEL: 10,           // iter-160 (owner economy epic ckpt2): a LONG upgrade track (was 3) — the player pours

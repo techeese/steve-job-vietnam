@@ -101,7 +101,8 @@ cat >> "$OUT" <<'HTML'
     }
     return {S:S,per:per};
   }
-  function snap(S){ return { year:S.year, cash:Math.round(S.cash||0), stu:(S.students||[]).length,
+  function eraName(S){ try{ return cfg().ERAS[eraIndex(S.year)].name; }catch(e){ return ""; } } // L1: which decade this year sits in
+  function snap(S){ return { year:S.year, era:eraName(S), cash:Math.round(S.cash||0), stu:(S.students||[]).length,
     grad:(S.META&&S.META.graduated)||0, alu:(S.alumni||[]).length,
     TT:Math.round(S.tiengTam||0), UT:Math.round(S.uyTin||0), TC:Math.round(S.thucChat||0) }; }
   function classify(S){
@@ -129,6 +130,7 @@ cat >> "$OUT" <<'HTML'
       '<div class="cols">'+
         '<div class="card"><h2>Run summary</h2><table>'+
           row("Triết lý",presetLabel(cfg(),preset))+row("Seed/Năm/Mentor",seed+" / "+years+" / "+(mentor?"có":"không"))+
+          row("Thời đại (đầu→cuối)",(function(){var seen=[];r.per.forEach(function(p){if(p.era&&seen[seen.length-1]!==p.era)seen.push(p.era);});return seen.join(" → ")||eraName(S);})())+
           row("Tiền cuối",money(last.cash))+row("Sinh viên",last.stu)+row("Tốt nghiệp",last.grad)+row("Cựu SV",last.alu)+
           row("Tiếng Tăm / Uy Tín / Thực Chất",last.TT+" / "+last.UT+" / "+last.TC)+
         '</table></div>'+
@@ -136,8 +138,8 @@ cat >> "$OUT" <<'HTML'
           '<table style="margin-top:8px">'+states.map(function(st){return row(chip(st),cl.byState[st]);}).join('')+'</table></div>'+
       '</div>'+
       '<div class="card"><h2>Per-year arc</h2><table>'+
-        '<tr><th>Năm</th><th>Tiền</th><th>SV</th><th>TN</th><th>Cựu</th><th>TT</th><th>UT</th><th>TC</th></tr>'+
-        r.per.map(function(p){return '<tr><td>'+p.year+'</td><td>'+money(p.cash)+'</td><td>'+p.stu+'</td><td>'+p.grad+'</td><td>'+p.alu+'</td><td>'+p.TT+'</td><td>'+p.UT+'</td><td>'+p.TC+'</td></tr>';}).join('')+
+        '<tr><th>Năm</th><th>Thời đại</th><th>Tiền</th><th>SV</th><th>TN</th><th>Cựu</th><th>TT</th><th>UT</th><th>TC</th></tr>'+
+        r.per.map(function(p){return '<tr><td>'+p.year+'</td><td style="font-size:11px;color:#888">'+esc(p.era||"")+'</td><td>'+money(p.cash)+'</td><td>'+p.stu+'</td><td>'+p.grad+'</td><td>'+p.alu+'</td><td>'+p.TT+'</td><td>'+p.UT+'</td><td>'+p.TC+'</td></tr>';}).join('')+
       '</table></div>'+
       '<div class="card"><h2>Biographies — who became who</h2><div class="bio">'+esc(bio)+'</div></div>';
   }

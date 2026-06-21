@@ -40,7 +40,19 @@ function hashStr(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h
 var S = null;
 var _nextId = 1;
 var CKPT2B_ON = false; // iter-200 E8 ckpt2b PLAYTEST FLAG (OFF by default → live byte-identical). Set true by ?ckpt2b=1 (ui.js boot) or the sweep sensor. When ON, a DISCOVERED gift whose grain you hired NO faculty for (and didn't mentor) goes adrift → real waste: specializing your faculty has a COST. The owner's gated "strong faculty trade-off" — shipped behind a flag so the owner can PLAYTEST the FEEL (the gate's own requirement) without it touching the default live experience.
+var ERA_OVERRIDE = null; // iter-204 L1: testing-only era pin (sweep era-sensor sets it to measure one era in isolation). null in production → era follows S.year. NOT serialized; never read by a save.
 function nid() { return _nextId++; }
+
+/* ---------- L1 ERAS (iter-204) — the authored decade spine ---------- */
+// era = a pure function of the academic year (deterministic → replay-safe; reload restores S.year → same era).
+function eraIndex(year) { var i = Math.floor((year - 1) / CONFIG.ERA_LEN); return i < 0 ? 0 : (i >= CONFIG.ERAS.length ? CONFIG.ERAS.length - 1 : i); }
+function eraIdxNow() { return ERA_OVERRIDE != null ? ERA_OVERRIDE : eraIndex(S ? S.year : 1); }
+function curEra() { return CONFIG.ERAS[eraIdxNow()]; }
+// eraFav(tell) — how the CURRENT decade treats this gift: >1 the world realizes it, <1 it wastes it. Undirected ("")
+// kids are era-neutral. Bounded by the authored table (~0.6..1.6). The heart of "right kid, wrong era".
+function eraFav(tell) { if (!tell) return 1; var f = curEra().fav; return (f && f[tell] != null) ? f[tell] : 1; }
+// the era-shift story beat — fires once at a year rollover that crosses an era boundary (pure derive, no state).
+function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); } }
 
 /* derived alumni stats (never stored — DESIGN §5a) */
 function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }
@@ -240,6 +252,7 @@ function freshState(seed) {
   bootTeachers(s);
   bootRoster(s);
   bootAlumni(s);
+  news("🕰️ " + CONFIG.ERAS[0].name + " — " + CONFIG.ERAS[0].shift); // iter-204 L1: the world the school is founded into (the opening decade). Invisible to gates (they read cash/destinies, not news); overwritten on load by the saved feed.
   return s;
 }
 
@@ -563,7 +576,7 @@ function openJune() {
 // young school with no Năm-4 cohort yet: roll the academic year & advance grades, no ceremony.
 function foundingJune() {
   for (var i = 0; i < S.students.length; i++) S.students[i].grade = Math.min(4, S.students[i].grade + 1);
-  S.year++;
+  S.year++; eraShift(S.year - 1); // iter-204 L1: the world's decade may turn at the year rollover
   S.utYearNet = 0; S.pierceDefense = false;
   S.speed3Unlocked = true;
   buildAdmitPool();
@@ -626,7 +639,7 @@ function finalizeJune(policy) {
   S.META.graduated += results.length;
 
   // alumni of PRIOR years advance one world-year now (this cohort waits to next June)
-  S.year++;
+  S.year++; eraShift(S.year - 1); // iter-204 L1: the world's decade may turn at the year rollover
   S.utYearNet = 0; S.pierceDefense = false; // new academic year, reset Uy Tín budget
 
   pj.stage = "results"; pj.results = results; pj.policy = policy;
@@ -698,7 +711,8 @@ function stevePShort(a) {
   var lua = aLua(a);
   var luaM = CONFIG.ALUM.STEVE_LUA[lua] != null ? CONFIG.ALUM.STEVE_LUA[lua] : CONFIG.ALUM.STEVE_LUA_ELSE;
   var p = CONFIG.ALUM.STEVE_BASE * (aCraft(a) >= CONFIG.ALUM.STEVE_CRAFT ? 1 : 0) * luaM * (aHollow(a) <= CONFIG.ALUM.STEVE_HOLLOW ? 1 : 0) * (1 + 0.1 * Math.min(5, a.yearsInState)) * (a.flags.tiemNang ? 1 : CONFIG.ALUM.STEVE_NOFLAG);
-  return p;
+  return p * eraFav(a.fs && a.fs.tell); // iter-204 L1: the apex too is era-gated — a coder's 🍎 is a near-certainty in the AI boom, a near-impossibility in the 1990s
+
 }
 function becomeSteve(a) {
   setAlumState(a, "STEVE");
@@ -712,12 +726,23 @@ function becomeSteve(a) {
 function transition(a, draw, ysg) {
   var rows = [];
   var fsm = CONFIG.ALUM.FSM[a.state] || [];
+  var fav = eraFav(a.fs && a.fs.tell); // iter-204 L1: the CURRENT decade's pull on THIS gift (right kid / wrong era)
   for (var i = 0; i < fsm.length; i++) {
     var row = fsm[i], target = row[0], base = row[1], gate = row[2], w = base;
     if (gate === "arrestClock") { w = Math.min(0.95, 0.18 + 0.06 * a.yearsInState); }
     else if (gate) { w = base * (gateFn(gate, a, ysg) ? 1 : 0); if (gate === "coinpull") w *= (a.flags.coinPath && ysg <= 2 ? 4 : 1); }
+    // ERA pull: a favored gift (fav>1) is drawn UP toward realize states (kỹ sư/founder); a wrong-era gift (fav<1)
+    // is pushed toward waste (thất nghiệp). Distortions stay era-neutral — those are the school's doing (#4).
+    if (fav !== 1) { if (CONFIG.ERA_REALIZE[target]) w *= fav; else if (CONFIG.ERA_WASTE[target]) w *= 1 / fav; }
     if (w > 0) rows.push({ t: target, w: w });
   }
+  // ERA MOBILITY (iter-204 L1): the decade can move a settled life. The FSM has no downward exit from kỹ sư/founder,
+  // so without this a gift realized once can never be un-realized — but "right kid, WRONG era" needs exactly that: a
+  // brilliant coder who graduates into a decade with no place for them slides back to a clerk's desk (KY_SU/FOUNDER→
+  // LUONG_ON→THAT_NGHIEP), while a favored gift in its golden decade is pulled UP (THAT_NGHIEP→LUONG_ON→KY_SU). Weight
+  // scales with how hostile/golden the era is (|fav−1|). Only directed gifts in non-neutral eras (fav≠1) feel it.
+  if (fav < 1) { var dn = (a.state === "LUONG_ON") ? "THAT_NGHIEP" : ((a.state === "KY_SU" || a.state === "FOUNDER") ? "LUONG_ON" : null); if (dn) rows.push({ t: dn, w: CONFIG.ALUM.ERA_REGRESS * (1 - fav) }); }
+  else if (fav > 1) { var up = (a.state === "THAT_NGHIEP") ? "LUONG_ON" : (a.state === "LUONG_ON" ? "KY_SU" : null); if (up) rows.push({ t: up, w: CONFIG.ALUM.ERA_RISE * (fav - 1) }); }
   // BI_BAT special (FSM empty in data): yearsInState>=2 → escape
   if (a.state === "BI_BAT" && a.yearsInState >= 2) { rows = [{ t: "THAT_NGHIEP", w: 0.9 }, { t: "CA_MAP_COIN", w: 0.1 }]; }
   var sum = 0; for (i = 0; i < rows.length; i++) sum += rows[i].w;

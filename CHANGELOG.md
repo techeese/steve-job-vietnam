@@ -1,5 +1,44 @@
 # Changelog
 
+## 2026-06-21 — ⭐ THE LATTICE BEGINS: the same gift now lives a different life in a different DECADE (ERAS L1 ckpt1) (loop iter 204)
+**The first axis of the story/levels LATTICE — the EPIC the strategic read demanded (no 4th tiny narrative refinement).**
+The game was one continuous person-sim with no narrative spine. ERAS gives it the authored campaign spine: a run plays
+through a SEQUENCE of decades — **Thời bao cấp (199x) → Đổi Mới → dot-com → smartphone → AI bùng nổ** — and **each
+decade re-weights which gift the WORLD realizes vs wastes.** So the SAME kid is a world-changing founder in the right era
+and a quiet engineer (or unemployed) in the wrong one. "Right kid, wrong time," now real and sweep-proven.
+
+**The mechanic (CKPT1 = the alumni-FSM axis, the highest-soul/lowest-surface lever):** `CONFIG.ERAS[5]` carries a
+`fav[tell]` table (spark/sky/hype) per decade. `eraFav(tell)` feeds the alumni FSM `transition()` — pulling a favored
+gift UP toward realize states (kỹ sư/founder/🍎) and a wrong-era gift toward waste (thất nghiệp) — plus **era MOBILITY
+rows** (`ERA_REGRESS`/`ERA_RISE`): the FSM had no downward exit from kỹ sư, so without these a gift realized once could
+never be un-realized — but "right kid, WRONG era" needs exactly that: a brilliant coder who graduates into a decade with
+no place for them **slides back to a clerk's desk**, while a favored gift in its golden decade is **pulled up** ("the
+world finally caught up / the world moved on" — emergent as the years pass). `stevePShort` (the 🍎 apex) is era-gated too.
+
+**What the decade decides is the CEILING, not the floor:** most gifts have the craft to reach a decent kỹ sư life in any
+era (floor stable — no decade abandons a gift), but how HIGH the gift climbs is the decade's call. Sweep apex sensor:
+**spark apex (🚀/🍎) swings 5%→17%** across decades (a coder is a *founder* in the dot-com/AI boom, a *solid kỹ sư* in the
+1990s), **sky peaks in the scarcity 1990s** (the maker who creates from nothing — Trần Đại Nghĩa), **hype peaks in
+Đổi-Mới/smartphone** (the hustler when markets & social open). **No dominant decade** — the apex-leading decade differs by
+gift (spark→ai / sky→scarcity / hype→smartphone), so no era is strictly easiest (invariant #1); the realize floor holds
+(invariant #2). Distortions (coin-shark / arrest / văn-mẫu) stay **era-neutral** — those are the SCHOOL's doing, never the
+decade's (invariant #4).
+
+**Replay-safe with NO save change:** era = `eraIndex(S.year)` (deterministic; reload restores S.year → same era; the
+GATE_ALUM byte-identical replay holds). **Surfacing (graphics frozen):** era-shift **news beats** fire at each year
+rollover that crosses a decade ("🕰️ Thời dot-com — Thế giới lên mạng. Đầu óc lập trình bỗng thành vàng ròng…") + an
+opening-era boot line; the **Gameplay Lab** now shows the era spine (Run-summary "Thời đại đầu→cuối" arc + a per-year
+column). The HUD era chip + transition modal are deferred to the graphics pass (text/news suffices now — the DECOUPLING
+PRINCIPLE: ship the soul as words, backfill the visual later).
+
+**Verification (headless):** gate GREEN (incl. GATE_ALUM determinism). bot BOTOK (cash **7353 byte-stable**; arrested
+15→14 & essay 2010→1974 chars shifted by the era redistributing alumni destinies — expected, no crash). `node sweep.js`
+**12✓** — new era-sensor proves apex swings Δ13/14/14 per gift, no dominant decade, symmetry holds; all prior bands
+intact (economy ~5 tỷ, realize/waste spread, inaction-cost, E8/E9). lives.sh clean (a stranger names the wasted prodigy
++ the realized). Lab JS parses + regenerates. **Owner steer same firing** ("add demographic + geographic realism") routed
+into the LATTICE L2 (archetype = geography; per-kid origin = demographic) — the TIME axis (ERAS) is its first delivery.
+SOUL 5 · STORY 5 (the person-sim now has a spine: a life is talent × education × **the decade it happens to land in**).
+
 ## 2026-06-15 — The epilogue grief now names WHICH gift was wasted (tell-aware) (loop iter 203)
 **Person-sim soul ship — completing the iter-193 mandate at the epilogue.** iter-193 made the *in-play* cohort beats
 name a kid's specific gift ("the line names THIS kid's gift, not a generic talent"). But the *epilogue* grief lines
