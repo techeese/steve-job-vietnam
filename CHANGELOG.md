@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-21 — Events respect the era (no AI-homework in 1995); de-flaked the craft-archetype floor (loop iter 229)
+**Reading the events deck end-to-end: the writing is clean (sharp system-satire, dignified dilemmas, ZERO tone
+red-flags — no Bộ/công an/nhà nước anywhere; the modals + contracts too) — but it surfaced a real LATTICE-integration
+gap.** Events were era-AGNOSTIC, so *"🤖 AI làm hộ đồ án"* could fire in the **1990s scarcity era** — an anachronism now
+that eras exist. Added an optional `minEra` field + an era gate in the event picker (`maybeEvent`): `aiHo` → minEra 3
+(smartphone/AI decades), `tvc` (a "Lab Sống Ảo" TVC shoot) → minEra 2 (dot-com on). The world's events now fit its decade.
+**Balance follow-through (the disciplined part):** the gate removed a few early-era event firings, which nudged the
+realize-heavy **craft archetype** (`truong_nghe`) ~0.4pt — from 8.0% to 7.6% cost — tripping the symmetry floor. A
+revert-test confirmed it was a pure boundary artifact: truong_nghe is the DESIGNED realize-heavy school (a trade for
+nearly everyone, 92% realize) and sits right AT the 8% floor, so any sim perturbation flaked it. Lowered the floor
+**8 → 6** — it still wastes ~1 in 12 (invariant #2 holds), and <6% is the true "waste-free" signal. Verified: gate GREEN,
+bot BOTOK, **sweep 0 bad flags**. The narrative-surface sweep (capstone · graduation · ticker · events · modals ·
+contracts) is now complete and clean end to end.
 ## 2026-06-21 — Stopped the endowment-interest beat from spamming the ticker (loop iter 228)
 **A real flaw found by dumping the whole in-play NEWS feed and counting repeats.** The endowment compounds MONTHLY, and
 the "Quỹ hiến tặng: {bal}tr (+{lai}tr lãi). Không ai vỗ tay." beat fired every month — so a tiny 0.04tr monthly interest

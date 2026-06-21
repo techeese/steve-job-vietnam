@@ -707,7 +707,8 @@ function maybeEvent() {
   if (S.month === 6) return;
   if (S.totalDays - S.lastEventDay < 14) return;
   if (rnd() > 0.06) return;
-  var elig = CONTENT.events.filter(eventPred);
+  var curE = eraIndex(S.year); // iter-229: an era-sensitive event (e.minEra) can't fire before its decade — no AI-homework in the 1990s
+  var elig = CONTENT.events.filter(function (e) { return eventPred(e) && (e.minEra == null || curE >= e.minEra); });
   var ev = null;
   if (!S._chuongDone) { for (var i = 0; i < elig.length; i++) if (elig[i].id === "chuong") ev = elig[i]; }
   if (!ev && elig.length) ev = elig[Math.floor(rnd() * elig.length)];

@@ -411,7 +411,7 @@ var CONTENT = {
         { label: "Lờ đi", hint: "không có gì xảy ra", fx: null },
         { label: "Cho mượn phòng máy sau giờ", hint: "-2tr, em ấy +4 TN, một việc tử tế", fx: "duanChoMuon" }
       ] },
-    { id: "tvc", title: "📺 Trứng Vàng muốn quay TVC",
+    { id: "tvc", minEra: 2, title: "📺 Trứng Vàng muốn quay TVC", // iter-229: a "Lab Sống Ảo" TVC shoot belongs to the dot-com era onward, not the 1990s
       desc: "Đối tác đề nghị quay TVC tại Lab Sống Ảo: 'các em chỉ cần ngồi gõ phím, không cần máy chạy thật'.",
       pred: "contractPr",
       choices: [
@@ -446,7 +446,7 @@ var CONTENT = {
         { label: "Đồng ý", hint: "+2 KT, +3 Vẹt Năm 4", fx: "tangGioOk" },
         { label: "Từ chối", hint: "+1 Thực Chất", fx: "tangGioNo" }
       ] },
-    { id: "aiHo", title: "🤖 AI làm hộ đồ án",
+    { id: "aiHo", minEra: 3, title: "🤖 AI làm hộ đồ án", // iter-229: AI-generated homework only makes sense from the smartphone/AI decades on
       desc: "Đồ án của {ten} bỗng xịn bất thường — hỏi ra mới biết AI 'làm' qua đêm. Em ấy bảo: 'em chỉ prompt thôi, mà nó chạy thật mà thầy'.",
       pred: "nam4Duan",
       choices: [
