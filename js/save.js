@@ -10,6 +10,9 @@
 function saveGame() {
   try { localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize())); } catch (e) {}
 }
+// iter-217 (L3): the CROSS-RUN legacy store — a SEPARATE key, so it survives past the single-game save. Compact record only.
+function writeLegacy(rec) { try { if (rec) localStorage.setItem(CONFIG.LEGACY_KEY, JSON.stringify(rec)); } catch (e) {} }
+function readLegacy() { try { var r = localStorage.getItem(CONFIG.LEGACY_KEY); if (!r) return null; var o = JSON.parse(r); return (o && typeof o === "object" && typeof o.ten === "string" && (o.kind === "bright" || o.kind === "dark")) ? o : null; } catch (e) { return null; } }
 function serialize() {
   var o = {}; for (var k in S) { if (k === "_mapDirty" || k === "_lastNod" || k === "_giftFlush" || k === "_milestoneJustHit") continue; o[k] = S[k]; } // transient UI flags aren't persisted
   return o;
@@ -148,6 +151,7 @@ function sanitize() {
   S.giftItems = (S.giftItems || []).filter(function (g) { return g && typeof g === "object" && g.item; }).slice(0, (CONFIG.ALUM && CONFIG.ALUM.ITEM_CAP) || 24);
   // iter-213 (N3): heal S.letters (the headmaster's annual letters the capstone re-reads) — drop malformed entries so the essay render can't throw on a corrupted/old save; cap at 16.
   S.letters = (S.letters || []).filter(function (l) { return l && typeof l === "object" && typeof l.text === "string"; }).slice(-16);
+  if (S.legacy != null && !(typeof S.legacy === "object" && typeof S.legacy.ten === "string")) S.legacy = null; // iter-217 L3: the inherited legacy is null or a well-formed record
   // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
   if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};
   var seenT = {};

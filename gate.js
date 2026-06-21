@@ -159,6 +159,31 @@ try {
   ok(S.letters.every(function(l){ return l && typeof l==='object' && typeof l.text==='string'; }) && S.letters.length===1, 'corrupted annual-letters healed (iter-213 N3 — only the well-formed letter survives)');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
+/* GATE_LEGACY — L3 cross-run legacy round-trip (iter 217): write → seedLegacy → effect; bright gifts the quỹ, dark echoes TT */
+try {
+  // BRIGHT legacy seeds the next school's endowment
+  freshState();
+  var endow0 = S.endow.bal;
+  writeLegacy({ ten:'Cựu Sáng', state:'KY_SU', schoolName:'Trường Cũ', year:12, kind:'bright', flourish:4 });
+  freshState(); seedLegacy();
+  ok(S.legacy && S.legacy.ten === 'Cựu Sáng', 'bright legacy is read onto S.legacy at seed');
+  ok(r1(S.endow.bal) === r1(endow0 + CONFIG.LEGACY.BOON_ENDOW), 'bright legacy gifts the new quỹ (+'+CONFIG.LEGACY.BOON_ENDOW+'tr)');
+  // DARK legacy echoes as a lower starting Tiếng Tăm
+  freshState(); var tt0 = S.tiengTam;
+  writeLegacy({ ten:'Cựu Tối', state:'BI_BAT', schoolName:'Trường Cũ', year:12, kind:'dark', flourish:0 });
+  freshState(); seedLegacy();
+  ok(S.legacy && S.legacy.kind === 'dark' && r1(S.tiengTam) === r1(tt0 - CONFIG.LEGACY.ECHO_TT), 'dark legacy echoes a lower starting Tiếng Tăm');
+  // a NEW game WITHOUT seedLegacy (freshState alone) is byte-identical — legacy is never applied by freshState itself
+  localStorage.setItem(CONFIG.LEGACY_KEY, JSON.stringify({ ten:'X', state:'STEVE', schoolName:'Y', year:12, kind:'bright', flourish:5 }));
+  freshState();
+  ok(S.legacy === null && r1(S.endow.bal) === r1(CONFIG.ARCHETYPES[CONFIG.ARCH_DEFAULT].endow), 'freshState stays PURE — the legacy only applies via seedLegacy (gate/sweep safe)');
+  // pickLegacy from a run: a graduated KY_SU is a bright standout
+  freshState(); S.alumni.push({ id:99, ten:'Cựu KS', state:'KY_SU', fs:{ seed:4, tell:'sky', origin:'tb' }, history:['KY_SU'], flags:{} });
+  var rec = pickLegacy();
+  ok(rec && rec.kind === 'bright' && rec.ten === 'Cựu KS', 'pickLegacy picks the bright standout from a run');
+  try { localStorage.setItem(CONFIG.LEGACY_KEY, ''); } catch(e){}
+} catch(e){ FAILS.push('GATE_LEGACY threw: '+e.message+'\\n'+e.stack); }
+
 OUT.push('');
 if (FAILS.length){ OUT.push('=== '+FAILS.length+' FAILURES ==='); OUT = OUT.concat(FAILS); }
 else OUT.push('=== ALL GATES GREEN ===');

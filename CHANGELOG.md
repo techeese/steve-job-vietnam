@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-21 — Your past school's standout now seeds your next run (L3 LEGACY ckpt1 — the last LATTICE pillar opens) (loop iter 217)
+**The first cross-run thread — the "one more run" ladder begins.** When a run reaches its decade, its most NOTABLE
+graduate is written to a SEPARATE localStorage key (`LEGACY_KEY`, surviving past the single-game save). A NEW run then
+re-reads it and is seeded by it:
+- **A BRIGHT legacy** (a 🍎/founder/kỹ sư) returns to give back — a founding gift to the new quỹ (+40tr) and a warm beat:
+  *"🎓 {ten} — cựu sinh viên trường {schoolName} của thầy, nay đã thành đạt — nghe thầy mở trường mới, gửi về 40tr dựng quỹ."*
+- **A DARK legacy** (a coin-shark / arrested grad, when that was the run's loudest mark) echoes as a wary reputation
+  start (−4 Tiếng Tăm) + *"📰 Người ta còn nhớ {ten}… Tiếng cũ theo thầy sang trường mới."*
+
+`pickLegacy()` chooses the standout (a real success if any flourish≥4, else a dark notable, else the best modest life);
+`writeLegacy` fires at the decade trap; `seedLegacy()` applies it — **at ui-boot for a NEW game ONLY, so freshState stays
+PURE** (the load-bearing fork: gate/sweep never see a legacy → byte-identical; a gate test calls seedLegacy explicitly).
+`S.legacy` is persisted + sanitize-guarded. Bounded boon/echo → balance-safe (and inactive in fresh gate/sweep/bot).
+
+**Verification:** new GATE_LEGACY block GREEN (bright gifts the quỹ, dark echoes TT, freshState-stays-pure, pickLegacy
+picks the standout) + ALL GATES GREEN; bot BOTOK (cash 7206/essay 2766 byte-stable — empty store, no legacy); sweep 0
+bad flags. **L3 ckpt2+ (planned, ## Epic: L3): the LEGACY ALUMNUS RETURNS AS A NAMED FIGURE** (a mentor/teacher, or a
+scandal that shapes admissions) + UNLOCKS (a completed run opens a harder archetype/longer era-chain) + the scored,
+never-verdict ending. The lattice's final pillar is open — a run now leaves a mark on the next.
+
 ## 2026-06-21 — The Gameplay Lab now surfaces the new systems (archetype + class) + a whole-session consolidation (loop iter 216)
 **Paying the dynamic-Lab debt + verifying the LATTICE holds together after a heavy 12-iteration run.** The Lab is the
 owner's graphics-free window to WATCH the sim; the skill mandates surfacing each new system there, but the demographic

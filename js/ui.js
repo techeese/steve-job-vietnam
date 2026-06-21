@@ -100,7 +100,7 @@
   }
   function boot() {
     checkForUpdate(); // if a newer build is live, hop to it so a refresh always shows the latest
-    if (!HVS.loadGame()) { /* fresh already set */ }
+    var wasFresh = !HVS.loadGame(); // true = no save → a NEW game (apply the cross-run legacy below)
     var q = location.search.match(/seed=(\d+)/);
     if (q && (!localStorage.getItem(CONFIG.SAVE_KEY))) HVS.freshState(parseInt(q[1], 10));
     // iter-210 L2: ?arch=<key> starts a fresh run in that GEOGRAPHIC archetype (playtest, like ?ckpt2b). Only on a clean slate.
@@ -109,6 +109,7 @@
       HVS.freshState(q ? parseInt(q[1], 10) : undefined, aq[1]);
       setTimeout(function () { try { news("🗺️ " + CONFIG.ARCHETYPES[aq[1]].name + " — " + CONFIG.ARCHETYPES[aq[1]].blurb); } catch (e) {} }, 1000);
     }
+    if (wasFresh && HVS.seedLegacy) { try { HVS.seedLegacy(); } catch (e) {} } // iter-217 L3: a NEW game inherits the last completed run's standout (bright gift / dark echo)
     if (/[?&]ckpt2b=1\b/.test(location.search)) { CKPT2B_ON = true; setTimeout(function () { try { news("🧪 Thử nghiệm (E8 ckpt2b): chuyên môn hoá giảng viên giờ có CÁI GIÁ — khiếu nào không có thầy dạy sẽ dễ bị bỏ phí."); } catch (e) {} }, 1200); } // iter-200: owner PLAYTEST flag for the strong faculty trade-off (off unless ?ckpt2b=1)
     var sb = S().META.build; saveIsOld = !!(sb && sb !== BUILD); // running newer code than the save was written under
     S().META.build = BUILD;

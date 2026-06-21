@@ -206,3 +206,32 @@ function flushGifts() {
   bacTamNod();
   S.endow.pending = [];
 }
+
+/* ---------- L3 LEGACY (iter 217) — your past school's standout seeds your next run ---------- */
+// pickLegacy() — at the decade, the run's most NOTABLE graduate: a real success (flourish≥4) if any, else a dark
+// notable (coin-shark / arrested) as a cautionary echo, else the best modest life. Written cross-run by the decade trap.
+function legacyRec(a, kind) { return { ten: a.ten, state: a.state, schoolName: S.schoolName, year: S.year, kind: kind, flourish: flourishOf(a.state) }; }
+function pickLegacy() {
+  var al = (S.alumni || []).filter(function (a) { return a && !a._tpl && a.fs; });
+  if (!al.length) return null;
+  var bright = null; al.forEach(function (a) { if (!bright || flourishOf(a.state) > flourishOf(bright.state) || (flourishOf(a.state) === flourishOf(bright.state) && a.fs.seed > bright.fs.seed)) bright = a; });
+  if (bright && flourishOf(bright.state) >= 4) return legacyRec(bright, "bright"); // a Steve / founder / kỹ sư returns to give back
+  var dark = null; al.forEach(function (a) { if ((a.state === "BI_BAT" || a.state === "CA_MAP_COIN") && (!dark || a.fs.seed > dark.fs.seed)) dark = a; });
+  if (dark) return legacyRec(dark, "dark");              // the run's loudest mark was a scandal → it echoes
+  return bright ? legacyRec(bright, "bright") : null;    // a modest success (💼/👷) — still a warm return
+}
+// seedLegacy() — applied at ui-boot for a NEW game only (freshState stays pure → gate/sweep byte-identical). A bright
+// legacy gifts the new quỹ + a warm beat; a dark one starts reputation a touch lower + a wary beat. Sets S.legacy.
+function seedLegacy() {
+  if (!S || typeof readLegacy !== "function") return;
+  var lg = readLegacy(); if (!lg) return;
+  S.legacy = lg;
+  if (lg.kind === "bright") {
+    S.endow.bal = r1(S.endow.bal + CONFIG.LEGACY.BOON_ENDOW);
+    news("🎓 " + lg.ten + " — cựu sinh viên trường " + lg.schoolName + " của thầy, nay đã thành đạt — nghe thầy mở trường mới, gửi về " + CONFIG.LEGACY.BOON_ENDOW + "tr dựng quỹ.");
+  } else {
+    S.tiengTam = clamp(r1(S.tiengTam - CONFIG.LEGACY.ECHO_TT), 0, 200);
+    news("📰 Người ta còn nhớ " + lg.ten + " của trường " + lg.schoolName + " cũ. Tiếng cũ theo thầy sang trường mới — Tiếng Tăm khởi điểm thấp hơn một chút.");
+  }
+}
+if (typeof window !== "undefined" && window.HVS) window.HVS.seedLegacy = seedLegacy; // ui-boot applies the cross-run legacy (engine.js built HVS before alumni.js loaded — augment it, the save.js/admissions.js pattern)

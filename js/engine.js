@@ -240,6 +240,7 @@ function freshState(seed, archKey) {
     endow: { bal: _A.endow, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 }, // iter-210: archetype boot endowment (tinh_le = legacy BOOT_ENDOW)
     giftItems: [], // iter-182 (owner steer ckpt3): non-monetary gifts from successful alumni — the "kho lưu niệm", a hook for extension functions later
     letters: [], // iter-213 (N3): the headmaster's annual letters accumulate here → the capstone essay re-reads them (his thinking, year by year). Persisted; old saves default [] → no letters section (graceful, no migrator).
+    legacy: null, // iter-217 (L3): the inherited legacy from the player's LAST completed run (set by seedLegacy() at ui-boot for a NEW game). Persisted once applied; null on a clean install / no prior run.
     scholarships: [
       { key: "tdn", holderId: null, suspended: false },
       { key: "tqb", holderId: null, suspended: false },
@@ -335,7 +336,7 @@ function monthRollover() {
   if (S.offersSeen.indexOf("trungvang") < 0 && S.year === 1 && S.month >= 10) { S.offersSeen.push("trungvang"); offerContract(CONTENT.contract.trungvang); }
   endowMilestones();
   // decade capstone: once the school reaches its run-cap year, arm the "Mười năm sau" reflection
-  if (S.year >= CONFIG.RUN_CAP_YEARS && !S.META.decadeShown && !S._decadeHit) S._decadeHit = true;
+  if (S.year >= CONFIG.RUN_CAP_YEARS && !S.META.decadeShown && !S._decadeHit) { S._decadeHit = true; try { writeLegacy(pickLegacy()); } catch (e) {} } // iter-217 L3: the run's standout is written cross-run → seeds the NEXT school
 }
 // favSnapOf / favBeat (the followed protégé's in-school arc) → js/sim/person.js (iter 127 STRUCTURE carve)
 function hasResolvedAdmitThisYear() {

@@ -8,6 +8,13 @@
 var CONFIG = {
   V: 2,
   SAVE_KEY: "hoc-vien-steve-v3", // v3: start-from-nothing reframe — old v2 saves (42-SV school) are retired so the new boot shows
+  // ★ L3 LEGACY (iter-217 ckpt1) — CROSS-RUN persistence: when a run reaches its decade, its STANDOUT graduate is written
+  // to a SEPARATE localStorage key (survives beyond the single-game save). A NEW run then re-reads it: a BRIGHT legacy
+  // (a Steve / founder / kỹ sư) returns to seed the next school (a founding gift to the quỹ + a warm beat); a DARK legacy
+  // (coin-shark / arrested) echoes as a wary reputation start. Your past alumni seed your next world — the "one more run"
+  // ladder's first thread. Applied by seedLegacy() at ui-boot ONLY (freshState stays pure → gate/sweep byte-identical).
+  LEGACY_KEY: "hoc-vien-steve-legacy",
+  LEGACY: { BOON_ENDOW: 40, ECHO_TT: 4 }, // a returning successful grad gifts ~40tr to the new quỹ; a dark legacy's reputation echoes −4 starting Tiếng Tăm
   // clock: 10 ticks = 1 day; 1 day = 1.0s at 1x
   TICK_MS: 70, TICKS_PER_DAY: 10, DAYS_PER_MONTH: 30, // TICK_MS 100→70 (iter 115, owner "1 month too long in real clock"): a month is now ~21s at 1× (was 30s) — pure WALL-CLOCK pace, no sim/balance change (sweep/gate drive dayTick directly)
   GRID_W: 15, GRID_H: 12, TILE: 26,
