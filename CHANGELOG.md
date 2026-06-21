@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — PEERS / CONTAGION ckpt2: the môi trường named on a kid IN-PLAY (loop iter 242)
+**The legibility half of yesterday's new factor, following the exact ERAS pattern** (ckpt1 mechanic → ckpt2
+named-at-the-moment). ckpt1 made the cohort pull moods together + a yearly school-level beat; ckpt2 names it on a
+**specific kid while you can still act** (Mark 5). In `cohortBeat` (the seasonal glimpse of one kid blooming/wilting),
+a peer-cause clause is now appended when the cohort atmosphere is the salient force — mirroring the iter-219 `cohortPoor`
+clause: a **bloomer in a WARM class** (`cohort mean ≥ PEER.WARM`) is reinforced (*"cả lớp năm nay cũng hừng hực — em
+đứng giữa đám bạn cùng gắng, lại càng gắng"*), a **cooling kid in a COLD class** (`mean ≤ PEER.COLD`) is dragged
+(*"cả lớp cũng đang rã đám, uể oải — không khí ấy cuốn em theo, chẳng ai níu lại"*). Live read of the cohort mean
+(deterministic, no rnd → **byte-identical** gate/sweep/bot). **Emergent interaction discovered + verified:** the clauses
+each fire in their natural habitat *because of the player's TEACHING CULTURE* — cram (`luyende`) drives cohort mean to
+~32–45 → the cold-class drag fires (31× across 7 runs), while craft/balance hold mean ~90–99 → the warm-class lift fires
+(21–22×). So *policy → cohort atmosphere → peer effect on a named kid* — plural and symmetric, no new state. Verified:
+parse clean, gate GREEN, bot BOTOK (7337/87/14/2761 — byte-identical to ckpt1), sweep 0 bad flags, lives 0 LIVESFAIL,
+probe confirms both poles reachable. Deployed. **NEXT (ckpt3, deferred — needs a serialized `peerAcc`):** the LIFE reads
+peer-shaped at the *epilogue* payoff (a kid wasted by a falling-apart class named in the cast), the deeper but
+state-heavier attribution.
+
 ## 2026-06-22 — NEW FACTOR: PEERS / CONTAGION ckpt1 — the cohort lifts or drags its members (loop iter 241)
 **A genuinely new LATTICE/MODEL.md factor, not a refinement of the last two L4 ships** (the loop's own guard against
 stacking small ships). The most culturally-central force in the đề-Văn that wasn't yet modeled: *môi trường* / "chọn

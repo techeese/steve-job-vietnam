@@ -318,6 +318,14 @@ function cohortBeat() {
   // iter-219: if the glimpsed kid is POOR + unbacked, name the class as a compounding force — felt IN-PLAY, while a mentor
   // slot can still change it (the school-as-equalizer). Deterministic (origin from id, no rnd) → bot/sweep byte-identical.
   if (!best.mentored && studentOrigin(best) === "ngheo" && CONTENT.cohortPoor) line += (CONTENT.cohortPoor[pole === 1 ? "wilt" : pole === 2 ? "bent" : "bloom"] || "");
+  // iter-242 PEERS/CONTAGION ckpt2 — name the MÔI TRƯỜNG when the cohort atmosphere is the salient force on THIS kid:
+  // a bloomer in a WARM class is reinforced, a cooling kid in a COLD class is dragged. Live read of the cohort mean
+  // (deterministic, no rnd → byte-identical). Only when peers actually CUT WITH the beat (warm↔bloom / cold↔wilt).
+  if (CONTENT.cohortPeer) {
+    var pmSum = 0; for (var pk = 0; pk < n; pk++) pmSum += st[pk].mood; var pMean = pmSum / n;
+    if (pole === 0 && pMean >= CONFIG.PEER.WARM) line += CONTENT.cohortPeer.bloomWarm;
+    else if (pole === 1 && pMean <= CONFIG.PEER.COLD) line += CONTENT.cohortPeer.wiltCold;
+  }
   news((pole === 1 ? "🍂 " : pole === 2 ? "🪙 " : "🌱 ") + best.ten + " — " + line);
   S._lastCohortBeat = S.totalDays;
 }

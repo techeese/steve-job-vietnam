@@ -255,6 +255,13 @@ var CONTENT = {
     bloom: " Nhà nghèo mà sáng đến thế — của hiếm; đừng để tuột mất.",
     bent:  " Nhà nghèo, đường tắt lại càng dễ kéo em đi."
   },
+  // iter-242 PEERS/CONTAGION ckpt2 — name the MÔI TRƯỜNG on a named kid IN-PLAY (Mark 5: while a slot/policy can still
+  // change it). Appended to a bloom/wilt beat when the cohort atmosphere is the salient force: a warm class lifts the
+  // bloomer further; a cold one drags the cooling one down ("chọn bạn mà chơi" made personal). Mirrors cohortPoor.
+  cohortPeer: {
+    bloomWarm: " Cả lớp năm nay cũng hừng hực — em đứng giữa đám bạn cùng gắng, lại càng gắng.",
+    wiltCold:  " Mà cả lớp cũng đang rã đám, uể oải — không khí ấy cuốn em theo, chẳng ai níu lại."
+  },
   // iter-182 (owner steer ckpt3): NON-monetary gifts from successful alumni — the school's "kho lưu niệm", a hook for
   // extension functions later (a printer→Xưởng, servers→Lab, an internship→a kid…). For now: collected, named, kept.
   giftItems: [
