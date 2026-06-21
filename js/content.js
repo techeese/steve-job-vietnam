@@ -155,10 +155,30 @@ var CONTENT = {
     "🏛️ 250 tỷ — huyền thoại. Người ta viết case study về bạn.",
     "🏛️ 500 tỷ — không còn gì để chứng minh nữa. Chỉ còn câu hỏi: để làm gì?"
   ],
-  tetCohort: {
-    blossom: "🌸 Tết — nhìn lại một năm, phần đông các em đang hợp lối, lớn lên đúng hướng. Mừng các em thêm tuổi.",
-    cool: "🌸 Tết — nhìn lại một năm, không ít em đang lệch lối, nguội dần. Năm mới, mình phải nghĩ lại cách dạy.",
-    mixed: "🌸 Tết — nhìn lại một năm: đứa bừng lên, đứa chững lại. Trường nào rồi cũng thế. Năm mới lại bắt đầu."
+  // iter-211 (NARRATIVE N2) — THE ANNUAL LETTER: once a year (Tết) the headmaster writes a short letter to his students,
+  // conditioned on the player's POLICY this year (cram/craft/balance) × the cohort's becoming (blossom/cool/mixed) × the
+  // ERA — so it MIRRORS the player's choices back (THESIS §B-3). A recurring narrative rhythm that accumulates toward the
+  // capstone "how to have a Steve Jobs Vietnam" essay (N3 will wire the persistent log + capstone assembly). Deterministic
+  // (cohort-state + presets + year, no rnd) → replay-safe. Opener names the decade; body keyed by [state][culture].
+  annualLetter: {
+    open: "📜 Thư gửi các em — {era}, cuối Năm {year}: ",
+    body: {
+      blossom: {
+        craft: "thầy nhìn quanh sân, thấy nhiều em đang làm ra thứ của riêng mình — vụng về, nhưng là của các em. Thầy nghĩ, có lẽ đó mới là điều đề Văn hỏi.",
+        cram: "các em qua kỳ thi đều tăm tắp, thầy nở mày nở mặt với trên. Nhưng đêm về thầy tự hỏi — đều tay như nhau, thì lấy đâu ra một đứa khác người?",
+        balance: "phần đông các em đang lớn lên vững vàng, đúng hướng. Thầy chưa biết trong các em có một Steve Jobs không, nhưng thầy mừng vì các em đang là chính mình."
+      },
+      cool: {
+        craft: "thầy để cửa mở cho các em tự tìm đường, mà vài em lạc mất giữa sân trường, chưa ai kịp kéo về. Tự do cũng có cái giá của nó.",
+        cram: "thầy đẩy các em qua hết đề này đến đề khác; vài đứa sáng dạ nhất lại nguội đi trên tay thầy. Thầy sợ mình đang mài, mà quên rằng có thứ càng mài càng mòn.",
+        balance: "năm nay thầy thấy vài em đang nguội dần, chưa tìm thấy lối của mình. Thầy còn phải nghĩ lại cách dạy các em."
+      },
+      mixed: {
+        craft: "đứa làm ra được thứ của mình, đứa vẫn loay hoay tìm lối. Thầy chưa biết để mặc các em tự lớn là đúng hay sai.",
+        cram: "đứa qua đề ngon lành, đứa thì gãy. Thầy luyện cho các em cái thước chung, mà đời ngoài kia đâu chấm theo thước ấy.",
+        balance: "đứa bừng lên, đứa chững lại — trường nào rồi cũng thế. Thầy chỉ mong năm sau bớt đi một cái tên thầy không giữ được."
+      }
+    }
   },
   mentorCredit: " · nhờ thầy không buông tay em",   // E4.1: a kid you MENTORED who reached a realized life — the attention, felt by name
   diamondCredit: " · ngọc thô — vào bằng cửa hẹp",  // E-UNDERDOG: an overlooked low-score admit who realized — the exam was wrong, you weren't

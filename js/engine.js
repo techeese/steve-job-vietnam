@@ -498,8 +498,13 @@ function tetCohortBeat() {
     if (s.mentored || mm >= 1.3) blossom++;
     else if (mm < CONFIG.MISMATCH_MM || s.mood < CONFIG.MOOD_PENALTY_BELOW) cool++;
   }
-  var n = st.length, key = (blossom >= n * 0.4) ? "blossom" : (cool >= n * 0.3) ? "cool" : "mixed";
-  news(CONTENT.tetCohort[key]);
+  var n = st.length, state = (blossom >= n * 0.4) ? "blossom" : (cool >= n * 0.3) ? "cool" : "mixed";
+  // iter-211 (N2 ANNUAL LETTER): mirror the player's dominant TEACHING CULTURE this year back to them, in the decade's voice.
+  var v = {}; ["n1", "n2", "n3", "n4"].forEach(function (k) { v[S.presets[k]] = (v[S.presets[k]] || 0) + 1; });
+  var best = "canbang", bc = -1; for (var p in v) if (v[p] > bc) { bc = v[p]; best = p; }
+  var culture = best === "luyende" ? "cram" : best === "duan" ? "craft" : "balance";
+  var L = CONTENT.annualLetter;
+  news(tpl(L.open, { era: curEra().name, year: S.year }) + L.body[state][culture]); // deterministic (cohort + presets + year, no rnd) → replay-safe; news-only → balance-neutral
 }
 function scholarshipDraw() {
   S.endow.drawnYear = false;

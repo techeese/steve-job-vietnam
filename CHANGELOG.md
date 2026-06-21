@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-21 — The headmaster now writes you an annual letter (NARRATIVE N2) (loop iter 211)
+**The recurring narrative rhythm the owner asked for — letters that build toward the capstone.** The yearly Tết cohort
+beat (3 generic lines) is now a real **annual letter to the students**, conditioned on three things at once: the player's
+dominant TEACHING POLICY this year (cram / craft / balance), the cohort's becoming (blossom / cool / mixed), and the ERA
+— so it MIRRORS the player's choices back (THESIS §B-3). Under a cram policy a cooling cohort reads *"thầy đẩy các em qua
+hết đề này đến đề khác; vài đứa sáng dạ nhất lại nguội đi trên tay thầy. Thầy sợ mình đang mài, mà quên rằng có thứ càng
+mài càng mòn."*; under craft, *"thầy để cửa mở cho các em tự tìm đường, mà vài em lạc mất giữa sân trường…"* The opener
+names the decade (*"Thư gửi các em — Thời AI bùng nổ, cuối Năm 13:"*), tying each letter to its era. 9 authored bodies
+(3 cohort-states × 3 cultures) + the era opener. **Deterministic** (cohort + presets + year, no rnd) → replay-safe;
+**news-only → balance-neutral** (gate GREEN, bot byte-identical cash 7392/essay 2148, sweep untouched). This is the spine
+the moving capstone essay grows from. **N3 (next narrative firing): persist the letters (S.letters) + assemble the long
+"how to have a Steve Jobs Vietnam" capstone from them** (authored-assembly per the owner's default). SOUL/STORY 5.
+
 ## 2026-06-21 — WHERE the school sits now pre-loads its whole world: 4 geographic archetypes (L2 ckpt1) (loop iter 210)
 **The GEOGRAPHIC half of the owner's "demographic + geographic realism" steer — and the first factor built MODEL-FIRST.**
 Before the player chooses anything, the school's *place* sets its starting world: economy, prestige, default teaching
