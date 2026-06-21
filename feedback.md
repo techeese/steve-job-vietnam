@@ -12,6 +12,13 @@ Write as much as you want, in any format (bullets, paragraphs, half-thoughts). P
 iterations; the loop absorbs it without you having to break its flow.
 
 **Ingest log** (newest first):
+- 2026-06-21 (iter 206) — **"to fast-track gameplay development, is the current process the best?"** → I assessed it
+  and the owner picked ALL four accelerators (use workflows · build tune.js · keep the serial loop · finish ERAS+L2
+  depth). **APPLIED to SKILL.md `## VELOCITY`:** (1) WORKFLOWS now owner-authorized (standing opt-in) for BREADTH work
+  (parallel authoring of eras/archetypes/content/multi-config sweeps); serial loop stays the default for DEEP
+  single-mechanic ships. (2) BUILD `tune.js` (a balance grid-search harness) near-term to kill the manual probe-cycle
+  tuning cost. (3) Keep headless-verify + deploy-per-slice. Plan: next firing builds tune.js (quick, high-leverage),
+  then a workflow fans out the GEOGRAPHIC archetypes / era×origin breadth.
 - 2026-06-21 (iter 204) — **"the philosophy question is how to have a Steve Jobs Vietnam — can we add DEMOGRAPHIC + GEOGRAPHIC info into the gameplay? Make it a bit realistic = interesting challenges."** → **ROUTED into the LATTICE as the L2 enrichment** (ROADMAP `## Epic backlog` L2 updated): GEOGRAPHIC = the ARCHETYPE itself (rural-Mekong / highlands-minority / Hanoi-elite-cram / industrial-vocational — location sets endowment, prestige, the local world's gift-bias, and the cohort's origin mix); DEMOGRAPHIC = a per-kid `origin`/family-background texture that modulates realize/waste WITHOUT touching the thesis (a poor rural spark kid in the 1990s = triple-wrong: wrong class × wrong place × wrong era = the system's hardest, most-felt waste, invariant #4 done-TO-them). It MULTIPLIES the soul (right kid / wrong era / wrong place / wrong class), never dilutes the đề-Văn. Not a THESIS.md change (additive realism) → applied to ROADMAP/L2 directly. **The first axis of this — ERAS (the TIME dimension) — SHIPPED today (iter-204 ckpt1).** Geographic/demographic = the L2 archetype epic, queued next after ERAS ckpt2.
 - 2026-06-15 (iter 157) — **"I develop on my phone now — deploy to github.io after each code change"** → **WORKFLOW
   CHANGED:** the every-10 cadence is RETIRED → DEPLOY EVERY ITERATION (see ROADMAP ## Cadence "DEPLOY POLICY").

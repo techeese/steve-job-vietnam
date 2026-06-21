@@ -74,6 +74,18 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
 4. **Waste is done TO the person** — blame the SYSTEM and the player's policy, never the kid. Pantheon
    (honored real educators) names NEVER appear in any waste/distort/scandal line (grep-enforced).
 
+## VELOCITY (owner 2026-06-21 — "fast-track the gameplay"; the owner picked ALL accelerators)
+- **WORKFLOWS ARE OWNER-AUTHORIZED (standing opt-in) for BREADTH work.** When a pick is embarrassingly parallel
+  authoring — multiple eras' event/đề flavor, several archetypes, content banks, multi-config balance sweeps — fan it
+  out with `Workflow` (subagents author/verify each unit against the invariants in parallel; you synthesize + integrate).
+  One firing then produces what serial firings would take 5-6 to do. Use the serial loop (below) for DEEP single-mechanic
+  work (today's ERAS/origin ships); use a workflow for breadth. Don't workflow trivial/1-file changes.
+- **`tune.js` — a balance grid-search harness (BUILD IT, near-term).** Manual probe-cycle tuning (iter-206 spent ~4
+  cycles on ORIGIN_GROW/MOOD) is the slowest serial cost. `tune.js` should sweep a CONFIG knob over a value grid and
+  report which value hits a target sweep-metric band — collapsing N firings of hand-tuning into one run. High leverage.
+- Keep the rest of the spine: headless-verify (the freeze killed the graphics tax — that's the velocity win), sweep
+  sensors, deploy-per-coherent-slice.
+
 ## THE LOOP (lean — this skill reloads every firing; keep it fast)
 
 0. **Orient.** Read `ROADMAP.md` (`## Cadence`, `## Epic backlog`, `## Now`) and `feedback.md` (owner
