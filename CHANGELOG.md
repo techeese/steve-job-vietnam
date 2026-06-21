@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-22 — The returning-alum teacher is now visible in the staff list (the L3 payoff, made persistent) (loop iter 234)
+**Auditing the cross-run LEGACY loop's player-facing experience found a real gap.** The emotional core of L3 is the
+bright-legacy boon: a graduate who became a success RETURNS to teach the next generation, for free. `seedLegacy` fires a
+one-time news beat — but in the persistent STAFF list the returning teacher rendered as an anonymous hire (name, hours,
+and an unexplained "0tr/th"), with nothing marking who they are. The whole cross-run payoff was invisible after the beat
+scrolled away. Now the teacher row reads the `legacy` flag: a gold 🎓 avatar + a *"🎓 trò cũ trở về"* (the old student
+came back) badge on the name — which also explains the free salary (they teach out of gratitude, not for pay). UI-only →
+gate GREEN (unaffected), bot BOTOK; `seedLegacy` confirmed sets `legacy:true` on the teacher. Deployed. The run-to-run
+thread you wove — your alumnus made it, and came home to teach — is now something you SEE every time you open the staff
+panel, not a line you might have missed.
 ## 2026-06-22 — The graduate-detail view now reads the gift-vs-fate (era × origin), like the epilogue (loop iter 233)
 **An inverted-richness gap, caught auditing `showAlumnus`.** The per-graduate DETAIL view (roster → click a kid) — which
 should be the FULLEST read of a single life — showed the journey, the vignette, and the stat bars, but NOT the

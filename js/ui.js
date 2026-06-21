@@ -1214,7 +1214,8 @@
     s.teachers.forEach(function (t) {
       var r = el("div", "srow");
       var lean = grainLean[t.grain] ? " · <span style='color:var(--gold)'>" + grainLean[t.grain] + "</span>" : "";
-      r.innerHTML = "<div class='av' style='background:rgba(106,169,240,.15)'>🧑‍🏫</div><div class='grow'><div class='nm'>" + esc(t.ten) + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + t.luong + "tr/th" + (t.bienChe ? " · biên chế" : "") + lean + "</div></div>";
+      var leg = t.legacy ? " <span class='tiny' style='color:var(--gold)'>🎓 trò cũ trở về</span>" : ""; // iter-234: surface the cross-run payoff PERSISTENTLY — a successful alumnus who came back to teach (the L3 legacy boon), not just a one-time news beat. Also explains the 0tr/th (free, out of gratitude).
+      r.innerHTML = "<div class='av' style='background:" + (t.legacy ? "rgba(240,198,116,.18)" : "rgba(106,169,240,.15)") + "'>" + (t.legacy ? "🎓" : "🧑‍🏫") + "</div><div class='grow'><div class='nm'>" + esc(t.ten) + leg + "</div><div class='meta'>Dạy " + t.day + " · Diễn " + t.dien + " · " + t.luong + "tr/th" + (t.bienChe ? " · biên chế" : "") + lean + "</div></div>";
       c4.appendChild(r);
     });
     // iter-195 (E8 ckpt2) — the FELT trade-off, made legible: a gift present in your cohort with NO faculty champion
