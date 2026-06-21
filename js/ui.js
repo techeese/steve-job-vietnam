@@ -1389,6 +1389,9 @@
     }
     var line = a.line || tpl((CONTENT.alumLines[a.state] || ["{ten}."])[0], { ten: a.ten });
     w.appendChild(el("div", "lead", "“" + esc(line) + "”")).style.fontStyle = "italic";
+    // iter-233: the gift-vs-fate reading (why this gift met this fate — era × origin), same source as the epilogue cast
+    // and the graduation screen. The per-life DETAIL view should be the FULLEST read of a life, not the thinnest.
+    if (a.fs) { var gvf = realCreditSuffix(a.state, a.fs.seed, a.flags, a.fs.tell, a.gradYear, a.fs.origin); if (gvf) w.appendChild(el("div", "tiny", "<span style='color:var(--gold)'>" + esc(gvf.replace(/^\s*[·—-]\s*/, "")) + "</span>")).style.marginTop = "4px"; }
     if (a.fs) w.appendChild(el("div", "ibars", ibar("Kiến thức", a.fs.kt, "#bb6bd9") + ibar("Tay nghề", a.fs.tn, "#6fcf97") + ibar("Sáng tạo", a.fs.st, "#6aa9f0") + ibar("Cá mập", a.fs.cm, "#f2994a")));
     var rel = "Tình cảm với trường: " + gratWord(a.grat || 0) + ".";
     if (a.gifts > 0) rel += " Đã gửi về quỹ " + Math.round(a.gifts) + "tr.";

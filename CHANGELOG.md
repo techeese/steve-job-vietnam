@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-22 — The graduate-detail view now reads the gift-vs-fate (era × origin), like the epilogue (loop iter 233)
+**An inverted-richness gap, caught auditing `showAlumnus`.** The per-graduate DETAIL view (roster → click a kid) — which
+should be the FULLEST read of a single life — showed the journey, the vignette, and the stat bars, but NOT the
+gift-vs-fate reading (why the gift was realized or wasted: era × origin) that the briefer epilogue cast line and the
+graduation screen both carry. So the most focused view of a life was the thinnest, and it didn't surface the LATTICE.
+Added the same `realCreditSuffix` reading as a gold standalone line — e.g. *"đôi bàn tay khéo, đầy ý lạ, mà chẳng nơi nào
+cho em làm · phải chi sinh vào thời người ta còn quý đôi tay"*, or *"gặp đúng thời của mình — tài năng nở đúng lúc"*.
+Caught + fixed a render glitch in the same pass: `realCreditSuffix` uses TWO leading separators (` · ` for realized,
+` — ` for wasted), and the first strip only handled `·`, orphaning a leading ` — ` on wasted lives — widened to
+`/^\s*[·—-]\s*/`. Now ~6 of a cohort's lives (the ones with a notable gap) show a clean reading. UI-only → gate GREEN
+(unaffected), bot BOTOK; deployed. The per-life detail is now consistent with — and as rich as — the capstone.
 ## 2026-06-22 — BUGFIX: the capstone cast no longer lists the same graduate twice (loop iter 232)
 **The bug caught while reading iter-231's render: "Lê Hải Nam" appeared as TWO cast rows in one capstone** (same kid,
 🚔 Bị bắt, two different quote lines). Cause: `buildCast` dedupes every slot with `!used[a.id]` — except the BI_BAT
