@@ -717,13 +717,16 @@ function stevePShort(a) {
   return p * eraFav(a.fs && a.fs.tell); // iter-204 L1: the apex too is era-gated — a coder's 🍎 is a near-certainty in the AI boom, a near-impossibility in the 1990s
 
 }
+// iter-208 (NARRATIVE/WRITING): the Steve keynote, picked per-alum by id → two Steves never read identically.
+// Deterministic (hashStr, not the live rng) → replay-safe; one source for becomeSteve + the live ui keynote moment.
+function keynoteFor(a) { var p = CONTENT.keynotePool; return tpl(p[hashStr("kn" + a.id) % p.length], { ten: a.ten }); }
 function becomeSteve(a) {
   setAlumState(a, "STEVE");
   gainTT(CONFIG.ALUM.KEYNOTE_TT);
   if (!S.pierceKeynote) { gainUT(CONFIG.ALUM.KEYNOTE_UT, true); S.pierceKeynote = true; }
   S.META.jobsEver = true; S.META.steves++;
   S.endow.bal = r1(S.endow.bal + CONFIG.ALUM.MEGA_GIFT); // mega-gift to quỹ
-  a.line = tpl(CONTENT.keynoteLine, { ten: a.ten });
+  a.line = keynoteFor(a);
   news("🍎 " + a.line); bacTamNod();
 }
 function transition(a, draw, ysg) {

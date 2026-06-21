@@ -248,7 +248,16 @@ var CONTENT = {
       "{ten} mở mã nguồn thứ từng làm nên tên tuổi. Cả ngành lặng đi một nhịp.", "Một đứa trẻ ở tỉnh xa bảo: 'lớn lên con làm như {ten}'."]
   },
   garageLine: "Công ty của {ten} sa thải 90% nhân sự. {ten} đang ngủ trong ga-ra.",
-  keynoteLine: "MỘT THỨ NỮA… — {ten} bước ra sân khấu. Cả nước nhận ra câu trả lời của đề Văn năm ấy.",
+  // iter-208 (NARRATIVE/WRITING track ckpt1) — a POOL so two Steves never read identically (the owner caught the dup).
+  // keynoteFor(a) picks per-alum by id (deterministic, replay-safe). Varied angles, same voice: the reveal, the awe,
+  // the roots, the teacher who didn't let go (the đề-Văn's own answer), the classroom it began in.
+  keynotePool: [
+    "MỘT THỨ NỮA… — {ten} bước ra sân khấu. Cả nước nhận ra câu trả lời của đề Văn năm ấy.",
+    "{ten} giơ lên một thứ vừa lòng bàn tay. Cả khán phòng nín thở, rồi vỡ oà — thứ đó, chưa ai từng thấy.",
+    "Người ta xếp hàng từ bốn giờ sáng để chạm vào thứ {ten} làm ra. Ở quê, mẹ em vẫn ra vườn, bảo 'hồi bé nó nghịch lắm'.",
+    "Báo nước ngoài gọi {ten} là hiện tượng. Em nói gọn: 'Tôi học trường tỉnh. Có một người thầy không bỏ tôi giữa chừng.'",
+    "Lên sân khấu, {ten} không chiếu sản phẩm trước. Em chiếu một tấm ảnh lớp học cũ, rồi mới nói: 'Bắt đầu từ đây.'"
+  ],
   arrestTPL: "Cựu sinh viên Trần Phi Lợi bị bắt — sàn coin XÔIĐỖ sập.",
   arrestNote: "khóa này tốt nghiệp thời chủ cũ",
   giftHead: "Cảm ơn thầy đã không bắt em học thuộc.",

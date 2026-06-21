@@ -1375,7 +1375,7 @@
     if (a.history && a.history.length > 1) w.appendChild(el("div", "lead", "<b>Hành trình:</b> " + a.history.map(function (h) { return CONFIG.ALUM.CHIPS[h] || h; }).join("  →  ")));
     // 🍎 the climax: a Steve's biography IS the đề Văn's answer, embodied — give it the keynote, gold-framed
     if (a.state === "STEVE") {
-      var kn = el("div", "lead", "🍎 " + esc(tpl(CONTENT.keynoteLine, { ten: a.ten })));
+      var kn = el("div", "lead", "🍎 " + esc(keynoteFor(a))); // iter-208: per-Steve keynote (no two read alike)
       kn.style.cssText = "background:linear-gradient(90deg,rgba(240,198,116,.18),rgba(240,198,116,.04));border:1px solid rgba(240,198,116,.4);border-radius:9px;padding:8px 10px;color:var(--gold);font-weight:600";
       w.appendChild(kn);
       w.appendChild(el("div", "tiny", "Câu trả lời cho đề Văn năm ấy — không phải bằng lý lẽ, mà bằng một con người trường này nuôi lớn.")).style.marginTop = "4px";
