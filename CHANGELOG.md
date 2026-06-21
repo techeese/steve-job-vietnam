@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-21 — The cram-essay no longer echoes itself (decoupled the grind reflection from the rut-letter) (loop iter 224)
+**Another real flaw caught by reading a WHOLE branch end-to-end — the dark/cram capstone.** In a cram-city run the essay
+fired both the re-read RUT letter and the empty-🍎 "grind" reflection a few sentences apart, and they used the SAME
+imagery — *"đẩy các em qua hết đề này đến đề khác"* + *"mài… càng mài càng mòn"* — so the climactic essay repeated itself
+within ~3 sentences (the two strings were authored independently, both reaching for the cram-grinding metaphor; they
+collide when both fire). Rewrote `steveColEmpty.grind` with FRESH imagery — the MOULD instead of the whetstone: *"Khoá
+nào cũng qua môn đẹp, điểm cao đều tăm tắp — nhưng đều quá, phẳng quá. Tôi luyện cho các em một cái khuôn chung; mà cái
+khác người, cái có thể thành 🍎, lại là thứ chẳng vừa khuôn nào."* Now the letter grieves the grinding (mài/mòn) and the
+🍎-reflection grieves the conformity (khuôn/phẳng) — two distinct thoughts, no echo. Content-only → balance-neutral (gate
+GREEN, bot BOTOK 7206, essay renders). The marquee artifact reads tighter on its darkest branch.
+
 ## 2026-06-21 — QA: ran down a "the game looks broken" scare → a verification-tool quirk, NOT a game bug (loop iter 223)
 **The "read the real output across cases" discipline (which caught iter-222's dup) flagged something alarming and it was
 worth chasing.** Reading capstone essays across 3 archetypes in a shell LOOP, every run came out IDENTICAL — same cast,

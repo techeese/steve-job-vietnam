@@ -637,7 +637,7 @@ var CONTENT = {
     steveColEmpty: {
       even: "Cột “🍎” vẫn để trống. Mà lạ — sổ tôi gần như không có dòng nào hỏng. Cả khoá nên người, đều tay, vững vàng. Có lẽ chính vì tôi không để đứa nào chông chênh, nên cũng chẳng đứa nào bứt lên. Tôi dạy an toàn quá chăng?",
       craft: "Cột “🍎” vẫn để trống — lần này. Sổ có vài dòng gãy. Có em lạc trong Xưởng, tôi chưa kịp kéo về — không phải vì thiếu tài, mà vì tôi để quá nhiều cửa mở. Mà cũng có thứ chỉ mọc lên khi không ai can thiệp. Không biết thế là đúng hay sai.",
-      grind: "Cột “🍎” vẫn để trống. Tôi đẩy các em qua hết đề này đến đề khác — qua môn thì nhiều, nhưng đứa nào có chút khác người cũng nguội mất. Có lẽ tôi mài, mà quên rằng có thứ càng mài càng mòn.",
+      grind: "Cột “🍎” vẫn để trống. Khoá nào cũng qua môn đẹp, điểm cao đều tăm tắp — nhưng đều quá, phẳng quá. Tôi luyện cho các em một cái khuôn chung; mà cái khác người, cái có thể thành 🍎, lại là thứ chẳng vừa khuôn nào.",
       mixed: "Cột “🍎” vẫn để trống — chỗ đó tôi chừa, chưa gạch."
     },
     steveColFull: "Cột “🍎” có {steves} dòng. Tôi vẫn không chắc là tôi viết ra nó, hay tôi chỉ tình cờ không xoá nó đi.",
