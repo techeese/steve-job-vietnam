@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-21 — Verified the 🍎-success capstone IS moving + flaw-free; the polish sweep is complete (loop iter 225)
+**The owner's marquee goal — "the essay when we have the first Steve should be very good, people read it should be
+moved" — is now read and confirmed.** Steves are rare, so a node probe found seeds that mint one (duan+mentor → 60/65/76),
+then read seed-60's full essay. It lands: a POOR kid becomes the Steve (*"Hồ Ngọc Dũng — 🍎 STEVE · nhà nghèo mà vẫn nên
+người"*, the best possible answer — the underdog who became it); the headmaster refuses the credit (*"Cột '🍎' có 1 dòng.
+Tôi vẫn không chắc là tôi viết ra nó, hay tôi chỉ tình cờ không xoá nó đi"* — the open-question humility); he crosses out
+"thành công rồi"; and Bác Tâm closes it perfectly — *"Đứa đó hồi xưa hay tháo chuông trường. Sổ này có nó là đủ dày"*
+(the kid who used to take apart the school bell became the answer). Scanned for flaws — cast quotes distinct (iter-222
+dedup holds), no within-essay echo (iter-224 decouple holds), gift/era/origin clauses fit, no template seams. **None
+found — the success branch is clean and moving.**
+
+**This completes the capstone POLISH SWEEP**: all three branches read end-to-end — even/empty-🍎 (iter-222: cast-quote
+dedup), dark/coin (iter-224: grind decouple), success/🍎 (this: verified clean). The đề-Văn's answer-in-faces reads as a
+coherent, genuinely moving essay on every path. Verification firing (doc-only) → engine untouched, UNDEPLOYED. The
+marquee narrative artifact — the heart of the gameplay-first phase — is confirmed excellent, sight-unseen.
+
 ## 2026-06-21 — The cram-essay no longer echoes itself (decoupled the grind reflection from the rut-letter) (loop iter 224)
 **Another real flaw caught by reading a WHOLE branch end-to-end — the dark/cram capstone.** In a cram-city run the essay
 fired both the re-read RUT letter and the empty-🍎 "grind" reflection a few sentences apart, and they used the SAME
