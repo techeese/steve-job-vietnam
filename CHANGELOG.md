@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — Audit complete: the opening reads clean, and the mentoring×LATTICE model is verified deep (loop iter 235)
+**A true-verification firing (no manufactured change — per the completion-plateau posture).** Two checks closed the
+comprehensive player-facing + model audit this session ran (iter-222→234, which fixed the real gaps: cast-quote dup,
+cram echo, tone, graduation flavor, ticker spam, era-gated events, the STATIC annual letters, the cast-dup, the per-life
+reading, the invisible legacy teacher). (1) **The opening** (`showIntro` + `CONTENT.boot`) reads strong and clean — the
+đề-Văn, the mortgaged house, the from-zero premise, the founding cautionary tale (Trần Phi Lợi), a reverent disclaimer.
+(2) **The mentoring × LATTICE interaction** is genuinely deep, not a flat rescue: a mentored kid's `orgGrow` resets to 1,
+**erasing the origin (class) growth penalty** — so your scarce attention lifts a POOR kid past their circumstance — yet
+mentoring does NOT override the ERA tilt on the apex ceiling. Thematically exact (the owner's "factors influence each
+other"): a teacher can lift a kid past where they came FROM, but not past the decade they graduate INTO. **No gaps
+found.** The player-facing layer and the core model are now comprehensively audited and coherent; the substantive
+work this session is complete. Doc-only → no deploy. Awaiting owner steer (the exit gate's (d) — release to graphics —
+or a new direction); the loop holds from manufacturing micro-changes per its self-correction posture.
 ## 2026-06-22 — The returning-alum teacher is now visible in the staff list (the L3 payoff, made persistent) (loop iter 234)
 **Auditing the cross-run LEGACY loop's player-facing experience found a real gap.** The emotional core of L3 is the
 bright-legacy boon: a graduate who became a success RETURNS to teach the next generation, for free. `seedLegacy` fires a
