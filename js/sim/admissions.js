@@ -32,6 +32,12 @@ function derivedPool() {
 }
 function openAdmissions() {
   if (!S.admissions.poolSeed) buildAdmitPool();
+  // iter-220 (L3): a DARK inherited legacy haunts the new school's FIRST intake — the scandal's NAME, surfaced at
+  // recruitment (the TT echo from seedLegacy already shrank the pool; this names WHY). Once, cross-run play only.
+  if (S.legacy && S.legacy.kind === "dark" && S.year === 1 && !S._legacyAdmShown) {
+    S._legacyAdmShown = true;
+    news("📰 Mùa tuyển sinh đầu: dăm phụ huynh nhắc tên " + S.legacy.ten + " của trường " + S.legacy.schoolName + " cũ rồi lặng lẽ rút hồ sơ. Tiếng cũ làm trường mới khó mở hàng.");
+  }
   var pool = derivedPool();
   var a = S.admissions;
   S.pendingAdmit = {

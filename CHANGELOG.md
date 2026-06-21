@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-21 — A past scandal's name now follows you into the new school's admissions (L3 Legacy ckpt3) (loop iter 220)
+**Completes the dark side of the cross-run legacy, symmetric with the bright returning-teacher (iter-218).** When the
+inherited legacy is a scandal (a coin-shark / arrested grad was your last run's loudest mark), the new school's FIRST
+intake is haunted by name: *"📰 Mùa tuyển sinh đầu: dăm phụ huynh nhắc tên {ten} của trường {schoolName} cũ rồi lặng lẽ
+rút hồ sơ. Tiếng cũ làm trường mới khó mở hàng."* The MECHANICAL effect was already there (seedLegacy's −4 Tiếng Tăm
+echo shrinks the admit pool, which scales with reputation); this NAMES it at recruitment, so the past isn't just a
+number — the scandal's shadow is felt where it bites. Fires once, year-1 only, cross-run play only. Reading-only +
+news-only → bot/sweep byte-identical (gate GREEN, bot BOTOK 7206/2766; empty store → no legacy → unchanged). The
+cross-run legacy is now symmetric: a bright run's standout returns to TEACH; a dark run's standout's name scares off
+your next applicants. **L3 progression rungs (UNLOCKS, the pick-archetype screen) remain — deferred to the graphics
+pass (a real selection UI) or an owner go-ahead.**
+
 ## 2026-06-21 — You now SEE the poor kid struggling — while you can still back them (loop iter 219)
 **Closes a real gap: the demographic axis was only named at the epilogue (too late to act).** The whole soul of the
 class system is the player CHOOSING to spend a scarce mentor slot on a kid the world stacked the deck against — but you
