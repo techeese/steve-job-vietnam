@@ -27,7 +27,7 @@ function buildCast(s, byState, majorityKey, C, dominantPreset) {
   var prodigy = s.alumni.filter(function (a) { return !used[a.id] && a.fs && (function (rc) { return rc === "loud" || rc === "bent"; })(realClass(a.state, a.fs.seed)); }).sort(byReal)[0] // iter-197: a wasted OR distorted prodigy carries the grief cast
     || s.alumni.filter(function (a) { return !used[a.id] && a.fs && realClass(a.state, a.fs.seed) === "under"; }).sort(byReal)[0];
   if (prodigy && cast.length < C.CAST_CAP) { cast.push(prodigy); used[prodigy.id] = 1; }
-  pick(s.alumni.filter(function (a) { return a.state === "BI_BAT"; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } });
+  pick(s.alumni.filter(function (a) { return a.state === "BI_BAT" && !used[a.id]; })).slice(0, C.BIBAT_CAP).forEach(function (a) { if (cast.length < C.CAST_CAP) { cast.push(a); used[a.id] = 1; } }); // iter-232: !used guard — the grief-prodigy slot above can already have taken a BI_BAT (distorted) kid; without this he was listed TWICE
   // E4.1 — the mentor's hand, named: a kid you spent scarce attention on who reached a realized life (💼 lương
   // ổn or better) WITHOUT a grief reading — your attention rescued them. Turns the inaction-cost (a sweep
   // number) into the felt attachment payoff: your invested kid, seen by name. Prefer the strongest realization.

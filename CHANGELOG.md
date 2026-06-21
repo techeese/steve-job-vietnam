@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-22 — BUGFIX: the capstone cast no longer lists the same graduate twice (loop iter 232)
+**The bug caught while reading iter-231's render: "Lê Hải Nam" appeared as TWO cast rows in one capstone** (same kid,
+🚔 Bị bắt, two different quote lines). Cause: `buildCast` dedupes every slot with `!used[a.id]` — except the BI_BAT
+slot, which filtered only `a.state === "BI_BAT"`. The grief-`prodigy` slot just above it can already have taken a
+DISTORTED kid whose state is BI_BAT (`realClass` "bent"), so the BI_BAT slot re-added the same alumnus. Added the
+missing `&& !used[a.id]` guard. Now that exact run reads four DISTINCT faces (Nam · Oanh · Founder · Sương) — the BI_BAT
+slot skips the already-cast Nam and surfaces a different arrested kid. Verified: parse clean, the duplicate is gone in the
+failing seed, gate GREEN, bot BOTOK byte-stable. One-line fix; the marquee artifact never repeats a life now.
 ## 2026-06-22 — The annual letters now EVOLVE — the headmaster's voice ages across the run (loop iter 231)
 **The biggest real gap found by reading actual output: the owner's signature beat was nearly STATIC.** Dumping the
 annual letters across a playthrough showed the headmaster writing the IDENTICAL sentence years 2–13 (twelve copies) — yet
