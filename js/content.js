@@ -618,7 +618,8 @@ var CONTENT = {
     // so the essay shows his THINKING evolve before he writes the final answer (THESIS §B-3: assembled from the run).
     lettersIntro: "Trước khi gấp lại, tôi giở tập thư mình viết cho các em mỗi cuối năm. Đọc một lượt mới thấy: tôi loay hoay với cái đề này y như nó bắt các em loay hoay.",
     lettersFirst: "Năm {y}, tôi viết: “…{text}”",
-    lettersLast: "Rồi lá cuối, năm {y}: “…{text}”",
+    lettersPivot: "Rồi năm {y}, tôi viết khác hẳn: “…{text}” — chắc đó là năm tôi bắt đầu nghĩ lại.",
+    lettersLast: "Và lá cuối, năm {y}: “…{text}”",
     lettersReflect: "{n} lá thư, {graduated} cái tên. Câu hỏi vẫn nằm nguyên trên bàn — nhưng người ngồi viết nó thì đã khác đi nhiều rồi. Có lẽ tôi không cần trả lời nó. Tôi chỉ cần đừng thôi hỏi.",
     lettersSameIntro: "Trước khi gấp lại, tôi giở tập thư mình viết cho các em mỗi cuối năm. Lạ — năm nào tôi cũng viết lại gần đúng một nỗi ấy:",
     lettersSame: "“…{text}”",

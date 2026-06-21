@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-21 — The capstone now shows the year the headmaster's thinking TURNED (N3 ckpt2) (loop iter 215)
+**Deepens the "thinks-aloud" essay without ever answering the question (the open-question law holds — the final line still
+cuts off at "Tôi—").** iter-213 had the capstone re-read the first + last annual letter (the arc) or name the rut. ckpt2
+adds the **turning point**: when the headmaster's letters genuinely changed across the years, the essay finds the first
+year his letter diverged and quotes it — *"Rồi năm {y}, tôi viết khác hẳn: '…' — chắc đó là năm tôi bắt đầu nghĩ lại."*
+So the arc reads as three points — where he started, **where his mind turned**, where he ended — making the evolution
+of his thinking concrete and personal to the run (the pivot is the real year the player's policy/cohort shifted). Only
+fires when there's a distinct middle (first ≠ pivot ≠ last); the 2-letter arc and the rut branch are unchanged.
+**Reading-only → balance-neutral** (gate GREEN, bot BOTOK cash 7206 byte-stable, sweep 0 bad flags, lives renders the
+section). Probe: ~half of varied runs have a 3-distinct-letter arc (a real pivot); the rest show first→last or the rut.
+The capstone is now a genuine record of a mind working a hard question across a decade — the moving payload, deepened.
+**N3 ckpt3 (future): weave a named kid into a letter's year** (tie the abstract reasoning to a concrete life).
+
 ## 2026-06-21 — Each decade now sends a different cohort: the world chases the hot field (ERAS L1 ckpt2) (loop iter 214)
 **Completes the "each era is a different world" promise — the era now shapes the INTAKE, not just the outcomes.** iter-204
 made the decade re-weight which gift gets realized; but the same cohort walked in every era. Now `rollTell` tilts the

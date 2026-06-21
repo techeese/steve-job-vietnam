@@ -171,9 +171,13 @@ function buildEssay(s, cb, capstone) {
         P("lead", E.lettersSameIntro, true);
         P("lead", tpl(E.lettersSame, { text: esc(ll.text) }), true);
         P("lead", tpl(E.lettersSameReflect, { n: s.letters.length }), true);
-      } else { // the thinking EVOLVED — show the arc, first letter to last
+      } else { // the thinking EVOLVED — show the arc: first → the TURNING POINT → last
         P("lead", E.lettersIntro, true);
         P("lead", tpl(E.lettersFirst, { y: lf.year, text: esc(lf.text) }), true);
+        // iter-214 (N3 ckpt2): the pivot — the first year the headmaster's letter changed (his thinking turned).
+        var pivot = null;
+        for (var li = 1; li < s.letters.length; li++) { if (s.letters[li].text !== s.letters[li - 1].text) { pivot = s.letters[li]; break; } }
+        if (pivot && pivot.text !== lf.text && pivot.text !== ll.text) P("lead", tpl(E.lettersPivot, { y: pivot.year, text: esc(pivot.text) }), true);
         P("lead", tpl(E.lettersLast, { y: ll.year, text: esc(ll.text) }), true);
         P("lead", tpl(E.lettersReflect, { n: s.letters.length, graduated: s.META.graduated }), true);
       }
