@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-21 — GRAPHICS-HANDOFF.md: the gameplay-first phase's payoff made legible (loop iter 230)
+**SELF-CORRECTION + consolidation.** After a productive streak of narrative-polish ships (iter-222→229: cast dedup,
+cram echo, tone, graduation flavor, ticker spam, era-gated events), the surface sweep is COMPLETE and the marginal
+flaw-rate has hit zero — continuing to hunt risks the "tiny ships, no lattice progress" decay the skill warns against.
+So instead of manufacturing another micro-polish, did the genuinely forward-looking thing the phase exists FOR: wrote
+**`GRAPHICS-HANDOFF.md`**, a living inventory of all 15 player-facing surfaces (`js/ui.js` show*/render* + the epilogue
+essay), each with its content status (verified clean this session) and what the graphics pass must visualize — plus the
+explicit DEFERRED list (archetype-select screen, progression-unlock rungs, era period-skins: gameplay designed,
+presentation pending — the decoupling backfill) and the LAW the graphics pass must not break (narrative is FINAL, no
+Ministry sarcasm, the open-question cut-off holds in pixels). The whole point of developing gameplay-first is that the
+art pass knows exactly what it's dressing — this makes that real, and makes the owner's release decision concrete (here
+is precisely what "dress the game" means). Verified the surface→function mapping against the render code (corrected
+capstone = `buildEssay`/`essayDraft`, not `showDedication`). Doc-only → no deploy.
+
 ## 2026-06-21 — Events respect the era (no AI-homework in 1995); de-flaked the craft-archetype floor (loop iter 229)
 **Reading the events deck end-to-end: the writing is clean (sharp system-satire, dignified dilemmas, ZERO tone
 red-flags — no Bộ/công an/nhà nước anywhere; the modals + contracts too) — but it surfaced a real LATTICE-integration

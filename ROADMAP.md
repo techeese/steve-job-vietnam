@@ -30,6 +30,9 @@ Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` s
 > OWNER-GATED, the loop may NOT self-release.** The LATTICE (L1 ERAS done · L2 DEMOGRAPHIC+GEOGRAPHIC done · L3 LEGACY
 > done; progression-UI rungs deferred to the graphics pass) + the narrative spine are complete. Absent the owner's go,
 > the loop continues conservative deepening (genuine value over volume; no manufactured refinements).
+> **The handoff map for the eventual graphics pass is written: `GRAPHICS-HANDOFF.md`** (all 15 player-facing surfaces +
+> content status + what to visualize + the DEFERRED list + the laws the art pass must not break). Narrative surfaces
+> were swept clean this session (iter-222→229); the writing is FINAL.
 
 ## Cadence
 <!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->

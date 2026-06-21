@@ -188,3 +188,9 @@ prevented; the owner corrected you; you slid back into touching frozen art; a st
 no story/lattice progress), edit THIS file in the same turn so it can't recur, and note `SELF-CORRECTION:
 …` in the status. Keep it LEAN — it reloads every firing; prune stale lines as you add. Mine VISION.md
 for the next lattice epic when the backlog runs dry.
+- COMPLETION-PLATEAU POSTURE (iter-230): the LATTICE + narrative are COMPLETE and the exit gate is measurably met (a/b/c;
+  see ROADMAP banner + `GRAPHICS-HANDOFF.md`); only owner-confirm (d) remains. The narrative-surface sweep is DONE (clean
+  end to end). So do NOT manufacture micro-polish to fill firings — that IS the decay this section warns about. When no
+  real gap exists and no owner steer is in `feedback.md`: prefer (1) a genuine forward-looking consolidation (extend the
+  handoff, sharpen the Lab), or (2) honestly hold the line and restate the owner decision point — over inventing a
+  refinement. A firing that ships nothing but a true verification is better than a manufactured change.
