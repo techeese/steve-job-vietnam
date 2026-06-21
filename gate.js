@@ -149,12 +149,14 @@ try {
   corT.teachers.push(null); corT.teachers.push({ id:'cdr', ten:'Dup', day:9, dien:1, luong:null, trait:'tch', grain:'spark', bienChe:false, age:0 }); // null + dup-id + NaN→null luong
   corT.khoaHead = { code:'cdr' };
   corT.giftItems = [null, { nope:1 }, { item:'sách', ten:'Cũ' }]; // corrupted gift entries
+  corT.letters = [null, { year:3 }, { year:5, text:'thư thật' }]; // iter-213: corrupted annual-letter entries (the capstone re-reads these — must not crash)
   localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(corT));
   var crashed = false; try { loadGame(); for (var _t=0; _t<5; _t++) dayTick(); } catch(e){ crashed = true; }
   ok(!crashed, 'corrupted teachers/giftItems save does NOT crash loadGame+tick');
   ok(S.teachers.every(function(t){ return t && typeof t==='object' && Number.isFinite(t.luong); }), 'corrupted teachers healed (no null, finite luong)');
   ok(Number.isFinite(S.cash), 'cash stays finite after a corrupted-teacher save (no NaN salary)');
   ok(S.giftItems.every(function(g){ return g && typeof g==='object' && g.item; }), 'corrupted giftItems healed');
+  ok(S.letters.every(function(l){ return l && typeof l==='object' && typeof l.text==='string'; }) && S.letters.length===1, 'corrupted annual-letters healed (iter-213 N3 — only the well-formed letter survives)');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
 OUT.push('');

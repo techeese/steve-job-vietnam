@@ -146,6 +146,8 @@ function sanitize() {
   // iter-202 BUGFIX: heal S.giftItems (iter-182, also left unsanitized) — a corrupted/non-object entry crashed the
   // Fund-tab render (esc(g.item) on null). Filter to well-formed entries so render can't throw.
   S.giftItems = (S.giftItems || []).filter(function (g) { return g && typeof g === "object" && g.item; }).slice(0, (CONFIG.ALUM && CONFIG.ALUM.ITEM_CAP) || 24);
+  // iter-213 (N3): heal S.letters (the headmaster's annual letters the capstone re-reads) — drop malformed entries so the essay render can't throw on a corrupted/old save; cap at 16.
+  S.letters = (S.letters || []).filter(function (l) { return l && typeof l === "object" && typeof l.text === "string"; }).slice(-16);
   // khoaHead: prune heads whose khoa or teacher no longer exists (and any teacher heading 2+ khoas)
   if (!S.khoaHead || typeof S.khoaHead !== "object") S.khoaHead = {};
   var seenT = {};

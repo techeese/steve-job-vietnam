@@ -164,6 +164,20 @@ function buildEssay(s, cb, capstone) {
       var coda = CONTENT.protegeCoda[protegeCodaKey(pg.state, pseed)]; // iter-150: ONE source of truth w/ the graduation beat
       P("lead", "Và " + esc(pg.ten) + " — đứa em dõi theo từ ngày đầu — giờ là " + CONFIG.ALUM.CHIPS[pg.state] + ". " + coda + ".", true);
     }
+    // iter-213 (N3) — re-read the annual letters: the headmaster's own thinking, year by year, before the final answer.
+    if (s.letters && s.letters.length >= 2) {
+      var lf = s.letters[0], ll = s.letters[s.letters.length - 1];
+      if (lf.text === ll.text) { // a STABLE run — the same worry, year after year (the rut, honestly named)
+        P("lead", E.lettersSameIntro, true);
+        P("lead", tpl(E.lettersSame, { text: esc(ll.text) }), true);
+        P("lead", tpl(E.lettersSameReflect, { n: s.letters.length }), true);
+      } else { // the thinking EVOLVED — show the arc, first letter to last
+        P("lead", E.lettersIntro, true);
+        P("lead", tpl(E.lettersFirst, { y: lf.year, text: esc(lf.text) }), true);
+        P("lead", tpl(E.lettersLast, { y: ll.year, text: esc(ll.text) }), true);
+        P("lead", tpl(E.lettersReflect, { n: s.letters.length, graduated: s.META.graduated }), true);
+      }
+    }
     if (s.META.steves > 0) { P("lead", tpl(E.steveColFull, { steves: s.META.steves })); }
     else { // iter-148/172 — WHY is the 🍎 column empty? (craft/even/grind/mixed — keeps §D-3 open). Prose-only.
       var tot148 = Math.max(1, total);

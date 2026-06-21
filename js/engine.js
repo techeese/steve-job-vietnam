@@ -239,6 +239,7 @@ function freshState(seed, archKey) {
     admissions: { poolSeed: 0, lastCutoff: 15.0, lastQuota: 12, lastFill: 0, aoCount: 0, bonusOffered: false, declaredHistory: [] },
     endow: { bal: _A.endow, log: [], pending: [], drawnYear: false, milestonesClaimed: 0 }, // iter-210: archetype boot endowment (tinh_le = legacy BOOT_ENDOW)
     giftItems: [], // iter-182 (owner steer ckpt3): non-monetary gifts from successful alumni — the "kho lưu niệm", a hook for extension functions later
+    letters: [], // iter-213 (N3): the headmaster's annual letters accumulate here → the capstone essay re-reads them (his thinking, year by year). Persisted; old saves default [] → no letters section (graceful, no migrator).
     scholarships: [
       { key: "tdn", holderId: null, suspended: false },
       { key: "tqb", holderId: null, suspended: false },
@@ -503,8 +504,12 @@ function tetCohortBeat() {
   var v = {}; ["n1", "n2", "n3", "n4"].forEach(function (k) { v[S.presets[k]] = (v[S.presets[k]] || 0) + 1; });
   var best = "canbang", bc = -1; for (var p in v) if (v[p] > bc) { bc = v[p]; best = p; }
   var culture = best === "luyende" ? "cram" : best === "duan" ? "craft" : "balance";
-  var L = CONTENT.annualLetter;
-  news(tpl(L.open, { era: curEra().name, year: S.year }) + L.body[state][culture]); // deterministic (cohort + presets + year, no rnd) → replay-safe; news-only → balance-neutral
+  var L = CONTENT.annualLetter, body = L.body[state][culture];
+  news(tpl(L.open, { era: curEra().name, year: S.year }) + body); // deterministic (cohort + presets + year, no rnd) → replay-safe; news-only → balance-neutral
+  // iter-213 (N3): keep the letter so the capstone essay can re-read the headmaster's thinking, year by year.
+  if (!S.letters) S.letters = [];
+  S.letters.push({ year: S.year, era: curEra().name, culture: culture, text: body });
+  if (S.letters.length > 16) S.letters.shift();
 }
 function scholarshipDraw() {
   S.endow.drawnYear = false;

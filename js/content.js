@@ -614,6 +614,15 @@ var CONTENT = {
     nameWithSteve: "Đề hỏi Steve Jobs ở đâu. Có lẽ là mấy đứa này — tôi chỉ dám chỉ tay, không dám kết luận:",
     nameNoSteve: "Đề hỏi Steve Jobs ở đâu. Tôi không có. Tôi chỉ có thể chỉ vào mấy đứa này:",
     castRowArrestTail: " — khoá này tốt nghiệp thời chủ cũ, nhưng tên vẫn nằm trong sổ tôi.",
+    // iter-213 (N3) — the capstone re-reads the headmaster's own annual letters (the player's policy, year by year),
+    // so the essay shows his THINKING evolve before he writes the final answer (THESIS §B-3: assembled from the run).
+    lettersIntro: "Trước khi gấp lại, tôi giở tập thư mình viết cho các em mỗi cuối năm. Đọc một lượt mới thấy: tôi loay hoay với cái đề này y như nó bắt các em loay hoay.",
+    lettersFirst: "Năm {y}, tôi viết: “…{text}”",
+    lettersLast: "Rồi lá cuối, năm {y}: “…{text}”",
+    lettersReflect: "{n} lá thư, {graduated} cái tên. Câu hỏi vẫn nằm nguyên trên bàn — nhưng người ngồi viết nó thì đã khác đi nhiều rồi. Có lẽ tôi không cần trả lời nó. Tôi chỉ cần đừng thôi hỏi.",
+    lettersSameIntro: "Trước khi gấp lại, tôi giở tập thư mình viết cho các em mỗi cuối năm. Lạ — năm nào tôi cũng viết lại gần đúng một nỗi ấy:",
+    lettersSame: "“…{text}”",
+    lettersSameReflect: "{n} năm, {n} lá thư, cùng một nỗi lo — mà chưa năm nào tôi dám đổi cách dạy. Có lẽ cái sai lớn nhất của tôi không nằm ở một đứa nào, mà ở chỗ tôi cứ làm đúng một việc và mong một kết quả khác.",
     // iter-148 — an empty 🍎 column has two OPPOSITE causes; naming which makes the đề Văn's peak-vs-median
     // trade-off felt at the payoff, and keeps the question open (§D-3). Picked in essayDraft from the cohort shape.
     steveColEmpty: {

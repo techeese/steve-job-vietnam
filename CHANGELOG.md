@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-06-21 — The capstone essay now re-reads the headmaster's own letters, year by year (NARRATIVE N3 ckpt1) (loop iter 213)
+**The "long, reasoned, personalized, moving" capstone the owner asked for — built from the annual letters (N2).** The
+yearly letters now PERSIST (`S.letters`), and the decade-capstone essay re-reads them before writing its final answer —
+so the player watches the headmaster's *thinking across the years* become part of the essay (THESIS §B-3: assembled from
+THEIR run). Two honest shapes, picked from the actual letters:
+- **The ARC** (the player's policy/cohort changed): *"Trước khi gấp lại, tôi giở tập thư mình viết cho các em mỗi cuối
+  năm…"* → quotes the FIRST letter (Năm 1) and the LAST → *"…người ngồi viết nó thì đã khác đi nhiều rồi. Có lẽ tôi
+  không cần trả lời nó. Tôi chỉ cần đừng thôi hỏi."*
+- **The RUT** (a stable run — every year the same letter): *"Lạ — năm nào tôi cũng viết lại gần đúng một nỗi ấy…"* →
+  *"{n} năm, {n} lá thư, cùng một nỗi lo — mà chưa năm nào tôi dám đổi cách dạy. Có lẽ cái sai lớn nhất của tôi… ở chỗ
+  tôi cứ làm đúng một việc và mong một kết quả khác."* (a quiet gut-punch — the headmaster stuck in his own loop).
+
+**Save-safe:** `S.letters` is a new persisted array (`freshState` default `[]` → old saves get no letters section,
+graceful, NO migrator); `tetCohortBeat` pushes each year's letter (capped 16); `serialize` carries it (whole-S);
+`sanitize` heals malformed entries (mirrors the iter-202 giftItems guard) + a new gate assertion (corrupted letters →
+only well-formed survive, no essay crash). Deterministic (letters are deterministic) → replay-safe. **Verification:**
+gate GREEN (incl. the new letters assertion), bot BOTOK (cash 7392 byte-stable; essay 2148→2778 chars = the letters
+section), sweep 0 bad flags (the persisted field didn't disturb balance), lives renders both branches. This is the spine
+of the moving essay; **N3 ckpt2 (a future narrative firing): weave a MIDDLE letter + the turning-point, and condition the
+final answer on the letter arc** (toward the full "thinks aloud" essay). SOUL/STORY 5 — the đề-Văn answered by the
+player's own evolving (or stuck) voice.
+
 ## 2026-06-21 — STRUCTURE: the alumni-world FSM carved into js/sim/alumni.js (engine.js back under 850) (loop iter 212)
 **Behavior-neutral structure-epic — paying the overdue debt (EPICS_SINCE_STRUCTURE was 3) the way the owner's "keep it
 PLASTIC" steer wants.** engine.js had grown back to 1033 lines with the era/archetype/annual-letter additions. The
