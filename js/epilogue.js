@@ -142,7 +142,7 @@ function buildEssay(s, cb, capstone) {
       if (!prizeFlavorUsed && a.flags && a.flags.prize && { THAT_NGHIEP: 1, QUAN_VAN_MAU: 1, CA_MAP_COIN: 1, BI_BAT: 1 }[a.state]) { line = CONTENT.prizeWastedFlavor.replace(/\{ten\}/g, a.ten); prizeFlavorUsed = true; } // iter-144/176
       var tail = (a.state === "BI_BAT" && isOldCohort(a)) ? E.castRowArrestTail : "";
       var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
-      var gap = realCreditSuffix(a.state, seed, a.flags, a.fs && a.fs.tell, a.gradYear); // iter-154: the gift-vs-fate reading · iter-203: + tell → names WHICH gift was wasted · iter-205: + gradYear → names the DECADE (right kid, wrong era)
+      var gap = realCreditSuffix(a.state, seed, a.flags, a.fs && a.fs.tell, a.gradYear, a.fs && a.fs.origin); // iter-154: the gift-vs-fate reading · iter-203: + tell · iter-205: + gradYear (the DECADE) · iter-206: + origin (family circumstance)
       if (!gap && dominantPreset === "canbang" && a.state === "KY_SU" && a.fs && a.fs.tell === "sky" && seed >= 4) gap = CONTENT.channeledMaker;
       var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p
       P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");

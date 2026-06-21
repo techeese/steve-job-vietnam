@@ -113,6 +113,7 @@ function sanitize() {
     if (!(a.annMonth >= 1 && a.annMonth <= 12) || a.annMonth === 6) a.annMonth = annMonthFor(a.id);
     ["kt", "tn", "st", "cm", "vet"].forEach(function (k) { a.fs[k] = clamp(a.fs[k] || 0, 0, 100); });
     a.fs.seed = clamp(Math.round(a.fs.seed) || 1, 1, 5);
+    if (typeof a.fs.origin !== "string") a.fs.origin = ""; // iter-206: demographic origin (pre-iter-206 alumni lack it → "" → no circumstance clause, graceful; no migrator needed)
     if (a.fs.real == null) a.fs.real = Math.round(realFrac(a.state, a.fs.seed) * 100); else a.fs.real = clamp(Math.round(a.fs.real), 0, 200); // E4: backfill carried realization on pre-E4 saves
     a.grat = clamp(a.grat || 0, 0, 100); a.gifts = Math.max(0, a.gifts || 0);
     if (!a.flags) a.flags = { vt: [] };

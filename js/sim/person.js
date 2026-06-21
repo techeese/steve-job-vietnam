@@ -31,6 +31,14 @@ function rollTell() {
   if (r < 0.46) return "sky";     // dreamer
   return "";
 }
+// iter-206 (L2 DEMOGRAPHIC) — a kid's family ORIGIN, derived deterministically from the stable student id (like
+// annMonthFor) → no save field, no migrator, no reroll on reload. Weighted by CONFIG.ORIGIN_W. NOT from the live rng
+// stream (uses hashStr, not rnd) → the cohort's gift roll is byte-identical to before (sweep/gate baselines hold).
+function studentOrigin(s) {
+  var w = CONFIG.ORIGIN_W, r = hashStr("o" + s.id) % 100, c = 0;
+  for (var i = 0; i < w.length; i++) { c += w[i]; if (r < c) return CONFIG.ORIGINS[i]; }
+  return CONFIG.ORIGINS[CONFIG.ORIGINS.length - 1];
+}
 
 function growStudents() {
   var n = S.students.length;
@@ -52,7 +60,12 @@ function growStudents() {
     var moodF = s.mood < CONFIG.MOOD_PENALTY_BELOW ? 0.7 : 1;
     var flowF = s.mood >= CONFIG.FLOW_MOOD ? CONFIG.FLOW_MULT : 1; // iter-155: a kid in FLOW (high mood) learns a little faster — genuine growth only (NOT cá-mập gCm below)
     var roomF = (S.presets["n" + s.grade] === "duan" && !hasRoom("phongmay")) ? 0.5 : 1;
-    var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * flowF * roomF / dpm;
+    // iter-206 (L2 DEMOGRAPHIC): a poor kid's LEGIT growth drags without backing; mentoring (the school's hand) erases
+    // the headwind → the school is the equalizer. well-off = a slight head-start. Hits g (legit) only, never gCm (hustle).
+    var org = studentOrigin(s);
+    var orgGrow = s.mentored ? 1 : (CONFIG.ORIGIN_GROW[org] != null ? CONFIG.ORIGIN_GROW[org] : 1);
+    var orgMood = (s.mentored && org === "ngheo") ? 0 : (CONFIG.ORIGIN_MOOD[org] || 0); // mentoring lifts the poor kid's circumstance-mood; well-off keeps its small security bonus
+    var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * flowF * roomF * orgGrow / dpm;
     var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
     var ptn = p.tn, pst = p.st;
     if (s.mentored) { mm = Math.max(mm, CONFIG.MENTOR_MM); ptn = Math.max(ptn, CONFIG.PRESETS.duan.tn); pst = Math.max(pst, CONFIG.PRESETS.duan.st); } // Phase 2: scarce attention = personal project-tutoring that overrides the school's policy for THIS kid
@@ -87,7 +100,7 @@ function growStudents() {
     s.vet = clamp(s.vet + vetGain, 0, 100);
     var moodDrain = (mm < CONFIG.MISMATCH_MM) ? CONFIG.MISMATCH_MOOD_DRAIN : 0; // lệch tạng wears them down; mentoring (mm≥MENTOR_MM) already spares them
     var facMood = (tf.ng > 0 && s.tell && tf.aff[s.tell] != null) ? CONFIG.TEACH_AFF_MOOD * (tf.aff[s.tell] - tf.ng / 3) : 0; // iter-195: faculty champions/neglects a grain → felt as mood (a neglected gift wilts more visibly in-play). Zero-sum, no grain teachers → 0 → byte-identical.
-    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood - moodDrain) / dpm, 0, 100);
+    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood + orgMood - moodDrain) / dpm, 0, 100); // iter-206: + circumstance-mood (poor headwind / well-off security), erased for the poor by mentoring
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
     if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
       var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster
@@ -137,7 +150,7 @@ function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c 
 // source of truth shared by the epilogue CAST (ui.js essayDraft) and the GRADUATION RESULTS screen (engine rec →
 // ui showJuneResults), so the soul reading — VISIBLE WASTED TALENT — appears at the MOMENT of graduation
 // (VISION §114), not only in the final essay. Returns "" for non-prodigies → glimpsed, not metered (invariant #3).
-function realCreditSuffix(state, seed, flags, tell, gradYear) {
+function realCreditSuffix(state, seed, flags, tell, gradYear, origin) {
   var rc = realClass(state, seed);
   var gap = (rc && tell && CONTENT.realGapTell[rc] && CONTENT.realGapTell[rc][tell]) || CONTENT.realGap[rc] || ""; // iter-203: name WHICH gift (tell) was wasted, not just the fate — epilogue counterpart of iter-193's in-play lines; falls back to the generic line for tell="" / unmapped
   if (gap && flags && flags.diamond) gap = (CONTENT.diamondWaste && CONTENT.diamondWaste[rc]) || gap; // iter-194: the gem admitted past the score, then let slip — name the gamble you LOST (symmetry of diamondCredit; invariant #2/#4)
@@ -151,6 +164,10 @@ function realCreditSuffix(state, seed, flags, tell, gradYear) {
     if (gap && fav <= CONFIG.ERA_WRONG) gap += (CONTENT.realGapEra.wrong[tell] || CONTENT.realGapEra.wrong._); // wrong-era WASTE — appended to the existing grief
     else if (!gap && fav >= CONFIG.ERA_RIGHT && flourishOf(state) >= 4) gap = CONTENT.realGapEra.right;          // right-era FLOURISH — the symmetric cheer (only when no other credit claimed the line)
   }
+  // iter-206 (L2 DEMOGRAPHIC): name the CIRCUMSTANCE for the poor — a structural waste ("chẳng ai chống lưng", done TO
+  // them, #4) or the hope of having made it despite ("nhà nghèo mà vẫn nên người"). Layered onto the gift+era reading.
+  var og = CONTENT.realGapOrigin && CONTENT.realGapOrigin[origin];
+  if (og) { if (rc) gap += og.waste; else if (!gap && flourishOf(state) >= 4) gap = og.real; } // rc set = a WASTE (append the structural cause); else an unclaimed realized line = the "made it despite" hope
   return gap;
 }
 
@@ -209,7 +226,7 @@ function makeAlumnus(s, row, diem, tiem) {
   var a = {
     id: id, ten: s.ten, gradYear: S.year, outcome: row.key, state: entry, history: [entry],
     yearsInState: 0, annMonth: annMonthFor(id),
-    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, tell: s.tell || "", real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap + tell (the SCHOOL’s shaping of direction) — separate from seed, never a 🍎 gate
+    fs: { kt: Math.round(s.kt), tn: Math.round(s.tn), st: Math.round(s.st), cm: Math.round(s.cm), vet: Math.round(s.vet), seed: s.seed, tell: s.tell || "", origin: studentOrigin(s), real: Math.round(realFrac(entry, s.seed) * 100) }, // E4: carry the graduation realization gap + tell (the SCHOOL’s shaping of direction); iter-206: + origin (family circumstance) for the demographic payoff line
     grat: r1(grat), gifts: 0, flags: flags, line: ""
   };
   S.alumni.push(a);

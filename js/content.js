@@ -111,6 +111,16 @@ var CONTENT = {
     },
     right: " · gặp đúng thời của mình — tài năng nở đúng lúc"
   },
+  // iter-206 (L2 DEMOGRAPHIC ckpt1) — name the kid's CIRCUMSTANCE at the payoff (the demographic axis). Fires for the
+  // poor only (the soul of the disadvantage): a poor kid WASTED reads the structural cause ("nhà nghèo, chẳng ai chống
+  // lưng" — no one to back them; blame the structure, never the kid — invariant #4); a poor kid who REALIZED reads the
+  // hope ("nhà nghèo mà vẫn nên người" — made it despite, your hand mattered). Layered onto the gift+era reading.
+  realGapOrigin: {
+    ngheo: {
+      waste: " · nhà nghèo, chẳng ai chống lưng",
+      real:  " · nhà nghèo mà vẫn nên người"
+    }
+  },
   // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
   // exam score (đặc cách / the narrow door) and then FAILED to realize. The win was named ("vào bằng cửa hẹp"); the
   // gamble you LOST must be named too, or the đặc cách door looks like free upside. Done TO them (invariant #4): you

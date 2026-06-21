@@ -65,6 +65,7 @@ function play(seed, strat) {
   for (var d = 0; d < totalDays; d++) {
     if (strat.adaptive && d % DPY === 0) adaptPresets();
     if (strat.mentor && d % DPY === 0) mentorPlay();
+    if (strat.mentorPoor && d % DPY === 0) S.students.forEach(function (s) { if (studentOrigin(s) === "ngheo") s.mentored = true; }); // iter-206 L2 sensor: back EVERY poor kid (ignore slot scarcity) → prove the school CAN equalize per-kid
     dayTick();
     if (S.cash < minCash) minCash = S.cash;
     if (S.cash < -60) bankrupt = true;
@@ -74,7 +75,7 @@ function play(seed, strat) {
   S.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
   // per-life realization inputs (E1/L1): innate seed + final genuine craft + hustle/hollow + destiny + tell (E8 sensor)
   var lives = S.alumni.map(function (a) {
-    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state, tell: a.fs.tell || "", real: flourishOf(a.state) >= 4 };
+    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state, tell: a.fs.tell || "", origin: a.fs.origin || "", real: flourishOf(a.state) >= 4 };
   });
   // E9 ckpt2 (iter-157): the cohesion tilt's footprint — the maker (spark/sky) share of the current student
   // body, which reflects the reputation→applicant tilt (REP_TILT). Used to PROVE the feedback can't run away.
@@ -364,6 +365,31 @@ line("");
       if (sw < 10) FLAGS.push("L1 ERAS: '" + t + "' apex% barely swings across eras (Δ" + f0(sw) + " < 10) — the decade doesn't lift/cap this gift (right-kid-wrong-era weak for " + t + ")");
       else FLAGS.push("L1 ERAS ✓ '" + t + "': apex% swings Δ" + f0(sw) + "pts across decades — a founder in its golden era, a solid kỹ sư in the wrong one (right kid, wrong era holds)"); }
   });
+})();
+line("");
+
+// iter-206 L2 DEMOGRAPHIC — family ORIGIN. The structural cost must be REAL (a poor kid under-realizes vs a middle one)
+// yet COUNTERABLE (backing a poor kid with mentoring → parity = the school as EQUALIZER, the đề-Văn's whole spirit), and
+// never waste-only (#2). Scarce mentoring (3 slots) means you can't back everyone → a tragic allocation, NOT a dominant
+// strategy (#1). Sensor: realize% by origin with NO help vs BACK-ALL-POOR (force-mentor every poor kid).
+(function () {
+  function byOrigin(strat) {
+    var t = { ngheo: { g: 0, r: 0 }, tb: { g: 0, r: 0 }, kha: { g: 0, r: 0 } };
+    SEEDS.forEach(function (sd) { play(sd, strat).lives.forEach(function (L) { if (t[L.origin]) { t[L.origin].g++; if (L.real) t[L.origin].r++; } }); });
+    function pc(o) { return t[o].g ? 100 * t[o].r / t[o].g : 0; }
+    return { ngheo: pc("ngheo"), tb: pc("tb"), kha: pc("kha") };
+  }
+  var off = byOrigin({ presets: "canbang" });
+  var on = byOrigin({ presets: "canbang", mentorPoor: true });
+  line("--- L2 ORIGIN (family circumstance: a real cost, counterable by backing the kid — the school as equalizer) ---");
+  line("  no help:        nghèo " + f0(off.ngheo) + "%   trung bình " + f0(off.tb) + "%   khá giả " + f0(off.kha) + "%   (realize = flourish≥4)");
+  line("  back all poor:  nghèo " + f0(on.ngheo) + "%   (mentoring erases the headwind → parity with middle)");
+  var gap = off.tb - off.ngheo;
+  if (gap < 8) FLAGS.push("L2 ORIGIN WEAK: poor realize " + f0(off.ngheo) + "% vs middle " + f0(off.tb) + "% (Δ" + f0(gap) + " < 8) — circumstance barely matters; raise the ORIGIN_GROW drag");
+  else if (off.ngheo < 35) FLAGS.push("L2 ORIGIN TRAP: poor realize only " + f0(off.ngheo) + "% (<35 — near waste-only, invariant #2 broken); soften ORIGIN_GROW/ORIGIN_MOOD");
+  else if (on.ngheo < off.tb - 12) FLAGS.push("L2 ORIGIN NOT-EQUALIZED: backing the poor reaches only " + f0(on.ngheo) + "% vs middle " + f0(off.tb) + "% — mentoring should erase the headwind (the school as equalizer)");
+  else if (off.kha > off.tb + 18) FLAGS.push("L2 ORIGIN PRIVILEGE RUNAWAY: well-off " + f0(off.kha) + "% vs middle " + f0(off.tb) + "% (Δ>18) — the head-start is too large; lower ORIGIN_GROW.kha");
+  else FLAGS.push("L2 ORIGIN ✓: circumstance is a REAL cost (poor " + f0(off.ngheo) + "% vs middle " + f0(off.tb) + "%, Δ" + f0(gap) + ") yet COUNTERABLE (back-all-poor → " + f0(on.ngheo) + "% ≈ parity) — the school as equalizer; scarce mentoring (" + CONFIG.MENTOR_SLOTS + " slots) makes it a tragic allocation, never waste-only, no dominant strategy");
 })();
 line("");
 

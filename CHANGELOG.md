@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-06-21 — Where a kid is BORN now shapes their odds — and the school is the equalizer (L2 DEMOGRAPHIC ckpt1) (loop iter 206)
+**The owner's "add demographic realism = interesting challenges" steer, delivered as a real mechanic.** Every kid now
+carries a family ORIGIN — **nghèo** (poor/rural) · **trung bình** (middle) · **khá giả** (well-off) — and circumstance
+shapes whether their gift gets realized. A poor kid's *legit* growth drags (`ORIGIN_GROW` nghèo 0.88 → they more often
+SETTLE into lương ổn than flourish into kỹ sư), a well-off kid gets a slight head-start (1.04). **The drag hits the
+legit path only (`g`), never the hustle (`gCm`)** — disadvantage funnels some toward shortcuts, it doesn't dull the
+street-smarts. **And the school is the EQUALIZER:** mentoring a poor kid ERASES the headwind entirely (`orgGrow → 1`).
+Sweep-proven: poor realize **68%** vs middle **83%** (a real ~15pt structural cost) → back every poor kid and they reach
+**89%** (parity). But mentoring is scarce (**3 slots**) — you can't back everyone, so it's a *tragic allocation*, never a
+dominant strategy. Never waste-only (#2 — 68% still flourish); the cost is done TO them by structure, never blamed on the
+kid (#4).
+
+**The payoff names it** (the demographic counterpart of iter-203's tell-aware grief + iter-205's era clause, layered):
+a poor kid WASTED reads *"…— tài năng bỏ phí trên tay bạn · nhà nghèo, chẳng ai chống lưng"*; a poor kid who made it
+reads *"· nhà nghèo mà vẫn nên người."* With era, a poor + wrong-gift + wrong-era kid now reads as the triple-wrong the
+owner named (wrong class × wrong gift × wrong time) — the system's hardest, most-felt waste.
+
+**Save-safe, ZERO migrator:** origin is DERIVED deterministically from the stable student id (`studentOrigin`, via
+hashStr like annMonthFor) — no new student field, no reroll on reload, byte-identical cohort gift-roll (uses hashStr,
+not the rng stream). Alumni carry `fs.origin` (defaulted to "" for pre-iter-206 saves → graceful, no clause). **Tuning
+note:** an early mood-penalty version spiraled the poor into mass DROPOUT under cram (they vanished instead of
+under-realizing — broke #2); fixed by zeroing the poor's mood lean and carrying the whole cost in growth, so the poor
+GRADUATE-but-settle (dropout origin-neutral: cram 65/run = pre-existing baseline, +0 from origin; bot grad 87 restored).
+
+**Verification (headless):** gate GREEN (origin deterministic; fs.origin survives reload), bot BOTOK (cash **7392**,
+grad 87 — no extra dropout), `node sweep.js` **0 bad flags** + a new L2 ORIGIN sensor (cost real Δ15, counterable to
+parity, never waste-only, no dominant strategy) + the ERAS sensors unchanged + economy/realization/symmetry bands all
+hold. lives.sh ×3 presets: both origin poles surface in the bios. SOUL 5 (the đề-Văn's truest question — can the school
+lift the kid the world stacked the deck against? — is now a mechanic you play). The first delivery of the owner's
+GEOGRAPHIC × DEMOGRAPHIC steer (geographic = the archetype/location, queued next). Next: archetypes (geographic) +
+era×origin interaction surfacing + the in-play "this kid needs backing" legibility.
+
 ## 2026-06-21 — "Right kid, wrong era" is now READABLE at the payoff (ERAS L1 ckpt2 — legibility) (loop iter 205)
 **The decade's hand, named.** iter-204 made the era silently re-weight destinies (a coder founds in the AI boom, settles
 in the 1990s) — but the era was a HIDDEN hand: the player couldn't read that a kid was wronged by their *decade*. ckpt2

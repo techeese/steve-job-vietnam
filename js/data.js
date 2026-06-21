@@ -45,6 +45,19 @@ var CONFIG = {
   ERA_RISE: 0.55,              // L1 era MOBILITY: per-year upward pull (×(fav−1)) on a settled life in its GOLDEN decade — the world finally has a place for the gift (thất nghiệp→lương ổn→kỹ sư)
   ERA_WRONG: 0.8,              // iter-205 ckpt2 (LEGIBILITY): fav ≤ this at graduation = the gift was born into a HOSTILE decade → a wasted gift earns a "sinh nhầm thời" grief clause (right kid, wrong era, NAMED at the payoff)
   ERA_RIGHT: 1.3,             //  fav ≥ this = the gift met its GOLDEN decade → a realized gift earns a "gặp đúng thời" cheer (symmetry — the era reads on BOTH the wasted and realized sides)
+  // ★ L2 DEMOGRAPHIC axis (owner steer 2026-06-21 "add demographic realism = interesting challenges"; iter-206 ckpt1).
+  // A per-kid FAMILY ORIGIN, derived deterministically from the student id (NO save field → NO migrator; stable across
+  // reloads, like annMonthFor). The school as EQUALIZER: a poor-origin kid carries a realization HEADWIND (the grind of
+  // disadvantage — felt as a chronic mood lean + a modest legit-growth drag) that MENTORING removes (you choose to back
+  // them); a well-off kid has a slight head-start. Bounded + sweep-gated: the cost is REAL but COUNTERABLE (no origin is
+  // waste-only, invariant #2; mentoring lifts the poor toward parity = the school's whole point), and scarce mentoring
+  // means you can't back everyone → a tragic allocation (no dominant strategy, invariant #1). The drag hits the LEGIT
+  // path only (g), never the hustle (gCm) — disadvantage funnels some toward shortcuts, it doesn't dull the street-smarts.
+  // MULTIPLIES the soul: poor × wrong gift × wrong era = the system's hardest waste, done TO them by structure (#4).
+  ORIGINS: ["ngheo", "tb", "kha"],            // nghèo (poor/rural) · trung bình (middle) · khá giả (well-off)
+  ORIGIN_W: [30, 45, 25],                     // distribution weights (Σ100) — most middle, a meaningful poor minority
+  ORIGIN_MOOD: { ngheo: 0, tb: 0, kha: 1 },  // poor mood lean = 0 ON PURPOSE: a mood penalty COMPOUNDS the cram-burnout drain → the poor would drop out en masse under a cram school (waste-only). The cost lives in ORIGIN_GROW (under-realize), NOT in dropout — the poor GRADUATE-but-settle, they don't vanish. kha +1 = a harmless security touch (the well-off don't drop)
+  ORIGIN_GROW: { ngheo: 0.88, tb: 1, kha: 1.04 }, // the main realize lever: the poor's legit growth drags (→ they more often SETTLE rather than flourish), erased by mentoring; well-off slight head-start. Tuned so poor under-realize by a felt ~20pt, mentoring ≈ parity, dropout barely moves
   MILESTONE_TT: 4,              // small Tiếng Tăm reward per founding milestone (the school gets noticed)
   PRIZE_BAR: 78,               // E7p: a graduating standout must clear this stat bar to earn an honor (a weak cohort wins nothing) — a line in a life, never a count
   ROOM_MAX_LEVEL: 10,           // iter-160 (owner economy epic ckpt2): a LONG upgrade track (was 3) — the player pours
