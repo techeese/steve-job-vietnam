@@ -95,7 +95,7 @@ function sanitize() {
     if (s.lookC && (typeof s.lookC !== "object" || !Number.isFinite(s.lookC.s) || !Number.isFinite(s.lookC.h) || !Number.isFinite(s.lookC.y) || !Number.isFinite(s.lookC.a))) delete s.lookC; // custom look (UI clamps ranges on use)
     return s;
   }).filter(Boolean).slice(0, CONFIG.ROSTER_CAP * 3); // iter-166: generous corruption guard (well above the scaled rosterCap ~89) so a big-campus save never drops enrolled students on reload
-  var _mc = 0; S.students.forEach(function (s) { if (s.mentored) { _mc++; if (_mc > CONFIG.MENTOR_SLOTS) s.mentored = false; } }); // Phase 2: never exceed the attention budget (heals a corrupted save)
+  var _ms = mentorSlots(), _mc = 0; S.students.forEach(function (s) { if (s.mentored) { _mc++; if (_mc > _ms) s.mentored = false; } }); // Phase 2: never exceed the attention budget (heals a corrupted save). iter-259 BUGFIX: cap by the ERA-SCALED mentorSlots() (= base + techReach(S.year), S.year restored above), NOT base CONFIG.MENTOR_SLOTS — else reloading a late-game save where the player mentored >3 (the era cap is 4–5) silently un-mentored kids.
   if (bad(S.endow.bal) || S.endow.bal < 0) S.endow.bal = 0;
   S.endow.milestonesClaimed = clamp(Math.round(S.endow.milestonesClaimed) || 0, 0, 3);
   // meters: the recovery layer for a corrupted/out-of-range save (mergeInto rejects NaN but copies finite

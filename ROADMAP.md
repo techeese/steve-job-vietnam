@@ -135,10 +135,18 @@ claim for Phase 1 is now actually verifiable.
      pressure to the STRUCTURE dial: cave→tighten upper grades vs hold; non-apex). Unblocked by an iter-258 MAJOR_FIT
      robustify (biz/Sống-Ảo khoa wastes craft harder: spark 0.7→0.6, sky 0.7→0.55; off-diagonal → byte-identical/sensor-only).
 
-  **▶ NEXT NON-GATED WORK: the iter-254 scout queue is FULLY DELIVERED (#1–#4 all shipped) → RUN A FRESH SCOUT before holding**
-  (per SKILL SCOUT-BEFORE-YOU-HOLD). The big remaining work (Phase 3 activities-apex / Phase 2c off-native intake) stays
-  owner-gated on the APEX fork. NOTE: the MAJOR_FIT robustify also clears the path for MORE event-deck content (new events
-  no longer tip the sensor).
+- **▶ NON-GATED QUEUE v2 (fresh scout fan-out iter-259 — 4 survivors, 14 rejected). Mine these before holding:**
+  3. ✅ **BUGFIX: late-game saves silently un-mentored kids** — SHIPPED iter-259 (sanitize capped by base 3 not era-scaled `mentorSlots()`; one-line fix + GATE_SAVE regression guard).
+  1. **Cohort-intake era-flood line** — ONE deterministic news-only line from `eraShift()` (engine.js) AFTER the post-boundary
+     intake, naming the gift the new era floods the school with (derive from `CONFIG.ERAS[ce].fav` max>1 — the same data `rollTell` tilts by). small. byte-identical-ish (news-only, recapture if it perturbs).
+  2. **Archetype×era era-shock beats** — a sparse CONTENT-only `eraShock[archKey][eraKey]` table, authored lines consulted in
+     `eraShift()` after the generic name+shift line, fired only on a real boundary crossing + when an entry exists. medium (authoring). news-only.
+  4. **Archetype-framed capstone intro** — `CONTENT.essay.archFrame{tinh_le,que_ngheo,lo_thanhpho,truong_nghe}`, one situated-question
+     clause per archetype inside buildEssay's capstone block (mirrors the archetype's own `de`). small. reading-only/byte-identical.
+
+  **▶ After v2 queue: RUN A FRESH SCOUT before holding** (per SKILL SCOUT-BEFORE-YOU-HOLD). Big remaining work (Phase 3
+  activities-apex / Phase 2c off-native intake) stays owner-gated on the APEX fork. The MAJOR_FIT robustify (iter-258) cleared
+  the path for MORE event-deck content (new events no longer tip the sensor).
 
 **▶ PHASE 2 — MAJORS decoupled (2a+2b ✓ done; 2c = the systemic off-native intake, NEXT). [orig spec ↓]** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`

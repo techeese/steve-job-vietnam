@@ -157,6 +157,16 @@ try {
   ok(Number.isFinite(S.cash), 'cash stays finite after a corrupted-teacher save (no NaN salary)');
   ok(S.giftItems.every(function(g){ return g && typeof g==='object' && g.item; }), 'corrupted giftItems healed');
   ok(S.letters.every(function(l){ return l && typeof l==='object' && typeof l.text==='string'; }) && S.letters.length===1, 'corrupted annual-letters healed (iter-213 N3 — only the well-formed letter survives)');
+  // iter-259 BUGFIX regression guard: sanitize must cap mentored by the ERA-SCALED mentorSlots() (= base + techReach(year)),
+  // NOT the base CONFIG.MENTOR_SLOTS — else reloading a LATE-GAME save silently un-mentors kids the player paid attention to.
+  __test.fresh(7); __test.place('phonghoc',1,1); __test.days(400);
+  S.year = 11; var eraCap = mentorSlots(); var _mn = 0; // force a late era (cap > base 3) without an 11-yr sim
+  for (var mli = 0; mli < S.students.length && _mn < eraCap; mli++) { if (!S.students[mli].mentored) { S.students[mli].mentored = true; _mn++; } }
+  var mentoredPre = S.students.filter(function(s){ return s.mentored; }).length;
+  localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize())); loadGame();
+  var mentoredPost = S.students.filter(function(s){ return s.mentored; }).length;
+  ok(eraCap > CONFIG.MENTOR_SLOTS && mentoredPre === eraCap, 'iter-259 precondition: late-game era cap ('+eraCap+') exceeds base ('+CONFIG.MENTOR_SLOTS+') and the roster was mentored to it');
+  ok(mentoredPost === mentoredPre, 'iter-259: late-game mentored kids survive reload — sanitize caps by era-scaled mentorSlots(), not base 3 (kept '+mentoredPost+'/'+mentoredPre+')');
 } catch(e){ FAILS.push('GATE_SAVE threw: '+e.message+'\\n'+e.stack); }
 
 /* GATE_LEGACY — L3 cross-run legacy round-trip (iter 217): write → seedLegacy → effect; bright gifts the quỹ, dark echoes TT */

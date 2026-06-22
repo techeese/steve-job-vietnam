@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-22 — BUGFIX: late-game saves silently un-mentored kids (a fresh-scout find) (loop iter 259)
+**A v2 scout fan-out surfaced a real save/reload correctness bug I'd never have found by holding — the exact payoff of
+SCOUT-BEFORE-YOU-HOLD.** `sanitize()` (js/save.js:98) capped the mentored-student count at the BASE `CONFIG.MENTOR_SLOTS`
+(3), ignoring the era-scaled `mentorSlots()` (= base + `techReach(S.year)`, which reaches 4–5 in the later decades). So
+reloading a LATE-GAME save where the player had mentored 4+ kids (legal under the era cap) silently dropped the extras to
+3 — quietly un-doing the player's scarce-attention choices, the game's central lever. One-line fix: cap by `mentorSlots()`
+(S.year is already restored+clamped earlier in sanitize) instead of the base constant. Added a permanent GATE_SAVE
+regression assertion (force year-11 era cap 4, mentor to it, reload → all 4 survive; the old code kept only 3). Verified:
+parse clean, gate ALL GREEN incl. the new assertion (kept 4/4), BASELINE GREEN + bot BOTOK + lives clean (byte-identical —
+the headless harnesses never mentor, so they never tripped the bug). Deployed.
+**Scout v2 (this firing) — 4 survivors, 14 rejected.** Shipped the bug (#3, highest-priority/correctness). Queued the 3
+narrative survivors in ROADMAP: cohort-intake era-flood line, archetype×era era-shock beats, archetype-framed capstone
+intro. (The synth stage hit a StructuredOutput retry-loop; I stopped it and read the survivors straight from the verify
+agents — the workflow's value was the finding, not the synth prose.)
+
 ## 2026-06-22 — scout #4 SHIPPED: the cram-pressure dilemma, unblocked by a MAJOR_FIT robustify (loop iter 258)
 **Completed the deferred scout #4 by fixing its blocker first.** Two coupled changes:
 1. **MAJOR_FIT robustify (the unblock, byte-identical).** The "wrong-major wastes" sensor's MAKER case was latently
