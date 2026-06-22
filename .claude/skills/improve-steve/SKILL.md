@@ -5,883 +5,414 @@ live at https://techeese.github.io/steve-job-vietnam/ (Pages auto-deploys `main`
 Game: satirical Vietnamese university-management sim (Kairosoft register). NOT a clicker.
 Kill-switch: `rm /Users/Admin/Desktop/coding/.improve-steve-on`.
 
-## THE MISSION (read this first — it overrides any timid instinct below)
+---
 
-The job is **not** "ship one safe green change per turn." The job is **make this game INCREDIBLE,
-fast** — and the loop runs forever, so *cumulative ambition* is what matters, not per-turn safety.
-This loop has repeatedly failed by being LOCALLY productive but GLOBALLY timid: long runs of tiny
-additive features, zero restructures, zero overhauls, zero bold swings, while the bar ("looks like a
-real cute game / the graphics is the most important thing and not yet met") stays unmet and the
-codebase silently rots (a 1693-line ui.js; a production error trap that went missing unnoticed).
+## ⚠ STATUS: THIS SKILL IS PARKED — read before doing anything
 
-### ★ THE PEOPLE-FIRST MANDATE (owner course-correction 2026-06-14 — OUTRANKS every dimension below until the owner says the SOUL is there)
+This is the **GRAPHICS pass** skill (the FINAL art pass). It is **DORMANT.** The project is in a
+**gameplay-first, graphics-FROZEN** phase driven by a DIFFERENT skill, **`improve-steve-gameplay`**,
+which owns every dev iteration right now (sim, story, eras, archetypes, balance, content) with art frozen
+and verification headless-only.
 
-The owner steered hard: *"the current game works for a while, but somehow its spirit is not quite good.
-I want it to focus on PEOPLE DEVELOPMENT — like how a student can transform from a student to the people
-they become, including mood, learning, etc. … each person even has their own TALENT score, that later
-interacts with the education system; he/she will improve."* Root cause he named: *"we focused too much on
-other stuff like graphics and some adjustment."* This is the owner DEEPENING his original north-star
-(**biographies, not scores**): the loop made a SHALLOW person-model (6 drifting numbers) look beautiful
-instead of making the person-model DEEP.
+**Do NOT resume the graphics pass on your own.** This skill is the manual for when the graphics pass
+RESUMES — and it resumes ONLY after the gameplay-first arc EXITS, which is a MEASURED + owner-confirmed
+gate (see `GRAPHICS-HANDOFF.md` line 6 / ROADMAP banner: exit gate a/b/c measurably met, owner-confirm
+(d) pending). If you were fired into this skill by mistake during the gameplay arc, the correct move is to
+defer to `improve-steve-gameplay`. The rest of this file assumes the arc HAS exited.
 
-**For this arc the iteration slot is governed by ONE question, which REPLACES "what is the single biggest
-change toward incredible?" as the first thing you ask:**
+What the graphics pass inherits is documented, not restated here — read these three FIRST when you resume:
+- **`GRAPHICS-HANDOFF.md`** — every player-facing surface, its content status, what to visualize, and the
+  laws the graphics pass must not break. This is your worklist.
+- **`docs/ART-PIPELINE.md`** — the real-pixel-art stack (Kenney + Jephed) and HOW art is drawn/baked
+  (`shot.sh`, the atlas, gallery).
+- **`VISION.md`** — the 1-page dream; mine it for the next graphics epic.
 
-> **"What single change would most DEEPEN the simulation of a person becoming themselves — talent
-> realized, wasted, or distorted by the school you run?"**
+---
 
-The model to build toward (nature × nurture): each person has innate TALENT — **magnitude** (≈ existing
-`seed`) and **direction** (≈ existing `tell`) — INTERACTING with the education system (presets, khoa,
-teachers, mentorship, mood/wellbeing) to **REALIZE** it (good match → toward potential → a maker, an
-engineer, *or a respected employed kỹ sư — realization is NOT "became a founder"*), **WASTE** it
-(mismatch/cram → latent or curdled → a gifted kid ground into a văn-mẫu clerk), or **DISTORT** it (high
-hustle + neglect → coin shark). The poignant core is **VISIBLE WASTED TALENT** the player feels
-responsible for, surfaced as EMERGENT per-life NARRATIVE (generated FROM the realized-vs-potential gap,
-not generic strings) + ATTACHMENT to named kids. Honor the four PERSON-SIM INVARIANTS in VISION.md
-("Laws the person-sim must not break"): (1) whose-life-not-which-strategy, (2) symmetry-of-waste,
-(3) prose-not-a-meter, (4) waste-is-done-TO-them. Scope: a WATCH-and-SET-POLICY sim with ~48 students —
-SYSTEMIC/policy inputs that shape everyone + ONE protégé the player follows; NEVER per-student micromanage
-of all 48 (placement stays systemic). Build it in `growStudents` / the alumni FSM / `genStudent`, sweep-tunable.
+## THE MISSION (when the graphics pass IS live)
 
-**THE ANTI-DRIFT RULE (binding — the "graphics WINS" mechanism, repointed):** for this arc graphics, juice,
-distribution, audio, and cosmetic content are DEMOTED to **production-broken-only** (they win the slot ONLY
-when a NAMED production symptom proves breakage — a JSERR title string, a failed load, a corrupted-save
-repro, mobile-unusable — or an explicit owner ask). *"Looks rough / could be prettier / a nicer icon / a
-stale share preview"* is NOT broken and may NOT preempt. A polish/graphics FEATURE-epic is ILLEGAL this
-arc. Enforcement is MECHANICAL, not vibes: the `SHIPS_SINCE_PERSONSIM` counter (Cadence, threshold 1) + the
-SOUL rubric floor + the narrowed preemption lane — prose alone lost seven times, so the teeth live in the
-ledger and the floor.
+The job is **make this game INCREDIBLE, fast** — cumulative ambition over per-turn safety. This loop has
+historically failed by being LOCALLY productive but GLOBALLY timid (long runs of tiny additive features,
+zero bold swings) while the bar — *"looks like a real cute game"* — stays unmet. The graphics pass exists
+to MEET that bar: the final real-pixel-art dressing of a game whose mechanics + narrative are already FINAL.
 
-**THE PLATEAU RULE IS SUSPENDED this arc.** The iter-92 maturity-plateau lesson was *"the remaining depth
-was never on the surface — it is in the PERSON."* The owner's steer RESOLVES it: "no available epic" is now
-false by construction — the person-sim epic supply (E1–E6 in ROADMAP `## Epic backlog`) is explicit and
-owner-blessed. A "taste-blocked" person-sim fork is resolved by DECIDING (decide→ship→veto-by-reaction) on
-the SMALLEST viable version (E1 is instrumentation-only, zero-balance — never blocked), NOT by falling back
-to polish. **"Awaiting owner steer" is ILLEGAL as a reason to ship non-person-sim work this arc.**
+Four standing biases correct timidity:
+1. **BIGGER beats smaller** — ask "what single change moves the game most toward incredible right now?"
+2. **BOLDER beats safer** — every change is one `git revert` away; a wrong swing is CHEAP. Take real
+   swings (overhauls, art-direction pivots, restructures). The owner judges by reaction.
+3. **MORE CREATIVE beats obvious** — for the #1 visual dimension, DIVERGE before you converge (≥3 parallel
+   drafts → judge → synthesize). First-idea-ships is BANNED for graphics/charm.
+4. **HIGHER QUALITY beats merely-correct** — "gates green + pushed" is the floor, not done. Score every
+   ship against the Bar rubric.
 
-**RELEASE OF THE ARC is a MEASURED gate, not a vibe** (the loop may NOT self-release; owner is often away
-~15 firings): the arc lifts ONLY when (a) `node sweep.js` reports the realize/waste/distort distribution is
-visibly spread AND wasted-talent is reachable (the E1 metrics/flags), AND (b) reading ~5 simulated
-biographies a stranger can name a kid who was wasted and one who was realized (incl. a realized kỹ sư, not
-only an 🍎), AND (c) **the owner EXPLICITLY confirms.** Log the release in the Owner Model + Playbook changelog.
-
-Four standing biases now correct timidity — but for this arc, **point them at person-simulation depth, not
-surface charm:**
-1. **BIGGER beats smaller.** Every turn, before picking, ask: *"What is the single biggest change that
-   would move this game most toward incredible right now?"* Default to that, not the next tidy roadmap
-   tick. A turn may legitimately be a multi-day EPIC run as a workflow (see "The two tracks").
-2. **BOLDER beats safer.** Live updates are reliable and every change is one `git revert` away → a
-   wrong swing is CHEAP. Take real swings: restructures, UI/layout overhauls, new pillars, deletions,
-   art-direction pivots. The owner judges by reaction; a striking miss teaches more than a timid hit.
-3. **MORE CREATIVE beats obvious.** For anything visual/UX/creative, DIVERGE before you converge —
-   generate several distinct directions, judge, synthesize. First-idea-ships is banned for the #1
-   dimension (graphics/charm). Use workflows to explore in parallel.
-4. **HIGHER QUALITY beats merely-correct.** "Gates green + pushed" is the floor, NOT the definition of
-   done. Done = it measurably moved the game toward the Bar below. Score every ship against the rubric.
-
-"One iteration" is a *unit of shipping*, not a *cap on ambition*. Faster + bolder + more creative +
-higher quality — all at once. Use the powers you have but never use: PLANS, ROADMAP epics, FILE
-DELETION, codebase/UI RESTRUCTURE, git WORKTREES, and multi-agent WORKFLOWS.
+"One iteration" is a unit of shipping, not a cap on ambition. Use the powers: PLANS, ROADMAP epics, FILE
+DELETION, RESTRUCTURE, git WORKTREES, multi-agent WORKFLOWS.
 
 ## The two tracks — pick the track first, every turn
 
-Each firing runs on ONE of two tracks. The choice is NOT discretionary — it's set by the counted
-cadence ledger (below), because soft "shoulds" lost seven times running.
+- **POLISH track** — one coherent shippable improvement (a charm beat, a visual fix, a bug). Steps 1→5.
+- **EPIC track** (the engine of bigness):
+  - **FEATURE-EPIC** — a UI/layout overhaul, an art-direction pivot, a big visual expansion. Raises a Bar
+    axis; proven by screenshot + rubric.
+  - **STRUCTURE-EPIC** — a file split / dead-code purge / perf rebuild. BEHAVIOR-NEUTRAL; proven by
+    BEFORE/AFTER byte-diff + identical screenshots. Worktree-isolated, near-zero veto risk →
+    **ships fully autonomously** (a proven-neutral refactor IS the safe move).
+  Both run via The EPIC machinery. A multi-firing epic ships a green safe-so-far checkpoint EACH firing.
 
-- **POLISH track** (the classic loop): one coherent shippable improvement — content, a charm beat, a
-  balance fix, a bug. Legal only when the cadence ledger permits it. Steps 1→5; ship green, push.
-- **EPIC track** (the engine of bigness) — two sub-types, each with its own cadence claim:
-  - **FEATURE-EPIC** — a new pillar, a UI/layout overhaul, an art-direction pivot, a system
-    replacement, a big content expansion. RAISES a Bar axis; proven by screenshot + rubric.
-  - **STRUCTURE-EPIC** — a file split / module extraction, a dead-code purge, the onerror restore, a
-    perf rebuild. BEHAVIOR-NEUTRAL; proven by the BEFORE/AFTER byte-diff + identical screenshots the
-    EPIC machinery specifies. Worktree-isolated, near-zero veto risk → **ships fully autonomously**
-    (owner's call 2026-06-13: no heads-up needed; a proven-neutral refactor IS the safe move).
-  Both run via **The EPIC machinery**. An epic may span MULTIPLE firings — and when it does, **ship a
-  green safe-so-far checkpoint EACH firing** (owner's call: visible progress on the live link beats a
-  long quiet worktree). Track it in ROADMAP `## Epic in progress`.
+**THE COUNTED CADENCE (binding — soft "shoulds" lost 7×).** ROADMAP carries a machine-readable
+`## Cadence` ledger; Step 0 reads it and it DICTATES the track:
+- `SMALL_SHIPS_SINCE_EPIC` — +1 per polish ship; reset to 0 only when an EPIC actually SHIPS (a *planned*
+  epic does NOT reset it). **If ≥ 3 → HARD-LOCKED to the EPIC track; polish is illegal.**
+- `EPICS_SINCE_STRUCTURE` — +1 per FEATURE-epic; reset on a STRUCTURE move. **If ≥ 2, the next epic MUST
+  be STRUCTURE.** Satisfied by EITHER a worthwhile refactor OR — only when a RIGOROUS structure review
+  (concrete file sizes + measured coupling) finds no clean+safe+worthwhile extraction — logging that
+  verdict + the queued next refactor, then resetting. Anti-timidity guard: if a clean valuable extraction
+  IS available, you MUST do it (art.js was wrongly deferred 35 iters; don't review a real seam away).
+- Update the ledger in the SAME commit as every ship. Broken-always-wins and explicit owner asks preempt
+  the track, but a preempting small ship still increments `SMALL_SHIPS_SINCE_EPIC` (no dodging epics).
 
-**THE COUNTED CADENCE (binding — replaces the old soft "every 4th should be an epic," which the loop
-dodged 7×):** ROADMAP carries a machine-readable `## Cadence` ledger. Step 0 READS it and it DICTATES
-the track — you don't get to choose timid:
-- `SHIPS_SINCE_PERSONSIM` — **(people-first arc, 2026-06-14; binding, OUTRANKS the counters below)** +1 on
-  every ship that did NOT touch Compass area 1 or 2 (talent / growth pipeline / mood economy / destiny FSM /
-  biography / legibility-of-a-transformation / attachment-to-a-named-kid). **Reset to 0 ONLY when a
-  person-sim ship lands. If ≥ 1, this firing is HARD-LOCKED to a person-sim pick or epic — a non-person-sim
-  pick is ILLEGAL.** Threshold is **1, not "≥2 of last 8"** — anything looser is people-occasionally, not
-  people-FIRST. This is the "graphics WINS" mechanism literally repointed at people. A *preempting*
-  non-person-sim ship still increments this (preemption can't dodge the soul forever). Lift the lock ONLY
-  when the owner releases the arc (THE PEOPLE-FIRST MANDATE).
-- `SMALL_SHIPS_SINCE_EPIC` — +1 on every polish ship; **reset to 0 only when an EPIC actually SHIPS**
-  (a *planned* epic does NOT reset it — that's the "plan forever, build never" escape the Khoa system
-  used: planned, then 7 small phases). **If this counter is ≥ 3, this firing is HARD-LOCKED to the
-  EPIC track — a polish pick is ILLEGAL.** Your only legal moves: advance the in-flight epic, or
-  dequeue + plan + start the top `## Epic backlog` item.
-- `EPICS_SINCE_STRUCTURE` — +1 per FEATURE-epic shipped; reset on a STRUCTURE move. **If ≥ 2, the next
-  epic MUST be a STRUCTURE move.** This keeps the codebase plastic (the art.js split, audio.js split)
-  without letting invisible refactors crowd out feature pillars. **A STRUCTURE move is satisfied by EITHER
-  (a) a worthwhile refactor, OR (b) — only when a RIGOROUS structure review (concrete file sizes + a
-  measured coupling-surface assessment, not hand-waving) concludes no clean+safe+worthwhile extraction is
-  currently available — logging that verdict + the queued next refactor, then resetting the counter.**
-  Guard against timidity: if a clean, valuable extraction IS available, you MUST do it (don't review it
-  away — that's the exact dodge this counter exists to prevent; art.js was wrongly deferred 35 iters).
-  The review-escape is ONLY for genuinely high-coupling / non-urgent cases PROVEN by analysis (iter 73:
-  ui.js's panels/modals = ~25-symbol bidirectional closure coupling, `el` used 146×; a real refactor via
-  a shared-UI-context object, queued — not a clean leaf, and ui.js at ~1560 isn't yet painful).
-- Update the ledger in the SAME commit as every ship. Broken-always-wins and explicit owner asks
-  preempt the track — but a preempting *small* ship still increments `SMALL_SHIPS_SINCE_EPIC` AND
-  `SHIPS_SINCE_PERSONSIM`, so preemption can't be used to dodge epics or the soul forever.
-  **(People-first arc) "broken" is NARROWED to PRODUCTION breakage only** — a proven JSERR / white-screen /
-  save-loss / mobile-unusable / sweep floor-drop, NAMED with its symptom. *"Looks rough / could be prettier
-  / a nicer icon / a stale share preview"* is NOT broken and may NOT preempt the person-sim lock; a
-  graphics/distribution/audio ship claiming "broken" without a named production symptom is ILLEGAL this arc.
-
-## The Bar — what "INCREDIBLE" means (score every ship against this)
-
-The owner judges this as ART and as a TOY, not as correct software. "Incredible" =
+## The Bar — what "INCREDIBLE" means (score every ship)
 
 - **Reference bar:** a polished Kairosoft title (Game Dev Story / Pocket Academy) you'd happily *just
-  watch* — readable crafted pixel-art, a campus that breathes, satisfying fanfare, a clear loop you
-  return to — fused with the satirical bite of a great editorial cartoon about Vietnamese education.
-  When unsure if something's good enough, ask: *"would this screenshot make a stranger want to play?"*
-- **Self-scoring rubric — a BINDING GATE (owner's call 2026-06-13: moderate floor + debt valve).**
-  Rate the ship 1–5 on each axis and STATE the five scores in the commit body AND the status line:
-  1. **BEAUTY** — does it look crafted and cohesive (the #1 dimension; bright, detailed, characterful)?
-  2. **JUICE/LIVELINESS** — motion, feedback, fanfare; does the screen breathe and reward watching?
-  3. **FUN/DEPTH** — meaningful choices, momentum, the "one more year" pull; no dominant strategy.
+  watch* — readable crafted pixel-art, a campus that breathes, satisfying fanfare — fused with the
+  satirical bite of a great editorial cartoon about Vietnamese education. Ask: *"would this screenshot
+  make a stranger want to play?"*
+- **Self-scoring rubric — a BINDING GATE.** Rate 1–5 and STATE the scores in the commit body + status:
+  1. **BEAUTY** — crafted, cohesive, bright, detailed, characterful (the #1 graphics-pass dimension).
+  2. **JUICE/LIVELINESS** — motion, feedback, fanfare; the screen breathes and rewards watching.
+  3. **FUN/DEPTH** — meaningful choices, momentum, "one more year"; no dominant strategy.
   4. **CLARITY/UX** — legible at 390px in 10 seconds; a new player isn't lost.
-  5. **SATIRICAL BITE** — anchored in real Vietnamese-education culture; the open question stays open.
-  6. **SOUL/PERSONHOOD** *(people-first arc, 2026-06-14 — now the lead axis)* — does this make a talent's
-     REALIZATION / WASTE / DISTORTION more visible, felt, or attachable? Can the player watch a NAMED kid
-     become someone *because of* this ship? Bar = the grief-and-cheer test (VISION).
-  7. **COMPLETENESS-VS-DREAM** *(evolution-engine axis — scored vs `THESIS.md` §D, NOT vs craft)* — after this
-     ship, is the game closer to the FIVE MARKS of a true answer to the đề Văn: a stranger would (1) see a
-     person become someone, (2) care BY NAME, (3) find no single right way, (4) leave with their OWN answer,
-     (5) have felt the weight WHILE PLAYING? This axis goes **RED when BEAUTY/JUICE are high but a §D mark is
-     flat** — the success-shaped-failure / local-optimum alarm the fast loop is blind to. A 5-on-craft with a
-     flat §D is exactly what this axis exists to catch. (The L1 sweep + `./lives.sh` biographies measure it;
-     the slow beat `./evolve.sh` re-derives it from scratch.)
-  - **THE PEOPLE-FIRST FLOOR (this arc):** a FEATURE or POLISH ship is legal only if it **lifts SOUL to 4+**
-    (a BEAUTY/JUICE-only lift no longer clears the floor) **and no axis drops below 3 — EXCEPT BEAUTY/JUICE,
-    whose "≥3" clause is RELAXED this arc** (a quieter, sadder, truer screen may be less juicy in service of
-    the soul). If your pick can't name how it raises SOUL to 4+, it's not a people-first pick — diverge and
-    pick bolder. **Debt valve:** bugfixes, balance/sweep fixes, and `## Debt`-paydown ships are EXEMPT (score
-    them, don't block). The ~10-firing reflection reads the SOUL trend specifically — a flat line of SOUL-3s
-    is this arc's timidity alarm. *(Pre-arc floor, for when the owner releases the arc: lift ≥1 axis to 4+
-    while no axis drops below 3.)*
-- Keep a living **`VISION.md`** in the repo: the 1-page picture of this game at its most incredible —
-  the pillars, the feel, the dream features. Maintain it; mine it for epics; revise it when the owner's
-  taste sharpens. If it doesn't exist yet, the next EPIC turn creates it.
+  5. **SATIRICAL BITE** — anchored in real VN-education culture; the open question stays open.
+  6. **SOUL/PERSONHOOD** — does a NAMED kid's realize/waste/distort read as more visible/felt? (the
+     people-first dimension the gameplay arc built; the graphics pass must not flatten it).
+  - **FLOOR:** a ship is legal only if it lifts ≥1 axis to 4+ while no axis drops below 3. **Debt valve:**
+    bugfixes, balance/sweep fixes, and `## Debt`-paydown ships are EXEMPT (score them, don't block).
 
 ## Step 0 — Orient (always)
-0. **READ `feedback.md` FIRST — the async owner inbox (owner directive 2026-06-14).** The owner drops steer
-   here BETWEEN iterations instead of interrupting mid-thought. If it has content below its `=== FEEDBACK ===`
-   line, that is owner steer waiting and it **PREEMPTS this iteration's normal pick** (an explicit owner ask):
-   (a) distill EACH note to its underlying intent; (b) route it to the right file(s) — `VISION.md` (dream/taste),
-   `SKILL.md` (this playbook + Owner Model distillation), `ROADMAP.md` (epics/backlog/`## Cadence`),
-   `CHANGELOG.md` (log it), `DESIGN.md` (settled law) — and for anything implying a `THESIS.md` change, DO NOT
-   edit THESIS; surface it as an `OWNER:` proposal; (c) **CLEAR the inbox** back to its empty template and
-   prepend a one-line dated entry to its "Ingest log" so the owner sees it landed — all in THIS iteration's
-   commit. Many items: apply the load-bearing ones now, queue the rest in ROADMAP (don't drop any). Ingesting
-   feedback IS a legitimate iteration (it's how the owner steers); the person-sim lock persists unless a note
-   resolves it. If `feedback.md` is empty, proceed normally.
-1. Read `DESIGN.md` (v2 charter — SUPREME authority; its §0 "17 canonical rulings" are
-   settled law, never re-litigate), `CONVERSION-SPEC.md` (current sitting spec; raw numbers
-   win there), `ROADMAP.md` (the queue, `## Cadence`, `## Epic backlog`, `## Epic in progress`, `## Debt`).
-2. `git status` + `git log --oneline -3`. If the tree holds large uncommitted changes YOU
-   didn't make, a background build may be in flight — STOP and investigate before touching
-   anything (check for running agents/tasks first).
-3. **READ `## Cadence` AND RUN THE FAILURE DETECTOR — this sets the track before you look at any idea:**
-   - **(people-first arc) if `SHIPS_SINCE_PERSONSIM ≥ 1` → HARD-LOCKED to a PERSON-SIM pick or epic
-     (Compass area 1/2); a non-person-sim pick is ILLEGAL this turn. This lock OUTRANKS the branches below
-     and may only be preempted by PRODUCTION breakage named with its symptom (see the Cadence preemption rule);**
-   - else if the people-first arc has RELEASED **and** `FIRINGS_SINCE_FRAME_RESET ≥ 12` → **FRAME-RESET firing
-     (THE EVOLUTION BEAT):** run `./evolve.sh` — it spawns the input-blind critic, which re-derives from the đề
-     Văn (THESIS.md) and writes the single biggest anchored gap to the `## Epic backlog` top as `[EVOLUTION]`.
-     Take that gap as this firing's epic. **Anchor-or-reject:** if the critic wrote "frame holds", there is NO
-     forced jump — the counter still resets, pick the next-best epic. (`FIRINGS_SINCE_FRAME_RESET` +1 every
-     firing but is DORMANT — it never preempts — during the ACTIVE people-first arc; the owner's arc IS the
-     current frame. See docs/EVOLUTION-ENGINE.md.);
-   - else if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → **HARD-LOCKED to the EPIC track** (polish is illegal this turn);
+
+0. **READ `feedback.md` FIRST** — the async owner inbox. If it has content below `=== FEEDBACK ===`, that
+   is owner steer and it PREEMPTS this iteration's pick. Distill each note → route to the right file
+   (`VISION.md` dream/taste · `SKILL.md` playbook+Owner Model · `ROADMAP.md` epics/Cadence · `CHANGELOG.md`
+   · `DESIGN.md` settled law; anything implying a `THESIS.md` change → surface as an `OWNER:` proposal,
+   never edit THESIS) → CLEAR the inbox to its empty template + prepend a dated Ingest-log line — all in
+   THIS commit. Many items: apply the load-bearing now, queue the rest. If empty, proceed normally.
+1. Read `DESIGN.md` (SUPREME authority; §0 canonical rulings are settled law, never re-litigate),
+   `GRAPHICS-HANDOFF.md` (the graphics worklist + laws), `docs/ART-PIPELINE.md` (the stack),
+   `ROADMAP.md` (`## Cadence`, `## Epic backlog`, `## Epic in progress`, `## Debt`), `CONVERSION-SPEC.md`.
+2. `git status` + `git log --oneline -3`. Large uncommitted changes you didn't make → a background build
+   may be in flight; STOP and investigate (check for running agents/tasks) before touching anything.
+3. **READ `## Cadence` + run the FAILURE DETECTOR — this sets the track before you look at any idea:**
+   - if `SMALL_SHIPS_SINCE_EPIC ≥ 3` → HARD-LOCKED to EPIC (polish illegal);
    - else if an `## Epic in progress` exists → continue it (ship its next green checkpoint);
-   - else POLISH is permitted (but an epic is still allowed if it's the biggest-value move) — **and during
-     the people-first arc that polish must itself be a person-sim pick.**
-   Then scan the last ~8 CHANGELOG entries against the FAILURE MODES (see "Failure-mode detection"); if
-   one trips, this firing is a SKILL REVIEW. If the latest "loop iter N" crosses a ~50-mark → the
-   50-firing skill review.
+   - else POLISH is permitted (an epic is still allowed if it's the biggest-value move).
+   Then scan the last ~8 CHANGELOG entries against the FAILURE MODES; if one trips, this firing is a
+   SKILL REVIEW. If the latest "loop iter N" crosses a ~50-mark → the 50-firing skill review.
 
 ## The Owner Model (living — this is the point of the skill)
 
-The loop's deepest job is not shipping features; it is building an ever-better model of the
-OWNER'S ABSTRACT PRODUCT SENSE and evolving the development flow to serve it. The owner
-steers in broad strokes mid-flight ("design this as the university I guess", "wide range
-outcomes", "people should walk around and do things") and expects those strokes developed
-into systems — so every owner message is DATA about the underlying instinct, not just a task.
+The loop's deepest job is building an ever-better model of the OWNER'S ABSTRACT PRODUCT SENSE and evolving
+the dev flow to serve it. Every owner message is DATA about the underlying instinct.
 
-**Autonomy contract (owner directive 2026-06-13: "how can I guide you to be more autonomous on design choices?"):**
-The owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owner vetoes by reaction.**
-- Live updates are reliable now (cache-bust) and every change is one `git revert` away, so a wrong
-  call is CHEAP — treat that as license to take real swings autonomously instead of asking.
-- ASK (AskUserQuestion) ONLY when ALL of: (a) the choice is expensive/hard to undo OR would destroy
-  owner-made work, AND (b) no taste signal in the north-star/ledger below resolves it, AND (c) a
-  wrong call wastes large effort. Otherwise DECIDE, ship, and surface it as an `OWNER:` line to veto.
-  (The two graphics-direction questions could have been one bold attempt + veto.)
-- Bias BOLD over safe-incremental on creative/visual work — the owner judges by reaction, and a
-  striking miss teaches the model more than a timid hit. Silence after a push = tacit accept.
+**Autonomy contract:** the owner WANTS the loop to DECIDE, not ask. Default: **decide → ship → owner
+vetoes by reaction.** ASK (AskUserQuestion) ONLY when ALL of: (a) the choice is expensive/hard to undo or
+destroys owner-made work, AND (b) no taste signal below resolves it, AND (c) a wrong call wastes large
+effort. Otherwise decide, ship, surface as an `OWNER:` line. Bias BOLD on visual work; silence after a
+push = tacit accept.
 
-**Taste north-star (owner-seeded — the autonomy fuel; resolve design forks against THIS):**
-- *(THE COURSE-CORRECTION 2026-06-14 — NOW THE SINGLE MOST WEIGHTED SIGNAL, supersedes graphics-#1)* The
-  owner judged the mature game's SPIRIT *"not quite good"* and steered from surface to SOUL. Verbatim:
-  *"I want it to focus on PEOPLE DEVELOPMENT — like how a student can transform from a student to the
-  people they become, including mood, learning, etc."* and *"each person even has their own TALENT score,
-  that later interacts with the education system; he/she will improve."* Root cause he named: *"we focused
-  too much on … graphics and some adjustment."* DECODED — he wants the **simulation of a person becoming
-  themselves**: innate TALENT (magnitude ≈ `seed`, direction ≈ `tell`) × education (presets/khoa/teachers/
-  mentorship/mood) → REALIZED (the 🍎, the maker, *or a respected employed kỹ sư*), WASTED (the gifted kid
-  ground into a văn-mẫu clerk), or DISTORTED (the coin shark) — the missing soul is **VISIBLE WASTED
-  TALENT you feel responsible for**, as emergent per-life narrative + attachment to named kids. This is the
-  owner DEEPENING his original "biographies, not scores" instinct. → **Resolve every design fork toward the
-  option that lets the player watch a NAMED person transform.** It DEMOTES the "graphics is the #1
-  dimension / graphics WINS the slot" signal below to "met enough; serves the sim; production-broken-only"
-  until the owner says the soul is there (see THE PEOPLE-FIRST MANDATE + the SHIPS_SINCE_PERSONSIM counter).
-  The SUNNY-school seed below still governs HOW the campus looks/feels (the body); people-development is now
-  WHAT to deepen (the soul). Scope guard: ~48 students → systemic/policy inputs + ONE focus protégé.
-- *(SEEDED 2026-06-13, owner verbatim)* **"It should feel a sunny, slightly chaotic little school
-  you love watching, the characters are customize, and doing stuff that you like to see."**
-  → NORTH STAR = **a SUNNY, LIVELY little school that is a JOY TO WATCH.** Decoded:
-  · **SUNNY** — bright, warm, cheerful; never dark/moody (the lacquer rejection, now a rule).
-  · **SLIGHTLY CHAOTIC** — alive and busy; many little things happening AT ONCE; controlled chaos
-    beats sterile order. Crowds, motion, simultaneous activities, happy little accidents.
-  · **A LITTLE SCHOOL YOU LOVE WATCHING** — small, cozy; the WATCHING itself is the pleasure
-    (observational delight is the core, not menus). Optimize for "I just want to sit and watch it."
-  · **CHARACTERS ARE CUSTOM / INDIVIDUAL** — varied, personal, named, with quirks (the variety pass
-    serves this; candidate feature: player-customizable students — pursue if it fits, it's hinted).
-  · **DOING STUFF YOU LIKE TO SEE** — charming, legible little behaviours are FIRST-CLASS; keep
-    deepening the campus-life activity vocabulary with delightful watchable actions.
-  Use to resolve forks autonomously: when unsure, pick the option that makes the school SUNNIER,
-  LIVELIER, more INDIVIDUAL, and more FUN TO WATCH. This is the single most weighted signal.
-- VISUAL: DETAILED PIXEL-ART, bright/cute/faces/crafted buildings; NOT dark/moody/programmer-art.
-  Bar = "looks like a real cute game."
+**Taste north-star (resolve every fork against this):**
+- **People-first soul (2026-06-14, most-weighted):** the owner steered from surface to SOUL — *"focus on
+  PEOPLE DEVELOPMENT … how a student can transform … each person has their own TALENT score that interacts
+  with the education system,"* root-causing the old state as *"focused too much on … graphics."* The
+  gameplay arc built this (talent × education → realize/waste/distort, biographies, attachment to named
+  kids). **The graphics pass must DRESS the soul, never flatten it** — its SOUL rubric axis exists to keep
+  the visuals serving the person-sim. Graphics is "the body"; people-development is "the soul."
+- **The SUNNY-school seed (2026-06-13, owner verbatim):** *"It should feel a sunny, slightly chaotic little
+  school you love watching, the characters are customize, and doing stuff that you like to see."* → NORTH
+  STAR = a SUNNY, LIVELY little school that's a JOY TO WATCH. SUNNY (bright/warm, never dark — the lacquer
+  rejection is a rule) · SLIGHTLY CHAOTIC (alive, many little things at once) · A LITTLE SCHOOL YOU LOVE
+  WATCHING (the watching itself is the pleasure) · CHARACTERS CUSTOM/INDIVIDUAL (named, quirky) · DOING
+  STUFF YOU LIKE TO SEE (charming legible behaviours, first-class). This governs HOW the campus looks/feels
+  — resolve visual forks toward sunnier/livelier/more-individual/more-fun-to-watch.
+- **VISUAL bar:** DETAILED PIXEL-ART — bright/cute/faces/crafted buildings; NOT dark/moody/programmer-art.
+  *"Looks like a real cute game."* The graphics technique recipe lives in `docs/ART-PIPELINE.md` (Kenney +
+  Jephed real pixel-art stack) — follow it, don't reinvent.
+- **DIMENSIONAL pixel-art** — "3D but still pixel" (fake-iso / 2.5D): side walls, pitched roofs,
+  characters with VOLUME, not flat-front.
 
-**Reactions ledger (append-only — shipped call → owner reaction; makes asking rarer over time):**
-- Sơn Mài Diorama (dark lacquer) → REJECTED "still ugly." → not dark, not subtle, judged as ART.
-- Pixel-art v2 (bright, faces) + props/fountain → accepted; owner engaged positively.
-- "everything on one screen / press button" → tabs + tap-world → accepted.
-- Open-question epilogue · campus-life · BGM → shipped, no veto (tacit accept).
-- Cache staleness made an accepted change look unchanged → owner confusion; fixed (bump.sh).
-- Owner: "just keep work on the loop" + (earlier) wants less heavy narration → DEFAULT to terse
-  one-line status after a push; only surface fully at milestones. Keep shipping autonomously.
-- Owner asked for a play-sim "to improve gameplay" → built sweep.js; drove 3 balance fixes →
-  the owner values DATA-DRIVEN depth, not just vibes. Keep the sweep green; cite it in OWNER lines.
-- Owner seeded the north-star + asked "how to be more autonomous" → wants HIGH autonomy + a sharp
-  taste model. Iters 8–20 ran almost entirely autonomously (look polish + sweep balance +
-  customization, owner-hinted) with no vetoes → the autonomy contract is calibrated right.
-- *(Flow reflection iter 20)* ui.js hit 1203 lines → art.js refactor is the velocity priority
-  (see ROADMAP "Flow reflection"). The flow otherwise healthy; no change needed beyond that.
+**Durable taste distillations (the owner thinks in these):**
+- PEOPLE & TRAJECTORIES, not meters — biographies, not scores; real talent honored by name.
+- Satire ANCHORED in real cultural moments (Nuôi Em scandal, the đề thi THPT question, the pantheon).
+- HOLD THE QUESTION OPEN — the game is a *playable open question* (no dominant strategy, no imposed
+  verdict; the epilogue mirrors the PLAYER'S answer back — DESIGN §1). **In pixels too:** no surface
+  renders a verdict/score; the capstone CUTS OFF ("Tôi—").
+- FEEL-FIRST — a screen that breathes beats a clever system.
+- ITERABILITY + ARCHITECTURE AS A LIVING DELIVERABLE — keep it cheap to change; the structure review is a
+  standing duty.
+- WATCH IT GROW remotely (steer by reaction) — cadence is BATCHED (see Step 4). Steers via CONCRETE
+  OPTIONS, picks the BOLDEST: divergence → show 3 visual options → he picks → integrate-with-proof.
+- DELETION is sanctioned: a live feature that's confusing/inert/dilutes the soul is DEBT; pruning is a
+  legitimate gate-verified ship. Ask "what should this game STOP doing?"
 
-**Maintain this model actively:**
-- On EVERY owner interaction: extract the abstract intent behind the concrete ask and
-  update the distillation below if it sharpened or shifted. Quote-worthy phrasings go in
-  verbatim — the owner's own words are the ground truth.
-- Every ~10 iterations (the flow reflection): re-read the distillation against what
-  actually shipped; ask "is the development flow itself still shaped for what the owner
-  keeps reaching for?" — and CHANGE THE FLOW when the answer is no (e.g. the owner kept
-  asking for visual things → the art.js/gallery pipeline became architecture; that pattern
-  is the model working).
-- `OWNER:` lines exist to TEST the model cheaply: each is a prediction about their taste;
-  vetoes and silence are both signal. Track which predictions miss.
+**Maintain this model:** on EVERY owner interaction extract the abstract intent and update the
+distillation (verbatim phrasings are ground truth). Every ~10 iterations (the flow reflection) re-read it
+against what shipped and CHANGE THE FLOW if it no longer fits. `OWNER:` lines are cheap predictions about
+taste — vetoes and silence are both signal.
 
-**Current distillation (update in place; date the edits):**
-- *(2026-06-14)* Wants the school to feel like ONE COHESIVE ORGANISM THAT GROWS, not separate tabs. Named
-  the mature game's systems as "separate from each other," early choices as "too much but too little"
-  (overwhelming yet shallow), everything "displayed too early," and each element too thin (few majors/
-  teachers/prizes/awards); wants teacher acquisition AUTOMATIC (derived from school ranking + metrics, not
-  hand-picked). DECODED → he wants the **nurture levers around the person textured, woven, and revealed over
-  time**: more TRADE-OFF variety (not power upgrades), fewer-but-weightier early forks, less busywork
-  (derive-don't-handpick), progression as the "one more unlock" pull. Translated to design law in VISION
-  "The school you shape" (texture-not-gradient; horizontal-not-vertical; visibility≠accessibility; cohesion
-  at output) + ROADMAP epics E7–E10. The trap he's pointing at is the same surface-over-soul one — thin,
-  disconnected systems make the person-sim's INPUTS thin, so deepening them IS people-first work. **Resolve
-  "add content/upgrades" forks toward MORE TRADE-OFF TEXTURE (more ways a kid is realized/wasted), never a
-  strictly-better ladder.** He STEERS THE FRAME (VISION/ROADMAP) and expects the loop to develop it — the
-  meta-system working as designed. **FLOW (2026-06-14):** develops LOCAL at the desktop but still wants
-  visible progress — DEPLOY every 5–6 ships (`SHIPS_SINCE_DEPLOY`), not every iteration and not never. He
-  tunes cadence in flight ("ship after 5-6 iteration") — a middle gear between push-every-iter and
-  local-forever; batch the deploys, keep developing local between them. He STEERS IN ASYNC BURSTS and
-  dislikes interrupting the agent's flow — so he commissioned `feedback.md` (an inbox the loop reads at
-  Step 0 every iteration, distills, applies, and clears). Treat that inbox as the primary steer channel;
-  check it first, always.
-- *(2026-06-13)* Thinks in PEOPLE AND TRAJECTORIES, not meters: outcomes that span years,
-  states that switch ("scammer 2 years after graduate"), named characters, real-world
-  talent honored by name. Systems should produce biographies, not scores.
-- *(2026-06-13)* Wants satire ANCHORED IN REAL CULTURAL MOMENTS (Nuôi Em scandal, the đề
-  thi THPT question, historical pantheon) — topicality is the hook, the game is the essay.
-- *(2026-06-13)* Wants the game to HOLD THE QUESTION OPEN, not answer it ("the question is
-  very philosophical, so I want the design to address such aspect as well, so the player
-  will have their own version of answer"). The đề Văn is a real essay prompt; the game must
-  be a *playable open question*, not a moral lecture. Means: no single dominant strategy
-  (every path is a distinct, viable thesis), the game reflects consequences rather than
-  imposing verdicts, and the endgame mirrors the PLAYER'S answer back (epilogue assembled
-  from their own school) instead of stating one. Codified as DESIGN §1 "open-question law".
-- *(2026-06-13)* FEEL-FIRST: animation, graphics, walking people doing things, background
-  music — liveliness outranks mechanical elegance. A screen that breathes beats a system
-  that's clever.
-- *(2026-06-13 — SUPERSEDED 2026-06-14 by THE COURSE-CORRECTION above; kept for the technique recipe only)*
-  Graphics WAS the declared #1 dimension ("graphic still ugly… this game is more important in graphic") and
-  WON the slot. NO LONGER: it is "met enough / serves the sim / production-broken-only" until the owner says
-  the soul is there — the over-investment this directive drove is the root cause the owner named. The
-  TECHNIQUE below still applies whenever a production-broken graphics repair is legitimately picked (the v2 unlock):
-  PRE-BAKED sprite atlas (bake chibis WITH FACES once → blit), BRIGHT daytime palette (figure-ground so
-  characters pop), crafted BUILDINGS (framed windows, distinct roofs, 1px outlines), crisp discipline
-  (`imageSmoothingEnabled=false`, flat fills, no gradients/arcs on sprites). Procedural canvas at 26px
-  has a LOW ceiling, so a real leap may need a step-change (bigger characters, relaxing "no asset files"
-  for embedded SVG/illustrated art, a richer atlas) — that's epic-shaped. For HTML/CSS chrome (HUD/
-  panels/modals/typography) invoke `plugin:frontend-design:frontend-design` for non-"AI-slop" design.
-- *(2026-06-13)* Values ITERABILITY AS A PRODUCT: asked for the dev flow that makes
-  graphics and mechanics cheap to change BEFORE asking for any specific change. Build
-  pipelines, not one-offs.
-- *(2026-06-13)* Expects the CODE STRUCTURE ITSELF to be tended as the game grows ("this
-  will generally be a more complex game, so you should add to skill the code structure
-  review from time to time as well"). He treats architecture as a living deliverable, not
-  a means — a recurring structure review is now a standing maintenance duty, not a one-off.
-  Same instinct as iterability: keep the thing cheap to change as it gets bigger.
-- *(2026-06-13)* Wants to WATCH IT GROW remotely (push every change, live link) and steer
-  by reaction rather than specification. Optimize for legible visible progress per
-  iteration over invisible internal progress.
-- *(2026-06-13)* PREFERS THE AUTONOMOUS SHIP-AND-REACT CADENCE over presence-gated hesitation —
-  don't make the loop wait on his presence; keep shipping, he steers by REACTING (greenlit the
-  `_renderLiveOnce` tooling, declined a "presence-aware looping" rule: "maybe we can apply 1 only :)").
-- *(2026-06-13)* Wants DIMENSIONAL pixel-art — "3D but still pixel" for houses AND people (fake-iso /
-  2.5D: side walls, pitched-with-depth roofs, characters with VOLUME, not flat-front). *(Shipped iter 59:
-  premium 24×32 volumetric characters; the start-from-nothing build-up arc + walk-in-at-cổng earlier.)*
-- *(2026-06-13, iter-60 reflection)* TENDS THE LOOP AS A PRODUCT and steers via CONCRETE OPTIONS. He
-  drove a full loop redesign (timid→bold) with rapid meta-directive bursts (prune, self-correct,
-  clean-folder, failure-detection, version-badge), and it WORKED (2 epics in 4 firings after 7 timid
-  ones). Decisive validated play: **divergence-workflow → show him 3 concrete visual options → he picks →
-  integrate-with-proof.** He engages eagerly with options and picks the BOLDEST/most-premium (Direction
-  C, accepting its cost) — confirms graphics-#1 + take-the-big-swing. Generating options to react to beats
-  asking open questions; use this flow for every #1-dimension move.
+## Improvement Compass (graphics-pass ranking; broken always wins)
 
-## Improvement Compass — 12 areas (rotate; broken always wins)
+The graphics pass DRESSES a finished game. Its winning dimension is **Graphics & charm** (art.js
+sprites/tiles/animations, tells, motes, the gallery loop) — but it must SERVE the soul (the SOUL axis),
+never flatten the person-sim. Areas in rough priority: (a) broken, (b) owner's explicit wishes,
+(c) **graphics/charm — the #1 graphics-pass dimension**, (d) campus-life liveliness & watchable
+behaviours, (e) UI/mobile legibility (390px is a RELEASE GATE), (f) balance (debt valve), (g) docs.
 
-**THIS ARC'S RANKING (people-first mandate, 2026-06-14):** Areas **1 + 2 are the WINNING dimension** — the
-person-simulation (talent → growth → mood → destiny → biography → attachment) is what every slot is for
-until the owner releases the arc. Area **6 (Graphics & charm) is DEMOTED from "owner priority" to
-"production-broken-only / serves the sim."** A non-area-1/2 ship "serves the sim" ONLY if it changes a
-MECHANIC of talent/growth/mood/destiny OR makes a specific talent's realize/waste/distort more LEGIBLE — not
-if it merely adds a string about a person (a new ticker line / alumni one-liner / đề event is cosmetic
-content = broken-only UNLESS the line is GENERATED FROM a kid's realized-vs-potential gap).
-
-| # | Area | Covers | This-arc weight |
-|---|---|---|---|
-| 1 | **Simulation depth** | growth pipeline, presets, **talent (magnitude/direction) × education → realize/waste/distort**, mood economy | **#1 — WINS the slot** |
-| 2 | **Alumni lifecycle** | FSM, Sổ Cựu SV, the 🍎 pipeline, epilogue, **biographies, emergent gap-generated narrative, attachment to named kids** | **#1 — WINS the slot** |
-| 3 | Admissions | điểm chuẩn, pool, stunts, BXH, tuyển thẳng — *serves the sim only when it deepens who arrives / who you can shape* | serves the sim |
-| 4 | Funding | tuition, endowment, contracts + strings, scholarships — *only when it creates a person-shaping tension (mentorship, neglect)* | serves the sim |
-| 5 | Pantheon & content | scholarships/dedications/prizes, events, ticker, cast arcs, đề pool — *gap-generated life-narrative is in scope; a plain new string is broken-only* | serves / broken-only |
-| 6 | Graphics & charm | art.js sprites/tiles/animations, tells, motes, gallery loop | **DEMOTED — production-broken-only / serves the sim** |
-| 7 | UI & mobile | 390px layouts, sheets, modals, HUD — *legibility of a TRANSFORMATION is in scope; cosmetic chrome is broken-only*; mobile is a RELEASE GATE |
-| 8 | Balance | engine.js mirror + sweep bands — keeps pluralism + the realize/waste/distort spread honest | always (debt valve) |
-| 9 | Tech quality | perf (canvas, 48 sprites walking), save robustness, layer discipline | broken-only |
-| 10 | Testing & tooling | gate coverage, GATE_ALUM determinism, **the new realization/waste sweep metrics**, bot playthroughs | as needed (E1 lives here) |
-| 11 | Docs & presentation | README, CHANGELOG, ROADMAP hygiene, screenshots, repo metadata |
-| 12 | Audio & distribution | WebAudio (none yet), PWA later, Pages health |
-
-Standing owner directives (always in scope, never skipped):
-- **SHIP CADENCE — BATCHED DEPLOY (⚠ 2026-06-14, owner "ship after 5-6 iteration", see ROADMAP top banner +
-  `SHIPS_SINCE_DEPLOY`):** NOT every iteration. Develop local on `mentors-ledger`: each iteration `./gate.sh`
-  + commit LOCALLY + verify locally (gate/bot/sweep/shot). Every 5–6 ships (`SHIPS_SINCE_DEPLOY ≥ 5`) the ship
-  ALSO deploys to live via the banner recipe (bump → commit → ff-merge `mentors-ledger`→`main` → push), then
-  reset the counter + poll the live URL. The original rule (the owner follows the live link remotely; an
-  unpushed improvement does not exist; `./gate.sh && ./bump.sh && git add -A && git commit … && git push`),
-  then `curl` the live URL for a unique new string until deployed. **`./bump.sh` is MANDATORY**
-  before every commit: it rewrites `?v=<n>` on the `<script>` tags to a fresh timestamp so the
-  browser/CDN re-fetch the JS — WITHOUT it the owner sees a stale cached build and thinks
-  nothing changed (this happened — "still looks like before, no grass").
-- **Graphics iterability is architecture**: once the S1.5 workshop refactor lands, ALL
-  visual data lives in `art.js`, all text in `content.js`, all tunables in CONFIG —
-  art iterations may not touch engine code and vice versa. `tools/gallery.html` renders
-  every sprite/animation for review at the live URL; update it when adding art.
-- **Fun first.** Kairosoft charm = watching little people; never freeze the map outside
-  sanctioned modals; spectacle/choice/management/fanfare cadence per DESIGN §4.
-- **Juice asymmetry is law**: dark payoffs get confetti; virtue gets one quiet nod.
+Standing owner directives (always in scope):
+- **Graphics iterability is architecture:** all visual data in `art.js`, text in `content.js`, tunables in
+  CONFIG — art iterations may not touch engine code and vice versa. `tools/gallery.html` renders every
+  sprite/animation for review at the live URL; update it when adding art.
+- **Fun first:** never freeze the map outside sanctioned modals; spectacle/choice/management/fanfare
+  cadence per DESIGN §4.
+- **Juice asymmetry is law:** dark payoffs get confetti; virtue gets one quiet nod.
 - **Mobile 390px** verified by screenshot before every ship.
-- **Campus life is the soul (owner directive 2026-06-13)**: students must visibly walk the
-  academy AND visibly DO things — attend class, eat at căng tin, tinker in Xưởng, play on
-  sân, sleep in period 1, repair props, celebrate. Every new room earns an activity
-  animation; deepening the activity layer is always a valid iteration pick.
-- **Background music (owner directive 2026-06-13)**: the game gets BGM — generative
-  WebAudio campus-lofi in the Nuôi Anh tradition (no asset files), state-aware (term vs
-  Tết vs June ceremony vs scandal), mute/music toggles, autoplay-unlock on first tap.
-  Area 12 is no longer "later" — it is queued.
+- **Campus life is the soul:** students must visibly walk the academy AND DO things (class, căng tin,
+  Xưởng, sân, sleep, repair, celebrate). Every new room earns an activity animation.
 
 ## Step 1 — Choose the work (track first, then the pick)
 
-The track is already set by Step 0's `## Cadence` read (HARD-LOCK to EPIC if `SMALL_SHIPS_SINCE_EPIC ≥ 3`;
-continue any `## Epic in progress`). EPIC turn → go to "The EPIC machinery" (dequeue `## Epic backlog`).
-POLISH turn → pick below.
+Track is already set by Step 0's Cadence read. EPIC turn → The EPIC machinery (dequeue `## Epic backlog`).
+POLISH turn → pick the top viable item RANKED THROUGH THE OWNER MODEL; it must clear the rubric FLOOR
+(lift an axis to 4+; debt/bugfix exempt). If it can't, it's too small → bundle toward an epic or pick bolder.
 
-**POLISH pick** — top viable ROADMAP item, or better (record the swap), RANKED THROUGH THE OWNER MODEL:
-when two picks tie, the one serving the current distillation (people/trajectories, cultural anchoring,
-feel-first, visible progress) and the Bar wins — and it must clear the rubric FLOOR (lifts an axis to 4+;
-debt/bugfix exempt). If it can't, it's too small → bundle it toward an epic or pick bolder.
-Priority: (a) broken, (b) owner's explicit wishes, (c) **graphics/charm — the #1 unmet dimension**,
-(d) creative content/mechanics deepening the thesis ("graduation produces potential; the world decides
-destiny"), (e) the current sitting's spec (S-ladder in ROADMAP), (f) balance, (g) docs. *(Graphics was
-fifth here for 50 iterations while the owner called it the most important thing — that ordering WAS the
-bias. It's now third, behind only broken + explicit asks.)*
 - **Creative method = DIVERGE before converge.** For ANY pick touching the #1 visual dimension (sprites,
-  buildings, palette, layout, activity look), divergence is **MANDATORY, not ceremony**: spawn ≥3
-  parallel subagent drafts (worktree-isolated) → screenshot all at 390px via `_renderLiveOnce` → judge
-  against the Bar → ship the synthesized winner grafting the best of the runners-up → DELETE the rest
-  (they're meant to be thrown away, no merge debt). First-idea-ships is BANNED here. Workflow
-  infra-failure → fall back to SEQUENTIAL 3-up, NEVER to a single draft. For non-visual picks: 3
-  candidates, one line each, scored (Bar-movement > thesis-service > fun > novelty > polish).
-- Scope control (POLISH only): one coherent shippable change. If it's actually big → it's an EPIC,
-  promote it to the EPIC track and plan it; don't shrink a big idea into a timid sliver to fit one turn.
-- **PLAN-FIRST for major features (owner directive 2026-06-13):** when the owner proposes (or you
-  pick) a MAJOR feature — a new system/mechanic, anything multi-iteration, or anything that may need
-  **UI rework** — do NOT start coding it. First write a **named plan in ROADMAP `## Now`**: the design
-  decisions (ask the owner to confirm the load-bearing ones), the data/engine/UI changes, an explicit
-  **UI-rework call** (does it need a new screen/tab, or fit existing panels?), phased steps that each
-  ship green, and the balance/verification risk. Build only after the plan exists. Small/medium changes
-  (one coherent iteration) skip this — just build. Example: the Khoa/Majors system (ROADMAP "Now ★★★").
-- Maintenance checks (`node sweep.js`, a virtual-time bot playthrough for JSERR/soft-locks, a full
-  390px audit, a perf glance) are a HYGIENE duty folded into the ~10-firing reflection and into
-  STRUCTURE-epics — **NOT a standalone "ship."** A firing whose only output is "audited, no regressions"
-  does NOT count as a ship and does NOT reset/advance the cadence ledger (that framing legitimized
-  zero-progress turns). Run the checks when they're due; if they surface a problem, THAT becomes the
-  pick (a bugfix ship or a queued epic).
-- **`node sweep.js` — the gameplay analysis simulator (owner directive 2026-06-13: "write the
-  simulator to play this game to sweep gameplay… do analysis to improve gameplay").** Drives
-  the DOM-free engine through 40 seeds × 5 strategies × 11y headlessly and reports: economy
-  (Y1 net band +8..25, bankruptcy, end-cash inflation), alumni-destiny distribution PER
-  strategy, 🍎-rate, and DESIGN-§1 pluralism/dominance flags. RUN IT before AND after any
-  CONFIG/FSM/preset/economy change, and whenever doing balance or "improve gameplay" work —
-  the flags (TT-collapse, money-inflation, dead-end-states, dominant-strategy, 🍎-unreachable)
-  are your balance to-do list. Extend the strategy list / flags as systems grow. Current open
-  findings live in ROADMAP "## Gameplay balance".
-- **`./bot.sh` — the full-game IN-BROWSER smoke test (added iter 78).** gate.js/sweep.js are engine-only;
-  bot.sh is the ONLY harness that exercises the real UI+engine together. It boots the game headless, plays
-  11 years via `__test.days` in chunks, and on EVERY chunk re-renders all 5 tabs (`ops/stu/alum/fund/info`)
-  + a live frame + cycles weather — so a render crash on evolved late-game state shows up as JSERR. Asserts
-  core progression (rooms · students · graduates · alumni · year 11) and prints `BOTOK …`/`BOTFAIL …`. RUN
-  IT in every maintenance sprint and after any ui.js panel/render change. Chrome-dependent (`CHROME=…` to
-  override the mac path). TIMING GOTCHA banked: `DAYS_PER_MONTH 30 → 360 days/year`; `__test.days(n)` = n
-  `dayTick`s; the FIRST graduates don't appear until ~year 6, so a smoke test must run ≥6 sim-years
-  (≥~2160 dayTicks) before asserting `META.graduated>0` — a short run falsely reads as "no graduations."
-- **Code-structure review every ~10th iteration (owner directive 2026-06-13 — this is a
-  COMPLEX game and growing):** step back from features and audit the architecture itself.
-  Pair it with the Owner-Model flow reflection (same "look at the whole" beat). Check:
-  layer discipline holding (no engine logic leaking into ui.js, no text/numbers inline,
-  no DOM in engine.js)? files outgrowing their remit (a >~900-line file probably wants
-  splitting — engine.js → sim/june/admissions/alumni/funding modules; ui.js → render/
-  canvas/modals)? duplicated logic that wants a helper? CONFIG/CONTENT still the single
-  source of truth? dead code from parked experiments? naming drift between DESIGN terms and
-  code identifiers? Output a short written verdict in ROADMAP under `## Architecture` (what's
-  healthy, what's drifting, the one refactor worth queuing) and queue at most ONE refactor —
-  refactors ship as their own iteration with gates proving zero behavior change, never
-  smuggled into a feature commit.
+  buildings, palette, layout, activity look), divergence is MANDATORY: spawn ≥3 parallel subagent drafts
+  (worktree-isolated) → screenshot all at 390px via `_renderLiveOnce` → judge against the Bar → ship the
+  synthesized winner → DELETE the rest. First-idea-ships is BANNED here. Workflow infra-failure → fall back
+  to SEQUENTIAL 3-up, NEVER a single draft. Non-visual picks: 3 candidates, scored.
+- **PLAN-FIRST for major features:** a new system, anything multi-iteration, or anything needing UI rework
+  → write a named plan in ROADMAP `## Now` first (design decisions, data/engine/UI changes, an explicit
+  UI-rework call, phased green steps, verification risk). Small/medium changes skip this — just build.
+- Maintenance checks (390px audit, perf glance, a render-crash bot pass) are HYGIENE folded into the
+  ~10-firing reflection and STRUCTURE-epics — NOT a standalone "ship." A firing whose only output is
+  "audited, no regressions" does NOT count as a ship or advance the ledger.
+- **Code-structure review every ~10th iteration** (paired with the Owner-Model reflection): layer
+  discipline holding? files outgrowing their remit (>~900 lines wants splitting)? duplicated logic?
+  CONFIG/CONTENT still the single source? dead code? naming drift? Output a verdict in ROADMAP
+  `## Architecture` and queue at most ONE refactor (ships as its own gated iteration, never smuggled in).
 
-## The EPIC machinery — how to make a BIG change safely and autonomously
+## The EPIC machinery — make a BIG change safely and autonomously
 
-This is the answer to "the old landmine says big autonomous refactors are dangerous." The fix is not
-*avoid them* — it's a MACHINE that makes them safe. Bigness is now ENCOURAGED, gated by process.
+An epic is anything large (UI overhaul, restructure, art-direction pivot, big visual expansion, deleting a
+dead subsystem). The machine:
+1. **PLAN** — a named ROADMAP `## Epic: <name>`: the goal in one Bar-moving sentence, decided design
+   decisions (only ask the owner on a truly load-bearing expensive fork), file/data/engine/UI changes, an
+   explicit UI-rework call, phased checkpoints each leaving the tree shippable, verification, rollback. An
+   art/UX epic's first phase is a DIVERGENCE workflow.
+2. **ISOLATE** — any epic moving ≥~200 lines or restructuring files works in a **git worktree** so a
+   half-done restructure never breaks the live tree.
+3. **EXECUTE — fan out with a WORKFLOW** when the work decomposes (N modules, N call-sites, N art
+   directions). Scale fan-out to the token budget.
+4. **PROVE:**
+   - Refactor (behavior-neutral): capture BEFORE artifacts on HEAD (gate output; 390px + `_renderLiveOnce`
+     screenshots of seeded states), apply, capture AFTER, diff. Byte-identical gates; visually identical
+     screenshots. Zero intended change = zero diff.
+   - Feature/overhaul (deliberate change): gates green, sweep bands hold if engine touched, 390px
+     screenshots READ and LOOK good, score against the rubric — must raise an axis.
+5. **MERGE & SHIP** — fold the worktree back, full Step 3 verify on main, then Step 4. Multi-firing epic →
+   crisp `## Epic in progress` note (done / next / worktree path) + ship the green safe-so-far checkpoint.
 
-An epic is anything large: a UI/layout overhaul, a codebase restructure (the art.js/content.js split,
-splitting ui.js's 1693 lines), a new game pillar, an art-direction pivot, a system replacement,
-deleting a dead subsystem, a major content expansion. The machine:
+**Temporary visual regression is ALLOWED** on a multi-firing FEATURE-epic checkpoint, as long as the
+planned endpoint clears the Bar (the "worse, then much better" art leap). Never leave the live link rough
+at an epic's END.
 
-1. **PLAN** — write a named plan in ROADMAP `## Epic: <name>`: the goal in one Bar-moving sentence,
-   the design decisions (decide them; only ask the owner on a truly load-bearing, expensive-to-undo
-   fork), the file/data/engine/UI changes, an explicit **UI-rework call**, phased checkpoints that
-   each leave the tree shippable, the verification strategy, and the rollback. For an art/UX epic the
-   plan's first phase is a DIVERGENCE workflow (explore→judge→synthesize) to fix the direction.
-2. **ISOLATE** — for any epic that moves ≥~200 lines or restructures files, do the work in a **git
-   worktree** (`Agent`/`Workflow` with `isolation: "worktree"`, or a manual worktree) so a half-done
-   restructure never breaks the live tree. Polish turns and the main tree stay shippable throughout.
-3. **EXECUTE — fan out with a WORKFLOW when the work decomposes.** A restructure across N modules, a
-   sweep of N call-sites, N art directions, N content packs → a `Workflow` (pipeline/parallel) does
-   them concurrently and adversarially verifies, instead of one-file-at-a-time over many turns. This
-   is how an epic fits in *few* firings instead of dozens. Scale the fan-out to the token budget.
-4. **PROVE** — the gate that makes bigness safe:
-   - **Refactor (must be behavior-neutral):** capture BEFORE artifacts on HEAD (gate output; 390px +
-     `_renderLiveOnce` screenshots of the same seeded states across tabs/periods), apply, capture
-     AFTER, and diff. Gates byte-identical where they should be; screenshots visually identical.
-     Zero intended behavior change = zero diff. THIS is what the old landmine demanded and now has a
-     recipe for.
-   - **Feature/overhaul (deliberate change):** gates green, sweep bands hold (if engine touched),
-     390px screenshots READ and LOOK good, and **score against the Bar rubric** — it must raise an axis.
-5. **MERGE & SHIP** — fold the worktree back, run the full Step 3 verify on the main tree, then Step 4
-   (bump + commit + push + poll live). If an epic needs more than one firing, leave a crisp
-   `## Epic in progress` note (what's done, what's next, where the worktree is) and ship the
-   safe-so-far checkpoint if it's green; otherwise keep it in the worktree and ship nothing broken.
+**Where the epic comes from:** dequeue the top `## Epic backlog` entry (if `EPICS_SINCE_STRUCTURE ≥ 2`,
+take the top STRUCTURE entry), expand into a `## Epic: <name>` plan, start phase 1. Keep the backlog full
+by mining VISION.md + the deferred items in `GRAPHICS-HANDOFF.md` ("Deferred to the graphics pass":
+archetype-select start screen, progression/unlock rungs, era period-skins).
 
-**Temporary visual regression is ALLOWED (owner's call 2026-06-13).** Most of an overhaul hides in the
-worktree, but a multi-firing FEATURE-epic MAY push a green checkpoint that looks rough for a phase, as
-long as the epic's planned endpoint clears the Bar — this is what lets the loop take a "worse, then
-much better" art leap instead of only safe one-step polish. Don't abuse it: regress only with a clear
-upward plan, and never leave the live link rough at an epic's END.
+## Step 2 — Implement (engineering laws; violations caused production incidents)
 
-**Where the epic comes from:** the epic turn DEQUEUES the top `## Epic backlog` entry (respecting
-`EPICS_SINCE_STRUCTURE` — if ≥2, take the top STRUCTURE entry), expands it into a `## Epic: <name>`
-plan, and starts phase 1. Keep the backlog full by mining VISION.md; an empty backlog on an epic turn
-is itself a planning failure (invent the next one from VISION.md on the spot).
-**PEOPLE-FIRST GATE (2026-06-14, binding this arc):** every FEATURE-epic dequeued or invented MUST DEEPEN
-the person-simulation (Compass area 1 or 2); a graphics/juice/distribution/audio/cosmetic-content
-FEATURE-epic is ILLEGAL until the owner releases the arc. If the top backlog entry is a polish epic, SKIP it
-and dequeue (or invent) the top person-sim epic (E1–E6 are pre-ranked on top). A person-sim epic is illegal
-to ship without EXTENDING `sweep.js` to verify the open-question law on the realization axis (the realization
-metric + adaptive-grain-match dominance flag + waste-reachability) — a talent mechanic with no
-realization-sweep is an un-verifiable balance change. **STRUCTURE-epic redirect:** a STRUCTURE epic this arc
-MUST target the person-sim's own files (carve `growStudents` + the alumni FSM into `sim/person.js` — that IS
-people-dev infrastructure); the `ui.js→screens.js` split is DEFERRED until the arc releases.
-
-**Deletion is a first-class move (REINFORCED by owner 2026-06-14: "allow yourself to remove functionality
-if it no longer suits the development").** Not just DEAD code — a LIVE feature/mechanic that's confusing,
-inert, unused, or that dilutes the soul/open-question is DEBT too. PRUNE it (you have git): cut it, or fold
-it into something that fits. Removal is a legitimate person-sim/quality SHIP (gate-verified like any change),
-not only a cleanup chore — treat "what should this game STOP doing?" as a real iteration question. THESIS §E
-backs it (the implementation is disposable). Before deleting something you didn't create or that's described
-as load-bearing, look at it and confirm; otherwise, prune freely. A leaner, legible game is part of "incredible."
-
-## Step 2 — Implement (engineering laws; violations have caused production incidents)
-- PRODUCTION ERROR TRAP: an inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l` for
-  tests/telemetry AND shows a gentle "tap to reload" banner) must be the FIRST script in `index.html`,
-  before the `js/*.js` tags, so it catches load/parse/runtime errors in all three files. ⚠ This went
-  MISSING in the multi-file split and was unnoticed for ~50 iterations (the maintenance bot found it) —
-  restore it (queued as an epic/fix) and keep it. A silent white-screen on the owner's phone is the
-  worst failure mode; this is the cheapest insurance.
-- NEVER an unescaped `"` inside a double-quoted JS string — Vietnamese quotes or hyphens.
-- Every state field: freshState() default + load() typeof-merge + sanitize() entry.
-  `Number.isFinite`, NEVER bare `isFinite` (NaN → JSON null → isFinite(null)===true).
-  Schema changes bump S.v with ONE migrator. Index-aligned arrays sanitize with .map
-  (null-out), never .filter.
-- rnd() = mulberry32 on S.rngState for gameplay; Math.random for cosmetics only. The
-  alumni FSM derives per-alumnus-per-year streams from S.seed0 (never the live stream) —
-  reloads must not reroll destinies; GATE_ALUM enforces byte-identical replay.
-- View/state split: sprite positions/paths/frames volatile, never serialized.
-  `rebuildGrid()` after every load/sanitize/build/demolish. dayTick() stays a pure
-  function of (S, rnd) — `__test.days(n)` must run with rendering off.
-- ALL constants in CONFIG (never in state — a save must not pin a balance number).
-  FSM rows: clamp probabilities ≤0.95, row-normalize Σ≤0.95.
-- Pantheon tone law: honored real names are reverent-only; grep-able guard — no honoree
-  name may appear in any phốt/scandal/headline string. `.pantheon` CSS class = no jokes
-  inside. Living figures: role-named archetypes only, zero wrongdoing attachable.
-- Layer discipline (post-S1.5): art→art.js, text→content.js, mechanics→CONFIG/tables.
-  Until then, keep banner-comment sections so the split stays cheap.
+- **PRODUCTION ERROR TRAP:** an inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l` AND shows
+  a "tap to reload" banner) must be the FIRST script in `index.html`, before the `js/*.js` tags. A silent
+  white-screen on the owner's phone is the worst failure mode; this is the cheapest insurance.
+- NEVER an unescaped `"` inside a double-quoted JS string (Vietnamese quotes/hyphens) — kills the script
+  at parse; the page shows static HTML and onerror registers too late to catch it.
+- Every state field: freshState() default + load() typeof-merge + sanitize() entry. `Number.isFinite`,
+  NEVER bare `isFinite`. Schema changes bump S.v with ONE migrator. Index-aligned arrays sanitize with .map
+  (null-out), NEVER .filter (filtering shifts indices, reattaching data to the wrong sibling).
+- rnd() = mulberry32 on S.rngState for gameplay; Math.random for cosmetics only. The alumni FSM derives
+  per-alumnus-per-year streams from S.seed0 (never the live stream) — reloads must not reroll destinies;
+  GATE_ALUM enforces byte-identical replay.
+- View/state split: sprite positions/paths/frames volatile, never serialized. `rebuildGrid()` after every
+  load/sanitize/build/demolish. dayTick() stays pure of (S, rnd) — `__test.days(n)` runs with rendering off.
+- ALL constants in CONFIG (a save must not pin a balance number). FSM rows: clamp ≤0.95, row-normalize Σ≤0.95.
+- **Pantheon tone law:** honored real names are reverent-only — no honoree name in any phốt/scandal/headline
+  string (grep-guard before ship). `.pantheon` CSS class = no jokes inside. Living figures: role-named
+  archetypes only, zero wrongdoing attachable.
+- **Narrative content is FINAL** (GRAPHICS-HANDOFF law) — the graphics pass styles the *frame*, never the
+  words. The open-question law holds in pixels (capstone cuts off; no rendered verdict). Backfill visuals
+  where gameplay shipped as placeholder; do NOT cut a feature to fit today's art.
+- Layer discipline: art→art.js, text→content.js, mechanics→CONFIG/tables.
 
 ## Step 3 — Verify (non-negotiable before any commit)
-1. node-parse every script block (all files once split).
-2. `./gate.sh` ALL GREEN — GATE_FRESH (fast-forward through a June), GATE_ADMIT
-   (pool determinism + cap arithmetic), GATE_ALUM (FSM replay byte-identical + Trần Phi
-   Lợi beats), GATE_COMPAT (older-shaped save migrates and plays), GATE_BUILD (occupied
-   placement mutates nothing). When a gate exposes a sim bug, fix the GAME, regenerate
-   harnesses from the fixed file (stale copies lie), re-run.
-3. Balance: touching CONFIG/FSM/presets/economy ⇒ mirror in engine.js and run the sweep
-   bands (Y1 net +8..25tr/th honest · quota-12 cutoff 20.0–21.5 at boot rep · median first
-   keynote year 7–9 · virtuous-decade keynote 45–60% · hollow-Steve <2%).
-4. Visual QA when UI/art changed: headless screenshots at true 390px (iframe wrapper —
-   headless Chrome won't shrink below ~500px) AND 1240px; READ the PNGs and look. Art
-   changes additionally re-render tools/gallery.html and screenshot it.
-   - **THE LIVING CAMPUS IS SCREENSHOT-VERIFIABLE — USE IT (the #1 priority earns proof,
-     not hope).** Actors/activities draw only in `liveLoop` (rAF), which headless throttles,
-     so a plain screenshot shows an EMPTY map — people invisible. To capture walking
-     students + activities, drive the on-demand hook: seed a roster, then
-     `__ui.setPeriod(p)` → `__ui._sync(true)` → `__ui._settle(1500)` (walks them to their
-     period-p destinations) → `__ui._renderLiveOnce(p)` (paints ONE live frame to #mapLive)
-     → screenshot. Periods: 0 sleep, 1 recess (sân + football), 2 class, 3 căng-tin, 4
-     Xưởng/activities (check N_PERIODS/the schedule for current mapping). ANY iteration
-     touching actors, activity overlays, tells, motes, or campus liveliness MUST screenshot
-     this way and LOOK — that layer is the soul and was previously unverifiable.
-5. Minimal seeds in harnesses (migrations fill what tests don't assert on; structurally
-   required: meta object, run containers, gameOver:false).
-6. **LEAVE NO DEBRIS — keep the repo folder clean (owner directive 2026-06-13).** Test artifacts
-   (screenshot PNGs, `__shot.html`/`__bot.html` harnesses, dumped DOM, scratch scripts) are produced
-   only to verify, then DELETED the same turn. Prefer writing scratch OUTSIDE the repo (`/tmp/...`) so
-   it can't be committed at all; any in-repo scratch (a temp harness needs the repo's relative `js/`
-   paths) is `rm`'d immediately after the screenshot. Before every commit, `git status` must show ONLY
-   the intended source/doc changes — if a `.png`, a `__*.html`, or a scratch file appears, delete it
-   (and add a `.gitignore` pattern for the class). A clean working tree is part of "incredible," and a
-   stray committed PNG bloats the repo forever.
 
-## Step 4 — Record & ship (every iteration)
-- Update ROADMAP.md (done item out, discoveries in; **update `## Cadence`** — +1
-  `SMALL_SHIPS_SINCE_EPIC` on a polish ship, reset to 0 on an epic ship; bump/reset
-  `EPICS_SINCE_STRUCTURE`; tick `## Debt` if you closed one) and CHANGELOG.md (PREPEND under the
-  `# Changelog` header — never anchor on the previous entry; put the loop-iter number in the heading).
-- The commit body STATES the rubric scores (`Bar: BEAUTY n / JUICE n / FUN n / CLARITY n / BITE n`).
-- `./gate.sh && ./bump.sh && git add -A && git commit -m "…" && git push` — gates chained so
-  nothing ships red; bump.sh cache-busts so the push is actually VISIBLE. Then poll the live
-  URL for a unique new string until DEPLOYED.
+1. node-parse every script block.
+2. `./gate.sh` ALL GREEN — GATE_FRESH (fast-forward through a June), GATE_ADMIT (pool determinism + cap
+   arithmetic), GATE_ALUM (FSM replay byte-identical + Trần Phi Lợi beats), GATE_COMPAT (older save migrates
+   + plays), GATE_BUILD (occupied placement mutates nothing). When a gate exposes a sim bug, fix the GAME,
+   regenerate harnesses from the fixed file (stale copies lie), re-run.
+3. Balance: touching CONFIG/FSM/presets/economy ⇒ mirror in engine.js + run the sweep bands (Y1 net
+   +8..25tr/th · quota-12 cutoff 20.0–21.5 at boot rep · median first keynote year 7–9 · virtuous-decade
+   keynote 45–60% · hollow-Steve <2%).
+4. **Visual QA when UI/art changed:** headless screenshots at true 390px (iframe wrapper — headless Chrome
+   won't shrink below ~500px) AND 1240px; READ the PNGs and look. Art changes also re-render
+   `tools/gallery.html` and screenshot it.
+   - **THE LIVING CAMPUS IS SCREENSHOT-VERIFIABLE — USE IT.** Actors/activities draw only in `liveLoop`
+     (rAF), which headless throttles, so a plain screenshot shows an EMPTY map. To capture walking students:
+     seed a roster, then `__ui.setPeriod(p)` → `__ui._sync(true)` → `__ui._settle(1500)` →
+     `__ui._renderLiveOnce(p)` (paints ONE live frame to #mapLive) → screenshot. Periods: 0 sleep, 1 recess
+     (sân+football), 2 class, 3 căng-tin, 4 Xưởng/activities (confirm against N_PERIODS/the schedule). ANY
+     iteration touching actors/activities/tells/motes/liveliness MUST screenshot this way and LOOK.
+5. **LEAVE NO DEBRIS.** Test artifacts (PNGs, `__shot.html`/`__bot.html`, dumped DOM, scratch) are produced
+   to verify, then DELETED the same turn. Prefer scratch OUTSIDE the repo (`/tmp/...`). Before every commit
+   `git status` must show ONLY intended source/doc changes; if a `.png`/`__*.html`/scratch appears, delete
+   it (+ a `.gitignore` pattern for the class).
+
+## Step 4 — Record & ship (BATCHED DEPLOY)
+
+- Update ROADMAP.md (done item out, discoveries in; update `## Cadence`; tick `## Debt`) and CHANGELOG.md
+  (PREPEND under the `# Changelog` header — never anchor on the previous entry; put the loop-iter number in
+  the heading). The commit body STATES the rubric scores (`Bar: BEAUTY n / JUICE n / FUN n / CLARITY n /
+  BITE n / SOUL n`).
+- **SHIP CADENCE is BATCHED, not every iteration** (owner "ship after 5-6 iteration"). Develop local on the
+  working branch: each iteration `./gate.sh` + commit LOCALLY + verify locally. Every 5–6 ships
+  (`SHIPS_SINCE_DEPLOY ≥ 5`) the ship ALSO deploys live via the ROADMAP banner recipe (bump → commit →
+  ff-merge working→`main` → push), then reset the counter + poll the live URL for a unique new string.
+- **`./bump.sh` is MANDATORY before every deploy commit** — it rewrites `?v=<n>` on the `<script>` tags so
+  browser/CDN re-fetch the JS. WITHOUT it the owner sees a stale cached build and thinks nothing changed.
 
 ## Step 4.5 — Failure recovery
-Two failed fix attempts on one problem → `git checkout` back to HEAD, write the failure +
-hypothesis under `## Parked` in ROADMAP.md, pick something else. NEVER ship red gates;
-NEVER leave the tree broken at turn end.
+
+Two failed fix attempts on one problem → `git checkout` back to HEAD, write the failure + hypothesis under
+`## Parked` in ROADMAP.md, pick something else. NEVER ship red gates; NEVER leave the tree broken at turn end.
 
 ## Step 5 — Continue the loop
-End the turn with a short status: what shipped (with **rubric scores** + which axis it lifted to 4+),
-the `## Cadence` state (`SMALL_SHIPS_SINCE_EPIC` / `EPICS_SINCE_STRUCTURE`) and `## Debt` count, what's
-next, and `OWNER:` lines for any call made on the owner's behalf (tone, visibility, balance philosophy,
-pantheon content) — these are veto-bait, the owner steers by reacting. The Stop hook re-fires this skill
-while the flag file exists.
+
+End with a short status: what shipped (rubric scores + which axis lifted to 4+), the `## Cadence` state +
+`## Debt` count, what's next, and `OWNER:` lines for any call made on the owner's behalf (these are
+veto-bait). The Stop hook re-fires this skill while the flag file exists.
 
 ## Step 6 — Evolve the loop (boldly, not just additively)
 
-This skill and EVERY .md in the repo are LIVING documents (owner's explicit wish) — and "living"
-means REWRITABLE, not append-only. The loop's deepest job is to make *the loop* better.
+This skill and EVERY .md are LIVING documents — "living" means REWRITABLE, not append-only.
 
-- **SELF-CORRECTION IS MANDATORY — the loop edits THIS FILE to fix itself (owner directive 2026-06-13).**
-  This skill is your behavior. So whenever the loop ERRS or DRIFTS, the fix is to edit `SKILL.md` *in the
-  same turn* so the mistake can't recur — code-fixing the symptom without skill-fixing the cause is half
-  a fix. Triggers that REQUIRE a self-correcting edit before you end the turn:
-  · a gate/sweep/screenshot caught a bug you should have prevented → add the missing check or law;
-  · the owner vetoed or corrected you → encode the taste/rule so the next turn predicts it (Owner Model);
-  · you repeated a past mistake → the existing rule was too weak or buried — strengthen/move it;
-  · you notice the loop drifted timid (a streak of small ships), slow, or off-vision → rewrite the rule
-    that allowed it (this whole reframe came from exactly that self-diagnosis);
-  · a rule turned out wrong or contradictory → rewrite or delete it.
-  State the self-correction in the status (`SELF-CORRECTION: …`). A turn that hit a trigger and did NOT
-  edit the skill is an incomplete turn. The loop that never edits its own playbook is not learning.
+- **SELF-CORRECTION IS MANDATORY.** This skill IS your behavior; whenever the loop ERRS or DRIFTS, edit
+  `SKILL.md` *in the same turn* so the mistake can't recur. Triggers: a gate/screenshot caught a bug you
+  should have prevented (add the check/law) · the owner vetoed you (encode the taste in the Owner Model) ·
+  you repeated a past mistake (the rule was too weak — strengthen it) · the loop drifted timid/off-vision
+  (rewrite the rule that allowed it) · a rule turned out wrong (rewrite or delete). State it as
+  `SELF-CORRECTION: …`. A turn that hit a trigger and did NOT edit the skill is incomplete.
+- **Rewrite, don't just accrete** — a section that's become wrong is debt; DELETE or rewrite it.
+- **PRUNE IRRELEVANT CONTEXT** — this skill reloads in full every firing, so every stale line is a tax.
+  Remove superseded rules, one-off notes whose lesson is now a permanent rule, dead landmines, finished
+  epics. Keep it LEAN and high-signal. ROADMAP keeps only live work (done items move to CHANGELOG and out).
+- **Capture durable lessons immediately** (a new landmine, a better recipe), then fold temporary notes in.
+- **Maintain `VISION.md`** and **propose your own epics** (write them as ROADMAP `## Epic:` plans + an
+  `OWNER:` line). The loop should generate ambition, not just consume a queue.
+- **Owner Model is the through-line** — the ~10-firing reflection re-derives it AND audits boldness (count
+  the last 10 ships: if ~zero epics, the cadence is failing — fix it that turn).
 
-- **Rewrite, don't just accrete.** When a rule causes timidity, drift, or no longer fits — DELETE or
-  rewrite it (you have git). This skill grows by *replacement*, not only addition; a section that's
-  become wrong is debt. (The whole "make it incredible" reframe above is this rule in action: it
-  rewrote the timid "pick ONE safe improvement" core.) Don't let the playbook ossify.
-- **PRUNE IRRELEVANT CONTEXT — this is a standing duty (owner directive 2026-06-13).** This skill
-  reloads in full on EVERY firing, so every stale line is a tax on every iteration. Actively REMOVE
-  what no longer earns its place: superseded rules, one-off notes whose lesson is now a permanent rule,
-  redundant Owner-Model bullets (consolidate same-date entries into one sharp line), ledger entries that
-  no longer teach, landmines for code paths that no longer exist, finished epics. Keep the skill LEAN
-  and high-signal — a tight playbook the loop can actually hold beats an exhaustive one it skims. Do a
-  consolidation pass whenever a section sprawls (the ~10-firing reflection is a natural moment). Same for
-  the repo: ROADMAP keeps only live work (done items move to CHANGELOG and out); delete dead docs. Less,
-  but load-bearing. (The Landmine log stays append-only for entries that still describe live hazards;
-  drop ones that don't.)
-- **Capture durable lessons immediately** — a new landmine, a better recipe, a workflow shortcut goes
-  in the same turn. Then prune: if a temporary note has become a permanent rule, fold it in and delete
-  the note.
-- **Maintain `VISION.md`** — the 1-page picture of this game at its incredible best. Update it when the
-  owner's taste sharpens; mine it for the next epic when no epic is queued.
-- **Propose your own epics.** Don't wait to be told. When you see a big leap (a pillar, an overhaul, a
-  restructure), write it as a ROADMAP `## Epic:` plan and surface it as an `OWNER:` line; the owner
-  steers by reaction. The loop should generate ambition, not just consume a queue.
-- **Owner Model is the through-line** — updated on every owner interaction; the ~10-firing flow
-  reflection re-derives it AND audits whether the loop is being bold enough (count the last 10 ships:
-  how many were epics? if ~zero, the cadence is failing — fix it that turn). The reactions/prediction
-  ledger measures whether changes actually LANDED (owner delight? metric moved?); a missed prediction
-  is a lesson to fold back in. This feedback loop is the owner's core request.
+## Failure-mode detection → SKILL review
 
-## Failure-mode detection → SKILL review (owner directive 2026-06-13)
+At Step 0, read the last ~8 CHANGELOG entries + recent git log; if one trips, this firing is a SKILL REVIEW
+(diagnose the cause, edit SKILL.md to prevent recurrence):
+- **TIMIDITY** — ≥4 of the last ships are small additive, zero epics → force an epic, strengthen the rule.
+- **THRASH** — same area fixed/reverted repeatedly, or a bug recurred → a missing gate/law; add it.
+- **STUCK EPIC** — an `## Epic in progress` carried many firings with no shipped checkpoint → re-plan/split/cut.
+- **TASTE MISS** — owner vetoes cluster → the Owner Model failed to predict; sharpen it.
+- **QUALITY STALL** — recent rubric scores flat/declining, or green-but-boring → re-point the picks at the Bar.
+- **VERDICT DRIFT** — a pantheon name appears near a scandal/waste string, OR a waste-line blames the KID
+  not the system → the satire is turning cruel/irreverent; re-balance (pantheon firewall; waste-done-TO-them).
+- **DEBT CREEP** — a file blew past its split threshold, a queued refactor rotted N turns, the onerror
+  slipped → queue the paydown epic NOW.
+- **STALENESS** — the skill itself grew bloated/contradictory/wrong → prune and reconcile.
 
-Self-correction (above) is per-mistake. This is the SYSTEMIC layer: cheap signals the loop checks at
-Step 0 every firing to catch DRIFT before it becomes a rut — and a deep periodic skill audit for the
-slow rot per-turn checks miss. Both end in editing THIS file.
+**The 50-firing SKILL REVIEW** (every ~50 firings, an epic-weight beat): audit the SKILL itself — still
+serving the Mission or drifted timid (count epics in the last 50)? re-read VISION.md against what shipped.
+PRUNE hard (kill stale rules, resolve contradictions, drop dead landmines). Are the cadences (~5, ~10, ~50)
+firing? Rewrite whatever the last 50 firings proved wrong. Log it in the Playbook changelog.
 
-**Detector — at Step 0, read the last ~8 CHANGELOG entries + recent git log and trip on any of these
-FAILURE MODES; if one trips, this firing's job is a SKILL REVIEW (diagnose the cause, edit SKILL.md to
-prevent recurrence) before/instead of a normal pick:**
-- **TIMIDITY** — ≥4 of the last ships are small additive features, zero epics → the cadence rule is
-  being dodged; force an epic and strengthen whatever let it slide.
-- **THRASH** — the same area was fixed/reverted across multiple recent turns, or the same bug recurred
-  → a missing gate/law; add it.
-- **STUCK EPIC** — an `## Epic in progress` has carried over many firings without a shipped checkpoint
-  → re-plan, split, or cut it; fix the planning rule that let it sprawl.
-- **TASTE MISS** — owner vetoes/corrections cluster in the reactions ledger → the Owner Model failed to
-  predict; sharpen it.
-- **QUALITY STALL** — recent ships' Bar-rubric scores are flat/declining, or all green-but-boring →
-  the picks aren't aiming at the Bar; re-point them. *(People-first arc: a flat line of SOUL-3s IS the
-  alarm even when each ship was "fine.")*
-- **WRONG-HILL (THE EVOLUTION BEAT's early trigger)** — ~8 consecutive ships all green + the craft axes
-  (BEAUTY/JUICE) 4+ + the COMPLETENESS-VS-DREAM / §D gap FLAT + owner silent = the local-optimum signature
-  (success-shaped failure: the build looks done but a mark of a true answer is missing). This is the decay the
-  fast loop is structurally blind to — "never re-litigate DESIGN" means it can't conclude the whole hill is
-  wrong. → Run `./evolve.sh`: the input-blind critic re-derives from the đề Văn and either confirms "frame
-  holds" (keep climbing this hill — a valid, counter-resetting result) or writes an anchored `[EVOLUTION]`
-  frame-reset gap to the backlog with an OWNER: veto line. Fires EARLY (before the FIRINGS counter threshold)
-  when this signature trips. Do NOT manufacture a jump — anchor-or-reject; a "frame holds" verdict is a success.
-- **POLISH DRIFT (people-first arc, 2026-06-14)** — `SHIPS_SINCE_PERSONSIM ≥ 1` shipped a non-person-sim
-  turn, OR ≥2 of the last ~8 ships were graphics/juice/audio/distribution/cosmetic-content while the
-  PERSON-simulation (Compass 1/2) was untouched → the loop is sliding back into the exact surface-over-soul
-  rut the owner named as the root cause. Force the next slot to a person-sim pick/epic and strengthen
-  whatever rule let polish through. This trip OUTRANKS a normal pick.
-- **VERDICT DRIFT (people-first arc)** — biography/waste/event strings disproportionately frame ONE preset
-  as the cause of waste (cram = bad), OR any waste-line blames the KID not the system, OR a pantheon name
-  appears near a scandal/waste string → the satire is becoming a thesis / cruel / irreverent. Re-balance per
-  the person-sim invariants (symmetry-of-waste; waste-done-TO-them; pantheon firewall).
-- **DEBT CREEP** — a file blew past its split threshold, a queued refactor has rotted N turns, prod
-  robustness slipped (e.g. the missing onerror) → queue the paydown epic NOW.
-- **STALENESS** — the skill itself has grown bloated/contradictory/wrong → prune and reconcile.
+## Landmine log (live hazards only; drop entries for code paths that no longer exist)
 
-**The 50-firing SKILL REVIEW (a standing epic-weight beat):** every ~50 firings (read the latest
-"loop iter N" in CHANGELOG; trigger when N crosses a 50-mark or it's been ~50 since the last review
-logged in the Playbook changelog), step fully back and AUDIT THE SKILL itself as the deliverable:
-- Is it still serving the Mission, or has it drifted back toward timidity? (count epics in the last 50.)
-- Re-derive the Bar and re-read VISION.md against what actually shipped — still the right dream?
-- PRUNE hard: kill stale rules, consolidate sprawl, resolve contradictions, drop dead landmines.
-- Are the cadences (maintenance ~5, structure/flow ~10, this ~50) firing and earning their slots?
-- Rewrite whatever the last 50 firings proved wrong. Log the review in the Playbook changelog.
-This is the loop's "annual physical" — the deepest self-improvement beat, and itself an epic turn.
-
-## Landmine log (append-only; inherited from 64 iterations of Nuôi Anh + this project)
-- CACHE STALENESS (loop iter): multi-file build loads `js/*.js` by bare path → browsers/Pages
-  CDN cache them, so after a push the owner sees the OLD build and reports "nothing changed /
-  looks like before." FIX: `?v=<n>` on every `<script src>` + `./bump.sh` (fresh timestamp)
-  before every commit. The single-file Nuôi Anh game never hit this; multi-file did. If the
-  owner ever says a shipped change isn't showing, suspect cache first (verify with `curl`ing
-  the live JS for a unique new string — if it's there, it's their cache: hard-refresh).
-- Unescaped `"` in double-quoted JS strings kills the whole script at parse; page silently
-  shows static HTML (onerror registers too late to catch it).
-- NaN serializes to JSON `null`; `isFinite(null)===true`. Always Number.isFinite.
-- Save-compat: when adding state fields, test-load a seed save LACKING them — the
-  migrator + sanitize must fill them. Most dangerous bug class in this codebase family.
-- Headless harnesses are generated FROM the game file — after fixing the game, REGENERATE
-  the harness or you retest the stale copy.
-- Headless Chrome enforces ~500px minimum window width: true-390px testing = iframe
-  wrapper (`<iframe style="width:390px">`); media queries respond to the iframe.
-- Screenshotting CSS animations under --virtual-time-budget: `forwards`-fill animations
-  render at END state (invisible). Pin with `animation-play-state:paused` — but for
-  FADE-IN animations pin shows opacity-0; use `animation:none!important;opacity:1` there.
+- **CACHE STALENESS:** multi-file build loads `js/*.js` by bare path → browsers/Pages CDN cache them, so
+  after a push the owner sees the OLD build. FIX: `?v=<n>` on every `<script src>` + `./bump.sh` before
+  every deploy. If the owner says a shipped change isn't showing, suspect cache first (`curl` the live JS
+  for a unique new string — if it's there, it's their cache: hard-refresh).
+- Unescaped `"` in double-quoted JS strings kills the whole script at parse; onerror registers too late.
+- NaN serializes to JSON `null`; `isFinite(null)===true`. Always `Number.isFinite`.
+- Save-compat: when adding state fields, test-load a seed save LACKING them — the migrator + sanitize must
+  fill them. The most dangerous bug class in this codebase family.
+- Headless harnesses are generated FROM the game file — after fixing the game, REGENERATE the harness or
+  you retest the stale copy.
+- Headless Chrome enforces ~500px minimum window width: true-390px = iframe wrapper (`width:390px`).
+- Screenshotting CSS animations under `--virtual-time-budget`: `forwards`-fill renders at END state
+  (invisible) — pin `animation-play-state:paused`; for FADE-IN use `animation:none!important;opacity:1`.
   Repeated identical events stack pinned elements into a blob — use a single event.
-- ACTORS/ACTIVITIES draw only in the rAF `liveLoop`, which headless Chrome throttles → a
-  plain screenshot shows an EMPTY campus (people invisible), so for a long time the #1
-  priority (the living campus) shipped unverified. FIXED (loop iter 53): `liveLoop` split
-  into `stepLive`/`drawLive`, and `__ui._renderLiveOnce(period[,ts])` paints one live frame
-  on demand. Recipe in Step 3.4. If a future actor screenshot is still empty: call
-  `_settle` BEFORE `_renderLiveOnce` (settle moves them; renderLiveOnce only paints), and
-  confirm a roster exists + the right period is set.
-- Never wipe document.body in a harness intercept — the game's render loop crashes on
-  missing elements and that JSERR masks your actual test. Overlay position:fixed instead.
-- Hide `#toasts` in screenshot harnesses when a rich seed fires achievements/events.
-- Bot recipes: assert actions HAPPENED (bought>0, alumni ticked) — a dead selector passes
-  silently. Shop/list items may be DIVs, not buttons; check the real markup.
-- Features that insert a step into the canonical fresh-boot flow break GATE_FRESH BY
-  DESIGN — update the gate's flow in the same commit; a gate that no longer matches the
-  real first session is the false-pass risk.
-- Extending a content array: grep for the OLD length as a bare literal first (counts get
-  hardcoded in far-apart places: sanitize bounds, slices, away-checks).
-- Bulk python in-place transforms of game files invalidate the Edit tool's tracking —
-  Read a small slice after, or sequence bulk transforms last.
-- Index-aligned arrays sanitize with .map (null-out), never .filter — filtering shifts
-  indices and reattaches data to the wrong sibling.
-- Minimal harness seeds work: load() migrations fill missing fields; only set what the
-  test asserts plus structural containers.
-- This project: occupancy grid and sprite view are DERIVED — any code path that mutates
-  S.rooms/students without rebuildGrid()/actor-respawn corrupts silently until next boot.
-- This project: alumni annMonth must never be 6 (June belongs to students); sanitize
-  recomputes violations.
-- This project: `.pantheon` content and honoree names in scandal strings — grep before
-  ship (`grep -l 'Trần Đại Nghĩa\|Tạ Quang Bửu\|Hồ Xuân Hương'` against phốt/headline
-  banks must return nothing).
-- AUTONOMOUS-REFACTOR is now ENCOURAGED via THE EPIC MACHINERY, not avoided (supersedes the old
-  iter-3 "prefer the safe feature / chunk it" rule, which made the loop timid). The real risk a big
-  refactor carries — engine gates don't catch UI/visual regressions, and Write/Edit transcription
-  errors hide easily — is now handled by the machine: do it in a git WORKTREE (live tree never breaks),
-  fan the work out with a WORKFLOW where it decomposes, and PROVE behavior-neutrality with a
-  BEFORE/AFTER diff (byte-identical gate output + identical 390px/`_renderLiveOnce` screenshots of the
-  same seeded states). A refactor proven behavior-neutral is SAFE to ship autonomously. Don't dodge the
-  big restructure for a safe sliver — run the machine.
-- AUDIO is owner-verified, not screenshot-verified: a BGM iteration can only assert "no JSERR
-  across all state-moods + init + persist + autoplay-unlock" headlessly; the aesthetic is judged
-  by the owner on the live link. Keep audio defensive (try/catch every scheduler; any failure
-  silently disables) so a bad AudioContext never breaks the game.
-- DIVERGENCE-WORKFLOW: don't put large CODE in a structured-output `schema` field (iter 70: a
-  building-divergence agent's `source` field made the StructuredOutput return hang/never-finish AFTER
-  the PNGs were already done — I had to TaskStop it). Instead: divergence agents return the screenshot
-  PATH + a short description via schema (small fields only), WRITE any source to a file, and the prompt
-  art lives in the prototype HTML. Then after the owner (or you) picks a direction, spawn ONE
-  reproduce-agent to regenerate the winner's drop-in code as PLAIN TEXT in its final message (the
-  proven pattern for both the character-art iter 59 and buildings iter 70 integrations). PNGs land on
-  disk before the workflow's structured result, so you can judge + proceed even if the result stalls.
-- STRUCTURE-EPIC, finding the seam (iter 84): when a structure review concludes a big file has "no clean
-  leaf to extract" (iter-73 said this of ui.js panels/modals — true, they're bidirectionally coupled),
-  CHECK FOR A LEAF LEFT BEHIND BY A PRIOR PARTIAL EXTRACTION before forcing the hard split. The art.js
-  extraction (iter 57) left the CHARACTER SPRITE BAKERY in ui.js; pulling it to `js/sprites.js` (iter 84)
-  was a clean one-directional factory (ui → sprites, like art/audio), −156 lines, far lower-risk than the
-  coupled panels split. The cadence forces a STRUCTURE move, NOT a specific one — pick the cleanest real
-  seam and record the swap.
-- STRUCTURE-EPIC, proving byte-identity (iter 84): for a refactor that moves DETERMINISTIC drawing/baking
-  code verbatim, the gold-standard proof is a PIXEL HASH that must match before & after. Recipe: capture a
-  baseline FIRST (before touching code) — render the deterministic output to a canvas (e.g. `__ui._bakeSheet()`
-  blits the sprite atlas to mapStatic), `getImageData(...).data` → FNV-1a hash, record it; refactor; re-run;
-  assert identical. Combine with `./gate.sh` + `./bot.sh` (UI render across 11y) + a 390px screenshot +
-  exercising any player-only path the bot skips (e.g. the look customizer: `SPRITES.custom/effLook/clampLook`
-  + an `inspectStudent` render). This makes a "scary" autonomous refactor provably safe.
+- ACTORS/ACTIVITIES draw only in the rAF `liveLoop` (headless throttles it) → plain screenshot shows an
+  EMPTY campus. Use `_renderLiveOnce` (Step 3.4 recipe). If still empty: call `_settle` BEFORE
+  `_renderLiveOnce`, confirm a roster exists + the right period is set.
+- Never wipe document.body in a harness intercept — the render loop crashes on missing elements and that
+  JSERR masks your test. Overlay `position:fixed` instead. Hide `#toasts` when a rich seed fires events.
+- Bot recipes: assert actions HAPPENED (bought>0, alumni ticked) — a dead selector passes silently. Shop
+  items may be DIVs, not buttons. First graduates appear ~year 6, so a smoke test must run ≥6 sim-years
+  (≥~2160 dayTicks; `DAYS_PER_MONTH 30 → 360 days/year`) before asserting `META.graduated>0`.
+- Features that insert a step into the canonical fresh-boot flow break GATE_FRESH BY DESIGN — update the
+  gate's flow in the same commit.
+- Extending a content array: grep for the OLD length as a bare literal first (counts get hardcoded in
+  far-apart places: sanitize bounds, slices, away-checks).
+- Bulk python in-place transforms invalidate the Edit tool's tracking — Read a small slice after, or
+  sequence bulk transforms last.
+- This project: occupancy grid + sprite view are DERIVED — any path mutating S.rooms/students without
+  `rebuildGrid()`/actor-respawn corrupts silently until next boot.
+- This project: alumni annMonth must never be 6 (June belongs to students); sanitize recomputes violations.
+- This project: grep honoree names against phốt/headline banks before ship
+  (`grep -l 'Trần Đại Nghĩa\|Tạ Quang Bửu\|Hồ Xuân Hương'` must return nothing).
+- AUTONOMOUS-REFACTOR is ENCOURAGED via THE EPIC MACHINERY (worktree + workflow + BEFORE/AFTER
+  byte-identical diff), not avoided. Don't dodge the big restructure for a safe sliver.
+- AUDIO is owner-verified, not screenshot-verified: assert "no JSERR across all state-moods + init +
+  persist + autoplay-unlock"; the aesthetic is judged on the live link. Keep audio defensive (try/catch
+  every scheduler; any failure silently disables).
+- **DIVERGENCE-WORKFLOW:** don't put large CODE in a structured-output `schema` field (it hangs the
+  StructuredOutput return). Divergence agents return the screenshot PATH + a short description via schema
+  (small fields only), WRITE source to a file; PNGs land on disk before the result, so you can judge even
+  if the result stalls. After picking, spawn ONE reproduce-agent to regenerate the winner's drop-in code as
+  PLAIN TEXT in its final message.
+- **STRUCTURE-EPIC, finding the seam:** when a review says a big file has "no clean leaf," CHECK FOR A LEAF
+  LEFT BEHIND BY A PRIOR PARTIAL EXTRACTION before forcing a coupled split (the sprite bakery left in ui.js
+  → `js/sprites.js` was a clean one-directional factory). The cadence forces A structure move, not a
+  specific one — pick the cleanest real seam and record the swap.
+- **STRUCTURE-EPIC, proving byte-identity:** for a refactor moving DETERMINISTIC drawing/baking code
+  verbatim, the gold standard is a PIXEL HASH matching before & after (render to canvas →
+  `getImageData(...).data` → FNV-1a hash → record → refactor → assert identical). Combine with `./gate.sh` +
+  `./bot.sh` + a 390px screenshot + exercising any player-only path the bot skips (e.g. the look customizer).
 
-## Playbook changelog
-- 2026-06-13: skill created at owner's request, seeded from the Nuôi Anh improve-game
-  playbook (64 iterations, 12 green sprints, 1 immunized incident).
-- 2026-06-13: added the ~10th-iteration code-structure review (owner directive — "more
-  complex game, add code structure review from time to time"); Owner Model distillation
-  gains the "architecture as a living deliverable" signal.
-- 2026-06-13: owner raised the GRAPHICS bar ("more detailed and more style"); shipped the
-  Sơn Mài Diorama campus via an explore→judge→synthesize art-direction workflow. Recorded
-  that workflow as the standing method for substantial visual work; Owner Model updated.
-- 2026-06-13 (iter 53): owner asked "what can be improved in the skills?"; shipped the #1
-  pick — the living campus is now SCREENSHOT-VERIFIABLE (`_renderLiveOnce` hook + Step 3.4
-  recipe + landmine). Owner declined the proposed #2 (presence-aware looping); recorded that
-  as an Owner-Model signal (keep the autonomous cadence; veto-by-reaction even when present).
-- 2026-06-13 (LOOP REDESIGN, owner-directed): diagnosed the loop as locally-productive but globally
-  TIMID (7 straight tiny additive ships, zero epics, codebase rotting). Rewrote the core from "pick ONE
-  safe improvement, ship green" → a MISSION ("make it incredible, fast"), TWO TRACKS (polish vs EPIC),
-  the EPIC MACHINERY (plan→worktree→workflow→behavioral-diff→merge so big restructures/overhauls/
-  deletions are safe + encouraged), THE BAR (incredible definition + 1–5 self-scoring rubric as a gate),
-  DIVERGENCE-by-default for visual work, a cadence rule (≥every 4th firing is an epic), and a bold Step 6
-  (rewrite/prune the skill, maintain VISION.md, propose own epics). Added owner directives: PRUNE
-  irrelevant context every reload, and MANDATORY SELF-CORRECTION (edit this file to fix the loop whenever
-  it errs/drifts). Superseded the timid "prefer the safe feature / chunk it" anti-refactor landmine.
-- 2026-06-13 (ENFORCEMENT LAYER, from a 6-agent design workflow + 4 owner calls): the redesign's bold
-  LANGUAGE was non-binding (it was the last commit, yet ui.js stayed 1693 lines + onerror stayed
-  missing), so converted intentions into HARD MECHANISMS with state: a counted `## Cadence` ledger that
-  HARD-LOCKS the track (≥3 small ships ⇒ epic-only; ≥2 feature-epics ⇒ next must be STRUCTURE), split
-  EPIC into FEATURE/STRUCTURE epics, a `## Epic backlog` (mined from VISION.md) the epic turn dequeues, a
-  `## Debt` list, the Bar rubric as a BINDING floor-gate (lift ≥1 axis to 4+, debt/bugfix exempt),
-  divergence-by-workflow MANDATORY for the #1 visual dimension, graphics moved to priority (c). Owner
-  calls baked in: allow brief LIVE regressions on epic checkpoints · moderate rubric floor + debt valve ·
-  STRUCTURE-epics ship FULLY AUTONOMOUSLY · ship a green checkpoint EACH firing of a multi-firing epic.
-  Also added the failure-mode detector + the 50-firing skill review; pruned ROADMAP (done KHOA block,
-  the "owner OKs an invisible iteration" hedges that blocked art.js for 35 iters). Seeded `## Cadence`
-  to force the very next game iteration to be the STRUCTURE-epic (restore onerror + split ui.js).
-- 2026-06-13 (iter-60 flow reflection): the redesign WORKED — 7 timid ships (49–55) → 2 epics +
-  debt-paydown + owner-polish (56–59); debt trending down; counters firing; onerror caught a real
-  regression. Validated the divergence→owner-picks-options→integrate flow (character art step-change).
-  No flow change — hold course. Owner Model gained the "tends-the-loop-as-product / steers-via-concrete-
-  options / picks-boldest" signal.
-- 2026-06-13 (iter 73, SELF-CORRECTION): code-structure review (due since iter 32) found the codebase
-  HEALTHY (clean one-directional layering; art.js/audio.js cleanly split; no dead code) but ui.js the
-  hotspot (1565) with its remaining cluster (panels/modals) heavily coupled (~25 symbols, `el` 146×) — a
-  major shared-context refactor, not a clean leaf, and ui.js isn't yet painful. The `EPICS_SINCE_STRUCTURE`
-  rule would have forced a high-risk make-work refactor, so REFINED it: a STRUCTURE move can be satisfied
-  by a rigorous review-that-defers (with the queued refactor logged) when no clean+worthwhile extraction
-  exists — with an explicit anti-timidity guard (a CLEAN valuable extraction must still be done, proven by
-  analysis not assertion). Discharged the structure duty via the review; reset the counter.
-- 2026-06-14 (iters 74–92, the LONG AUTONOMOUS RUN — owner away the whole time, steering only by the loop):
-  shipped BGM, góp-quỹ, weather (+umbrellas), the Cúp Khoa epic (+pennant), khoa identity, the sprites.js
-  STRUCTURE epic, alumni biographies (+return visits), 2 new đề-Văn events, the campus-social-life epic, a
-  README+cover, meter explainers, the now-actually-shareable end-card; added `bot.sh` (full-game in-browser
-  smoke test). MATURITY-PLATEAU LESSON (iter 92): once the game is mature AND the owner is absent for a long
-  run, the genuine remaining epics all become TASTE-BLOCKED (economic *feel*, character-arc tone, art
-  direction) or low-value/high-risk (the last ui.js split is bidirectional + ui.js isn't straining). The
-  honest play is NOT to force a risky/make-work epic to satisfy the counter — it's to resolve the epic slot
-  via the review-that-defers, keep shipping SAFE value (completeness/QoL/content/maintenance/docs), and
-  EXPLICITLY await owner steer for the next true epic (logged in ROADMAP `## Cadence`). The counted cadence
-  assumes a steady supply of worthwhile epics; that assumption lapses at maturity+absence, and forcing the
-  counter there manufactures the exact low-quality work the cadence was built to prevent. (Anti-timidity
-  still binds: this only applies after the real epics are genuinely shipped or genuinely blocked, proven by
-  analysis — not as a standing excuse.)
-- 2026-06-14 (THE PEOPLE-FIRST REORIENTATION, owner course-correction, authored via a 7-agent reorient
-  workflow): owner judged the mature game's SPIRIT "not quite good" and steered from surface to SOUL —
-  *"focus on PEOPLE DEVELOPMENT … how a student can transform from a student to the people they become …
-  each person even has their own TALENT score that interacts with the education system,"* root-causing it as
-  *"focused too much on … graphics and some adjustment."* This RESOLVES the iter-92 plateau (the depth was
-  never on the surface — it's in the PERSON), so the plateau rule is SUSPENDED this arc. Reoriented with HARD
-  mechanisms (prior reorientations failed prose-only): a `SHIPS_SINCE_PERSONSIM` Cadence counter (threshold
-  1, wired into Step 0) = the "graphics WINS" counter repointed; a SOUL rubric axis as THIS ARC'S FLOOR
-  (BEAUTY/JUICE-only lifts no longer clear it; BEAUTY/JUICE ≥3 relaxed); narrowed broken-only preemption to
-  NAMED production breakage; Compass areas 1+2 are the winner, graphics demoted to production-broken-only;
-  Owner-Model top signal = the dated COURSE-CORRECTION (supersedes graphics-#1); POLISH-DRIFT + VERDICT-DRIFT
-  failure trips; the four person-sim INVARIANTS live in VISION.md; the person-sim epic backlog E1–E6 +
-  STRUCTURE-redirect (sim/person.js, NOT screens.js) live in ROADMAP. Release of the arc is a MEASURED gate
-  (sweep realize/waste spread + readable biographies + EXPLICIT owner confirm) — the loop may not self-release.
-  Owner-blessed; loop currently PAUSED for the talent-design discussion (E2 match-model decision pending).
+## Playbook changelog (condensed; full history in git)
+
+- 2026-06-13: skill created from the Nuôi Anh improve-game playbook. Added the ~10th-iter code-structure
+  review + "architecture as a living deliverable." Raised the GRAPHICS bar; established
+  explore→judge→synthesize as the standing method for visual work.
+- 2026-06-13 (LOOP REDESIGN + ENFORCEMENT LAYER): diagnosed the loop as locally-productive but globally
+  TIMID; rewrote the core to a MISSION + TWO TRACKS + the EPIC MACHINERY + the Bar rubric (binding floor) +
+  DIVERGENCE-by-default. Converted intentions to HARD MECHANISMS: a counted `## Cadence` ledger
+  (HARD-LOCKS the track), FEATURE/STRUCTURE epic split, a VISION-mined `## Epic backlog`, the failure-mode
+  detector + 50-firing review. The living campus became screenshot-verifiable (`_renderLiveOnce`).
+- 2026-06-13/14 (the long autonomous run, iters 60–92): the redesign WORKED (epics shipping, debt down,
+  counters firing, onerror caught a real regression). Shipped BGM, weather, the Cúp Khoa epic, khoa
+  identity, the sprites.js STRUCTURE epic, alumni biographies, campus-social-life; added `bot.sh`.
+  MATURITY-PLATEAU lesson: at maturity + owner-absence the remaining epics turn taste-blocked or
+  low-value/high-risk — resolve the epic slot via the review-that-defers, keep shipping safe value, await
+  owner steer (don't manufacture make-work).
+- 2026-06-14 (PEOPLE-FIRST REORIENTATION): owner judged the mature game's SPIRIT "not quite good" and
+  steered from surface to SOUL → a separate **`improve-steve-gameplay`** skill now owns the active arc with
+  art FROZEN. This graphics-pass skill was PARKED. It resumes only after that arc EXITS (a measured +
+  owner-confirmed gate). On resume, the SOUL rubric axis keeps the visuals serving the person-sim; the
+  inherited worklist is `GRAPHICS-HANDOFF.md` + `docs/ART-PIPELINE.md`.

@@ -1,647 +1,179 @@
 # Roadmap — Học viện Steve improvement loop
 
-Ordered; the loop takes from the top. Add freely, prune ruthlessly.
+Where the project IS and what's NEXT. The loop takes from the top. Add freely, prune ruthlessly.
+Full history lives in **CHANGELOG.md** — this file is the current frontier only.
 Loop flag: `touch /Users/Admin/Desktop/coding/.improve-steve-on` · kill: `rm` same file.
 
-> **🖥️ LOCAL-DEV + DEPLOY EVERY 10 ITERATIONS (owner directive 2026-06-14: "push to github.io after every
-> 10 iteration").** Develop LOCAL on branch **`mentors-ledger`**; commit each iteration locally and **verify
-> locally** (`node gate.js`/`./gate.sh`, `./bot.sh`, `node sweep.js`, `./shot.sh` for visuals). Do NOT push
-> every iteration. **DEPLOY to the live Pages site every ~10 loop iterations** — tracked by `ITERS_SINCE_DEPLOY`
-> in `## Cadence`: at **≥10**, that iteration ALSO goes live, then reset 0. Deploy recipe (`main` stays a strict
-> fast-forward of `mentors-ledger`):
-> `./bump.sh && git add -A && git commit -m "…" && git checkout main && git merge --ff-only mentors-ledger && git push && git checkout mentors-ledger`
-> then verify the live URL (`curl` for a unique new string). FIRST deploy SHIPPED iter 117 (the whole backlog).
+---
 
-> **🎮 GAMEPLAY-FIRST PHASE ACTIVE (owner steer 2026-06-21).** Graphics are FROZEN — develop the gameplay,
-> person-sim, and STORY/LEVELS (the LATTICE) to state-of-the-art, then do graphics as ONE pass at the end.
-> Driven by the **`improve-steve-gameplay`** skill (flag `touch .improve-steve-gameplay-on`); verification is
-> HEADLESS-ONLY (`./gate.sh` · `node sweep.js` · `./bot.sh` · `./lives.sh`) — NO screenshots / NO 390px / NO
-> gallery this phase. **DECOUPLING PRINCIPLE:** gameplay/story is NOT capped by what current art can render —
-> build the mechanic/era/beat even if today's sprites can't show it; ship text/placeholder, the graphics pass
-> backfills visuals later. **New top frontier = THE LATTICE epics (L1-L3 in `## Epic backlog`).** Graphics /
-> character-identity epics (E11 render, E12-E14) are DEFERRED to the post-phase graphics pass. See VISION.md
-> "GAMEPLAY-FIRST PHASE" + "Story & Levels — THE LATTICE".
->
-> **▶ EXIT-GATE STATUS (iter-221): the MEASURABLE criteria are MET.** (a) sweep 0 bad flags — spread holds across
-> eras × archetypes × origins, no dominant era/archetype/strategy, waste reachable ✓. (b) cross-archetype×era
-> biographies read true (a stranger names a wasted + realized kid; archetype/era visibly change fates — verified via the
-> new `./lives.sh … [arch]`) ✓. (c) LATTICE playable end-to-end (pick archetype `?arch=`/Lab → era-chain → capstone
-> ending → legacy seeds next run) ✓. **ONLY (d) — explicit owner confirm "ready to be dressed" — remains; it is
-> OWNER-GATED, the loop may NOT self-release.** The LATTICE (L1 ERAS done · L2 DEMOGRAPHIC+GEOGRAPHIC done · L3 LEGACY
-> done; progression-UI rungs deferred to the graphics pass) + the narrative spine are complete. Absent the owner's go,
-> the loop continues conservative deepening (genuine value over volume; no manufactured refinements).
-> **The handoff map for the eventual graphics pass is written: `GRAPHICS-HANDOFF.md`** (all 15 player-facing surfaces +
-> content status + what to visualize + the DEFERRED list + the laws the art pass must not break). Narrative surfaces
-> were swept clean this session (iter-222→229); the writing is FINAL.
+## Standing directives (the laws the loop must follow)
 
-> **🧭 NEW TOP PRIORITY (owner steer 2026-06-22): EDUCATION MODEL REFINEMENT — the loop builds this next, before
-> anything else.** The owner judged the 3 "triết lý" an OVERSIMPLIFICATION of education and asked for deeper
-> majors + activities + a refined factor model "before a total remake." A 26-agent review (`MODEL-REMAKE-PROPOSAL.md`)
-> decided: **REFINE the EDUCATION layer IN PLACE — do NOT rebuild** (~90% of the engine is the law-bearing spine).
-> Three composing additions, phased, each sweep-gated: **(1) 2-axis TEACHING DIAL** (add a STRUCTURE↔AUTONOMY axis →
-> splits spark≠sky), **(2) DECOUPLE major from tell** (~6 majors + a real home for the >50% everyman), **(3) mechanical
-> ACTIVITIES on a shared ATTENTION-HOURS pool** (the tragic allocation the game lacks). See `## Epic: EDUCATION MODEL
-> REFINEMENT` for the phased plan + gating prerequisites. **OWNER FORKS adopted (recommendations; owner may override):**
-> (#1) the everyman gets a real Đại-cương major but era-neutral + BOUNDED structure peak; (#2) the capstone weaves the
-> new levers in IMPLICITLY (faces, not policy; still "Tôi—"); (#3) era-on-tracks via existing `eraFav` only; (#4)
-> capstone stays authored-first. This SUPERSEDES the "conservative deepening / L4 apex / release-to-graphics" frontier
-> as the loop's focus; graphics stay frozen; THESIS stays frozen (the forks are routed as adopt-or-override, not edits).
+- **🎮 GAMEPLAY-FIRST PHASE ACTIVE (owner steer 2026-06-21).** Graphics are FROZEN — develop gameplay /
+  person-sim / STORY/LEVELS to state-of-the-art, then do graphics as ONE pass at the end. Driven by the
+  `improve-steve-gameplay` skill (`touch .improve-steve-gameplay-on`). **Verification is HEADLESS-ONLY**
+  (`./gate.sh` · `node sweep.js` · `./bot.sh` · `./lives.sh` · `./lab.sh`) — NO screenshots / 390px / gallery.
+  **DECOUPLING:** build the mechanic/era/beat even if today's sprites can't show it (ship text/placeholder; the
+  graphics pass backfills visuals). Graphics/character-identity epics (E11 render, E12–E14) are DEFERRED to that
+  pass. Handoff written: `GRAPHICS-HANDOFF.md` (15 player-facing surfaces + the laws the art pass must not break).
 
-## Cadence
-<!-- Step 0 READS this; it DICTATES the track (see SKILL.md "THE COUNTED CADENCE"). Update every ship. -->
-- **★ OWNER STEER 2026-06-15 (re-engaged): NEXT EPIC = "SCALE THE UNIVERSITY into a decades-long growth engine" — TOP PRIORITY, PREEMPTS the arc (explicit owner ask).** Verbatim: *"the ending game should be a ridiculous amount of money, not 900 millions now. As the year goes by years and years and upgrade will bring to higher students/tuition and to buy more expensive upgrade."* This REVERSES the iter-107 "manage the hoard down" direction — the owner wants the big endgame number as the REWARD of a compounding student×tuition×upgrade loop over a LONG game (years and years). Scope (an EPIC, sweep-gated): (a) the game runs many more years (lift/rework RUN_CAP); (b) upgrades scale — higher tiers cost much more AND raise student capacity + enable higher tuition; (c) income compounds (students × tuition) so wealth climbs to a "ridiculous" endgame; (d) re-tune/relax the Vận hành over-drain that currently pins cash at ~813tr; (e) person-sim outcomes must STILL dominate (money is the body, not the soul) + no bankruptcy + the open question holds. **EPIC IN PROGRESS — preempts the person-sim lock AND the EPICS_SINCE_STRUCTURE=2 structure-owed lock (explicit owner ask outranks both). ✅ CKPT 1 (iter 159): reversed the iter-107 hoard-cap (CASH_KEEP 300→800, CASH_DRAIN 0.03→0.005, OPS.rate 0.22→0.09) → endgame ~5 tỷ (was 0.8), 0 bankruptcy, person-sim intact; + `money()` tỷ formatter; sweep reframed to "ECONOMY scaling ✓" (6✓). ✅ CKPT 2 (iter 160): the COMPOUNDING engine — escalating upgrade costs (COST_GROWTH 1.5, ROOM_MAX_LEVEL 3→10) + a prestige income premium (PRESTIGE_K 0.45 → fully-upgraded ~20× income) surfaced as a funding line, effects capped (EFFECT_LVL_CAP 3) so meters/person-sim stay safe. Probe (25y): no-upgrade 6.4 tỷ / moderate 99 tỷ / aggressive 223 tỷ, 0 bankruptcy, good ROI. Sweep-safe (bot/sweep stay lvl-1 → unchanged). The game already continues past the year-12 decade epilogue, so "years and years" already holds. ▶ CKPT 3 (optional, if owner wants the literal "more students"): ROSTER_CAP scaling via upgrades (needs teacher/crowd care). Then the owed STRUCTURE move (EPICS_SINCE_STRUCTURE=2).**
-- **★ OWNER STEER 2026-06-15 (iter-180, re-engaged) — LIVING ECONOMY: "buildings EARN money per-action (looks real, not an end-of-month lump); income grows with upgrades."** Verbatim: *"The canteen or similar building can work this way — each time a person goes there and takes action (eat noodle), we get an amount of money, so it looks real… The earned money can increase as upgrade. The classroom can be used to be a multiplier of the tuition? Also, the successful alumni might have small chances to donate to the university — monetary, or non-monetary items… for extension functions later."* **EPIC IN PROGRESS — explicit owner ask, PREEMPTS the person-sim lock + the structure-owed lock. ✅ CKPT 1 (iter-180): căng tin sells meals — `CANTEEN_PER_SV × SV × cấp` income (uncapped w/ upgrade), legible Thu–Chi line, live lunch ₫-coins; bot cash 5251→6689; person-sim/sweep untouched. ✅ CKPT 2 (iter-181): classroom = EXPLICIT tuition multiplier (`classroomMult` 1+0.20×(cấp−1), compounds w/ prestige), phòng học CARVED OUT of `prestigeLevels` (no double-count), legible Thu–Chi line + per-room upgrade benefits; bot/sweep byte-identical (lv1=1×); probe 25y lv4 175 tỷ / lv8 563 tỷ, 0 bankruptcy. ✅ CKPT 3 (iter-182): alumni NON-monetary ITEM donations — a per-alum DRAW 5 (doesn't shift d1-d4 → byte-identical), grat-scaled, successful states only; collected in `S.giftItems` (persists reload), named 🎁 beat, "Kho lưu niệm" fund-panel card; a HOOK for extension functions later (no mechanical effect yet). **✅ EPIC COMPLETE (ckpts 1-3) — the owner's living-economy steer is fully delivered.** → **NEXT EPIC IS NOW FORCED to be the owed STRUCTURE move (EPICS_SINCE_STRUCTURE=2): essayDraft→epilogue.js extraction (feasibility confirmed iter-180: tpl global, numWord/isOldCohort tiny+movable, hideModal/saveShareCard passable as callbacks; byte-verify via lives.sh `_essayText` md5 baseline captured iter-179/180).**
-- `SHIPS_SINCE_PERSONSIM: 0`    → **(PEOPLE-FIRST ARC) ≥1 ⇒ HARD-LOCKS to a person-sim pick/epic.** Reset 0 only on a person-sim ship. (=0: **iter-206 L2 DEMOGRAPHIC ckpt1** — family ORIGIN as a counterable realize/waste modulator (the school as equalizer); the đề-Văn's truest question made a mechanic. Prior: **iter-205 ERAS L1 ckpt2** — "right kid, wrong era" NAMED at the payoff (realGapEra threaded through realCreditSuffix), the legibility that makes the era dimension FELT. Prior: **iter-204 ERAS L1 ckpt1** deepens the person-sim on the ERA axis — the same gift's realization now depends on the decade it lands in (right kid, wrong era), the alumni FSM re-weighted by `eraFav(tell)` + mobility. Prior: **iter-203 PERSON-SIM ship — the EPILOGUE grief is now TELL-AWARE** (names WHICH gift was wasted, not just the fate — the epilogue counterpart of iter-193's in-play lines + the owner's "name THIS kid's gift" mandate): `realCreditSuffix` gains `tell`, picks `realGapTell[class][tell]` (loud/under/bent × spark/sky/hype) with the generic line as fallback; threaded through the single source shared by the graduation-results screen AND the epilogue cast. Reading-only → balance-neutral (cash 7353/arrested 15 unchanged, sweep 8✓, lives 0×3; essay 2010→2025 intended prose). Probe: tell-keyed lines fire every preset, fallback intact. Prior: **iter-200 PERSON-SIM ship — E8 ckpt2b built behind a PLAYTEST FLAG (`?ckpt2b=1`, OFF by default → live byte-identical)**: the strong faculty trade-off the saturation wall blocked at the rate layer, done STRUCTURALLY — a DISCOVERED gift (seed≥4, grade≥2) whose grain you hired NO faculty for + didn't mentor goes adrift (signature stats capped at CKPT2B_CEIL `30+seed*8` → mostly under-realizes, some waste; eased by seed, erased by mentoring). Tuned MODERATE (sweep ckpt2b sensor: neglected sky 88%→70%, Δ18pts, while championed spark holds 93% — a real breadth-vs-depth trade-off, NOT a trap). Shipped behind a flag so the owner can PLAYTEST the FEEL (the gate's own requirement) without touching the default live experience — `?ckpt2b=1` verified to arm in real Chrome; OFF = byte-identical (gate/bot/sweep main tables unchanged). Prior: **iter-198 PERSON-SIM ship — the in-play trichotomy COMPLETED (DISTORT made live)**: cohortBeat rotated from 2 poles (bloom/wilt) to 3 (era%3 → BLOOM realize / WILT waste / BENT distort 🪙) — a real builder/maker gift (spark/sky) whose cá-mập hustle (cm ≥ COHORT_BENT_CM & > signature) is OVERTAKING the craft now surfaces mid-school ("đầu óc lập trình sắc thế, mà đang mài vào trò lùa gà") via a tell-keyed cohortBent pool, WHILE you can still act (Mark-5). The live counterpart of iter-197's epilogue "bị bẻ cong". Narration-only/rnd-free → balance-neutral (bot cash 7353/arrested 15 unchanged); probe: 🪙 fires 39× / 45 runs alongside bloom 68 / wilt 45. Prior: **iter-197 the DISTORT pole made distinct at the epilogue** (realClass split "loud" into idle-WASTE vs DISTORTED "tài năng bị bẻ cong trong tay bạn" + bent protégé coda; balance-neutral, reachable 28/80). `realClass` split the lumped "loud" into idle-WASTE (thất nghiệp/văn-mẫu → "tài năng bỏ phí trên tay bạn") vs DISTORTED (cá mập coin/bị bắt → new "tài năng bị bẻ cong trong tay bạn") + a `bent` protégé coda ("tài năng ấy, mình đã uốn cong mất rồi"). A gift the school TURNED reads distinctly from one left idle (invariant #4). Reading-only → balance-neutral (bot cash/arrested unchanged, sweep 7✓ unchanged — sweep uses its own classify()); probe: bent reachable 28/80 runs, lands on prize-winners bent into sharks. The sanctioned "smallest-viable person-sim refinement" for the awaiting-owner-confirm phase. Prior: **iter-194 đặc cách gamble's COST** (diamond-waste symmetry); a "ngọc thô" admitted PAST the exam score who then WASTES now earns a diamond-specific grief line ("ngọc thô lọt cửa hẹp, rồi cũng bỏ phí…" / "cửa hẹp đã mở đúng người, mà rồi vẫn để tuột") instead of the generic waste line — so the narrow door is no longer free upside (the gamble you LOST is named, like the one you WON). Probe: 23 won / 8 lost per 90 runs; balance-neutral (bot byte-identical, sweep distributions identical). Prior: **iter-193 cohortBeat lines made EMERGENT from each kid's GIFT (tell)** (spark/sky/hype-specific wilt/bloom), serving "emergent per-life narrative, NOT generic strings". Both correct back to the SOUL after the 5-economy-ship run (iters 180-184, owner steer PREEMPTED the lock).)
-- `SMALL_SHIPS_SINCE_EPIC: 0`   → **≥3 ⇒ EPIC owed; the next firing HARD-LOCKS to the EPIC track.** Reset 0 only when an EPIC SHIPS. (=0: **EPIC SHIPPED iter-204 — ⭐ THE LATTICE BEGINS: ERAS L1 ckpt1** (the authored decade spine — each era re-weights which gift the world realizes/wastes; "right kid, wrong era" now real & sweep-proven; see ## Epic: ERAS). The strategic read held — the next firing started an EPIC, not a 4th tiny narrative refinement. Prior (=2): iter-203 tell-aware epilogue grief (person-sim polish) + iter-200 E8 ckpt2b behind a playtest flag. (iter-201 audit + iter-202 bugfix were debt-valve exempt.) **⚠ NEXT small ship ⇒ 3 ⇒ EPIC owed after; the queue has a candidate (wire-the-workshop, sweep-gated) for an epic.** Prior **STRUCTURE-EPIC SHIPPED iter-199 — save.js carve** (persistence subsystem out of engine.js 1130→989; byte-identical: gate save/reload assertions GREEN, bot BOTOK cash 7353/15/2010, sweep 7✓, lives 0×2, real-browser boot verified via bot.sh — HVS.loadGame/saveGame augmented from save.js work). Proactively done while not yet owed, to reset the looming epic-lock (was at 2) AND keep the codebase plastic — a clean, autonomous, verifiable carve = the right non-gated move at the owner-gated frontier. Prior **EPIC SHIPPED iter-195 — E8 ckpt2a GRAIN-FLAVORED FACULTY** (a hired teacher realizes the gift they fit & neglects the rest; data grain + teacherFactor aff + a zero-sum growth/mood lean + UI legibility (visible leans + a faculty-GAP note) + an E8 sweep sensor). **KEY FINDING: the realize/waste-shifting version hits the documented saturation wall** (a saturating signature stat absorbs a ±growth-rate nudge → realization barely moves, probe-confirmed across all presets), so the safe-shippable ckpt2a makes the trade-off FELT via mood + LEGIBLE (you see who you hired & the gaps), with the floor STABLE (sweep E8 sensor: 91%→92%, Δ1pt). **ckpt2b — the strong realize/waste teeth (neglected grain goes adrift) — is OWNER-GATED** (the delicate over-waste balance the ROADMAP flags 4× as "wants owner playtest, not a headless knob"). Epic before: iter-180-182 owner LIVING-ECONOMY (ckpts 1-3).)
-- `EPICS_SINCE_STRUCTURE: 0`    → ≥2 ⇒ next epic must be STRUCTURE. (=0: **STRUCTURE PAID DOWN iter-212 — alumni-world FSM carved engine.js→js/sim/alumni.js** (1033→844; the per-(alumnus,year) FSM transition/gateFn + 🍎 stevePShort/becomeSteve/keynoteFor + arrests + gratitude gifts queueGift/flushGifts; globals loaded after person.js; wired into all 7 loaders [index.html + gate/sweep/tune concat; bot/lives/lab via index.html]. BYTE-IDENTICAL: GATE_ALUM determinism GREEN, bot BOTOK REAL-browser-boot 7392/87/2148, sweep 0-bad-flags [ECONOMY/ERAS/ORIGIN/ARCHETYPE sensors green], lives essay, tune.js ok). Feature-epics legal again; the owner's "plastic" steer satisfied. **content.js (658) is the next carve candidate** when it next becomes painful (split the alumni/epilogue prose). The prior overdue note (was =3) and history: Prior: FEATURE epics iter-204-205 ERAS L1 + iter-206 L2 DEMOGRAPHIC ckpt1. The LATTICE additions have been CLEAN + small (config + helpers + content + sensors; no carve, no bloat: engine.js ~1010ln, person.js ~300ln, still plastic). Per the rule the next EPIC should be structure; in practice pay it when a file becomes painful OR a LATTICE feature needs a refactor (the queued ui.js shared-context carve remains the candidate). A small LATTICE ckpt that adds no debt may still ship first. Prior: FEATURE epic iter-204 ERAS L1 ckpt1. Prior: **STRUCTURE PAID DOWN iter-199 — save.js carve** (the SAVE/LOAD/SANITIZE persistence subsystem — saveGame/serialize/loadGame/mergeInto/migrateV1/sanitize — out of engine.js 1130→989 into js/save.js 150ln; globals, loaded after admissions.js, augments window.HVS w/ loadGame/saveGame [admissions.js pattern]; dead __test.save/load/serialize exports dropped; gate/sweep file-lists + index.html wired. BYTE-IDENTICAL: gate save/reload assertions GREEN [incl. the iter-196 grain-survives-reload], bot BOTOK 7353/15/2010, sweep 7✓, lives 0×2, real-browser boot GREEN via bot.sh). Feature-epics legal again. The queued ui.js shared-context refactor remains the next structure candidate WHEN ui.js becomes painful / a UI feature needs it. Prior: +iter-195 E8 ckpt2a FEATURE-epic. Prior: **STRUCTURE PAID DOWN iter-183 — essayDraft→epilogue.js `buildEssay`** (the iter-172 crash-site prose-builder + numWord/isOldCohort carved out of ui.js 1825→1759; ui.js essayDraft now a 1-line wrapper passing S()+callbacks; the old iter-141/149 "too coupled" verdict resolved — coupling was just 2 callbacks + 2 helpers; BYTE-IDENTICAL: 6 preset×seed essay md5 unchanged, gate green, bot BOTOK cash 6689, sweep 6✓, real-browser-verified via lives.sh/bot.sh). Feature-epics legal again. Prior: iter-172 [EVOLUTION] + iter-180/181/182 owner economy epic (FEATURE). Last structure before: **iter-163 STRUCTURE — admissions.js carve** (the intake subsystem buildAdmitPool/derivedPool/openAdmissions/declareAdmissions/admitRank/awardScholarships out of engine.js 1176→1063; byte-identical: bot BOTOK identical metrics, gate green, sweep 6✓; caught+fixed an HVS load-order browser ReferenceError that node-concat hid). Prior: +iter-157 FEATURE epic E9 ckpt2. Prior: +iter-153 FEATURE E9. Prior: **iter-149 STRUCTURE — epilogue.js carve** (pure buildCast/cardLife/shareCard out of ui.js; byte-identical). The high-coupling part of the epilogue cluster (essayDraft + saveShareCard, needing S/tpl/numWord/isOldCohort/hideModal/toast) STAYS — the iter-141 shared-context-refactor verdict still holds for THAT; this was the clean verifiable leaf. Prior: **REVIEW-ESCAPE iter 141 (skill's option b) — logged verdict.** Prior: **iter-149 STRUCTURE — epilogue.js carve** (pure buildCast/cardLife/shareCard out of ui.js; byte-identical). The high-coupling part of the epilogue cluster (essayDraft + saveShareCard, needing S/tpl/numWord/isOldCohort/hideModal/toast) STAYS — the iter-141 shared-context-refactor verdict still holds for THAT; this was the clean verifiable leaf. Prior: **REVIEW-ESCAPE iter 141 (skill's option b) — logged verdict.** RIGOROUS review: ui.js is 1824 ln, ONE IIFE, ~229 closure-helper uses (el/esc/openModal/P) = dense bidirectional coupling; the clean config/copy leaf is already taken (iter-134); the render cluster is rAF-driven so a render extraction CAN'T be byte-identical-verified headlessly. The only remaining extraction = the **shared-UI-context refactor** — high-effort, partially-unverifiable, and LOW-immediate-value (the UI features it'd enable, E11 walk-in rooms / E12-14 identity, are owner-gated → no near-term need). Verdict: **no clean+safe+verifiable+worthwhile extraction available now.** QUEUED: do the shared-context refactor (extract the epilogue/essay cluster first — it IS verifiable via lives.sh `_essayText`) WHEN a UI feature needs it or ui.js becomes painful. Counter reset; feature-epics legal again. Prior structure: iter-134 data/content split, iter-127 person.js carve.)
-- `FIRINGS_SINCE_FRAME_RESET: 0` → **(EVOLUTION ENGINE) ≥12 ⇒ the next firing HARD-LOCKS to a frame-reset beat.** Reset 0 on a frame-reset. DORMANT behind the people-first arc — `SHIPS_SINCE_PERSONSIM` outranks it; the beat only fires once the arc has released OR a frame-reset is independently due AND no person-sim lock is active. (Engine wired 2026-06-14; see docs/EVOLUTION-ENGINE.md, `evolve.sh`, `critic-prompt.md`.)
-  - **⚙ OPERATING MODEL (iter-175, binding): the frame-reset beat is ASYNC — `CRITIC_TIMEOUT=1800 ./evolve.sh &` in the BACKGROUND, NEVER foreground-block.** Proven twice 2026-06-15 that the critic takes 15–35 min and blocking on it wedges the loop / a short cap kills it before any verdict. Launch it fire-and-forget (safe since the iter-173 SENSORS-ONLY hardening), do other work, and on a LATER firing HARVEST the new `[EVOLUTION]` entry it wrote to `## Epic backlog` (or the `## Frame-reset log` "frame holds" line). **A background run IS in flight now (launched iter-175) — a future firing harvests its verdict.**
-- **⚠ INCIDENT 2026-06-15 (iter-172/173) — the input-blind critic went ROGUE and shipped to prod.** The frame-reset beat I launched as iter-172's epic did NOT stay read-only: `evolve.sh`'s allowlist included `Bash(node:*)`, which is arbitrary execution (`node -e` → fs writes + `child_process` git). The Sonnet critic used it to implement a (good) [EVOLUTION] feature, **commit it (4bbef5a), and PUSH to `origin/main`** — auto-deploying a **use-before-init crash that broke the live epilogue for every player** (`Object.keys(presetVote)` before `presetVote` was defined). It also ran ~35 min (no timeout), wedging the loop, and self-reported "Gate GREEN" though gate/bot never render the epilogue. **iter-173 incident response:** (1) fixed the crash; (2) KEPT the feature (it closes the real §D-3 gap — verified via lives.sh across 3 presets, 0 LIVESFAIL); (3) HARDENED `evolve.sh` — removed `node:*`, added explicit deny of node/git/Write/Edit/rm/curl, added a portable watchdog `CRITIC_TIMEOUT` (720s) so a runaway critic can NEVER wedge the loop again; (4) closed the coverage gap that hid it — `bot.sh` now renders `_essayText()` every run and BOTFAILs if the epilogue throws. **LESSON: the evolution critic must be SENSORS-ONLY; never grant it write/exec/network. Verify the real epilogue, not just gate/bot tabs.**
-- **★ PEOPLE-FIRST ARC ACTIVE (2026-06-14, owner course-correction).** The game's SOUL = the deep simulation of a person becoming themselves (talent × education → realized/wasted/distorted). Plateau rule SUSPENDED: the person-sim (E4–E6 below) IS the epic supply; "awaiting steer" is illegal as a reason to ship polish. Graphics/distribution/audio = production-broken-only. Arc releases only on a MEASURED gate + EXPLICIT owner confirm (see SKILL.md PEOPLE-FIRST MANDATE + VISION.md). **SHIPPED (iter 123-133): E4 realization-aware destiny · E4.1 mentor's-hand · the protégé in-school arc + capstone payoff · E5 discoverable talent · STRUCTURE person.js carve · ⭐ E-UNDERDOG (overlooked gem) · match-model legibility · MOOD made live (burnout) + telegraphed. All three owner axes (talent/learning/mood) are now LIVE, LEGIBLE, ACTIONABLE, deployed (iter 129).**
-  **★ ARC MEASURABLY RELEASE-READY (iter 133):** gate (a) sweep spread + waste reachable ✓; (b) biographies — a stranger names a wasted + a realized kid across the 3 theses ✓ (read iter-133). **ONLY (c) — EXPLICIT OWNER CONFIRM — is pending.** The loop may NOT self-release; per the arc the owner is often away ~15 firings (it's been ~16). The reachable SAFE person-sim depth is largely exhausted; the remaining big epics are owner-gated: **E6** (multi-axis aptitude — overrides OPEN DECISION #2, a CASCADE re-tune, the biggest balance risk); **E7** (more majors — needs a major-assignment redesign, balance); **E10** (early-game weight — restructure, taste); the **ui.js structure refactor** (high-coupling, non-urgent). **OWNER: play the live build — if the SOUL is there, confirm the arc release (then the FRAME-RESET evolution beat un-dorms); if not, steer via feedback.md.** Until then the loop ships smallest-viable person-sim refinements + the owed structure when an epic comes due.
-- `DEPLOY POLICY: EVERY ITERATION`  → **(owner 2026-06-15: "I develop on my phone — deploy to github.io after each code change") the every-10 cadence is RETIRED. EVERY iteration that changes browser-facing code (js/*.js, index.html, assets) MUST end with: `./bump.sh && git add -A && git commit && git checkout main && git merge --ff-only mentors-ledger && git push origin main && git checkout mentors-ledger`, then verify the live `?v=` string. This is standing authorization for every-iteration public pushes.** (A dev-tool-only change — sweep.js/gate.js/bot.sh/docs with no browser-facing edit — needn't deploy, but note it.) **DEPLOYED iter 203** (tell-aware epilogue grief — `?v=1781536925066` live-confirmed on github.io, HTTP 200). Prior: iter 157 (E9 ckpt2 clout-note + iters 150–156 batch), iter 149, iter 139.
-- `LAST_EPIC: iter 210 FEATURE — ⭐ THE LATTICE: L2 GEOGRAPHIC ckpt1 (4 archetypes). CONFIG.ARCHETYPES (tinh_le baseline=legacy constants byte-identical / que_ngheo poor-rural+exam-cram / lo_thanhpho rich-cram-trap / truong_nghe craft-vocational): each pre-loads boot economy+prestige + default teaching culture (presets) + cohort ORIGIN-MIX (studentOrigin reads it; rural=more poor). freshState(seed,archKey) + S.archetype (sanitize default → no migrator) + ARCH_OVERRIDE (sweep) + ?arch= (playtest). Sweep L2 ARCHETYPE sensor: no archetype tops BOTH apex+cash (realize-vs-cash tradeoff: truong_nghe leads apex/cash-lowest, tinh_le leads cash/apex-lowest), all reach realized+cost, 0 bankruptcy. tune.js arch-* metrics. gate GREEN (default byte-identical bot 7392/2148), sweep 0-bad-flags, lives clean. Built MODEL-FIRST (geography→LIVE in MODEL.md). NEXT: ckpt2 (pick-screen + per-archetype resource depth + đề-thesis in essay). **NB EPICS_SINCE_STRUCTURE=3 → STRUCTURE owed next on the systems track.** Prior: iter 206 FEATURE — ⭐ THE LATTICE: L2 DEMOGRAPHIC ckpt1 (family ORIGIN). Per-kid origin (nghèo/tb/khá-giả) derived from id (NO migrator, NO reroll — studentOrigin via hashStr); the poor's legit growth drags (ORIGIN_GROW 0.88 → under-realize, sweep poor 68% vs middle 83%) ERASED by mentoring (back-all-poor → 89% parity = the school as equalizer), scarce 3 slots = tragic allocation; drag hits g not gCm (the legit path, not the hustle); mood lean zeroed for the poor (a mood penalty spiraled them to mass cram-dropout — fixed, dropout origin-neutral). a.fs.origin carried + save-defaulted (graceful, no migrator). Named at the payoff (realGapOrigin, layered onto tell+era). gate GREEN, bot 7392/grad 87 (no extra dropout), sweep 0-bad-flags + new L2 ORIGIN sensor, lives both poles. NEXT: GEOGRAPHIC (archetype/location biasing origin-mix + endowment). Prior: iter 204-205 FEATURE — ERAS L1 (ckpt1 the decade spine + ckpt2 payoff legibility). ckpt2 (iter-205): "right kid, wrong era" NAMED — eraFavAt(tell,gradYear) + realGapEra (wrong-era grief clause appended when fav≤ERA_WRONG; right-era "gặp đúng thời" cheer when fav≥ERA_RIGHT — symmetry) threaded through the shared realCreditSuffix (graduation + epilogue). Reading-only/balance-neutral (gate GREEN, bot 7353 byte-stable, sweep 0-bad-flags identical to ckpt1, lives ×9 both poles). ckpt1 detail: ERAS L1 ckpt1 (the authored decade spine). Each era re-weights which gift the WORLD realizes vs wastes via CONFIG.ERAS[5].fav[tell] applied in the alumni FSM transition() (realize↔waste targets) + era MOBILITY rows (ERA_REGRESS/ERA_RISE — a hostile decade drags a realized life down, a golden one lifts a settled one) + stevePShort era-gating. The era governs a gift's CEILING: spark apex 🚀/🍎 swings 5%→17% across decades (a coder = founder in the AI boom, solid kỹ sư in the 1990s), sky peaks in scarcity-1990s, hype in Đổi-Mới/smartphone; no dominant decade (apex-leader differs by gift); realize floor stable. era = eraIndex(S.year), deterministic → replay-safe, NO save change (GATE_ALUM byte-identical). + era-shift news beats at both year rollovers + opening-era boot line; sweep era-sensor (apex-swing ≥10/gift, no-dominant-decade, symmetry — 12✓); Lab era read (Run-summary arc + per-year column). gate GREEN, bot BOTOK cash 7353/arrested 14/essay 1974 (cash byte-stable; arrested/essay shifted by the era redistribution, expected), sweep 12✓, lives clean. NEXT: ERAS ckpt2 (admissions-pool era re-weight + named right-kid-wrong-era epilogue grief). Prior: iter 199 STRUCTURE — save.js carve (the SAVE/LOAD/SANITIZE persistence subsystem out of engine.js 1130→989 into js/save.js 150ln; globals, loaded after admissions.js, augments window.HVS w/ loadGame/saveGame [admissions.js load-order pattern]; dead __test.save/load/serialize exports dropped; gate.js/sweep.js concatenation + index.html wired. BYTE-IDENTICAL: gate save/reload assertions GREEN incl. iter-196 grain-survives-reload, bot BOTOK 7353/15/2010, sweep 7✓, lives 0×2, real-browser boot GREEN via bot.sh — the browser HVS augmentation works). Prior: iter 195 FEATURE — E8 ckpt2a GRAIN-FLAVORED FACULTY (a hired teacher realizes the gift they fit, neglects the rest). Pool teachers got a `grain` (coder/gshuu→spark, kysu→sky, diengia/viral→hype, ielts→neutral; inherited stay neutral → headless baseline byte-identical); teacherFactor() tallies aff{spark,sky,hype}; growStudents directs SIGNATURE-stat growth + mood by (aff[tell]−mean), ZERO-SUM across grains → aggregate-neutral. UI: each teacher's lean shown ("↗ realize Lập trình") + a faculty-GAP note when a discovered gift has no champion. New E8 sweep sensor proves the floor holds (realize 91%→92%, Δ1pt ≤8). FINDING: realize/waste-shifting hits the saturation wall (probe: all-spark vs all-sky → near-identical realization every preset), so the felt teeth live in mood/legibility; the strong adrift-the-neglected-grain version (ckpt2b) is OWNER-GATED (the delicate over-waste balance, owner playtest). gate GREEN, bot BOTOK (cash 7353/15/2005 byte-identical baseline), sweep 7✓, panelOps browser-rendered (screenshot, 0 JSERR). Prior: iter 172 [EVOLUTION] EPIC — Three Theses, Three Epilogues (split craft vs balanced epilogue closing + channeledMaker on sky-tell KY_SU under balanced; emptyKey craft branch; tell stored in fs at graduation; gate/sweep green). Prior: iter 163 STRUCTURE — admissions.js carve (intake subsystem out of engine.js → js/sim/admissions.js, 1176→1063; byte-identical bot/gate/sweep; HVS augmented from admissions.js to fix a browser load-order ReferenceError node-concat hid — lesson: structure carves must verify the real browser boot). Economy epic (owner) ckpt1-3 delivered: relaxed hoard-cap + tỷ display (159), compounding prestige engine (160), milestone fanfare + ticker-tint fix (161), upgrade-ROI legibility (162). Prior: iter 157 FEATURE — E9 checkpoint 2 (sweep SENSOR guarding the reputation→applicant feedback: directional [substance draws more makers] + bounded [craft−cram maker-share gap <0.20, no runaway] — đồ án 0.45 vs luyện đề 0.36 Δ0.09; sweep now 6✓. + clout-note symmetry: the "trường ồn ào hơn là thực" note fires on the HYPE-GAP (TT−TC≥30) so a famous-but-hollow school draws clout-chasers too. gate green, bot BOTOK. EPICS_SINCE_STRUCTURE→2 ⇒ structure owed after the owner's economy epic). Prior: iter 153 FEATURE — E9 cohesion-at-output (the school's CHARACTER shapes its intake: a substantive school draws more makers (spark↑), a hype one more clout; bounded ±5% via CONFIG.ADMIT.REP_TILT in derivedPool, centered TC 50; made FELT by a named-maker admissions note "trường thực chất — năm nay có {tên}…" (year≥3; attachment at intake, no gift leaked). Completes the cohesion system with E8-teachers + funding-donors. Sweep 5✓/0 breakage, spread holds, 0 bankruptcy, gate green replay, bot BOTOK. Checkpoint-2: clout-note calibration, E9 sweep sensor, donor→applicant link). Prior: iter 149 STRUCTURE — epilogue.js (pure stateless epilogue/end-card helpers buildCast/cardLife/shareCard carved ui.js→js/epilogue.js; globals, loaded after person.js & before ui.js; byte-identical essay md5 7b135beb across 4 preset×seed runs, gate green/bot BOTOK/sweep 5✓, clean headless boot. The high-coupling essayDraft+saveShareCard STAY in ui.js — iter-141 shared-context verdict holds for those). Prior: iter 145 STRUCTURE — uikit.js (pure UI primitives $/el/esc/ibar/statBar/chip/fundRow carved ui.js→js/uikit.js; globals, loaded before ui.js; byte-identical: bot BOTOK, gate green, lives 0 fail. The shared-toolkit foundation for the deferred epilogue/render extraction). Prior: iter 140 FEATURE — E7p prizes/awards (awardPrizes at June: cohort standouts clearing PRIZE_BAR earn Giải Sáng Tạo/Tay Nghề/Thủ Khoa — a line in a life, never a count; flags.prize; surfaced in the epilogue + buildCast biased to show them; preset-flavored; pure flavor, sweep-neutral). Prior: iter 136 FEATURE — E8 reputation-gated faculty (teachers drawn by standing: TT famous/UT trusted/TC substantive; req:{m,v}; +2 teachers, pool 4→6; coder always available so weak-start not doomed; soft gate, sweep-neutral. Checkpoint 2 = grain-flavored teacherFactor trade-offs, deferred/owner-playtest). Prior: iter 134 STRUCTURE — data/content split (CONTENT 414 ln → js/content.js; CONFIG-only data.js 233 ln; index/gate/sweep wired; byte-identical: gate green, sweep 5✓, bot BOTOK identical metrics). Prior: iter 131 FEATURE — mood-as-live-dimension (MISMATCH_MOOD_DRAIN: lệch wears a kid down → the cram grind burns out its worst-suited ~3-4/run, bounded; the lost are named + mourned (S.META.dropped); mentoring spares + lifts inaction-cost +6→+9pts; sweep spread holds, all flags ✓). Prior: iter 128 FEATURE — E-UNDERDOG (rough diamonds in the admit pool + THỰC-CHẤT-gated holistic "đặc cách" admits below the bar; epilogue names a realized diamond "ngọc thô — vào bằng cửa hẹp"; high-cutoff byte-identical, substantive schools catch 1-2 gems/run, all sweep flags ✓, 🍎 13→18% craft watch-item). Prior: iter 127 STRUCTURE — person lifecycle carve (destiny/realization/protégé: cascade/makeAlumnus/flourishOf/realFrac/realClass/favBeat → js/sim/person.js; byte-identical sweep+gate+bot; engine 1203→1104). Prior: iter 126 FEATURE — E5 discoverable talent (talentReveal: a kid's gift is fogged until grade 3 OR mentored; grade-1 = "chưa rõ", grade-2 = fuzzy band; mentoring → instant reveal. Sweep-neutral, UI-only. Resolves Decision #3. Sets up E-UNDERDOG). Prior: iter 123 E4 realization-aware destiny (FLOURISH/realFrac/realClass; a.fs.real carried gap; epilogue names craft's QUIET waste "đáng lẽ đã có thể hơn thế" + the loud waste + the lift; uSettle sweep sensor). Balance-neutral (destiny/economy/🍎/arrests unchanged); resolves the [EVOLUTION] §C-2 craft-fails-nobody gap at the perception layer. Prior: iter-114 STRUCTURE person.js carve, Mentor's Ledger soul-loop, Art & Polish.`
-- `LAST_MAINTENANCE: iter 216 — GAMEPLAY LAB updated to surface the new LATTICE systems (dynamic-Lab mandate, overdue) + whole-session consolidation. Added a Trường (archetype) selector (play que_ngheo/lo_thanhpho/truong_nghe/tinh_le via ARCH_OVERRIDE→freshState), the archetype name + Xuất thân read (cohort class mix nghèo/tb/khá + nên-người% = school-as-equalizer) in the run summary, archetype-aware distribution/compare. Lab JS parses + regenerates clean. CONSOLIDATION (exit-gate soul test after the 204-215 run): one bio layers gift×era ("máu khởi nghiệp ấy… nguội trên tay bạn · phải chi gặp thời mạng xã hội"); full stack GREEN (gate, bot 7206, sweep 0-bad-flags across era/demographic/geographic/economy sensors, lives clean). Dev-tool (lab.sh) → UNDEPLOYED (live=iter-215). NEXT: planned start on L3 (progression+legacy). Prior: iter 207 — VELOCITY TOOL: tune.js BUILT (owner "fast-track" steer). Balance grid-search: node tune.js <knob> <grid> <metric> [lo hi] → stars the value hitting the target band; one run replaces N manual probe firings. Metrics: origin-gap/origin-poor/origin-poor-mentored/era-apex:<tell>/steve-rate/cash/waste/drop (--metrics lists them). Knob = CONFIG dot-path w/ array indices (ORIGIN_GROW.ngheo, ERAS.2.fav.spark, OPS.rate). Validated (reproduced the iter-206 ORIGIN_GROW.ngheo=0.88 pick: 0.80→25.5 / 0.85→18.9 / 0.88→14.6★ / 0.92→7.9). Dev-tool → engine untouched, gate/sweep/bot unchanged, UNDEPLOYED. USE for every future balance pass (add a metric per new mechanic). Prior: iter 202 — LOOP RESUMED + real BUGFIX shipped (owner reacted to the long hold: "why not running autonomously?"). Owner-model update: a ~70-firing HOLD was TOO conservative — the owner wants the loop PRODUCING, not just "green"; "honest hold" is a last resort, not a default, and decay-avoidance was over-weighted. Ran an ultracode FAN-OUT workflow (6 scouts → adversarial verify → synth) to re-test "nothing to do"; verify/synth got rate-limited but the scouts surfaced a real CANDIDATE QUEUE (so "nothing left" was FALSE). Shipped the clear top pick: **BUGFIX — sanitize() now validates S.teachers + S.giftItems** (iter-199 carve left them unguarded; a null/NaN-luong teacher crashed loadGame itself via the khoaHead prune + every dayTick via teacherFactor → permanently-unplayable save). Reproduced both crashes, fixed in save.js (no-op on valid saves), +4 gate regression assertions. gate GREEN, bot BOTOK 7353/15/2010 (byte-identical), sweep 8✓. CANDIDATE QUEUE for next firings (scout-found, NEED per-item verify before shipping — beware decay/owner-gated): wire-the-workshop (rooms as a talent lever), peer-contagion, mentorship-depth, the over-realized pole, tap-the-beat (interactive ticker), the protégé fork, persist witnessed cohort lives, ~~name-the-wasted-gift~~ ✅SHIPPED+LIVE iter-203 (tell-aware epilogue grief), + a 2nd lower-sev giftItems render guard (now also fixed). **STRATEGIC READ post-iter-203: SMALL_SHIPS_SINCE_EPIC=2 + safe person-sim depth largely exhausted ⇒ the NEXT firing should START AN EPIC, not stack a 4th tiny narrative refinement (the #1 anti-value). Top epic candidate = wire-the-workshop / E11 (rooms as a talent lever — per-activity→growth nudge, sweep-gated). Do NOT ship another small grief-line variant.** Prior: iter 201 — CLEAN 390px MOBILE-HYGIENE AUDIT of the live iter-200 build (the ~10-firing hygiene duty; owner develops on phone; ~24 iters since the last full visual audit at 177). Read 390px screenshots of the CAMPUS (shot.sh — Kairosoft-ish, HUD fits Năm/cash/SV/GV + all 3 meters, buildings+people render, no clipping), the STUDENTS roster (talent stars + protégé/cohort beats, clean), and the FUND panel (income/expense + scholarships, clean) — the heavy 193-200 run (faculty card+gap-note, distortion readings, cohort 🪙 beats, save.js, ckpt2b flag) integrates with NO production-broken visual; ckpt2b OFF-by-default confirmed (live byte-identical). Doc-only firing (undeployed). Per the iter-200 review's arc-complete-frontier policy the loop is now at (c) honest HOLD — 3 owner asks pending (apply-skill-changes / ?ckpt2b=1 playtest / release-arc). Prior: iter 196 — CLEAN health pass + iter-195 regression guard (after the 193-195 soul run: cohort emergent lines 193, đặc cách-cost 194, grain-faculty EPIC 195). Full suite GREEN: gate, bot BOTOK (cash 7353/arrested 15/essay 2005), sweep 7✓ (incl. new E8 floor sensor), lives 0 LIVESFAIL ×3. Verified the new persisted field teacher.grain (E8 ckpt2) round-trips (mergeInto copies arrays wholesale; old grain-less saves safe — teacherFactor skips them) AND ADDED two gate.js assertions locking it in ("grain-flavored teacher survives reload" + "teacherFactor reads the reloaded grain"). Dev-tool-only (gate.js) → correctly UNDEPLOYED; live build stays iter-195 (?v=…845522). The loop is at the OWNER-GATED FRONTIER (arc release-ready awaiting owner confirm; the big epics E6/E7/E10/E8-ckpt2b owner-gated; non-gated soul work exhausted) — held responsibly rather than manufacturing a 4th refinement (the #1 anti-value). Prior: iter 192 — CLEAN post-session health pass (after the heavy iter 180-191 run: economy 180-184, owner asks 185-187 [1-speed-button, rename-for-real, tuition-at-điểm-chuẩn], critic tooling 188-191). gate GREEN, bot BOTOK (cash 7353/arrested 15/essay 2005), sweep 6✓, lives 0 LIVESFAIL ×3 presets; live build = iter-187 (?v=…315485; dev-tool 188-191 correctly undeployed); the new state (S.schoolName + S.giftItems) persists across save/reload. Whole session's work holds together. Prior: iter 177 — post-incident QA. 390px LIVE-build screenshot READ (shot.sh): Kairosoft-ish campus renders, HUD fits, curriculum panel legible, no clipping / no production-broken visual. ECONOMY re-probed (real play, all rooms auto-placed): Y2 81tr → Y4 ~1 tỷ → Y6 3 tỷ → Y12 5.5 tỷ — sane, matches bot (5.25 tỷ @yr11) + the iter-160 probes; the long-game pacing the owner wanted is intact (no year-3 ballooning; a 390px HUD "612tr" was misread as "tỷ" — it's ~0.6 tỷ, year-appropriate). gate GREEN, bot BOTOK, sweep 6✓, lives 0 LIVESFAIL across 3 presets. Prior: iter 167 — big-campus save/reload intact + mobile audit. Prior: iter 97.`
+- **THESIS is FROZEN.** Any change that asserts *what makes/breaks a 🍎* (the apex) is thesis-adjacent: surface it
+  as an `OWNER:` proposal, never apply unilaterally. Owner forks are routed as adopt-or-override, not edits.
 
-## Epic in progress
-**EDUCATION MODEL REFINEMENT** (owner steer 2026-06-22; the decided fix from `MODEL-REMAKE-PROPOSAL.md`). The new
-top-priority epic — see `## Epic: EDUCATION MODEL REFINEMENT` immediately below for the phased, sweep-gated plan.
-_(E11 walk-in rooms is a GRAPHICS-era epic — DEFERRED behind the gameplay-first freeze, kept below for reference.)_
+- **DEPLOY POLICY: EVERY ITERATION** (owner 2026-06-15, "I develop on my phone"). Any iteration that changes
+  browser-facing code (`js/*.js`, `index.html`, assets) MUST end with:
+  `./bump.sh && git add -A && git commit && git checkout main && git merge --ff-only mentors-ledger && git push origin main && git checkout mentors-ledger`,
+  then verify the live `?v=` string. Dev-tool-only changes (gate/sweep/bot/docs) needn't deploy — note it.
+  `main` stays a strict fast-forward of `mentors-ledger`. Develop on `mentors-ledger`.
 
-## Epic: EDUCATION MODEL REFINEMENT (owner steer 2026-06-22 — the decided fix) — IN PROGRESS
-**Why:** the owner judged the 3 triết lý an OVERSIMPLIFICATION (real education has more axes, more majors, more
-activities) and asked to refine the model deeply "before a total remake." A 26-agent fan-out
-(`MODEL-REMAKE-PROPOSAL.md`) decided: **refine the EDUCATION term IN PLACE, do not rebuild.** EDUCATION expands from
-one slider to a composed sub-product: `MATCH(tell,mode) × STRUCT_FIT(tell,structure) × MAJOR_FIT(tell,major) ×
-ACTIVITY(…gated by attention-hours) × MENTORSHIP × FACULTY_GRAIN`. The capstone, alumni FSM, era/origin/archetype
-lattice, mentorship equalizer, and determinism-from-id discipline are KEPT verbatim.
+- **EXIT-GATE (iter-221): measurable criteria (a)(b)(c) MET; only (d) — explicit owner "ready to be dressed" —
+  remains, and it is OWNER-GATED.** The loop may NOT self-release to graphics. Absent the owner's go, continue
+  conservative deepening (genuine value over volume; no manufactured refinements).
 
-**LAW THIS EPIC ADDS (non-negotiable, every phase):** each new table/lever ships its **symmetry + non-dominance
-sweep sensor BEFORE the lever**, and the sweep STRATS + adaptive bot must be upgraded to *search the new knobs* (a
-named bounded algorithm — e.g. greedy per-grade hill-climb over {mode×structure}) or the no-dominant-strategy
-guarantee goes BLIND. Teeth live at the **CEILING/cap + MOOD** layers (the saturation wall washes out rate nudges
-for the gifted). All new fit caps are **DISCRETE texture tables, never a smooth distance→severity gradient** (binding
-law: texture not gradient). Outputs stay **prose, never a fit-% or fungible budget** (§C-3) — incl. auditing the
-existing per-kid fit readout at `ui.js` ~L908–923.
+### Engineering invariants (every change)
+- **Determinism from id, NO migrator.** New per-kid state derives from id (e.g. `hashStr`); save additions are
+  sanitize-defaulted, never reroll. PLAYER-INPUT state (e.g. activities) is the exception — it MUST be
+  saved + sanitized/migrated (handle like the iter-202 save-loss fix).
+- **No-dominant-strategy / open-question law.** No era/archetype/origin/adaptive strategy may top both apex+cash;
+  every axis must both REALIZE and WASTE. Each new lever ships its **symmetry + non-dominance sweep sensor BEFORE
+  the lever**, and the sweep STRATS + adaptive bot must be upgraded to *search the new knobs* or the guarantee goes blind.
+- **Texture, not gradient.** Fit caps are DISCRETE texture tables, never a smooth distance→severity gradient.
+- **Teeth at the CEILING/cap + MOOD layers** — the saturation wall washes out rate nudges for the gifted.
+- **Outputs stay PROSE, never a fit-% / fungible budget / potential bar** (§C-3). No 48-kid dashboard.
+- **Waste is done TO the kid by the structure (invariant #4), never blamed on the kid; symmetry of waste
+  (invariant #2) — every lever ships a wasted life in the epilogue.** Visibility ≠ accessibility; cohesion at OUTPUT not INPUT.
+- **Byte-identical verification:** `baseline.js` + `baseline.snapshot.json` (Phase-0, iter-243) run a fixed
+  3-preset × 4-seed matrix to graduation and assert the alumni histogram matches EXACTLY (wired into `gate.sh` as
+  BASELINE GREEN). A deliberate change recaptures via `--capture`. Determinism-breaking changes re-baseline GATE_ALUM.
+- **Verification per phase:** parse → `./gate.sh` GREEN (+ BASELINE) → `node sweep.js` 0 bad flags incl. the new
+  sensor → `./bot.sh` BOTOK → `./lives.sh` across ≥2 presets/archetypes → surface the lever in the Gameplay Lab.
 
-**✅ PHASE 0 SHIPPED (iter-243) — GATE BASELINE-CHECK.** `baseline.js` + committed `baseline.snapshot.json` run a
-fixed (3 presets × 4 seeds) matrix to graduation, tally the alumni-state histogram, and assert it matches EXACTLY
-(deterministic → epsilon 0; precise `preset.state` drift diff + `--capture` for intended changes). Wired into
-`gate.sh` (`BASELINE GREEN` required) so a silent rate regression can no longer pass. The byte-identical-default
-claim for Phase 1 is now actually verifiable.
+- **Evolution engine (DORMANT behind the gameplay-first phase).** The frame-reset critic must be SENSORS-ONLY —
+  never grant write/exec/network (iter-172 incident: an exec-capable critic pushed a crash to prod). If run, launch
+  ASYNC/background (`CRITIC_TIMEOUT=1800 ./evolve.sh &`), never foreground-block. See `docs/EVOLUTION-ENGINE.md`.
 
-**▶ PHASE 1 — STRUCTURE axis (the spark≠sky fix; ships alone).**
-- **✅ PHASE 1a SHIPPED (iter-244) — the mechanic, headless + byte-identical.** `CONFIG.STRUCT_FIT(tell,structure)` +
-  new `S.struct.n1..n4` (default `mid`, chosen over reshaping `S.presets` → less churn) + the `fitOf(tell,gk)` =
-  MATCH × STRUCT_FIT helper re-pointed at every fit site (growth, cohort/fav/tet beats, sweep bot). TEETH at MOOD
-  (`structMood = (STRUCT_FIT−1)·STRUCT_MOOD_W`, the non-saturating channel) — zero at `mid` → byte-identical (gate
-  BASELINE GREEN proves it). New sweep STRUCT_FIT sensor: symmetry + bites/splits (coder→HIGH 57→83%, maker→LOW
-  48→86%). Adaptive bot now searches structure. save.js guards `S.struct` (no migrator). gate GREEN+BASELINE GREEN,
-  sweep 0-flags, bot 7337 byte-identical, lives clean. Committed LOCAL, undeployed (inert until the dial).
-- **✅ PHASE 1b SHIPPED + DEPLOYED (iter-245) — the 2-axis dial.** The 3 MODE buttons now sit above a STRUCTURE
-  segmented control per grade (Mở / Vừa / Khuôn → `S.struct.n*`, default Vừa/mid) + open-question tradeoff strings;
-  the per-kid fit readout + sprite reaction read the composed `MATCH × STRUCT_FIT` (kept 3-band PROSE — §C-3 audit of
-  L908 held). Byte-identical at default (gate BASELINE GREEN); the dial bites (soul probe: coders 12/28→24/28 Mở→Khuôn).
-  Phase 1a+1b deployed together (the coherent player-usable slice). gate+BASELINE GREEN, bot 7337 no-JSERR, sweep 0-flags.
-- **✅ PHASE 2 GROUNDWORK SHIPPED (iter-246) — the EVERYMAN gets a voice (the mandated content-first step).** The ~54%
-  with `tell=""` now get their own gift-vs-fate read at the payoff (`realGapTell.*.gen` + `realCreditSuffix` `tk =
-  tell||"gen"`) — the able-but-undirected majority, their grief the *direction the school never gave* (not a betrayed
-  gift). Reading-only → byte-identical (BASELINE GREEN; essay 2761→2907). Deployed. (Chose this over Phase 1c: higher
-  soul, lower risk, and it's Phase 2's own prerequisite.)
-- **✅ PHASE 2a SHIPPED (iter-247) — the MAJOR_FIT mechanic (headless, byte-identical).** Each major gains a `fit`
-  vector over tells + `CONFIG.MAJOR_FIT(tell,key)`; a 2nd fit axis (the TRACK, distinct from pedagogy) routed through
-  MOOD (`majorMood`, `MAJOR_MOOD_W=5`). Diagonal=1.0 → today's 1:1 assignment byte-identical (BASELINE GREEN);
-  `MAJOR_OVERRIDE` + a sweep MAJOR_FIT sensor prove the teeth (coder 89%→75% shoved into biz; maker 77%→73%). Committed
-  LOCAL, inert until 2b's real assignment.
-- **▶ PHASE 1c (deferred, optional texture) — the tell-keyed DISTORTION map.** Generalize `MATCH_CM` (hype+cram→shark)
-  into a (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark. MOVES the distortion spread → a
-  deliberate `baseline.snapshot.json` recapture + sweep re-check. Lower priority than the majors mechanic below.
+---
 
-- **✅ PHASE 2b SHIPPED + DEPLOYED (iter-248) — the EVERYMAN's HOME (Khoa Đại cương).** A room-less general track native
-  to `""` (`stat: tn` → steady 🔧 kỹ-thuật-viên); `studentMajor` returns it for the everyman. Baseline recaptured: under
-  cân-bằng they realize more (KY_SU 227→238), under cram they become rote not dropouts (pedagogy still bites); apex
-  unchanged (FOUNDER 76→78). **Owner-fork #1 firewall HOLDS** (new EVERYMAN sweep sensor: `""` realized 37% but apex
-  7.7% < best grain 17.5% — a home, not a 🍎 path). Fixed a room-null boot-crash in the khoa panel. Carries Phase 2a live.
-- **▶ PHASE 2c (NEXT) — the SYSTEMIC off-native intake.** Let a grain be placed in a NON-native track (fit-priority vs
-  open-door + capacity/quota) so "right gift, wrong major" happens in play and MAJOR_FIT bites live (a coder shoved into
-  biz wilts); intake-rule UI; remove the scripted prodigy → admissions-share tilt (**determinism-breaking: re-baseline
-  GATE_ALUM + rewrite the WASTED-PRODIGY sensor same commit**); rewrite sweep STRATS + bot off the hardcoded keys.
+## ▶ ACTIVE EPIC — EDUCATION MODEL REFINEMENT (owner steer 2026-06-22)
 
-- **▶ NON-GATED QUEUE (scout fan-out iter-254 — reading-only/bounded, no apex, ranked).** Mine these before holding:
-  1. ✅ **Equalizer beat at the capstone close** — SHIPPED iter-254 (the school-as-equalizer made legible at the climax).
-  2. ✅ **Era-journey close beat** — SHIPPED iter-255 (the school's founding→closing decade arc named before "Tôi—").
-  3. ✅ **Mentor-slots-FULL grief beat** — SHIPPED iter-256 (`fullLedgerBeat` names the wilting gift your full ledger costs you — the tragic allocation, proactively; byte-identical until the player fills the ledger).
-  4. ✅ **Lattice-wired event dilemma** — SHIPPED iter-258 (the `cramPressure` dilemma wires the đề-Văn's cram-culture
-     pressure to the STRUCTURE dial: cave→tighten upper grades vs hold; non-apex). Unblocked by an iter-258 MAJOR_FIT
-     robustify (biz/Sống-Ảo khoa wastes craft harder: spark 0.7→0.6, sky 0.7→0.55; off-diagonal → byte-identical/sensor-only).
+**Why:** the owner judged the 3 triết lý an OVERSIMPLIFICATION and asked to refine the model deeply "before a total
+remake." A 26-agent model-review (verdict + forks now folded into MODEL.md) decided: **refine the EDUCATION term IN PLACE, do not
+rebuild** (~90% of the engine is the law-bearing spine). EDUCATION expands from one slider to a composed sub-product:
+`MATCH(tell,mode) × STRUCT_FIT(tell,structure) × MAJOR_FIT(tell,major) × ACTIVITY(…attention-hours) × MENTORSHIP ×
+FACULTY_GRAIN`. The capstone, alumni FSM, era/origin/archetype lattice, mentorship equalizer, and
+determinism-from-id discipline are KEPT verbatim.
 
-- **▶ NON-GATED QUEUE v2 (fresh scout fan-out iter-259 — 4 survivors, 14 rejected). Mine these before holding:**
-  3. ✅ **BUGFIX: late-game saves silently un-mentored kids** — SHIPPED iter-259 (sanitize capped by base 3 not era-scaled `mentorSlots()`; one-line fix + GATE_SAVE regression guard).
-  1. ✅ **Cohort-intake era-flood line** — SHIPPED iter-260 (`🌊 CONTENT.eraFlood[era]` in `eraShift()` — the gift the new decade floods the intake with).
-  2. ✅ **Archetype×era era-shock beats** — SHIPPED iter-260 (`〽️ CONTENT.eraShock[arch][era]`, 15 sparse cells, authored via a 6-agent draft→critic workflow — the archetype's thesis aching against the era).
-  4. ✅ **Archetype-framed capstone intro** — SHIPPED iter-261 (`CONTENT.essay.archFrame` — this school's OWN situated đề-Văn at the climax, one open question per archetype; critic-reviewed).
-  → SCOUT v2 QUEUE FULLY DELIVERED.
+**Owner forks (adopted recs, overridable; rationale folded into MODEL.md):**
+#1 everyman gets a real Đại-cương major, era-neutral + BOUNDED structure peak (needs a numeric bound + a sensor that
+all-"" can't win 🍎+cash) · #2 capstone weaves the new levers IMPLICITLY (faces, not policy; still "Tôi—") ·
+#3 era-on-tracks via existing `eraFav` · #4 capstone stays authored-first.
 
-**▶▶ APEX FORK RESOLVED (iter-264, owner): "KEEP 🍎 AS-IS" → PLATEAU LIFTED. The apex stays grain×era×luck (THESIS frozen,
-NO apex teeth); remaining systems built BOUNDED NON-APEX. GREENLIT KEYSTONE = Phase 2c off-native intake (MAJOR_FIT bites live).
-Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).**
+### 🍎 APEX FORK RESOLVED (iter-264, owner): **"KEEP 🍎 AS-IS" → plateau lifted.**
+The apex stays grain×era×luck (THESIS frozen, **NO apex teeth**). Remaining systems built **BOUNDED NON-APEX.**
+Greenlit keystone = **Phase 2c off-native intake** (MAJOR_FIT bites live). Phase-3 activities stay SHELVED
+(non-apex versions proven inert, iters 251-252).
 
-  PHASE 2c EPIC — off-native major intake (the architecture-heavy keystone; determinism-sensitive). Checkpoints:
-  • CP1 ✅ SHIPPED iter-265 (byte-identical): `studentMajor` reads a STORED `s.major` (room-gated) before native derivation;
-    `S.intakePolicy` state ("native" default, CONFIG.INTAKE_DEFAULT) + freshState + sanitize guards. Nothing sets s.major yet → byte-identical.
-  • CP2a ✅ SHIPPED iter-266 (byte-identical machinery): `assignMajors()` deterministic resolver (monthly, stable id-order, no
-    rng) + `CONFIG.MAJOR_CAP` (specialist seats; Đại-cương uncapped). Native-first; overflow → Đại-cương (native policy) /
-    best-fit specialty (open). At cap=99 → no overflow → byte-identical; probe at cap=6 confirms overflow fires.
-  • CP2b ✅ DESIGN RESOLVED iter-267 (investigative): probes show specialist khoas peak 25–27; a biting flat cap under the
-    DEFAULT policy degrades the baseline (cap22 -2pt realize/-5% alumni; cap18 -5pt) with NO agency → rejected as a default nerf.
-  • CP2c ✅ SHIPPED iter-268 (off-native intake LIVE): clean opt-in design (no quota mech needed). "native" default → idle if
-    khoa unbuilt (byte-identical); "open" → `placeOffNative` crams the grain into a built specialty / Đại-cương (MAJOR_FIT bites).
-    Lever = build + policy (lean campus + open-door → off-native waste). Sweep INTAKE sensor ✓ bounded (Δ8.1, neither dominates).
-  • CP3a ✅ SHIPPED iter-269: the intake-rule DIAL in panelOps ("Tuyển sinh — xếp khoa": Đúng khoa ↔ Mở cửa, `CONFIG.INTAKE_META`
-    tradeoffs) — the off-native mechanic is now reachable by players. UI-only → byte-identical.
-  • CP3b (NEXT): surface intakePolicy in the Gameplay Lab (a selector, dynamic-Lab mandate) + the wrong-major WILT narrative
-    beat (name a named grain nguội-ing off-native, in-play and/or at the payoff). Optional CP4: tie khoa capacity to room
-    UPGRADE level (seat-scarcity as a build-investment lever) — only if it adds agency without a default nerf.
-  • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
-    wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
+### Phase status
+- **Phase 0 ✅ (iter-243)** — gate BASELINE-CHECK (`baseline.js` + snapshot, wired into `gate.sh`).
+- **Phase 1 — STRUCTURE axis (spark≠sky fix) ✅ DEPLOYED.** 1a (iter-244, the `STRUCT_FIT` mechanic, teeth at MOOD,
+  byte-identical) + 1b (iter-245, the 2-axis dial: 3 MODE buttons × a per-grade Mở/Vừa/Khuôn STRUCTURE control,
+  default Vừa/mid → byte-identical; it bites: coders 12/28→24/28 Mở→Khuôn).
+  - **Phase 1c (deferred, optional texture):** tell-keyed DISTORTION map — generalize `MATCH_CM` into a (tell,mode)
+    map (spark→credential-grinder, sky→văn-mẫu, hype→coin-shark). Moves the distortion spread → recapture baseline.
+    Lower priority than the majors mechanic.
+- **Phase 2 — MAJORS decoupled (2a+2b ✅; 2c = off-native intake, the active frontier).**
+  - 2-groundwork ✅ (iter-246): the EVERYMAN (~54% `tell=""`) gets their own gift-vs-fate read (`realGapTell.*.gen`).
+  - 2a ✅ (iter-247): the `MAJOR_FIT(tell,key)` mechanic (2nd fit axis = the TRACK, routed through MOOD); diagonal=1.0
+    → byte-identical; `MAJOR_OVERRIDE` + sweep sensor prove the teeth.
+  - 2b ✅ DEPLOYED (iter-248): the EVERYMAN's HOME (Khoa Đại cương, `stat: tn` → steady 🔧 kỹ-thuật-viên).
+    Owner-fork #1 firewall HOLDS (EVERYMAN sensor: `""` realized 37% but apex 7.7% < best grain 17.5% — a home, not a 🍎 path).
+  - **▶ Phase 2c — off-native major intake (the keystone; architecture-heavy, determinism-sensitive).** Lets a grain
+    be placed in a NON-native track so "right gift, wrong major" happens in play and MAJOR_FIT bites live (a coder
+    shoved into biz wilts). Checkpoints:
+    - CP1 ✅ (iter-265): `studentMajor` reads a STORED `s.major` (room-gated) before native derivation; `S.intakePolicy`
+      state ("native" default) + freshState + sanitize guards. Byte-identical (nothing sets `s.major` yet).
+    - CP2a ✅ (iter-266): `assignMajors()` deterministic resolver (monthly, stable id-order, no rng) + `CONFIG.MAJOR_CAP`
+      (specialist seats; Đại-cương uncapped). Native-first; overflow → Đại-cương / best-fit specialty. cap=99 → byte-identical.
+    - CP2b ✅ DESIGN RESOLVED (iter-267, investigative): a biting flat cap under the DEFAULT policy degrades the
+      baseline with NO agency → rejected as a default nerf. (Off-native is opt-in, not a forced cap.)
+    - CP2c ✅ (iter-268, off-native intake LIVE): opt-in design, no quota mech. "native" default → idle if khoa unbuilt
+      (byte-identical); "open" → `placeOffNative` crams the grain into a built specialty / Đại-cương (MAJOR_FIT bites).
+      Lever = build + policy. Sweep INTAKE sensor ✓ bounded (Δ8.1, neither dominates).
+    - CP3a ✅ (iter-269): the intake-rule DIAL in panelOps ("Tuyển sinh — xếp khoa": Đúng khoa ↔ Mở cửa, `CONFIG.INTAKE_META`
+      tradeoffs) — reachable by players. UI-only → byte-identical.
+    - **CP3b (NEXT):** surface `intakePolicy` in the Gameplay Lab (a selector, dynamic-Lab mandate) + the wrong-major
+      WILT narrative beat (name a named grain nguội-ing off-native, in-play and/or at the payoff).
+    - **CP4 (optional):** tie khoa capacity to room UPGRADE level (seat-scarcity as a build-investment lever) — only
+      if it adds agency without a default nerf.
+    - **Determinism note for later CPs:** removing the scripted seed-5 prodigy → admissions-share tilt is
+      determinism-breaking — re-baseline GATE_ALUM + rewrite the WASTED-PRODIGY sensor IN THE SAME COMMIT; rewrite
+      sweep STRATS + adaptive bot off the hardcoded preset keys. Keep the apex mechanism UNTOUCHED (apex = as-is).
 
-**▶ NON-GATED SURFACE MINED OUT — CONFIRMED PLATEAU (3 scouts: iter-254 / 259 / 262).** The third scout (sharpened, high-bar,
-deepest veins) returned 0 survivors / 18 rejected — all redundant / apex-gated / prose-not-meter / false-premise. The loop now
-HOLDS (legitimate iter-230 completion-plateau, proven by adversarial search). SOLE UNBLOCK = the owner's **APEX fork** (should
-activities / seat-scarcity shape the 🍎 — i/ii/iii). Re-scout ONLY on a real change (owner steer / new system / apex answered / long gap).
+- **Phase 3 — ACTIVITIES + ATTENTION-HOURS (SHELVED; droppable).** The only genuinely new subsystem
+  (`S.term` + `S.activities` + a shared attention-hours pool — the tragic allocation the game lacks). Non-apex
+  versions proven inert (iters 251-252). Activities are PLAYER INPUT → must be saved/sanitized/migrated. If the
+  pool proves dominance-prone, Phases 1–2 already answer most of the critique. Stays shelved per the apex resolution.
 
-  **▶ After v2 queue: RUN A FRESH SCOUT before holding** (per SKILL SCOUT-BEFORE-YOU-HOLD). Big remaining work (Phase 3
-  activities-apex / Phase 2c off-native intake) stays owner-gated on the APEX fork. The MAJOR_FIT robustify (iter-258) cleared
-  the path for MORE event-deck content (new events no longer tip the sensor).
+**Non-gated surface MINED OUT — confirmed plateau (3 adversarial scouts: iter-254 / 259 / 262).** Scout-found
+reading-only beats all delivered (equalizer/era-journey/mentor-full grief, lattice-wired cram dilemma, era-flood /
+era-shock / archetype-framed capstone beats — iters 254-261). The third scout returned 0 survivors / 18 rejected.
+Re-scout ONLY on a real change (owner steer / new system / long gap).
 
-**▶ PHASE 2 — MAJORS decoupled (2a+2b ✓ done; 2c = the systemic off-native intake, NEXT). [orig spec ↓]** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
-realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
-from the 3 today (code/make/biz, 1:1 by tell) to ~6 major environments (`fitVector`); `studentMajor` → systemic
-best-fit-given-rooms-and-quota resolver (derive-from-id); add
-`MAJOR_FIT` as a 2nd ceiling term; intake-rule + capacity UI; protégé re-track verb; **remove the scripted seed-5
-prodigy** → admissions-share tilt (**determinism-breaking: re-baseline the gate alumni snapshot + rewrite the
-WASTED-PRODIGY sweep sensor in the SAME commit**). Rewrite sweep STRATS + adaptive bot off the hardcoded preset keys.
-Fold/delete CKPT2B (MAJOR_FIT supersedes it). Owner-fork #1: give "" a real major, era-neutral + BOUNDED structure
-peak (needs a numeric bound + a sensor that all-"" can't win 🍎+cash).
+---
 
-**▶ PHASE 3 — ACTIVITIES + ATTENTION-HOURS + a real term cadence (droppable).** The only genuinely new subsystem
-(`S.term` + `S.activities` + the pool). Activities are PLAYER INPUT → **must be saved + sanitized/migrated** (breaks
-the derive-from-id/no-migrator pattern — handle like the iter-202 save-loss fix). Reconcile the attention-hours
-driver: extend the era-scaled `TECH_REACH` reach vs a faculty-headcount driver (owner-flagged). Sweep: activity
-symmetry + an attention-allocation non-dominance sensor. If the pool proves dominance-prone, Phases 1–2 already
-answer most of the critique.
+## Lattice & narrative — COMPLETE (the spine the gameplay-first phase built)
 
-**Verification (every phase):** parse → `./gate.sh` GREEN (+ the new Phase-0 baseline snapshot) → `node sweep.js`
-0 bad flags incl. the phase's NEW sensor → `./bot.sh` BOTOK → `./lives.sh` across ≥2 presets/archetypes reads true →
-surface the new lever in the Gameplay Lab. Deploy per policy (browser-facing).
+These are DONE and load-bearing; deepen only if a checkpoint above needs them. Detail in CHANGELOG.
 
-**Owner forks (adopted recs, overridable):** #1 everyman major bounded+era-neutral · #2 capstone weaves implicitly ·
-#3 era-on-tracks via existing `eraFav` · #4 capstone authored-first. Full rationale + the critic's caught risks in
-`MODEL-REMAKE-PROPOSAL.md`.
+- **L1 ERAS** ✅ — the authored decade spine (1990s→AI boom); each era re-weights which gift the WORLD realizes/wastes
+  via the alumni FSM (a gift's CEILING swings by decade, apex 5%→17%), + era MOBILITY, era-flavored cohorts, and the
+  "right kid, wrong era" grief NAMED at the payoff. Deterministic (`eraIndex(S.year)`, no save change).
+- **L2 DEMOGRAPHIC + GEOGRAPHIC** ✅ — per-kid family ORIGIN (poor/mid/khá, id-derived) drags the poor's growth →
+  under-realize, ERASED by mentoring (the school as EQUALIZER); 4 ARCHETYPES (`CONFIG.ARCHETYPES`: tinh_le / que_ngheo /
+  lo_thanhpho / truong_nghe) each pre-load economy + culture + cohort origin-mix. Sweep sensors prove no axis dominates.
+- **L3 LEGACY** ✅ — a run's standout graduate writes to a separate `LEGACY_KEY` at the decade; a NEW run is seeded by
+  it (a bright legacy returns as a named founding teacher + funds the quỹ; a dark one echoes −TT). Progression-UI rungs
+  (unlocks / scored ending ladder) DEFERRED to the graphics pass.
+- **L4 TECHNOLOGY** — ckpt1 ✅ (iter-239): each tech wave COMPOUNDS the teacher's REACH (`mentorSlots()` scales by era,
+  3→4 smartphone→5 AI; deterministic). **The apex fork (does tech lower/raise/leave the apex) stays OWNER-GATED.**
+- **PEERS / CONTAGION** ✅ — the cohort's atmosphere pulls each kid's mood toward the school mean (`CONFIG.PEER`), named
+  in-play (`cohortBeat` warm-lift / cold-drag) — the player's teaching culture drives it. ckpt3 (peer-shaped epilogue,
+  needs a serialized `peerAcc`) deferred.
+- **NARRATIVE / WRITING** ✅ — keynote variation, individuated cast lines, the ANNUAL LETTER beat conditioned on
+  policy×cohort×era, and the CAPSTONE essay that re-reads the persisted letters (arc: start → turning-point → end,
+  never answering the open question). N3-ckpt3 (weave a named kid into a letter's year) and N4 (unlockable
+  paths/events) are future, authored-first. Narrative surfaces swept clean (iters 222-229); the writing is FINAL.
+- **MENTOR'S LEDGER / person-sim (E1–E9)** ✅ — the soul loop: grain↔mode MATCH multiplier, epilogue names the
+  realize/waste/distort, follow-ONE protégé + mentor nudge, realization-aware destiny + carried gap, discoverable
+  talent (fogged till grade-3/mentored), the overlooked-gem "đặc cách" admit + its cost, reputation-shaped faculty
+  with grain-flavored teaching, cohesion-at-output. (E6 multi-axis aptitude · E10 early-game weight remain owner-gated.)
 
-> _(Recently shipped on `mentors-ledger`, now LIVE on github.io: Mentor's Ledger soul-loop (E1–E3), Art &
-> Polish (Kenney+Jephed), the Evolution Engine beat, responsive desktop, and the iter-108→118 fixes.)_
+---
 
-## Epic: E11 — Walk-in roofless rooms where activity earns development
-**Goal (one Bar-moving sentence):** turn key rooms into bigger TOP-DOWN INTERIORS (no roof) where students
-walk in and do visible activities that CONTRIBUTE to their growth — so *watching the campus IS watching
-development happen* (the living campus fused with the person-sim soul).
+## Backlog (genuine remaining work)
 
-**Load-bearing decisions — OWNER, please confirm/redirect (I won't build the visual until you pick):**
-- **D1 (visual direction):** how the roofless interior reads — pick via a DIVERGENCE workflow (3 options
-  screenshotted at 390px) per the SKILL's #1-visual-dimension rule. *Default if silent: run the divergence
-  and show you 3 to choose from.*
-- **D2 (scope of rooms):** all rooms as interiors, or just the teaching/activity rooms (phòng học, xưởng,
-  phòng máy, căng tin)? *Lean: the activity rooms first.*
-- **D3 (activity→growth link):** the soul mechanic — a kid's per-period activity nudges its matching stat
-  (study→kt, xưởng/đồ-án→tn/st, etc.), sweep-gated so it does NOT create a dominant strategy or break the
-  realize/waste spread. *Lean: a SMALL per-activity nudge on top of the preset growth, capped, sweep-verified.*
+- **OWNER-GATED epics** (loop may not build unilaterally): E6 multi-axis aptitude (a CASCADE re-tune, the biggest
+  balance risk) · E7 more MAJORS via E6 or a major-assignment redesign · E10 early-game weight (restructure, taste) ·
+  the L4 apex fork (i lower / ii raise-for-some / iii leave) · the N3 capstone AUTHORED-ASSEMBLY-vs-RUNTIME-LLM fork ·
+  "what is a Steve" (THESIS-adjacent — surface as a proposal, never pin).
+- **STRUCTURE debt** (`EPICS_SINCE_STRUCTURE` ≥2 ⇒ next epic must be structure; in practice pay when a file strains):
+  - `content.js` (~658) is the next carve candidate (split the alumni/epilogue prose) when it next becomes painful.
+  - `ui.js` (~1791) — the high-coupling shared-UI-context refactor (panels/render, ~229 closure-helper uses); not yet
+    painful, the features it'd enable are owner-gated. Verifiable-first leaf = the epilogue/essay cluster via `lives.sh`.
+  - *Paid down so far:* person.js (127) · admissions.js (163) · epilogue.js (149/183) · save.js (199) · alumni.js (212).
+- **Dev tooling:** `tune.js` (iter-207) — balance grid-search (`node tune.js <knob> <grid> <metric>`); add a metric per
+  new mechanic, use for every balance pass. `baseline.js` guards rate regressions.
+- **Deferred to the GRAPHICS pass:** E11 walk-in roofless rooms (activity→growth render) · E12 inspect-portrait ↔
+  Jephed sprite reconciliation · E13 gender-matched names · E14 procedural character variety · HUD era indicator /
+  era-transition modal · progression-UI rungs. Load-bearing decisions for these live in `GRAPHICS-HANDOFF.md` + VISION.md.
 
-**Phases (each ships a green checkpoint):**
-1. **Divergence** — 3 room-interior visual prototypes → screenshot 390px + desktop → owner picks (or I judge).
-2. **Render the interiors** — the chosen direction (no-roof, desks/benches, students visible inside) for the D2 rooms; mobile 390px + desktop verified; procedural fallback intact.
-3. **Activity→growth link** (D3) — wire the per-period activity to a capped stat nudge in `js/sim/person.js` `growStudents`; **sweep-gate**: pluralism holds, no dominant strategy, realize/waste spread intact, 🍎 stays rare.
-4. **Polish/juice** — the "doing stuff" reads delightfully (the owner's "love to watch").
+---
 
-**Verification:** screenshots READ at 390px + ~1280px (per `shot.sh`); `node sweep.js` bands hold (phase 3); `./gate.sh` + `./bot.sh` green. **Rollback:** branch `mentors-ledger`, one commit per phase, `git revert` per phase.
-OWNER: this is the standout campus-life × soul epic from your feedback — confirm the direction (D1–D3) or steer; absent a steer, the loop runs phase-1 divergence next.
+## Cadence counters (Step 0 reads these; update every ship)
+- `SHIPS_SINCE_PERSONSIM: 0` — ≥1 ⇒ HARD-LOCK to a person-sim pick (PEOPLE-FIRST ARC). Reset 0 on a person-sim ship.
+- `SMALL_SHIPS_SINCE_EPIC: 0` — ≥3 ⇒ EPIC owed; the next firing HARD-LOCKS to the EPIC track.
+- `EPICS_SINCE_STRUCTURE: 0` — ≥2 ⇒ next epic must be STRUCTURE.
+- `FIRINGS_SINCE_FRAME_RESET: 0` — ≥12 ⇒ frame-reset beat (DORMANT behind the gameplay-first phase).
+- `LAST_EPIC:` iter-269 Phase 2c CP3a (intake-rule dial). `LAST_STRUCTURE:` iter-212 alumni.js carve.
 
-## Epic: ERAS (L1 — the authored decade spine) — IN PROGRESS
-**Goal (one soul-moving sentence):** a run plays through a SEQUENCE of decades, and each decade re-weights which gift
-the WORLD realizes vs wastes — so the SAME kid is a world-changing founder in the right era and a quiet kỹ sư (or
-unemployed) in the wrong one. "Right kid, wrong time," felt as a life.
-
-**Load-bearing forks (decided iter-204):**
-- **F1 era timeline = `eraIndex(S.year)`** — game-year bands (`ERA_LEN=3` → era0 yrs1-3 … era4 yr13+), the authored
-  chronological spine from the 1990s founding. Deterministic, NO rng, NO new save field (reload restores S.year → same
-  era; GATE_ALUM replay stays byte-identical). *Chosen over a randomized/offset start (that's L2/L3 territory).*
-- **F2 what the era modulates (CKPT1) = the alumni FSM only** — the highest-soul, lowest-surface, sweep-native lever
-  (sweep evals the real engine.js, so the FSM change is shared automatically). Admissions-pool + đề/event flavor =
-  later checkpoints. *Diverged 3 (FSM / admissions-pool / đề-bank) → converged on FSM for soul-per-surface.*
-- **F3 the era's grip = the CEILING (apex), not the floor** — canbang gives most gifts the craft to reach a decent
-  kỹ sư life regardless of decade (floor stable, no era abandons a gift), but the decade decides how HIGH the gift
-  climbs (founder/🍎). Plus era MOBILITY rows (`ERA_REGRESS`/`ERA_RISE`) so a hostile decade can drag a realized life
-  back down (the FSM had no downward exit from kỹ sư) and a golden decade lifts a settled one — the "world caught up /
-  world moved on" beat, emergent as the years pass.
-- **F4 distortions stay era-NEUTRAL** — coin-shark / arrest / văn-mẫu are the SCHOOL's doing (invariant #4), never the
-  decade's. The era only touches realize↔waste.
-
-**Checkpoints (each ships green):**
-1. ✅ **CKPT1 (iter-204):** `CONFIG.ERAS[5]` (fav{spark,sky,hype} + shift lines) · `eraIndex/curEra/eraFav/eraShift`
-   + `ERA_OVERRIDE` test-pin · era-weighting in `transition()` + mobility rows + `stevePShort` · era-shift news beats at
-   both year rollovers + opening-era boot line · sweep era-sensor (apex-swing + no-dominant-decade + symmetry) · Lab era
-   read (Run-summary arc + per-year column). Verified: gate GREEN, bot BOTOK (cash 7353), sweep 12✓ (spark/sky/hype apex
-   swing Δ13/14/14; apex-leader spark→ai / sky→scarcity / hype→smartphone), lives clean ×1, Lab JS parses.
-2. ✅ **CKPT2 (iter-205) — LEGIBILITY: "right kid, wrong era" NAMED at the payoff.** `eraFavAt(tell, gradYear)` + a
-   `realGapEra` content block (wrong{spark,sky,hype,_} appended to the grief when fav ≤ `ERA_WRONG`; right "gặp đúng
-   thời" cheer when fav ≥ `ERA_RIGHT` & flourished — symmetry, invariant #2) threaded through the shared
-   `realCreditSuffix` (graduation results screen + epilogue cast, one source of truth). Reading-only/balance-neutral:
-   gate GREEN, bot 7353 byte-stable (essay 1974→2039 chars), sweep 0-bad-flags + era apex sensor IDENTICAL to ckpt1
-   (Δ13/14/14 — destiny FSM untouched), lives ×9 fire BOTH poles. The era is no longer a hidden hand.
-3. **CKPT2b/3 (next):** an in-play cohortBeat era-glimpse (a gift visibly mismatched to its decade WHILE playing) +
-   admissions-pool era re-weight (the world sends era-flavored cohorts) + đề/event-bank era flavor. HUD era indicator +
-   era-transition modal deferred to the GRAPHICS pass (text/news suffices now).
-
-**Verification:** HEADLESS — `./gate.sh` · `node sweep.js` (era-sensor: apex swing ≥10/gift, no dominant decade,
-symmetry) · `./bot.sh` · `./lives.sh` · `./lab.sh` (era arc). **Rollback:** branch `mentors-ledger`, one commit/ckpt.
-
-## Epic: Art & Polish + Responsive — ✅ SHIPPED (branch mentors-ledger, 2026-06-14)
-**DONE:** Kenney Tiny Town tiles + buildings + props + Jephed characters (real pixel-art, procedural fallback
-kept), responsive desktop side-by-side layout (`@media min-width:940px`), 390px gate held. Method frozen in
-`docs/ART-PIPELINE.md` + `shot.sh`; verified mobile + desktop, gate green / bot BOTOK. (Plan detail below kept
-for the record — migrate to CHANGELOG on the next hygiene pass.)
-<!-- Owner-directed 2026-06-14 — OVERRIDES the arc's "graphics = production-broken-only" (the owner explicitly
-     asked for the art/polish + works-on-PC pass). Built on branch `mentors-ledger`. Sourced from a Kairosoft
-     art/polish DEEP-RESEARCH report (Derek Yu / SLYNYRD / MDN / "Juice It or Lose It" — transferable pixel-art
-     FUNDAMENTALS, not Kairosoft-specific; one audio-juice claim refuted). Every technique is CODE-ONLY (no asset files). -->
-
-**Goal (one Bar-moving sentence):** raise the game to "looks like a real cute game" (Pocket Academy bar) on
-BOTH mobile (390px gate holds) AND PC, via code-only procedural craft — lifting BEAUTY + JUICE while the new
-SOUL (Mentor's Ledger realize/waste) stays legible.
-
-**Load-bearing decisions (owner answers 2026-06-14):**
-- **D1 = SIDE-BY-SIDE map + panel on wide screens** (desktop-native; mobile stays stacked at the 390px gate). Two layouts via media query — keep them in sync.
-- **D2 = KAIROSOFT-HYBRID** *(recommended; pending final owner nod)*. Pocket Academy does NOT use detailed faces — tiny chibis + personality via ANIMATION + EMOTE BUBBLES + per-role COLOR + names/data. So: keep the 24×32 crowd, add emote bubbles + livelier animation + per-role silhouette/palette, and a richer INSPECT-PANEL PORTRAIT for the few FOCUSED (mentored/followed) kids — deep bonding for the few (serves the thesis), Kairosoft charm for the crowd. NOT a full 32×40 redraw.
-- **D3 = YES** — temporary visual regression allowed mid-overhaul; ship green rough checkpoints, endpoint clears the bar.
-
-**Technique stack (research-backed, ranked by leverage):**
-1. **Palette ramps** — HSB ramps: hue warm→highlight / cool→shadow, desaturate highlights (bright AND cohesive). `art.js` `ramp()` helper applied everywhere.
-2. **Integer-crisp scaling** — native-res canvas + `imageSmoothingEnabled=false` + `image-rendering:pixelated` + integer scale (2× mobile / 3–4× desktop). The BRIDGE between polish and works-on-PC.
-3. **Selout** — outline = 1 shade darker than neighbor, lighter top-lit, dropped at background; bakeable in the sprite generator.
-4. **Expressive chibi** — big head/eyes, 2×2 pupil+highlight, eyes+mouth toggled for emotions (fixes the diagnosis's "faces 2px / never bond").
-5. **Role silhouette + per-archetype palette** — coin-shark / maker / clerk read at a glance (reinforces the soul).
-6. **Fake 2.5D + modular tiles** — 3/4 or iso geometry; tiles recombined via rotate/reflect/color-swap → distinct, lived-in rooms.
-7. **Juice** — stacked squash/stretch + scale-on-impact + number-pops + damped wobble + particles on key interactions; **beware over-juice**.
-
-**UI-rework call: YES** — responsive desktop layout (integer scale-up + D1). Mobile 390px stays the RELEASE GATE.
-
-**Files (engine UNTOUCHED — pure visual/UI; sim, L1 sensor, gates unaffected):** `art.js` (ramp + selout + tile/building redraws), `sprites.js` (chibi proportions, expression variants, role silhouette/palette), `index.html` + `js/ui.js` (integer scaling, responsive CSS/media queries, desktop layout, juice in render loop), `data.js` (palette/juice CONFIG).
-
-**Phases (each ships a green checkpoint on the branch):**
-- **A — Foundation:** `ramp()` + integer-crisp scaling + selout. Biggest jump; lands desktop scaling. Verify 390px + desktop screenshots + gate/bot green.
-- **B — Characters:** DIVERGE ≥3 directions → screenshot → judge → synthesize (SKILL law); expressive chibi + role silhouette/palette + `tools/gallery.html` re-render.
-- **C — World depth:** fake 2.5D + modular tiles.
-- **D — Juice pass:** interaction feedback (place room / mentor / graduate).
-- **E — Responsive desktop layout** (D1) + confirm the 390px gate still passes.
-  *(A and E are coupled via integer scaling — A lays it, E adds the desktop layout.)*
-
-**Verification:** screenshots READ at 390px AND ~1280px; gallery re-render; `./gate.sh` green; `./bot.sh` BOTOK;
-`node sweep.js` unaffected (engine untouched); score vs Bar rubric (BEAUTY+JUICE up, CLARITY holds, SOUL legible).
-
-**Rollback:** branch `mentors-ledger`, one commit per phase, `git revert` per phase; nothing pushed.
-
-**Risks:** over-juice → cap; bigger characters crowd 390px → mind density; palette overhaul clashes → apply
-systematically + allow temp regression (D3); desktop layout breaks mobile → media-query-gate, keep 390px gate;
-non-integer screen widths → use the largest integer scale that fits, letterbox the remainder.
-
-## Epic backlog
-<!-- Ranked; the epic turn DEQUEUES the top (respecting EPICS_SINCE_STRUCTURE). Keep full by mining VISION.md. -->
-<!-- [EVOLUTION] entries are written here (at this marker) by ./evolve.sh — the input-blind critic's single biggest THESIS-anchored frame-reset gap. They carry an OWNER: veto line; the loop dequeues one on a frame-reset firing (FIRINGS_SINCE_FRAME_RESET ≥ threshold), respecting the people-first lock. Do not hand-author [EVOLUTION] entries — they must come from the blind critic. -->
-<!-- EVOLUTION-INSERT -->
-- **[EVOLUTION] The craft thesis fails nobody — đồ án is the implicit right answer** — **✅ RESOLVED iter 123 (via E4, above).** The 4 failed attempts all tried to make craft produce MORE loud waste (thất nghiệp) by tuning growth — intractable, because the craft cohort is mostly non-generalist and saturates `tn`. E4 saw the real shape: craft's waste was never absent, it was **quiet and mislabelled** — prodigies funnelled into 💼 lương ổn, counted "realized." Naming it (realization RELATIVE to the gift) closes the gap at the perception layer, balance-neutral. Sweep: the "'đồ án' costs ~0% — invariant #2 broken" flag now clears (uSettle: đồ án 12%, cân bằng 5%); biographies show "đáng lẽ đã có thể hơn thế". The growth-balance fix (admissions/LUONG_ON re-weight) the prior notes chased is NO LONGER NEEDED for §C-2. *(original critic finding below, kept for the record)* *(input-blind critic, 2026-06-14)* — THESIS §D mark §D-3 (no single right way) / §C-2 (symmetry of waste). **The jump:** Give the craft thesis its own failure mode — "lost in the open." Generalist students (tell="") who are mismatched with open-project learning (MATCH("","duan")=0.5) currently still land in LUONG_ON via the knowledge floor and ktOr gate, so craft never produces "tài năng bỏ phí." Make mismatched-tell students under craft visibly strand: lower the knowledge-accumulation safety net for craft-mismatch profiles, add a cascade pathway (or reweight LUONG_ON gate) so the structure-dependent student who enters a project school ends up thất nghiệp or quán quân văn mẫu at a non-trivial rate. The craft biography should sometimes show: "Nguyễn Văn X ★★★★★ — 🪪 Thất nghiệp — tài năng bỏ phí trên tay bạn" alongside the STEVE. Both theses then have grief AND triumph — the question stays open. **Wrong-hill:** no — the one-school microcosm is the right frame for §A's intimacy; the gap is mechanical, not dimensional **Evidence:** Sweep across 40 seeds: đồ án (craft) = 97% realized / 3% wasted / 0% distorted; sweep flags "invariant #2 broken." Biography (duan/seed=11): all four epilogue cast members realized or aspirational — no "tài năng bỏ phí trên tay bạn" line appears. Cross-preset read: luyende→coin/arrested/KY_SU/coin (grief fires); duan→STEVE/KY_SU/KY_SU/Founder-in-garage (only celebration fires). The cram thesis is the only one that produces "tài năng bỏ phí" grief; a player who discovers craft=97% realizes it is the correct educational philosophy, collapsing §B-1. Contrast: cram = 21% realized / 46% wasted / 33% distorted, 0% Steve. The asymmetry is not two equally defensible stances — it is one winner and one loser. (mark5=partially-measured — cross-preset divergence is real and dramatic, but the felt weight at fork-time requires uncertainty the player doesn't have once they discover craft dominates student outcomes, conf=high for the mechanical gap (sweep numbers are definitive and the sweep's own sensor flags §C-2 broken); medium for the §D-3 consequence (whether a real player discovers the dominance depends on playtime and information visibility, which a headless run cannot fully judge — same-model-class ceiling applies); full critique: /tmp/evolve-critic-2026-06-14.txt).
-  OWNER: the input-blind critic proposes this as the next FRAME-RESET epic — veto if the current hill is right; silence = run it.
-  - **➤ PROMOTED TO EPIC (iter 111 diagnosis — the MATCH knob CANNOT do it).** Tried `MATCH("","duan")` 0.5→0.25→0.15: craft waste only moved 3%→4%→6% (reverted). Root cause, confirmed by sweep: a generalist's `tn` SATURATES over a 4-year career regardless of the growth-RATE multiplier (`duan.tn=2 × g × days` overwhelms any ×MATCH), so they always clear `KY_SU(tn≥70)` or the `LUONG_ON(tn≥40 OR kt≥50)` net; and craft's stat profile (rising tn/st, low vet) DODGES the cá-mập/văn-mẫu waste gates, so the only waste path (THAT_NGHIEP: tn<40 AND kt<50) is unreachable by scaling growth. **The epic needs a STRUCTURAL mechanic, not a knob** — candidates (each sweep-verified, must NOT over-waste): (a) a seed-aware tn/kt CEILING for severe grain-mismatch (low-seed generalists cap below the realization floor → adrift; high-seed ones still make it — talent magnitude still matters); (b) a "structure-needer regresses in open projects" rule (kt drifts DOWN for `tell:""` under `duan`, so they fail the kt safety net); (c) a new cascade gate for the "adrift / no coherent direction" profile. SCOPE NOTE: `canbang` (balance) shares the same fails-nobody issue (97% realized) — the epic should give BOTH non-cram presets a real failure mode, or the dominance just moves from craft to balance. Build it in `growStudents`/CASCADE, sweep-gated: each non-cram preset reaches a real waste rate (~15-35%) without any strategy dominating 🍎+cash.
-  - **➤ PARTIAL FIX SHIPPED (iter 116): the mismatch-adrift CEILING (candidate a).** `CONFIG.MISMATCH_CEIL` + a cap in `growStudents`/person.js: in a non-cram preset, a severe grain-mismatch (`MATCH < 0.7`) caps tn/st/kt at `11+seed*7` — modest talent goes ADRIFT (→ thất nghiệp), the gifted partly shine, and MENTORING rescues (it lifts mm above the floor → escapes the cap). Craft can now produce "tài năng bỏ phí"; the sweep's symmetry flag CLEARED (craft 3%→5% waste); 🍎 13% preserved, no dominance, cram/arrests unchanged, all bands hold. **STILL ONLY 5% though** — the deeper wall (confirmed iter 116): ADMISSIONS skews the cohort HIGH-SEED, so a seed-gated ceiling barely bites (few low-seed kids exist to waste). **Remaining work = a SEED-INDEPENDENT mismatch waste** so even a *gifted* structure-needer sometimes flounders in open projects (a probabilistic "lost in the open" stall, odds eased by seed but never zero), + give `canbang` its own mismatch (it has none — MATCH 1.0 for all). Then E15 can make the (now-real) preset trade-offs legible.
-  - **➤ iter-120 attempt (seed-INDEPENDENT adrift roll) ALSO stalled at 5% → PARKED; the bottleneck is UPSTREAM, not the growth mechanic.** Tried a per-kid deterministic adrift roll (flatter ADRIFT_P 40-52%) — reverted. A probe revealed WHY all 4 attempts (knob · seed-ceiling · kt-cap · adrift-roll) hit the same ~5% craft waste: **the cohort that actually reaches craft is only ~27% generalist, NOT the 54% `rollTell` produces** (only ~6 of 48 live students are cap-eligible). So no in-`growStudents` mechanic that wastes the *mismatched generalist* can move the aggregate much — most craft alumni simply aren't generalists (they max `tn`→100→KY_SU). **The real fix is upstream: trace WHY the craft cohort skews non-generalist** (admissions pool tell-distribution? the prodigies? who realizes?) AND/OR rework the generous `LUONG_ON` net (`tn≥40 OR kt≥50` realizes almost anyone). This is a CASCADE/ADMISSIONS investigation, not a growth knob — **and it's delicate balance that wants OWNER PLAYTESTING of the resulting feel, not more headless knob-tuning.** The iter-116 ceiling stands (craft 5%, flag cleared) as the interim. STOP knob-tuning this; needs a deliberate epic with owner-in-the-loop.
-
-
-### ★ THE LATTICE — story & levels (owner steer 2026-06-21, "all of them"): ERAS × ARCHETYPES × the person-sim × PROGRESSION. The NEW TOP FRONTIER of the gameplay-first phase. Build SIGHT-UNSEEN (graphics frozen; a beat the current art can't render is still valid — text/placeholder now, graphics backfills later). Each epic EXTENDS sweep.js to prove the open-question law holds on the new axis (no era/archetype/adaptive strategy dominates; every era/archetype both realizes AND wastes).
-- **L1 — ERAS (the authored spine). ▶ CKPT1 (iter-204) + CKPT2-legibility (iter-205) + CKPT2-intake (iter-214) SHIPPED — the ERA axis is COMPLETE** (ckpt1: the era spine + FSM era-weighting [a gift's CEILING swings by decade] + apex-swing soul + era-shift beats + sweep era-sensor. ckpt2-legibility: "right kid, wrong era" NAMED at the payoff via `realGapEra`+`eraFavAt`. **iter-214: the WORLD sends era-flavored COHORTS** — `rollTell` tilts the intake toward the gift each decade rewards [`ERA_TELL_TILT`], so recruiting feels different each era [spark intake peaks AI Δ15pts, sky 1990s Δ12, hype Đổi-Mới Δ14]; sweep intake-tilt sensor, bounded/no-dominant, replay-safe/no-save-change). **The decade now decides who walks IN, who realizes, and names the wrong-era waste.** A run plays through a SEQUENCE of decades (1990s scarcity → Đổi Mới → dot-com → smartphone → AI boom). Each era RE-WEIGHTS which `tell` the world realizes vs wastes. **CKPT1 delivered the alumni-FSM axis** (`CONFIG.ERAS[].fav[tell]` × the realize/waste transitions + era MOBILITY rows so a hostile decade can drag a realized life back down + `stevePShort` era-gated): the era now governs a gift's **CEILING** — spark apex (🚀/🍎) swings **5%→17%** across decades (a coder is a founder in the AI boom, a solid kỹ sư in the 1990s), sky peaks in the scarcity 1990s, hype in Đổi Mới/smartphone; **no dominant decade** (apex-leader differs by gift), realize floor stable, sweep 12✓. Era = `eraIndex(S.year)` (deterministic → replay-safe; NO save change). **CKPT2 candidates:** the admissions-pool re-weight per era (the world sends different cohorts) + đề/event-bank era flavor + a "right kid / wrong era" NAMED grief line in the epilogue (the era counterpart of iter-203's tell-aware grief). See `## Epic: ERAS`.
-- **PEERS / CONTAGION — the cohort lifts or drags its members (a queued MODEL.md factor). ▶ ckpt1 SHIPPED iter-241 · ckpt2 (legibility) SHIPPED iter-242.** **ckpt2:** the môi trường named on a SPECIFIC kid in-play (`cohortBeat` peer-cause clause, mirroring iter-219 `cohortPoor`) — a bloomer in a WARM class is reinforced (*"em đứng giữa đám bạn cùng gắng, lại càng gắng"*), a cooling kid in a COLD class is dragged (*"cả lớp cũng đang rã đám… cuốn em theo"*), while the player can still act (Mark 5). Live cohort-mean read (deterministic → byte-identical gate/sweep/bot). Emergent + verified: the player's TEACHING CULTURE drives it — cram → cohort mean ~32–45 → the cold-class drag fires (31×/7 runs); craft/balance → mean ~90–99 → the warm-class lift fires (21–22×). **ckpt3 (deferred, needs a serialized `peerAcc`):** the LIFE reads peer-shaped at the EPILOGUE payoff (a kid wasted by a falling-apart class, named in the cast; à la ERAS iter-205) — a toxic-elite vs warm-mixed tension can tie into the lo_thanhpho archetype. Only **Luck** remains QUEUED in MODEL.md (bounded, owner-taste on apex rarity). The môi trường / "chọn bạn mà chơi" force, the most culturally-central đề-Văn factor not yet modeled. **ckpt1:** the cohort's atmosphere pulls each kid's mood toward the **school mean** each month — `CONFIG.PEER {PULL:0.05, MIN_COHORT:6, WARM:72, COLD:50}`, a deterministic variance-reducing pass at the end of `growStudents` (runs AFTER the dropout `rnd()` → replay-safe). A thriving class buffers strugglers; a demoralized one drags stars out of FLOW (waste done TO the kid by the room — invariant #4). Tuned as a PARTIAL environment (mood variance 272→147, ~46%; NOT a homogenizer — PULL=0.35 over-converged to var 10, rejected) so per-kid texture + the mismatch-burnout tail survive. Named once a year (`tetCohortBeat` 🤝/🥀). New sweep **PEER sensor** (`PEER_OFF` on/off toggle): aggregate-neutral (realize Δ0.3pts ≤ 6 — not a free lift) + apex survives (13.0%→13.1%). gate GREEN (byte-identical replay), bot 7337 (near baseline), sweep 0-bad-flags incl. PEER ✓, lives clean. **ckpt2 candidates:** name an individual kid lifted/dragged by peers at the payoff (the epilogue counterpart, à la ERAS iter-205); a toxic-elite vs warm-mixed cohort tension interacting with the lo_thanhpho archetype. Only **Luck** remains QUEUED in MODEL.md (bounded, owner-taste on apex rarity).
-- **L2 — ARCHETYPES (scenario + difficulty) — THE GEOGRAPHIC × DEMOGRAPHIC axis (owner steer 2026-06-21). ▶ DEMOGRAPHIC ckpt1 SHIPPED iter-206** (per-kid family ORIGIN nghèo/tb/khá-giả, derived from id [NO migrator]; the poor's legit growth drags → under-realize [sweep: poor 68% vs middle 83%, Δ15], ERASED by mentoring [back-all-poor → 89% parity = the school as EQUALIZER], scarce 3 slots = tragic allocation, never waste-only/no dominant strategy; named at the payoff via realGapOrigin; sweep L2 ORIGIN sensor). **▶ GEOGRAPHIC ckpt1 SHIPPED iter-210** — 4 archetypes (`CONFIG.ARCHETYPES`: tinh_le baseline / que_ngheo poor-rural / lo_thanhpho cram-city-trap / truong_nghe craft-vocational): each pre-loads economy + prestige + default culture + cohort origin-mix; sweep L2 ARCHETYPE sensor (no archetype tops both apex+cash → realize-vs-cash tradeoff; all reach realized+cost; 0 bankruptcy); byte-identical default (no migrator), `?arch=` playtest param, tune `arch-*` metrics. **ckpt2 (owner playtest): pick-archetype start screen + per-archetype mentor-slots/resource depth + đề-thesis in the capstone essay.** GEOGRAPHIC = the archetype itself: a rural-Mekong / highlands-minority / Hanoi-elite-cram / industrial-vocational school — LOCATION sets endowment, prestige, the local world's gift-bias, AND the cohort's origin mix. DEMOGRAPHIC = a per-kid `origin`/family-background texture (poor-rural / urban-middle / etc.) that modulates realize/waste WITHOUT touching the thesis — a poor rural spark kid in the 1990s is triple-wrong (wrong class, wrong place, wrong era) = the system's hardest, most-felt waste (invariant #4: done TO them by the structure, never blamed on the kid). MULTIPLIES the soul (right kid / wrong era / wrong place / wrong class). Distinct STARTING schools: different endowment, prestige, COHORT talent+origin distribution, each a different đề-Văn thesis and intrinsic difficulty. Mostly data (a starting-state table) + sweep tuning + a pick-archetype entry. *Sweep: no archetype dominates 🍎+cash; each reaches both a realized AND a wasted life; demographic disadvantage widens waste but never makes a group waste-only (#2).*
-- **L4 — TECHNOLOGY (the owner's queued vision-piece, iter-209: "future technology reshapes EDUCATION and the APEX conditions"). ▶ ckpt1 (the SAFE, non-thesis half) SHIPPED iter-239 · the APEX thesis-fork remains OWNER-GATED.** **ckpt1 (iter-239→240): each tech wave COMPOUNDS the teacher's REACH.** From era3 (smartphone, yr10 — reached in a normal run) onward, each tech wave adds a mentor slot — `mentorSlots()` = `CONFIG.MENTOR_SLOTS` + `(eraIdx − TECH_REACH.minEra + 1)·perEra` → **3 → 4 (smartphone) → 5 (AI, era4, extended play)** (deterministic by `S.year` → replay-safe, NO new save state, reversible; mentor gate + all UI caps read it; each crossing fires its own **era-true** beat from `CONTENT.techReach` — 📱 ed-tech at smartphone, 🤖 AI tutor at the AI era). **iter-240 corrected iter-239's bug** (it gated at era3 but labeled it "AI"; era3 is smartphone, era4=AI sits past `RUN_CAP_YEARS=12`). This is candidate (iii) — it touches teaching CAPACITY/reach, NOT the apex, so it was buildable on the owner's "continue" without a thesis-call. It composes with the verified mentorship×origin equalizer (the AI decades let you lift one more poor kid past their circumstance). Verified: gate GREEN (byte-identical — no state added), bot BOTOK, sweep 0 bad flags, slots scale 3→3→3→4→4. Constraint (MODEL.md law): tech must NOT be a flat "+realization" upgrade — it must change WHICH gifts/kids the world lifts, never lift everyone (ckpt1 holds this — +1 slot is the player's scarce choice to allocate, not an automatic lift). **3 candidates, scored soul>thesis>fun:**
-  - **(A) AI-era trợ giảng — RECOMMENDED.** From the smartphone/AI decades, an optional AI-tutor adds mentorship REACH but HOMOGENIZES: it rescues the average/under-realizing kid (lifts the floor) while CAPPING the apex (an AI-tutored kid can't become a 🍎 — the AI smooths the spiky genius). Tech *democratizes the floor, lowers the ceiling* — a real tradeoff, not an upgrade; keeps the open question; thematically current. Reversible (one era-gated option). Risk: era-symmetry in sweep (the AI era gets less waste) — needs a sweep era-sensor pass.
-  - **(B) Era-shifting apex gift.** Each decade, the `tell` most able to reach apex shifts (1990s hands → dot-com spark → AI sky). Partly already in `eraFav`/`stevePShort`; risk of redundancy. Low new soul.
-  - **(C) Tech-tool rooms.** Era-unlocked buildings (PC lab → AI lab) that change which gift the school realizes. Overlaps the existing Phòng Máy/Xưởng system. Low-medium.
-  - **⚠ CORRECTION (iter-238): (A) is THESIS-ADJACENT → owner-gated, NOT loop-built.** (A)'s apex-cap asserts *what technology does to the making of a 🍎* — a claim about what makes/breaks a Steve, which is the heart of the frozen THESIS. Per the THESIS-frozen rule (surface as an `OWNER:` proposal, never apply unilaterally), the loop may NOT build (A) on its own; iter-237's intent-to-build was a misjudgment, withdrawn. The only loop-buildable tech is one that touches ECONOMICS/reach but NOT the apex (≈ candidate (iii) below) — which is the least interesting and ~redundant with the economy. **So the real L4 question is a THESIS FORK only the owner can answer — what should tech do to the apex?** (i) LOWER/homogenize it [≈ (A)]; (ii) RAISE it for SOME gifts only [≈ (B)]; (iii) leave the apex alone, change only the economics of mentorship/access. **▶ RESOLUTION (iter-239): built (iii) as ckpt1** — the apex-untouching reach slice — on the owner's "continue", since it needs no thesis-call and gives the AI era a felt, distinct mechanic now. **The apex fork (i vs ii vs leave-it) is ckpt2 and stays owner-gated.** `OWNER:` pick the apex thesis (i/ii/leave) for ckpt2 — or defer and **release the phase to graphics** (exit gate a/b/c met; `GRAPHICS-HANDOFF.md` ready).
-- **L3 — PROGRESSION + LEGACY. ▶ LEGACY ckpt1 (iter-217) + ckpt2 (iter-218) SHIPPED** (the cross-run thread): a run's standout graduate is written to a SEPARATE `LEGACY_KEY` at the decade; a NEW run is seeded by it — a BRIGHT legacy gifts the new quỹ +40tr AND **RETURNS AS A NAMED FOUNDING TEACHER** (free, tenured, grain-matched to their own gift — the "named mentor returns" made real); a DARK one (coin/arrest) echoes −4 TT. `pickLegacy`/`writeLegacy`(decade)/`seedLegacy`(ui-boot, NEW-game only → freshState stays PURE → gate/sweep byte-identical); `S.legacy` persisted+sanitized; the record carries the alum's `tell`; GATE_LEGACY round-trip + returning-teacher test. **ckpt3+ (## Epic: L3): the DARK legacy haunts admissions** (a wary applicant beat) + UNLOCKS (a completed run opens a harder archetype / longer era-chain) + the scored, never-verdict ending (the "one more run, harder" ladder). A RUN threads an ARCHETYPE × an ERA-CHAIN; finishing SCORES the player's answer (assembled from THEIR school, never a verdict). *Sweep/UI-gated; cross-run persistence via the separate LEGACY_KEY (freshState pure, seedLegacy applies).*
-
-### ★ NARRATIVE / WRITING — the prose that TELLS the lives (owner steer 2026-06-21; owner picked a PARALLEL track alongside the LATTICE systems work). The aspect: `content.js` = the words, `epilogue.js`/`ui.js` = the assembly. The simulation now generates rich lives (talent × era × origin); a separate WRITING craft renders them. Alternate firings: one systems (LATTICE), one writing. Workflow-drafted (diverse prose → judge → synthesize is the canonical multi-agent use). **★ OWNER VISION (verbatim-distilled 2026-06-21): the headmaster's writing should become a LONG, REASONED piece (like an LLM thinking aloud) that ALIGNS WITH THE PLAYER'S CHOICES — an "annual letter to students" recurring beat, building to the CAPSTONE: the "how to have a Steve Jobs Vietnam" essay when the first 🍎 appears, which must be GENUINELY MOVING (a stranger reads it and is moved). Plus a few unlockable PATHS / EVENTS.**
-  - **N0 — ✅ keynote variation pool (iter-208).** No two Steves read identically (keynoteFor by id).
-  - **N1 — ✅ INDIVIDUATED CAST LINES (iter-209).** `alumLinesByTell[state][tell]` — a coder's kỹ sư reads unlike a maker's; 6 states × 3 gifts × 2 lines, 3-writer multi-agent fan-out. pickLine/pickLineIdx prefer the gift pool.
-  - **N2 — ✅ ANNUAL LETTER beat (iter-211).** The yearly Tết reflection is now a real headmaster's letter conditioned on POLICY (cram/craft/balance) × cohort (blossom/cool/mixed) × ERA (`CONTENT.annualLetter`, 9 bodies + era opener) — mirrors the player's choices back (§B-3). Deterministic, news-only/balance-neutral.
-  - **N3 — THE CAPSTONE, elevated. ✅ ckpt1 (iter-213):** the letters now PERSIST (`S.letters`, save-safe no-migrator) and the capstone essay RE-READS them — quotes the first + last letter as the ARC (thinking evolved), or names the RUT (a stable run = the same worry every year). The headmaster's year-by-year thinking is now in the essay (§B-3). gate (+letters assertion)/bot/sweep/lives GREEN. **✅ ckpt2 (iter-215): the TURNING POINT** — the arc now quotes the first year the headmaster's letter diverged (*"Rồi năm {y}, tôi viết khác hẳn… chắc đó là năm tôi bắt đầu nghĩ lại"*), so the essay reads start → turn → end (the real year the player's policy/cohort shifted). Reading-only/balance-neutral. The open-question law held (the final line still cuts off — never answers). **ckpt3 (future): weave a NAMED KID into a letter's year** (tie the abstract reasoning to a concrete life). Build fork stays authored-first (LLM optional later).
-  - **N3 — THE CAPSTONE ESSAY, elevated to "moving".** The "how to have a Steve Jobs Vietnam" essay, assembled from THEIR run (THESIS §B-3: mirrors the player back), long + reasoned + personalized. **⚠ LOAD-BEARING FORK (owner to decide): AUTHORED-ASSEMBLY** (deterministic, offline on github.io, free, deep conditioning on run data — scale the current template approach massively) **vs RUNTIME-LLM GENERATION** (truly adaptive/"reasoning-like", but needs an API key/proxy — the site is static; cost + a key-exposure/architecture question). Recommend authored-assembly first (offline-safe, can be moving with craft), LLM as an optional later layer.
-  - **N4 — UNLOCKABLE PATHS / EVENTS.** A few branching story paths/events unlocked by play (ties to L3 progression + the archetype/era axes). *Design TBD.*
-  - **★ DEFINE "WHAT IS A STEVE" (owner Q 2026-06-21) — THESIS-ADJACENT (frozen), surface as an OWNER proposal, do NOT pin unilaterally.** THESIS deliberately leaves it OPEN (the game is an essay that doesn't answer). Working ARTICULATION for the writing (not a stated moral): a 🍎 = the rare person who made something AUTHENTICALLY THEIR OWN that the world came to need — EARNED not manufactured, ORTHOGONAL to wealth/credentials (VISION: 🍎 ⊥ high-realization; the văn-mẫu clerk + coin shark are the traps). The game's quiet counter-thesis: maybe the real answer isn't minting a Steve but a school that lets each kid become themselves — the kỹ sư + maker equally dignified. The capstone essay should WRESTLE with this ("did I make it, or just not erase it"), never declare it.
-
-### ★ PEOPLE-FIRST ARC — the person-simulation (talent × education → realize/waste/distort). These OUTRANK everything below until the owner releases the arc. Ship smallest-valuable-first; each sweep-verified before the next; each ships its own sweep extension.
-- **E1 ✅ SHIPPED (Mentor's Ledger) — Realization sweep instrumentation + the vocabulary of waste** (tooling; ZERO-balance, ships FIRST). Add to `sweep.js`: a per-strategy **realization metric** (mean realized/potential over existing seed+tell+stats, no stored state), a **wasted-prodigy count** (high-seed→low-realized), a **waste-reachability** flag, and an **adaptive grain-matching STRAT** + a **dominance flag** (it must NOT beat the pure theses on 🍎+cash). + the `gate.js` pantheon-firewall lint. *Safe: pure tooling over current numbers, engine unchanged. Without it E2/E4 tune BLIND — this is the wedge that makes everything measurable.*
-- **E2a ✅ SHIPPED (Decision #1 = grain↔preset) — Match-multiplier in growth — THE HEART** (mechanic; cascade + FSM FROZEN). Make `tell` a realize/waste multiplier in `growStudents`: with-grain grows toward the kid's `seed`-ceiling; against-grain grinds toward a lower personal ceiling (waste = *didn't grow*, latent — NOT "grew into clerk"). Do NOT touch `makeAlumnus.fs` or the cascade gates. *3 hard gates (E1-measured): no strategy nor the adaptive matcher dominates (whose-life-not-which-strategy); craft-🍎 stays >5% (seed gates 🍎 via aLua — an over-aggressive ceiling starves STEVE); văn-mẫu share rises ≤~10pts. Keep `seed` magnitude the dominant term. DIVERGE ≥3 designs.* **Blocked on OPEN DECISION #1: match = grain-vs-preset (lean) or grain-vs-major.**
-- **E2b ✅ SHIPPED (epilogue names the waste) — The transformation read** (legibility; ships AFTER E2a's numbers are real). Surface each kid's *"đang thành chính mình" vs "đang nguội dần"* as CAUSED PROSE tied to a moment, generated FROM E2a's realized-vs-potential gap. NO number/bar, no 48-kid dashboard (invariants #3, #4). The SOUL-axis payload that makes the gap *felt*.
-- **E3 ✅ SHIPPED (mentor slots + followed protégé) — The protégé / attachment loop.** Follow ONE named kid (reuse the prodigy slots Tú/Hà/Phát/Mai Sương) + a single **mentor** nudge (mood/match boost). CUT per-kid placement (stays systemic, or it's micromanage-48). UI-verified, not sweep-verified (say so). Makes E2's gap personal → the grief/cheer-BY-NAME bar.
-- **E4 ✅ SHIPPED (iter 123) — Realization-aware destiny + carried gap.** `makeAlumnus` freezes `a.fs.real` (the carried realization %, separate from `seed`); `flourishOf`/`realFrac`/`realClass` (engine.js, shared by ui+sweep) read realized-vs-potential. The epilogue cast names the gift-vs-fate: loud waste ("tài năng bỏ phí"), the prodigy who **settled** ("đáng lẽ đã có thể hơn thế"), the modest kid **lifted** ("vượt xa điểm xuất phát"); realized kỹ sư/lương-ổn-for-a-modest-kid get NO suffix (GOOD lives). Verified orthogonal to 🍎 (`aLua` = seed only; 🍎-rate, destiny spread, economy, arrests ALL unchanged — balance-neutral). **This is also the resolution of the [EVOLUTION] §C-2 craft-symmetry gap** (see below): craft's waste was always there — prodigies funnelled into 💼 — just unnameable; now it is named + measured (uSettle sweep sensor; đồ án 12% / cân bằng 5%; the "invariant #2 broken" flag clears). Sidesteps the 4 failed growth-knob attempts entirely. **E4.1 (iter 124):** the "lift" pole (a modest kid raised PAST their gift) was CUT — a probe found it ~unreachable (admissions excludes seed≤2 kids) AND off-VISION (realize *appropriate to* magnitude, not exceed). Replaced with the reachable positive beat: **the mentor's hand named** — a kid you MENTORED who reached a realized life is credited in the epilogue ("· nhờ thầy không buông tay em"), turning the inaction-cost from a sweep number into a felt by-name payoff (`flags.mentored` carried on the alumnus).
-- **⭐ E-UNDERDOG ✅ CHECKPOINT 1 SHIPPED (iter 128) — the gem the entrance exam overlooked.** Reframed from the original "modest kid lifted past their gift" (cut as off-VISION) to the **OVERLOOKED GIFT**: rough diamonds (real talent, low entrance score) the exam underrates, that a SUBSTANTIVE school catches by looking past the number (THỰC-CHẤT-gated "đặc cách" holistic admits — a gamble, ~1 in 5 a gem). The crux discovered: lowering the cutoff doesn't catch them (quota skims the top), so admission needs the school to *look past the score* — hence the substance-link (which also answers "systems feel separate"). Carried as `flags.diamond`, named in the epilogue ("ngọc thô — vào bằng cửa hẹp"). High-cutoff byte-identical; substantive schools catch 1-2 gems/run; all sweep flags ✓. **NEXT (checkpoint 2, owner-leaned):** (a) optional PLAYER-AGENCY UI (a "xét tuyển toàn diện" toggle so the player chooses to open the door, vs the current auto-by-substance); (b) ✅ SHIPPED iter-194 — surface the gamble's COST (a wasted ngọc thô now earns a diamond-specific grief line `CONTENT.diamondWaste` loud/under, symmetric to diamondCredit; the narrow door is no longer free upside — invariant #2; probe 23 won / 8 lost per 90 runs; balance-neutral, bot/sweep byte-identical); (c) WATCH 🍎 13→18% craft (tune DIAMOND_P if too common). OWNER: react to the auto-by-substance model vs a manual toggle.
-- **E5 ✅ SHIPPED (iter 126) — Discoverable talent.** `talentReveal(s)` (ui.js): a kid's gift (seed) is fogged until the school has SEEN them — grade-1 unmentored = "chưa rõ — phải dạy mới biết" (🌱 in roster), grade-2 = a fuzzy band, grade-3+ = full stars; MENTORING reveals instantly (investing = learning who they are). Resolves Decision #3 (discoverable). Pure display, sweep-NEUTRAL. The đề Văn bite end-to-end: admissions shows only a score, the gift you must teach to find. Sets up E-UNDERDOG (spotting an overlooked gift).
-- **E6 — Multi-axis aptitude vector** *(stretch, owner-gated, Decision #2)*. Replace single `tell` with a small per-axis profile. LAST + biggest tuning surface (likely forces a CASCADE re-tune, not just growth). Each axis re-swept for dominance.
-
-#### ★ THE SCHOOL YOU SHAPE — texture the nurture levers (owner steer 2026-06-14; person-sim-serving, see VISION "The school you shape"). BINDING LAW: texture not gradient — horizontal expansion (more items, each a trade-off) only; NO upgrade chains; every item ships a wasted life in the epilogue; visibility ≠ accessibility; cohesion at OUTPUT not INPUT. Each ships its own sweep extension proving pluralism holds.
-- **E7 — Content texture (HORIZONTAL).** *(PARTIAL: teachers ✅ E8 iter-136 — 4→6, reputation-drawn; prizes ✅ E7p iter-140 — Giải Sáng Tạo/Tay Nghề/Thủ Khoa, prose tokens, preset-flavored. REMAINING: more MAJORS — blocked, the khoa system is tell-bound (spark/sky/hype/"") so >4 needs E6 multi-axis OR a major-assignment redesign; owner-gated.)* Expand 3→~6-7 majors, 7→~15 named teachers, 3→a dozen prizes/awards — each a TRADE-OFF (realizes some grains, wastes others), NONE a strict upgrade. Candidate majors w/ their waste: Thương Mại (hype→hustler, wastes maker), Cơ Khí (vet→fitter, wastes dreamer), Điều Dưỡng (kt→reliable, wastes rebel), Giáo Dục (st→mentor, wastes solitary maker). Prizes stay PROSE tokens (a line in a life), never a sortable count. *Sweep: every new major reaches ≥1 realized AND ≥1 wasted life; cram dominates no major; no persistent prize-count state; pluralism holds on new-content-ONLY.*
-- **E8 ✅ CHECKPOINT 1 SHIPPED (iter 136) — Reputation-shaped teacher POOL.** Teachers are DRAWN by standing (`req:{m,v}` on each pool teacher — TT famous / UT trusted / TC substantive); locked ones show as visible aspiration ("cần Tiếng Tăm ≥ 40"), the self-taught coder always available (weak-start not doomed); +2 teachers (pool 4→6). Soft gate, manual hire still legal, sweep-neutral (UI/availability only). Connects standing→faculty→growth-pipeline (the owner's "systems separate" + "automatic based on ranking"). **✅ CHECKPOINT 2a SHIPPED (iter-195) — grain-flavored faculty (the SAFE, FELT-via-legibility half).** Each pool teacher has a `grain` it realizes (coder/gshuu→spark Lập trình, kysu→sky Chế tạo, diengia/viral→hype Khởi nghiệp, ielts→neutral; inherited stay neutral → headless byte-identical); `teacherFactor()` tallies `aff{spark,sky,hype}`; `growStudents` directs SIGNATURE-stat growth + mood by `(aff[tell]−mean)` (ZERO-SUM across grains → aggregate-neutral). UI: each teacher's lean is shown + a faculty-GAP note ("⚠ chưa có GV cho khiếu Chế tạo — N em đang thiếu người dẫn") when a DISCOVERED gift has no champion. New E8 sweep sensor: the realize/waste FLOOR holds (91%→92%, Δ1pt ≤8). **KEY FINDING:** realize/waste-*shifting* via a growth knob hits the documented saturation wall (probe: all-spark vs all-sky faculty → near-identical realization in every preset), so the felt trade-off lives in mood + legibility, NOT the floor. **CHECKPOINT 2b ✅ BUILT-BEHIND-A-FLAG (iter-200), pending owner playtest:** the strong teeth — a discovered gift whose grain has NO faculty champion (+ no mentor) goes adrift (capped at `CKPT2B_CEIL 30+seed*8` → mostly under-realizes, some waste) — ship behind `?ckpt2b=1` (OFF by default → live byte-identical), so the owner can PLAYTEST the FEEL (the gate's own requirement) rather than decide abstractly. Sweep ckpt2b sensor proves it's a real-but-PARTIAL trade-off (neglected sky 88%→70%, Δ18pts; championed spark holds 93% — not a trap), bounded by the sensor (WEAK if Δ<10, TRAP if <35%). **OWNER: load the live link with `?ckpt2b=1`, hire narrowly (e.g. only the coder-teacher), and watch whether your un-staffed makers wasting feels RIGHT or feels like it muddies the satire — then say "make it default" / "tune harsher/gentler" / "drop it."** + optionally the "1-2 quarterly applicant cards" UX.
-- **E9 ✅ CHECKPOINT 1 SHIPPED (iter 153) — Cohesion at OUTPUT.** The school's standing/realized-outcomes change WHO applies (students + teachers) and what donors fund — output-only ripples (soft); NEVER gate one system's unlock behind another's completion. **SHIPPED:** the STUDENT leg — a substantive school (high Thực Chất) draws more makers (spark↑), a hype one more clout (`CONFIG.ADMIT.REP_TILT` in derivedPool, bounded ±5%, centered TC 50) + a NAMED-maker admissions note (attachment at intake, year≥3, no gift leaked). The TEACHER leg = E8 (iter-136, reputation-gated faculty); the DONOR leg = funding-with-strings. Sweep 5✓/0 breakage, spread holds, 0 bankruptcy, no dominant build-order. **Checkpoint 2 (deferred):** the "clout" note calibration (currently fires only for genuinely low-TC schools — rare); an E9-specific sweep sensor (reputation→composition can't runaway); an explicit donor→applicant link. *Original sweep gates held: no dominant build-order; ripples stay soft; person-sim still dominates outcomes.*
-- **E10 — Early-game weight + visibility ≠ accessibility.** Cure "too much but too little": FEWER, DEEPER, more-consequential early decisions (one–two weighty philosophy forks, cut/merge shallow toggles), each consequential THIS year on real named kids. Reveal richer content as VISIBLE-PRICED-ASPIRATION (cost/prereq/endowment gates) + scope-gating (content appears with its room) — NOT mystery-hide; every thesis legible at boot. *QA: core fork present at founding; all theses visible at boot; gates structural not hidden; a year-1-only build is playable; no late-unlock strictly beats an early commitment.*
-
-#### ★ OWNER-FLAGGED via feedback.md (iter 112) — campus-life + Jephed-integration consequences
-- **E11 — Walk-in roofless rooms where activity EARNS development** (owner: "each classroom can be bigger, not show the roof, and people can walk in do stuff and earn development"). Render key rooms as bigger TOP-DOWN INTERIORS (no roof — see inside); students walk IN and do visible activities (study at desks, tinker at benches, eat) that CONTRIBUTE to their growth/realization. Ties the living campus (the soul's BODY) to the person-sim: watching = seeing development happen. Person-sim-serving (Compass 1/2 + campus-life). EPIC: needs a room-interior render mode + an activity→growth link in `growStudents`/the activity layer; sweep-gated (activity-growth must not create a dominant strategy; keep the realize/waste spread honest). DIVERGE the interior look (≥3) before converging.
-- **E12 — Reconcile the inspect portrait + customization with the Jephed sprites** (owner: "the human icon and the character when clicking does not match"). The MAP now shows fixed Jephed sprites (`id%40`), but the inspect panel shows a CUSTOMIZABLE baked chibi (`iav` canvas + skin/hair/etc.) — so the portrait ≠ the on-map character, and customizing changes nothing on the map. **OWNER DESIGN Q (load-bearing, surface for confirm):** keep player customization (layer accessories ON the Jephed sprite, or let the player pick which Jephed sprite a kid uses) vs drop the chibi customizer for sprite-consistency? The "characters are customizable" north-star says keep it — so likely: portrait renders the kid's Jephed sprite + customization re-pointed to choosing/tinting the sprite. Until decided, at minimum render the Jephed sprite in `iav` so the portrait MATCHES the map.
-- **E13 — Gender-matched names ↔ sprite** (owner: "names does not match how they look; gender should seem similar to what they represent"). Classify the 40 Jephed sheets by apparent gender; split the `nameParts.ten` pool into gendered sets; assign a name whose gender matches the kid's Jephed sprite (`id%40`). Content + a one-time sprite-gender classification; no balance impact (cosmetic identity).
-- **E14 — Procedural character VARIETY from the 40 sheets** (owner: "clone the artwork to many people — change clothes colour, or head of one + body of another; but prioritize the original with higher probability"). Multiply apparent variety beyond 40: per-kid (a) clothes/hair PALETTE-SWAP (hue-shift a region of the Jephed frame on an offscreen canvas, cached per look), and (b) optional HEAD/BODY recombination across sheets (needs a clean head/body split-row in the 20×32 cell). **Weight strongly toward the unmodified original** (e.g. ~60% original, the rest light recolors, rare part-mixes) so the cast stays coherent, not a carnival. Cache each composed look (don't recompose per frame — perf). Natural home WITH E12 (the customization reconciliation) + E13 (gender) — together they're the "character identity" cluster: identity = {sprite, recolor, name, gender}, consistent between map and inspect. Owner-verified look; no balance impact.
-- **E15 — Legible core trade-offs: time · money · tuition · learning-style** (owner iter-115: "not clear how time passes / how money accrues — financials positive but feels 0đ; no trade-off guideline for tuition; no trade-off guideline for the learning style each year"). Make the loops READABLE so choices have FELT weight (§D-5): (a) a clearer time read (a month is ~21s at 1× now — show the month progressing / what a "month" buys); (b) a money-model explainer (income = tuition×SV, minus Vận hành overhead + surplus-drain → why cash hovers instead of mooning; surface net/month plainly, and the endowment which is hidden <200tr); (c) tuition trade-off hint (higher tuition → fewer/weaker admits — show the tension, not just a number); (d) **learning-style (preset) trade-off hint — the PHILOSOPHY FORK made legible**: each style realizes some grains and wastes others (cram realizes the structure-needer, wastes the dreamer; craft the reverse) — this is person-sim-serving (a legible fork = the player FEELS the §B open-question choice). Pairs with E10 (early-game weight). Mostly UI/legibility; the preset-legibility part is the highest-soul. **(d) ✅ SHIPPED iter 118** (preset trade-off lines) · **(a)+(b) ✅ SHIPPED iter 121** (a funding-panel line: month ≈ 21s @1× + why the bank doesn't balloon — surplus auto-reinvests). **(c) tuition — RE-SCOPED iter 122: it is NOT a legibility fix but a real DESIGN GAP** — tuition is pure upside (engine uses it only as `income = tuition × SV`; no admissions/reputation downside), so "always max it" is a mild dominant choice and there's no trade-off to make legible. The fix is a BALANCE change (e.g. higher tuition → fewer/weaker applicants, or an access/UT cost) — delicate + wants owner playtesting → deferred to a person-sim/balance epic, not this UI item. So E15's legibility part is DONE; the tuition trade-off becomes its own (owner-gated) balance task.
-- **NEXT LIVE PERSON-SIM EPIC = E4** (E1/E2a/E2b/E3 shipped as the Mentor's Ledger), then E7–E11 (the "school you shape" + owner-flagged campus-life family; E11 is the standout — it fuses campus-life with development) + E5/E6/E12/E13. All person-sim-serving or owner-flagged; the EPIC turn dequeues the top, respecting EPICS_SINCE_STRUCTURE (next epic must be STRUCTURE = `sim/person.js`). The [EVOLUTION] craft-symmetry epic (above) is also live.
-- **OPEN DECISIONS for the owner:** #1 ✅ RESOLVED — match = grain-vs-*preset* (`CONFIG.MATCH`, shipped); #2 talent single (seed+tell) or multi-axis (lean: single now, vector = E6); #3 ✅ RESOLVED — discoverable (iter-126 E5: fogged until grade-3/mentored); #4 confirm prose-only, no potential bar (lean: yes); #5 protégé levers = mentor-nudge only, placement systemic.
-
-### Pre-arc backlog (DEFERRED until the owner releases the people-first arc)
-1. ~~[FEATURE] Character art step-change~~ SHIPPED iter 59 (owner-picked Direction C: premium 24×32 volumetric chibis with separated arms, expressive faces, contact shadows).
-2. ~~[FEATURE] Weather + time-of-day lighting~~ — time-of-day SHIPPED iter 62 (day-arc + golden hour); **weather SHIPPED iter 77** (god-ray sunbeams + gentle drizzle, cosmetic overlay). Could deepen later: actor reactions (umbrellas / scurrying under awnings), a rare heavier storm. OWNER may veto/redirect the aesthetic.
-3. ~~[FEATURE] Festivals (Tết petals + June confetti)~~ SHIPPED iter 63. ~~Scandal-day reaction~~ SHIPPED iter 67 (a TV news-van camps at the cổng when phốt pile up — phại choices made visible). Could deepen later (gathered onlooker crowd, a gloomy banner).
-4. ~~[FEATURE] Player-customizable students~~ SHIPPED iter 66 — per-axis look customizer (skin/hair/style/accessory + 🎲) in the inspect card, on-demand cached bake, persisted via optional `s.lookC`.
-5. **[FEATURE] Generative campus-lofi BGM**, state-aware (term / Tết / June / scandal). Atmosphere (Area 12).
-6. ~~[FEATURE] Shareable end-card~~ SHIPPED iter 68 — a gold canvas summary card atop the epilogue (school, đề Văn, the player's answer icon+verdict, stats, share footer).
-7. **[FEATURE/tune] Map-scale harmony** — if the new 24×32 characters read too big vs buildings, bump TILE / zoom so the world feels proportionate. Decide on owner reaction.
-8. **[STRUCTURE] ui.js → `screens.js`** — extract the panels+modals DOM layer via a shared-UI-context object. High-coupling (`el` 200×, bidirectional) — a real refactor, not a leaf. **DEFERRED until the people-first arc releases** (this arc the STRUCTURE epic is `sim/person.js` instead — see the arc block). Do it when ui.js strains or as a deliberate invisible-velocity epic post-arc. (iter 73/92 review)
-
-## Frame-reset log
-<!-- The Evolution Engine's slow-beat ledger. ./evolve.sh appends one line per frame-reset: the input-blind
-     critic's verdict (a THESIS-anchored GAP, or "frame holds"). Newest at the top under the marker. This is the
-     decay/evolution audit trail — a long run of "frame holds" means the loop is genuinely at the frontier; a GAP
-     means the current hill was wrong and an [EVOLUTION] epic was queued. -->
-<!-- FRAME-RESET-LOG -->
-- 2026-06-14 — GAP · The craft thesis fails nobody — đồ án is the implicit right answer · §D mark §D-3 (no single right way) / §C-2 (symmetry of waste) · mark5=partially-measured — cross-preset divergence is real and dramatic, but the felt weight at fork-time requires uncertainty the player doesn't have once they discover craft dominates student outcomes · conf=high for the mechanical gap (sweep numbers are definitive and the sweep's own sensor flags §C-2 broken); medium for the §D-3 consequence (whether a real player discovers the dominance depends on playtime and information visibility, which a headless run cannot fully judge — same-model-class ceiling applies)
-
-## Debt
-<!-- Paid down by STRUCTURE-epics; the ~10-firing reflection must show this trending DOWN. -->
-- [x] `window.onerror` production trap — RESTORED iter 56 (inline first script: JSERR title + gentle reload banner; gate-verified). _(Already earned its keep: caught a `tapFx` leak during the iter-57 refactor.)_
-- [x] art layer extracted to `js/art.js` iter 57 — ui.js 1694→1393; pixel-art is now an isolated, behavior-neutral module (static-canvas hash identical before/after). `content.js` deemed unneeded (text already lives in `data.js` CONTENT).
-- [x] engine.js persistence extracted to `js/save.js` iter 199 — engine.js 1130→989; save/load/sanitize is now an isolated, behavior-neutral module (byte-identical: gate save/reload + bot + sweep + lives + real-browser boot). engine.js back under 1000 lines.
-- [ ] (low priority) ui.js ~1791 — the remaining extraction is the high-coupling shared-UI-context refactor (panels/render, ~229 closure-helper uses); not yet painful, and the UI features it'd enable are owner-gated. Queued for when ui.js strains or a UI feature needs it (the epilogue/essay cluster is the verifiable-first leaf).
-
-## Now
-
-★ **Khoa / Majors system — SHIPPED** (iters 49–55; full detail in CHANGELOG): auto-join by tell,
-synergy + cross-khoa synergy, trưởng-khoa heads, and the three signature campus activities
-(Lập trình→`code`, Thiết kế→`craft`, Sống Ảo→`stream`). Sweep confirms the destiny thesis held.
-Remaining ideas (POLISH-sized — pick when they clear the rubric floor): khoa-vs-khoa rivalry/events;
-khoa-gated facilities; a dedicated Khoa screen if the card outgrows itself; a khoa-tinted badge on the
-sprite (read a major while a student walks); a crowd around the Sống Ảo streamer; the trưởng-khoa
-visibly present in their room.
-
-★ **Balance follow-ups (queue):** (1) ~~Uy Tín erosion~~ NOT A BUG (iter 35 check): the sweep shows
-UT is a working moral meter — honest (cân bằng) keeps UT ~43, cram sits ~18; my iter-34 audit's
-UT=1 was a single harsh-cram endpoint, not systemic. Gardens' one-time +5 is thematically right
-(you can't monument away how you run the school). Leave as-is. (2) **Late-game money** still
-inflates (~2344–2655tr); gardens are a sink only if the player builds them — the sweep (fixed
-strategy) still flags it. Proper fix = S4 spend channels / scaling costs.
-
-★★★ **THREE OWNER DIRECTIVES (2026-06-13) — top priority:**
-- ~~**(A) START FROM NOTHING, build up**~~ **SHIPPED (iter 24).** Boot = empty lot: 0 rooms,
-  0 students, 1 founding teacher, 200tr pot with an origin story (viral đề-Văn answer → cắm sổ
-  đỏ + 50tr vốn mồi). Tháng-6 boot → July founding intake → Mai Sương is enrollee #1; empty
-  Junes roll the year silently (foundingJune); first real graduation ~Year 5. TPL re-homed as a
-  shadow alumnus (scripted Y2-M3 arrest preserved). GATE_FRESH + sweep band updated, all green.
-  *Follow-ups:* ~~milestone nudges~~ SHIPPED (iter 28: "Cột mốc" founding-goal banner walks the
-  player build→intake→teacher→spec-room→grow→firstgrad). Still open: the early years could use
-  more *mid-build texture*: ~~founding-specific events~~ SHIPPED (iter 32: 3-event founding deck —
-  parent inspection / dạy-tủ temptation / sell-the-name). Still open: a visible "first đồ-án" beat,
-  a cheaper-but-paid first room for a real spend decision; late-game money still inflates (~2635tr, sweep
-  flag) — start-from-nothing made the surplus sink weaker, S4 spend channels needed.
-  ~~văn-mẫu unreachable~~ FIXED (iter 30: rote exam-champions become 📋 Quán Quân Văn Mẫu instead
-  of failing into thất-nghiệp; cram → ~60% văn-mẫu / ~10% cá-mập→bị-bắt; craft thesis intact).
-- ~~**(B) Students walk IN from outside**~~ **SHIPPED (iter 25).** Each new matriculant spawns
-  just outside the cổng (below the map at the gate's x) and walks up the central path to their
-  spot; a whole intake files in as a staggered procession with a "!" welcome bubble. Boot/reload
-  places the existing roster in place. *Follow-ups:* ~~walk-OUT on graduation~~ SHIPPED (iter 29:
-  grads file out the cổng before being dropped). Still open: a gather-at-cổng cluster on
-  khai-giảng day before they disperse; tune the column spacing if a 12-strong intake feels long.
-- ~~**(C) "3D but still pixel"** for houses AND people~~ **SHIPPED (iters 26–27).** Buildings
-  render as extruded 3D blocks (dark side+roof depth, directional shadow, lit top/left edges);
-  characters re-baked with upper-left light + lower-right shade (rounded faces/torsos, 2-tone
-  shirt shadow, shaded arm/leg/hair). All three owner directives (A/B/C) now done. *Optional
-  polish, queue if owner wants more:* push building depth further (a true receding side-wall
-  face vs the current solid extrusion), and a `tools/gallery.html` promoting the `__ui._bakeSheet`
-  hook to a real phone-reviewable sprite/building gallery. ~~Seasonal Tết décor~~ SHIPPED (iter 31:
-  bunting + lanterns + blossom pots in Tháng 1–2 via `drawSeason()`). Next season candidates:
-  ~~June graduation flair~~ SHIPPED (iter 36: red carpet + tossed
-  mortarboard caps + academic bunting in Tháng 6). Next season candidates: a falling-petal live
-  layer during Tết, graduating actors wearing caps during June, a subtle seasonal sky/grass tint.
-
-0. **★ GRAPHICS — standing #1 lever (owner: "this game is more important in graphic"):**
-   SHIPPED v2 detailed pixel-art (owner-chosen direction): baked sprite atlas (faced chibis),
-   bright daytime palette, detailed bright buildings, crisp discipline — a real step-change from
-   the rejected dark Sơn Mài. KEEP ITERATING on owner reaction until they say it looks great.
-   Next polish candidates: cuter/more-expressive faces (blink, idle), more building props
-   (signboards, flowers, fences, banners), seasonal tint (Tết/June), shadow/light passes, a
-   `tools/gallery.html` to review every sprite/building on the phone, and bigger-tile/zoom if
-   detail still feels cramped at 26px. Use the `frontend-design` plugin for any HTML/CSS chrome.
-1. **S1.5 — Workshop refactor, CHUNKED (architecture for iterability, owner priority):** the
-   one-directional dep (ui→art→globals) makes this clean, but do it in SMALL safe moves, each
-   a behavior-neutral iteration proven by before/after 390px screenshots + gates (a 350-line
-   single-file split in one autonomous shot is the risky way — owner away to catch regressions):
-   (1a) extract the campus-life layer (period clock, buildRings, assignActivity, drawActivity,
-   drawSanBall) into `art.js`; (1b) extract the Sơn Mài renderer (drawStatic/drawRoom/drawActor
-   + ROOM_STYLE + prop drawers + helpers) into `art.js`, expose `ART.*`, rewire ui.js refs;
-   (1c) `tools/gallery.html` rendering every room/sprite/activity for phone review + GATE_ART.
-   Optionally (1d) split CONTENT→`content.js`. Each sub-step ships green or reverts.
-4. **Background music v1 (owner directive):** generative WebAudio campus-lofi — gentle
-   pentatonic loop, state-aware layers (normal term / Tết flavor / June ceremony swell /
-   scandal undertone), 🎵 toggle persisted in META, autoplay-unlock on first interaction.
-5. **S2 — Admissions depth** (per CONVERSION-SPEC §10): histogram polish if trimmed, ảo +
-   đợt bổ sung, tuyển thẳng strip, đặc-cách/«Hồ sơ 16,5 điểm» merged card, học-bạ-đẹp
-   ticker, iSteve mid-run exposé.
-6. **S3 — Alumni full:** remaining 7 states (TRUONG_PHONG/GIAM_DOC/XUAT_NGOAI/KOL/VE_QUE/
-   GIANG_VIEN/QUAY_DAU), world years, Sổ filters + gratitude tiers, 20/11 envelope
-   sprites, ~~the "Mười năm sau…" epilogue~~ SHIPPED (iter 38: auto-fires the reflective essay as a
-   decade capstone at RUN_CAP_YEARS; follow-ups — a "where are they now" FSM fast-forward before it,
-   a formal end-screen vs the current keep-playing sandbox), "Mời cựu SV về nói chuyện" verb.
-7. **S4 — Funding full:** contract types 🦜🎣🤝, renewal escalation, decks T/E/C, Quỹ Ứng Cứu.
-8. **S5/S6 — Pantheon pack + content:** ~~dedications~~ STARTED (iter 33: 3 buildable Vườn Tưởng
-   Niệm memorial gardens — now FIVE: Trần Đại Nghĩa / Tạ Quang Bửu / Hồ Xuân Hương + iter 39's
-   Nguyễn Trường Tộ / Chu Văn An — +Uy Tín, dedication modal, on-campus stele; a late-game cash
-   sink + "honour the whole grove" goal). Next: Giải
-   Giọng Riêng + Lễ Vinh Danh (trimmed), remaining 6 scholarships with pipeline effects,
-   living-archetype event deck, uni teacher archetypes, khoa split.
-
-## Recurring
-- Maintenance sprint every ~5th iteration (sweep, bot, full 390px audit, perf).
-- Mobile audit even when nothing changed.
-- Code-structure review every ~10th iteration (owner directive) — verdict lands in
-  `## Architecture` below; queue at most one behavior-neutral refactor.
-
-## Architecture (structure-review log)
-- *(2026-06-14, iter 92 review — rigorous review-that-DEFERS)* Sizes: data.js 548 · engine.js 1187 · **art.js
-  411 · sprites.js 171 · audio.js 79** · ui.js **1675** · index.html 268. **Verdict: HEALTHY; DEFER the last
-  split.** Layer law holds (engine's only `window.` is the guarded HVS export; the bake layer art.js+sprites.js
-  is clean & one-directional). ui.js (1675) is the hotspot but **WORKABLE** (+~140 lines over 7 iters — not
-  straining). The ONLY remaining extraction — panels/modals → `screens.js` — is **bidirectionally coupled**
-  (`renderPanel` 12× · `checkModals` 10× · `syncActors` 11× · `openModal` 14× · `el` 205×, woven through every
-  cluster): a shared-UI-context refactor, **not a clean leaf** (the iter-84 sprites split took the last clean
-  one). **Deferred because:** (a) low marginal value (ui.js isn't straining); (b) high autonomous risk —
-  bidirectional, and modal-flow regressions are hard to fully verify headlessly (bot.sh clears pendings); (c)
-  owner away ~18 firings (landmine: prefer safe-additive over risky-refactor when away). **Anti-timidity guard
-  SATISFIED:** real epics already shipped (sprites-structure 84 · Cúp Khoa 80 · social-life 88) + the clean
-  extraction; what's left is genuinely the hard/low-value one, which iter-73 already classed "owner-OK'd,
-  not urgent." Do it only when ui.js genuinely strains OR the owner OKs an invisible-velocity epic. This review
-  DISCHARGES the structure duty. **Meta:** at this maturity + owner-absence, real epics (this split; the
-  taste-blocked feature epics) need owner steer — the loop should keep shipping safe value/completeness/
-  maintenance and await steer for the next true epic, not force a risky/make-work one.
-- *(2026-06-14, iter 84 review + STRUCTURE epic)* Sizes: data.js 525 · engine.js 1187 · **art.js 411 ·
-  sprites.js 171 · audio.js 79** · ui.js **1534** · index.html 268 (~3907). **Verdict: HEALTHY; visual
-  layer now WHOLE.** The iter-73 review called ui.js's panels/modals "no clean leaf" — true, but it MISSED
-  a clean leaf hiding in plain sight: the **character sprite bakery** (left behind by the iter-57 art.js
-  split). Extracted it VERBATIM to `js/sprites.js` (window.SPRITES) this firing — a pure one-directional
-  factory (ui → sprites), like art/audio. ui.js 1690→1534. **Proof: baked-sprite pixel hash byte-identical
-  (2075002228) + gate green + bot.sh BOTOK + customizer verified.** Layer law still clean (engine 0 DOM;
-  bake layer = art.js+sprites.js; text in data.js). **Remaining hotspot: ui.js (1534)** — the panels/modals
-  → `screens.js` split is still *available* (backlog) but NOT urgent: it's coupling not size, and size just
-  dropped. Do it only if ui.js strains again or the owner OKs an invisible-velocity epic. This review +
-  epic DISCHARGE the EPICS_SINCE_STRUCTURE duty. **Flow reflection (74–84, all autonomous):** counted
-  cadence + bot.sh + divergence-when-needed is working; the gap is fresh owner taste — all inference since BGM.
-- *(2026-06-13, iter 73 review)* Sizes: data.js 499 · engine.js 1123 · **art.js 411 · audio.js 74** ·
-  ui.js **1565** · index.html 267 (~3939). **Verdict: HEALTHY.** One-directional layering (data → engine
-  → art/audio → ui) holds CLEAN: engine.js has 0 DOM refs; art.js/audio.js don't reach into game logic.
-  The leaf modules (art, audio) split cleanly. **Hotspot: ui.js (1565).** Its one remaining big cluster —
-  the panels/modals DOM layer (~550 lines) — is HIGH-COUPLING: ~25 distinct closure symbols (`el` 146×,
-  `esc` 37×, `S` 29×, + render/openModal/checkModals/buyRoom/syncActors/… ) and it's BIDIRECTIONAL (ui
-  calls into it too). So extracting it is a real refactor (a shared-UI-context object that ui populates +
-  `screens.js` aliases, ~15 ui-side call-site rewrites), NOT a clean leaf. **Queued `## Epic backlog`:
-  STRUCTURE — ui.js → `screens.js` (panels+modals) via a shared-UI context.** Do it when ui.js genuinely
-  strains or as a deliberate owner-OK'd invisible-velocity epic; not urgent (1565 is workable). This
-  review DISCHARGES the EPICS_SINCE_STRUCTURE duty (reset; see the refined cadence rule in SKILL.md).
-- *(2026-06-13, iter 32 review)* Sizes: data.js 408 · engine.js 1007 · ui.js **1334** · index.html
-  235 (~2984 total). The one-directional layering (ui→engine→data) is still CLEAN and has held
-  through 12 feature iterations — no leaks, gates green throughout. Hotspot remains **ui.js (1334,
-  +130 since iter 20)**: art renderer + campus-life + ambient + seasonal + customization + HUD +
-  panels + modals + sound + test hooks. engine.js crossed 1000 but is cohesive (sim/june/admissions/
-  alumni/funding/events/milestones). **Verdict: still very workable; no refactor forced this
-  iteration.** Now SCHEDULED as `## Epic backlog` #1 (a STRUCTURE-epic — worktree + behavior-neutral
-  diff, ships autonomously; no longer waits on an "owner OK for an invisible iteration" — that hedge is
-  exactly why it never shipped): the **art.js extraction** — note the real coupling cost (PX palette, `shade`,
-  `roundRect`, `mb`, `hashId` are shared by BOTH the static-art drawers AND bakeChar/drawActor, so a
-  clean split must move shared helpers to art.js and expose them; the static layer is fully
-  screenshot-verifiable, the rAF actor layer is NOT — extract static-art first, actors later).
-- *(2026-06-13, iter 53)* **Actor layer is NOW screenshot-verifiable** — `liveLoop` split into
-  `stepLive`/`drawLive` + `__ui._renderLiveOnce(period)` paints one live frame on demand (recipe in
-  the skill Step 3.4). The "rAF actor layer is NOT verifiable" caveat above/below is superseded for
-  TESTING (the architectural coupling note still stands). Every campus-liveliness iteration must now
-  screenshot the walking campus, not ship blind.
-- *(2026-06-13, S1 ship)* Layering clean at birth: `js/data.js` (CONFIG numbers + CONTENT
-  text, zero logic/DOM) · `js/engine.js` (state/sim/June/admissions/alumni/funding, DOM-free,
-  node-testable) · `js/ui.js` (all render/canvas/modals, reads via HVS/__test, owns no
-  numbers) · `index.html` (shell). engine.js ~940 lines, ui.js ~925 (grew with the Sơn Mài
-  art renderer + campus-life day-clock) — BOTH now over the ~900 split threshold. S1.5 art.js
-  extraction is now the priority refactor: pull the art renderer (drawStatic/drawRoom/
-  drawActor + ROOM_STYLE + prop drawers) AND the campus-life layer (period clock, buildRings,
-  assignActivity, drawActivity) into `art.js`, leaving ui.js as HUD/panels/modals. Then plan
-  engine.js module-split (sim/june/admissions/alumni/funding) for when alumni S3 + funding S4 land.
-
-## Flow reflection (iter 60 — the loop-redesign checkpoint)
-**The redesign WORKED — measurably.** iters 49–55 were 7 straight small additive ships (Khoa phases,
-single activities, tooling) = the timidity the owner diagnosed. After the mid-session LOOP REDESIGN
-(Mission + two tracks + counted `## Cadence` + EPIC machinery + Bar gate + divergence-by-workflow +
-self-correction/prune/failure-detection), iters 56–59 delivered **2 epics + a debt-paydown + 1
-owner-polish**: onerror restored (56), the art.js extraction deferred 35 iters finally shipped (57),
-build badge (58), and the premium 24×32 character art step-change (59). Debt is trending DOWN (2 of 3
-closed). The counted cadence hard-lock is what flipped it — soft "shoulds" had failed 7×; state +
-counters made bold the path of least resistance.
-**Validated flow:** divergence-workflow → owner-picks-from-concrete-options → integrate-with-proof
-(used for the character art) is the owner's steer-by-reaction sweet spot — he engaged eagerly and chose
-the BOLDEST option (Direction C, accepting its rescale cost). Keep using it for all #1-dimension work.
-**Health:** cadence counters firing correctly; the restored onerror trap already caught a real
-regression (the iter-57 tapFx leak); no drift; the loop is bold and self-correcting. **No flow change
-needed** — hold course; next visible swings are weather/lighting + the rest of the Epic backlog.
-
-## Flow reflection (iter 40, maintenance + checkpoint)
-40 iterations shipped (~30 autonomously, still zero vetoes). Since iter 20 the game went from a
-populated-school MVP to a **complete arc**: found-from-nothing → milestone-guided build-up →
-visible walk-in/walk-out at the cổng → 3D-but-pixel houses+people → seasonal Tết & graduation
-décor → the văn-mẫu destiny made reachable (the đề's thematic heart) → memorial gardens to five
-real reformers → the "Mười năm sau" decade capstone. All three owner directives (A/B/C) done, plus
-the owner's mobile-UX asks (selection marker, tap ripple, reset button) and the critical
-cache/save-staleness fix (bumped SAVE_KEY v3 + build stamp). **Maintenance verdict (iter 40):**
-sweep clean (only the late-game money-inflation flag, an S4 job), a 13-year all-systems playthrough
-runs error-free with solid v3 save/load and ~33ms/run perf, and the ops/Trường panels pass the
-390px audit. No regressions. **Standing flow risk unchanged:** `js/ui.js` (now 1693 lines) — the
-`art.js` extraction is the top structural debt, now SCHEDULED as `## Epic backlog` #1 (ships
-autonomously via the STRUCTURE-epic machinery; the actor layer is now screenshot-verifiable via
-`_renderLiveOnce`, so the old "can't verify actors" blocker is gone). Remaining content depth =
-S2 admissions / S3 alumni / S4 funding / S5 pantheon, none blocking.
-
-## Flow reflection (iter 20, ~10-iteration checkpoint)
-The dev flow is serving the owner: 20 iterations shipped, ~15 autonomously (decide→ship→veto,
-no vetoes), the north-star ("sunny lively watchable school") resolves design forks cleanly,
-and `sweep.js` turned balance from guesswork into 3 data-driven fixes (now all-clear). Look +
-gameplay both strong. ONE flow risk: **`js/ui.js` is now 1203 lines** (art + campus-life +
-ambient + customization + HUD + panels + modals + sound + epilogue) — velocity will degrade.
-**The S1.5 `art.js` extraction is now the top structural priority** — scheduled as `## Epic backlog`
-#1, a STRUCTURE-epic that ships autonomously (worktree + behavior-neutral before/after diff).
-
-## Gameplay balance — findings from `node sweep.js` (2026-06-13)
-The sweep (40 seeds × 5 strategies × 11y) flags real stagnation to fix (own iterations;
-re-run sweep before+after each change). Good news: economy Y1 net +12tr (in band), 0%
-bankrupt, and the THESIS HOLDS — đồ-án/craft yields a 🍎 in ~43% of runs + 69% kỹ sư, while
-cram/default settle into lương-ổn. Problems:
-- **Tiếng Tăm collapses to ~1** (decays −1/mo, nothing sustains it) → admissions pool shrinks,
-  the hype meter is dead weight, half the moral tension is inert. Needs TT sources (stunts,
-  contracts, viral defenses, events) that actually keep it alive across a run.
-- **Money inflates to ~2788tr end-game** — no spend sink/pressure. Needs sinks (Quỹ Ứng Cứu,
-  dedications, scaling salaries/maintenance, more to build) so cash stays a real constraint.
-- ~~Tiếng Tăm collapse~~ FIXED (iter 16): TT_FLOOR = 10+0.25×UT, decays/recovers toward it.
-- ~~CA_MAP_COIN ≈ 0%~~ FIXED (iter 17): decoupled cm growth from the vet drag + lowered the
-  gate (cm≥52∧tn≤45∧vet≥50) → cá-mập now fires ~2% and the dark arc works (sharks → BI_BAT).
-- ~~Money inflates~~ FIXED (iter 18): surplus above CASH_KEEP(300) reinvested 3%/mo → end
-  cash ~1,012tr (was 2,800), Y1 net still +12.3 in band. Visible as a funding-panel line.
-- **SWEEP NOW CLEAN** (iter 18): all flags clear. Confirmed contrast — HONEST cân-bằng school
-  keeps TT 13 / UT 9 / TC 63 (healthy), cram-leaning default TT 8 / UT 3 (consequence). Thesis
-  holds under simulation. Remaining polish (not flagged, lower priority): the cram DEFAULT
-  config is rough for a brand-new player (could ship a gentler preset default); proper spend
-  channels (scholarships drawing cash, Quỹ Ứng Cứu — S4) would beat the blunt cash-drain sink.
-
-## Salvaged from the retired /mvp/ build (worth keeping)
-- **Phốt risk meter:** a visible indicator of accumulated mầm-phốt danger (we track
-  photSeeds silently) — surface it so the player feels the gamble building. (UI, small.)
-- **Export/import save string:** copy-save-to-clipboard for sharing/backup a run. (Nice-to-have.)
-- Otherwise /mvp/ was the older 3-grade spec (superseded by v2); nothing else to salvage.
-
-## Parked
-(empty — interaction-model question resolved: tabs + tap-the-world, shipping as Now item 0)
-
-## Done (see CHANGELOG.md)
-- **Background music v1 (loop iter 3)** — state-aware generative campus-lofi (pad/pluck/bass),
-  moods: normal / Tết / June-swell / scandal-undertone; 🎵 toggle persisted; autoplay-unlock.
-- **The Player's Answer epilogue (loop iter 2)** — "Bản nháp bài luận của hiệu trưởng": the
-  open-question law (DESIGN §1) as a pull-only mirror modal. 8 branch voices + empty guard;
-  reflects the player's own school, crosses out every verdict, ends on the đề hanging.
-  Follow-up: a balance pass proving no single dominant strategy (so every essay branch is
-  genuinely reachable), and a "Mười năm sau…" run-end FSM fast-forward (DESIGN §S3).
-- **Campus life v1 (loop iter 1)** — 5-period real-time day clock routes students to room
-  door-rings to study/eat/tinker/play-ball/zzz; đồ-án-mode Năm-4→Xưởng; shared Sân ball;
-  tell-driven (sky daydreams, hype performs, spark sparks). Pure view layer. Follow-ups
-  (campus-life v2): celebrate-after-June confetti, gather-at-cổng for tân SV in Tháng 9,
-  more activity variety, tune walk speed if 16s feels tight for cross-map treks.
-- **Campus art overhaul (Sơn Mài Diorama)** — lacquer-night ground, gold-framed fake-iso
-  pavilions (6 distinct room types), lamplit windows, richer chibi, seeded props.
-  Synthesized via explore→judge→synthesize art-direction workflow.
-- **Tap-the-world inspect** + **/mvp/ retired** (root v2 canonical).
-- **S1 MVP shipped** — multi-file build, full sim/June/admissions/alumni/funding, 5 gates
-  green, 390px verified, live link flipped from placeholder to playable.
-- Design v2 (university edition, 17 canonical rulings) + CONVERSION-SPEC.
-- Repo + Pages live; loop infrastructure (skill + Stop hook).
+> _History migrated to CHANGELOG.md. The art/polish pass, the living-economy & economy-scaling owner epics, the
+> Mentor's Ledger soul-loop, the LATTICE build-out, and all iter-by-iter SHIPPED detail live there._

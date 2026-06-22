@@ -101,12 +101,11 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
    cheap to change — expect to retune/remake mechanics as the model sharpens; don't over-polish what may change).
    The freeze HOLDS until the model + its narrative are deeply right — graphics are the last pass, not a deadline.
    The work splits into two tracks the loop ALTERNATES: SYSTEMS (the LATTICE / factors) and NARRATIVE/WRITING.
-1. **Pick — biggest gameplay/story move available.** **★ CURRENT TOP PRIORITY (owner steer 2026-06-22):
-   the EDUCATION MODEL REFINEMENT epic — build it phase by phase (Phase 0 baseline-check → 1 STRUCTURE axis →
-   2 MAJORS decoupled → 3 ACTIVITIES+attention-hours).** See ROADMAP `## Epic: EDUCATION MODEL REFINEMENT` +
-   `MODEL-REMAKE-PROPOSAL.md`. This is the decided fix for the "3 triết lý oversimplify education" steer; it
-   PREEMPTS the prior frontier (L4 apex / release-to-graphics / conservative deepening). Ship ONE phase-checkpoint
-   per firing, green each time; obey the epic's gating laws (below). When the epic completes, fall back to the
+1. **Pick — biggest gameplay/story move available.** **★ CURRENT FRONTIER: the EDUCATION MODEL REFINEMENT epic,
+   now at Phase 2c — OFF-NATIVE MAJOR INTAKE.** Phases 0/1/2a-b shipped; the **apex-fork is RESOLVED (iter-264, owner:
+   "keep 🍎 as-is" → build remaining systems BOUNDED NON-APEX)**; Phase-3 activities are SHELVED (non-apex versions
+   proven inert, iters 251-252). See ROADMAP `## ACTIVE EPIC` + `MODEL.md`. Ship ONE checkpoint per firing, green each
+   time; obey the epic's gating laws (below). When the epic completes, fall back to the
    normal ranking: (a) production-broken, (b) explicit owner ask, (c) LATTICE epics + NARRATIVE/WRITING track,
    (d) person-sim depth, (e) balance from the sweep, (f) content. Prefer ONE coherent shippable change; if it's
    big, it's an EPIC — plan it in ROADMAP `## Epic: <name>` (decide the load-bearing forks; ask the owner only on
@@ -216,9 +215,9 @@ for the next lattice epic when the backlog runs dry.
   not rebuild them. Resume the normal loop on Phase 2c (plan it as an epic, byte-identical-at-default checkpoints, sweep a
   NEW off-native-wastes sensor + a no-dominant sensor each ckpt). The 3-scout plateau history stays valid for the NEXT idle
   gap, but the loop is NOT idle now — it has a greenlit epic.
-- COMPLETION-PLATEAU POSTURE (iter-230): the LATTICE + narrative are COMPLETE and the exit gate is measurably met (a/b/c;
-  see ROADMAP banner + `GRAPHICS-HANDOFF.md`); only owner-confirm (d) remains. The narrative-surface sweep is DONE (clean
-  end to end). So do NOT manufacture micro-polish to fill firings — that IS the decay this section warns about. When no
-  real gap exists and no owner steer is in `feedback.md`: prefer (1) a genuine forward-looking consolidation (extend the
-  handoff, sharpen the Lab), or (2) honestly hold the line and restate the owner decision point — over inventing a
-  refinement. A firing that ships nothing but a true verification is better than a manufactured change.
+- WHEN THE EPIC COMPLETES / THE LOOP IDLES (durable lesson, iters 202/230/254/262): do NOT manufacture micro-polish to
+  fill firings — that IS decay; a firing that ships nothing but a true verification beats a fake change. Before concluding
+  "nothing left" or holding ≥2 firings, RUN A SCOUT FAN-OUT (`Workflow`: parallel scouts per system → adversarial filter →
+  ranked queue). A "plateau" asserted from reasoning was FALSE twice (iter-202, 254 — scouts found real work) and only REAL
+  at iter-262 (3 scouts, 0 survivors). Hold honestly only AFTER a scout returns plateauReal; re-scout only on a real change
+  (owner steer / new system / a long idle gap), not every firing.

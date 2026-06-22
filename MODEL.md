@@ -18,8 +18,8 @@ changed, or removed. It does NOT replace THESIS.md (the frozen charter) or VISIO
 > **a LIFE = TALENT (magnitude × direction) × EDUCATION (your policy) × WORLD (era × place) × CIRCUMSTANCE
 > (origin) × LUCK — read as realized / wasted / distorted, RELATIVE to that person's own gift.**
 
-EDUCATION — the player's lever — is **EXPANDING from one slider into a small composed sub-product** (the
-2026-06-22 decided refinement; see `MODEL-REMAKE-PROPOSAL.md` + ROADMAP `## Epic: EDUCATION MODEL REFINEMENT`):
+EDUCATION — the player's lever — **EXPANDED from one slider into a small composed sub-product** (the
+2026-06-22 model refinement; phased build status in ROADMAP `## Epic: EDUCATION MODEL REFINEMENT`):
 > **EDUCATION = MATCH(tell, mode) × STRUCT_FIT(tell, structure) × MAJOR_FIT(tell, major) ×
 > ACTIVITY(matched-realize / mismatched-waste, GATED by attention-hours) × MENTORSHIP × FACULTY_GRAIN.**
 
@@ -27,6 +27,28 @@ No term dominates; each *re-weights whose* life is realized vs wasted (invariant
 correct*. The player's lever is EDUCATION + attention; the rest is the world they're dropped into. The
 refinement keeps that law — it gives the lever more *texture* and more *felt decisions*, never a dominant
 setting (every new table ships its symmetry + non-dominance sweep sensor BEFORE the lever).
+
+*Refinement provenance (from the delivered model-review, now folded in — the doc itself is retired): the
+verdict was **REFINE in place, never rebuild** — ~90% of the engine is the law-bearing spine (multiplier-product
+growth core, cascade + prose engine, alumni FSM, era/origin/archetype lattice, mentorship equalizer,
+id-determinism, capstone frame); the oversimplification lives in **one term, EDUCATION**, a single per-grade
+slider. The fix is three composing additions, each a real player verb, each sweep-gated, built in phases: (1)
+the **TEACHING DIAL** — keep the 3 triết lý as named one-tap corners but add an orthogonal STRUCTURE axis, so
+fit = MATCH(tell,mode)×STRUCT_FIT(tell,structure) as two small discrete tables (this is what finally splits
+spark≠sky; teeth land at the ceiling/cap, not just rates, via a DISCRETE cap-multiplier — a smooth distance→cap
+function would be the forbidden "gradient"); (2) **decouple MAJOR from tell** — ~6 authored major-environments
+at one horizontal tier each with a fitVector, MAJOR_FIT as a 2nd ceiling term (the "right gift, wrong major"
+fate, impossible when major=tell), assignment SYSTEMIC (build rooms + intake rule + capacity, id-derived sort,
+the protégé re-track the one per-kid override), the everyman ("") finally gets a real home (Đại-cương); (3)
+**ACTIVITIES become mechanical** (CLB / đội-tuyển / thực-tập, each carries its own waste) sharing one finite
+**ATTENTION-HOURS** pool with the mentor slots — the tragic allocation (deep programs for all vs rescuing one
+named kid), DISCRETE picks never a fungible slider (§C-3). Owner forks resolved: everyman gets a real major but
+**era-neutral with a BOUNDED structure peak** (the structural firewall against "match everyone to their grain");
+capstone weaves the answer in IMPLICITLY through the lives shaped (faces, not policy); ERA re-weights a major's
+apex via the existing `eraFav`-on-tell (no new FSM weights); capstone stays **authored-first**, LLM revisited
+only after the model freezes. The apex-fork (what tech does to the 🍎 ceiling) was resolved by the owner: keep
+🍎 as-is. Phase-0 guard: the gate must snapshot a realization/destiny histogram, not just determinism, or a
+mis-tuned table silently regresses every kid and stays green.*
 
 ## The factors (LIVE = shipped · QUEUED = planned) — real-world basis · mechanic · key interactions
 | Factor | State | Real-world basis | Current mechanic | Interacts with |
@@ -50,52 +72,34 @@ setting (every new table ships its symmetry + non-dominance sweep sensor BEFORE 
 | **Progression / legacy** | QUEUED | one generation seeds the next | (L3) past-run alumni → next world | archetype, era-chain |
 | **World economy** | LIVE | the school's body, not its soul | cash / endow / upgrades | enables scale; must NOT become a back-door to 🍎 |
 
-## Interaction highlights (the "factors influence each other" the owner wants tracked)
+## Interaction highlights (the load-bearing "factors influence each other")
 - **TALENT × EDUCATION** — a gift in a matching policy flowers; in a mismatch it goes adrift (the original
-  Mentor's-Ledger spine).
-- **TALENT × MODE × STRUCTURE** (DECIDED, Phase 1) — pedagogy is two axes, not one: *what* the time produces
-  (cram↔project) AND *how the day is governed* (drill↔autonomy). A coder (spark) needs a scaffolded ladder
-  then the machine (mid structure); a hands-maker (sky) dies under drill (low structure). This is what finally
-  makes spark≠sky — today they share an identical fit row. Teeth land at the ceiling cap, not just rates.
-- **TALENT × MAJOR** (DECIDED, Phase 2) — the *same gift* lives a different life in a different track: a spark
-  in Chế-tạo (a coder at the lathe) under-realizes; in Lập-trình it flowers. "Right gift, wrong major" — a
-  fate that's structurally impossible today (major=tell). And the >50% everyman finally gets a real home
-  (Đại-cương) where they realize as a kỹ-thuật-viên or are quietly wasted.
-- **PEDAGOGY × ACTIVITIES × MENTORSHIP — the SCARCE HAND** (DECIDED, Phase 3) — deep teaching, competition
-  teams, internships, and the 3 mentor slots all draw from one finite ATTENTION pool. Running great programs
-  for the whole cohort *visibly starves* your ability to rescue the one named kid in front of you — the tragic
-  allocation the game's agency has lacked. Discrete picks (never a fungible budget), so it stays prose-shaped.
-- **TALENT × ERA** — the same coder is a founder in the dot-com boom, a clerk in the 1990s ("right kid,
-  wrong era"). The era governs the *ceiling*, not the floor.
-- **ORIGIN × MENTORSHIP** — a poor kid under-realizes (68% vs 83%) UNLESS you spend scarce attention on them
-  → the school as *equalizer*. The đề-Văn's truest question, made a mechanic.
-- **MENTORSHIP's CEILING** (verified iter-235) — the player's scarce-attention lever DEFEATS origin (mentoring
-  resets `orgGrow→1`, erasing the class growth-drag) but does NOT defeat era (the apex tilt still stands). A
-  teacher can lift a kid past where they came FROM, never past the decade they graduate INTO. The player's agency
-  has a limit, and that limit is the world's timing — the đề-Văn's humility, made a mechanic (not a flat rescue).
-- **ORIGIN × ERA × DIRECTION** — poor + wrong-gift + wrong-decade = the system's hardest, most-felt waste
-  (the "triple-wrong"), always done TO them (invariant #4).
-- **GEOGRAPHY → ORIGIN-MIX** (queued) — a rural school simply *contains* more poor kids; place pre-loads
-  circumstance before the player makes a single choice.
-- **PEERS × MOOD × FLOW** (ckpt1 LIVE, iter-241) — the cohort's atmosphere pulls each kid's mood toward the school
-  mean, so the môi trường (the class you're in) decides whether your gift catches FLOW or gets dragged out of it. A
-  star in a demoralized class is wasted by the *room*, not by themselves (invariant #4); a struggler in a thriving
-  one is buffered. Tuned as a *partial* environment (not a homogenizer) and aggregate-neutral, so it adds a social
-  layer to the realize/waste reading without becoming a dominant strategy. The player shapes it only indirectly —
-  through admissions + the policy that sets the whole cohort's mood.
-- **TECHNOLOGY × ERA × MENTORSHIP** (ckpt1 LIVE, iter-239) — the AI era's trợ-giảng extends the headmaster's
-  reach (+1 mentor slot), so the verified mentorship×origin equalizer scales: in the AI decades you can lift one
-  more poor kid past their circumstance. This is the SAFE half of the factor (teaching CAPACITY), built on the
-  owner's "continue" without touching the thesis. The apex half (below) stays owner-gated.
-- **TECHNOLOGY × ERA × EDUCATION × APEX** (ckpt2, owner-gated thesis-fork, owner steer 2026-06-21) — each era's *tools* reshape the
-  game twice over: (a) **education** — the AI era could offer an AI-tutor that changes the economics of
-  scarce mentorship (does it democratize attention to the poor, or only the rich school affords it? → ties to
-  ORIGIN), online learning that widens access; (b) **the apex conditions** — tech lowers the barrier to
-  "making something the world needs" (a coder + modern tools builds what once took a team), so *what counts
-  as a Steve* and *how reachable it is* shifts by era. Speculative FUTURE eras (beyond the AI boom) can extend
-  the authored spine — each a new technology that re-poses the đề-Văn for its time. The risk to guard: tech
-  must not become a flat "+realization" upgrade (that breaks pluralism) — it should *change WHICH gifts and
-  WHICH kids* the world lifts, not lift everyone.
+  Mentor's-Ledger spine). The refinement gives this two more orthogonal mismatch axes: **× STRUCTURE** (spark
+  needs a mid-structure ladder, sky dies under drill — the spark≠sky splitter, teeth at the ceiling cap) and
+  **× MAJOR** (the same gift lives a different life per track — a coder at the lathe under-realizes; "right
+  gift, wrong major," impossible when major=tell; and the everyman gets Đại-cương).
+- **PEDAGOGY × ACTIVITIES × MENTORSHIP — the SCARCE HAND** — deep teaching, competition teams, internships,
+  and the mentor slots all draw from one finite ATTENTION pool. Running great programs for the whole cohort
+  *visibly starves* your ability to rescue the one named kid in front of you — the tragic allocation the game's
+  agency has lacked. Discrete picks (never a fungible budget), so it stays prose-shaped.
+- **TALENT × ERA** — the same coder is a founder in the dot-com boom, a clerk in the 1990s ("right kid, wrong
+  era"). The era governs the *ceiling*, not the floor.
+- **ORIGIN × MENTORSHIP — the equalizer, with a ceiling** (verified iter-235) — a poor kid under-realizes
+  (≈68% vs 83%) UNLESS you spend scarce attention on them → the school as equalizer. Mentoring DEFEATS origin
+  (resets the class growth-drag) but does NOT defeat era (the apex tilt stands). A teacher lifts a kid past
+  where they came FROM, never past the decade they graduate INTO — the đề-Văn's humility, made a mechanic.
+- **ORIGIN × ERA × DIRECTION** — poor + wrong-gift + wrong-decade = the system's hardest, most-felt waste (the
+  "triple-wrong"), always done TO them (invariant #4). Geography pre-loads it: a rural school simply *contains*
+  more poor kids before the player makes a single choice.
+- **PEERS × MOOD × FLOW** (ckpt1 LIVE) — the cohort's atmosphere pulls each kid's mood toward the school mean,
+  so the môi trường decides whether a gift catches FLOW or gets dragged out of it. A star in a demoralized
+  class is wasted by the *room* (invariant #4); a struggler in a thriving one is buffered. A *partial*,
+  aggregate-neutral environment (not a homogenizer), shaped only indirectly via admissions + cohort policy.
+- **TECHNOLOGY × ERA × MENTORSHIP** (ckpt1 LIVE) — each tech wave extends the headmaster's reach (+1 mentor
+  slot by smartphone/AI era), so the verified equalizer scales: in later decades you can lift one more poor kid
+  past their circumstance. This is the SAFE half — teaching CAPACITY. The apex half (what tech does to the 🍎
+  ceiling) was the owner-gated thesis-fork, **resolved: keep 🍎 as-is.** Tech must never become a flat
+  "+realization" upgrade — it should change WHICH gifts and WHICH kids the world lifts, not lift everyone.
 
 ## Laws this model serves (never broken)
 - THESIS §B (open-question law) + §C (the 4 person-sim invariants). A factor that creates a dominant

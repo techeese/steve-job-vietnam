@@ -1,6 +1,6 @@
 # CONVERSION-SPEC — Sitting S1 "Lên Đại Học" (v1 HS skeleton → University MVP)
 
-Assumes the v1 skeleton exists and passes its gates (map/sprites/clock/save/events/stats/outcome-cascade per MVP-SPEC.md). This sitting is a CONVERSION DIFF + four v0 systems. Where this file conflicts with anything else, DESIGN.md v2 rulings win; for raw numbers, THIS file wins for S1. All new constants land in CONFIG.ADMIT / CONFIG.ALUM / CONFIG.FUND / CONFIG.PANTHEON.
+Assumes the v1 skeleton exists and passes its gates (map/sprites/clock/save/events/stats/outcome-cascade per the original v1 skeleton). This sitting is a CONVERSION DIFF + four v0 systems. Where this file conflicts with anything else, DESIGN.md v2 rulings win; for raw numbers, THIS file wins for S1. All new constants land in CONFIG.ADMIT / CONFIG.ALUM / CONFIG.FUND / CONFIG.PANTHEON.
 
 ## 0 · Scope in one paragraph
 Reskin the 3-grade high school into a 4-year university (strings + calendar + cohort link), replace the recruiting card-picker with the ĐIỂM CHUẨN modal, convert the June exam into bảo vệ đồ án with the canonical 8-row cascade (🍎 row removed, hidden 🌱 tiemNang flag), and ship four v0 systems: alumni lifecycle (8 states, deterministic, Trần Phi Lợi scripted), funding trio v0 (endowment line + 2 corporate contracts), and 3 pantheon scholarships. One S.v 1→2 migrator covers everything. Estimated ~1,400–1,800 lines net; the trim line in §11 is the honesty mechanism.

@@ -1,197 +1,198 @@
 # Học viện Steve — Design Charter v2 (Ấn Bản Đại Học)
 
-> The north star for every change. If an improvement fights this document, the improvement loses.
-> v2 SUPERSEDES DESIGN.md v1. It is the canonical merge of the four university revision designs (university / alumni / funding / pantheon) with both judges' fixes applied. Where any subsystem doc disagrees with this file, THIS file wins. The v1 high-school skeleton converts to this charter via CONVERSION-SPEC (sitting S1); it is a CONVERSION DIFF, not a rewrite — every v1 system not named below survives byte-identical.
-
-## 0 · Canonical rulings (the tiebreaks, decided once, never re-litigated)
-
-1. **Cascade:** the alumni doc's 8-row graduation table is canonical. The 🍎 row is REMOVED from graduation; 🌱 Hạt Táo is a HIDDEN flag (no card, no confetti — one Bác Tâm line). University's "TIỀM NĂNG:" card header and full-stat-block write into `alumni[]` are kept. Pantheon's visible "Tiềm năng Steve" card is dead.
-2. **Admissions:** the university doc's điểm chuẩn system wins wholesale (cutoff 12.00–30.50 step 0.25, pool N=round(24+1.6×TT) clamp 24–180, poolSeed determinism, hard-ish quota dial, #admitModal histogram). Funding §1's parallel system (S.diemChuan, SCORE(), 14–28 scale) is DELETED. Salvaged from funding: the crowding penalty (quota reads as giảng-đường capacity; overfilling above 12 is allowed and RENDERED, ×max(0.6, 1−0.02×(n−12)) + Mood −1/th + packed sprites), the inherited cutoff-15.0 boot flavor, the kế-toán nudge line, and the "Hồ sơ 16,5 điểm" jewel (merged with the đặc-cách card — they are one archetype).
-3. **Endowment:** ONE schema — `S.endow = {bal:10, log:[], pending:[], drawnYear:false, milestonesClaimed:0}`. ONE rate — `CONFIG.ENDOW_RATE = 0.004`/month, in CONFIG never state. `S.endowment` and pantheon's in-state `yieldRate` are dead.
-4. **Gifts:** probability = stateBase × (grat/50), clamped ≤0.95. Amount × (1+UyTín/100) — the ONLY UT multiplier (no double-dip). Routing: <30tr → cash as "quà cảm ơn"; ≥30tr → quỹ as "hiến tặng". ALL gifts queue and land together on 20/11 Ngày Nhà giáo (envelope stack, no confetti); only STEVE/QUAY_DAU mega-gifts may break schedule.
-5. **Scholarship money model:** quỹ-gated unlock ladder (200tr / 350tr / 500tr, then +150tr per additional) + annual draw (12tr stipend + waived tuition) paid from quỹ each Tháng 9; if bal < draw → SUSPENDED one year, −1 Uy Tín, one quiet ticker line. Funding's 150tr-earmark model is dead.
-6. **Naming/dedications:** pantheon §3 wins entirely — milestone-earned quyền đặt tên (quỹ 300tr/600tr/1tỷ/1.5/2.2/3tỷ), 10tr plaque ceremony, worthiness gates with refusal lines, +2 Thực Chất, irreversible, burns the corporate-naming slot. The 30tr purchasable-naming shop and BOTH "+1 UT for naming/anonymity" rows are DELETED: **no quỹ spend may ever ADD Uy Tín** (UT costs/penalties remain legal).
-7. **Uy Tín cap-piercers — exactly TWO, forever:** the viral defense (+5) and the first 🍎 keynote (+5, once per game). Everything else stays inside ±3/yr net.
-8. **June:** university's two-stage June is canonical (THPT happens out in the world; bảo vệ đồ án + lễ tốt nghiệp are yours). NO rank computation in June — the BXH ĐIỂM CHUẨN lands Tháng 8. Pantheon's June ranking beat is dead; `essayQ` renames to `defenseQ` everywhere.
-9. **Rivals (one name set):** Học viện iSteve Toàn Cầu ("Cam kết đầu ra: Kỳ lân hoặc hoàn 30% học phí") · ĐH Dân Lập Bình Thường · ĐH Cộng Đồng Bến Sung (flat 15.0, with dignity).
-10. **Pantheon registry:** pantheon doc owns every real-name surface; each honored figure appears on AT MOST ONE live surface per save. MVP scholarships: Trần Đại Nghĩa + Tạ Quang Bửu + Hồ Xuân Hương with SIMPLE effects; the nine bespoke pipeline exceptions are an L-pack with its own sitting and cut-line. Voice-prize "Không trao" beat re-homes to a school-named **Giải Giọng Riêng** (no pantheon name needed) since HXH is occupied by her scholarship.
-11. **FSM repairs (all baked in below):** row normalization Σ≤0.95; explicit BI_BAT exits; `employed:true` excludes hired GIANG_VIEN from ticks; the Steve/garage roll is DRAW #1 every alumnus-year (drawn-and-discarded when ineligible); garage year locks state in FOUNDER; annMonth never lands on Tháng 6; all probabilities clamp ≤0.95.
-12. **Trần Phi Lợi:** scripted override row in CONFIG.ALUM.SCRIPTED — forced CA_MAP_COIN entry, forced BI_BAT detonation year 2, through the GENERIC arrest modal ("khóa này tốt nghiệp thời chủ cũ"); demos the morality clause if a contract is live. Everyone else is pure FSM.
-13. **Steve window:** pSteve tuned so the median first keynote lands **year 7–9** (garage year included, inside the 12-year cap), AND the run-end summary gains an EPILOGUE — "Mười năm sau…" fast-forwards the pure FSM 10 years on one screen, so every run resolves its destinies on-screen.
-14. **Bác Tâm stays.** No successor, lương cũ, silence intact. Non-negotiable cast continuity (with Mai Sương → sinh viên Năm 1, Trần Phi Lợi → Năm 4 zombie).
-15. **Save:** ONE v2 migrator (S.v 1→2) owned by sitting S1 covers all four workstreams. Alumni records use `state/yearsInState` (never stage/stageYear); `fs:{kt,tn,st,cm,vet,seed}` (typo fixed). All rates/curves in CONFIG.
-16. **Boot economy:** canon 120tr cash / 150tr book value kept. 42 sinh viên (12+10+10+10), quỹ 10tr, tuition 2tr, inherited cutoff 15.0, a THIRD inherited giảng viên (biên chế, unfireable) absorbs the extra tuition so year 1 stays tight (+8..+25tr/th band, sweep-verified: ~+15).
-17. **Corrected admissions sweep target:** at TT 25 / UT 10 in year 1, the quota-12-filling cutoff lands **20.0–21.5**; cutoff 24 fills ≤4 (the prestige play must hurt in year 1). The old "cutoff 24 fills 8–11" target contradicted its own formulas and is void.
+> The settled-law reference for the shipped game. If an improvement fights this document, the improvement
+> loses. (See `VISION.md` for the dream, `MODEL.md` for the factor model.) Canonical merge of the four
+> university revision designs (university / alumni / funding / pantheon); where any subsystem disagrees, THIS
+> file wins. The v1 high-school skeleton converted to this charter as a DIFF — every v1 system not named below
+> survives byte-identical.
 
 ## 1 · What this game is
+A **satirical Vietnamese university-management sim** in the Kairosoft register: a hand-drawn campus of tiny
+walking sinh viên, watched from above, managed in small decisions, evaluated every June with fanfare — and
+haunted for YEARS afterward by everyone it graduates. **NOT a clicker:** taps are choices, never rate.
+Offline, time is frozen. **The v2 thesis:** *graduation produces POTENTIAL; the world decides DESTINY* — the
+diploma is a save file, not an ending.
 
-A **satirical Vietnamese university-management sim** in the Kairosoft register: a hand-drawn campus of tiny walking sinh viên, watched from above, managed in small decisions, evaluated every June with fanfare — and now haunted for YEARS afterward by everyone it graduates. **NOT a clicker** (owner rule): taps are choices or curiosity, never rate. Offline, time is frozen.
-
-**The v2 thesis, one sentence:** *graduation produces POTENTIAL; the world decides DESTINY* — the diploma is a save file, not an ending.
-
-**The open-question law (owner directive 2026-06-13):** the đề Văn is a *philosophical* prompt — "Làm thế nào để Việt Nam có những 'Steve Jobs Việt Nam'?" — and the game must NOT ship a pre-written answer. The design's job is to make the question *playable as an open essay*, so each player arrives at THEIR OWN version of the answer through the school they build. Three hard consequences for every system: **(1) No single dominant strategy.** Hype, craft, real engineering, văn-mẫu mass-production, and patient virtue must all stay *viable and legible as distinct theses* — if one path strictly dominates, the question has been answered for the player and the satire collapses into a moral lecture. Balance protects pluralism, not just numbers. **(2) The game argues nothing; it reflects.** The satire's targets (cargo-cult founders, coin sharks, costume-worn virtue) are *consequences the player can choose to court or avoid*, never punishments the designer imposes — bad outcomes fire only for sins actually committed (trigger hygiene), good outcomes are never forced. The player's choices ARE the argument. **(3) Reflect the answer back, don't state it.** The endgame deliverable is the player's own essay assembled from what they actually did — the Sổ Cựu Sinh Viên, the three ledgers, the rare 🍎 or its absence — surfaced as *"bản nháp bài luận của hiệu trưởng"* (an epilogue that quotes the player's own school back to them: which students became what, which choices recurred), never a designer's verdict screen. The đề keeps asking; the school is the player's reply; the game only holds up the mirror.
+**The open-question law (owner directive):** the đề Văn — *"Làm thế nào để Việt Nam có những 'Steve Jobs Việt
+Nam'?"* — is a *philosophical* prompt; the game must NOT ship a pre-written answer. Three hard consequences:
+**(1) No single dominant strategy** — hype, craft, real engineering, văn-mẫu mass-production, patient virtue
+all stay viable, legible, distinct theses; balance protects pluralism, not just numbers. **(2) The game argues
+nothing; it reflects** — bad outcomes fire only for sins committed (trigger hygiene), good outcomes are never
+forced; the player's choices ARE the argument. **(3) Reflect the answer back, don't state it** — the endgame
+is the player's own essay assembled from what they did (*"bản nháp bài luận của hiệu trưởng"*), never a
+designer's verdict.
 
 ## 2 · Premise & founding myth
+After the real June 2026 đề thi THPT môn Văn asked the Steve-Jobs question, your founder takes it literally and
+buys a bankrupt private university — **Trường ĐH Dân Lập Văn Mẫu Số 9** — to convert into the institution that
+MANUFACTURES one. Display name: **"Học viện Steve (tên đầy đủ đang chờ Bộ duyệt mã trường)"** — the mã
+trường/mã ngành approval is the running joke. The exam is no longer yours: each June 2,1 triệu thí sinh sit it
+OUT THERE and what that machine produces walks toward your gate in July; Bác Tâm reads the 2026 đề aloud at the
+flagpole yearly (one ticker line, never commented). **Everything is parody** (footer disclaimer; historical
+figures honored with respect, §10).
 
-After the real June 2026 đề thi THPT môn Văn asked *"Làm thế nào để Việt Nam có những 'Steve Jobs Việt Nam'?"*, your founder takes the question literally — and buys a bankrupt private university, **Trường ĐH Dân Lập Văn Mẫu Số 9**, to convert it into the institution that MANUFACTURES one. Display name: **"Học viện Steve (tên đầy đủ đang chờ Bộ duyệt mã trường)"** — Sở→Bộ is the one-word satire upgrade; mã trường/mã ngành approval is the running joke. One khoa at MVP: **"Khoa Công Nghệ & Sáng Tạo (mã ngành đang chờ Bộ duyệt)"**.
+## 3 · Canonical spec sheet
+- **Student stats (visible 0–100):** KIẾN THỨC · TAY NGHỀ · SÁNG TẠO · CHAI MẶT · MOOD. Hidden: HẠT GIỐNG 1–5
+  (`seed`) · VẸT 0–100 (🦜; exam helper NOW, drags real growth, top-outcome disqualifier).
+- **School meters:** CHỈ SỐ THỰC CHẤT · TIẾNG TĂM (−1/tháng) · UY TÍN (never decays, ±3/yr net, exactly TWO
+  pierce events ever — the viral defense +5, the first 🍎 keynote +5).
+- **Alumnus record** ≈80 bytes: `{id,ten,gradYear,outcome,state,yearsInState,annMonth,fs{…seed},grat,gifts,
+  flags{…}}`; ≤~150/run. **Teachers:** DẠY/DIỄN 0–10, salary 8+2.5×(D+Đ); label **giảng viên**.
+- **Clock:** month 30s, year 6 min; speeds pause/1×/2×/**3× (unlocks at first Lễ Tốt Nghiệp)**. Run cap 12 năm
+  = 9 admissions cycles, 8 self-shaped graduating classes. **Roster cap 48** (4 cohort-years × 12; tuyển
+  thẳng/đặc-cách count against it; sanitize never deletes an enrolled student).
+- **Determinism — three isolated streams:** main sim on `S.rngState`; admissions pool from `poolSeed` (never
+  serialized); alumni-years from `S.seed0` per-alumnus-year throwaway generators. Reloading reroll-proofs all
+  three.
 
-The đề Văn pool (5 canonical mutating phrasings, v1 verbatim) survives — but the exam is no longer yours to run. Every June, 2,1 triệu thí sinh sit it OUT THERE, and what that machine produces walks toward your gate in July. Every year Bác Tâm reads the original 2026 đề aloud at the flagpole — one ticker line, never commented, the founding myth as liturgy (a ticker beat, NOT a modal beat).
-
-**Everything is parody.** Footer disclaimer forever, with one new clause: *"Mọi nhân vật, công ty, học viện trong game đều là hư cấu. Mọi sự trùng hợp là do vũ trụ thích đùa. Các danh nhân lịch sử được vinh danh với lòng kính trọng, đúng như mọi mái trường Việt Nam vẫn làm."*
-
-## 3 · Canonical spec sheet (one language, no dialects)
-
-- **Student stats (visible 0–100):** KIẾN THỨC · TAY NGHỀ · SÁNG TẠO · CHAI MẶT · MOOD. Hidden: HẠT GIỐNG 1–5 (gain ×(0.7+0.15×seed)) · VẸT 0–100 (🦜 pips; exam helper NOW, ×(1−Vẹt/150) on real growth, top-outcome disqualifier). UNCHANGED from v1.
-- **School:** CHỈ SỐ THỰC CHẤT 0–100 · TIẾNG TĂM 0–100 (−1/tháng) · UY TÍN 0–100 (never decays, ±3/yr net, two pierce events only). UNCHANGED.
-- **Alumnus record:** `{id, ten, gradYear, outcome, state, yearsInState, annMonth, fs:{kt,tn,st,cm,vet,seed}, grat 0–100, gifts, flags:{tiemNang, coinPath, garage, employed, poached, hb, laureate, xn, kol}}` ≈ 80 bytes; ≤~150 records/run; aggregate escape hatch only past 200 (prestige).
-- **Teachers:** DẠY/DIỄN 0–10, salary 8+2.5×(D+Đ) with flavored overrides; relabel **giảng viên**. UNCHANGED numbers.
-- **Clock:** 1 day = 1.0s, fixed-step setInterval(100ms)×10/day, month 30s, year 6 min. Speeds pause/1×/2× (end HK1)/**3× (NEW — unlocks at first Lễ Tốt Nghiệp, June Y1; ticks-per-interval=3)**. Degree = 4 years = 24 min at 1×, ~12–15 felt minutes at 3×. Run cap 12 năm = 9 admissions cycles, 8 self-shaped graduating classes.
-- **Map:** 15×12 @26px, unchanged — a whole đại học on one bàn cờ IS the joke (campus sign: "Khuôn viên đạt chuẩn quốc tế (1/100 quy mô)"). Map expansion stays the downward-pan growth item; the four new university rooms (Giảng đường, Trại thực nghiệm, Ký túc xá, Sân thơ) defer with it.
-- **Roster:** 4 cohort-years (Năm 1–4, khóa K1, K2…) × 12 nominal = **cap 48** (sanitize slice(0,48)). Tuyển thẳng and đặc-cách admits COUNT against the cap and against chỉ tiêu's displayed max — sanitize may never silently delete an enrolled student.
-- **Determinism:** main sim on `S.rngState` mulberry32; admissions pool derives from `S.admissions.poolSeed` (pool never serialized); alumni years derive from `S.seed0` per-alumnus-year throwaway generators. Three isolated streams; reloading reroll-proofs all three.
-
-## 4 · Academic structure & calendar
-
-Same 12 months (Tháng 9 → Tháng 8), beats remapped:
-
-- **Tháng 9:** khai giảng + tân sinh viên nhập học (last July's admits walk in at the cổng; **3 spotlight cards** — top scorer, the scholarship/đặc-cách kid, one random with a visible tell — give the histogram faces 30s after it resolves). Phốt seeds roll day 1 (unchanged). Scholarship annual draws debit the quỹ.
-- **Tháng 12–1:** thi cuối HK1 → "Sơ kết học kỳ" modal (same modal, kế-toán line: *"Trần học phí hiện tại: {x}tr. Điểm chuẩn hàng xóm: {y}."*).
-- **Tháng 1–2:** Tết window, unchanged. (Tháng 1 also carries the world-year ticker line once the alumni world-roll ships.)
-- **Tháng 2–5:** HK2. **Năm 4 auto-enters ĐỒ ÁN MODE:** chiều schedule targets Xưởng/Phòng Máy (cosmetic walking); if NEITHER room exists, June defense scores take −1.0 — room value rendered, not tooltipped.
-- **Tháng 6 (two-stage heartbeat):** (1) THPT QUỐC GIA in the world — đề variant + parent-forum memes + ticker *"2,1 triệu thí sinh vừa được hỏi câu hỏi của trường bạn"* + pool foreshadow *"{N} hồ sơ đang hướng về cổng trường"*. (2) **BẢO VỆ ĐỒ ÁN + LỄ TỐT NGHIỆP** for Năm 4 (§6–7). Cohorts roll (graduates leave map; 1→2→3→4). Speed 3× unlocks at the first one.
-- **Tháng 7:** **TUYỂN SINH modal** — điểm chuẩn + chỉ tiêu (§5). Stunt headlines fire on declaration.
-- **Tháng 8:** kết quả + **BXH ĐIỂM CHUẨN** (the ranking ladder lives HERE — toast + ladder strip, full modal only if đợt bổ sung fires).
-- **Tháng 11:** 20/11 Ngày Nhà giáo — the gift-envelope beat (quiet).
-
-**June–August corridor budget (HARD):** June ceremony modal ≤90s typical, ≤120s absolute including Lễ Vinh Danh (which renders ONLY prizes with a live decision this year — most years 1–2 cards); July modal is player-paced decision, not reading; August is a toast unless bổ sung fires. Asserted as a gate note; 3× compresses simulation, this budget compresses the reading.
+## 4 · Calendar (Tháng 9 → Tháng 8)
+- **T9** khai giảng + nhập học (3 spotlight cards give the histogram faces); phốt seeds roll. **T12–1** thi HK1.
+  **T1–2** Tết + world-year ticker. **T2–5** HK2; Năm 4 enters ĐỒ ÁN MODE (no Xưởng/Phòng Máy → June −1.0).
+- **T6 (two-stage):** (1) THPT QUỐC GIA in the world (đề variant, pool foreshadow); (2) **BẢO VỆ ĐỒ ÁN + LỄ TỐT
+  NGHIỆP** for Năm 4 (§6–7). Cohorts roll. 3× unlocks here.
+- **T7** **TUYỂN SINH modal** (§5). **T8** kết quả + **BXH ĐIỂM CHUẨN**. **T11** 20/11 — the gift-envelope beat.
+- **June–August corridor (HARD):** June ceremony ≤90s typical / ≤120s absolute; July player-paced; August a
+  toast unless bổ sung fires. June is structurally **alumni-free** (anniversary hashing avoids it).
 
 ## 5 · ĐIỂM CHUẨN — admissions (the star mechanic)
-
-Each Tháng 7 the player sets TWO dials against a visible score histogram: **ĐIỂM CHUẨN** (12.00–30.50, step 0.25) and **CHỈ TIÊU** (4 to min(14, 48−roster)). You do not hand-pick students — a university meets a histogram, not a person; that anonymity is the satire, and September gives it back faces.
-
-**(a) Pool** (Tháng 7 day 1, derived deterministically from stored poolSeed; never serialized): N = round(24+1.6×TT), clamp 24–180. Score = clamp(gauss(μ, 3.2), 12, 30) + điểmƯuTiên {0:70% · 0.25–1.0:20% · 1.25–2.75:10%} (the right tail above 30 — the 30/30 gun); μ = 17 + 0.05×UyTín + 0.015×TT + 0.25×(year−1) [national inflation drift]. **Học bạ đẹp:** 25% carry phantom +rnd(0.5..2.0) display inflation; Tháng 10 ticker exposes it; kt0 derives from TRUE score, vet0 +10.
-**(b) Hidden derivations (rolled lazily at enrollment from (poolSeed,index)):** HẠT GIỐNG base 30/30/20/13/7 with w5 += 0.06×UT + 0.35×max(0,score−24), w4 += 0.10×UT + 0.5×max(0,score−22), renormalized — quality follows the quiet meter. **The detox truth:** vet0 = clamp((trueScore−15)×3.5 − 0.25×UT + gauss(0,6), 0, 70) — a 28-điểm admit arrives likely seed-4 AND Vẹt ~40–60, pre-crammed by the THPT machine you no longer run; năm nhất is the year of cai văn mẫu, and the existing pipeline handles it untouched. kt0 = clamp(trueScore×2.6−18, 10, 78); tn0 5–20; st0 = clamp(gauss(22+3×seed,8), 5, 50); cm0 5–25; mood 60–80; tells per v1.
-**(c) Resolution:** M = count(score ≥ cutoff); enroll top-min(M,quota) by score. Enrolling n>12 → **crowding**: cohort gains ×max(0.6, 1−0.02×(n−12)), Mood −1/th, packed sprites (rendered in the forecast BEFORE commit). **Ảo** (ghosting): each admit no-shows p=8% (+7% if any rival cutoff > yours). Shortfall → **ĐỢT BỔ SUNG** Tháng 8: [Hạ −2.0, lấp {d} chỗ — low-seed/high-vẹt fill, −2 TT headline] vs [Để trống — lost tuition ≈ 80tr/suất rendered in-modal, one quiet rumor line, Bác Tâm nods].
-**(d) Tuyển thẳng strip:** 1–2 hồ sơ/yr outside the cutoff math, EXACT v1 applicant cards. Plus the merged jewel — **đặc cách "Hồ sơ 16,5 điểm"** (30%/yr if UT≥20): Bác Tâm vouches for a below-cutoff kid (score ~16, seed 4–5, Vẹt 0, sky-stare; *"con bé sửa xe ở cổng trường, điểm thấp vì đi làm nuôi em"*; dự-thính variant when your billboard says 27). Accept = −1 TT gossip + one nod. All count against cap and chỉ tiêu max.
-**(e) Stunt events (predicate-gated, risks SHOWN in forecast L5 before commit — informed gamble, house signature):** cutoff ≥29.50 → "Thủ khoa 29,9 vẫn trượt vì tiêu chí phụ" +8 TT −2 UT +seed sev1 · ≥30.00 → the legend "ĐIỂM CHUẨN 30,5/30" +12 TT −3 UT +seed sev2 · ≥27 → "cao kỷ lục" +4 TT · ≤15.50 → "vét sàn" −3 TT, iSteve mocks, cohort vet0 +10.
-**(f) Tiers:** 💎 → HỆ CHẤT LƯỢNG CAO ×3 tuition (8%, +4% if TT≥50; *"cùng giảng đường, tên tiếng Anh, học phí ×3"*) · 🏵️ named pantheon scholarships (§10) · Thường.
-**(g) BXH ĐIỂM CHUẨN (Tháng 8):** ranks your DECLARED cutoff vs scripted rival curves + noise — iSteve 26.5+0.5×year ±0.75 (sandbagged; admits through "hệ liên kết quốc tế" side doors — scripted year-5 exposé re-prices the ladder once without player input); B.Thường 19±1; Bến Sung flat 15.0. Payouts rank 1/2/3/4 → TT +8/+4/+1/−3; tuition-ceiling bonus rank ≤2. National drift +0.25/yr = the treadmill: điểm chuẩn is hype's currency; only Uy Tín ratchets. The modal header anchors continuity: *"Năm ngoái: 24.00 — 11/12 nhập học, 2 ảo"*, and the forecast carries a projected-rank line so the treadmill is visible at decision time.
-**(h) Auto-resolve** (unattended/headless): cutoff = max(15, last year −0.5), quota 12, diary line *"Phòng Đào Tạo tự quyết vì hiệu trưởng đi vắng."*
-**(i) Presets** keep internal keys (`luyende/canbang/duan`, save compat), relabel: **Học Để Qua Môn / Cân Bằng / Đồ Án & Lab**. Numbers untouched. Khoa split (3 khoa, per-khoa cutoff boards — truyền thông 29.9, kỹ thuật 21) defers to the growth layer.
+Each T7 the player sets TWO dials against a visible score histogram: **ĐIỂM CHUẨN** (12.00–30.50, step 0.25) and
+**CHỈ TIÊU** (4 to min(14, 48−roster)). You meet a histogram, not a person — that anonymity is the satire;
+September gives it faces.
+- **Pool** N=round(24+1.6×TT); score = gauss(μ,3.2)+điểmƯuTiên, μ rises with UT/TT and a **national inflation
+  drift +0.25/yr** (the treadmill — điểm chuẩn is hype's currency, only Uy Tín ratchets). **Học bạ đẹp:** 25%
+  carry phantom display inflation, exposed by a T10 ticker.
+- **Hidden derivations** (lazy at enrollment): HẠT GIỐNG quality follows the quiet UT/score meters; **the detox
+  truth** — a high-điểm admit arrives pre-crammed (high Vẹt), so năm nhất is the year of cai văn mẫu.
+- **Resolution:** enroll top scorers ≥ cutoff up to quota. n>12 → **crowding** (growth ×, Mood −1, packed
+  sprites, shown pre-commit). **Ảo** no-show ≈8% (worse if a rival cutoff beats yours). Shortfall → **ĐỢT BỔ
+  SUNG** T8 (lower vs leave empty, lost tuition rendered).
+- **Tuyển thẳng strip** (1–2/yr outside the math) + the merged **đặc-cách "Hồ sơ 16,5 điểm"** (Bác Tâm vouches
+  for a below-cutoff seed-4/5 kid). **Stunt events** (risks shown pre-commit): ≥30.00 the legend "ĐIỂM CHUẨN
+  30,5/30"; ≤15.50 "vét sàn"; TT/UT trade-offs each way. **Tiers:** 💎 CLC ×3 tuition · 🏵️ scholarships (§10) ·
+  Thường.
+- **BXH ĐIỂM CHUẨN (T8):** ranks your DECLARED cutoff vs scripted rivals — iSteve 26.5+0.5×year (sandbagged,
+  scripted year-5 side-door exposé), B.Thường 19±1, Bến Sung flat 15.0 → TT payouts. **Auto-resolve (headless):**
+  cutoff = max(15, last −0.5), quota 12.
+- **Presets** keep internal keys (save-compat), relabel **Học Để Qua Môn / Cân Bằng / Đồ Án & Lab**. **Rivals:**
+  Học viện iSteve Toàn Cầu · ĐH Dân Lập Bình Thường · ĐH Cộng Đồng Bến Sung (flat 15.0, with dignity).
 
 ## 6 · Student model & the June defense
-
-Growth pipeline, presets, sprite tells (all 4), mood/dropout, KT rust/saturation, names, Mai Sương — UNCHANGED from v1.
-
-**June stage 2:** policy **ĐỒ ÁN MẪU** (+1.0 all defenses, +5 Vẹt cohort, +1 seed sev1, coin-flip +4 TT or *"43 slide giống nhau từng hiệu ứng chuyển trang"* −6 TT) vs **BẢO VỆ THẬT** (raw, viral ×2) — identical numbers to v1's exam policies. Defense điểm = clamp(2 + 0.045×TN + 0.035×ST + 0.02×Vẹt + policy + roomTerm(−1.0 if no Xưởng/Phòng Máy) + quanVụTerm(+0.1×QUAN_VAN_MAU alumni, cap +0.5) + rnd(±0.5), 0, 10); đỗ ≥5.0 — the hội đồng still loves Vẹt, but real stats now carry the weight. Mirror beat: defense transcripts from re-costumed line banks (three identical *"Trong dòng chảy bất tận của cách mạng công nghiệp 4.0…"* openings at cohort Vẹt≥60; *"con ốc M2 toét ren"* survives verbatim as a defense answer). **defenseQ** = 0.5×ST + 0.3×TN + 0.2×UyTín; ≥70 → viral beacon +10 TT +5 UT (pierce #1).
+Growth pipeline, presets, sprite tells, mood/dropout, KT rust/saturation, names, Mai Sương — unchanged from v1
+(model refinements layer on top, `MODEL.md`). **June stage 2:** **ĐỒ ÁN MẪU** (+1.0 defenses, +5 Vẹt, TT
+coin-flip) vs **BẢO VỆ THẬT** (raw, viral ×2). Defense điểm weights TN/ST/Vẹt + policy + room/quan-vụ terms; đỗ
+≥5.0 — the hội đồng still loves Vẹt but real stats now carry the weight. **defenseQ** = 0.5×ST+0.3×TN+0.2×UyTín;
+≥70 → viral beacon +10 TT +5 UT (pierce #1).
 
 ## 7 · Graduation — the cascade keeps its job, loses its crown
-
-Shell unchanged (priority order, first match wins, ✓/✗ checks, near-miss line, rarest last). Card header reads **"TIỀM NĂNG:"**; full final stat block written into `alumni[]`. Canonical 8 rows:
+Shell unchanged (priority order, first match wins, rarest last). Card header **"TIỀM NĂNG:"**; full final stat
+block into `alumni[]`. The 🍎 row is REMOVED from graduation. Canonical 8 rows:
 
 | Pri | Card | Gate | Entry state |
 |---|---|---|---|
 | 1 | 🪙 Cá Mập Coin | CM≥60 ∧ TN<40 ∧ Vẹt≥50 | CA_MAP_COIN |
 | 2 | 📋 Quán Quân Văn Mẫu | KT≥80 ∧ Vẹt≥60 ∧ ST<40 | QUAN_VAN_MAU |
-| 3 | 🚀 Founder Gọi Vốn | CM≥80 ∧ ST≥60 ∧ TN≤50 | FOUNDER (coinPath if Vẹt≥50: ×4 pull → CA_MAP_COIN, 2 yrs) |
+| 3 | 🚀 Founder Gọi Vốn | CM≥80 ∧ ST≥60 ∧ TN≤50 | FOUNDER (coinPath if Vẹt≥50) |
 | 4 | 👷 Kỹ Sư Chân Chính | TN≥70 | KY_SU |
 | 5 | ✈️ Kỹ Sư Xuất Ngoại | TN≥60 ∧ CM≥50 ∧ ST<50 | XUAT_NGOAI |
 | 6 | 📱 Reviewer Triệu Sub | CM≥70 ∧ TN 40–69 | KOL |
 | 7 | 💼 Nhân Viên Lương Ổn | KT≥50 ∨ TN≥40 | LUONG_ON |
 | 8 | 🪪 Thất Nghiệp Có Bằng | default | THAT_NGHIEP |
 
-**🌱 Hạt Táo (hidden flag, replaces the minted 🍎):** ST≥80 ∧ TN≥70 ∧ CM≥60 ∧ Vẹt≤50 ∧ ThựcChất≥55. NO confetti, no meter moves — one extra quiet card line: Bác Tâm: *"Đứa này… để xem."* Worth ×6.7 on the Steve roll; never explained. Non-flagged alumni ascend at ×0.15 — the world occasionally surprises a school that deserves no credit. Every card's final line: *"Trạng thái đầu đời: {entry chip}"* — the gacha visibly opens a second gacha. grat is frozen at graduation: clamp(0.35×moodAtGrad + 0.35×(100−Vẹt) + 8×virtueTouches + 10×họcBổngTier, 0, 100) — virtueTouches stores EVENT KEYS (not a bare counter) so gift letters can quote the actual moment (*"chuyện cái tua vít"*).
+**🌱 Hạt Táo (hidden flag, replaces the minted 🍎):** ST≥80 ∧ TN≥70 ∧ CM≥60 ∧ Vẹt≤50 ∧ ThựcChất≥55 → one quiet
+card line (*"Đứa này… để xem."*), worth ×6.7 on the later Steve roll; never explained. Non-flagged alumni ascend
+×0.15 (the world occasionally surprises a school that deserves no credit). grat frozen at graduation; virtueTouches
+store EVENT KEYS so gift letters quote the actual moment.
 
 ## 8 · The alumni lifecycle (the diploma is a save file)
+Yearly per-alumnus FSM; the 🍎 emerges (or doesn't) years later, from a garage. All feedback routes through
+EXISTING plumbing (gifts → cash/endow; scandals → phốt seeds; lecturers → hirePool; keynote → June-modal).
+**15 states (v0 ships 8):** THAT_NGHIEP · LUONG_ON · KY_SU · TRUONG_PHONG · GIAM_DOC · XUAT_NGOAI (về nước ×2 at
+UyTín≥60) · **FOUNDER (the high-variance hub, the ONLY road to 🍎)** · CA_MAP_COIN · KOL · QUAN_VAN_MAU (biên
+chế outlives the run cap, the punchline) · BI_BAT · QUAY_DAU · VE_QUE · GIANG_VIEN (real teacher card → hirePool;
+hired → excluded from ticks) · STEVE (absorbing; +15 TT once, +5 UT pierce #2, keynote, title screen).
 
-Yearly per-alumnus state machine; the 🍎 emerges (or doesn't) years later, from a garage. All feedback routes through EXISTING plumbing: gifts → cash/endow; scandals → photSeeds; lecturers → hirePool; news → ticker/bubbles; keynote → June-modal family. Tiếng Tăm appears NOWHERE in the Steve pipeline.
+**Determinism (hard rule):** alumni NEVER touch S.rngState; per alumnus-year derives from `S.seed0 ^ id ^ year`,
+fixed draw order **(1) Steve/garage roll (drawn-and-discarded if ineligible) → (2) transition → (3) flavor → (4)
+gift** (CI-proven byte-identical replay). Walker rows scale to Σ≤0.95 (stay always ≥5%).
 
-**15 states** (chip vocabulary; v0 ships 8 — see roadmap): 🪪 THAT_NGHIEP · 💼 LUONG_ON · 👷 KY_SU (gift p.20, 10–30tr; the *"Cảm ơn thầy đã không bắt em học thuộc"* line heads its gift bank) · 📈 TRUONG_PHONG (p.15) · 🏢 GIAM_DOC (p.30, 50–150tr; Steve roll ×0.5) · ✈️ XUAT_NGOAI (p.25 kiều hối; về nước .10/yr, **×2 when UyTín≥60** — quiet credibility repatriates brainpower) · 🚀 FOUNDER (the high-variance hub, the ONLY main road to 🍎) · 🪙 CA_MAP_COIN (yearly tainted sponsor offer via the reused sponsor modal; sev2 seed maintained; arrest clock) · 📱 KOL (±2 TT/yr; hollow KOLs flip 70/30 against you) · 📋 QUAN_VAN_MAU (97% stay/yr — biên chế outlives the run cap, which is the punchline; effect: +0.1 defense score per alumnus, cap +0.5) · 🚔 BI_BAT (guaranteed detonation on entry; sits 2 yrs; exits at yIS≥2: QUAY_DAU .45 / THAT_NGHIEP .45 / CA_MAP_COIN .10 recidivism) · 🌱 QUAY_DAU (memoir "Tôi Đã Sai Ở Đâu"; the strangest lecturer) · 🐟 VE_QUE (produce gift: +1 Mood school-wide one month; →FOUNDER .04 "startup nông sản sạch") · 👨‍🏫 GIANG_VIEN (pushes a real teacher card into hirePool: DẠY=round((0.6TN+0.4ST)/10)−(Vẹt≥50?2:0), DIỄN=round(CM/12)(+2 ex-KOL), salary −20% "về trường", `tch` if seed≥4, loyal; **hired → employed:true, excluded from ticks; fired/retire → KY_SU grat+10**; unhired 2 yrs → KY_SU) · 🍎 STEVE (absorbing; +15 TT once, +5/yr ×3, +5 UT pierce #2, keynote, mega-gift, Spark 7→9%, title screen, META.jobsEver).
+**The 🍎 pipeline (two-stage, garage mandatory):** in FOUNDER, pSteve = base × craftGate(≥75) × lửaMult(seed) ×
+hollowGate(≤40) × yearsInFounder × (tiemNang?1:0.15) × world. First success → garage=true (school eats −2 TT,
+state LOCKED that year); next year ×3 → KEYNOTE (the ONE loud virtue payoff) or QUAY_DAU/KY_SU. The −2 TT sting
+lands ~12 months before the +15 TT keynote — the game's best-engineered whiplash. **World year** (off S.seed0):
+Bình Thường 50% · Gọi Vốn 15% · Sốt Coin 12% · Sốt AI 13% · Thanh Lọc 10%. **Trần Phi Lợi:** scripted
+CA_MAP_COIN → BI_BAT year 2 (everyone else pure FSM).
 
-**Determinism (hard rule):** alumni NEVER touch S.rngState. Per alumnus-year: `r = mulberry32((S.seed0 ^ imul(a.id,2654435761) ^ imul(simYear,40503))>>>0)`; fixed append-only draw order: **(1) Steve/garage roll** (drawn and discarded when ineligible — preserved forever), (2) transition, (3) flavor line, (4) gift. Same save + same year ⇒ same life, proven in CI (GATE_ALUM byte-identical replay).
-
-**Walker:** `CONFIG.ALUM.FSM[state] = [[target, base, modFn]…]`; weights × stat gates × world × yearsInState; **after multipliers, if Σ > 0.95 scale the row to 0.95** (stay always ≥5% except scripted overrides; 10k-roll fuzz in the sweep). All probabilities clamp ≤0.95. Representative rows per the alumni doc (CONFIG, sweep-tuned). Frozen inputs at graduation: craft = 0.6TN+0.4ST · hustle = CM · hollow = Vẹt · lửa = seed · grat · flags.
-
-**World year** (one hash off S.seed0): Bình Thường 50% · 📉 Mùa Đông Gọi Vốn 15% · 🪙 Sốt Coin 12% · 🤖 Sốt AI 13% · 🧾 Chiến Dịch Thanh Lọc 10%; one Tháng 1 ticker line.
-
-**The 🍎 pipeline (two-stage, garage mandatory — the biography says so, which is the joke):** in FOUNDER (GIAM_DOC ×0.5): pSteve = base × craftGate(≥75) × lửaMult(5:1.5/4:1.2/3:0.7/else .25) × hollowGate(≤40) × (1+0.1×yearsInFounder, cap5) × (tiemNang?1:0.15) × world. First success sets garage=true — *"{tên} đang ngủ trong ga-ra"*, school eats −2 TT (dark-loud), state LOCKED in FOUNDER that year. Next year ×3: success → KEYNOTE (the ONE virtue payoff allowed to be loud — it earned it); failure → QUAY_DAU or KY_SU 50/50. The −2 TT sting lands ~12 months before the +15 TT keynote — the game's best-engineered whiplash. Khủng Hoảng Ga-ra (L-layer) may grant garage=true pre-paid.
-
-**Cadence & badge discipline:** anniversary hashing `annMonth = 1+(hash(id)%11)` mapped over {1,2,3,4,5,7,8,9,10,11,12} — **June is structurally alumni-free**. ≤2 alumni ticker lines/month (overflow → eventLog). Big four (garage, BI_BAT, GIANG_VIEN offer, QUAY_DAU) → non-pausing bubble over the cổng tile, where Bác Tâm sweeps. The Sổ red-dot fires ONLY for the big four + transitions of kids with a tell, Hạt Táo, or virtueTouches ≥1 — never for routine churn. 20/11 = envelope stack; Tháng 1 = world line.
-
-**Sổ Cựu Sinh Viên (no fifth tab):** 🎓 tab renamed **Sinh viên** with segment [Sinh viên | Cựu SV]; list rows ≥44px (atlas thumb + grad-cap overlay · tên · K{gradYear} · state chip · last line); filters Tất cả/Đang toả sáng/Đang gặp biến/khóa; lazy slice 30. Detail: portrait, year→chip mini-timeline, lifetime gifts, original graduation card replayed, gratitude as FLAVOR TIERS never a number (*"vẫn nhắn tin hỏi thăm Bác Tâm" / "đã unfollow trường"*). Growth verb (L): "Mời cựu SV về nói chuyện" — one pick/year, state-keyed campus event.
-
-**Epilogue (NEVER cut once shipped):** at run end, "Mười năm sau…" — the FSM fast-forwards 10 years headlessly, one line per notable alumnus, keynote playing if it ever fires. The ledger becomes the ending narration for free.
-
-**Perf:** ~12 alumni touched per monthly tick; <0.1ms/game-year; sim headless-pure inside dayTick; Sổ is DOM rebuilt only while open.
+**Sổ Cựu Sinh Viên:** 🎓 tab → [Sinh viên | Cựu SV]; rows with state chip + last line; gratitude as FLAVOR TIERS,
+never a number. **Epilogue (NEVER cut once shipped):** at run end "Mười năm sau…" fast-forwards the FSM 10 years
+headlessly, one line per notable alumnus — the ledger becomes the ending narration for free.
 
 ## 9 · The funding trio — three meters made monetary
+- **HỌC PHÍ = Tiếng Tăm money** (loud-ish, monthly): stepper 1–6tr, ceiling = 1+TT/10; above → pool halved +
+  Mood penalty. Quantity capped by điểm chuẩn (lowering the cutoff floods halls with cash and cram products).
+- **HỢP ĐỒNG DOANH NGHIỆP = Thực Chất money** — pays NOW with confetti, bills LATER via seeds, locks, a morality
+  clause. Five string types (RENDERED never tooltipped): 📣 PR · 🦜 Giáo trình thương hiệu · 🎣 Tuyển dụng sớm
+  (poaches năm-cuối PRE-graduation → "potential never resolves" made literal) · 🔒 Lab độc quyền (switches off
+  your thực-chất engine) · 🤝 Thực tập có lương (the honest end). Refusing seed-bearing offers: +TC +UT, virtue
+  flag. On any phốt detonation each contract may cancel instantly.
+- **QUỸ HIẾN TẶNG = Uy Tín money** — `S.endow`, ×1.004/month, never decays, survives every scandal. Spend
+  channels (only three): scholarships, dedications, Quỹ Ứng Cứu. **Causality one-directional: UT feeds the quỹ;
+  the quỹ's size never buys UT** (no spend may ever ADD Uy Tín).
 
-- **HỌC PHÍ = Tiếng Tăm money** (loud-ish, monthly, price×quantity). v1 verbatim: stepper 1–6tr step 0.5 (home: 📊 Trường, NOT the admissions modal); ceiling = 1+TT/10 (+0.5 rank≤2); above ceiling → pool halved + Mood −1/th. Quantity now capped by điểm chuẩn; lowering the cutoff floods halls with cash and cram products. Boot hook: inherited cutoff 15.0 — year 1's high-Vẹt intake is a decision someone else made for you.
-- **HỢP ĐỒNG DOANH NGHIỆP = Thực Chất money** — someone pays you monthly to erode substance; pays NOW with confetti, bills LATER via seeds, locks, and the morality clause. `S.contracts[] = {id,co,type,pay,signBonus,mLeft,strings,strikes}`, cap = 1+⌊TT/35⌋ (max 3); offers at term boundaries p = 0.5+TT/200. Companies (fictional lineage): Tập đoàn Trứng Vàng · Cty CP Rất Minh Bạch (collapse risk — C5 teaches counterparty risk once) · Tập đoàn Phần Mềm Phương Đông (poaching) · Cty TNHH Giải Pháp Tổng Thể Toàn Diện · Xưởng Cơ Khí Ông Bảy (the honest end). Five types, strings RENDERED never tooltipped: **📣 PR** 12tr/th+30tr sign (3 days/th top-3 students rehearse, motes stopped — v1 sponsor code path verbatim; TC −2) · **🦜 Giáo trình thương hiệu** 25tr/th (+1 KT +2 Vẹt/th one cohort, banner sprite, TC −4, seed sev1) · **🎣 Tuyển dụng sớm** 40tr/th (each Tháng 3 claims ≤2 high-KT+CM năm-cuối PRE-graduation; **mandated alumni record: LUONG_ON, flags{poached:true,co}, gift base halved, ineligible for tiemNang** — "potential never resolves" made literal INSIDE the sim; seed≥4 reveal on exit: *"Hạt giống: 5. Thôi."*; TC −3, seed sev2) · **🔒 Lab độc quyền** 60tr/th (Phòng Máy/Xưởng fenced+logo'd, room effects suspended — numerically switches off your thực-chất engine; TC −5, seed sev2) · **🤝 Thực tập có lương** 8tr/th (TC +1, the honest end whose refusal must not be trivial). Refusing seed-bearing offers: +1 TC, +1 UT (in cap), virtue flag, Bác Tâm nods. Breaking: 1 month fee, −8 TT, 2-yr blacklist, +2 TC if it carried Vẹt/lock strings (Chuộc Lỗi DNA). Renewal: +30% money + ONE extra string. Always. **Điều khoản hình ảnh:** on any phốt detonation each contract rolls 0.5+0.25×sev to cancel instantly, no severance.
-- **QUỸ HIẾN TẶNG = Uy Tín money** — `S.endow` per ruling 3; bal ×1.004/month (one grey ticker line; never decays, survives every scandal; boot 10tr = *"sổ tiết kiệm chủ cũ để quên"*). Inflows: alumni gifts (ruling 4), philanthropist events (deck E incl. E4 — the dirty endowment door: 300tr naming gift IF his son enters below cutoff), donor-endowed scholarships. Spend channels, the only three: **scholarships** (§10), **dedications** (§10, milestone rights), **Quỹ Ứng Cứu** (once/yr, ≤25% bal when cash<0, −1 UT, *"Hiệu trưởng mở két của lòng tin"*). Causality one-directional: UT feeds the quỹ; the quỹ's size never buys UT. The endowment NEVER gets confetti; its one flashy moment is the scripted diary line the first month lãi out-earns a contract: *"Tháng này, lòng biết ơn trả lương cao hơn Trứng Vàng."*
-
-**The scandal stress test (fires naturally):** detonation → contracts cancel INSTANTLY (morality clause), applicant pool dips NEXT YEAR, the endowment doesn't notice — grey interest line ticks on. One bad September teaches all three textures, zero narration.
-
-**Money UI:** #moneyVal becomes a ≥44px tap target → **Tài chính bottom sheet** (the quỹ's SINGLE home; sheet→detail = depth 2): cash / THU 3 lines (🎓 học phí · 🤝 hợp đồng gold with logo chips · 🌱 quỹ small and grey — typography IS the satire) / CHI. Contract rows: string icon-chips; tapping a chip NAMES the cost (*"Đang trả bằng: 3 ngày/tháng của Mai Sương…"*); [Phá vỡ] with full penalty preview. Quỹ detail: flat relentless sparkline, gift log with quotes, plaque cards, dedication button, Ứng Cứu button. The 🌱 number earns a HUD pixel only at bal ≥200tr. Term report THU = the same three rows.
+**The scandal stress test (fires naturally):** detonation → contracts cancel INSTANTLY, applicant pool dips NEXT
+YEAR, the endowment doesn't notice — one bad September teaches all three textures, zero narration. Money UI:
+#moneyVal → **Tài chính bottom sheet** (cash / THU: 🎓 học phí gold · 🤝 hợp đồng · 🌱 quỹ small-grey — typography
+IS the satire / CHI).
 
 ## 10 · The pantheon layer & LUẬT TÔN KÍNH (hard rule)
+HISTORICAL figures — deceased, nationally celebrated, closed roster — may be honored **BY REAL NAME** on
+scholarships, buildings, and prizes in the reverent register real Vietnamese schools use. LIVING figures appear
+ONLY as unnamed composites (≥3 inspirations, role-titles only) — with an owner-sanctioned exception list (the
+Fields-medalist lecture, the chip-CEO visit) as honored guests named by role only. Five enforced rules:
+1. **The figure is the straight man; the school is the clown** — satire targets the distance between name and
+   institutional behavior, never the name.
+2. **`.pantheon` CSS frame** (gold-on-lacquer-red, serif, 🏵️): jokes NEVER ship inside it; honoree names NEVER
+   in scandal/phốt HEADLINE strings. **3.** Deceased + nationally celebrated only; roster closed. **4.** Living
+   = unnamed composites (with the exception list, role only). **5. Worthiness gates** — the game refuses an
+   unworthy school a worthy name; the refusal line is the satire landing on you.
 
-**The naming policy, stated as law:** HISTORICAL figures — deceased (latest ~Trần Đại Nghĩa 1997), nationally celebrated, closed roster — may be honored **BY REAL NAME** on scholarships, buildings, and prizes, in the exact reverent register real Vietnamese schools use. LIVING figures appear ONLY as unmistakable unnamed composites/archetypes. Five enforced rules + two amendments:
-1. **The figure is the straight man; the school is the clown.** All satire targets the distance between the name on the plaque and the institution's behavior under it. The ticker may mock the school's USE of a name; never the name.
-2. **`.pantheon` CSS frame** (gold-on-lacquer-red plaque, serif, 🏵️ only): jokes never ship inside `.pantheon` elements — mechanically enforceable in review.
-3. **Deceased + nationally celebrated only;** roster closed; additions need both conditions + a fact-checkable one-line legacy.
-4. **Living people are unnamed composites** (≥3 inspirations, no unique identifiers, role-titles only, NEVER attachable wrongdoing, per-playthrough randomized sprite details) — **with an owner-sanctioned exception list** (the Fields-medalist lecture, the chip-CEO visit): single-referent living archetypes are permitted ONLY as honored guests named by role, zero controversy attachable, no biographical tells beyond the role (*"huy chương toán quốc tế danh giá"*, never the medal's name).
-5. **Worthiness gates:** the game refuses to let an unworthy school wear a worthy name; the hội đồng's refusal line is the satire landing on you.
-**Amendment (absorbed from university):** honoree names never appear inside Phốt/scandal HEADLINE strings — detonation copy says "học bổng vượt khó" generically; the plaque card stays untouched.
-**Registry rule:** each figure on AT MOST ONE live surface per save.
+**Scholarships** (ride the 🎓 tier; one holder each, tuition 0, seed +1 bias, `hb` flag → +10% honest
+transitions). MVP three: **Trần Đại Nghĩa** (TN ×1.15) · **Tạ Quang Bửu** (ST ×1.15) · **Hồ Xuân Hương** (Vẹt
+accrual ×0.5 — the thesis in one multiplier). Dark mirror: awarding to a Kim Cương kid for PR = +TT + photo but
+the bias does NOT apply. Deferred roster + **dedications** (đặt tên công trình, milestone-gated, burns the
+corporate-naming slot) + **Lễ Vinh Danh** (Giải Giọng Riêng with its *"Không trao"* beat · Lương Định Của · Chu
+Văn An) are L-packs.
 
-**Scholarships (ride the v1 🎓 tier slot; one holder each, holderId scalar; tuition 0; seed +1 bias at enrollment; holder flag `hb` → +10% honest alumni transitions, gifts cite the scholarship; money model per ruling 5).** MVP three, simple effects only: **Học bổng Trần Đại Nghĩa** (kỹ thuật — TN gains ×1.15) · **Học bổng Tạ Quang Bửu** (khoa học — ST gains ×1.15) · **Học bổng Hồ Xuân Hương** (giọng riêng — Vẹt accrual ×0.5; the thesis in one multiplier; strictest tone rule: no double-meaning jokes, no quoted verse). Each active scholarship +1 Thực Chất/yr; a holder graduating TN≥70 ∨ ST≥70 → +1 UT (in cap) and their own gift probability ×2 — *học bổng sinh ra học bổng*. Dark mirror (one, shared): awarding to a Kim Cương kid for PR = +3 TT + photo + seed sev1, and the bias does NOT apply — names don't work worn as costume. Deferred roster (L-pack, each with its bespoke effect and tone rule as authored): Lương Thế Vinh, Lê Quý Đôn, Nguyễn Trường Tộ, Tôn Thất Tùng, Lương Định Của, Mạc Đĩnh Chi. Chu Văn An reserved for the teacher prize.
+## 11 · Moral tension & balance
+Tiếng Tăm decays and must be fed; Uy Tín never decays, moves only on real outcomes, two pierce events. **Juice
+asymmetry is law:** contract signings get confetti, the endowment never does, the keynote is the one loud virtue
+payoff, dedications get one nhật-ký line while corporate renamings get drone shots. Dark bills LATER through the
+SAME Phốt engine. Virtue pays SECRETLY — the endowment IS the charter's virtue-overtake curve, one number
+multiplying itself. **Balance bands (one combined `engine.js` sweep before any numbers ship):** Y1 honest net
++8..+25tr/th at 42 SV · theater 1.3–1.5× virtue years 1–4 · virtue net worth overtakes years 6–8 · scandal EV
+60–80% of the dark money that bred it · virtuous decade: 3–5 tiemNang grads, P(🍎)/flag 0.15–0.20, **45–60% see
+exactly one keynote, median year 7–9** · hollow decade P(🍎)<2% (a theorem) · Jobs NEVER measured at graduation.
 
-**Dedications (đặt tên công trình, L-pack):** quyền đặt tên earned at quỹ 300tr/600tr/1tỷ/1.5/2.2/3tỷ; 10tr plaque ceremony (Bác Tâm front row), +2 Thực Chất, room-specific quiet buff, irreversible, **burns the corporate-naming slot** (corporate offers 80–200tr to rename the SAME buildings — loud, revocable, +seed; the two naming economies staring at each other IS the funding satire). First ships: **Vườn Nguyễn Trường Tộ** (re-dedicates Vườn Táo Sau Trường, zero map cost; gate: refused ≥2 corporate offers; buff: one rejected student proposal/yr resurfaces as a real event). Others (Thư viện Lê Quý Đôn — gate avg Vẹt<50, refusal *"Thư viện mang tên nhà bác học không thể toàn sách đề cương"*; Phòng khám Tôn Thất Tùng; Ký túc xá Mạc Đĩnh Chi…) follow with their rooms.
+## 12 · Content, cast & UI
+- **Rooms:** v1 catalog (Xưởng, Phòng Máy, Lab Sống Ảo the trap…); new rooms defer with map expansion.
+  **Teachers:** v1's ten re-skinned + six university archetypes (L-pack). **Events:** v1 12-deck swapped by
+  predicate-and-text (tin đồn lộ đề → CHỢ ĐỒ ÁN MẪU; bỏ học làm KOL → xin bảo lưu để startup "như Jobs"…) + decks
+  T/E/C + 4 cutoff stunts; **bad events only fire for sins committed.**
+- **Cast:** Bác Tâm (connective tissue — alumni news arrives at his gate; no successor, non-negotiable) · Mai
+  Sương (Năm 1) · Trần Phi Lợi (scripted) · Chị Băng Trang · Shark Lươn.
+- **UI — 390px portrait is the design surface.** Two stacked canvases, headless-pure sim. Tabs 🏗️ Xây · 👩‍🏫
+  Nhân sự · 🎓 Sinh viên · 📊 Trường. **#admitModal** (auto-pause, T7): histogram → cutoff/quota dials → DỰ BÁO
+  forecast (fill/crowding · tiers · tuition value · UT rumor TEXT never a number · risk · projected rank) →
+  tuyển thẳng strip → công bố. Sheets ≤62vh, nav depth ≤2, touch ≥44px, **the map never scrolls.**
 
-**Lễ Vinh Danh (June beat 5.5, L-pack, trimmed):** unlocks at ≥2 endowed scholarships; renders ONLY prizes with a live decision (most years 1–2 cards, ~15–20s): **Giải Giọng Riêng** (best defenseQ among grads with Vẹt≤30; most years nobody qualifies at a theater school — **[Không trao]** prints *"Hội đồng: 'Chưa nghe thấy giọng nào là của chính mình.'"* +1 UT in cap; forcing it = +3 TT, confetti, seed sev1 "giải gượng") · **Giải Lương Định Của** (kiên trì: lowest-seed student, highest absolute growth; +3 Mood cohort; satire-free by design) · **Giải Nhà Giáo Chu Văn An** (teacher, highest Dạy by student vote, **Diễn excluded by written rule**; winner's salary +10% next year — virtue priced).
+## 13 · Hard rules
+Single file; Vietnamese-first, never cruel to kids; obviously-fictional names EXCEPT the honoring pantheon
+(§10); never break saves (freshState / typeof-merge / sanitize / Number.isFinite); CONFIG + `engine.js` sweep;
+headless gates + `?seed` + `__test`; 390px screenshot gate; fun first; juice asymmetry + anti-clicker. Plus:
+**LUẬT TÔN KÍNH** is law · exactly two UT cap-piercers · June–August corridor ≤90s/≤120s · three isolated RNG
+streams (derive, never serialize) · one registry per concern (CONFIG.ADMIT / CONFIG.ALUM / CONFIG.FUND / the
+pantheon registry, one live surface per figure).
 
-**Living-archetype event deck (6, L-pack)** per the pantheon doc with composite rules binding: the medalist's open lecture (seed≥4 kids visibly front-row — the sky-stare pays off) vs VIP-ticket event; the chip-CEO 4-second silence (student answer from TN≥60 → the game's only stringless contract — earned, not bought); the diaspora engineer (*"Tôi về để làm việc."*); the unicorn founder (*"Câu trả lời của các em thì giống nhau quá."*); the anonymous benefactor (respect = +200tr+1 UT and nobody ever knows — the purest virtue beat); your own decorated graduate returning (fired FROM the sim — the deck closes into the lifecycle).
-
-**University teacher archetypes (6, L-pack):** thỉnh giảng chạy sô 4 trường (6/4, 60% pay, 20%/term unavailable) · trợ giảng nghiện publish (7/1, 14tr) · GS đếm bài báo ISI (3/5, 28tr — +0.5 TT/th aura, students −10%; **one inherited at boot, biên chế, unfireable** — the third salary line that keeps year 1 tight) · PGS chờ ghế (5/6, 32tr) · giảng viên doanh nhân kiêm nhiệm (4/7, 12tr) · cô giáo sư về hưu (9/2, 20tr, applies unsolicited at UT 60, money cannot recruit her, leaves +1 Dạy on one junior — the only teacher who upgrades another teacher).
-
-## 11 · Moral tension system (v1 DNA, extended — unchanged where unstated)
-
-Tiếng Tăm decays and must be fed; Uy Tín never decays, moves only on real outcomes, ±3/yr, TWO pierce events (ruling 7). Juice asymmetry is law and now covers the new systems: contract signings get confetti + logo stingers; tuition floods get parents queueing as sprites; the endowment never gets confetti; the keynote is the one loud virtue payoff; dedication ceremonies get one nhật-ký line while corporate renamings get drone shots. Dark bills LATER through the SAME Phốt engine — contracts and hollow alumni just append seeds {src,year,sev}; live "Nguy cơ phốt %" stays; alumni damage ×(1+TT/50) ×max(0.5, 1−0.05×yearsSinceGrad). Virtue pays SECRETLY — and now compounds in a literal bank account: the endowment IS the charter's virtue-overtake curve, implemented as one number multiplying itself. Anti-degenerate guards unchanged; the interaction matrix of funding §6 is canon MINUS the two deleted +UT rows (ruling 6).
-
-**Balance bands (one combined engine.js sweep before ANY sitting ships numbers — they share levers):** Y1 honest net +8..+25tr/th at 42 SV · theater 1.3–1.5× virtue years 1–4 · virtue net worth overtakes years 6–8 via alumni+endowment (quỹ ≈ 400–800tr by Y10 virtuous) · scandal EV 60–80% of the dark money that bred it (incl. the 30/30 stunt and morality-clause cancellations) · virtuous decade: 3–5 tiemNang grads, ~80% of deliberate runs flag ≥1 by June Y4, lifetime P(🍎) per flag 0.15–0.20, **45–60% of virtuous decades see exactly one keynote, median year 7–9** · hollow decade P(🍎)<2% — "a cram school can run 12 years and never see one" is a theorem · arrests: hollow 2–4, virtuous ≤1 never hard-zero · QUAN_VAN_MAU median tenure ≥15 yrs · admissions per ruling 17 · stacked honest-transition modifiers (hb +10%, laureate +10%, LĐC +20%) watched for compounding past the keynote band · ≥1 alumni line/month from year 4, ≤2/month cap · Jobs is NEVER measured at graduation again.
-
-## 12 · Content pack summary
-
-- **Rooms:** v1 catalog unchanged (Xưởng, Phòng Máy, Lab Sống Ảo the trap, Căng Tin Mì Tôm…). New university rooms defer with map expansion.
-- **Teachers:** v1's ten re-skinned (Cô Văn Mẫu → **Cô Giáo Trình Mẫu**, biên chế cũ intact) + the six university archetypes (§10).
-- **Events:** the v1 12-deck converts by predicate-and-text swap: sổ đầu bài → app điểm danh (mời em ấy tối ưu hệ thống thật); lén code → lén làm dự án riêng; phụ huynh đòi điểm đồ án; **tin đồn lộ đề → CHỢ ĐỒ ÁN MẪU** (đồ án mẫu is văn mẫu with a hardware budget — the thesis carried into đại học); hội thi → cuộc thi NCSV cấp bộ ("làm đẹp dữ liệu" replaces gà bài); bỏ học làm KOL → **xin bảo lưu để startup "như Jobs"** (the cargo-cult event at its natural altitude); trend → "một ngày làm sinh viên". Plus decks T (admissions) / E (endowment, incl. E3 cụ giáo về hưu and E4 the dirty door) / C (corporate C1–C6) and the 4 cutoff stunts. Trigger hygiene: bad events only fire for sins committed.
-- **Cast:** Bác Tâm (unchanged, the connective tissue — alumni news arrives at his gate) · Mai Sương (sinh viên Năm 1) · Trần Phi Lợi (Năm 4; scripted CA_MAP_COIN → BI_BAT year 2) · Chị Băng Trang · Shark Lươn (separate scripted mirror, not in the contract deck).
-- **Ticker pack:** the pantheon doc's quotable lines adopted verbatim (deadpan, no exclamation marks; *"Trại thực nghiệm Lương Định Của báo cáo: lúa lên. Không có gì để quay phim. Vẫn lên."*).
-- **Legal hygiene:** v1 rules + the pantheon Tone Law + footer clause (§2).
-
-## 13 · UI architecture (390px portrait is the design surface)
-
-Two stacked canvases, atlas sprites, BFS, view/state split, headless-pure sim — all v1, unchanged; 48 actors verified fine. HUD 56px: 💰#moneyVal (now a tap target → Tài chính sheet) · TT gold bar · UT rumor/number · #yearVal "Năm 2 · Tháng 6" · pause/1×/2×/3×; grey 🌱 appears at quỹ ≥200tr. Tabs: 🏗️ Xây · 👩‍🏫 Nhân sự · 🎓 **Sinh viên** [Sinh viên | Cựu SV] · 📊 Trường (presets, tuition stepper, BXH strip, phốt risk, TC bar, contract-count chip). Sheets max 62vh, nav depth exactly 2, touch ≥44px, map never scrolls. **#admitModal** (full-screen, auto-pause, Tháng 7): header with last-year anchor → context line (N counts up ~1s) → histogram 374px inner, 19 bins (12→30+), CSS divs 17px+2px gap, bars at/above cutoff tint GOLD, rival ▼ markers, red dashed cutoff line with 28×28 drag handle (44×44 hit), snap 0.25 → dial rows A/B (44×44 ±, long-press repeat) → DỰ BÁO card (L1 fill+crowding · L2 tiers ~ · L3 tuition value · L4 UT rumor text never a number · L5 risk warnings · Lrank projected rank) → tuyển thẳng strip (v1 84×96 cards) → CTA "📣 CÔNG BỐ ĐIỂM CHUẨN" with con-dấu stamp → footer *"Quyết định này lên báo. Theo cả hai nghĩa."* Modal may scroll; the map never does. Modal policy: auto-pause only for June ceremony/graduation/term reports/contract offers/admissions/placement.
-
-## 14 · Hard rules
-
-1–9 from v1 verbatim (single file; Vietnamese-first, never cruel to kids; obviously-fictional names EXCEPT the honoring pantheon per §10; never break saves — freshState/typeof-merge/sanitize, Number.isFinite; CONFIG + engine.js sweep; headless gates + ?seed + __test; 390px screenshot gate; fun first; juice asymmetry + anti-clicker). Plus:
-10. **LUẬT TÔN KÍNH** (§10) is law; `.pantheon` elements never contain jokes; honoree names never in scandal headlines; living figures composite-only with the owner's exception list.
-11. **Exactly two UT cap-piercers** (ruling 7).
-12. **June–August corridor ≤90s typical / ≤120s hard** (§4); flagpole is a ticker beat; August is a toast.
-13. **Three isolated RNG streams** (§3); pools and alumni-years derive, never serialize; reloading cannot reroll a cohort or a life.
-14. **One registry per concern:** CONFIG.ADMIT owns admissions; CONFIG.ALUM owns the FSM; CONFIG.FUND owns money; the pantheon registry owns real names, one live surface per figure.
-
-## 15 · Roadmap (each sitting independently shippable, each with a cut-line)
-
-- **S1 — "Lên Đại Học" (the conversion, = CONVERSION-SPEC):** string pass, 4-cohort boot, v2 migrator, calendar remap, June two-stage + 8-row cascade + Hạt Táo, admissions v0 (histogram, dials, forecast L1/L3/L5/Lrank, stunts, auto-resolve, BXH Tháng 8), alumni v0 (8 states, determinism, TPL, gifts, Sổ list), funding v0 (endow line, 2 contracts, Tài chính sheet, 3-row term report), 3 scholarships, speed 3×, gates.
-- **S2 — Admissions satire teeth:** ảo + đợt bổ sung, tuyển thẳng strip + merged đặc-cách/16,5 jewel, học-bạ-đẹp Tháng 10 ticker, CLC reflavor, spotlight polish, iSteve year-5 side-door exposé, deck T.
-- **S3 — Alumni completion:** the other 7 states, world years, GIANG_VIEN/QUAY_DAU loops, tainted CA_MAP_COIN offers, 20/11 envelope sprites, keynote modal polish, Sổ detail + filters + red-dot, **the epilogue**, almLetter generalization, GATE_ALUM extension + Monte-Carlo bands.
-- **S4 — Funding portfolio:** 🦜🎣🤝 contract types, renewal escalation, blacklist/strikes, decks E + C, Quỹ Ứng Cứu, the quỹ-out-earns-Trứng-Vàng diary line, C5 collapse.
-- **S5 — Pantheon pack (cut-line WRITTEN here, before implementation):** ship order = Vườn NTT dedication → Lễ Vinh Danh (3 prizes) → 2 more scholarships (Lê Quý Đôn, Lương Định Của) with bespoke effects → living-archetype deck → university teacher archetypes → remaining scholarships/dedications with their rooms. Cut from the bottom up; NEVER cut: Tone Law enforcement, the Vườn NTT refusal line, the Không-trao beat.
-- **S6+ — v1's L3–L8 continue:** khoa split + per-khoa cutoff boards, xét tuyển kết hợp scouting, traits, Chuộc Lỗi, Khủng Hoảng Ga-ra (garage pre-pay), institutions, curriculum blocks, the cast arcs, prestige + cross-run alumni network.
-
-## 16 · Voice & aesthetic
-
-Deadpan biên-bản prose, no exclamation marks. Kairosoft warmth. The three ledgers — bank balance, quỹ hiến tặng, and Di Sản — stare at each other on every year-end report. The đề Văn keeps asking the question; the Sổ Cựu Sinh Viên is the only honest answer the game ever gives.
+## 14 · Voice & aesthetic
+Deadpan biên-bản prose, no exclamation marks. Kairosoft warmth. The three ledgers — bank balance, quỹ hiến
+tặng, Di Sản — stare at each other on every year-end report. The đề Văn keeps asking; the Sổ Cựu Sinh Viên is
+the only honest answer the game ever gives.
