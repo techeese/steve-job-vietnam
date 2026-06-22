@@ -83,7 +83,7 @@ function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES &&
 // KHOA / MAJORS — students auto-join the khoa matching their tell once its building exists
 function majorByTell(tell) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].tell === tell) return M[i]; return null; }
 function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].room === room) return M[i]; return null; }
-function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; } var m = majorByTell(s.tell); return (m && hasRoom(m.room)) ? m : null; } // null = Đại cương (general). iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
+function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; } var m = majorByTell(s.tell); return (m && (!m.room || hasRoom(m.room))) ? m : null; } // iter-248: a room-less major (Đại-cương) needs no building → the everyman ("") always has a home. iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
 // P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.
 function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }

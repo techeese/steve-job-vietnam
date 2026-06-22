@@ -361,6 +361,24 @@ line("");
 })();
 line("");
 
+// iter-248 EDUCATION epic Phase 2b — the EVERYMAN FIREWALL (owner-fork #1). Đại-cương gives the >50% with no grain ("")
+// a home: it lifts their realize FLOOR (steady kỹ-thuật-viên) but must NOT open an APEX path — else "admit all "" +
+// Đại-cương" could dominate and collapse the open question. Assert across normal runs that "" reaches realized-steady
+// yet its apex (🚀/🍎) stays ~0 (the firewall is structural — stevePShort gates on grain, and Đại-cương adds no apex).
+(function () {
+  var APEX = { FOUNDER: 1, STEVE: 1 };
+  var t = { spark: { g: 0, a: 0, r: 0 }, sky: { g: 0, a: 0, r: 0 }, hype: { g: 0, a: 0, r: 0 }, "": { g: 0, a: 0, r: 0 } };
+  ["luyende", "canbang", "duan"].forEach(function (pr) { SEEDS.forEach(function (sd) { play(sd, { presets: pr }).lives.forEach(function (L) { var k = t[L.tell || ""]; if (k) { k.g++; if (L.real) k.r++; if (APEX[L.state]) k.a++; } }); }); });
+  function apx(k) { return t[k].g ? 100 * t[k].a / t[k].g : 0; }
+  function rl(k) { return t[k].g ? 100 * t[k].r / t[k].g : 0; }
+  var emptyApex = apx(""), maxGrainApex = Math.max(apx("spark"), apx("sky"), apx("hype"));
+  // The firewall is NOT "'' never apexes" ('' reaches FOUNDER ~7-8% via the cascade, pre-existing + fine). It is:
+  // a GRAIN still out-apexes the everyman, so chasing 🍎 still wants a grain — admitting all-'' is never the apex play.
+  if (emptyApex >= maxGrainApex) FLAGS.push("EVERYMAN FIREWALL BREACH: tell='' apex " + f1(emptyApex) + "% ≥ the best grain's " + f1(maxGrainApex) + "% — Đại-cương made the ordinary majority the DOMINANT apex bet; admitting all-'' could win 🍎 (owner-fork #1). Bound Đại-cương.");
+  else FLAGS.push("EVERYMAN ✓ firewall holds: Đại-cương realizes the ordinary majority (tell='' realized " + f0(rl("")) + "%) yet a GRAIN still out-apexes it ('' apex " + f1(emptyApex) + "% < best grain " + f1(maxGrainApex) + "%) — a home, not a 🍎 path; chasing apex still wants a gift (owner-fork #1 firewall stands).");
+})();
+line("");
+
 // iter-241 PEERS / CONTAGION — the cohort's atmosphere pulls each kid's mood toward the school mean ("chọn bạn mà chơi";
 // the môi trường that shapes whether a gift realizes). It must be an ENVIRONMENT, not a lever: ~AGGREGATE-NEUTRAL on
 // realization (a variance-reducer, NOT a free lift → no dominant strategy, invariant #1) AND it must not collapse the

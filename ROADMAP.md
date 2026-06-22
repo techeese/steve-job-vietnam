@@ -117,7 +117,17 @@ claim for Phase 1 is now actually verifiable.
   into a (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark. MOVES the distortion spread → a
   deliberate `baseline.snapshot.json` recapture + sweep re-check. Lower priority than the majors mechanic below.
 
-**▶ PHASE 2 — MAJORS decoupled (2a ✓ done; 2b = the behavioral decouple, NEXT).** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
+- **✅ PHASE 2b SHIPPED + DEPLOYED (iter-248) — the EVERYMAN's HOME (Khoa Đại cương).** A room-less general track native
+  to `""` (`stat: tn` → steady 🔧 kỹ-thuật-viên); `studentMajor` returns it for the everyman. Baseline recaptured: under
+  cân-bằng they realize more (KY_SU 227→238), under cram they become rote not dropouts (pedagogy still bites); apex
+  unchanged (FOUNDER 76→78). **Owner-fork #1 firewall HOLDS** (new EVERYMAN sweep sensor: `""` realized 37% but apex
+  7.7% < best grain 17.5% — a home, not a 🍎 path). Fixed a room-null boot-crash in the khoa panel. Carries Phase 2a live.
+- **▶ PHASE 2c (NEXT) — the SYSTEMIC off-native intake.** Let a grain be placed in a NON-native track (fit-priority vs
+  open-door + capacity/quota) so "right gift, wrong major" happens in play and MAJOR_FIT bites live (a coder shoved into
+  biz wilts); intake-rule UI; remove the scripted prodigy → admissions-share tilt (**determinism-breaking: re-baseline
+  GATE_ALUM + rewrite the WASTED-PRODIGY sensor same commit**); rewrite sweep STRATS + bot off the hardcoded keys.
+
+**▶ PHASE 2 — MAJORS decoupled (2a+2b ✓ done; 2c = the systemic off-native intake, NEXT). [orig spec ↓]** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
 from the 3 today (code/make/biz, 1:1 by tell) to ~6 major environments (`fitVector`); `studentMajor` → systemic
 best-fit-given-rooms-and-quota resolver (derive-from-id); add

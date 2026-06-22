@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ PHASE 2b: the EVERYMAN gets a HOME — Khoa Đại cương (loop iter 248)
+**The >50% with no grain (`tell=""`) were homeless — null major, no khoa, no realize-path of their own. Now they have
+one.** Added **Khoa Đại cương (ứng dụng)** 🧭 — a room-less, always-available general track native to `""`, with a modest
+practical synergy (`stat: tn` → realized as a steady **🔧 kỹ thuật viên**). `studentMajor` now returns it for the
+everyman (`!m.room` → no building needed). The result (baseline intentionally **recaptured**): under cân-bằng the
+everyman realizes MORE as kỹ-sư (KY_SU 227→238, fewer settled-lesser); under cram they become rote-competent rather than
+dropping out (BI_BAT 20→8, THAT_NGHIEP 31→23, văn-mẫu 28→47 — pedagogy STILL wastes them, just differently); **apex barely
+moved** (FOUNDER 76→78 total). **Owner-fork #1 firewall — built bounded + sweep-gated + HOLDS:** a new EVERYMAN sensor
+proves Đại-cương lifts the ordinary majority's realize floor (`""` realized 37%) but a GRAIN still out-apexes it (`""`
+apex **7.7% < best grain 17.5%**) — a home, not a 🍎 path, so chasing apex still wants a gift and "admit all-`""`" is
+never the dominant play. The open-question firewall stands. Carries **Phase 2a (iter-247, MAJOR_FIT mechanic)** live too.
+Fixed a boot-crash the new room-less major exposed (`ui.js` khoa panel did `CONFIG.ROOMS[null].name` → now a room-less
+major is always "unlocked"). Verified: parse clean, gate GREEN + BASELINE GREEN (recaptured), sweep 0 bad flags (MAJOR_FIT
+✓ + EVERYMAN firewall ✓ + STRUCT ✓), bot BOTOK 7479/87/13 (no JSERR), lives 0 LIVESFAIL. Deployed. **NEXT (Phase 2c): the
+SYSTEMIC off-native intake** — let a grain be placed in a non-native track (fit-priority vs open-door + quota), making
+"right gift, wrong major" actually happen in play (MAJOR_FIT finally bites live); + remove the scripted prodigy.
+
 ## 2026-06-22 — EDUCATION epic ▶ PHASE 2a: the MAJOR_FIT mechanic (right gift, wrong major) (loop iter 247)
 **The structural-majors groundwork, headless + byte-identical (the proven 1a pattern).** Each major gains a `fit`
 vector over tells (`code.fit{spark:1, sky:.85, hype:.7, "":.8}` etc.) and a new `CONFIG.MAJOR_FIT(tell, majorKey)`

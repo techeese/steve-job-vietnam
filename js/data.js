@@ -117,7 +117,15 @@ var CONFIG = {
       prodigy: { ten: "Hà 'Maker'", seed: 5, kt: 26, tn: 35, st: 48, cm: 16, vet: 6, mood: 76, tell: "sky" } },
     { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", cross: "st", dest: "🪙 cá mập coin", color: "#b48ef0",
       line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.", fit: { hype: 1.0, spark: 0.7, sky: 0.7, "": 0.85 },
-      prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } }
+      prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } },
+    // iter-248 (EDUCATION epic Phase 2b) — the EVERYMAN's home. The >50% with no grain ("") were homeless (null major,
+    // no khoa, no realize-path of their own). Đại-cương is their track: no room (the default general studies — always
+    // available), native to "", a MODEST practical synergy (tn → realized as a steady kỹ-thuật-viên). BOUNDED + era-
+    // neutral by design (owner-fork #1): "" has ~no apex path (stevePShort gates on grain), so this lifts the realize
+    // FLOOR for the ordinary majority WITHOUT a 🍎 — an all-"" school maxes steady-realize but never wins apex, so it
+    // can't dominate (the firewall the open-question law rests on). Cup-excluded automatically (no room). No prodigy.
+    { key: "daicuong", name: "Khoa Đại cương (ứng dụng)", icon: "🧭", room: null, tell: "", stat: "tn", cross: "kt", dest: "🔧 kỹ thuật viên", color: "#9aa7b2",
+      line: "Không phải ai cũng thành thiên tài — nhưng ai cũng nên thành một người làm được việc.", fit: { "": 1.0, spark: 0.85, sky: 0.85, hype: 0.85 } }
   ],
   MAJOR_FIT: function (tell, majorKey) { // how well a gift fits a TRACK (1.0 = native). Phase 2b adds non-native placements; for now studentMajor=majorByTell → always native → 1.0 → byte-identical.
     var M = this.MAJORS; for (var i = 0; i < M.length; i++) if (M[i].key === majorKey) { var f = M[i].fit; return (f && f[tell || ""] != null) ? f[tell || ""] : 1.0; } return 1.0;

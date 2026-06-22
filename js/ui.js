@@ -1300,7 +1300,7 @@
       if (cup.champ) { var ch = CONFIG.MAJORS.filter(function (m) { return m.key === cup.champ; })[0]; if (ch) kc.appendChild(el("div", "tiny", "🏆 Đương kim vô địch Cúp Khoa: <span style='color:" + (ch.color || dflt) + ";font-weight:700'>" + ch.icon + " " + esc(ch.name) + "</span> · cúp ×" + (cup.trophies[ch.key] || 1))).style.marginBottom = "6px"; }
       else if (ranked.length >= 2) { var top = ranked[0]; kc.appendChild(el("div", "tiny", "Khoa nổi bật năm nay: <span style='color:" + (top.color || dflt) + ";font-weight:700'>" + top.icon + " " + esc(top.name) + "</span> <span style='opacity:.6'>· Cúp Khoa tháng 5</span>")).style.marginBottom = "6px"; }
       CONFIG.MAJORS.forEach(function (m) {
-        var unlocked = s.rooms.some(function (r) { return r.key === m.room; });
+        var unlocked = !m.room || s.rooms.some(function (r) { return r.key === m.room; }); // iter-248: a room-less major (Đại-cương) is always available — never gates on a building
         var cnt = counts[m.key] || 0, need = thr(m.key), syn = cnt >= need, col = m.color || dflt;
         var status = !unlocked ? ("🔒 Xây " + CONFIG.ROOMS[m.room].name + " để mở")
           : (syn ? "<span style='color:var(--green)'>⚡ Cộng hưởng — lớn nhanh hơn</span>" : (cnt + "/" + need + " SV để cộng hưởng"));
