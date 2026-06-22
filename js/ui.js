@@ -1165,6 +1165,21 @@
     STRUCT_KEYS.forEach(function (k) { var sm = CONFIG.STRUCT_META[k]; if (sm.tradeoff) c1.appendChild(el("div", "tiny", "<b>" + esc(sm.label) + "</b> — " + esc(sm.tradeoff))); }); // iter-244: the structure axis's open-question tradeoffs
     wrap.appendChild(c1);
 
+    // iter-268 (Phase-2c CP3) — the INTAKE rule: how to place a grain whose khoa you haven't built. "Đúng khoa" (fit-priority)
+    // leaves them idle; "Mở cửa" (open-door) crams them off-native into a built khoa (active but wrong-fit → MAJOR_FIT bites).
+    if (CONFIG.INTAKE_META) {
+      var ci = el("div", "card"); ci.appendChild(el("h3", null, "Tuyển sinh — xếp khoa"));
+      var segI = el("div", "seg");
+      ["native", "open"].forEach(function (k) {
+        var b = el("button", (s.intakePolicy || CONFIG.INTAKE_DEFAULT) === k ? "on" : ""); b.textContent = CONFIG.INTAKE_META[k].label;
+        b.onclick = function () { S().intakePolicy = k; renderPanel(); };
+        segI.appendChild(b);
+      });
+      ci.appendChild(segI);
+      ["native", "open"].forEach(function (k) { var im = CONFIG.INTAKE_META[k]; ci.appendChild(el("div", "tiny", "<b>" + esc(im.label) + "</b> — " + esc(im.tradeoff))); });
+      wrap.appendChild(ci);
+    }
+
     // tuition
     var c2 = el("div", "card"); c2.appendChild(el("h3", null, "Học phí (mỗi SV / tháng)"));
     var row = el("div", "row"); row.appendChild(el("div", "grow muted", "Thu mỗi tháng: <b style='color:var(--gold)'>" + Math.round(s.tuition * s.students.length) + "tr</b>"));

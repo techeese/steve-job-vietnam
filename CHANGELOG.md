@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP3a: the intake-rule DIAL (off-native intake now reachable by players) (loop iter 269)
+**The open-door policy gets a control — the off-native mechanic (CP2c) is now PLAYABLE, not just code-settable.** Added a
+"Tuyển sinh — xếp khoa" segmented toggle to panelOps (right under the teaching dial), mirroring the existing MODE/STRUCTURE
+seg pattern (functional wiring of a shipped mechanic — within the graphics freeze): **Đúng khoa** (fit-priority — an
+un-built-khoa grain waits idle, no wrong-fit cramming) ↔ **Mở cửa** (open-door — no one idle, but off-khoa grains learn a
+trade that doesn't fit → MAJOR_FIT bites). Each option shows its open-question tradeoff line (`CONFIG.INTAKE_META`, mirroring
+the preset/structure tradeoffs — neither rule dominant). Verified: parse clean, ALL GATES GREEN + BASELINE GREEN (UI-only →
+no sim change → byte-identical), bot BOTOK (the ops panel renders the toggle, no JSERR; essay 3380 / cash 7610), lives clean,
+probe confirms the toggle sets `S.intakePolicy`. Deployed. **CP3b (next): surface the policy in the Gameplay Lab (a selector,
+per the dynamic-Lab mandate) + the wrong-major WILT narrative beat (name a grain nguội-ing off-native).**
+
 ## 2026-06-22 — Phase 2c CP2c: off-native intake goes LIVE — "right gift, wrong major" in play (loop iter 268)
 **The keystone of the greenlit epic lands: a grain can now be wasted in the wrong major DURING A RUN, not just in the
 sweep sensor.** Reworked `assignMajors` to the clean opt-in design (dropping the default-nerf flat-cap idea, iter-267):

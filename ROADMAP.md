@@ -157,9 +157,11 @@ Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).
   • CP2c ✅ SHIPPED iter-268 (off-native intake LIVE): clean opt-in design (no quota mech needed). "native" default → idle if
     khoa unbuilt (byte-identical); "open" → `placeOffNative` crams the grain into a built specialty / Đại-cương (MAJOR_FIT bites).
     Lever = build + policy (lean campus + open-door → off-native waste). Sweep INTAKE sensor ✓ bounded (Δ8.1, neither dominates).
-  • CP3 (NEXT): the intake-rule UI toggle (fit-priority ↔ open-door, in panelOps near the teaching dial) + the wrong-major WILT
-    narrative beat (name a named grain wasting in the wrong khoa, in-play and/or at the payoff). Optional CP4: tie khoa capacity
-    to room UPGRADE level (seat-scarcity as a build-investment lever) — only if it adds agency without a default nerf.
+  • CP3a ✅ SHIPPED iter-269: the intake-rule DIAL in panelOps ("Tuyển sinh — xếp khoa": Đúng khoa ↔ Mở cửa, `CONFIG.INTAKE_META`
+    tradeoffs) — the off-native mechanic is now reachable by players. UI-only → byte-identical.
+  • CP3b (NEXT): surface intakePolicy in the Gameplay Lab (a selector, dynamic-Lab mandate) + the wrong-major WILT narrative
+    beat (name a named grain nguội-ing off-native, in-play and/or at the payoff). Optional CP4: tie khoa capacity to room
+    UPGRADE level (seat-scarcity as a build-investment lever) — only if it adds agency without a default nerf.
   • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
     wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
 
