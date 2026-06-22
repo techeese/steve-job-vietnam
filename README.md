@@ -65,8 +65,24 @@ Satire anchored in real cultural moments, dry and affectionate, all characters f
 educators (the Pantheon) are reverent-only. The game holds the question open — it reflects consequences,
 it never lectures.
 
+## Foundations — extending it without betraying the thesis
+
+The game argues you can't *manufacture* a 🍎, only grow conditions for one — so it must never collapse into a
+solved strategy. **The philosophy is the spec.** Anything added later (a mechanic, era, archetype, khoa) must
+keep these — the non-negotiables that keep the question *open*:
+
+1. **The open question stays open** — no policy/strategy/archetype "wins"; the closing essay always cuts off at "Tôi—".
+2. **No dominant strategy / symmetry of waste** — every lever REALIZES some gifts and WASTES others; ship its `sweep.js` sensor with it.
+3. **The 🍎 is grain × era × luck**, never bought — the apex is frozen / owner-gated (THESIS.md).
+4. **Prose, not meters** — outcomes surface as caused *lives*, never a fit-% / readiness bar / 48-kid efficiency table.
+5. **Waste is done TO the kid by the system**, never blamed on the kid; honored real educators (the Pantheon) reverent-only.
+
+**To extend:** name the new real-world factor in [`MODEL.md`](MODEL.md) first (what it is, how it interacts, how it
+stays plural), ship its sweep sensor, keep it byte-identical-at-default, then deploy. The questions live in
+[`THESIS.md`](THESIS.md); the lattice + full invariants in [`VISION.md`](VISION.md); the settled rules in
+[`DESIGN.md`](DESIGN.md); the current frontier in [`ROADMAP.md`](ROADMAP.md); how it grew in [`CHANGELOG.md`](CHANGELOG.md).
+
 ---
 
-*Built iteratively, in the open. See [`CHANGELOG.md`](CHANGELOG.md) for how it grew, and
-[`VISION.md`](VISION.md) / [`DESIGN.md`](DESIGN.md) / [`THESIS.md`](THESIS.md) for the north star and the
-settled law.*
+*Built iteratively, in the open — a lean static base (≈2 MB working tree) meant to be expanded while keeping the
+thesis honest.*
