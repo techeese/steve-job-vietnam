@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP2b design resolved (investigative): opt-in volume-vs-fit, not a default nerf (loop iter 267)
+**Probed the seat-scarcity dynamics and resolved the design before building — avoiding two traps.** Occupancy probe: the
+specialist khoas accumulate to **25–27** at peak across a run (much bigger than the ~6–12 I'd estimated; they pool grains
+across all 4 grades). Impact probe (flat cap under the DEFAULT "native" policy): cap 22 → realize 43%→41% + ~5% fewer
+alumni; cap 18 → 38% + ~12% fewer; cap 14 → 32%. So a biting flat cap is **a default-policy nerf with no player agency**
+(the off-native grains both waste AND burn out → fewer grads), and it would permanently make the shipped default game more
+wasteful — over-reach for "bounded." TRAP 2: a *generous* cap (≥27) never bites → inert. **Resolved design (CP2c build
+next): the OPT-IN tradeoff.** Keep "native" the byte-identical default (cap off → no recapture). Make **"open"** a genuine
+*volume-vs-fit* choice — open-door raises the admission quota (a bigger cohort = more tuition + more gem-shots) while the
+specialist khoas cap → the overflow lands off-native (MAJOR_FIT bites = the waste cost). Non-inert (volume upside),
+non-dominant (waste cost), byte-identical default. Needs quota-mult tuning + a sweep STRAT/sensor (open trades realize for
+scale, neither policy dominates) — done next firing with fresh attention, not rushed here. CP2a machinery stays shipped;
+live game unchanged. Doc-only.
+
 ## 2026-06-22 — Phase 2c CP2a: the seat-scarcity intake resolver (byte-identical machinery) (loop iter 266)
 **The deterministic off-native placement machinery, shipped byte-identical.** `assignMajors()` (monthly, idempotent) places
 each grain into a khoa seat: native khoa first (up to `CONFIG.MAJOR_CAP` seats on the specialist khoas code/make/biz; Đại-cương

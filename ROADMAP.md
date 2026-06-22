@@ -152,10 +152,13 @@ Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).
   • CP2a ✅ SHIPPED iter-266 (byte-identical machinery): `assignMajors()` deterministic resolver (monthly, stable id-order, no
     rng) + `CONFIG.MAJOR_CAP` (specialist seats; Đại-cương uncapped). Native-first; overflow → Đại-cương (native policy) /
     best-fit specialty (open). At cap=99 → no overflow → byte-identical; probe at cap=6 confirms overflow fires.
-  • CP2b (NEXT): lower MAJOR_CAP to a BITING value → an era-flood overflows a khoa under the DEFAULT "native" policy
-    (emergent era×scarcity→wrong-major, Đại-cương 0.85 mild waste). Recapture baseline + a NEW off-native-wastes / no-dominant
-    sweep sensor; verify the realize/waste spread stays healthy. RESOLVE the "open" policy's UPSIDE (currently strictly more
-    waste → inert) — e.g. open-door raises intake volume, or cut "open" and keep the emergent native-cap mechanic.
+  • CP2b ✅ DESIGN RESOLVED iter-267 (investigative): probes show specialist khoas peak 25–27; a biting flat cap under the
+    DEFAULT policy degrades the baseline (cap22 -2pt realize/-5% alumni; cap18 -5pt) with NO agency → rejected as a default nerf.
+  • CP2c (NEXT, the build): the OPT-IN volume-vs-fit tradeoff. "native" stays byte-identical (cap off, no recapture). "open" =
+    open-door: raise the admission QUOTA (×CONFIG.OPEN_INTAKE_MULT — bigger cohort, more tuition/gems) WITH specialist caps active
+    → overflow lands off-native (MAJOR_FIT bites). Wire the quota mult (admissions.js, open-only) + cap-by-policy in assignMajors
+    (cap only under "open"). Add a sweep STRAT (intakePolicy:"open") + a sensor: open trades realize for scale, NEITHER dominates.
+    Tune OPEN_INTAKE_MULT. Byte-identical default → gate/baseline GREEN unchanged. Then CP3: intake-rule UI + wrong-major narrative.
   • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
     wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
 
