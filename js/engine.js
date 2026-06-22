@@ -520,6 +520,12 @@ function tetCohortBeat() {
   var L = CONTENT.annualLetter, pool = L.body[state][culture];
   var phase = clamp(Math.floor((S.year - 1) * 3 / CONFIG.RUN_CAP_YEARS), 0, 2); // iter-231: the letter's voice ages early→mid→late across the run (same worry, wearier words)
   var body = Array.isArray(pool) ? pool[phase] : pool; // guard tolerates a pre-pool save/harness
+  // iter-253 (NARRATIVE legibility of the Phase-1 DIAL): the STRUCTURE axis echoes in the letter too — the headmaster
+  // reflects on how tightly he governs the day. Appended only on a strong lean (Khuôn/high or Mở/low); the neutral 'Vừa'
+  // default → no clause → byte-identical. Deterministic (modal struct, no rnd) → replay-safe; news-only.
+  var sv = {}; ["n1", "n2", "n3", "n4"].forEach(function (k) { var sk = (S.struct && S.struct[k]) || CONFIG.STRUCT_DEFAULT; sv[sk] = (sv[sk] || 0) + 1; });
+  var sbest = "mid", sbc = -1; for (var sp in sv) if (sv[sp] > sbc) { sbc = sv[sp]; sbest = sp; }
+  if (sbest !== "mid" && CONTENT.structLetter && CONTENT.structLetter[sbest]) body = body + CONTENT.structLetter[sbest];
   news(tpl(L.open, { era: curEra().name, year: S.year }) + body); // deterministic (cohort + presets + year, no rnd) → replay-safe; news-only → balance-neutral
   // iter-213 (N3): keep the letter so the capstone essay can re-read the headmaster's thinking, year by year.
   // iter-231: also store the worry KEY (state×culture, the thematic constant) so the capstone reads rut-vs-evolved by

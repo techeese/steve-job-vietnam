@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — the STRUCTURE dial echoes in the writing (narrative legibility) (loop iter 253)
+**A non-gated pivot that closes a real gap: the player's headline new agency — the 2-axis teaching DIAL — had no echo
+in the marquee writing.** The annual letters already mirror the player's MODE choice (cram/craft/balance, iter-211);
+now they also mirror the **STRUCTURE** choice. On a strong lean the headmaster reflects on how tightly he governs the
+day — Khuôn: *"tôi kèm các em sát quá chăng — đứa cần khuôn thì nên người, còn đứa cần một khoảng trời riêng, có khi
+tôi bóp nghẹt mất"*; Mở: *"tôi để các em khá tự do — đứa tự bay thì bay cao, còn đứa cần một bàn tay cầm lái lại loay
+hoay mãi"*. Appended to the stored letter, so the **capstone re-read** reflects it too (owner-fork #2: weave the new
+levers into the writing implicitly). Deterministic, news-only, **byte-identical at the neutral `Vừa` default** (clause
+fires only on a Khuôn/Mở lean: probe 0 at default, 11 each under high/low). Non-apex — pure narrative legibility of an
+already-shipped mechanic. Verified: parse clean, gate GREEN + BASELINE GREEN, bot BOTOK 7479/87/13, probe confirms the
+clause fires on a lean only. Deployed. (Pivoted here after proving Phase 3 activities are apex-gated, iters 251–252 —
+this is genuine non-gated value, not filler: the central new system now felt in the soul/writing.)
+
 ## 2026-06-22 — Phase 3 internship ATTEMPTED → reverted (2nd apex-gate confirmation); loop holds (loop iter 252)
 **Second negative result, recorded so neither activity is re-attempted.** After đội-tuyển (iter-251) I tried the OTHER
 review activity — **THỰC TẬP (internships)**: +applied tn / −creative st for upper grades, opt-in default-off. Sweep

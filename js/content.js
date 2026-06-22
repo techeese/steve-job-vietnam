@@ -163,6 +163,12 @@ var CONTENT = {
   // ERA — so it MIRRORS the player's choices back (THESIS §B-3). A recurring narrative rhythm that accumulates toward the
   // capstone "how to have a Steve Jobs Vietnam" essay (N3 will wire the persistent log + capstone assembly). Deterministic
   // (cohort-state + presets + year, no rnd) → replay-safe. Opener names the decade; body keyed by [state][culture].
+  // iter-253 — the STRUCTURE axis (the dial's Axis B) echoed in the annual letter (and so the capstone re-read): the
+  // headmaster's reflection on how tightly he governs the day. Appended on a strong Khuôn/Mở lean; neutral Vừa = no clause.
+  structLetter: {
+    high: " Mà tôi kèm các em sát quá chăng — đứa cần khuôn thì nên người, còn đứa cần một khoảng trời riêng, có khi tôi bóp nghẹt mất.",
+    low: " Tôi để các em khá tự do — đứa tự bay thì bay cao, còn đứa cần một bàn tay cầm lái lại cứ loay hoay mãi không ra lối."
+  },
   annualLetter: {
     open: "📜 Thư gửi các em — {era}, cuối Năm {year}: ",
     // iter-231 (N3 ckpt): each cell is a 3-variant arc [early · mid · late] — the SAME worry, the headmaster's voice
