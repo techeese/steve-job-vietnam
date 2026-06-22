@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — DETACH the drifted real-art layer (Kenney + Jephed) into a swappable slot (owner ask)
+**The borrowed real-pixel-art (Kenney *Tiny Town* tiles + 40 Jephed chibi characters) had drifted from the evolved
+person-sim and read as a tonal orphan — detached so graphics become a clean, curated, re-addable layer.** A 6-agent
+read-only audit confirmed the real-art layer was *already* fully guarded behind a complete procedural fallback (every use
+gated `if(TILES)…` / `if(CHARS_N>0)…` over `art.js` + `sprites.js`), so detaching is **risk-free + reversible**: moved the
+41 PNGs to `assets/_parked/` (loaders 404 → `TILES=null`, `CHARS_N=0` → the game renders on its procedural base — the look
+it shipped on for ~270 iterations) and **kept all loader/draw code as the swap hook** (`loadChars`/`charFrame`/`drawRoomKenney`
+/ the `drawActor` Jephed branch) so re-adding curated art later is drop-in. Also: dropped the genuinely-dead
+`assets/characters/Reference.png` (never loaded — `loadChars` only fetches 000–039); relaxed `shot.sh`'s hard asset-wait to
+a boot-wait (it would hang on the parked assets). Verified: ALL GATES GREEN + BASELINE GREEN, bot BOTOK (procedural renders,
+no white-screen/JSERR), lives clean, swap hooks intact. **Live look reverts to procedural (known-good).** Fully reversible
+(`git mv` back). Deployed.
+**Still owner taste-calls (NOT touched — left for the curated graphics pass):** which ambient charm to keep (cat/ball/
+butterflies/weather/seasonal dressing — the "watching the world" soul; selection + identity markers must be RE-STYLED, never
+removed), the chibi customizer, and what fresh VN-specific art to commission. The load-bearing procedural core
+(`drawStatic`/`liveLoop`/`drawRoom`/`drawGarden`/`drawSan`/`pathBand`/the sprite bakery) stays as the placeholder until then.
+
 ## 2026-06-22 — Phase 2c CP3b: the wrong-major WILT beat (off-native waste, named) (loop iter 270)
 **The soul of off-native intake: "right gift, wrong major" is now FELT, not just mechanical.** Added `wrongMajorBeat()`
 (monthly, after fullLedgerBeat) — when an OPEN-DOOR off-native grain (seed≥4, grade≥2, in a khoa where MAJOR_FIT<1) is

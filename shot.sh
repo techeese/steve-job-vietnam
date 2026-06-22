@@ -15,8 +15,8 @@ cat >> "$TMP" <<HTML
 (function(){
   var P=$PERIOD;
   var iv=setInterval(function(){
-    var a; try{ a=window.__ui._assetsReady(); }catch(e){ return; }
-    if(!(a && a.tiles && a.chars>=10)) return;   // wait for Kenney tiles + Jephed sheets
+    var a={tiles:false,chars:0}; try{ a=window.__ui._assetsReady(); }catch(e){ return; } // _assetsReady exists only after boot
+    if(!(window.__test && window.HVS)) return;   // iter: wait for BOOT only — the real-art layer (Kenney/Jephed) is DETACHED + optional now; shot the procedural fallback. Re-tighten to a.tiles && a.chars>=10 if/when curated art is re-added.
     clearInterval(iv);
     try{ // seed AFTER boot has run (boot fires on DOMContentLoaded, after this inline script) so it isn't reset
       window.__test.fresh(11); var s=HVS.S(); s.META.tutorial=true;
