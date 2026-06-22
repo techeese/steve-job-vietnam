@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — the localized đề-Văn at the capstone open (scout v2 #4 — queue fully delivered) (loop iter 261)
+**The capstone climax now answers the question the RUN actually began with.** The essay opened with a generic intro, but
+each archetype carries its OWN đề-Văn (`CONFIG.ARCHETYPES[].de`) — the situated question shown at the run's start — and it
+never returned at the climax. Added `CONTENT.essay.archFrame{tinh_le,que_ngheo,lo_thanhpho,truong_nghe}`: one reverent,
+still-open situated question per archetype, appended right after the capstone intro (keyed by `s.archetype`). The poor-village
+school closes on *"đứa sáng dạ nhất làng — đời nó rẽ ở chỗ có một bàn tay chịu chống lưng, hay không có ai?"*; the cram-lò on
+*"cả thành phố đổ tiền vào luyện thi đến thế, mà sao một Steve Jobs vẫn chưa lớn lên nổi giữa lòng phố?"* Each mirrors its
+`de` (harmonized, not duplicated) and stays a question, never a verdict (open-question law). Authored solo, then an adversarial
+prose critic passed all 4 + flagged 2 register tweaks (tinh_le → purely interrogative; lo_thanhpho → less flippant/more
+aching), both applied. Reading-only → gate + BASELINE GREEN (byte-identical), bot BOTOK (essay 3247→3380), lives clean, probe:
+archFrame renders for all 4 archetypes. Deployed.
+**Scout v2 queue (iter-259 fan-out) FULLY DELIVERED: #1+#2 era-boundary layer ✓ (260), #3 mentor-save bugfix ✓ (259),
+#4 capstone đề-frame ✓ (261).** Per SCOUT-BEFORE-YOU-HOLD, the next non-gated step is a fresh scout; big remaining work stays apex-gated.
+
 ## 2026-06-22 — the ERA-BOUNDARY narrative layer: the lattice felt in prose at every decade turn (loop iter 260)
 **Scout v2 #1+#2, shipped together as one coherent layer — authored via a 6-agent draft→critic workflow.** The ERA×ARCHETYPE
 lattice (the spine of the game) re-weights which gifts the world realizes, but the decade TURNS read thinly — `eraShift()`

@@ -751,6 +751,15 @@ var CONTENT = {
   // "Bản nháp bài luận của hiệu trưởng" — the open-question epilogue (DESIGN §1). Reflect, never verdict.
   essay: {
     ones: ["", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"],
+    // iter-261 (scout v2 #4) — the localized đề-Văn at the CAPSTONE open: the generic intro now gives way to THIS school's
+    // OWN situated question (mirroring its archetype `de`), so the climax answers the question the run actually began with.
+    // ONE reading-only line, inserted after the capstone intro; keyed by S.archetype. Reverent, a question, never a verdict.
+    archFrame: {
+      tinh_le:     "Mà câu hỏi của ngôi trường tỉnh lẻ này vẫn nguyên đó, bướng bỉnh: tỉnh lẻ thì đã sao — chẳng lẽ không có quyền mơ lấy một Steve Jobs?",
+      que_ngheo:   "Câu hỏi ở cuối con đường đất này chưa bao giờ là trường có giỏi hay không, mà là: đứa sáng dạ nhất làng — đời nó rẽ ở chỗ có một bàn tay chịu chống lưng, hay không có ai?",
+      lo_thanhpho: "Câu hỏi vẫn treo lơ lửng trên cái lò luyện giữa phố: cả thành phố đổ tiền vào luyện thi đến thế, mà sao một Steve Jobs vẫn chưa lớn lên nổi giữa lòng phố?",
+      truong_nghe: "Câu hỏi của ngôi trường nghề bên khu công nghiệp này nhỏ nhẹ mà bướng bỉnh: một người thợ thật giỏi, liệu có thua kém gì một Steve Jobs?"
+    },
     openBtn: "📜 Bản nháp bài luận",
     kic: "Bản nháp · chưa nộp · Năm {year}",
     title: "Bài luận của hiệu trưởng",

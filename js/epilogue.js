@@ -100,6 +100,8 @@ function buildEssay(s, cb, capstone) {
     w.appendChild(el("div", "kic", "Mười năm sau · Lễ Bế Giảng"));
     var ch = el("h2", null, "Mười năm sau ngày khai giảng đầu tiên"); w.appendChild(ch);
     var intro = el("div", "lead", "Trường đã đi hết một chặng. Bạn ngồi xuống, lấy ra bản nháp bài luận năm xưa — câu hỏi vẫn còn đó. Lần này bạn viết bằng những gương mặt đã đi qua sân trường này."); intro.style.fontStyle = "italic"; w.appendChild(intro);
+    var _af = CONTENT.essay.archFrame && CONTENT.essay.archFrame[s.archetype]; // iter-261 (scout v2 #4): this school's OWN situated đề-Văn at the climax (mirrors its archetype `de`) — the run answers the question it began with
+    if (_af) { var afEl = el("div", "lead", _af); afEl.style.fontStyle = "italic"; w.appendChild(afEl); }
   }
   var de = CONTENT.dePool[0], yw = numWord(s.year), cash = money(s.cash), endow = money(s.endow.bal); // iter-159: tỷ-aware money formatting for the (now scaling) endgame numbers
   var byState = {}; s.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });

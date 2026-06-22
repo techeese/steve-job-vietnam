@@ -139,8 +139,8 @@ claim for Phase 1 is now actually verifiable.
   3. ✅ **BUGFIX: late-game saves silently un-mentored kids** — SHIPPED iter-259 (sanitize capped by base 3 not era-scaled `mentorSlots()`; one-line fix + GATE_SAVE regression guard).
   1. ✅ **Cohort-intake era-flood line** — SHIPPED iter-260 (`🌊 CONTENT.eraFlood[era]` in `eraShift()` — the gift the new decade floods the intake with).
   2. ✅ **Archetype×era era-shock beats** — SHIPPED iter-260 (`〽️ CONTENT.eraShock[arch][era]`, 15 sparse cells, authored via a 6-agent draft→critic workflow — the archetype's thesis aching against the era).
-  4. **Archetype-framed capstone intro** — `CONTENT.essay.archFrame{tinh_le,que_ngheo,lo_thanhpho,truong_nghe}`, one situated-question
-     clause per archetype inside buildEssay's capstone block (mirrors the archetype's own `de`). small. reading-only/byte-identical.
+  4. ✅ **Archetype-framed capstone intro** — SHIPPED iter-261 (`CONTENT.essay.archFrame` — this school's OWN situated đề-Văn at the climax, one open question per archetype; critic-reviewed).
+  → SCOUT v2 QUEUE FULLY DELIVERED. Next non-gated step: a FRESH scout (per SCOUT-BEFORE-YOU-HOLD).
 
   **▶ After v2 queue: RUN A FRESH SCOUT before holding** (per SKILL SCOUT-BEFORE-YOU-HOLD). Big remaining work (Phase 3
   activities-apex / Phase 2c off-native intake) stays owner-gated on the APEX fork. The MAJOR_FIT robustify (iter-258) cleared
