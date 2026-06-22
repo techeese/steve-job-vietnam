@@ -332,3 +332,24 @@ function cohortBeat() {
   news((pole === 1 ? "🍂 " : pole === 2 ? "🪙 " : "🌱 ") + best.ten + " — " + line);
   S._lastCohortBeat = S.totalDays;
 }
+
+// iter-256 (scout #3) — the FULL-LEDGER beat: the tragic allocation made PROACTIVE. When every mentor slot is spent AND a
+// strong gift is wilting unrescued, name the kid your maxed attention is costing you. Only fires once the player has FILLED
+// the ledger → headless harnesses (which don't mentor) never trigger it → byte-identical. Deterministic (no rnd), news-only.
+function fullLedgerBeat() {
+  if (S.totalDays - (S._lastFullBeat || 0) < CONFIG.FULL_BEAT_GAP) return;
+  if (typeof mentorCount !== "function" || mentorCount() < mentorSlots()) return; // only when the ledger is FULL — no free hand
+  var st = S.students, best = null, bestScore = -1;
+  for (var i = 0; i < st.length; i++) {
+    var s = st[i];
+    if (s.mentored || s.id === S.META.favId || s.grade < 2 || s.seed < 4) continue; // a real, discoverable gift you did NOT take on
+    var mm = fitOf(s.tell, "n" + s.grade);
+    if (mm < CONFIG.MISMATCH_MM && s.mood < CONFIG.FAV_MOOD_LOW) { var score = (CONFIG.MISMATCH_MM - mm) * 100 + (CONFIG.FAV_MOOD_LOW - s.mood) + s.seed * 4; if (score > bestScore) { bestScore = score; best = s; } }
+  }
+  if (!best) return;
+  var pool = (CONTENT.fullLedger && CONTENT.fullLedger[best.tell]) || (CONTENT.fullLedger && CONTENT.fullLedger._) || [];
+  if (!pool.length) return;
+  var idx = Math.floor(S.totalDays / CONFIG.FULL_BEAT_GAP) % pool.length; // deterministic line pick (no rnd)
+  news("🖐️ " + best.ten + " — " + pool[idx]);
+  S._lastFullBeat = S.totalDays;
+}

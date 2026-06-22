@@ -278,6 +278,15 @@ var CONTENT = {
     bloom: " Nhà nghèo mà sáng đến thế — của hiếm; đừng để tuột mất.",
     bent:  " Nhà nghèo, đường tắt lại càng dễ kéo em đi."
   },
+  // iter-256 (scout #3) — the FULL-LEDGER beat: when every mentor slot is spent and a strong gift is wilting unrescued,
+  // name the kid your maxed attention is COSTING you (the tragic-allocation invariant, surfaced proactively in-play — not
+  // only as a reactive toast). Tell-keyed + `_` fallback. News-only, rnd-free.
+  fullLedger: {
+    spark: [ "đầu óc lập trình sắc thế mà đang nguội — tôi muốn kèm, nhưng tay nào cũng đã có một đứa rồi.", "giá tôi còn một suất dìu dắt cho cái đầu mạch lạc ấy — mà sổ tay đã kín." ],
+    sky:   [ "bàn tay khéo ấy đang chững lại — tôi hết tay để đỡ, đã dồn cả cho mấy đứa kia.", "một đứa biết làm ra cái đẹp đang lạc lối — mà tôi chẳng còn suất nào để kéo em." ],
+    hype:  [ "máu khởi nghiệp ấy đang trượt sang ăn xổi — tôi muốn uốn, mà tay đã kín cả." ],
+    _:     [ "một đứa có tài đang nguội dần — tôi nhìn thấy, mà không còn tay nào rảnh để đỡ.", "tôi đã dồn hết tâm sức cho mấy đứa khác; đứa này, tôi đành nhìn em tuột." ]
+  },
   // iter-242 PEERS/CONTAGION ckpt2 — name the MÔI TRƯỜNG on a named kid IN-PLAY (Mark 5: while a slot/policy can still
   // change it). Appended to a bloom/wilt beat when the cohort atmosphere is the salient force: a warm class lifts the
   // bloomer further; a cold one drags the cooling one down ("chọn bạn mà chơi" made personal). Mirrors cohortPoor.

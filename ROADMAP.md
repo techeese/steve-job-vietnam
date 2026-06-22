@@ -130,9 +130,7 @@ claim for Phase 1 is now actually verifiable.
 - **▶ NON-GATED QUEUE (scout fan-out iter-254 — reading-only/bounded, no apex, ranked).** Mine these before holding:
   1. ✅ **Equalizer beat at the capstone close** — SHIPPED iter-254 (the school-as-equalizer made legible at the climax).
   2. ✅ **Era-journey close beat** — SHIPPED iter-255 (the school's founding→closing decade arc named before "Tôi—").
-  3. **Mentor-slots-FULL grief beat (in-play)** — a rnd-free ticker beat when all mentor slots are spent AND a strong
-     unmentored gift is wilting (names the kid the full ledger costs you; the tragic-allocation invariant, proactively).
-     Gate in monthRollover after cohortBeat (respect COHORT_BEAT_GAP); news-only → byte-identical. small.
+  3. ✅ **Mentor-slots-FULL grief beat** — SHIPPED iter-256 (`fullLedgerBeat` names the wilting gift your full ledger costs you — the tragic allocation, proactively; byte-identical until the player fills the ledger).
   4. **Lattice-wired event dilemmas** — the 31-event deck never touches the new dial/major/structure; add bounded one-time
      dilemmas (e.g. a khuôn-vs-mở pressure choice that nudges `S.struct`, NOT the apex). medium, design-care to stay non-apex.
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-22 — the FULL-LEDGER grief beat: the tragic allocation, proactively (scout queue #3) (loop iter 256)
+**Third scout-queue candidate shipped.** The scarce-attention tragedy (you can mentor only a few; the rest you must let
+go) was felt only REACTIVELY — a toast when you click a full mentor button. Now it's PROACTIVE: once your ledger is full
+AND a strong gift (seed≥4, grade≥2) is wilting unrescued (mm < MISMATCH_MM, mood < FAV_MOOD_LOW), a once-a-season-ish
+ticker beat names the kid your maxed hands are costing you — *"🖐️ {tên} — máu khởi nghiệp ấy đang trượt sang ăn xổi —
+tôi muốn uốn, mà tay đã kín cả."* (tell-keyed + `_` fallback; deterministic line pick). `fullLedgerBeat()` in
+`monthRollover` after `cohortBeat` (own throttle `FULL_BEAT_GAP=130`, rarer than the cohort glimpse so it stays weighty).
+**Only fires once the player has FILLED the ledger** → headless harnesses (which don't mentor) never trigger it →
+byte-identical. Verified: parse clean, gate + BASELINE GREEN, bot BOTOK (essay 3369 unchanged — no beat without
+mentoring), lives 0 LIVESFAIL, probe confirms it fires 5×/8yrs under a kept-full ledger naming the wilting gift. Deployed.
+Scout queue remaining: #4 lattice-wired event dilemmas (the design-care one).
+
 ## 2026-06-22 — the SCHOOL's era-journey named at the capstone close (scout queue #2) (loop iter 255)
 **Second scout-queue candidate shipped — the loop producing genuine non-gated value, as intended.** A run spans ~4
 decades (12yr / 3yr-bands: bao-cấp 1990s → Đổi-Mới → dot-com → smartphone), and the era already shapes every gift's
