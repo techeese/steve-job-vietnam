@@ -140,7 +140,12 @@ claim for Phase 1 is now actually verifiable.
   1. ✅ **Cohort-intake era-flood line** — SHIPPED iter-260 (`🌊 CONTENT.eraFlood[era]` in `eraShift()` — the gift the new decade floods the intake with).
   2. ✅ **Archetype×era era-shock beats** — SHIPPED iter-260 (`〽️ CONTENT.eraShock[arch][era]`, 15 sparse cells, authored via a 6-agent draft→critic workflow — the archetype's thesis aching against the era).
   4. ✅ **Archetype-framed capstone intro** — SHIPPED iter-261 (`CONTENT.essay.archFrame` — this school's OWN situated đề-Văn at the climax, one open question per archetype; critic-reviewed).
-  → SCOUT v2 QUEUE FULLY DELIVERED. Next non-gated step: a FRESH scout (per SCOUT-BEFORE-YOU-HOLD).
+  → SCOUT v2 QUEUE FULLY DELIVERED.
+
+**▶ NON-GATED SURFACE MINED OUT — CONFIRMED PLATEAU (3 scouts: iter-254 / 259 / 262).** The third scout (sharpened, high-bar,
+deepest veins) returned 0 survivors / 18 rejected — all redundant / apex-gated / prose-not-meter / false-premise. The loop now
+HOLDS (legitimate iter-230 completion-plateau, proven by adversarial search). SOLE UNBLOCK = the owner's **APEX fork** (should
+activities / seat-scarcity shape the 🍎 — i/ii/iii). Re-scout ONLY on a real change (owner steer / new system / apex answered / long gap).
 
   **▶ After v2 queue: RUN A FRESH SCOUT before holding** (per SKILL SCOUT-BEFORE-YOU-HOLD). Big remaining work (Phase 3
   activities-apex / Phase 2c off-native intake) stays owner-gated on the APEX fork. The MAJOR_FIT robustify (iter-258) cleared

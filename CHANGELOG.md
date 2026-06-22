@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-06-22 — third scout returns a CONFIRMED PLATEAU (0/18) — non-gated surface mined out (loop iter 262)
+**The evidence-backed plateau, reached honestly after THREE scout fan-outs — not asserted from intuition (iter-202's
+mistake).** Ran a third, sharpened scout (high bar, aimed at the deepest under-mined veins: deeper event dilemmas,
+person-sim turning-points/agency, mechanical lattice gaps, replay/economy decisions, balance/correctness), explicitly
+empowered to return a plateau. Result: **0 survivors / 18 candidates rejected** by the adversarial filter — every idea was
+redundant with a shipped system (cohortBeat/fullLedger/protégé/mentor-scarcity/equalizer/era-layer), apex-gated (the
+prestige-vs-cash squeeze, progression unlocks), prose-not-meter (visible pivot/threshold signals = a meter), or
+false-premise (mismatch-early-warning can't fire until the gated Phase-2c intake exists). The three scouts together: iter-254
+→ 4 shipped (equalizer/era-journey/full-ledger/cram-event), iter-259 → 4 incl. the mentor-save bugfix + the era-boundary
+layer + capstone đề-frame, iter-262 → nothing genuine remains.
+**Verdict: the non-gated / non-redundant / non-apex surface is MINED OUT.** Per the updated SKILL (SCOUT-CONFIRMED PLATEAU),
+the loop now HOLDS — this is the legitimate iter-230 completion-plateau, proven by adversarial search. The sole unblock is the
+owner's **APEX fork** (should activities / seat-scarcity shape the 🍎 — i/ii/iii). Re-scout only when something real changes
+(owner steer, a new system, the apex-fork answered, or a long idle gap) — not every firing. Doc-only; no code change; live build unchanged.
+
 ## 2026-06-22 — the localized đề-Văn at the capstone open (scout v2 #4 — queue fully delivered) (loop iter 261)
 **The capstone climax now answers the question the RUN actually began with.** The essay opened with a generic intro, but
 each archetype carries its OWN đề-Văn (`CONFIG.ARCHETYPES[].de`) — the situated question shown at the run's start — and it
