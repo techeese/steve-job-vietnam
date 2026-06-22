@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — everyman in-play voice (small) + SOLO-PLATEAU reached on the EDUCATION epic (loop iter 250)
+**A small completion + an honest finding.** Gave the everyman (`tell=""`) dedicated `cohortBloom`/`cohortWilt` in-play
+glimpse lines (sharper than the generic `_`: "vững dần đều — kiểu người ta tin giao việc" / "chẳng có nghề nào ngấm vào
+tay — cứ trôi"). While doing it I found the `cohortBeat` BENT pole only selects spark/sky, so a `cohortBent[""]` would
+be **dead content** — removed it rather than ship clutter (and the bloom/wilt `""` lines fire only rarely, since the beat
+glimpses the most-dramatic kid, usually a grain — kept as a correct sharper fallback, not overstated). Byte-identical
+(gate BASELINE GREEN, bot 7479/87/13). **PLATEAU FINDING:** the EDUCATION epic's high-value *solo-buildable* work is
+DONE (Phase 0 baseline harness · Phase 1 the 2-axis dial · everyman voice + home · Phase 2a MAJOR_FIT). The remaining
+pieces are genuine **design-FEEL forks that want the owner's steer**, verified this firing: **(2c)** systemic off-native
+intake — done well it needs an architecture-heavy capacity/intake resolver AND a feel call (how scarce should specialist
+seats be?); done cheap it's a niche lever. **(Phase 3)** activities + attention-hours — the review's #1 agency fix, but a
+new save-stateful subsystem + a "how scarce is attention?" feel call. **(1c)** cram-distortion map — largely redundant
+(cram→văn-mẫu/shark already happens + prose already tell-specific). Not manufacturing filler; surfacing the fork.
+
 ## 2026-06-22 — GAMEPLAY LAB updated: surface the EDUCATION-epic systems (loop iter 249)
 **Paying down the dynamic-Lab debt** — I shipped 5 EDUCATION-epic systems (iters 243–248: the STRUCTURE dial, the
 everyman voice, MAJOR_FIT, Khoa Đại cương) without surfacing any in the Gameplay Lab (the owner's graphics-free window,

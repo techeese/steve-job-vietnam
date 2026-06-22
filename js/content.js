@@ -235,12 +235,14 @@ var CONTENT = {
     spark: [ "tư duy mạch lạc hẳn ra — đang thành một kỹ sư thực thụ.", "gỡ được cái lỗi cả lớp bó tay, mắt sáng rỡ." ],
     sky:   [ "bắt đầu làm ra thứ của riêng mình — cái khiếu đã tìm được lối.", "mấy ý lạ trong đầu em giờ thành hình được rồi." ],
     hype:  [ "biết bán ý tưởng của mình rồi — mà vẫn là ý thật.", "đứng trước lớp thuyết trình, cả phòng tin theo." ],
+    "":    [ "không có tài gì nổi trội, mà vững dần đều — kiểu người ta tin giao việc.", "đang thành một người làm được việc tử tế; chỗ nào cũng cần một người như thế." ], // iter-250: the everyman's in-play voice — realized as the dependable, not the dazzling (sharper than the generic _)
     _:     [ "đang thành chính mình — lối học này hợp với em.", "mắt sáng hẳn từ ngày được học đúng tạng." ]
   },
   cohortWilt: {
     spark: [ "đầu óc mạch lạc thế, mà cứ bắt học thuộc — tư duy đang cùn dần.", "giải thuật trong đầu em sắc lắm, nhưng lớp này chỉ dạy chép." ],
     sky:   [ "bàn tay khéo, đầy ý lạ — mà trường chưa cho em chỗ nào để làm.", "óc sáng tạo đang co lại vì chẳng có gì để chế tạo." ],
     hype:  [ "máu khởi nghiệp đang chuyển dần thành thói ăn xổi.", "khiếu thuyết phục đấy, mà đang học cách lùa hơn cách làm." ],
+    "":    [ "chẳng có nghề nào ngấm vào tay — cứ trôi từ việc này sang việc khác.", "ngồi học mà chưa biết để làm gì; không ai chỉ cho em một hướng." ], // iter-250: the everyman wasted — the direction the school never gave
     _:     [ "tài năng đang nguội dần — lối học chưa hợp với em.", "ngồi đúng chỗ, mà mắt cứ nhìn ra cửa sổ." ]
   },
   // iter-198 — the 3rd in-play pole (cohortBeat): a real gift being BENT into hustle mid-school (cá-mập overtaking the
@@ -248,7 +250,7 @@ var CONTENT = {
   cohortBent: {
     spark: [ "đầu óc lập trình sắc thế, mà đang mài vào trò lùa gà.", "giỏi máy móc thật, nhưng đang học cách bán khoá học làm giàu." ],
     sky:   [ "bàn tay khéo đang bỏ xưởng đi buôn nước bọt.", "óc sáng tạo đang quay sang nghĩ chiêu hơn nghĩ sản phẩm." ],
-    _:     [ "cái khiếu đang bị bẻ dần sang trò khôn lỏi.", "tài năng thật đang nhường chỗ cho thói ăn xổi." ]
+    _:     [ "cái khiếu đang bị bẻ dần sang trò khôn lỏi.", "tài năng thật đang nhường chỗ cho thói ăn xổi." ] // NB: the bent pole (cohortBeat) only picks spark/sky → no "" key (it would be dead content)
   },
   // iter-219 (NARRATIVE) — the DEMOGRAPHIC axis surfaced IN-PLAY: when a glimpsed gifted kid is POOR + unbacked, name the
   // class as a compounding force WHILE you can still act (a mentor slot is the school-as-equalizer, made felt mid-game).
