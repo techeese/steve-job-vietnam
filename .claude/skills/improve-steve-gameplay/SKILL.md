@@ -101,15 +101,18 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
    cheap to change — expect to retune/remake mechanics as the model sharpens; don't over-polish what may change).
    The freeze HOLDS until the model + its narrative are deeply right — graphics are the last pass, not a deadline.
    The work splits into two tracks the loop ALTERNATES: SYSTEMS (the LATTICE / factors) and NARRATIVE/WRITING.
-1. **Pick — biggest gameplay/story move available**, ranked: (a) production-broken, (b) explicit owner
-   ask, (c) the LATTICE epics (archetypes / eras / progression / legacy) + the NARRATIVE/WRITING track
-   (alternate the two), (d) person-sim depth, (e) balance from the sweep, (f) content. Prefer ONE coherent
-   shippable change; if it's big, it's an
-   EPIC — plan it in ROADMAP `## Epic: <name>` (decide the load-bearing forks; ask the owner only on a
-   truly expensive-to-undo one), isolate in a git worktree if it moves files, ship a green checkpoint
-   each firing. For non-trivial design forks, DIVERGE before converge: 3 candidates, one line each,
-   scored by soul-movement > thesis-service > fun > novelty — but this is design reasoning, NOT the
-   art-screenshot ritual (that stays frozen).
+1. **Pick — biggest gameplay/story move available.** **★ CURRENT TOP PRIORITY (owner steer 2026-06-22):
+   the EDUCATION MODEL REFINEMENT epic — build it phase by phase (Phase 0 baseline-check → 1 STRUCTURE axis →
+   2 MAJORS decoupled → 3 ACTIVITIES+attention-hours).** See ROADMAP `## Epic: EDUCATION MODEL REFINEMENT` +
+   `MODEL-REMAKE-PROPOSAL.md`. This is the decided fix for the "3 triết lý oversimplify education" steer; it
+   PREEMPTS the prior frontier (L4 apex / release-to-graphics / conservative deepening). Ship ONE phase-checkpoint
+   per firing, green each time; obey the epic's gating laws (below). When the epic completes, fall back to the
+   normal ranking: (a) production-broken, (b) explicit owner ask, (c) LATTICE epics + NARRATIVE/WRITING track,
+   (d) person-sim depth, (e) balance from the sweep, (f) content. Prefer ONE coherent shippable change; if it's
+   big, it's an EPIC — plan it in ROADMAP `## Epic: <name>` (decide the load-bearing forks; ask the owner only on
+   a truly expensive-to-undo one), isolate in a git worktree if it moves files, ship a green checkpoint each
+   firing. For non-trivial design forks, DIVERGE before converge: 3 candidates, one line each, scored by
+   soul-movement > thesis-service > fun > novelty — but this is design reasoning, NOT the art-screenshot ritual.
 2. **Implement** (engineering laws below).
 3. **Verify HEADLESS (non-negotiable, all fast):**
    - node-parse every changed script.
@@ -142,6 +145,22 @@ realization-or-waste more felt, more caused-by-the-player, more legible as a LIF
    lines for any call made on the owner's behalf (he steers by reaction).
 
 ## Engineering laws (the load-bearing subset — violations have caused prod incidents)
+- **★ EDUCATION-REFINEMENT EPIC GATING LAWS (owner steer 2026-06-22 — while this epic is active):**
+  (1) **Sensor-before-lever:** every new fit table (STRUCT_FIT / MAJOR_FIT / ACTIVITY) ships its symmetry +
+  non-dominance `sweep.js` sensor IN THE SAME or a PRIOR commit, and the sweep STRATS + adaptive bot
+  (`adaptPresets`) must be upgraded to actually SEARCH the new knob (a named bounded algorithm, e.g. greedy
+  per-grade hill-climb over {mode×structure}) — else the no-dominant-strategy guarantee is BLIND, not merely
+  unproven. (2) **Teeth at the ceiling, not rates:** route new fit into the MISMATCH_CEIL cap + MOOD, because the
+  saturation wall washes rate nudges out for the gifted (the kids the đề-Văn is about). (3) **Texture not gradient:**
+  caps are small DISCRETE lookup tables, never a smooth distance→severity function (binding law). (4) **No meter
+  leak:** outputs stay prose — no fit-% / readiness bar / fungible hour-number; AUDIT `ui.js` ~L908–923 (the
+  existing per-kid "nở rộ/tạm hợp/lệch" readout) when re-pointing threshold reads. (5) **Byte-identical default is a
+  CONSTRAINT to HIT:** `STRUCT_FIT` must return exactly 1.0 at the baseline structure for the enum→{mode,mid}
+  default-derive — and PHASE 0 (a stored realization-histogram baseline check) must exist first, because `gate.sh`
+  tests determinism only and will NOT catch a silent rate regression. (6) **Everyman content FIRST:** the Đại-cương
+  major is illegal to ship without its realized AND wasted prose banks + a `realGapTell[class]['']` row (none exist
+  today). (7) Removing the scripted prodigy is DETERMINISM-BREAKING — re-baseline the GATE_ALUM snapshot + rewrite
+  the WASTED-PRODIGY sensor in the same commit.
 - PRODUCTION ERROR TRAP: the inline `window.onerror` (sets `document.title='JSERR: '+m+' @'+l`) MUST stay
   the FIRST script in `index.html`, before the `js/*.js` tags. A silent white-screen on a phone is the
   worst failure mode.

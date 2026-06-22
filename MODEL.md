@@ -18,15 +18,26 @@ changed, or removed. It does NOT replace THESIS.md (the frozen charter) or VISIO
 > **a LIFE = TALENT (magnitude × direction) × EDUCATION (your policy) × WORLD (era × place) × CIRCUMSTANCE
 > (origin) × LUCK — read as realized / wasted / distorted, RELATIVE to that person's own gift.**
 
+EDUCATION — the player's lever — is **EXPANDING from one slider into a small composed sub-product** (the
+2026-06-22 decided refinement; see `MODEL-REMAKE-PROPOSAL.md` + ROADMAP `## Epic: EDUCATION MODEL REFINEMENT`):
+> **EDUCATION = MATCH(tell, mode) × STRUCT_FIT(tell, structure) × MAJOR_FIT(tell, major) ×
+> ACTIVITY(matched-realize / mismatched-waste, GATED by attention-hours) × MENTORSHIP × FACULTY_GRAIN.**
+
 No term dominates; each *re-weights whose* life is realized vs wasted (invariant #1), never *which policy is
-correct*. The player's lever is EDUCATION + attention; the rest is the world they're dropped into.
+correct*. The player's lever is EDUCATION + attention; the rest is the world they're dropped into. The
+refinement keeps that law — it gives the lever more *texture* and more *felt decisions*, never a dominant
+setting (every new table ships its symmetry + non-dominance sweep sensor BEFORE the lever).
 
 ## The factors (LIVE = shipped · QUEUED = planned) — real-world basis · mechanic · key interactions
 | Factor | State | Real-world basis | Current mechanic | Interacts with |
 |---|---|---|---|---|
 | **Talent magnitude** | LIVE | innate ceiling — how far one *could* go | `seed` 1–5 (SEED_MULT) | everything (it's the ceiling realization is measured against) |
 | **Talent direction** | LIVE | a grain — maker / coder / hustler | `tell` sky/spark/hype | education-match, era, faculty-grain, the gift-specific prose |
-| **Education policy** | LIVE | cram vs craft vs hustle pedagogy | `presets` luyện-đề / đồ-án / cân-bằng (MATCH × tell) | talent-direction (match/mismatch → realize/waste), mood |
+| **Education — MODE** | LIVE (refining) | cram vs craft vs hustle pedagogy | `presets` luyện-đề / đồ-án / cân-bằng (MATCH × tell). **Refinement: becomes Axis A of a 2-axis TEACHING DIAL** (the 3 triết lý kept as named corners). | talent-direction (match/mismatch → realize/waste), mood, **structure (composes)** |
+| **Education — STRUCTURE** | DECIDED → building (Phase 1) | how the day is governed (drill ↔ autonomy) — the orthogonal pedagogy axis real education varies but the 3 presets flatten | Axis B of the dial: `STRUCT_FIT(tell, structure)` low/mid/high, composed into mm AND a **discrete** MISMATCH_CEIL cap-multiplier (teeth at the ceiling, past the saturation wall). **Splits spark≠sky** (today identical): spark peaks mid, sky low, "" high. | talent-direction (the spark≠sky splitter), mode (composes), the cap layer |
+| **Education — MAJOR** | DECIDED → building (Phase 2) | a gift can flower down several *chosen* tracks; "wrong major for this kid" is a real fate | **Decouple from tell**: ~6 authored major-environments with a `fitVector`; `MAJOR_FIT(tell,major)` = a 2nd ceiling term; systemic best-fit intake (fit-vs-open + quota), protégé re-track. Gives the >50% everyman ("") a real home (Đại-cương). | talent-direction (same-gift-different-life), faculty-grain (per-major teeth), era (right-track-wrong-era), origin×mentorship (afford the track) |
+| **Education — ACTIVITIES** | DECIDED → building (Phase 3) | clubs / olympiad teams / internships — real school life beyond class | mechanical roster (CLB / đội-tuyển / thực-tập), each realizes a matched grain + carries its own waste; gated by ATTENTION-HOURS | major, era (era-wrong internship wastes), mood/peers (đội-tuyển pressure), the scarce hand below |
+| **Attention-hours** | DECIDED → building (Phase 3) | good teaching doesn't scale — the headmaster's finite hand | a scarce DISCRETE pool that đồ-án/Lò-Rèn teaching + đội-tuyển + internships + the 3 mentor slots ALL draw from → the tragic allocation (deep programs vs rescuing named kids) | mentorship (extends the jewel), activities, pedagogy. **Driver TBD: extend era-scaled `TECH_REACH` vs faculty headcount — owner-flagged** |
 | **Mentorship** | LIVE | scarce personal attention that rescues | `mentored` (MENTOR_SLOTS=3) | mismatch-rescue, **origin (the equalizer)**, mood |
 | **Faculty grain** | LIVE | a teacher realizes the gift they fit | E8 teacher `grain` → teacherFactor | talent-direction (which gift flowers), mood |
 | **Mood / wellbeing** | LIVE | burnout, flow, dropping out | `mood` (FLOW/penalty/dropout) | cram-drain, mismatch, origin, education |
@@ -42,6 +53,18 @@ correct*. The player's lever is EDUCATION + attention; the rest is the world the
 ## Interaction highlights (the "factors influence each other" the owner wants tracked)
 - **TALENT × EDUCATION** — a gift in a matching policy flowers; in a mismatch it goes adrift (the original
   Mentor's-Ledger spine).
+- **TALENT × MODE × STRUCTURE** (DECIDED, Phase 1) — pedagogy is two axes, not one: *what* the time produces
+  (cram↔project) AND *how the day is governed* (drill↔autonomy). A coder (spark) needs a scaffolded ladder
+  then the machine (mid structure); a hands-maker (sky) dies under drill (low structure). This is what finally
+  makes spark≠sky — today they share an identical fit row. Teeth land at the ceiling cap, not just rates.
+- **TALENT × MAJOR** (DECIDED, Phase 2) — the *same gift* lives a different life in a different track: a spark
+  in Chế-tạo (a coder at the lathe) under-realizes; in Lập-trình it flowers. "Right gift, wrong major" — a
+  fate that's structurally impossible today (major=tell). And the >50% everyman finally gets a real home
+  (Đại-cương) where they realize as a kỹ-thuật-viên or are quietly wasted.
+- **PEDAGOGY × ACTIVITIES × MENTORSHIP — the SCARCE HAND** (DECIDED, Phase 3) — deep teaching, competition
+  teams, internships, and the 3 mentor slots all draw from one finite ATTENTION pool. Running great programs
+  for the whole cohort *visibly starves* your ability to rescue the one named kid in front of you — the tragic
+  allocation the game's agency has lacked. Discrete picks (never a fungible budget), so it stays prose-shaped.
 - **TALENT × ERA** — the same coder is a founder in the dot-com boom, a clerk in the 1990s ("right kid,
   wrong era"). The era governs the *ceiling*, not the floor.
 - **ORIGIN × MENTORSHIP** — a poor kid under-realizes (68% vs 83%) UNLESS you spend scarce attention on them

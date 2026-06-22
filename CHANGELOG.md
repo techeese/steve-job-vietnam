@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-06-22 — PLAN ADOPTED: EDUCATION MODEL REFINEMENT wired into MODEL/ROADMAP/SKILL (owner greenlight)
+**Owner:** *"Let's do the decided fix — revise the model, roadmap, plan, skills… before continuing the loop."*
+After the 26-agent review (`MODEL-REMAKE-PROPOSAL.md`), baked the decided model into the governing docs so the
+loop builds toward it. **No engine change yet — docs only.**
+- **MODEL.md:** core equation now shows EDUCATION as a composed sub-product (`MATCH × STRUCT_FIT × MAJOR_FIT ×
+  ACTIVITY[gated by attention-hours] × MENTORSHIP × FACULTY_GRAIN`); factor table splits Education into MODE
+  (live, refining) + STRUCTURE / MAJOR / ACTIVITIES / ATTENTION-HOURS (decided→building); added the 3 new
+  interaction highlights (mode×structure, talent×major, the scarce-hand allocation).
+- **ROADMAP.md:** new top-priority banner + `## Epic: EDUCATION MODEL REFINEMENT` with the phased plan
+  (Phase 0 gate baseline-check → 1 STRUCTURE axis → 2 MAJORS decoupled → 3 ACTIVITIES+attention-hours), the
+  epic's gating laws, and the adopted owner-fork resolutions. Repointed "Epic in progress" to it; E11 noted as
+  graphics-deferred.
+- **SKILL.md:** the epic is the loop's CURRENT TOP PICK (preempts L4-apex/release/conservative-deepening); added
+  the epic's 7 gating engineering laws (sensor-before-lever + adaptive-bot upgrade; teeth at the ceiling;
+  texture-not-gradient caps; no §C-3 meter leak incl. the ui.js L908 readout; byte-identical default + Phase-0
+  baseline check; everyman content first; prodigy-removal determinism).
+- **Verdict carried from the review:** refine in place, do NOT rebuild (~90% of the engine is the law-bearing
+  spine). THESIS stays frozen — the 4 thesis-adjacent forks were adopted as recommendations, owner-overridable.
+- Owner forks adopted: #1 everyman gets a real Đại-cương major (era-neutral + BOUNDED structure peak) · #2
+  capstone weaves levers in implicitly · #3 era-on-tracks via existing `eraFav` · #4 capstone authored-first.
+
 ## 2026-06-22 — PEERS / CONTAGION ckpt2: the môi trường named on a kid IN-PLAY (loop iter 242)
 **The legibility half of yesterday's new factor, following the exact ERAS pattern** (ckpt1 mechanic → ckpt2
 named-at-the-moment). ckpt1 made the cohort pull moods together + a yearly school-level beat; ckpt2 names it on a
