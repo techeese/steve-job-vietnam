@@ -383,6 +383,7 @@ function monthRollover() {
   favBeat(); // iter-125: the followed protégé's in-school arc — a caused moment ~once a season (THESIS mark 5)
   cohortBeat(); // iter-179: the BROADER cohort becomes someone WHILE you watch — a glimpse of one kid blooming/wilting (mark 5+2, past the single protégé); rnd-free + narration-only → bot/sweep byte-identical
   fullLedgerBeat(); // iter-256 (scout #3): when the mentor ledger is FULL + a strong gift wilts unrescued, name the cost (the tragic allocation, proactively). Only fires once the player has filled the ledger → headless byte-identical.
+  wrongMajorBeat(); // iter-270 (Phase-2c CP3b): when an OPEN-DOOR off-native grain is nguội-ing in a wrong-fit khoa, name the "right gift, wrong major" waste. Only fires when off-native grains exist (open-door) → headless byte-identical.
   // scripted Offer 1 — Tập đoàn Trứng Vàng (≈one month after boot)
   if (S.offersSeen.indexOf("trungvang") < 0 && S.year === 1 && S.month >= 10) { S.offersSeen.push("trungvang"); offerContract(CONTENT.contract.trungvang); }
   endowMilestones();

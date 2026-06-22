@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP3b: the wrong-major WILT beat (off-native waste, named) (loop iter 270)
+**The soul of off-native intake: "right gift, wrong major" is now FELT, not just mechanical.** Added `wrongMajorBeat()`
+(monthly, after fullLedgerBeat) — when an OPEN-DOOR off-native grain (seed≥4, grade≥2, in a khoa where MAJOR_FIT<1) is
+nguội-ing (mood < FAV_MOOD_LOW), it names the kid + the wrong khoa: *"🧩 {tên} — đứa nói hay bán giỏi mà kẹt ở Khoa Lập
+trình — sai sân chơi, nó nguội thấy rõ."* (`CONTENT.wrongMajor`, tell-keyed; `{khoa}` = the mismatched khoa name).
+Deterministic, news-only, own throttle `WRONGMAJOR_BEAT_GAP=120`. Only fires when off-native grains exist (open-door)
+→ headless default ("native") never triggers it → byte-identical: gate + BASELINE GREEN, sweep 0 flags, bot BOTOK
+(essay 3380 / cash 7610), lives clean. Probe: fires 18×/8yr under open-door + only-code-khoa built. Apex untouched.
+Deployed. CP3c (next, small): surface `intakePolicy` in the Gameplay Lab (a selector, per the dynamic-Lab mandate).
+
 ## 2026-06-22 — Phase 2c CP3a: the intake-rule DIAL (off-native intake now reachable by players) (loop iter 269)
 **The open-door policy gets a control — the off-native mechanic (CP2c) is now PLAYABLE, not just code-settable.** Added a
 "Tuyển sinh — xếp khoa" segmented toggle to panelOps (right under the teaching dial), mirroring the existing MODE/STRUCTURE

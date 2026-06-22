@@ -353,3 +353,27 @@ function fullLedgerBeat() {
   news("🖐️ " + best.ten + " — " + pool[idx]);
   S._lastFullBeat = S.totalDays;
 }
+// iter-270 (Phase-2c CP3b) — the WRONG-MAJOR wilt beat: open-door seated a strong grain OFF-native (its khoa wasn't built);
+// now the gift nguội-s in a khoa that doesn't fit. Names "right gift, wrong major" the moment it bites in play. Only fires
+// when an off-native grain exists (open-door) → headless harnesses (default "native") never trigger it → byte-identical.
+function wrongMajorBeat() {
+  if (S.totalDays - (S._lastWrongMajorBeat || 0) < CONFIG.WRONGMAJOR_BEAT_GAP) return;
+  if (typeof majorByTell !== "function") return;
+  var st = S.students, best = null, bestScore = -1;
+  for (var i = 0; i < st.length; i++) {
+    var s = st[i];
+    if (!s.major || s.grade < 2 || s.seed < 4) continue;           // a real gift, settled in
+    var nat = majorByTell(s.tell); if (!nat || s.major === nat.key) continue; // must be OFF-native
+    var fit = CONFIG.MAJOR_FIT(s.tell, s.major); if (fit >= 1) continue;       // wrong-fit khoa
+    if (s.mood >= CONFIG.FAV_MOOD_LOW) continue;                   // and nguội-ing
+    var score = (1 - fit) * 100 + (CONFIG.FAV_MOOD_LOW - s.mood) + s.seed * 4;
+    if (score > bestScore) { bestScore = score; best = s; }
+  }
+  if (!best) return;
+  var maj = majorByKey(best.major);
+  var pool = (CONTENT.wrongMajor && CONTENT.wrongMajor[best.tell]) || (CONTENT.wrongMajor && CONTENT.wrongMajor._) || [];
+  if (!pool.length || !maj) return;
+  var idx = Math.floor(S.totalDays / CONFIG.WRONGMAJOR_BEAT_GAP) % pool.length; // deterministic (no rnd)
+  news("🧩 " + best.ten + " — " + tpl(pool[idx], { khoa: maj.name }));
+  S._lastWrongMajorBeat = S.totalDays;
+}

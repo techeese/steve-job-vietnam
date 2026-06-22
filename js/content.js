@@ -287,6 +287,15 @@ var CONTENT = {
     hype:  [ "máu khởi nghiệp ấy đang trượt sang ăn xổi — tôi muốn uốn, mà tay đã kín cả." ],
     _:     [ "một đứa có tài đang nguội dần — tôi nhìn thấy, mà không còn tay nào rảnh để đỡ.", "tôi đã dồn hết tâm sức cho mấy đứa khác; đứa này, tôi đành nhìn em tuột." ]
   },
+  // iter-270 (Phase-2c CP3b) — the WRONG-MAJOR wilt beat: open-door seated a grain off-native (its khoa wasn't built), and
+  // now the gift is nguội-ing in a khoa that doesn't fit. Names "right gift, wrong major" the moment it bites in play.
+  // Tell-keyed; {khoa} = the wrong khoa's name. News-only, fires only when an off-native grain wilts → headless byte-identical.
+  wrongMajor: {
+    spark: [ "đầu óc lập trình mà lại ngồi {khoa} — như bắt cá leo cây, mỗi ngày một nguội.", "cái đầu hợp với code, vậy mà phải học {khoa} cho có chỗ — tài để lệch, phí." ],
+    sky:   [ "đôi tay làm ra đồ thật mà lạc vào {khoa}, chẳng có chỗ mà dụng — cứ thế cùn dần.", "khéo tay thế mà khoa lại là {khoa} — học cái mình không ưa, lửa nghề tắt dần." ],
+    hype:  [ "máu khởi nghiệp mà nhốt trong {khoa} — bồn chồn, học chẳng vào, ngày một chán.", "đứa nói hay bán giỏi mà kẹt ở {khoa} — sai sân chơi, nó nguội thấy rõ." ],
+    _:     [ "đúng tài một đằng, khoa một nẻo — {khoa} chẳng phải chỗ của nó, mỗi ngày một uể oải." ]
+  },
   // iter-242 PEERS/CONTAGION ckpt2 — name the MÔI TRƯỜNG on a named kid IN-PLAY (Mark 5: while a slot/policy can still
   // change it). Appended to a bloom/wilt beat when the cohort atmosphere is the salient force: a warm class lifts the
   // bloomer further; a cold one drags the cooling one down ("chọn bạn mà chơi" made personal). Mirrors cohortPoor.

@@ -100,7 +100,7 @@ Greenlit keystone = **Phase 2c off-native intake** (MAJOR_FIT bites live). Phase
       Lever = build + policy. Sweep INTAKE sensor ✓ bounded (Δ8.1, neither dominates).
     - CP3a ✅ (iter-269): the intake-rule DIAL in panelOps ("Tuyển sinh — xếp khoa": Đúng khoa ↔ Mở cửa, `CONFIG.INTAKE_META`
       tradeoffs) — reachable by players. UI-only → byte-identical.
-    - **CP3b (NEXT):** surface `intakePolicy` in the Gameplay Lab (a selector, dynamic-Lab mandate) + the wrong-major
+    - **CP3b ✅ SHIPPED iter-270 (wrongMajorBeat names the off-native grain nguội-ing); CP3c next:** surface `intakePolicy` in the Gameplay Lab (a selector, dynamic-Lab mandate) + the wrong-major
       WILT narrative beat (name a named grain nguội-ing off-native, in-play and/or at the payoff).
     - **CP4 (optional):** tie khoa capacity to room UPGRADE level (seat-scarcity as a build-investment lever) — only
       if it adds agency without a default nerf.
