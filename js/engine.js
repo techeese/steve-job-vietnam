@@ -58,7 +58,10 @@ function eraFav(tell) { if (!tell) return 1; var f = curEra().fav; return (f && 
 // iter-205 ckpt2: lets the epilogue/graduation name the DECADE's hand on a life (wrong-era waste / right-era flourish).
 function eraFavAt(tell, year) { if (!tell || year == null) return 1; var f = CONFIG.ERAS[eraIndex(year)].fav; return (f && f[tell] != null) ? f[tell] : 1; }
 // the era-shift story beat — fires once at a year rollover that crosses an era boundary (pure derive, no state).
-function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift); var add = techReach(S.year) - techReach(prevYear); if (add > 0 && CONTENT.techReach[ce]) news(tpl(CONTENT.techReach[ce], { n: add })); } } // iter-240 L4 ckpt1: each tech wave (era-true) compounds the teacher's reach
+function eraShift(prevYear) { var pe = eraIndex(prevYear), ce = eraIndex(S.year); if (ce !== pe) { var e = CONFIG.ERAS[ce]; news("🕰️ " + e.name + " — " + e.shift);
+    if (CONTENT.eraFlood && CONTENT.eraFlood[e.key]) news("🌊 " + CONTENT.eraFlood[e.key]); // iter-260 (scout v2 #1): the gift the new decade floods the intake with — the world changing WHO walks in the gate
+    var _ash = CONTENT.eraShock && CONTENT.eraShock[S.archetype] && CONTENT.eraShock[S.archetype][e.key]; if (_ash) news("〽️ " + _ash); // iter-260 (scout v2 #2): this archetype's thesis meeting the era's reweighting — the ache (sparse). News-only, deterministic (e.key from S.year, S.archetype from state) → replay-safe.
+    var add = techReach(S.year) - techReach(prevYear); if (add > 0 && CONTENT.techReach[ce]) news(tpl(CONTENT.techReach[ce], { n: add })); } } // iter-240 L4 ckpt1: each tech wave (era-true) compounds the teacher's reach
 
 /* derived alumni stats (never stored — DESIGN §5a) */
 function aCraft(a) { return 0.6 * a.fs.tn + 0.4 * a.fs.st; }

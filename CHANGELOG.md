@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-22 — the ERA-BOUNDARY narrative layer: the lattice felt in prose at every decade turn (loop iter 260)
+**Scout v2 #1+#2, shipped together as one coherent layer — authored via a 6-agent draft→critic workflow.** The ERA×ARCHETYPE
+lattice (the spine of the game) re-weights which gifts the world realizes, but the decade TURNS read thinly — `eraShift()`
+fired only a generic name+shift line. Now each boundary lands two new beats, in the headmaster's voice:
+- **🌊 eraFlood (5 lines, one per era)** — who now walks in the gate: the gift the new decade floods the *intake* with
+  (era-true to `ERAS[].fav` — scarcity→maker hands, đổi-mới→hustler tongue, dotcom→screen/coder, smartphone→clout/be-seen,
+  AI→builders who won't let the machine do it for them). The world changing the cohort, felt.
+- **〽️ eraShock (15 sparse cells across 4 archetypes)** — the archetype's THESIS colliding with the era's reweighting, the
+  ache: the vocational school whose hand-craft the dotcom/smartphone decades stop wanting (then, in the AI era, *the one
+  thing the machine can't fake* — vindication after decades at the back); the city cram-lò hearing its flawless-rote model
+  reproduced by a machine for free ("tôi ngồi nghe cái lò của mình nguội dần"); the poor-village maker whose one favored
+  decade (scarcity) still slips by for lack of a backer.
+Built by a Workflow: 5 parallel drafters (one per archetype + an era-flood drafter) → an adversarial law/voice critic that
+de-templated, enforced prose-not-meter / no-Ministry-sarcasm / no-Pantheon / no-shift-line-duplication / era+archetype-truth,
+and kept the table SPARSE (cut cram-lò×smartphone as smug vindication, etc.). News-only, deterministic from `S.year` +
+`S.archetype` → replay-safe. Verified: parse clean, gate + BASELINE GREEN (byte-identical), bot BOTOK, lives clean, probe:
+floods fire 3×/run + shocks fire exactly as the sparse table designs across all 4 archetypes. Deployed. **Scout v2 queue:
+#1+#2 ✓ (this), #3 ✓ (iter-259); remaining: #4 archetype-framed capstone intro.**
+
 ## 2026-06-22 — BUGFIX: late-game saves silently un-mentored kids (a fresh-scout find) (loop iter 259)
 **A v2 scout fan-out surfaced a real save/reload correctness bug I'd never have found by holding — the exact payoff of
 SCOUT-BEFORE-YOU-HOLD.** `sanitize()` (js/save.js:98) capped the mentored-student count at the BASE `CONFIG.MENTOR_SLOTS`

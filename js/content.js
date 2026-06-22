@@ -649,6 +649,42 @@ var CONTENT = {
   ],
 
   // iter-240 L4 ckpt1-fix: the tech-reach beat fires when a new tech era extends the teacher's reach — keyed by era index so it's ERA-TRUE (era3 = smartphone/ed-tech, era4 = AI), not the iter-239 mislabel. {n} = the era's bonus to the mentor cap.
+  // iter-260 (scout v2 #1+#2) — the ERA-BOUNDARY narrative layer (authored via a 6-agent draft->critic workflow). When a
+  // decade turns, the headmaster notices WHO now walks in the gate (eraFlood = the gift the era floods the intake with,
+  // era-true to ERAS[].fav) and, for HIS archetype, the ACHE of his school's thesis meeting the era's reweighting
+  // (eraShock = sparse: only the distinct collisions). News-only, deterministic from S.year + S.archetype -> replay-safe.
+  eraFlood: {
+    scarcity: "Lứa gõ cổng năm nay phần nhiều là con nhà nghèo có đôi tay chẳng chịu ngồi yên — đứa vá lại cái radio hỏng, đứa lấy lốp xe cũ nặn thành món đồ chơi; cái khó đẻ ra cái khéo, rồi cái khéo lại tìm về cổng trường tôi.",
+    doimoi: "Cổng trường giờ rặt những đứa mắt sáng lên mỗi khi nhắc chuyện mua đi bán lại — chợ vừa mở, nhà nào cũng gửi gắm cho tôi một đứa biết xoay, biết nói, mong nó kịp chuyến đò làm giàu.",
+    dotcom: "Dạo này đứa nào tới ghi danh cũng hỏi trước tiên là trường có máy không — lũ trẻ mê cái màn hình, mê cái thứ gõ vào là chạy, cứ thế tự dắt nhau về.",
+    smartphone: "Phụ huynh dắt vào toàn những đứa đã quen đứng trước ống kính — đứa nào cũng mơ được nhiều người biết mặt, được lên màn hình, chứ hiếm đứa mơ làm ra một thứ cầm được trên tay.",
+    ai: "Giờ đứa xếp hàng ngoài cổng là lũ không cam chịu để cái máy làm thay phần mình — chúng muốn tự tay ra lệnh cho máy, muốn dựng nên cái thật mà máy còn chưa dựng nổi."
+  },
+  eraShock: {
+    tinh_le: {
+      doimoi: "Cái chợ ồn ào ấy mở ở đâu xa lắm, chưa lần nào tới được tỉnh này — vậy mà đứa nhanh nhẹn nhất lớp đã khăn gói ra bến xe, về phố mà buôn bán.",
+      dotcom: "Cuối cùng trường tỉnh cũng nuôi được một đứa biết lập trình — rồi nó lên chuyến xe đêm ra thành phố, vì cái nghề ấy về đây vẫn chưa có chỗ mà dùng.",
+      smartphone: "Cái điện thoại mang cả thế giới hào nhoáng về tận tỉnh lẻ — rồi làm lũ trẻ thấy lớp học của mình sao mà bé, sao mà xa ánh đèn.",
+      ai: "Sợi dây mạng kéo cả kho tri thức về tới tận cổng trường tỉnh — chỉ còn một câu chưa ai dám trả lời: một cái bàn ở tỉnh lẻ có dám tin mình nặn nổi một kỹ sư thật không."
+    },
+    que_ngheo: {
+      scarcity: "Cái thời này lẽ ra hợp với làng tôi nhất — đứa nào cũng quen tay làm ra cái gì đó từ con số không; chỉ tiếc, sáng dạ đến mấy mà sau lưng chẳng có ai chống, thì cái thời của mình rồi cũng trôi qua tay.",
+      doimoi: "Chợ vừa mở, mấy đứa sáng dạ nhất làng đã bỏ con đường đất mà ra phố — tôi nhìn theo, chẳng biết nên mừng hay nên tiếc cái đầu khôn ngoan ấy đem đi đong đếm ngoài sạp hàng.",
+      dotcom: "Ngoài kia người ta trả vàng cho cái đầu biết lập trình — mà ở cuối con đường đất này, đứa sáng dạ nhất của tôi còn chưa một lần được chạm tay vào cái máy.",
+      smartphone: "Cái điện thoại đã về tới tận làng, lần đầu đường xa không còn cắt đứt được đứa nào — vậy mà ánh đèn vẫn chỉ rọi vào kẻ được nhìn thấy, còn đứa giỏi lặng lẽ của tôi thì cứ ngồi mãi trong bóng."
+    },
+    lo_thanhpho: {
+      doimoi: "Chợ vừa mở, phụ huynh xếp hàng trước cổng lò dài chưa từng thấy, cái máy luyện đề của tôi chạy hết công suất — mà tịnh không ai dừng lại hỏi: luyện mãi thế này, có luyện ra nổi một đứa dám tự nghĩ không.",
+      dotcom: "Thế giới lên mạng, ngoài kia người ta hỏi em đã làm ra được cái gì — còn đứa tôi luyện kỹ nhất thì thuộc lòng mọi đáp án mẫu mà chưa một lần tự tay dựng nên thứ gì của riêng nó.",
+      ai: "Đúng cái món tôi luyện cả đời để bán — bài văn mẫu trơn tru, đáp án không sai một dấu phẩy — giờ cái máy nhả ra trong chớp mắt, không công; tôi ngồi nghe cái lò của mình nguội dần."
+    },
+    truong_nghe: {
+      scarcity: "Năm nay cả nước thiếu thốn, người ta lại quý đôi tay biết làm ra cái dùng được — lần đầu tôi nghe nghề của trường mình được gọi là cái nghề tử tế, mà trong bụng cứ nơm nớp sợ nó chẳng bền.",
+      dotcom: "Trò tôi học để có một cái nghề cầm chắc trong tay — vậy mà cái nghề ấy đang nguội đi, người ta chỉ còn hỏi em có biết gõ máy không.",
+      smartphone: "Trường tôi dạy người ta làm ra của thật, chứ chưa từng dạy ai cách bước lên sân khấu — mà giờ hình như chỉ cái sân khấu ấy mới ra tiền.",
+      ai: "Cái máy giờ làm thay được khối thứ, nhưng mối hàn chắc, cỗ máy chạy được thì nó chưa thế chân nổi — sau bao năm đứng cuối, đôi tay làm thật của trò tôi bỗng lại là thứ không sao giả được."
+    }
+  },
   techReach: {
     3: "📱 Internet và học liệu trực tuyến về trường — thầy kèm sát thêm được một em mỗi lúc (suất dìu dắt +{n}). Bài giảng số gánh phần lặp đi lặp lại; thầy dồn sức cho đứa thật cần.",
     4: "🤖 Trợ giảng AI về trường — thầy lại kèm sát thêm một em nữa (suất dìu dắt +{n}). Máy tự viết, tự chấm; thầy chỉ còn lo phần không máy nào thay được — hiểu cho thấu một đứa trẻ."

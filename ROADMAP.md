@@ -137,10 +137,8 @@ claim for Phase 1 is now actually verifiable.
 
 - **▶ NON-GATED QUEUE v2 (fresh scout fan-out iter-259 — 4 survivors, 14 rejected). Mine these before holding:**
   3. ✅ **BUGFIX: late-game saves silently un-mentored kids** — SHIPPED iter-259 (sanitize capped by base 3 not era-scaled `mentorSlots()`; one-line fix + GATE_SAVE regression guard).
-  1. **Cohort-intake era-flood line** — ONE deterministic news-only line from `eraShift()` (engine.js) AFTER the post-boundary
-     intake, naming the gift the new era floods the school with (derive from `CONFIG.ERAS[ce].fav` max>1 — the same data `rollTell` tilts by). small. byte-identical-ish (news-only, recapture if it perturbs).
-  2. **Archetype×era era-shock beats** — a sparse CONTENT-only `eraShock[archKey][eraKey]` table, authored lines consulted in
-     `eraShift()` after the generic name+shift line, fired only on a real boundary crossing + when an entry exists. medium (authoring). news-only.
+  1. ✅ **Cohort-intake era-flood line** — SHIPPED iter-260 (`🌊 CONTENT.eraFlood[era]` in `eraShift()` — the gift the new decade floods the intake with).
+  2. ✅ **Archetype×era era-shock beats** — SHIPPED iter-260 (`〽️ CONTENT.eraShock[arch][era]`, 15 sparse cells, authored via a 6-agent draft→critic workflow — the archetype's thesis aching against the era).
   4. **Archetype-framed capstone intro** — `CONTENT.essay.archFrame{tinh_le,que_ngheo,lo_thanhpho,truong_nghe}`, one situated-question
      clause per archetype inside buildEssay's capstone block (mirrors the archetype's own `de`). small. reading-only/byte-identical.
 
