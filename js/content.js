@@ -84,17 +84,20 @@ var CONTENT = {
     loud: { // gift left idle / ground to rote
       spark: " — tư duy lập trình sắc thế, mà bỏ phí trên tay bạn",
       sky:   " — đôi bàn tay khéo, đầy ý lạ, mà chẳng nơi nào cho em làm",
-      hype:  " — máu khởi nghiệp ấy, rốt cuộc nguội trên tay bạn"
+      hype:  " — máu khởi nghiệp ấy, rốt cuộc nguội trên tay bạn",
+      gen:   " — sáng dạ, việc gì cũng kham được, mà chẳng ai chỉ cho một hướng; rốt cuộc ra trường vẫn trắng tay nghề" // iter-246: the everyman ("") — no betrayed gift, the grief is the DIRECTION the school never gave the able-but-undirected majority
     },
     under: { // settled into a steady-but-lesser life
       spark: " — đáng lẽ thành một kỹ sư thực thụ, giờ chỉ một chân yên ổn",
       sky:   " — đôi tay ấy đáng lẽ làm ra thứ của riêng mình",
-      hype:  " — đáng lẽ dựng được gì đó của riêng em, giờ làm công ăn lương"
+      hype:  " — đáng lẽ dựng được gì đó của riêng em, giờ làm công ăn lương",
+      gen:   " — giỏi đều mọi thứ, thiếu một thứ để gọi là của riêng; thành người làm được việc, không thành một cái tên"
     },
     bent: { // the gift turned the wrong way
       spark: " — đầu óc lập trình sắc thế, bị bẻ thành trò lùa gà",
       sky:   " — bàn tay khéo ấy, giờ chỉ khéo vẽ chiêu",
-      hype:  " — khiếu thuyết phục ấy, bị bẻ cong thành thói ăn xổi"
+      hype:  " — khiếu thuyết phục ấy, bị bẻ cong thành thói ăn xổi",
+      gen:   " — nhanh nhẹn, dễ bảo, nên cũng dễ bị người ta dùng vào trò khôn lỏi"
     }
   },
   // iter-205 (ERAS L1 ckpt2 — LEGIBILITY) — name the DECADE's hand on a life, appended to the gift-vs-fate reading.

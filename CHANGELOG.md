@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ Phase 2 groundwork: the EVERYMAN gets a voice (loop iter 246)
+**The plan's "write the everyman content FIRST" prerequisite — and a real narrative gap closed for the majority of
+kids.** ~54% of students have no gift-direction (`tell=""`), and at the payoff they ALL shared one generic line
+(*"tài năng bỏ phí trên tay bạn"*) — which doesn't even fit them (they have no *standout* gift to betray). Added the
+everyman's own gift-vs-fate read to `realGapTell` via a `gen` key for each class, and re-pointed `realCreditSuffix`
+(`tk = tell || "gen"`) so `""` resolves to it (spark/sky/hype unchanged → **byte-identical**). Their grief is distinct
+and true to the đề-Văn's most universal note — not a betrayed gift but the **direction the school never gave the
+able-but-undirected**: *loud* → *"sáng dạ, việc gì cũng kham được, mà chẳng ai chỉ cho một hướng; rốt cuộc ra trường
+vẫn trắng tay nghề"*; *under* → *"giỏi đều mọi thứ, thiếu một thứ để gọi là của riêng; thành người làm được việc,
+không thành một cái tên"*; *bent* → *"nhanh nhẹn, dễ bảo, nên cũng dễ bị người ta dùng vào trò khôn lỏi."* Reading-only
+→ sim byte-identical (gate BASELINE GREEN; the capstone essay grew 2761→2907 as the everyman cast reads richer).
+Verified: parse clean, gate GREEN + BASELINE GREEN, sweep 0 bad flags, bot BOTOK, probe confirms all 3 everyman lines
+fire + spark unchanged. Deployed. **NEXT: the Phase 2 mechanic** — decouple major from tell (~6 majors incl. the
+Đại-cương everyman track, with its realized+wasted banks) + `MAJOR_FIT` as a 2nd ceiling term.
+
+
 ## 2026-06-22 — EDUCATION epic ▶ PHASE 1b: the 2-axis TEACHING DIAL goes live (loop iter 245)
 **Structure becomes a player verb.** The curriculum panel's 3 triết-lý buttons (MODE) now sit above a second
 segmented control per grade — the STRUCTURE axis (**Mở / Vừa / Khuôn** = autonomy / neutral / scaffold), wired to

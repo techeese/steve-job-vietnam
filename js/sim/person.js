@@ -175,7 +175,8 @@ function protegeCodaKey(state, seed) { var c = realClass(state, seed); return c 
 // (VISION §114), not only in the final essay. Returns "" for non-prodigies → glimpsed, not metered (invariant #3).
 function realCreditSuffix(state, seed, flags, tell, gradYear, origin) {
   var rc = realClass(state, seed);
-  var gap = (rc && tell && CONTENT.realGapTell[rc] && CONTENT.realGapTell[rc][tell]) || CONTENT.realGap[rc] || ""; // iter-203: name WHICH gift (tell) was wasted, not just the fate — epilogue counterpart of iter-193's in-play lines; falls back to the generic line for tell="" / unmapped
+  var tk = tell || "gen"; // iter-246: the everyman ("") gets its OWN gift-vs-fate read (the able-but-undirected majority — >50% of kids), not the generic line. spark/sky/hype unchanged → byte-identical.
+  var gap = (rc && CONTENT.realGapTell[rc] && CONTENT.realGapTell[rc][tk]) || CONTENT.realGap[rc] || ""; // iter-203: name WHICH gift (tell) was wasted, not just the fate; iter-246: + the everyman via tk="gen"; falls back to the generic line for any unmapped tell
   if (gap && flags && flags.diamond) gap = (CONTENT.diamondWaste && CONTENT.diamondWaste[rc]) || gap; // iter-194: the gem admitted past the score, then let slip — name the gamble you LOST (symmetry of diamondCredit; invariant #2/#4)
   else if (!gap && flags && flags.diamond && flourishOf(state) >= 4) gap = CONTENT.diamondCredit;     // overlooked at entry, realized anyway — the gamble you WON
   else if (!gap && flags && flags.mentored && flourishOf(state) >= 2) gap = CONTENT.mentorCredit;     // a realized life under your hand
