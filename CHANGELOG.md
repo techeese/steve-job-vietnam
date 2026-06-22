@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-22 — Phase 3 internship ATTEMPTED → reverted (2nd apex-gate confirmation); loop holds (loop iter 252)
+**Second negative result, recorded so neither activity is re-attempted.** After đội-tuyển (iter-251) I tried the OTHER
+review activity — **THỰC TẬP (internships)**: +applied tn / −creative st for upper grades, opt-in default-off. Sweep
+proved it ISN'T the clean non-apex tradeoff I hoped: +tn converts even makers into employable **technicians** (maker
+realize 70→85%, a buff), while the real *cost* is the dulled creativity/**apex** (st) — and the everyman was already at
+ceiling (81%→81%). So internship's true tradeoff is **applied-realize vs the 🍎**, i.e. thesis-adjacent again; the
+non-apex version is a near-free realize buff (non-plural). Reverted clean (gate + BASELINE GREEN, repo at iter-251).
+**Both Phase-3 activities now empirically confirm the same gate: the interesting tradeoff IS the genius/🍎 cost** — which
+is frozen + owner-gated. I'm stopping Phase-3 attempts (further variants only re-prove it) and **holding** at this
+frontier until the owner answers the APEX fork (should activities/seats shape the 🍎 ceiling — i/ii/iii). The live
+build remains the complete EDUCATION delivery (Phases 0/1/2a/2b + everyman voice/home). No code change shipped.
+
 ## 2026-06-22 — Phase 3 đội-tuyển ATTEMPTED → reverted; the frontier is EMPIRICALLY thesis-gated (loop iter 251)
 **A negative result, recorded so it isn't re-attempted.** Built Phase 3 ckpt1 (Đội tuyển — an opt-in competition team:
 groom the top gifted → +mood/FLOW, at the cost of a mentor slot + mild strain on the sidelined), default-OFF so
