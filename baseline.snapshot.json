@@ -1,0 +1,22 @@
+{
+  "luyende": {
+    "BI_BAT": 20,
+    "CA_MAP_COIN": 16,
+    "FOUNDER": 1,
+    "LUONG_ON": 17,
+    "QUAN_VAN_MAU": 28,
+    "THAT_NGHIEP": 31
+  },
+  "canbang": {
+    "FOUNDER": 36,
+    "KY_SU": 227,
+    "LUONG_ON": 62,
+    "THAT_NGHIEP": 11
+  },
+  "duan": {
+    "FOUNDER": 39,
+    "KY_SU": 205,
+    "LUONG_ON": 68,
+    "THAT_NGHIEP": 26
+  }
+}

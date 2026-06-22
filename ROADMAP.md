@@ -84,9 +84,11 @@ for the gifted). All new fit caps are **DISCRETE texture tables, never a smooth 
 law: texture not gradient). Outputs stay **prose, never a fit-% or fungible budget** (§C-3) — incl. auditing the
 existing per-kid fit readout at `ui.js` ~L908–923.
 
-**▶ PHASE 0 (prerequisite, build FIRST) — GATE BASELINE-CHECK.** Today `gate.sh` tests determinism only, NOT a
-growth/realization baseline → a mis-tuned `STRUCT_FIT`-at-baseline would silently regress every kid and stay GREEN.
-Add a stored realization/destiny-histogram snapshot check so the byte-identical-default claim is actually verifiable.
+**✅ PHASE 0 SHIPPED (iter-243) — GATE BASELINE-CHECK.** `baseline.js` + committed `baseline.snapshot.json` run a
+fixed (3 presets × 4 seeds) matrix to graduation, tally the alumni-state histogram, and assert it matches EXACTLY
+(deterministic → epsilon 0; precise `preset.state` drift diff + `--capture` for intended changes). Wired into
+`gate.sh` (`BASELINE GREEN` required) so a silent rate regression can no longer pass. The byte-identical-default
+claim for Phase 1 is now actually verifiable.
 
 **▶ PHASE 1 — STRUCTURE axis (the spark≠sky fix; ships alone).** `STRUCT_FIT(tell,structure)` table; `S.presets.n*`
 → `{mode,structure}` (default-derive old enum → `{enum, mid}`, must return exactly 1.0 at baseline); compose into mm

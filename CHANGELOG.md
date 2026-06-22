@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ PHASE 0 SHIPPED: the realization-baseline snapshot (loop iter 243)
+**The gating prerequisite my own plan requires before any Phase-1 code.** `gate.sh` proved *determinism* (replay
+byte-identical) but stored NO growth/realization baseline — so a mis-tuned change (e.g. a Phase-1 STRUCT_FIT that
+doesn't return exactly 1.0 at the baseline structure) would silently shift every kid's destiny and the gate would
+stay GREEN. New **`baseline.js`** closes the hole: runs a FIXED matrix (3 triết lý × 4 seeds) to graduation, tallies
+the alumni-state histogram, and asserts it matches the committed **`baseline.snapshot.json`** EXACTLY (the sim is
+deterministic → epsilon 0; any drift is a regression, with a precise `preset.state: baseline N → now M` diff and a
+`--capture` path for *intended* changes). Wired into `gate.sh` after gate.js (`BASELINE GREEN` required). Captured
+the current spread as the snapshot (luyện-đề → waste/distortion-heavy: 31 thất-nghiệp / 28 văn-mẫu / 16 coin / 20
+bị-bắt / 17 ổn / 1 founder; cân-bằng & đồ-án → mostly realized: 227/205 kỹ-sư + 36/39 founders). Verified: parse
+clean, gate GREEN + BASELINE GREEN, drift-detection confirmed (perturb → exit 1, names the cell), bot BOTOK
+(7337/87/14 — no engine touched), sweep 0 bad flags. Dev-tooling only → undeployed. **NEXT: Phase 1 — the STRUCTURE
+axis (the spark≠sky fix), now safely verifiable against this baseline.**
+
 ## 2026-06-22 — PLAN ADOPTED: EDUCATION MODEL REFINEMENT wired into MODEL/ROADMAP/SKILL (owner greenlight)
 **Owner:** *"Let's do the decided fix — revise the model, roadmap, plan, skills… before continuing the loop."*
 After the 26-agent review (`MODEL-REMAKE-PROPOSAL.md`), baked the decided model into the governing docs so the
