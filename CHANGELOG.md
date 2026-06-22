@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-22 — Phase 3 đội-tuyển ATTEMPTED → reverted; the frontier is EMPIRICALLY thesis-gated (loop iter 251)
+**A negative result, recorded so it isn't re-attempted.** Built Phase 3 ckpt1 (Đội tuyển — an opt-in competition team:
+groom the top gifted → +mood/FLOW, at the cost of a mentor slot + mild strain on the sidelined), default-OFF so
+byte-identical. The sweep sensor + a direct probe **proved it doesn't work as a non-thesis lever** and I reverted it
+clean (gate + BASELINE GREEN, repo at iter-250):
+- the gifted already realize ~88–92% (a **ceiling**) → grooming them for more *realization* has no headroom (sensor: team
+  realize 88→84%, INERT/worse);
+- **peer-contagion** (iter-241) drags the strained cohort mean back onto the team, *cancelling* the member boost;
+- their only real headroom is the **apex (🍎)** — which is grain/era-gated by `stevePShort` (probe: apex 9→9%, mood-immune).
+**This empirically confirms the plateau finding:** both remaining big EDUCATION pieces — Phase 3 activities (đội-tuyển's
+real lever = apex) and Phase 2c off-native intake (who overflows / how scarce = a feel call) — have a **thesis-adjacent
+core (the 🍎 / what makes a Steve)** that is FROZEN + owner-gated. I tried, the sweep proved it, I didn't ship filler.
+**The decision is the owner's: the L4-style APEX fork** — should activities/seats/tech be allowed to shape the 🍎
+ceiling (and how)? Until then the EDUCATION epic's high-value *solo* work is complete (Phases 0/1/2a/2b + the everyman
+voice + home, all live + Lab-surfaced).
+
 ## 2026-06-22 — everyman in-play voice (small) + SOLO-PLATEAU reached on the EDUCATION epic (loop iter 250)
 **A small completion + an honest finding.** Gave the everyman (`tell=""`) dedicated `cohortBloom`/`cohortWilt` in-play
 glimpse lines (sharper than the generic `_`: "vững dần đều — kiểu người ta tin giao việc" / "chẳng có nghề nào ngấm vào
