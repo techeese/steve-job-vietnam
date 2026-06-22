@@ -103,9 +103,14 @@ claim for Phase 1 is now actually verifiable.
   the per-kid fit readout + sprite reaction read the composed `MATCH × STRUCT_FIT` (kept 3-band PROSE — §C-3 audit of
   L908 held). Byte-identical at default (gate BASELINE GREEN); the dial bites (soul probe: coders 12/28→24/28 Mở→Khuôn).
   Phase 1a+1b deployed together (the coherent player-usable slice). gate+BASELINE GREEN, bot 7337 no-JSERR, sweep 0-flags.
-- **▶ PHASE 1c (NEXT) — the tell-keyed DISTORTION map.** Generalize the single `MATCH_CM` (hype+cram→shark) into a
-  (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark when crammed. This MOVES the distortion
-  spread → a deliberate `baseline.snapshot.json` recapture (note it) + sweep re-check. Then Phase 2 (majors decoupled).
+- **✅ PHASE 2 GROUNDWORK SHIPPED (iter-246) — the EVERYMAN gets a voice (the mandated content-first step).** The ~54%
+  with `tell=""` now get their own gift-vs-fate read at the payoff (`realGapTell.*.gen` + `realCreditSuffix` `tk =
+  tell||"gen"`) — the able-but-undirected majority, their grief the *direction the school never gave* (not a betrayed
+  gift). Reading-only → byte-identical (BASELINE GREEN; essay 2761→2907). Deployed. (Chose this over Phase 1c: higher
+  soul, lower risk, and it's Phase 2's own prerequisite.)
+- **▶ PHASE 1c (deferred, optional texture) — the tell-keyed DISTORTION map.** Generalize `MATCH_CM` (hype+cram→shark)
+  into a (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark. MOVES the distortion spread → a
+  deliberate `baseline.snapshot.json` recapture + sweep re-check. Lower priority than the majors mechanic below.
 
 **▶ PHASE 2 — MAJORS decoupled.** **Write the everyman content FIRST** (`realGapTell[class]['']` + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
