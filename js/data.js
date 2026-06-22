@@ -170,6 +170,28 @@ var CONFIG = {
   },
   // a showy kid crammed doesn't realize — they curdle toward gaming-the-system (cá mập): boost hustle growth
   MATCH_CM: function (tell, preset) { return (tell === "hype" && preset === "luyende") ? 1.6 : 1.0; },
+  // iter-244 (EDUCATION epic, Phase 1a) — STRUCTURE axis: the orthogonal pedagogy dimension the 3 triết lý flatten.
+  // Axis B of the TEACHING DIAL (Axis A = MODE = the existing preset). STRUCT_FIT(tell, structure) COMPOSES with
+  // MATCH (fitOf = MATCH × STRUCT_FIT) and, where it deviates from 1, drives MOOD (the non-saturating tooth — FLOW /
+  // dropout / peer-contagion — where structure can actually move a GIFTED kid's life; rate alone washes out).
+  // 'mid' is the NEUTRAL default → 1.0 for every tell → byte-identical to pre-Phase-1 (gate BASELINE GREEN proves it).
+  // The two real stances split the craft-twins (today MATCH gives spark & sky an IDENTICAL row): low (autonomy / open
+  // xưởng) realizes the maker(sky) + showman(hype) & wastes the coder(spark) + everyman(""); high (scaffold / drill)
+  // realizes the coder + everyman & wastes the maker + showman. Every COLUMN (level) realizes some tell AND wastes
+  // some (symmetry, invariant #2); every ROW (tell) has a structure that lifts it AND one that drags it. spark↔sky
+  // now need OPPOSITE structures — the spark≠sky fix. Sweep STRUCT_FIT sensor enforces both.
+  STRUCT_DEFAULT: "mid",
+  STRUCT_FIT: function (tell, structure) {
+    var T = {
+      spark: { low: 0.90, mid: 1.0, high: 1.10 }, // coder: a scaffolded ladder, then the machine
+      sky:   { low: 1.15, mid: 1.0, high: 0.85 }, // hands-maker: dies under drill, blooms with autonomy
+      hype:  { low: 1.10, mid: 1.0, high: 0.90 }, // showman: needs the stage / freedom
+      "":    { low: 0.85, mid: 1.0, high: 1.15 }  // everyman: the ladder gives the directionless a direction
+    };
+    var row = T[tell || ""] || T[""];
+    return row[structure] != null ? row[structure] : 1.0;
+  },
+  STRUCT_MOOD_W: 3, // mood/month per unit of STRUCT_FIT deviation from 1.0 (a structure-mismatch wears a kid down; a fit lifts) — bounded ±0.45 at the ±0.15 extremes, comparable to MISMATCH_MOOD_DRAIN 0.5. Zero at 'mid' → byte-identical.
   // MENTOR'S LEDGER Phase 2 — the headmaster's scarce ATTENTION. You can actively mentor only a FEW kids;
   // a mentored kid's craft multiplier is lifted (focused attention overcomes a grain mismatch — you RESCUE
   // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.

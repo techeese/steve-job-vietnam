@@ -88,6 +88,12 @@ function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherByI
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }
 function teacherById(id) { for (var i = 0; i < S.teachers.length; i++) if (S.teachers[i].id === id) return S.teachers[i]; return null; }
 // MENTOR'S LEDGER Phase 2 — the headmaster's scarce attention (player verb + helpers; UI wiring lands next)
+// iter-244 (EDUCATION epic Phase 1a) — the TEACHING DIAL fit: MODE (preset) × STRUCTURE. fitOf is the single
+// source for "how well the school's teaching fits this gift", replacing the bare CONFIG.MATCH(tell, preset) at
+// every site (growth, cohort/fav/tet beats, the UI readouts, the sweep bot). structOf defaults to 'mid' (→
+// STRUCT_FIT 1.0) so a pre-Phase-1 save / the boot default is byte-identical.
+function structOf(gk) { return (S.struct && S.struct[gk]) || CONFIG.STRUCT_DEFAULT; }
+function fitOf(tell, gk) { return CONFIG.MATCH(tell, S.presets[gk]) * CONFIG.STRUCT_FIT(tell, structOf(gk)); }
 function mentorCount() { var c = 0, st = S.students; for (var i = 0; i < st.length; i++) if (st[i].mentored) c++; return c; }
 // iter-240 (L4 ckpt1): the effective attention cap — each tech wave (era ≥ TECH_REACH.minEra) compounds the teacher's reach. Deterministic from S.year → replay-safe; no new state.
 function techReach(year) { var e = eraIndex(year), m = CONFIG.TECH_REACH.minEra; return e >= m ? (e - m + 1) * CONFIG.TECH_REACH.perEra : 0; }
@@ -233,6 +239,7 @@ function freshState(seed, archKey) {
     tiengTam: _A.tt, uyTin: _A.ut, thucChat: _A.tc,
     utYearNet: 0, pierceDefense: false, pierceKeynote: false,
     presets: { n1: _A.presets.n1, n2: _A.presets.n2, n3: _A.presets.n3, n4: _A.presets.n4 }, // the archetype's default TEACHING CULTURE (player can change it); tinh_le = canbang/luyện-đề baseline (inaction WASTES — the realize/waste spread comes from per-child attention)
+    struct: { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT }, // iter-244 (EDUCATION epic Phase 1a) — Axis B of the teaching dial, per grade. All 'mid' (neutral, STRUCT_FIT=1.0) at boot → byte-identical to pre-Phase-1; the player moves it via the dial (Phase 1b). Archetype-specific defaults are a deliberate later recapture, not now.
     rooms: [],
     students: [],
     teachers: [],
@@ -500,7 +507,7 @@ function tetCohortBeat() {
   var st = S.students; if (!st || st.length < 6) return;
   var blossom = 0, cool = 0;
   for (var i = 0; i < st.length; i++) {
-    var s = st[i], mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    var s = st[i], mm = fitOf(s.tell, "n" + s.grade); // iter-244: MODE × STRUCTURE (byte-identical at the mid default)
     if (s.mentored || mm >= 1.3) blossom++;
     else if (mm < CONFIG.MISMATCH_MM || s.mood < CONFIG.MOOD_PENALTY_BELOW) cool++;
   }

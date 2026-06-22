@@ -90,11 +90,20 @@ fixed (3 presets × 4 seeds) matrix to graduation, tally the alumni-state histog
 `gate.sh` (`BASELINE GREEN` required) so a silent rate regression can no longer pass. The byte-identical-default
 claim for Phase 1 is now actually verifiable.
 
-**▶ PHASE 1 — STRUCTURE axis (the spark≠sky fix; ships alone).** `STRUCT_FIT(tell,structure)` table; `S.presets.n*`
-→ `{mode,structure}` (default-derive old enum → `{enum, mid}`, must return exactly 1.0 at baseline); compose into mm
-+ the discrete MISMATCH_CEIL cap; re-point the mm≥1.3 threshold reads (engine ~L504, person ~L311, ui ~L351 **+ the
-L908 fit readout**); replace the single `MATCH_CM` with a tell-keyed DISTORTION map; UI: the 3 buttons become a 2-axis
-dial (named corners + tradeoff strings). Sweep: STRUCT_FIT symmetry sensor + a spark≠sky differentiation assertion.
+**▶ PHASE 1 — STRUCTURE axis (the spark≠sky fix; ships alone).**
+- **✅ PHASE 1a SHIPPED (iter-244) — the mechanic, headless + byte-identical.** `CONFIG.STRUCT_FIT(tell,structure)` +
+  new `S.struct.n1..n4` (default `mid`, chosen over reshaping `S.presets` → less churn) + the `fitOf(tell,gk)` =
+  MATCH × STRUCT_FIT helper re-pointed at every fit site (growth, cohort/fav/tet beats, sweep bot). TEETH at MOOD
+  (`structMood = (STRUCT_FIT−1)·STRUCT_MOOD_W`, the non-saturating channel) — zero at `mid` → byte-identical (gate
+  BASELINE GREEN proves it). New sweep STRUCT_FIT sensor: symmetry + bites/splits (coder→HIGH 57→83%, maker→LOW
+  48→86%). Adaptive bot now searches structure. save.js guards `S.struct` (no migrator). gate GREEN+BASELINE GREEN,
+  sweep 0-flags, bot 7337 byte-identical, lives clean. Committed LOCAL, undeployed (inert until the dial).
+- **▶ PHASE 1b (NEXT) — the dial UI + re-points + distortion map.** The 3 preset buttons → a 2-axis dial (named
+  corners + tradeoff strings) so the player SETS structure; re-point the ui.js fit readouts to `fitOf` **+ audit the
+  L908 per-kid readout against §C-3** (keep it 3-band prose, never a fit-%); replace the single `MATCH_CM` with a
+  tell-keyed DISTORTION map (spark→credential-grinder, sky→văn-mẫu, hype→coin-shark). This is the coherent slice to
+  DEPLOY (structure becomes player-usable). A non-mid dial will move outcomes → recapture `baseline.snapshot.json`
+  intentionally IF the default ever changes (the default stays `mid`, so the baseline should hold).
 
 **▶ PHASE 2 — MAJORS decoupled.** **Write the everyman content FIRST** (`realGapTell[class]['']` + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`

@@ -80,6 +80,10 @@ function sanitize() {
   if (typeof S.archetype !== "string" || !CONFIG.ARCHETYPES[S.archetype]) S.archetype = CONFIG.ARCH_DEFAULT; // iter-210 L2: old saves / corrupt → baseline (tinh_le) → byte-identical; drives studentOrigin's mix
   if (!CONFIG.PRESETS[S.presets.n1]) S.presets.n1 = "canbang";
   ["n1", "n2", "n3", "n4"].forEach(function (k) { if (!CONFIG.PRESETS[S.presets[k]]) S.presets[k] = "canbang"; });
+  // iter-244 (EDUCATION epic Phase 1a) — STRUCTURE axis (parallel to presets). Old saves lack S.struct → default all
+  // 'mid' (STRUCT_FIT=1.0) → byte-identical. No migrator needed (new field, freshState seeds it; this just guards it).
+  if (!S.struct || typeof S.struct !== "object") S.struct = { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT };
+  ["n1", "n2", "n3", "n4"].forEach(function (k) { if (["low", "mid", "high"].indexOf(S.struct[k]) < 0) S.struct[k] = CONFIG.STRUCT_DEFAULT; });
   S.students = (S.students || []).map(function (s) {
     if (!s) return null;
     if (bad(s.kt) || bad(s.tn) || bad(s.st) || bad(s.cm) || bad(s.vet)) return null;

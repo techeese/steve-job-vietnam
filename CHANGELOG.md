@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ PHASE 1a: the STRUCTURE axis mechanic (the spark≠sky fix) (loop iter 244)
+**The first real slice of the decided refinement — headless, byte-identical on default, sweep-proven.** Pedagogy
+gains its missing orthogonal axis: alongside MODE (the 3 triết lý, kept) there is now **STRUCTURE** (drill ↔
+autonomy). `CONFIG.STRUCT_FIT(tell, structure)` composes with MATCH via a single new helper **`fitOf(tell, gradeKey)`
+= MATCH × STRUCT_FIT** (replacing the bare `CONFIG.MATCH(tell,preset)` at every fit site: growth, cohort/fav/tet
+beats, the sweep bot). A new parallel state field **`S.struct.n1..n4`** (default `"mid"`) holds the axis — chosen over
+reshaping `S.presets` into objects (far less churn, same model). The TEETH live at **MOOD** (the non-saturating
+channel — FLOW/dropout/peer-contagion — where structure can move a *gifted* kid; rate alone washes out per the
+saturation wall): `structMood = (STRUCT_FIT − 1) × STRUCT_MOOD_W`, **zero at `mid` → byte-identical**. The table
+splits the craft-twins (today MATCH gives spark & sky an IDENTICAL row): **low** (autonomy) lifts the maker(sky) +
+showman(hype), drags the coder(spark) + everyman(""); **high** (scaffold) lifts the coder + everyman, drags the maker
++ showman. Every row has a lift AND a drag; every non-neutral level realizes some + wastes some (symmetry).
+- **Phase 0 pays off immediately:** gate **BASELINE GREEN** proves the alumni-state histogram is byte-identical at
+  the default (STRUCT_FIT=1.0 at `mid`); the mechanic is provably inert until the dial moves it.
+- **New sweep STRUCT_FIT sensor** (`PEER_OFF`-style `struct` override in `play()`): asserts table symmetry + that it
+  BITES and SPLITS — under a neutral mode the **coder prefers HIGH (57→83%)**, the **maker prefers LOW (48→86%)**
+  (Δ25.9/38.1pts). The verified spark==sky degeneracy is fixed.
+- The **adaptive bot now also searches structure** (modal gift → its STRUCT_FIT-peak level) so the no-dominant-strategy
+  guarantee isn't blind to the new knob.
+- `S.struct` sanitized/defaulted in save.js (new field, no migrator — old saves → all `mid` → byte-identical).
+Verified: parse clean, **gate GREEN + BASELINE GREEN**, **sweep 0 bad flags** incl. the new STRUCT ✓, bot BOTOK
+7337/87/14 (byte-identical), lives 0 LIVESFAIL. Committed LOCAL — **undeployed**; the dial UI (Phase 1b) makes
+structure player-settable and is the coherent slice to deploy. **NEXT: Phase 1b — the 2-axis dial + the ui.js
+fit-readout re-points (the §C-3 audit at L908) + the tell-keyed distortion map.**
+
 ## 2026-06-22 — EDUCATION epic ▶ PHASE 0 SHIPPED: the realization-baseline snapshot (loop iter 243)
 **The gating prerequisite my own plan requires before any Phase-1 code.** `gate.sh` proved *determinism* (replay
 byte-identical) but stored NO growth/realization baseline — so a mis-tuned change (e.g. a Phase-1 STRUCT_FIT that

@@ -75,7 +75,7 @@ function growStudents() {
     var orgGrow = s.mentored ? 1 : (CONFIG.ORIGIN_GROW[org] != null ? CONFIG.ORIGIN_GROW[org] : 1);
     var orgMood = (s.mentored && org === "ngheo") ? 0 : (CONFIG.ORIGIN_MOOD[org] || 0); // mentoring lifts the poor kid's circumstance-mood; well-off keeps its small security bonus
     var g = sm * vm * crowdByGrade[s.grade] * tf.mult * moodF * flowF * roomF * orgGrow / dpm;
-    var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]); // grain↔preset craft multiplier (Mentor's Ledger Phase 1): the gift decides whose life the school realizes
+    var mm = fitOf(s.tell, "n" + s.grade); // iter-244: MODE × STRUCTURE (the teaching dial). At the 'mid' default STRUCT_FIT=1.0 → == the old CONFIG.MATCH (byte-identical); a non-mid structure re-weights whose gift the school fits
     var ptn = p.tn, pst = p.st;
     if (s.mentored) { mm = Math.max(mm, CONFIG.MENTOR_MM); ptn = Math.max(ptn, CONFIG.PRESETS.duan.tn); pst = Math.max(pst, CONFIG.PRESETS.duan.st); } // Phase 2: scarce attention = personal project-tutoring that overrides the school's policy for THIS kid
     // iter-195 (E8 ckpt2) — faculty grain-lean directs SIGNATURE-stat growth: a kid whose gift the faculty favors
@@ -109,7 +109,8 @@ function growStudents() {
     s.vet = clamp(s.vet + vetGain, 0, 100);
     var moodDrain = (mm < CONFIG.MISMATCH_MM) ? CONFIG.MISMATCH_MOOD_DRAIN : 0; // lệch tạng wears them down; mentoring (mm≥MENTOR_MM) already spares them
     var facMood = (tf.ng > 0 && s.tell && tf.aff[s.tell] != null) ? CONFIG.TEACH_AFF_MOOD * (tf.aff[s.tell] - tf.ng / 3) : 0; // iter-195: faculty champions/neglects a grain → felt as mood (a neglected gift wilts more visibly in-play). Zero-sum, no grain teachers → 0 → byte-identical.
-    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood + orgMood - moodDrain) / dpm, 0, 100); // iter-206: + circumstance-mood (poor headwind / well-off security), erased for the poor by mentoring
+    var structMood = (CONFIG.STRUCT_FIT(s.tell, structOf("n" + s.grade)) - 1) * CONFIG.STRUCT_MOOD_W; // iter-244 (Phase 1a): a structure-MISMATCH wears the kid down, a structure-FIT lifts — the non-saturating tooth of the STRUCTURE axis (FLOW/dropout/peer-contagion). Zero at 'mid' (STRUCT_FIT=1.0) → byte-identical.
+    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood + structMood + orgMood - moodDrain) / dpm, 0, 100); // iter-206: + circumstance-mood (poor headwind / well-off security), erased for the poor by mentoring
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
     if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
       var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster
@@ -269,7 +270,7 @@ function favBeat() {
   if (!snap || snap.id !== id) { S.META.favSnap = favSnapOf(id, s); S.META.favSeen = {}; S.META.favLog = []; return; } // baseline on first sighting / new protégé — no moment yet (clear the journal too)
   if (S.totalDays - (S.META.favMomentDay != null ? S.META.favMomentDay : -9999) < CONFIG.FAV_MOMENT_GAP) return; // throttle
   var mile = CONFIG.FAV_MILE, crossed = function (a, b) { for (var k = 0; k < mile.length; k++) if (a < mile[k] && b >= mile[k]) return true; return false; };
-  var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+  var mm = fitOf(s.tell, "n" + s.grade); // iter-244: MODE × STRUCTURE (byte-identical at the mid default)
   var seen = S.META.favSeen || (S.META.favSeen = {}); // per-type fire COUNT → consecutive same-type lines cycle (a deepening arc, never a repeat)
   var type = null;
   if (s.mentored && !snap.mentored) type = "mentored";                                           // the turning point you caused
@@ -302,7 +303,7 @@ function cohortBeat() {
   for (i = 0; i < n; i++) {
     s = st[i];
     if (s.id === S.META.favId || s.grade < 2 || s.seed < 4) continue; // the protégé has favBeat; the gift must be real + discoverable
-    mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    mm = fitOf(s.tell, "n" + s.grade); // iter-244: MODE × STRUCTURE
     if (pole === 1) { // WILT — a real gift cooling in a mismatch — low mood, the "đang nguội dần" made visible mid-school
       if (mm < CONFIG.MISMATCH_MM && s.mood < CONFIG.FAV_MOOD_LOW) { score = (CONFIG.MISMATCH_MM - mm) * 100 + (CONFIG.FAV_MOOD_LOW - s.mood) + s.seed * 4; if (score > bestScore) { bestScore = score; best = s; } }
     } else if (pole === 2) { // BENT — a builder/maker gift (spark/sky) whose cá-mập hustle is overtaking the craft = the shark forming, while you can still act

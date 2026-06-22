@@ -39,6 +39,11 @@ function adaptPresets() {
   var modal = "", best = -1; for (var t in tally) if (tally[t] > best) { best = tally[t]; modal = t; }
   var P = (modal === "spark" || modal === "sky") ? "duan" : (modal === "hype" ? "luyende" : "canbang");
   S.presets = { n1: P, n2: P, n3: P, n4: P };
+  // iter-244 (EDUCATION epic Phase 1a): the bot also picks the STRUCTURE that fits the modal gift (the STRUCT_FIT
+  // peak: maker/showman → low/autonomy, coder/everyman → high/scaffold) — so the no-dominant-strategy sensor SEARCHES
+  // the new knob; left blind it could not catch a structure-matched dominant build.
+  var ST = (modal === "sky" || modal === "hype") ? "low" : (modal === "spark" || modal === "") ? "high" : "mid";
+  S.struct = { n1: ST, n2: ST, n3: ST, n4: ST };
 }
 
 // mentor play (Phase 2): each year spend the scarce attention budget rescuing the most-mismatched, highest-gift
@@ -48,7 +53,7 @@ function mentorPlay() {
   var cur = 0; S.students.forEach(function (s) { if (s.mentored) cur++; });
   var free = CONFIG.MENTOR_SLOTS - cur; if (free <= 0) return;
   var cand = S.students.filter(function (s) { return !s.mentored; }).map(function (s) {
-    var mm = CONFIG.MATCH(s.tell, S.presets["n" + s.grade]);
+    var mm = fitOf(s.tell, "n" + s.grade); // iter-244: MODE × STRUCTURE
     return { s: s, pri: (1 - mm) * s.seed }; // most-mismatched × highest gift first
   }).sort(function (a, b) { return b.pri - a.pri; });
   for (var i = 0; i < free && i < cand.length; i++) cand[i].s.mentored = true;
@@ -58,6 +63,7 @@ function mentorPlay() {
 function play(seed, strat) {
   freshState(seed);
   if (strat.presets) S.presets = { n1: strat.presets, n2: strat.presets, n3: strat.presets, n4: strat.presets };
+  if (strat.struct) S.struct = { n1: strat.struct, n2: strat.struct, n3: strat.struct, n4: strat.struct }; // iter-244 EDUCATION epic Phase 1a: drive the STRUCTURE axis for the STRUCT_FIT sensor
   if (strat.tuition) S.tuition = strat.tuition;
   if (strat.grant) S.cash += strat.grant;
   if (strat.build) strat.build.forEach(function (r) { placeRoom(r.key, r.x, r.y); });
@@ -309,6 +315,29 @@ if (craS && cramS) {
   else if (on.sky < 35) FLAGS.push("E8 ckpt2b (flag) TRAP: neglected sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (<35% — a wipeout, not a trade-off); raise CKPT2B_CEIL");
   else FLAGS.push("E8 ckpt2b (flag) ✓ [OFF by default; ?ckpt2b=1]: narrow faculty COSTS the unchampioned gift — sky realize " + f0(off.sky) + "%→" + f0(on.sky) + "% (Δ" + f0(drop) + "pts) while championed spark holds " + f0(on.spark) + "%. A real breadth-vs-depth trade-off; owner playtests the FEEL.");
 })();
+
+// iter-244 EDUCATION epic Phase 1a — STRUCTURE axis. Two laws: (A) the STRUCT_FIT table is SYMMETRIC — every tell has
+// a structure that LIFTS it (>1) AND one that DRAGS it (<1), and every non-neutral level realizes some tell AND wastes
+// some (no structure level is a free win — invariant #2); (B) it BITES + splits the craft-twins: under a NEUTRAL mode
+// (canbang, where MATCH=1 for spark & sky so structure is the only differentiator), the coder (spark) realizes better
+// under HIGH structure and the maker (sky) better under LOW — the spark≠sky fix, proven on realized LIVES.
+(function () {
+  var SF = CONFIG.STRUCT_FIT, tells = ["spark", "sky", "hype", ""], levels = ["low", "mid", "high"];
+  var rowBad = tells.filter(function (t) { var hi = false, lo = false; levels.forEach(function (L) { if (SF(t, L) > 1) hi = true; if (SF(t, L) < 1) lo = true; }); return !(hi && lo); });
+  var colBad = ["low", "high"].filter(function (L) { var hi = false, lo = false; tells.forEach(function (t) { if (SF(t, L) > 1) hi = true; if (SF(t, L) < 1) lo = true; }); return !(hi && lo); });
+  function realByTell(structure) {
+    var t = { spark: { g: 0, r: 0 }, sky: { g: 0, r: 0 } };
+    SEEDS.forEach(function (sd) { play(sd, { presets: "canbang", struct: structure }).lives.forEach(function (L) { if (t[L.tell]) { t[L.tell].g++; if (L.real) t[L.tell].r++; } }); });
+    return { spark: t.spark.g ? 100 * t.spark.r / t.spark.g : 0, sky: t.sky.g ? 100 * t.sky.r / t.sky.g : 0 };
+  }
+  var lo = realByTell("low"), hi = realByTell("high");
+  var sparkPrefersHigh = hi.spark - lo.spark, skyPrefersLow = lo.sky - hi.sky;
+  if (rowBad.length) FLAGS.push("STRUCTURE asymmetric ROW(s) [" + rowBad.map(function (t) { return t || "''"; }).join(",") + "]: a tell with no lifting OR no dragging structure (invariant #2)");
+  else if (colBad.length) FLAGS.push("STRUCTURE asymmetric COLUMN(s) [" + colBad.join(",") + "]: a structure level that realizes nobody or wastes nobody — a free win (invariant #2)");
+  else if (sparkPrefersHigh <= 0 || skyPrefersLow <= 0) FLAGS.push("STRUCTURE INERT/UNSPLIT: under neutral mode spark realize low→high " + f0(lo.spark) + "→" + f0(hi.spark) + "% (Δ" + f1(sparkPrefersHigh) + ", want >0), sky low/high " + f0(lo.sky) + "/" + f0(hi.sky) + "% (want low>high, Δ" + f1(skyPrefersLow) + ") — the structure tooth doesn't bite or split the craft-twins; raise STRUCT_MOOD_W");
+  else FLAGS.push("STRUCTURE ✓ symmetric + splits spark≠sky: under a neutral mode the coder prefers HIGH (" + f0(lo.spark) + "→" + f0(hi.spark) + "%), the maker prefers LOW (" + f0(hi.sky) + "→" + f0(lo.sky) + "%) — Δ" + f1(sparkPrefersHigh) + "/" + f1(skyPrefersLow) + "pts. The spark≠sky fix lands.");
+})();
+line("");
 
 // iter-241 PEERS / CONTAGION — the cohort's atmosphere pulls each kid's mood toward the school mean ("chọn bạn mà chơi";
 // the môi trường that shapes whether a gift realizes). It must be an ENVIRONMENT, not a lever: ~AGGREGATE-NEUTRAL on
