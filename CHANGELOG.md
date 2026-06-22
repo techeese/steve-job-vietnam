@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP2a: the seat-scarcity intake resolver (byte-identical machinery) (loop iter 266)
+**The deterministic off-native placement machinery, shipped byte-identical.** `assignMajors()` (monthly, idempotent) places
+each grain into a khoa seat: native khoa first (up to `CONFIG.MAJOR_CAP` seats on the specialist khoas code/make/biz; Đại-cương
+room-less + uncapped = the catch-all home); when the native khoa is FULL it overflows off-native — under **"native"**
+(fit-priority) to the gentle Đại-cương generalist track, under **"open"** (open-door) into the best-fit BUILT specialty with a
+free seat (real stat-growth, but MAJOR_FIT bites). Stores `s.major` (CP1). DETERMINISTIC — stable student order by id,
+occupancy counted live, NO rng → replay byte-identical. At the shipped **MAJOR_CAP=99 nothing overflows → every grain native
+→ byte-identical**: gate + BASELINE GREEN, bot byte-identical (essay 3380 / cash 7610 / arrested 15), lives clean. Probe (forced
+cap=6, 3 khoa rooms): overflow fires correctly — native-policy pushes overflow sparks/hypes to Đại-cương, open-policy packs
+specialties harder (28 vs 20 off-native). Apex untouched.
+**CP2b (next) — the design + tuning:** lower MAJOR_CAP to a biting value so an era-flood of one tell overflows the khoa under
+the DEFAULT "native" policy (the emergent era×scarcity→wrong-major dynamic — recapture + a new off-native-wastes / no-dominant
+sweep sensor). The "open" policy needs an UPSIDE to be non-inert (it currently yields strictly more waste) — resolve in CP2b/CP3.
+
 ## 2026-06-22 — Phase 2c CP1: stored-`s.major` intake architecture (byte-identical foundation) (loop iter 265)
 **First checkpoint of the greenlit off-native-intake epic — the byte-identical foundation that lets a grain sit in a
 NON-native khoa.** Until now a student's major was DERIVED dynamically (`studentMajor` = the khoa matching their tell,

@@ -149,8 +149,13 @@ Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).
   PHASE 2c EPIC — off-native major intake (the architecture-heavy keystone; determinism-sensitive). Checkpoints:
   • CP1 ✅ SHIPPED iter-265 (byte-identical): `studentMajor` reads a STORED `s.major` (room-gated) before native derivation;
     `S.intakePolicy` state ("native" default, CONFIG.INTAKE_DEFAULT) + freshState + sanitize guards. Nothing sets s.major yet → byte-identical.
-  • CP2: major CAPACITY (seat scarcity) + the open-door resolver — under "open" policy, a kid whose native khoa is FULL is
-    placed in the best-fit AVAILABLE khoa (off-native, deterministic from seed0) → MAJOR_FIT penalty bites → wrong-major wastes.
+  • CP2a ✅ SHIPPED iter-266 (byte-identical machinery): `assignMajors()` deterministic resolver (monthly, stable id-order, no
+    rng) + `CONFIG.MAJOR_CAP` (specialist seats; Đại-cương uncapped). Native-first; overflow → Đại-cương (native policy) /
+    best-fit specialty (open). At cap=99 → no overflow → byte-identical; probe at cap=6 confirms overflow fires.
+  • CP2b (NEXT): lower MAJOR_CAP to a BITING value → an era-flood overflows a khoa under the DEFAULT "native" policy
+    (emergent era×scarcity→wrong-major, Đại-cương 0.85 mild waste). Recapture baseline + a NEW off-native-wastes / no-dominant
+    sweep sensor; verify the realize/waste spread stays healthy. RESOLVE the "open" policy's UPSIDE (currently strictly more
+    waste → inert) — e.g. open-door raises intake volume, or cut "open" and keep the emergent native-cap mechanic.
   • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
     wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
 

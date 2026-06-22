@@ -89,6 +89,32 @@ function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.
 function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; }
   if (s.major) { var sm = majorByKey(s.major); if (sm) return (!sm.room || hasRoom(sm.room)) ? sm : null; } // iter-265 (Phase-2c CP1): a STORED khoa assignment (room-gated), set by the open-door intake resolver (CP2). Lets a grain sit in a NON-native major so MAJOR_FIT bites live. Default: no s.major → native derivation below → byte-identical.
   var m = majorByTell(s.tell); return (m && (!m.room || hasRoom(m.room))) ? m : null; } // iter-248: a room-less major (Đại-cương) needs no building → the everyman ("") always has a home. iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
+// iter-266 (Phase-2c CP2a) — the SEAT-SCARCITY intake resolver. SPECIALIST khoas (a room + a tell: code/make/biz) hold
+// CONFIG.MAJOR_CAP seats; Đại-cương (room-less) is the uncapped catch-all home. A grain fills its NATIVE khoa first; when
+// that khoa is FULL it OVERFLOWS off-native — under "native" (fit-priority) to the gentle Đại-cương generalist track, under
+// "open" (open-door) packed into the best-fit BUILT specialty with a free seat (real stat-growth, but MAJOR_FIT bites).
+// DETERMINISTIC: stable student order (by id), occupancy counted live, NO rng → replay byte-identical. Stores s.major.
+// At MAJOR_CAP=99 (CP2a) nothing overflows → every grain native → byte-identical; CP2b lowers the cap so it bites.
+function specialistMajors() { return (CONFIG.MAJORS || []).filter(function (m) { return m.room && m.tell; }); }
+function majorOccupancy() { var o = {}; for (var i = 0; i < S.students.length; i++) { var m = studentMajor(S.students[i]); if (m) o[m.key] = (o[m.key] || 0) + 1; } return o; }
+function assignMajors() {
+  var occ = majorOccupancy(), cap = CONFIG.MAJOR_CAP, dc = majorByTell(""); // dc = Đại-cương, the uncapped catch-all
+  var pending = S.students.filter(function (s) { return !s.major; }).sort(function (a, b) { return a.id < b.id ? -1 : a.id > b.id ? 1 : 0; }); // stable order
+  for (var i = 0; i < pending.length; i++) {
+    var s = pending[i], nat = majorByTell(s.tell);
+    if (!nat) continue;
+    if (!nat.room) { s.major = nat.key; continue; }       // room-less native (the everyman's Đại-cương) → always home
+    if (!hasRoom(nat.room)) continue;                      // native khoa not built yet → wait (s.major unset), like the dynamic derivation
+    if ((occ[nat.key] || 0) < cap) { s.major = nat.key; occ[nat.key] = (occ[nat.key] || 0) + 1; continue; } // a native seat is free
+    // native khoa FULL → overflow off-native
+    if (S.intakePolicy === "open") {
+      var best = null, bf = -1;
+      specialistMajors().forEach(function (m) { if (m.key === nat.key || !hasRoom(m.room) || (occ[m.key] || 0) >= cap) return; var f = CONFIG.MAJOR_FIT(s.tell, m.key); if (f > bf) { bf = f; best = m; } });
+      if (best) { s.major = best.key; occ[best.key] = (occ[best.key] || 0) + 1; continue; }
+    }
+    if (dc) { s.major = dc.key; }                          // fit-priority overflow, or open-door with no open specialty → the Đại-cương generalist track
+  }
+}
 // P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.
 function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }
@@ -340,6 +366,7 @@ function monthRollover() {
   if (S.month > 12) S.month = 1;
   S._mapDirty = true; // refresh the static layer so seasonal décor (Tết, …) tracks the calendar
   economyTick();
+  assignMajors(); // iter-266 (Phase-2c CP2a): place newly-enrolled grains into a khoa seat (native first; overflow off-native per intakePolicy when full). Idempotent (only unplaced students); deterministic → replay-safe. At MAJOR_CAP=99 → no overflow → byte-identical.
   alumniMonth(S.month);
   if (S.year === 2 && S.month === 3) scriptedArrest();
   if (S.month === 2) tetBeat();
