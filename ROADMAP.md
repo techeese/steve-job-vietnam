@@ -154,11 +154,12 @@ Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).
     best-fit specialty (open). At cap=99 → no overflow → byte-identical; probe at cap=6 confirms overflow fires.
   • CP2b ✅ DESIGN RESOLVED iter-267 (investigative): probes show specialist khoas peak 25–27; a biting flat cap under the
     DEFAULT policy degrades the baseline (cap22 -2pt realize/-5% alumni; cap18 -5pt) with NO agency → rejected as a default nerf.
-  • CP2c (NEXT, the build): the OPT-IN volume-vs-fit tradeoff. "native" stays byte-identical (cap off, no recapture). "open" =
-    open-door: raise the admission QUOTA (×CONFIG.OPEN_INTAKE_MULT — bigger cohort, more tuition/gems) WITH specialist caps active
-    → overflow lands off-native (MAJOR_FIT bites). Wire the quota mult (admissions.js, open-only) + cap-by-policy in assignMajors
-    (cap only under "open"). Add a sweep STRAT (intakePolicy:"open") + a sensor: open trades realize for scale, NEITHER dominates.
-    Tune OPEN_INTAKE_MULT. Byte-identical default → gate/baseline GREEN unchanged. Then CP3: intake-rule UI + wrong-major narrative.
+  • CP2c ✅ SHIPPED iter-268 (off-native intake LIVE): clean opt-in design (no quota mech needed). "native" default → idle if
+    khoa unbuilt (byte-identical); "open" → `placeOffNative` crams the grain into a built specialty / Đại-cương (MAJOR_FIT bites).
+    Lever = build + policy (lean campus + open-door → off-native waste). Sweep INTAKE sensor ✓ bounded (Δ8.1, neither dominates).
+  • CP3 (NEXT): the intake-rule UI toggle (fit-priority ↔ open-door, in panelOps near the teaching dial) + the wrong-major WILT
+    narrative beat (name a named grain wasting in the wrong khoa, in-play and/or at the payoff). Optional CP4: tie khoa capacity
+    to room UPGRADE level (seat-scarcity as a build-investment lever) — only if it adds agency without a default nerf.
   • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
     wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
 

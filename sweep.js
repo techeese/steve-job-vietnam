@@ -64,6 +64,7 @@ function play(seed, strat) {
   freshState(seed);
   if (strat.presets) S.presets = { n1: strat.presets, n2: strat.presets, n3: strat.presets, n4: strat.presets };
   if (strat.struct) S.struct = { n1: strat.struct, n2: strat.struct, n3: strat.struct, n4: strat.struct }; // iter-244 EDUCATION epic Phase 1a: drive the STRUCTURE axis for the STRUCT_FIT sensor
+  if (strat.intakePolicy) S.intakePolicy = strat.intakePolicy; // iter-268 Phase-2c CP2c: drive the INTAKE rule (native|open) for the off-native-intake sensor
   if (strat.tuition) S.tuition = strat.tuition;
   if (strat.grant) S.cash += strat.grant;
   if (strat.build) strat.build.forEach(function (r) { placeRoom(r.key, r.x, r.y); });
@@ -357,7 +358,19 @@ line("");
   MAJOR_OVERRIDE = null; // restore — must NEVER leak into the rest of the sweep
   var d1 = sparkNative - sparkAlien, d2 = skyNative - skyAlien;
   if (d1 <= 0 || d2 <= 0) FLAGS.push("MAJOR_FIT INERT/WRONG: a coder realizes " + f0(sparkNative) + "% in code vs " + f0(sparkAlien) + "% in biz (Δ" + f1(d1) + "), a maker " + f0(skyNative) + "% in make vs " + f0(skyAlien) + "% in biz (Δ" + f1(d2) + ") — the native track should win; wrong-major doesn't waste, raise MAJOR_MOOD_W");
-  else FLAGS.push("MAJOR_FIT ✓ wrong-major wastes: a coder realizes " + f0(sparkNative) + "% in code vs only " + f0(sparkAlien) + "% shoved into biz; a maker " + f0(skyNative) + "% in make vs " + f0(skyAlien) + "% in biz — right-gift-wrong-major is a real fate (Δ" + f1(d1) + "/" + f1(d2) + "pts). Inert until Phase 2b's systemic intake.");
+  else FLAGS.push("MAJOR_FIT ✓ wrong-major wastes: a coder realizes " + f0(sparkNative) + "% in code vs only " + f0(sparkAlien) + "% shoved into biz; a maker " + f0(skyNative) + "% in make vs " + f0(skyAlien) + "% in biz — right-gift-wrong-major is a real fate (Δ" + f1(d1) + "/" + f1(d2) + "pts). Live via Phase-2c OPEN-DOOR intake (below).");
+})();
+line("");
+
+// iter-268 EDUCATION epic Phase 2c (CP2c) — OFF-NATIVE INTAKE goes LIVE. With no specialist khoa rooms built, a grain's
+// native khoa is unavailable: under "native" (fit-priority) it sits IDLE (no major, neutral); under "open" (open-door) it
+// is crammed into the Đại-cương generalist track (MAJOR_FIT 0.85 → a real wrong-fit penalty, but it becomes ACTIVE). The
+// open-door choice must be a BOUNDED tradeoff (activate-but-mismatch vs idle), NEVER a domination (no free realize, no crater).
+(function () {
+  function realRate(policy) { var g = 0, r = 0; SEEDS.forEach(function (sd) { play(sd, { presets: "canbang", intakePolicy: policy }).lives.forEach(function (L) { if ((L.tell || "") !== "") { g++; if (L.real) r++; } }); }); return g ? 100 * r / g : 0; }
+  var natR = realRate("native"), openR = realRate("open"), d = openR - natR; // specialist grains (tell≠"") only — the ones open-door re-routes
+  if (Math.abs(d) > 15) FLAGS.push("INTAKE open-door DOMINATES/CRATERS: specialist grains realize " + f0(openR) + "% open vs " + f0(natR) + "% native (Δ" + f1(d) + ") — open-door should be a BOUNDED placement tradeoff, not a free win/loss; retune");
+  else FLAGS.push("INTAKE ✓ open-door is a bounded LIVE tradeoff: specialist grains realize " + f0(openR) + "% (active off-native, Đại-cương) vs " + f0(natR) + "% (idle under native), Δ" + f1(d) + " — right-gift-wrong-major now happens in play, neither policy dominates");
 })();
 line("");
 

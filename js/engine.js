@@ -97,22 +97,27 @@ function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJO
 // At MAJOR_CAP=99 (CP2a) nothing overflows → every grain native → byte-identical; CP2b lowers the cap so it bites.
 function specialistMajors() { return (CONFIG.MAJORS || []).filter(function (m) { return m.room && m.tell; }); }
 function majorOccupancy() { var o = {}; for (var i = 0; i < S.students.length; i++) { var m = studentMajor(S.students[i]); if (m) o[m.key] = (o[m.key] || 0) + 1; } return o; }
+// iter-268 (Phase-2c CP2c) — OPEN-DOOR off-native placement: cram a grain whose native khoa is unavailable (not built, or
+// full) into the best-fit BUILT specialist with room, else the Đại-cương generalist track. The grain becomes ACTIVE
+// (wrong-fit, MAJOR_FIT bites) instead of sitting idle. Deterministic; mutates occ. Returns true if placed.
+function placeOffNative(s, occ, natKey) {
+  var best = null, bf = -1, cap = CONFIG.MAJOR_CAP;
+  specialistMajors().forEach(function (m) { if (m.key === natKey || !hasRoom(m.room) || (occ[m.key] || 0) >= cap) return; var f = CONFIG.MAJOR_FIT(s.tell, m.key); if (f > bf) { bf = f; best = m; } });
+  if (best) { s.major = best.key; occ[best.key] = (occ[best.key] || 0) + 1; return true; }
+  var dc = majorByTell(""); if (dc) { s.major = dc.key; return true; } // Đại-cương is room-less → always available
+  return false;
+}
 function assignMajors() {
-  var occ = majorOccupancy(), cap = CONFIG.MAJOR_CAP, dc = majorByTell(""); // dc = Đại-cương, the uncapped catch-all
-  var pending = S.students.filter(function (s) { return !s.major; }).sort(function (a, b) { return a.id < b.id ? -1 : a.id > b.id ? 1 : 0; }); // stable order
+  var occ = majorOccupancy(), open = (S.intakePolicy === "open"), cap = CONFIG.MAJOR_CAP;
+  var pending = S.students.filter(function (s) { return !s.major; }).sort(function (a, b) { return a.id < b.id ? -1 : a.id > b.id ? 1 : 0; }); // stable order → replay-safe
   for (var i = 0; i < pending.length; i++) {
     var s = pending[i], nat = majorByTell(s.tell);
     if (!nat) continue;
     if (!nat.room) { s.major = nat.key; continue; }       // room-less native (the everyman's Đại-cương) → always home
-    if (!hasRoom(nat.room)) continue;                      // native khoa not built yet → wait (s.major unset), like the dynamic derivation
-    if ((occ[nat.key] || 0) < cap) { s.major = nat.key; occ[nat.key] = (occ[nat.key] || 0) + 1; continue; } // a native seat is free
-    // native khoa FULL → overflow off-native
-    if (S.intakePolicy === "open") {
-      var best = null, bf = -1;
-      specialistMajors().forEach(function (m) { if (m.key === nat.key || !hasRoom(m.room) || (occ[m.key] || 0) >= cap) return; var f = CONFIG.MAJOR_FIT(s.tell, m.key); if (f > bf) { bf = f; best = m; } });
-      if (best) { s.major = best.key; occ[best.key] = (occ[best.key] || 0) + 1; continue; }
-    }
-    if (dc) { s.major = dc.key; }                          // fit-priority overflow, or open-door with no open specialty → the Đại-cương generalist track
+    if (hasRoom(nat.room) && (occ[nat.key] || 0) < cap) { s.major = nat.key; occ[nat.key] = (occ[nat.key] || 0) + 1; continue; } // a native seat is open
+    // can't get a native seat (khoa not built, or — under a biting cap — full)
+    if (open) placeOffNative(s, occ, nat.key); // OPEN-DOOR: become active off-native rather than idle (MAJOR_FIT bites = the cost of opening the door)
+    // "native" (fit-priority, default): leave idle (s.major unset) → studentMajor null until you build their khoa → byte-identical to pre-Phase-2c
   }
 }
 // P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.

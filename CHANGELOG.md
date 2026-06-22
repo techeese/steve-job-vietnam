@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP2c: off-native intake goes LIVE — "right gift, wrong major" in play (loop iter 268)
+**The keystone of the greenlit epic lands: a grain can now be wasted in the wrong major DURING A RUN, not just in the
+sweep sensor.** Reworked `assignMajors` to the clean opt-in design (dropping the default-nerf flat-cap idea, iter-267):
+under the **"native"** default a grain whose khoa isn't built sits IDLE (no major — exactly pre-Phase-2c → byte-identical);
+under **"open"** (open-door) that grain is crammed into the best-fit BUILT specialty, else the Đại-cương generalist track
+(`placeOffNative`) — ACTIVE but wrong-fit, so MAJOR_FIT bites. The lever is the player's BUILD + POLICY: afford every khoa
+→ everyone native; run a lean campus + open the door → grains land off-native and waste (thematically the poor/frugal
+school that can't offer every specialty). Probe (build only the code khoa + open-door): **11 hustlers crammed into the
+code khoa** (MAJOR_FIT 0.7 bites), the rest to Đại-cương, zero idle — vs "native" leaving 25 idle. New sweep INTAKE sensor
+(+`strat.intakePolicy` in `play()`): **✓ bounded LIVE tradeoff — specialist grains realize 89% active-off-native vs 81%
+idle, Δ8.1, neither policy dominates.** Verified: ALL GATES GREEN + BASELINE GREEN (native default → byte-identical, replay
+holds — resolver is deterministic, no rng), sweep **0 bad flags**, bot byte-identical, lives clean ×2. Apex untouched.
+Deployed. **CP3 (next): the intake-rule UI toggle (fit-priority ↔ open-door) + the wrong-major wilt narrative beat.**
+
 ## 2026-06-22 — Phase 2c CP2b design resolved (investigative): opt-in volume-vs-fit, not a default nerf (loop iter 267)
 **Probed the seat-scarcity dynamics and resolved the design before building — avoiding two traps.** Occupancy probe: the
 specialist khoas accumulate to **25–27** at peak across a run (much bigger than the ~6–12 I'd estimated; they pool grains
