@@ -97,6 +97,10 @@ cat >> "$OUT" <<'HTML'
     if(struct){ S.struct={n1:struct,n2:struct,n3:struct,n4:struct}; } // iter-249: the STRUCTURE axis (Axis B of the dial) — watch how drill↔autonomy re-weights spark vs sky
     ROOMS.forEach(function(k){try{HVS.autoPlace(k);}catch(e){}});
     var CFG=cfg(), per=[];
+    // iter-263 — keep the Lab DYNAMIC: capture the new IN-PLAY narrative beats as they fire (era-boundary eraFlood 🌊 /
+    // eraShock 〽️ / era shift 🕰️, and the full-ledger grief 🖐️) so the owner can READ the prose the new systems emit
+    // during a run, not just the final essay. Hooks the global news() for the duration, then restores it.
+    var beats=[], _news=null; try{ _news=news; news=function(s){ try{ if(/^🌊|^〽️|^🕰️|^🖐️/.test(s)) beats.push({year:S.year,s:s}); }catch(e){} return _news(s); }; }catch(e){}
     for(var y=0;y<years;y++){
       if(mentor){ try{ var free=CFG.MENTOR_SLOTS-HVS.mentorCount();
         if(free>0){ var cand=S.students.filter(function(x){return !x.mentored;}).sort(function(a,b){
@@ -104,7 +108,8 @@ cat >> "$OUT" <<'HTML'
           for(var i=0;i<free&&i<cand.length;i++) HVS.mentorStudent(cand[i].id); } }catch(e){} }
       __test.days(360); S.pendingEvent=null; S.pendingContract=null; per.push(snap(S));
     }
-    return {S:S,per:per};
+    try{ if(_news) news=_news; }catch(e){} // restore the real news()
+    return {S:S,per:per,beats:beats};
   }
   function eraName(S){ try{ return cfg().ERAS[eraIndex(S.year)].name; }catch(e){ return ""; } } // L1: which decade this year sits in
   function snap(S){ return { year:S.year, era:eraName(S), cash:Math.round(S.cash||0), stu:(S.students||[]).length,
@@ -165,6 +170,10 @@ cat >> "$OUT" <<'HTML'
         '<tr><th>Năm</th><th>Thời đại</th><th>Tiền</th><th>SV</th><th>TN</th><th>Cựu</th><th>TT</th><th>UT</th><th>TC</th></tr>'+
         r.per.map(function(p){return '<tr><td>'+p.year+'</td><td style="font-size:11px;color:#888">'+esc(p.era||"")+'</td><td>'+money(p.cash)+'</td><td>'+p.stu+'</td><td>'+p.grad+'</td><td>'+p.alu+'</td><td>'+p.TT+'</td><td>'+p.UT+'</td><td>'+p.TC+'</td></tr>';}).join('')+
       '</table></div>'+
+      '<div class="card"><h2>Diễn biến trong trận — các nhịp kể (era-boundary · đời)</h2><div class="bio">'+
+        ((r.beats&&r.beats.length)? r.beats.map(function(b){return '<div style="margin:4px 0"><b style="color:#8a7;font-size:11px">Năm '+b.year+'</b> &nbsp;'+esc(b.s)+'</div>';}).join('')
+          : '<span style="color:#888">(không có nhịp era/đời nào nổi lên trong khoảng này — thử chạy đủ ≥4 năm để bắc qua một mốc thời đại, bật Mentor để thấy nhịp “hết tay”)</span>')+
+      '</div></div>'+
       '<div class="card"><h2>Biographies — who became who</h2><div class="bio">'+esc(bio)+'</div></div>';
   }
   function runDist(){

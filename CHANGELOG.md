@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — Gameplay Lab made DYNAMIC again: surfaces this session's in-play beats (loop iter 263)
+**Closed a real Lab gap the scouts didn't cover (they audited game mechanics, not the owner's tooling).** The SKILL
+mandates keeping the Gameplay Lab dynamic — surfacing each new system so the owner can SEE what changed — but the 6
+systems shipped this session left the in-play layer invisible there: the Lab read the final capstone essay (so the
+capstone beats showed) but never the IN-PLAY news stream, where the marquee **era-boundary layer** (🌊 eraFlood / 〽️
+eraShock / 🕰️ era-shift) and the **full-ledger grief** (🖐️) actually fire. Added a `news()` hook in the Lab's
+`simulate()` that captures those marquee beats per year, and a new card — "Diễn biến trong trận — các nhịp kể
+(era-boundary · đời)" — that renders them. Now the owner can READ, in the Lab, the prose the new systems emit across a
+run (e.g. *"🌊 Dạo này đứa nào tới ghi danh cũng hỏi trước tiên là trường có máy không…"*, *"🕰️ Thời dot-com — Thế giới
+lên mạng…"*), not just the endgame essay. Verified: lab.sh syntax ok, headless LAB_OK, the card populates with real
+era-boundary beats across an 11-yr canbang run; gate + BASELINE GREEN (lab.sh is a dev/owner tool, not in the live
+build → no deploy). Tooling/visibility, non-gated, zero game-state change.
+
 ## 2026-06-22 — third scout returns a CONFIRMED PLATEAU (0/18) — non-gated surface mined out (loop iter 262)
 **The evidence-backed plateau, reached honestly after THREE scout fan-outs — not asserted from intuition (iter-202's
 mistake).** Ran a third, sharpened scout (high bar, aimed at the deepest under-mined veins: deeper event dilemmas,
