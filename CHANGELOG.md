@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — scout #4 (lattice event dilemma) ATTEMPTED → deferred; scout queue closed (loop iter 257)
+**Negative result, honestly recorded.** Built scout candidate #4 — a cram-culture pressure DILEMMA (the đề-Văn's satire
+target) wired to the STRUCTURE dial (cave → tighten the upper grades + reputation/integrity tradeoff). The mechanics
+worked (cave→struct high ✓, hold neutral ✓), and it's non-apex. But: (1) caught + fixed a dead-pred bug (`grow20` isn't
+an `eventPred` case → used `hasNam4`); (2) once live, the new event perturbs the `maybeEvent` deck enough to tip the
+PRE-EXISTING marginal MAJOR_FIT **maker** sensor (was Δ3.4 at iter-247 — makers are nearly major-insensitive; the event's
+noise flipped it to Δ-2.3). Shipping it cleanly would require re-tuning a live system (strengthen sky's off-native
+biz-fit, ~sensor-only) + a double baseline recapture — not worth it for the lowest-value scout item. **Reverted clean**
+(gate + BASELINE GREEN, sweep 0 flags, repo at iter-256); no code shipped this firing. **Scout queue (iter-254) now
+closed: #1 equalizer beat ✓, #2 era-journey ✓, #3 full-ledger ✓ shipped; #4 deferred** (known fix path: make
+MAJOR_FIT-maker robust first, then any new event can ship). Next non-gated work needs a FRESH scout (the iter-254 queue
+is processed); the big remaining work stays apex-gated (owner's call).
+
 ## 2026-06-22 — the FULL-LEDGER grief beat: the tragic allocation, proactively (scout queue #3) (loop iter 256)
 **Third scout-queue candidate shipped.** The scarce-attention tragedy (you can mentor only a few; the rest you must let
 go) was felt only REACTIVELY — a toast when you click a full mentor button. Now it's PROACTIVE: once your ledger is full

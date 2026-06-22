@@ -131,8 +131,14 @@ claim for Phase 1 is now actually verifiable.
   1. ✅ **Equalizer beat at the capstone close** — SHIPPED iter-254 (the school-as-equalizer made legible at the climax).
   2. ✅ **Era-journey close beat** — SHIPPED iter-255 (the school's founding→closing decade arc named before "Tôi—").
   3. ✅ **Mentor-slots-FULL grief beat** — SHIPPED iter-256 (`fullLedgerBeat` names the wilting gift your full ledger costs you — the tragic allocation, proactively; byte-identical until the player fills the ledger).
-  4. **Lattice-wired event dilemmas** — the 31-event deck never touches the new dial/major/structure; add bounded one-time
-     dilemmas (e.g. a khuôn-vs-mở pressure choice that nudges `S.struct`, NOT the apex). medium, design-care to stay non-apex.
+  4. ⏸ **Lattice-wired event dilemmas** — DEFERRED iter-257 (attempted: a cram-pressure dilemma wired to `S.struct`; works +
+     non-apex, but ANY new live event perturbs the `maybeEvent` deck enough to tip the pre-existing marginal MAJOR_FIT-maker
+     sensor, Δ3.4→−2.3). KNOWN FIX FIRST: make MAJOR_FIT-maker robust (strengthen sky's off-native biz-fit ~0.7→0.55,
+     sensor-only — sky is never in biz live → no recapture), THEN any new event ships cleanly. Low value → low priority.
+
+  **▶ NEXT NON-GATED WORK: the iter-254 scout queue is CLOSED (3 shipped, #4 deferred) → RUN A FRESH SCOUT before holding**
+  (per SKILL SCOUT-BEFORE-YOU-HOLD). The big remaining work (Phase 3 activities-apex / Phase 2c off-native intake) stays
+  owner-gated on the APEX fork.
 
 **▶ PHASE 2 — MAJORS decoupled (2a+2b ✓ done; 2c = the systemic off-native intake, NEXT). [orig spec ↓]** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
