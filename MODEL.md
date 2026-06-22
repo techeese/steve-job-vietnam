@@ -70,6 +70,7 @@ mis-tuned table silently regresses every kid and stays green.*
 | **Peers / contagion** | ckpt1 LIVE | a cohort lifts or drags its members | **ckpt1 (iter-241):** the cohort's atmosphere pulls each kid's mood toward the school mean (`CONFIG.PEER.PULL`, a deterministic variance-reducing pass in `growStudents`) — a thriving class buffers strugglers, a demoralized one drags stars out of FLOW. Aggregate-neutral (sweep PEER sensor: realize Δ0.3pts, apex held); named once a year (`tetCohortBeat` warm/cold). | **mood (its native axis)**, cohort composition, FLOW/mismatch-burnout, realize/waste |
 | **Luck** | QUEUED | the same gift, different break | (idea, bounded) | era, the apex (keep rare + earned) |
 | **Progression / legacy** | QUEUED | one generation seeds the next | (L3) past-run alumni → next world | archetype, era-chain |
+| **National layer (value-chain)** | PROPOSED (owner-gated) | strong talent, but the SYSTEM thins the top tail — value EXTRACTED offshore (the FDI assembly trap), the late-stage CAPITAL CLIFF (a real founder can't scale), BRAIN DRAIN (the best emigrate). The policy-plan sibling's sharpest gap. | proposed: a structural POST-GRAD outcome dimension on the alumni FSM — value-RETAINED (serves the dân, stays) vs EXTRACTED vs DRAINED — seed0-deterministic, **NON-APEX** (the 🍎 gate unchanged); bounded player agency via formation (ren/community) + era + archetype | era, archetype, the formation levers, the alumni FSM, the value-for-dân capstone axis |
 | **World economy** | LIVE | the school's body, not its soul | cash / endow / upgrades | enables scale; must NOT become a back-door to 🍎 |
 
 ## Interaction highlights (the load-bearing "factors influence each other")
@@ -100,6 +101,27 @@ mis-tuned table silently regresses every kid and stays green.*
   past their circumstance. This is the SAFE half — teaching CAPACITY. The apex half (what tech does to the 🍎
   ceiling) was the owner-gated thesis-fork, **resolved: keep 🍎 as-is.** Tech must never become a flat
   "+realization" upgrade — it should change WHICH gifts and WHICH kids the world lifts, not lift everyone.
+
+- **TALENT × NATIONAL SYSTEM — the thin top tail (PROPOSED, owner-gated)** — a REALIZED creator can be wasted not
+  by the school or the kid but by the SYSTEM after graduation: value extracted offshore (assembly trap), no late-stage
+  capital (the cliff), or the best emigrate (brain drain). Invariant #4 at the national scale — *the system fails your
+  best.* The win is re-denominated as **value-for-the-dân** (hậu dân sinh): a community-server without a big exit COUNTS
+  as success; a drained/extracted "success" is a loss to the dân — a flourishing reading the achievement-metric can FAIL.
+  Non-apex (the 🍎 gate is untouched). Design resolving in the national-layer proposal.
+
+## Lessons from the policy-plan sibling (`../steve_vietnam_plan/PLAN.md`)
+A rigorous policy plan answering the SAME đề-Văn (built by an adversarial multi-agent loop) independently CONFIRMS this
+game's core — *raise the base rate, never target the icon; honesty over mythology; hold the open question.* Three lessons,
+folded in above:
+1. **The NATIONAL layer the game lacks** (new factor row + interaction above). The systems model is individual × DOMAIN ×
+   FIELD; the game does individual + field (the school), not the national domain (R&D / capital / value-chain). Structural
+   post-grad waste is the proposed deepening.
+2. **Additive FLOOR, multiplicative CEILING** — a realized life (floor) should be ROBUST (many paths); the 🍎 (ceiling) is
+   FRAGILE/multiplicative (grain × era × luck, all aligned). The game already embodies this; keep the floor robust, the apex rare.
+3. **Value re-denominated for the dân** — the win is value retained + circulated for the community + a person formed in REN
+   (serving, dissent-with-virtue), not the foreign scoreboard → the value-for-dân capstone axis above.
+The plan's "honesty ledger" (named risks, each with an observable TRIGGER that flips a decision) mirrors the game's sweep
+SENSORS — validation the dev discipline is sound. The national-layer MECHANIC is an OWNER PROPOSAL (design in progress).
 
 ## Laws this model serves (never broken)
 - THESIS §B (open-question law) + §C (the 4 person-sim invariants). A factor that creates a dominant
