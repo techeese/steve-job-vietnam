@@ -84,6 +84,7 @@ function sanitize() {
   // 'mid' (STRUCT_FIT=1.0) → byte-identical. No migrator needed (new field, freshState seeds it; this just guards it).
   if (!S.struct || typeof S.struct !== "object") S.struct = { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT };
   ["n1", "n2", "n3", "n4"].forEach(function (k) { if (["low", "mid", "high"].indexOf(S.struct[k]) < 0) S.struct[k] = CONFIG.STRUCT_DEFAULT; });
+  if (["native", "open"].indexOf(S.intakePolicy) < 0) S.intakePolicy = CONFIG.INTAKE_DEFAULT; // iter-265 (Phase-2c CP1): old saves lack S.intakePolicy → default "native" → byte-identical. New field, no migrator.
   S.students = (S.students || []).map(function (s) {
     if (!s) return null;
     if (bad(s.kt) || bad(s.tn) || bad(s.st) || bad(s.cm) || bad(s.vet)) return null;
@@ -91,6 +92,7 @@ function sanitize() {
     s.seed = clamp(Math.round(s.seed) || 1, 1, 5);
     ["kt", "tn", "st", "cm", "vet", "mood"].forEach(function (k) { s[k] = clamp(s[k], 0, 100); });
     s.mentored = !!s.mentored; // Phase 2 attention flag (defaults false on older saves)
+    if (s.major != null && !CONFIG.MAJORS.some(function (m) { return m.key === s.major; })) delete s.major; // iter-265 (Phase-2c CP1): a corrupt/stale stored khoa key → drop it → studentMajor falls back to native derivation. Old saves lack s.major (undefined) → native → byte-identical.
     if (!s.flags) s.flags = {}; if (!s.flags.vt) s.flags.vt = [];
     if (s.lookC && (typeof s.lookC !== "object" || !Number.isFinite(s.lookC.s) || !Number.isFinite(s.lookC.h) || !Number.isFinite(s.lookC.y) || !Number.isFinite(s.lookC.a))) delete s.lookC; // custom look (UI clamps ranges on use)
     return s;

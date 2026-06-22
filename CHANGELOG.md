@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-22 — Phase 2c CP1: stored-`s.major` intake architecture (byte-identical foundation) (loop iter 265)
+**First checkpoint of the greenlit off-native-intake epic — the byte-identical foundation that lets a grain sit in a
+NON-native khoa.** Until now a student's major was DERIVED dynamically (`studentMajor` = the khoa matching their tell,
+once its room exists). Added a STORED override: `studentMajor` now reads `s.major` (a khoa key, room-gated) before the
+native derivation — so the open-door resolver (CP2) can place a coder into the Sống-Ảo khoa and have MAJOR_FIT bite live
+("right gift, wrong major" wastes for real). Plus `S.intakePolicy` ("native" | "open", default `CONFIG.INTAKE_DEFAULT`
+= "native") + freshState + two sanitize guards (policy whitelist; drop a corrupt/stale `s.major` → native fallback).
+**Nothing sets `s.major` yet → byte-identical**: gate + BASELINE GREEN, bot byte-identical (essay 3380 / cash 7610 /
+arrested 15), lives clean. Probe confirms the stored path works end-to-end (a forced `s.major="biz"` is read + room-gated;
+MAJOR_FIT(spark,biz)=0.6 < 1 → the wrong-major penalty would bite). Apex mechanism untouched (apex = as-is). Deployed.
+Next: CP2 — major capacity (seat scarcity) + the deterministic open-door resolver that sets `s.major` off-native.
+
 ## 2026-06-22 — APEX FORK RESOLVED (owner: "keep 🍎 as-is") → plateau lifted, Phase 2c greenlit (loop iter 264)
 **The owner answered the keystone decision** (via a formal AskUserQuestion after the 3-scout plateau): **"Keep 🍎 as-is."**
 The apex stays grain × era × luck (THESIS still frozen — NO apex teeth), and the remaining systems are built **bounded

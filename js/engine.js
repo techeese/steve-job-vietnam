@@ -86,7 +86,9 @@ function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES &&
 // KHOA / MAJORS — students auto-join the khoa matching their tell once its building exists
 function majorByTell(tell) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].tell === tell) return M[i]; return null; }
 function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].room === room) return M[i]; return null; }
-function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; } var m = majorByTell(s.tell); return (m && (!m.room || hasRoom(m.room))) ? m : null; } // iter-248: a room-less major (Đại-cương) needs no building → the everyman ("") always has a home. iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
+function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; }
+  if (s.major) { var sm = majorByKey(s.major); if (sm) return (!sm.room || hasRoom(sm.room)) ? sm : null; } // iter-265 (Phase-2c CP1): a STORED khoa assignment (room-gated), set by the open-door intake resolver (CP2). Lets a grain sit in a NON-native major so MAJOR_FIT bites live. Default: no s.major → native derivation below → byte-identical.
+  var m = majorByTell(s.tell); return (m && (!m.room || hasRoom(m.room))) ? m : null; } // iter-248: a room-less major (Đại-cương) needs no building → the everyman ("") always has a home. iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
 // P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.
 function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }
@@ -244,6 +246,7 @@ function freshState(seed, archKey) {
     utYearNet: 0, pierceDefense: false, pierceKeynote: false,
     presets: { n1: _A.presets.n1, n2: _A.presets.n2, n3: _A.presets.n3, n4: _A.presets.n4 }, // the archetype's default TEACHING CULTURE (player can change it); tinh_le = canbang/luyện-đề baseline (inaction WASTES — the realize/waste spread comes from per-child attention)
     struct: { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT }, // iter-244 (EDUCATION epic Phase 1a) — Axis B of the teaching dial, per grade. All 'mid' (neutral, STRUCT_FIT=1.0) at boot → byte-identical to pre-Phase-1; the player moves it via the dial (Phase 1b). Archetype-specific defaults are a deliberate later recapture, not now.
+    intakePolicy: CONFIG.INTAKE_DEFAULT, // iter-265 (Phase-2c CP1) — major INTAKE rule: "native" (fit-priority: a grain always to its own khoa = current behavior) | "open" (open-door: a full native khoa overflows a grain into another khoa → off-native, MAJOR_FIT bites). Default "native" → byte-identical; the off-native resolver activates in CP2.
     rooms: [],
     students: [],
     teachers: [],

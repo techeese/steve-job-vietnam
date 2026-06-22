@@ -199,6 +199,7 @@ var CONFIG = {
   // some (symmetry, invariant #2); every ROW (tell) has a structure that lifts it AND one that drags it. spark↔sky
   // now need OPPOSITE structures — the spark≠sky fix. Sweep STRUCT_FIT sensor enforces both.
   STRUCT_DEFAULT: "mid",
+  INTAKE_DEFAULT: "native", // iter-265 (Phase-2c CP1) — major-intake rule default. "native" = fit-priority (a grain always to its own khoa = pre-Phase-2c behavior → byte-identical). "open" = open-door overflow (CP2: a full native khoa pushes a grain off-native → MAJOR_FIT bites). The list of valid policies is sanitize-guarded.
   STRUCT_FIT: function (tell, structure) {
     var T = {
       spark: { low: 0.90, mid: 1.0, high: 1.10 }, // coder: a scaffolded ladder, then the machine

@@ -147,9 +147,8 @@ NO apex teeth); remaining systems built BOUNDED NON-APEX. GREENLIT KEYSTONE = Ph
 Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).**
 
   PHASE 2c EPIC — off-native major intake (the architecture-heavy keystone; determinism-sensitive). Checkpoints:
-  • CP1 (byte-identical): shift major assignment from DYNAMIC-derivation to STORED `s.major` (assigned = native at enrollment),
-    studentMajor reads `s.major` (room-gated, falls back to native) → everyone native → byte-identical. + `S.intakePolicy`
-    state ("native" default) + freshState + sanitize.
+  • CP1 ✅ SHIPPED iter-265 (byte-identical): `studentMajor` reads a STORED `s.major` (room-gated) before native derivation;
+    `S.intakePolicy` state ("native" default, CONFIG.INTAKE_DEFAULT) + freshState + sanitize guards. Nothing sets s.major yet → byte-identical.
   • CP2: major CAPACITY (seat scarcity) + the open-door resolver — under "open" policy, a kid whose native khoa is FULL is
     placed in the best-fit AVAILABLE khoa (off-native, deterministic from seed0) → MAJOR_FIT penalty bites → wrong-major wastes.
   • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
