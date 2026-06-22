@@ -65,6 +65,7 @@ cat >> "$OUT" <<'HTML'
       '<div class="row">'+
         '<label>Trường (archetype)<select id="lab_arch">'+Object.keys(CFG.ARCHETYPES||{}).map(function(k){return '<option value="'+k+'">'+(CFG.ARCHETYPES[k].name)+'</option>';}).join('')+'</select></label>'+
         '<label>Triết lý (preset)<select id="lab_preset">'+presets.map(function(k){return '<option value="'+k+'">'+presetLabel(CFG,k)+'</option>';}).join('')+'</select></label>'+
+        '<label>Lối học (structure)<select id="lab_struct">'+Object.keys(CFG.STRUCT_META||{mid:1}).map(function(k){return '<option value="'+k+'"'+(k==="mid"?" selected":"")+'>'+((CFG.STRUCT_META&&CFG.STRUCT_META[k]&&CFG.STRUCT_META[k].label)||k)+'</option>';}).join('')+'</select></label>'+
         '<label>Seed<input id="lab_seed" type="number" value="11" style="width:80px"></label>'+
         '<label>Số năm<input id="lab_years" type="number" value="12" style="width:70px"></label>'+
         '<label>Số seed (phân bố)<input id="lab_seeds" type="number" value="8" style="width:80px"></label>'+
@@ -88,11 +89,12 @@ cat >> "$OUT" <<'HTML'
   }
 
   function cfg(){return __test.config();}
-  function simulate(preset,seed,years,mentor,arch){
+  function simulate(preset,seed,years,mentor,arch,struct){
     try{ ARCH_OVERRIDE = arch||null; }catch(e){} // L2: start in the chosen geographic archetype (economy + prestige + cohort origin-mix); freshState reads ARCH_OVERRIDE
     __test.fresh(seed); try{ ARCH_OVERRIDE = null; }catch(e){} // restore so it doesn't leak to other runs
     var S=HVS.S(); S.META=S.META||{}; S.META.tutorial=true;
     S.presets={n1:preset,n2:preset,n3:preset,n4:preset}; S.speed=0; // freeze the live clock; we advance explicitly (preset = the teaching policy you're testing, on top of the archetype's economy/class)
+    if(struct){ S.struct={n1:struct,n2:struct,n3:struct,n4:struct}; } // iter-249: the STRUCTURE axis (Axis B of the dial) — watch how drill↔autonomy re-weights spark vs sky
     ROOMS.forEach(function(k){try{HVS.autoPlace(k);}catch(e){}});
     var CFG=cfg(), per=[];
     for(var y=0;y<years;y++){
@@ -130,10 +132,17 @@ cat >> "$OUT" <<'HTML'
     function pc(o){ return t[o].g?Math.round(100*t[o].r/t[o].g):0; }
     return 'nghèo '+t.ngheo.g+' ('+pc('ngheo')+'% nên người) · tb '+t.tb.g+' ('+pc('tb')+'%) · khá '+t.kha.g+' ('+pc('kha')+'%)'; }
 
+  // iter-249 — surface the EDUCATION-epic systems: the cohort's KHOA mix (incl. the everyman's Đại cương) + how the
+  // grain-less majority (tell="") fared (realize = flourish≥4 → steady kỹ-thuật-viên). The dynamic-Lab window into Phase 2.
+  function majorDist(S){ var t={}; (S.students||[]).forEach(function(s){ var m=HVS.studentMajor?HVS.studentMajor(s):null; var k=m?m.key:"(chưa khoa)"; t[k]=(t[k]||0)+1; });
+    return Object.keys(t).map(function(k){ var nm=(cfg().MAJORS.filter(function(m){return m.key===k;})[0]||{}).name||k; return nm+' '+t[k]; }).join(' · ')||'—'; }
+  function everymanRead(S){ var g=0,r=0; (S.alumni||[]).forEach(function(a){ if(((a.fs&&a.fs.tell)||"")===""){ g++; try{ if(flourishOf(a.state)>=4) r++; }catch(e){} } });
+    return g?(g+' em chưa rõ năng khiếu → '+Math.round(100*r/g)+'% nên người (Đại cương)'):'—'; }
   function runOne(){
     var arch=el("lab_arch")?el("lab_arch").value:null;
     var preset=el("lab_preset").value, seed=+el("lab_seed").value, years=+el("lab_years").value, mentor=el("lab_mentor").checked;
-    var r=simulate(preset,seed,years,mentor,arch), S=r.S, last=r.per[r.per.length-1]||snap(S), cl=classify(S);
+    var struct=el("lab_struct")?el("lab_struct").value:"mid";
+    var r=simulate(preset,seed,years,mentor,arch,struct), S=r.S, last=r.per[r.per.length-1]||snap(S), cl=classify(S);
     var states=Object.keys(cl.byState).sort(function(a,b){return cl.byState[b]-cl.byState[a];});
     var bio=""; try{ bio=__ui._essayText(); }catch(e){ bio="(epilogue chưa sẵn — "+e.message+")"; }
     el("lab_out").innerHTML=
@@ -141,6 +150,9 @@ cat >> "$OUT" <<'HTML'
         '<div class="card"><h2>Run summary</h2><table>'+
           row("Trường (archetype)",archName(arch||(S&&S.archetype)))+
           row("Triết lý",presetLabel(cfg(),preset))+row("Seed/Năm/Mentor",seed+" / "+years+" / "+(mentor?"có":"không"))+
+          row("Lối học (structure)",(cfg().STRUCT_META&&cfg().STRUCT_META[struct]&&cfg().STRUCT_META[struct].label)||struct)+
+          row("Khoa (cohort cuối)",majorDist(S))+
+          row("Đại cương (everyman)",everymanRead(S))+
           row("Thời đại (đầu→cuối)",(function(){var seen=[];r.per.forEach(function(p){if(p.era&&seen[seen.length-1]!==p.era)seen.push(p.era);});return seen.join(" → ")||eraName(S);})())+
           row("Xuất thân (nghèo/tb/khá → nên người)",originDist(S))+
           row("Tiền cuối",money(last.cash))+row("Sinh viên",last.stu)+row("Tốt nghiệp",last.grad)+row("Cựu SV",last.alu)+
@@ -158,8 +170,9 @@ cat >> "$OUT" <<'HTML'
   function runDist(){
     var arch=el("lab_arch")?el("lab_arch").value:null;
     var preset=el("lab_preset").value, years=+el("lab_years").value, mentor=el("lab_mentor").checked, K=+el("lab_seeds").value;
+    var struct=el("lab_struct")?el("lab_struct").value:"mid";
     var agg={realized:0,wasted:0,distorted:0}, rows=[];
-    for(var s=0;s<K;s++){ var r=simulate(preset,1+s*7,years,mentor,arch), c=classify(r.S);
+    for(var s=0;s<K;s++){ var r=simulate(preset,1+s*7,years,mentor,arch,struct), c=classify(r.S);
       agg.realized+=c.o.realized; agg.wasted+=c.o.wasted; agg.distorted+=c.o.distorted;
       rows.push({seed:1+s*7,o:c.o,n:c.n}); }
     el("lab_out").innerHTML='<div class="card"><h2>Distribution — '+presetLabel(cfg(),preset)+' × '+K+' seeds</h2>'+bar(agg)+
@@ -170,8 +183,9 @@ cat >> "$OUT" <<'HTML'
   function runCmp(){
     var arch=el("lab_arch")?el("lab_arch").value:null;
     var years=+el("lab_years").value, mentor=el("lab_mentor").checked, K=Math.max(3,Math.min(6,+el("lab_seeds").value)), CFG=cfg(), presets=Object.keys(CFG.PRESETS);
+    var struct=el("lab_struct")?el("lab_struct").value:"mid";
     var out=presets.map(function(p){ var agg={realized:0,wasted:0,distorted:0};
-      for(var s=0;s<K;s++){ var c=classify(simulate(p,1+s*7,years,mentor,arch).S);
+      for(var s=0;s<K;s++){ var c=classify(simulate(p,1+s*7,years,mentor,arch,struct).S);
         agg.realized+=c.o.realized; agg.wasted+=c.o.wasted; agg.distorted+=c.o.distorted; }
       return {p:p,o:agg}; });
     el("lab_out").innerHTML='<div class="card"><h2>Compare presets × '+K+' seeds each</h2>'+

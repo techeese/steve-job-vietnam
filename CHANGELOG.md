@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-22 — GAMEPLAY LAB updated: surface the EDUCATION-epic systems (loop iter 249)
+**Paying down the dynamic-Lab debt** — I shipped 5 EDUCATION-epic systems (iters 243–248: the STRUCTURE dial, the
+everyman voice, MAJOR_FIT, Khoa Đại cương) without surfacing any in the Gameplay Lab (the owner's graphics-free window,
+which the SKILL mandates I keep current). Now the Lab reads them: a **Lối học (structure)** selector (Mở/Vừa/Khuôn) so
+the owner can WATCH the dial re-weight spark vs sky in a live run; the run-summary gains **Lối học**, **Khoa (cohort
+cuối)** (the major mix incl. Đại cương), and **Đại cương (everyman)** (how the grain-less majority fared — % nên người).
+The structure selector also flows into the distribution + compare reads (all reads now respect the dial). Dev-tool only
+(`lab.sh` → regenerates `__lab.html`); the live game is untouched → undeployed. Verified: `lab.sh` regenerates clean,
+headless auto-run returns **LAB_OK** (no JS error); game code unchanged since iter-248 so gate/sweep/bot/baseline hold.
+**The EDUCATION epic's CORE is now delivered + visible** (pedagogy 2-axis dial · richer majors + the everyman's home ·
+deeper composed factor model — the owner's three asks). **Remaining (owner-steerable):** Phase 2c (systemic off-native
+intake → "right gift, wrong major" live + remove the scripted prodigy) and Phase 3 (mechanical activities + attention-
+hours) — both large; Phase 1c (cram-distortion map) is small deferred texture.
+
 ## 2026-06-22 — EDUCATION epic ▶ PHASE 2b: the EVERYMAN gets a HOME — Khoa Đại cương (loop iter 248)
 **The >50% with no grain (`tell=""`) were homeless — null major, no khoa, no realize-path of their own. Now they have
 one.** Added **Khoa Đại cương (ứng dụng)** 🧭 — a room-less, always-available general track native to `""`, with a modest
