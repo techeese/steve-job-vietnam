@@ -204,6 +204,13 @@ function buildEssay(s, cb, capstone) {
         P("lead", tpl(E.lettersReflect, { n: s.letters.length, graduated: s.META.graduated }), true);
       }
     }
+    // iter-255 (scout queue #2) — the SCHOOL's own era-journey, named before the close: the world that moved under it across
+    // its decades (a run spans ~4 eras; the close was era-agnostic). Reading-only prose, no era counts; fires only when the
+    // founding and closing decades differ (a run that crossed ≥1 boundary — i.e. nearly always; a sub-3-year run gets nothing).
+    if (typeof eraIndex === "function" && CONFIG.ERAS && CONTENT.eraJourneyClose) {
+      var efrom = CONFIG.ERAS[eraIndex(1)], eto = CONFIG.ERAS[eraIndex(s.year)];
+      if (efrom && eto && efrom !== eto) P("lead", tpl(CONTENT.eraJourneyClose, { from: efrom.name, to: eto.name }), true);
+    }
     if (s.META.steves > 0) { P("lead", tpl(E.steveColFull, { steves: s.META.steves })); }
     else { // iter-148/172 — WHY is the 🍎 column empty? (craft/even/grind/mixed — keeps §D-3 open). Prose-only.
       var tot148 = Math.max(1, total);

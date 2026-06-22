@@ -129,8 +129,7 @@ claim for Phase 1 is now actually verifiable.
 
 - **▶ NON-GATED QUEUE (scout fan-out iter-254 — reading-only/bounded, no apex, ranked).** Mine these before holding:
   1. ✅ **Equalizer beat at the capstone close** — SHIPPED iter-254 (the school-as-equalizer made legible at the climax).
-  2. **Era-journey close beat** — name the school's founding→closing decade arc before "Tôi—" (`s.letters[].era` is stored
-     but dead in the essay; `epilogue.js` close is era-agnostic). Reading-only, byte-identical-at-default. small/medium.
+  2. ✅ **Era-journey close beat** — SHIPPED iter-255 (the school's founding→closing decade arc named before "Tôi—").
   3. **Mentor-slots-FULL grief beat (in-play)** — a rnd-free ticker beat when all mentor slots are spent AND a strong
      unmentored gift is wilting (names the kid the full ledger costs you; the tragic-allocation invariant, proactively).
      Gate in monthRollover after cohortBeat (respect COHORT_BEAT_GAP); news-only → byte-identical. small.

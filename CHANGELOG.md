@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-22 — the SCHOOL's era-journey named at the capstone close (scout queue #2) (loop iter 255)
+**Second scout-queue candidate shipped — the loop producing genuine non-gated value, as intended.** A run spans ~4
+decades (12yr / 3yr-bands: bao-cấp 1990s → Đổi-Mới → dot-com → smartphone), and the era already shapes every gift's
+ceiling + the per-kid "wrong-era" grief — but the CAPSTONE close was era-agnostic (`s.letters[].era` stored yet dead in
+the essay). Added one reading-only beat before the "Tôi—" close naming the founding→closing decade: *"Ngày tôi mở cổng
+trường, ngoài kia hãy còn là Thời bao cấp (199x); hôm nay tiễn lứa này ra đời, đã là Thời smartphone. Cùng một mái
+trường, mà thế giới ngoài kia thay da đổi thịt mấy bận — đứa khoá đầu với đứa khoá cuối, gần như sinh ra ở hai thời khác
+nhau."* Fires only when the founding decade ≠ the closing one (a sub-3-year run gets nothing); no era counts (§C-3
+prose). Verified: parse clean, gate + BASELINE GREEN (reading-only → sim byte-identical), bot BOTOK (essay 3108→3369),
+lives 0 LIVESFAIL, probe confirms from→to. Deployed. Scout queue remaining: #3 mentor-slots-full grief beat, #4
+lattice-wired event dilemmas (ROADMAP).
+
 ## 2026-06-22 — the SCHOOL-AS-EQUALIZER beat at the capstone close (scout broke a false plateau) (loop iter 254)
 **A 28-agent scout fan-out DISPROVED my "plateau" — found 4 genuine non-gated candidates I'd wrongly concluded didn't
 exist (the iter-202 lesson, again: when I think nothing's left, a real search proves me wrong).** Built the top pick:

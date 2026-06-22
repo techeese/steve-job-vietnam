@@ -128,6 +128,9 @@ var CONTENT = {
   // the CAPSTONE close: it plays 12 years (the poor under-realize unless you spend scarce attention on them) but read
   // invisibly at the climax. ONE aggregate beat before "Tôi—", keyed on how the poorest fared. Prose, NO counts (§C-3);
   // both poles present (#2); fires only on a meaningful poor minority (gated off for well-off cohorts → no false note).
+  // iter-255 (scout queue #2) — the SCHOOL's own journey across the decades, named at the capstone close (the run spans
+  // ~4 eras; the close was era-agnostic). ONE reading-only beat, no era counts; fires only when founding decade ≠ closing.
+  eraJourneyClose: "📅 Ngày tôi mở cổng trường, ngoài kia hãy còn là {from}; hôm nay tiễn lứa này ra đời, đã là {to}. Cùng một mái trường, mà thế giới ngoài kia thay da đổi thịt mấy bận — đứa khoá đầu với đứa khoá cuối, gần như sinh ra ở hai thời khác nhau.",
   cohortClassClose: {
     success:   "Trong sổ có mấy đứa nhà nghèo nhất — những đứa tưởng sẽ chìm. Vậy mà phần nhiều đã nên người: mấy suất tôi dồn sức kèm đã kéo được các em qua khỏi chỗ mình sinh ra. Cái trường này, ít ra, đã làm được cái bậc thang.",
     shortfall: "Trong sổ có mấy đứa nhà nghèo nhất — và phần nhiều vẫn cứ chìm. Tôi không đủ tay để kéo hết; đứa nào không ai chống lưng rồi cũng tuột về đúng chỗ xuất phát. Với các em, cái trường này chưa thành được cái bậc thang.",
