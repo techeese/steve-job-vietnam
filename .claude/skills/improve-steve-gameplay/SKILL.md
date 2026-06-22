@@ -207,15 +207,15 @@ prevented; the owner corrected you; you slid back into touching frozen art; a st
 no story/lattice progress), edit THIS file in the same turn so it can't recur, and note `SELF-CORRECTION:
 …` in the status. Keep it LEAN — it reloads every firing; prune stale lines as you add. Mine VISION.md
 for the next lattice epic when the backlog runs dry.
-- SCOUT-CONFIRMED PLATEAU (iter-262 — supersedes the iter-254 "scout before every hold" reflex): THREE scout fan-outs have
-  now run — iter-254 (4 shipped), iter-259 (4 shipped incl. a real save bug), iter-262 (**0 survivors / 18 rejected**). The
-  third, sharpened + high-bar + aimed at the deepest veins (events / person-sim depth / lattice mechanics / replay / balance),
-  found NOTHING genuine survives: every idea is redundant with a shipped system, apex-gated, prose-not-meter, or false-premise.
-  So the non-gated / non-redundant / non-apex surface is MINED OUT, evidence-backed. HOLD is now the correct posture (this is
-  the legitimate iter-230 completion-plateau, now proven by adversarial search — NOT the iter-202 over-hold-on-intuition).
-  Do NOT burn a scout every firing now: re-scout ONLY when something real CHANGES (owner steer in feedback.md, a new
-  system/era/archetype lands, the apex-fork is answered, or a long idle gap). The earlier lesson still holds in spirit
-  (don't assert a plateau from pure reasoning) — but it has been DISCHARGED by three real searches; trust the evidence, hold.
+- APEX FORK RESOLVED → PLATEAU LIFTED (iter-264, owner decision): the owner chose **"Keep 🍎 as-is"** — the apex stays
+  grain × era × luck (THESIS still frozen; do NOT add apex teeth), and the remaining systems are built **bounded NON-apex**.
+  This DISCHARGES the iter-262 scout-confirmed plateau (that plateau was conditional on the apex-fork being unanswered; it now
+  is). The buildable keystone is **Phase 2c — off-native major INTAKE** (a grain placed in a non-native khoa → the MAJOR_FIT
+  lever, built iter-247 + robustified iter-258, finally BITES live: "right gift, wrong major" wastes in play). Phase-3
+  activities (đội-tuyển / internship) stay SHELVED — their non-apex versions were proven inert/dominant (iters 251-252); do
+  not rebuild them. Resume the normal loop on Phase 2c (plan it as an epic, byte-identical-at-default checkpoints, sweep a
+  NEW off-native-wastes sensor + a no-dominant sensor each ckpt). The 3-scout plateau history stays valid for the NEXT idle
+  gap, but the loop is NOT idle now — it has a greenlit epic.
 - COMPLETION-PLATEAU POSTURE (iter-230): the LATTICE + narrative are COMPLETE and the exit gate is measurably met (a/b/c;
   see ROADMAP banner + `GRAPHICS-HANDOFF.md`); only owner-confirm (d) remains. The narrative-surface sweep is DONE (clean
   end to end). So do NOT manufacture micro-polish to fill firings — that IS the decay this section warns about. When no

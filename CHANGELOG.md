@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-06-22 — APEX FORK RESOLVED (owner: "keep 🍎 as-is") → plateau lifted, Phase 2c greenlit (loop iter 264)
+**The owner answered the keystone decision** (via a formal AskUserQuestion after the 3-scout plateau): **"Keep 🍎 as-is."**
+The apex stays grain × era × luck (THESIS still frozen — NO apex teeth), and the remaining systems are built **bounded
+NON-apex**. This discharges the iter-262 scout-confirmed plateau (which was conditional on this fork being unanswered).
+**Re-oriented the loop** (SKILL + ROADMAP): the buildable keystone is now **Phase 2c — off-native major INTAKE**, the
+architecture-heavy mechanic where the MAJOR_FIT lever (built iter-247, robustified iter-258) finally BITES in live play —
+"right gift, wrong major" wastes a kid for real, not just in the sweep sensor. Phase-3 activities (đội-tuyển / internship)
+stay SHELVED — their non-apex versions were proven inert/dominant (iters 251-252). Planned the epic as determinism-safe
+checkpoints in ROADMAP: CP1 (byte-identical: stored `s.major` + `S.intakePolicy` state) → CP2 (major capacity + the
+open-door off-native resolver, deterministic from seed0) → CP3 (intake UI + a new off-native-wastes/no-dominant sweep
+sensor + the wrong-major wilt narrative). The scripted-prodigy / apex mechanism stays UNTOUCHED (apex = as-is). Doc-only
+this firing (decision capture + re-orientation); CP1 builds next, with full byte-identical + replay verification.
+
 ## 2026-06-22 — Gameplay Lab made DYNAMIC again: surfaces this session's in-play beats (loop iter 263)
 **Closed a real Lab gap the scouts didn't cover (they audited game mechanics, not the owner's tooling).** The SKILL
 mandates keeping the Gameplay Lab dynamic — surfacing each new system so the owner can SEE what changed — but the 6

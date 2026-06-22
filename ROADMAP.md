@@ -142,6 +142,19 @@ claim for Phase 1 is now actually verifiable.
   4. ✅ **Archetype-framed capstone intro** — SHIPPED iter-261 (`CONTENT.essay.archFrame` — this school's OWN situated đề-Văn at the climax, one open question per archetype; critic-reviewed).
   → SCOUT v2 QUEUE FULLY DELIVERED.
 
+**▶▶ APEX FORK RESOLVED (iter-264, owner): "KEEP 🍎 AS-IS" → PLATEAU LIFTED. The apex stays grain×era×luck (THESIS frozen,
+NO apex teeth); remaining systems built BOUNDED NON-APEX. GREENLIT KEYSTONE = Phase 2c off-native intake (MAJOR_FIT bites live).
+Phase-3 activities stay SHELVED (non-apex versions proven inert, iters 251-252).**
+
+  PHASE 2c EPIC — off-native major intake (the architecture-heavy keystone; determinism-sensitive). Checkpoints:
+  • CP1 (byte-identical): shift major assignment from DYNAMIC-derivation to STORED `s.major` (assigned = native at enrollment),
+    studentMajor reads `s.major` (room-gated, falls back to native) → everyone native → byte-identical. + `S.intakePolicy`
+    state ("native" default) + freshState + sanitize.
+  • CP2: major CAPACITY (seat scarcity) + the open-door resolver — under "open" policy, a kid whose native khoa is FULL is
+    placed in the best-fit AVAILABLE khoa (off-native, deterministic from seed0) → MAJOR_FIT penalty bites → wrong-major wastes.
+  • CP3: intake-rule UI (fit-priority ↔ open-door) + a NEW sweep sensor (off-native WASTES + no-dominant) + the wrong-major
+    wilt NARRATIVE (content). Re-baseline if it perturbs; keep the scripted-prodigy / apex mechanism UNTOUCHED (apex = as-is).
+
 **▶ NON-GATED SURFACE MINED OUT — CONFIRMED PLATEAU (3 scouts: iter-254 / 259 / 262).** The third scout (sharpened, high-bar,
 deepest veins) returned 0 survivors / 18 rejected — all redundant / apex-gated / prose-not-meter / false-premise. The loop now
 HOLDS (legitimate iter-230 completion-plateau, proven by adversarial search). SOLE UNBLOCK = the owner's **APEX fork** (should
