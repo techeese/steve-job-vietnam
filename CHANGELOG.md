@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ PHASE 1b: the 2-axis TEACHING DIAL goes live (loop iter 245)
+**Structure becomes a player verb.** The curriculum panel's 3 triết-lý buttons (MODE) now sit above a second
+segmented control per grade — the STRUCTURE axis (**Mở / Vừa / Khuôn** = autonomy / neutral / scaffold), wired to
+`S.struct.n*` (default `Vừa`/mid). Each level ships its open-question tradeoff string (like the presets), so the fork
+is legible: *Mở* lifts makers & showmen, *Khuôn* lifts coders & the everyman, *Vừa* is neutral. The per-kid fit
+readout + the walking-sprite reaction now read the **composed** fit (`MATCH × STRUCT_FIT`) — so a structure-mismatched
+gift reads *"lệch lối học này"* and a fit reads *"đang nở rộ"* — kept as **3-band PROSE, never a fit-%** (§C-3 audit of
+the L908 readout held). **Phase 1a+1b are the coherent slice — DEPLOYED together.** At the `mid`/`Vừa` default
+everything is byte-identical (gate BASELINE GREEN); moving the dial bites — a soul probe shows the SAME cohort's
+coders realize **12/28 → 24/28** when structure goes Mở→Khuôn (scaffold lifts the coder), makers the reverse. The
+spark≠sky degeneracy — a coder and a maker responding identically to teaching — is now gone: they want OPPOSITE
+structures. Verified: parse clean, gate GREEN + BASELINE GREEN, bot BOTOK 7337/87/14 (the dial renders, no JSERR),
+sweep 0 bad flags incl. the STRUCT_FIT ✓, lives clean. **NEXT (Phase 1c): the tell-keyed DISTORTION map** (generalize
+the single `MATCH_CM` hype+cram→shark into spark→credential-grinder / sky→văn-mẫu / hype→coin-shark — a balance-shift,
+so it recaptures the baseline intentionally). Then Phase 2 (majors decoupled).
+
 ## 2026-06-22 — EDUCATION epic ▶ PHASE 1a: the STRUCTURE axis mechanic (the spark≠sky fix) (loop iter 244)
 **The first real slice of the decided refinement — headless, byte-identical on default, sweep-proven.** Pedagogy
 gains its missing orthogonal axis: alongside MODE (the 3 triết lý, kept) there is now **STRUCTURE** (drill ↔

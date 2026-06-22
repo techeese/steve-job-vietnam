@@ -98,12 +98,14 @@ claim for Phase 1 is now actually verifiable.
   BASELINE GREEN proves it). New sweep STRUCT_FIT sensor: symmetry + bites/splits (coder→HIGH 57→83%, maker→LOW
   48→86%). Adaptive bot now searches structure. save.js guards `S.struct` (no migrator). gate GREEN+BASELINE GREEN,
   sweep 0-flags, bot 7337 byte-identical, lives clean. Committed LOCAL, undeployed (inert until the dial).
-- **▶ PHASE 1b (NEXT) — the dial UI + re-points + distortion map.** The 3 preset buttons → a 2-axis dial (named
-  corners + tradeoff strings) so the player SETS structure; re-point the ui.js fit readouts to `fitOf` **+ audit the
-  L908 per-kid readout against §C-3** (keep it 3-band prose, never a fit-%); replace the single `MATCH_CM` with a
-  tell-keyed DISTORTION map (spark→credential-grinder, sky→văn-mẫu, hype→coin-shark). This is the coherent slice to
-  DEPLOY (structure becomes player-usable). A non-mid dial will move outcomes → recapture `baseline.snapshot.json`
-  intentionally IF the default ever changes (the default stays `mid`, so the baseline should hold).
+- **✅ PHASE 1b SHIPPED + DEPLOYED (iter-245) — the 2-axis dial.** The 3 MODE buttons now sit above a STRUCTURE
+  segmented control per grade (Mở / Vừa / Khuôn → `S.struct.n*`, default Vừa/mid) + open-question tradeoff strings;
+  the per-kid fit readout + sprite reaction read the composed `MATCH × STRUCT_FIT` (kept 3-band PROSE — §C-3 audit of
+  L908 held). Byte-identical at default (gate BASELINE GREEN); the dial bites (soul probe: coders 12/28→24/28 Mở→Khuôn).
+  Phase 1a+1b deployed together (the coherent player-usable slice). gate+BASELINE GREEN, bot 7337 no-JSERR, sweep 0-flags.
+- **▶ PHASE 1c (NEXT) — the tell-keyed DISTORTION map.** Generalize the single `MATCH_CM` (hype+cram→shark) into a
+  (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark when crammed. This MOVES the distortion
+  spread → a deliberate `baseline.snapshot.json` recapture (note it) + sweep re-check. Then Phase 2 (majors decoupled).
 
 **▶ PHASE 2 — MAJORS decoupled.** **Write the everyman content FIRST** (`realGapTell[class]['']` + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`

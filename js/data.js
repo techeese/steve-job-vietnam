@@ -192,6 +192,11 @@ var CONFIG = {
     return row[structure] != null ? row[structure] : 1.0;
   },
   STRUCT_MOOD_W: 3, // mood/month per unit of STRUCT_FIT deviation from 1.0 (a structure-mismatch wears a kid down; a fit lifts) — bounded ±0.45 at the ±0.15 extremes, comparable to MISMATCH_MOOD_DRAIN 0.5. Zero at 'mid' → byte-identical.
+  STRUCT_META: { // iter-244 (Phase 1b) — the STRUCTURE dial's labels + the open-question tradeoff strings (each level realizes some tạng, wastes others; 'mid' is the neutral default)
+    low:  { label: "Mở",    tradeoff: "Mở (để trò tự mò, tự làm) — thắp người làm bằng tay & kẻ nói giỏi; ai cần khuôn thì dễ lạc." },
+    mid:  { label: "Vừa",   tradeoff: "Vừa (không siết, không thả) — an toàn, không nghiêng về tạng nào. Mặc định." },
+    high: { label: "Khuôn", tradeoff: "Khuôn (kèm sát, dựng nền chắc) — hợp dân lập trình & người cần lối đi; tay nghề ưa tự do thì bị bó." }
+  },
   // MENTOR'S LEDGER Phase 2 — the headmaster's scarce ATTENTION. You can actively mentor only a FEW kids;
   // a mentored kid's craft multiplier is lifted (focused attention overcomes a grain mismatch — you RESCUE
   // the wasted). The rest drift on the grain↔preset coupling, so inaction visibly wastes them.

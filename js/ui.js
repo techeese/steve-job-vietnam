@@ -346,7 +346,7 @@
     if (a.mood != null && a.mood < CONFIG.MOOD_PENALTY_BELOW && Math.random() < 0.6) return "sweat"; // iter-138: low mood (esp. burning out) → visible strain on the sân — the mood dimension, made watchable (owner: "watching")
     if (a.mood != null && a.mood >= CONFIG.FLOW_MOOD && Math.random() < 0.5) return Math.random() < 0.5 ? "spark" : "idea"; // iter-155: FLOW — a kid in the zone visibly lights up (symmetric with the burnout sweat; mood watchable BOTH ways)
     if (a.mentored && Math.random() < 0.6) return Math.random() < 0.5 ? "idea" : "spark";            // a kid you pour attention into lights up
-    var _pre = S().presets["n" + a.grade], _mm = CONFIG.MATCH ? CONFIG.MATCH(a.tell, _pre) : 1;
+    var _pre = S().presets["n" + a.grade], _mm = CONFIG.MATCH ? CONFIG.MATCH(a.tell, _pre) * (CONFIG.STRUCT_FIT ? CONFIG.STRUCT_FIT(a.tell, (S().struct && S().struct["n" + a.grade]) || "mid") : 1) : 1; // iter-244 (Phase 1b): sprite reaction reflects MODE × STRUCTURE
     if (_mm <= 0.6 && Math.random() < 0.6) return "sweat";                                            // grain the school is wasting → visible strain
     if (_mm >= 1.3 && !a.act && Math.random() < 0.5) return Math.random() < 0.5 ? "idea" : "spark";   // grain the school fits → thriving
     if (a.act === "perform") return "music";
@@ -903,7 +903,7 @@
     // E2 made LEGIBLE (cohesion + mark 5): the kid's GRAIN × the learning style you set for their year → thriving
     // or adrift. Orthogonal to E5 (about direction, not magnitude) → safe to always show; it surfaces WASTE RISK
     // before you know how gifted they are, and points at the fix (change the style, or mentor).
-    var _mm = CONFIG.MATCH(st.tell, S().presets["n" + st.grade]);
+    var _mm = CONFIG.MATCH(st.tell, S().presets["n" + st.grade]) * (CONFIG.STRUCT_FIT ? CONFIG.STRUCT_FIT(st.tell, (S().struct && S().struct["n" + st.grade]) || "mid") : 1); // iter-244 (Phase 1b): the read reflects MODE × STRUCTURE (the full teaching dial). Stays 3-band PROSE, never a fit-% (§C-3).
     var fit = st.mentored ? { t: "🎓 có thầy dìu — tạng nào cũng gỡ lại được phần nào", c: "var(--gold)" }
       : _mm >= 1.3 ? { t: "hợp lối học này — đang nở rộ", c: "var(--green)" }
       : _mm >= 0.9 ? { t: "lối học này tạm hợp", c: "var(--faint)" }
@@ -1137,8 +1137,9 @@
     var s = S(), wrap = el("div");
     // teaching presets per cohort
     var c1 = el("div", "card"); c1.appendChild(el("h3", null, "Hướng dạy từng khoá"));
+    var STRUCT_KEYS = ["low", "mid", "high"]; // iter-244 (Phase 1b) — Axis B of the teaching dial
     [1, 2, 3, 4].forEach(function (g) {
-      var row = el("div", "row"); row.style.marginBottom = "6px";
+      var row = el("div", "row"); row.style.marginBottom = "2px";
       row.appendChild(el("div", null, "<div style='font-size:11px;font-weight:700;width:46px'>Năm " + g + "</div>"));
       var seg = el("div", "seg"); seg.style.flex = "1";
       PRESET_KEYS.forEach(function (k) {
@@ -1147,9 +1148,21 @@
         seg.appendChild(b);
       });
       row.appendChild(seg); c1.appendChild(row);
+      // iter-244 (Phase 1b): the STRUCTURE axis (lối học) — a 2nd segmented control per grade, stacked under MODE (mobile-safe).
+      var row2 = el("div", "row"); row2.style.marginBottom = "8px";
+      row2.appendChild(el("div", null, "<div style='font-size:10px;color:var(--faint);width:46px'>lối</div>"));
+      var seg2 = el("div", "seg"); seg2.style.flex = "1";
+      STRUCT_KEYS.forEach(function (k) {
+        var sc = S().struct && S().struct["n" + g] ? S().struct["n" + g] : CONFIG.STRUCT_DEFAULT;
+        var b = el("button", sc === k ? "on" : ""); b.textContent = CONFIG.STRUCT_META[k].label;
+        b.onclick = function () { if (!S().struct) S().struct = {}; S().struct["n" + g] = k; renderPanel(); };
+        seg2.appendChild(b);
+      });
+      row2.appendChild(seg2); c1.appendChild(row2);
     });
     // the philosophy fork made LEGIBLE (owner: "no trade-off guideline for learning style") — each style realizes some, wastes others (DESIGN §1 open question)
     PRESET_KEYS.forEach(function (k) { var pr = CONFIG.PRESETS[k]; if (pr.tradeoff) c1.appendChild(el("div", "tiny", "<b>" + esc(pr.label) + "</b> — " + esc(pr.tradeoff))); });
+    STRUCT_KEYS.forEach(function (k) { var sm = CONFIG.STRUCT_META[k]; if (sm.tradeoff) c1.appendChild(el("div", "tiny", "<b>" + esc(sm.label) + "</b> — " + esc(sm.tradeoff))); }); // iter-244: the structure axis's open-question tradeoffs
     wrap.appendChild(c1);
 
     // tuition
