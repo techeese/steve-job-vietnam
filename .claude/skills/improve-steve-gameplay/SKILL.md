@@ -207,6 +207,12 @@ prevented; the owner corrected you; you slid back into touching frozen art; a st
 no story/lattice progress), edit THIS file in the same turn so it can't recur, and note `SELF-CORRECTION:
 …` in the status. Keep it LEAN — it reloads every firing; prune stale lines as you add. Mine VISION.md
 for the next lattice epic when the backlog runs dry.
+- SCOUT-BEFORE-YOU-HOLD (iter-254, reinforces iter-202): before concluding "non-gated work is exhausted" / holding for
+  ≥2 firings, RUN A SCOUT FAN-OUT (`Workflow`: parallel scouts over each game system → adversarial filter → ranked queue).
+  TWICE now (iter-202, iter-254) a "plateau" I asserted from reasoning was FALSE — the scout found genuine non-gated work
+  (iter-254: 4 candidates incl. the high-value school-as-equalizer capstone beat). My plateau intuition is unreliable;
+  a real search is cheap and usually breaks it. Hold ONLY after a scout returns plateauReal=true. Reading-only legibility
+  of the NEW systems at the payoff (e.g. the equalizer beat) is a rich, byte-identical seam — mine it before holding.
 - COMPLETION-PLATEAU POSTURE (iter-230): the LATTICE + narrative are COMPLETE and the exit gate is measurably met (a/b/c;
   see ROADMAP banner + `GRAPHICS-HANDOFF.md`); only owner-confirm (d) remains. The narrative-surface sweep is DONE (clean
   end to end). So do NOT manufacture micro-polish to fill firings — that IS the decay this section warns about. When no

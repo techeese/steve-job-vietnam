@@ -164,6 +164,19 @@ function buildEssay(s, cb, capstone) {
       if (dz > tot * 0.18) ps.push("không ít đứa lạc sang đường tắt"); else if (dz > 0) ps.push("một hai đứa lạc sang đường tắt");
       if (ps.length) P("lead", "Còn lại trong sổ: " + ps.join("; ") + ".", true);
     }
+    // iter-254 — the đề-Văn's TRUEST question at the close: did the school EQUALIZE? The MODEL frames it as the class GAP
+    // (the poor under-realize UNLESS you spend scarce attention → mentoring closes it toward parity). So key on the GAP
+    // between the poor and the rest, not the poor's absolute rate. Reading-only, prose-not-meter (no counts), both poles;
+    // fires only on a meaningful poor minority + enough non-poor to compare (gated off for well-off cohorts → no false note).
+    var poor = s.alumni.filter(function (a) { return a.fs && a.fs.origin === "ngheo" && !a._tpl; });
+    var rest = s.alumni.filter(function (a) { return a.fs && a.fs.origin && a.fs.origin !== "ngheo" && !a._tpl; });
+    if (poor.length >= Math.max(3, s.alumni.length * 0.15) && rest.length >= 3 && CONTENT.cohortClassClose) {
+      var rzFrac = function (arr) { var n = 0; arr.forEach(function (a) { if (flourishOf(a.state) >= 4) n++; }); return n / arr.length; };
+      var pRz = rzFrac(poor), gap = rzFrac(rest) - pRz; // gap >0 = the poor lagged the rest; ≤0 = the poor kept pace
+      // pRz<0.3 → the poor SANK (even if the rest sank too — equal failure is NOT "equalized"); else by the class gap.
+      var ck = pRz < 0.3 ? "shortfall" : gap <= 0.06 ? "success" : gap >= 0.16 ? "shortfall" : "mixed";
+      P("lead", CONTENT.cohortClassClose[ck], true);
+    }
     if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned
     // iter-133 — the FOLLOW-LOOP's capstone payoff: the kid you watched, named with a personal coda
     var proteges = s.alumni.filter(function (a) { return a.flags && a.flags.protege; }).sort(function (a, b) { return (b.gradYear || 0) - (a.gradYear || 0); });

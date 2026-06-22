@@ -127,6 +127,16 @@ claim for Phase 1 is now actually verifiable.
   biz wilts); intake-rule UI; remove the scripted prodigy → admissions-share tilt (**determinism-breaking: re-baseline
   GATE_ALUM + rewrite the WASTED-PRODIGY sensor same commit**); rewrite sweep STRATS + bot off the hardcoded keys.
 
+- **▶ NON-GATED QUEUE (scout fan-out iter-254 — reading-only/bounded, no apex, ranked).** Mine these before holding:
+  1. ✅ **Equalizer beat at the capstone close** — SHIPPED iter-254 (the school-as-equalizer made legible at the climax).
+  2. **Era-journey close beat** — name the school's founding→closing decade arc before "Tôi—" (`s.letters[].era` is stored
+     but dead in the essay; `epilogue.js` close is era-agnostic). Reading-only, byte-identical-at-default. small/medium.
+  3. **Mentor-slots-FULL grief beat (in-play)** — a rnd-free ticker beat when all mentor slots are spent AND a strong
+     unmentored gift is wilting (names the kid the full ledger costs you; the tragic-allocation invariant, proactively).
+     Gate in monthRollover after cohortBeat (respect COHORT_BEAT_GAP); news-only → byte-identical. small.
+  4. **Lattice-wired event dilemmas** — the 31-event deck never touches the new dial/major/structure; add bounded one-time
+     dilemmas (e.g. a khuôn-vs-mở pressure choice that nudges `S.struct`, NOT the apex). medium, design-care to stay non-apex.
+
 **▶ PHASE 2 — MAJORS decoupled (2a+2b ✓ done; 2c = the systemic off-native intake, NEXT). [orig spec ↓]** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
 from the 3 today (code/make/biz, 1:1 by tell) to ~6 major environments (`fitVector`); `studentMajor` → systemic

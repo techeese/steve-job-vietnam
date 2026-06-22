@@ -124,6 +124,15 @@ var CONTENT = {
       real:  " · nhà nghèo mà vẫn nên người"
     }
   },
+  // iter-254 — the đề-Văn's TRUEST question (the school as class-EQUALIZER, MODEL.md §ORIGIN×MENTORSHIP) made legible at
+  // the CAPSTONE close: it plays 12 years (the poor under-realize unless you spend scarce attention on them) but read
+  // invisibly at the climax. ONE aggregate beat before "Tôi—", keyed on how the poorest fared. Prose, NO counts (§C-3);
+  // both poles present (#2); fires only on a meaningful poor minority (gated off for well-off cohorts → no false note).
+  cohortClassClose: {
+    success:   "Trong sổ có mấy đứa nhà nghèo nhất — những đứa tưởng sẽ chìm. Vậy mà phần nhiều đã nên người: mấy suất tôi dồn sức kèm đã kéo được các em qua khỏi chỗ mình sinh ra. Cái trường này, ít ra, đã làm được cái bậc thang.",
+    shortfall: "Trong sổ có mấy đứa nhà nghèo nhất — và phần nhiều vẫn cứ chìm. Tôi không đủ tay để kéo hết; đứa nào không ai chống lưng rồi cũng tuột về đúng chỗ xuất phát. Với các em, cái trường này chưa thành được cái bậc thang.",
+    mixed:     "Mấy đứa nhà nghèo nhất trong sổ — đứa tôi kịp kèm thì lên được, đứa tôi không với tới thì tuột lại. Cái bậc thang ấy, tôi mới bắc được một nửa."
+  },
   // iter-194 — the SYMMETRY of diamondCredit (E-UNDERDOG ckpt2 / invariant #2): a "ngọc thô" you admitted PAST the
   // exam score (đặc cách / the narrow door) and then FAILED to realize. The win was named ("vào bằng cửa hẹp"); the
   // gamble you LOST must be named too, or the đặc cách door looks like free upside. Done TO them (invariant #4): you

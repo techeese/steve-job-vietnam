@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — the SCHOOL-AS-EQUALIZER beat at the capstone close (scout broke a false plateau) (loop iter 254)
+**A 28-agent scout fan-out DISPROVED my "plateau" — found 4 genuine non-gated candidates I'd wrongly concluded didn't
+exist (the iter-202 lesson, again: when I think nothing's left, a real search proves me wrong).** Built the top pick:
+the đề-Văn's *truest question* — the school as class-EQUALIZER (mentoring lifts the poor toward parity, MODEL.md
+§ORIGIN×MENTORSHIP) — plays for 12 years but read INVISIBLY at the climax. Added one aggregate prose beat before the
+"Tôi—" close (`epilogue.js`, after the "Còn lại trong sổ" reflection) keyed on the **class GAP** (poor vs rest realize),
+with an absolute floor so equal-failure ≠ "equalized": **success** (the poor kept pace — *"mấy suất tôi dồn sức kèm đã
+kéo được các em qua khỏi chỗ mình sinh ra… đã làm được cái bậc thang"*), **shortfall** (the poor lagged/sank — *"không
+đủ tay để kéo hết… chưa thành được cái bậc thang"*), **mixed** (*"mới bắc được một nửa"*). Prose-not-meter (no counts),
+both poles, fires only on a meaningful poor minority + enough non-poor to compare (gated off for well-off cohorts).
+Probe-verified true to the model: back-the-poor → success (canbang poor 86% vs rest 88% = the parity finding); leave them
+→ shortfall (62% vs 86% = the class gap); cram-all-sank → shortfall (floor guard). Reading-only → gate + BASELINE GREEN
+(byte-identical), sweep 0 flags, bot BOTOK (essay 2893→3108), lives 0 LIVESFAIL. Deployed.
+**SELF-CORRECTION:** I held ~7 firings on an assumed plateau before scouting — too conservative (iter-202's exact
+mistake). Recorded in SKILL: before concluding a plateau / holding repeatedly, RUN A SCOUT FAN-OUT first. The scout's
+other 3 survivors (era-journey close beat, mentor-slots-full grief beat, lattice-wired event dilemmas) are queued in ROADMAP.
+
 ## 2026-06-22 — the STRUCTURE dial echoes in the writing (narrative legibility) (loop iter 253)
 **A non-gated pivot that closes a real gap: the player's headline new agency — the 2-axis teaching DIAL — had no echo
 in the marquee writing.** The annual letters already mirror the player's MODE choice (cram/craft/balance, iter-211);
