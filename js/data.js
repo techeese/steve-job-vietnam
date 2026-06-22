@@ -103,17 +103,26 @@ var CONFIG = {
   KHOA_CUP: { month: 5, moodWin: 12, ttWin: 2 },
   // KHOA / MAJORS (P1) — students auto-join by tell; a khoa unlocks when its building exists; each
   // khoa grows one stat and leans toward one destiny (the satirical hook). Prodigy joins on unlock.
+  // iter-247 (EDUCATION epic Phase 2a) — each major gains a `fit` vector over tells: a grain reaches SEVERAL tracks at
+  // different fit (a coder is great in code, passable in make, poor in biz). The DIAGONAL (native tell) = 1.0, so the
+  // CURRENT 1:1 assignment (studentMajor = majorByTell) is byte-identical; the off-diagonal only bites once Phase 2b's
+  // SYSTEMIC intake can place a grain in a non-native track ("right gift, wrong major"). MAJOR_FIT routes through MOOD
+  // (the proven non-saturating tooth, like STRUCT_FIT) — distinct AXIS (the track), shared CHANNEL.
   MAJORS: [
     { key: "code", name: "Khoa Lập trình", icon: "💻", room: "phongmay", tell: "spark", stat: "tn", cross: "st", dest: "👷 kỹ sư", color: "#6aa9f0",
-      line: "Học để cái máy chạy thật, không phải để qua môn.",
+      line: "Học để cái máy chạy thật, không phải để qua môn.", fit: { spark: 1.0, sky: 0.85, hype: 0.7, "": 0.8 },
       prodigy: { ten: "Tú 'Compiler'", seed: 5, kt: 30, tn: 45, st: 32, cm: 18, vet: 8, mood: 76, tell: "spark" } },
     { key: "make", name: "Khoa Thiết kế Chế tạo", icon: "🎨", room: "xuong", tell: "sky", stat: "st", cross: "tn", dest: "🍎 sáng tạo", color: "#f0c674",
-      line: "Cái đẹp không có văn mẫu — phải tự vẽ lấy.",
+      line: "Cái đẹp không có văn mẫu — phải tự vẽ lấy.", fit: { sky: 1.0, spark: 0.85, hype: 0.7, "": 0.8 },
       prodigy: { ten: "Hà 'Maker'", seed: 5, kt: 26, tn: 35, st: 48, cm: 16, vet: 6, mood: 76, tell: "sky" } },
     { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", cross: "st", dest: "🪙 cá mập coin", color: "#b48ef0",
-      line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.",
+      line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.", fit: { hype: 1.0, spark: 0.7, sky: 0.7, "": 0.85 },
       prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } }
   ],
+  MAJOR_FIT: function (tell, majorKey) { // how well a gift fits a TRACK (1.0 = native). Phase 2b adds non-native placements; for now studentMajor=majorByTell → always native → 1.0 → byte-identical.
+    var M = this.MAJORS; for (var i = 0; i < M.length; i++) if (M[i].key === majorKey) { var f = M[i].fit; return (f && f[tell || ""] != null) ? f[tell || ""] : 1.0; } return 1.0;
+  },
+  MAJOR_MOOD_W: 5, // mood/month per unit of MAJOR_FIT deviation from 1.0 (wrong major wears a kid down). Tuned up from 3 → 5: at W=3 the tooth bit coders clearly but makers only marginally (mood alone is gentle); 5 makes "wrong major" wastes consistently across tells. Zero at a native placement → byte-identical.
 
   // economy
   BOOT_CASH: 200, BOOK_VALUE: 40, BOOT_ENDOW: 10, BOOT_TUITION: 2, // start-from-nothing: a small pot, near-empty grounds

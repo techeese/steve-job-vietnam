@@ -110,7 +110,8 @@ function growStudents() {
     var moodDrain = (mm < CONFIG.MISMATCH_MM) ? CONFIG.MISMATCH_MOOD_DRAIN : 0; // lệch tạng wears them down; mentoring (mm≥MENTOR_MM) already spares them
     var facMood = (tf.ng > 0 && s.tell && tf.aff[s.tell] != null) ? CONFIG.TEACH_AFF_MOOD * (tf.aff[s.tell] - tf.ng / 3) : 0; // iter-195: faculty champions/neglects a grain → felt as mood (a neglected gift wilts more visibly in-play). Zero-sum, no grain teachers → 0 → byte-identical.
     var structMood = (CONFIG.STRUCT_FIT(s.tell, structOf("n" + s.grade)) - 1) * CONFIG.STRUCT_MOOD_W; // iter-244 (Phase 1a): a structure-MISMATCH wears the kid down, a structure-FIT lifts — the non-saturating tooth of the STRUCTURE axis (FLOW/dropout/peer-contagion). Zero at 'mid' (STRUCT_FIT=1.0) → byte-identical.
-    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood + structMood + orgMood - moodDrain) / dpm, 0, 100); // iter-206: + circumstance-mood (poor headwind / well-off security), erased for the poor by mentoring
+    var _sjm = studentMajor(s); var majorMood = _sjm ? (CONFIG.MAJOR_FIT(s.tell, _sjm.key) - 1) * CONFIG.MAJOR_MOOD_W : 0; // iter-247 (Phase 2a): a WRONG-MAJOR wears the kid down (a coder at the lathe) — 2nd fit axis, same mood channel. Zero at a native placement (MAJOR_FIT=1.0) / no major → byte-identical until Phase 2b's systemic intake can mismatch.
+    s.mood = clamp(s.mood + (p.mood + tf.mood + facMood + structMood + majorMood + orgMood - moodDrain) / dpm, 0, 100); // iter-206: + circumstance-mood (poor headwind / well-off security), erased for the poor by mentoring
     var smj = studentMajor(s); // khoa synergy: a full khoa lifts its members' signature stat
     if (smj && (majorCount[smj.key] || 0) >= khoaThreshold(smj.key)) {
       var headed = khoaHeaded(smj.key); // a trưởng-khoa makes the khoa thrive sooner AND grow faster

@@ -108,11 +108,16 @@ claim for Phase 1 is now actually verifiable.
   tell||"gen"`) — the able-but-undirected majority, their grief the *direction the school never gave* (not a betrayed
   gift). Reading-only → byte-identical (BASELINE GREEN; essay 2761→2907). Deployed. (Chose this over Phase 1c: higher
   soul, lower risk, and it's Phase 2's own prerequisite.)
+- **✅ PHASE 2a SHIPPED (iter-247) — the MAJOR_FIT mechanic (headless, byte-identical).** Each major gains a `fit`
+  vector over tells + `CONFIG.MAJOR_FIT(tell,key)`; a 2nd fit axis (the TRACK, distinct from pedagogy) routed through
+  MOOD (`majorMood`, `MAJOR_MOOD_W=5`). Diagonal=1.0 → today's 1:1 assignment byte-identical (BASELINE GREEN);
+  `MAJOR_OVERRIDE` + a sweep MAJOR_FIT sensor prove the teeth (coder 89%→75% shoved into biz; maker 77%→73%). Committed
+  LOCAL, inert until 2b's real assignment.
 - **▶ PHASE 1c (deferred, optional texture) — the tell-keyed DISTORTION map.** Generalize `MATCH_CM` (hype+cram→shark)
   into a (tell,mode) map: spark→credential-grinder, sky→văn-mẫu, hype→coin-shark. MOVES the distortion spread → a
   deliberate `baseline.snapshot.json` recapture + sweep re-check. Lower priority than the majors mechanic below.
 
-**▶ PHASE 2 — MAJORS decoupled.** **Write the everyman content FIRST** (`realGapTell[class]['']` + Đại-cương
+**▶ PHASE 2 — MAJORS decoupled (2a ✓ done; 2b = the behavioral decouple, NEXT).** **Write the everyman content FIRST** (`realGapTell[class]['']` ✅ iter-246 + Đại-cương
 realized+wasted prose banks — they do NOT exist today; illegal to ship the major without both fates). Then expand `CONFIG.MAJORS`
 from the 3 today (code/make/biz, 1:1 by tell) to ~6 major environments (`fitVector`); `studentMajor` → systemic
 best-fit-given-rooms-and-quota resolver (derive-from-id); add

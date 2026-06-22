@@ -43,6 +43,7 @@ var CKPT2B_ON = false; // iter-200 E8 ckpt2b PLAYTEST FLAG (OFF by default → l
 var ERA_OVERRIDE = null; // iter-204 L1: testing-only era pin (sweep era-sensor sets it to measure one era in isolation). null in production → era follows S.year. NOT serialized; never read by a save.
 var ARCH_OVERRIDE = null; // iter-210 L2: testing-only archetype pin (sweep archetype-sensor / ?arch= can also set it). null → freshState uses archKey arg or ARCH_DEFAULT. NOT serialized.
 var PEER_OFF = false; // iter-241 PEERS/CONTAGION: testing-only kill of peer mood-contagion (sweep on/off sensor sets it true for a baseline). false in production → contagion live. NOT serialized.
+var MAJOR_OVERRIDE = null; // iter-247 (EDUCATION epic Phase 2a): testing-only — force EVERY student into one major key (the sweep MAJOR_FIT sensor sets it to measure a non-native placement's bite). null in production → studentMajor follows tell+rooms. NOT serialized.
 function nid() { return _nextId++; }
 
 /* ---------- L1 ERAS (iter-204) — the authored decade spine ---------- */
@@ -82,7 +83,7 @@ function dedFigure(key) { return pantheonByKey(key) || (CONFIG.GARDEN_FIGURES &&
 // KHOA / MAJORS — students auto-join the khoa matching their tell once its building exists
 function majorByTell(tell) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].tell === tell) return M[i]; return null; }
 function majorByRoom(room) { var M = CONFIG.MAJORS || []; for (var i = 0; i < M.length; i++) if (M[i].room === room) return M[i]; return null; }
-function studentMajor(s) { var m = majorByTell(s.tell); return (m && hasRoom(m.room)) ? m : null; } // null = Đại cương (general)
+function studentMajor(s) { if (MAJOR_OVERRIDE) { for (var i = 0; i < CONFIG.MAJORS.length; i++) if (CONFIG.MAJORS[i].key === MAJOR_OVERRIDE) return CONFIG.MAJORS[i]; } var m = majorByTell(s.tell); return (m && hasRoom(m.room)) ? m : null; } // null = Đại cương (general). iter-247: MAJOR_OVERRIDE (sweep-only) force-places everyone for the MAJOR_FIT sensor.
 // P4b — a trưởng-khoa (teacher head). A headed khoa thrives at one fewer member and grows faster.
 function khoaHeaded(key) { return !!(S.khoaHead && S.khoaHead[key] && teacherById(S.khoaHead[key])); }
 function khoaThreshold(key) { return khoaHeaded(key) ? Math.max(2, CONFIG.SYN_MIN - 1) : CONFIG.SYN_MIN; }

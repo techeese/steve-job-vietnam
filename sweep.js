@@ -339,6 +339,28 @@ if (craS && cramS) {
 })();
 line("");
 
+// iter-247 EDUCATION epic Phase 2a — MAJOR_FIT. A grain reaches several tracks at different fit; a NON-NATIVE placement
+// (right gift, wrong major) must WASTE more than the native one — the teeth, via mood. Sensor: force every kid into one
+// major (MAJOR_OVERRIDE) under a neutral mode+structure, and assert the native tell realizes MORE than a mismatched tell
+// in the SAME track (isolating MAJOR_FIT from khoa synergy). Restores MAJOR_OVERRIDE after (never leaks).
+(function () {
+  function realIn(majorKey, tell) {
+    MAJOR_OVERRIDE = majorKey;
+    var g = 0, r = 0;
+    SEEDS.forEach(function (sd) { play(sd, { presets: "canbang" }).lives.forEach(function (L) { if (L.tell === tell) { g++; if (L.real) r++; } }); });
+    return g ? 100 * r / g : 0;
+  }
+  // SAME tell, native vs alien track (isolates the major effect from tell-specific base rates): a coder in code(1.0)
+  // vs in biz(0.7); a maker in make(1.0) vs in biz(0.7). The native placement must realize MORE.
+  var sparkNative = realIn("code", "spark"), sparkAlien = realIn("biz", "spark");
+  var skyNative = realIn("make", "sky"), skyAlien = realIn("biz", "sky");
+  MAJOR_OVERRIDE = null; // restore — must NEVER leak into the rest of the sweep
+  var d1 = sparkNative - sparkAlien, d2 = skyNative - skyAlien;
+  if (d1 <= 0 || d2 <= 0) FLAGS.push("MAJOR_FIT INERT/WRONG: a coder realizes " + f0(sparkNative) + "% in code vs " + f0(sparkAlien) + "% in biz (Δ" + f1(d1) + "), a maker " + f0(skyNative) + "% in make vs " + f0(skyAlien) + "% in biz (Δ" + f1(d2) + ") — the native track should win; wrong-major doesn't waste, raise MAJOR_MOOD_W");
+  else FLAGS.push("MAJOR_FIT ✓ wrong-major wastes: a coder realizes " + f0(sparkNative) + "% in code vs only " + f0(sparkAlien) + "% shoved into biz; a maker " + f0(skyNative) + "% in make vs " + f0(skyAlien) + "% in biz — right-gift-wrong-major is a real fate (Δ" + f1(d1) + "/" + f1(d2) + "pts). Inert until Phase 2b's systemic intake.");
+})();
+line("");
+
 // iter-241 PEERS / CONTAGION — the cohort's atmosphere pulls each kid's mood toward the school mean ("chọn bạn mà chơi";
 // the môi trường that shapes whether a gift realizes). It must be an ENVIRONMENT, not a lever: ~AGGREGATE-NEUTRAL on
 // realization (a variance-reducer, NOT a free lift → no dominant strategy, invariant #1) AND it must not collapse the

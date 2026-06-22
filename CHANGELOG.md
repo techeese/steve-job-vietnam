@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-22 — EDUCATION epic ▶ PHASE 2a: the MAJOR_FIT mechanic (right gift, wrong major) (loop iter 247)
+**The structural-majors groundwork, headless + byte-identical (the proven 1a pattern).** Each major gains a `fit`
+vector over tells (`code.fit{spark:1, sky:.85, hype:.7, "":.8}` etc.) and a new `CONFIG.MAJOR_FIT(tell, majorKey)`
+reads it. A **2nd fit axis** — the TRACK, distinct from pedagogy — routed through the same proven non-saturating MOOD
+channel: `majorMood = (MAJOR_FIT − 1) × MAJOR_MOOD_W` (tuned 3→5 so it bites consistently across tells). The DIAGONAL
+(native tell) = 1.0, so today's 1:1 `studentMajor = majorByTell` assignment is **byte-identical** (gate BASELINE GREEN);
+the off-diagonal only bites once **Phase 2b's systemic intake** can place a grain off-track ("a coder at the lathe").
+A `MAJOR_OVERRIDE` (sweep-only, like ERA/PEER) force-places everyone so the new **MAJOR_FIT sensor** can prove the
+teeth: a coder realizes **89% in code vs 75% shoved into biz**, a maker **77% in make vs 73% in biz** — wrong-major
+is a real waste (Δ14.2/3.4). Verified: parse clean, gate GREEN + BASELINE GREEN, **sweep 0 bad flags** (STRUCT ✓ +
+new MAJOR_FIT ✓), bot BOTOK 7337/87/14, lives 0 LIVESFAIL. Committed LOCAL — undeployed (inert until 2b's assignment,
+the coherent player-usable slice). **NEXT: Phase 2b** — decouple `studentMajor` into a systemic best-fit-given-rooms-
+and-quota resolver + add the ~3 new majors (incl. the everyman's **Đại-cương** with its prose banks) + intake UI +
+remove the scripted prodigy (re-baseline GATE_ALUM) — the behavioral change + a deliberate `baseline.snapshot.json`
+recapture.
+
 ## 2026-06-22 — EDUCATION epic ▶ Phase 2 groundwork: the EVERYMAN gets a voice (loop iter 246)
 **The plan's "write the everyman content FIRST" prerequisite — and a real narrative gap closed for the majority of
 kids.** ~54% of students have no gift-direction (`tell=""`), and at the payoff they ALL shared one generic line
