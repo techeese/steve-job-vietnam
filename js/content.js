@@ -471,6 +471,19 @@ var CONTENT = {
   },
 
   events: [
+    // iter-258 (scout #4, unblocked by the iter-258 MAJOR_FIT robustify) — wire the new TEACHING-DIAL into the EVENT
+    // layer: the cram-culture pressure (the đề-Văn's satire target) as a player DILEMMA. Parents push you to drill harder;
+    // caving tightens the upper grades' STRUCTURE (the world pushing your pedagogy — reversible via the dial) for
+    // reputation, at the cost of integrity; holding keeps your approach for integrity, at a reputation cost. Non-apex
+    // (structure → mood-channeled; meters). 'Hold' is choice[1] so the headless auto-resolve (neutralChoice → index 1)
+    // takes the no-structure-change path. New live event → perturbs the deck → baseline recaptured this iter.
+    { id: "cramPressure", title: "📣 Phụ huynh đòi 'siết' — con nhà người ta học ngày học đêm",
+      desc: "Một nhóm phụ huynh kéo lên gặp: “Trường mình dạy lỏng quá. Con nhà người ta luyện ngày luyện đêm, con tôi rồi thua thiệt.” Họ muốn thầy siết kỷ luật, dạy chắc từng khuôn — như lò luyện ngoài kia.",
+      pred: "hasNam4",
+      choices: [
+        { label: "Siết lại — chiều lòng phụ huynh", hint: "Năm 3–4 vào khuôn (kèm sát); +5 Tiếng Tăm, −2 Uy Tín", fx: "cramCave" },
+        { label: "Giữ cách của trường — mỗi đứa một lối", hint: "+3 Uy Tín, −3 Tiếng Tăm; Bác Tâm gật đầu", fx: "cramHold" }
+      ] },
     // iter-169 — money-vs-mission, at the wealthy-school scale (the đề Văn bite tied to the new economy): a felt
     // fork between cash/fame and integrity. Fires once the school is famous (TT≥60) — a corp courts a name.
     { id: "taiTro", title: "💰 Một tập đoàn muốn 'đồng hành cùng nhà trường'",

@@ -778,6 +778,8 @@ function classmates(grade, fn) { for (var i = 0; i < S.students.length; i++) if 
 function virtue(t, key) { if (t) { t.flags.vt = t.flags.vt || []; t.flags.vt.push(key); } gainUT(1, false); bacTamNod(); }
 function applyFx(fx, t) {
   switch (fx) {
+    case "cramCave": if (S.struct) { S.struct.n3 = "high"; S.struct.n4 = "high"; } gainTT(5); gainUT(-2, false); moodAll(-2); break; // iter-258: cave to cram-pressure → tighten the upper grades (the world bends your dial), reputation up, integrity + a little mood down
+    case "cramHold": gainUT(3, false); gainTT(-3); bacTamNod(); break; // iter-258: hold your approach → integrity up, a reputation cost
     case "chuongKyLuat": moodAll(0); if (t) { classmates(t.grade, function (s) { s.kt = clamp(s.kt + 2, 0, 100); }); t.st = clamp(t.st - 5, 0, 100); } break;
     case "chuongTuaVit": if (t) { t.tn = clamp(t.tn + 3, 0, 100); virtue(t, "tuaVit"); } break;
     case "duanKyLuat": if (t) { classmates(t.grade, function (s) { s.kt = clamp(s.kt + 2, 0, 100); }); t.st = clamp(t.st - 4, 0, 100); } break;

@@ -116,7 +116,7 @@ var CONFIG = {
       line: "Cái đẹp không có văn mẫu — phải tự vẽ lấy.", fit: { sky: 1.0, spark: 0.85, hype: 0.7, "": 0.8 },
       prodigy: { ten: "Hà 'Maker'", seed: 5, kt: 26, tn: 35, st: 48, cm: 16, vet: 6, mood: 76, tell: "sky" } },
     { key: "biz", name: "Khoa Khởi nghiệp (Sống Ảo)", icon: "🚀", room: "lab", tell: "hype", stat: "cm", cross: "st", dest: "🪙 cá mập coin", color: "#b48ef0",
-      line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.", fit: { hype: 1.0, spark: 0.7, sky: 0.7, "": 0.85 },
+      line: "Chưa có sản phẩm nhưng đã có hoodie và pitch deck.", fit: { hype: 1.0, spark: 0.6, sky: 0.55, "": 0.85 }, // iter-258: the SỐNG-ẢO/clout khoa wastes craft harder — a coder/maker shoved here loses it (deepens "wrong major wastes", robustifies the MAJOR_FIT-maker sensor). Off-diagonal → read ONLY via MAJOR_OVERRIDE (the sensor); never live until Phase-2c off-native intake → byte-identical.
       prodigy: { ten: "Phát 'Founder'", seed: 4, kt: 25, tn: 18, st: 30, cm: 45, vet: 15, mood: 76, tell: "hype" } },
     // iter-248 (EDUCATION epic Phase 2b) — the EVERYMAN's home. The >50% with no grain ("") were homeless (null major,
     // no khoa, no realize-path of their own). Đại-cương is their track: no room (the default general studies — always

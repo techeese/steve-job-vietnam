@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-22 — scout #4 SHIPPED: the cram-pressure dilemma, unblocked by a MAJOR_FIT robustify (loop iter 258)
+**Completed the deferred scout #4 by fixing its blocker first.** Two coupled changes:
+1. **MAJOR_FIT robustify (the unblock, byte-identical).** The "wrong-major wastes" sensor's MAKER case was latently
+   marginal (makers are nearly major-insensitive) — any new live event's deck-noise tipped it negative (iter-257). Root
+   fix: the biz khoa is **Khoa Khởi nghiệp (Sống Ảo)** — the clout/hustle track — so a craft-kid shoved there *should*
+   clearly waste. Lowered its off-native fit (spark 0.7→0.6, sky 0.7→0.55). This deepens "right-gift-wrong-major is a real
+   fate" AND makes the sensor robust. Off-diagonal fits are read ONLY via `MAJOR_OVERRIDE` (the sensor) — never live until
+   Phase-2c off-native intake — so **zero live impact / byte-identical** (gate + BASELINE GREEN unchanged by this edit).
+2. **The cram-pressure DILEMMA (the ship).** The 31-event deck never touched the new TEACHING DIAL; now the đề-Văn's
+   cram-culture pressure is a player choice: parents demand you drill like the lò luyện ngoài kia — **cave** (tighten the
+   upper grades to Khuôn: `S.struct.n3/n4="high"`, +5 Tiếng Tăm, −2 Uy Tín, −2 mood — the world bending your pedagogy,
+   reversible via the dial) or **hold** (+3 Uy Tín, −3 Tiếng Tăm, Bác Tâm nods). Non-apex (structure → mood; meters).
+Verified: parse clean, **sweep 0 bad flags** (MAJOR_FIT now ✓ WITH the event live: maker make 75% vs biz 72% Δ3.3, coder
+Δ15.2), baseline RECAPTURED (new event perturbs the deck — intentional), gate + BASELINE GREEN, bot BOTOK (cash 7610 /
+arrested 15 — shifted from 7479/13, confirming the event fires), lives 0 LIVESFAIL ×2 presets, probe: fires 4×/11yrs,
+cave→n4 high. Deployed. **Scout queue (iter-254) now fully delivered: #1–#4 all shipped.**
+
 ## 2026-06-22 — scout #4 (lattice event dilemma) ATTEMPTED → deferred; scout queue closed (loop iter 257)
 **Negative result, honestly recorded.** Built scout candidate #4 — a cram-culture pressure DILEMMA (the đề-Văn's satire
 target) wired to the STRUCTURE dial (cave → tighten the upper grades + reputation/integrity tradeoff). The mechanics
