@@ -769,6 +769,20 @@ var CONTENT = {
       lo_thanhpho: "Câu hỏi vẫn treo lơ lửng trên cái lò luyện giữa phố: cả thành phố đổ tiền vào luyện thi đến thế, mà sao một Steve Jobs vẫn chưa lớn lên nổi giữa lòng phố?",
       truong_nghe: "Câu hỏi của ngôi trường nghề bên khu công nghiệp này nhỏ nhẹ mà bướng bỉnh: một người thợ thật giỏi, liệu có thua kém gì một Steve Jobs?"
     },
+    // iter-271 (Phase-3 "Giá trị ở lại" CP3) — the NATIONAL-LAYER capstone reading: of the realized lives, WHERE did their
+    // value land for the dân? Prose-KEY only (NO count, §C-3). Every branch is QUESTION-shaped — NONE crowns a pole; "staying"
+    // is never declared the win (the open question holds, ending at "Tôi—"). Only when STANDING.ON + ≥3 resolved.
+    standing: {
+      cap: {
+        "retained-majority": "Phần lớn các em ở lại — thắp đèn cho chính mảnh đất này. Họ đi được; họ ở. Tôi không biết gọi đó là tôi giữ được các em, hay tôi đã níu chân các em.",
+        "extracted-majority": "Các em giỏi — giỏi để người ta dùng. Nước mình dựng được người; chưa dựng được cái chỗ để giữ thứ họ làm ra. Của ai, thứ ấy?",
+        "drained-majority": "Rồi các em đi — vé một chiều, hoặc lời hứa để ngỏ. Trường có vinh dự dạy họ; ai có phước dùng họ, tôi không biết. Tôi chỉ tiễn.",
+        "mixed": "Đứa ở, đứa đi, đứa ngồi lại đây mà thứ làm ra thì đã sang bên kia. Câu hỏi không phải các em đi hay ở. Câu hỏi là: thứ các em làm ra, rốt cuộc là của ai?"
+      },
+      // CAST tail — a " · ..." suffix on a realized cast line (matches the realCreditSuffix format). Keyed by standing; the apex+drained gets its own (the 🍎 is untouched — still STEVE/keynote — only the LOCATION is mourned, in prose).
+      castTail: { RETAINED: " · thứ em làm, ở lại đây", EXTRACTED: " · em làm thật, cho một cái tên bên kia", DRAINED: " · rồi em đi, ở lại bên ấy" },
+      apexDrain: " · có 🍎 — ở bên kia bán cầu, không ở đây"
+    },
     openBtn: "📜 Bản nháp bài luận",
     kic: "Bản nháp · chưa nộp · Năm {year}",
     title: "Bài luận của hiệu trưởng",

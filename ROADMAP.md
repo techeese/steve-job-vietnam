@@ -120,6 +120,24 @@ Re-scout ONLY on a real change (owner steer / new system / long gap).
 
 ---
 
+## ▶ NEW EPIC — NATIONAL-LAYER value axis · "Giá trị ở lại" (iter-271, from the policy-plan sibling)
+**Lessons from `../steve_vietnam_plan/PLAN.md` (a rigorous multi-agent answer to the same đề-Văn) named the layer the game
+lacked: the NATIONAL value-chain that wastes a REALIZED kid AFTER graduation** — assembly trap (value extracted offshore) /
+capital cliff (can't scale) / brain drain. Strong talent, the SYSTEM thins the top tail (invariant #4 at national scale).
+Designed by a 10-agent workflow (design → adversarial stress-test → buildable spec); owner chose **"build the byte-identical
+foundation."** Shipped iter-271, all behind `CONFIG.ALUM.STANDING.ON=false` (default inert → byte-identical):
+- **CP1 ✅** foundation: `a.standing` (RETAINED/EXTRACTED/DRAINED) + `S.renDial` philosophy dial + freshState/sanitize heals.
+- **CP2 ✅** `resolveStanding` (DRAW 6, SEPARATE seed0-salted generator → never touches the FSM stream → non-apex) + 3 sweep
+  sensors (firewall ON===OFF / bounded 54% vs 11% anti-correlated / symmetry all poles) + GATE_STANDING (firewall + freeze-on-reload).
+- **CP3 ✅** capstone "Giá trị ở lại?" prose-KEY reading (question-shaped, never crowns a pole) + per-cast value tails
+  (flourish-gated; 🍎+drained mourns only the LOCATION — apex untouched). Real-Chrome ON=true render verified.
+- **CP4 (owner-gated):** in-play standing beats + the REN dial UI + phụng-sự's costed giving trade.
+- **THE ON-FLIP (owner-gated):** spec decisions A–G — ship-at-all + DRAINED valence (thesis), exclude LUONG_ON + REN cost +
+  beats on/off (taste), weight calibration (F/G, sweep-tuned). Default OFF until the owner reviews the headless output + flips it.
+The model factor is named in MODEL.md; the full stress-tested spec is in the iter-271 design-workflow output.
+
+---
+
 ## Lattice & narrative — COMPLETE (the spine the gameplay-first phase built)
 
 These are DONE and load-bearing; deepen only if a checkpoint above needs them. Detail in CHANGELOG.
@@ -173,7 +191,7 @@ These are DONE and load-bearing; deepen only if a checkpoint above needs them. D
 - `SMALL_SHIPS_SINCE_EPIC: 0` — ≥3 ⇒ EPIC owed; the next firing HARD-LOCKS to the EPIC track.
 - `EPICS_SINCE_STRUCTURE: 0` — ≥2 ⇒ next epic must be STRUCTURE.
 - `FIRINGS_SINCE_FRAME_RESET: 0` — ≥12 ⇒ frame-reset beat (DORMANT behind the gameplay-first phase).
-- `LAST_EPIC:` iter-269 Phase 2c CP3a (intake-rule dial). `LAST_STRUCTURE:` iter-212 alumni.js carve.
+- `LAST_EPIC:` iter-271 NATIONAL-LAYER value axis "Giá trị ở lại" CP1–CP3 (byte-identical foundation, OFF). `LAST_STRUCTURE:` iter-212 alumni.js carve.
 
 > _History migrated to CHANGELOG.md. The art/polish pass, the living-economy & economy-scaling owner epics, the
 > Mentor's Ledger soul-loop, the LATTICE build-out, and all iter-by-iter SHIPPED detail live there._

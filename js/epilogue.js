@@ -154,6 +154,7 @@ function buildEssay(s, cb, capstone) {
       var seed = (a.fs && a.fs.seed) || 0, stars = "★".repeat(seed) + "☆".repeat(5 - seed);
       var gap = realCreditSuffix(a.state, seed, a.flags, a.fs && a.fs.tell, a.gradYear, a.fs && a.fs.origin); // iter-154: the gift-vs-fate reading · iter-203: + tell · iter-205: + gradYear (the DECADE) · iter-206: + origin (family circumstance)
       if (!gap && dominantPreset === "canbang" && a.state === "KY_SU" && a.fs && a.fs.tell === "sky" && seed >= 4) gap = CONTENT.channeledMaker;
+      if (CONFIG.ALUM.STANDING.ON && a.standing && flourishOf(a.state) >= 4 && CONTENT.essay.standing) { var _stail = (a.standing === "DRAINED" && (a.state === "FOUNDER" || a.state === "STEVE")) ? CONTENT.essay.standing.apexDrain : CONTENT.essay.standing.castTail[a.standing]; if (_stail) gap += _stail; } // iter-271 (Phase-3 CP3): the value-standing tail on a STILL-realized cast line (flourish≥4 now — a fallen life keeps the frozen tag but won't show a stale "value stays" on an unemployed alum); apex+drained mourns only the LOCATION (the 🍎 stays untouched)
       var prize = (a.flags && a.flags.prize && CONTENT.prizes[a.flags.prize]) ? " <span class='tiny' style='color:var(--gold)'>🏅 " + esc(CONTENT.prizes[a.flags.prize]) + "</span>" : ""; // E7p
       P("lead", esc(a.ten) + " <span class='tiny' style='color:var(--gold);letter-spacing:1px'>" + stars + "</span> — " + CONFIG.ALUM.CHIPS[a.state] + esc(tail) + gap + prize + "<br>“" + esc(line) + "”");
     });
@@ -178,6 +179,18 @@ function buildEssay(s, cb, capstone) {
       // pRz<0.3 → the poor SANK (even if the rest sank too — equal failure is NOT "equalized"); else by the class gap.
       var ck = pRz < 0.3 ? "shortfall" : gap <= 0.06 ? "success" : gap >= 0.16 ? "shortfall" : "mixed";
       P("lead", CONTENT.cohortClassClose[ck], true);
+    }
+    // iter-271 (Phase-3 "Giá trị ở lại" CP3) — the NATIONAL-LAYER close: of the realized lives, WHERE did their value land for
+    // the dân (retained / extracted / drained)? A prose-KEY reading (no count), question-shaped — never crowns a pole. Only at
+    // the capstone, with ≥3 resolved standings (→ STANDING.ON; default OFF → silent → byte-identical).
+    if (CONFIG.ALUM.STANDING.ON && capstone && CONTENT.essay.standing) {
+      var cen = { RETAINED: 0, EXTRACTED: 0, DRAINED: 0 }, cenN = 0;
+      s.alumni.forEach(function (a) { if (a.standing && cen[a.standing] != null && flourishOf(a.state) >= 4) { cen[a.standing]++; cenN++; } }); // only STILL-realized lives (a fallen alum's frozen tag is moot — matches the sweep's L.real gate)
+      if (cenN >= 3) {
+        var topK = (cen.RETAINED >= cen.EXTRACTED && cen.RETAINED >= cen.DRAINED) ? "RETAINED" : (cen.EXTRACTED >= cen.DRAINED ? "EXTRACTED" : "DRAINED");
+        var skey = cen[topK] > cenN * 0.5 ? topK.toLowerCase() + "-majority" : "mixed";
+        P("lead", CONTENT.essay.standing.cap[skey], true);
+      }
     }
     if (s.META.dropped > 0) P("lead", "Và " + s.META.dropped + " em đã rời sân trường giữa chừng — kiệt sức, không trụ nổi. Những cái tên tôi không kịp ghi vào sổ.", true); // iter-131: the burnout losses, mourned
     // iter-133 — the FOLLOW-LOOP's capstone payoff: the kid you watched, named with a personal coda

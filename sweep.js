@@ -65,6 +65,7 @@ function play(seed, strat) {
   if (strat.presets) S.presets = { n1: strat.presets, n2: strat.presets, n3: strat.presets, n4: strat.presets };
   if (strat.struct) S.struct = { n1: strat.struct, n2: strat.struct, n3: strat.struct, n4: strat.struct }; // iter-244 EDUCATION epic Phase 1a: drive the STRUCTURE axis for the STRUCT_FIT sensor
   if (strat.intakePolicy) S.intakePolicy = strat.intakePolicy; // iter-268 Phase-2c CP2c: drive the INTAKE rule (native|open) for the off-native-intake sensor
+  if (strat.renDial) S.renDial = strat.renDial; // iter-271 Phase-3 CP2: drive the school philosophy dial for the value-standing sensors
   if (strat.tuition) S.tuition = strat.tuition;
   if (strat.grant) S.cash += strat.grant;
   if (strat.build) strat.build.forEach(function (r) { placeRoom(r.key, r.x, r.y); });
@@ -84,7 +85,7 @@ function play(seed, strat) {
   S.alumni.forEach(function (a) { byState[a.state] = (byState[a.state] || 0) + 1; });
   // per-life realization inputs (E1/L1): innate seed + final genuine craft + hustle/hollow + destiny + tell (E8 sensor)
   var lives = S.alumni.map(function (a) {
-    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state, tell: a.fs.tell || "", origin: a.fs.origin || "", real: flourishOf(a.state) >= 4 };
+    return { seed: a.fs.seed, craft: 0.6 * a.fs.tn + 0.4 * a.fs.st, hustle: a.fs.cm, hollow: a.fs.vet, state: a.state, tell: a.fs.tell || "", origin: a.fs.origin || "", real: flourishOf(a.state) >= 4, standing: a.standing || null }; // iter-271: + national-layer value tag for the STANDING sensors
   });
   // E9 ckpt2 (iter-157): the cohesion tilt's footprint — the maker (spark/sky) share of the current student
   // body, which reflects the reputation→applicant tilt (REP_TILT). Used to PROVE the feedback can't run away.
@@ -371,6 +372,37 @@ line("");
   var natR = realRate("native"), openR = realRate("open"), d = openR - natR; // specialist grains (tell≠"") only — the ones open-door re-routes
   if (Math.abs(d) > 15) FLAGS.push("INTAKE open-door DOMINATES/CRATERS: specialist grains realize " + f0(openR) + "% open vs " + f0(natR) + "% native (Δ" + f1(d) + ") — open-door should be a BOUNDED placement tradeoff, not a free win/loss; retune");
   else FLAGS.push("INTAKE ✓ open-door is a bounded LIVE tradeoff: specialist grains realize " + f0(openR) + "% (active off-native, Đại-cương) vs " + f0(natR) + "% (idle under native), Δ" + f1(d) + " — right-gift-wrong-major now happens in play, neither policy dominates");
+})();
+line("");
+
+// iter-271 (Phase-3 "Giá trị ở lại" CP2) — the NATIONAL-LAYER value axis: after a life is REALIZED, where does its value land
+// for the dân (RETAINED / EXTRACTED / DRAINED)? Three sensors toggle CONFIG.ALUM.STANDING.ON, restore false (never leaks):
+// (1) FIREWALL — ON must not move the alumni FSM (non-apex); (2) DOMINANCE+anti-correlation — no build retains >ceiling, the
+// max-LEAK build never out-retains the max-RETAIN one (#1 no-dominance); (3) SYMMETRY — every realized state reaches all 3 poles (#2).
+(function () {
+  if (typeof CONFIG.ALUM.STANDING === "undefined") return;
+  var ST = CONFIG.ALUM.STANDING, FLOOR = ST.FLOOR_SHARE * 100 - 1.5; // post-norm floor minus a margin for sampling noise
+  // S-1 FIREWALL (falsifiable): ON vs OFF must produce the identical alumni FSM (byState) — the tag touches no state.
+  var fwBad = 0; SEEDS.forEach(function (sd) { ST.ON = false; var o = JSON.stringify(play(sd, { presets: "canbang" }).byState); ST.ON = true; var n = JSON.stringify(play(sd, { presets: "canbang" }).byState); ST.ON = false; if (o !== n) fwBad++; });
+  if (fwBad) FLAGS.push("STANDING FIREWALL BREACH: the value axis shifted the alumni FSM in " + fwBad + "/" + SEEDS.length + " seeds — it must be byte-identical to OFF (touches no state/cash/TT/UT)");
+  else FLAGS.push("STANDING ✓ firewall: ON===OFF alumni FSM across all seeds — the value tag is non-apex (touches no state, cash, TT, UT)");
+  function dist(strat, arch) {
+    ST.ON = true; ARCH_OVERRIDE = arch || null; var c = { RETAINED: 0, EXTRACTED: 0, DRAINED: 0 }, byst = {};
+    SEEDS.forEach(function (sd) { play(sd, strat).lives.forEach(function (L) { if (L.real && L.standing) { c[L.standing]++; var b = byst[L.state] = byst[L.state] || { RETAINED: 0, EXTRACTED: 0, DRAINED: 0 }; b[L.standing]++; } }); });
+    ARCH_OVERRIDE = null; ST.ON = false; var n = c.RETAINED + c.EXTRACTED + c.DRAINED || 1;
+    return { R: 100 * c.RETAINED / n, E: 100 * c.EXTRACTED / n, D: 100 * c.DRAINED / n, n: n, byst: byst };
+  }
+  var hi = dist({ presets: "canbang", renDial: "phung_su", mentorPoor: true }, "que_ngheo"); // max-retain build
+  var lo = dist({ presets: "luyende", renDial: "vi_loi" }, "lo_thanhpho");                    // max-leak build
+  // S-2 DOMINANCE + anti-correlation
+  if (hi.R > 70) FLAGS.push("STANDING DOMINANCE: the max-retain build hits " + f0(hi.R) + "% RETAINED (>70 ceiling) — the value axis became a dominant strategy; lower PLAYER_CAP / the player levers");
+  else if (lo.R >= hi.R) FLAGS.push("STANDING NON-ANTICORRELATED: the max-leak build retains " + f0(lo.R) + "% ≥ the max-retain build " + f0(hi.R) + "% — the archetype firewall failed; retune ARCH");
+  else FLAGS.push("STANDING ✓ bounded + anti-correlated: RETAINED max-retain " + f0(hi.R) + "% vs max-leak " + f0(lo.R) + "% (≤70 ceiling — cram-city leaks value, poor-rural retains; neither archetype wins both apex AND retention)");
+  // S-3 SYMMETRY: every realized state with a real sample reaches all 3 poles ≥ floor (the post-norm floor guarantees it; this catches a wiring break)
+  var agg = dist({ presets: "canbang" }, null).byst, symBad = [];
+  ["KY_SU", "FOUNDER", "STEVE"].forEach(function (st) { var b = agg[st]; if (!b) return; var t = b.RETAINED + b.EXTRACTED + b.DRAINED; if (t < 12) return; ["RETAINED", "EXTRACTED", "DRAINED"].forEach(function (p) { if (100 * b[p] / t < FLOOR) symBad.push(st + "/" + p + "=" + f0(100 * b[p] / t) + "%"); }); });
+  if (symBad.length) FLAGS.push("STANDING SYMMETRY GAP: a realized state never reaches a fate — " + symBad.join(", ") + " (every state must reach all 3 poles ≥ floor)");
+  else FLAGS.push("STANDING ✓ symmetry: every realized state (with a real sample) reaches RETAINED + EXTRACTED + DRAINED ≥ floor — all three fates live for everyone");
 })();
 line("");
 

@@ -200,6 +200,7 @@ var CONFIG = {
   // some (symmetry, invariant #2); every ROW (tell) has a structure that lifts it AND one that drags it. spark↔sky
   // now need OPPOSITE structures — the spark≠sky fix. Sweep STRUCT_FIT sensor enforces both.
   STRUCT_DEFAULT: "mid",
+  REN_DEFAULT: "can_bang", // iter-271 (Phase-3 CP1) — school PHILOSOPHY dial feeding the national-layer value axis: phung_su (service ethos → +retain, costed at CP4) / can_bang (neutral) / vi_loi (profit-first → +extract). Default can_bang = ZERO modifier → byte-identical. sanitize-guarded.
   INTAKE_DEFAULT: "native", // iter-265 (Phase-2c CP1) — major-intake rule default. "native" = fit-priority (a grain always to its own khoa = pre-Phase-2c behavior → byte-identical). "open" = open-door overflow (CP2: a full native khoa pushes a grain off-native → MAJOR_FIT bites). The list of valid policies is sanitize-guarded.
   INTAKE_META: { // iter-268 (Phase-2c CP3) — the intake-rule dial labels + open-question tradeoffs (each choice realizes some, wastes some — no dominant rule)
     native: { label: "Đúng khoa", tradeoff: "đứa chưa có khoa thì đợi — không nhồi sai chỗ, nhưng có đứa ngồi không, năng khiếu để mốc." },
@@ -354,6 +355,20 @@ var CONFIG = {
   TIEMNANG: { st: 80, tn: 70, cm: 60, vetMax: 50, tcMin: 55 },
 
   ALUM: {
+    // iter-271 (Phase-3 "Giá trị ở lại" CP1) — the NATIONAL-LAYER value axis: after a life is REALIZED (flourish≥4), WHERE
+    // does its value land for the dân — RETAINED (circulates here) / EXTRACTED (the assembly trap — value goes offshore) /
+    // DRAINED (brain drain — the best emigrate)? An orthogonal alumni TAG, NOT a state, NOT the 🍎 gate. Seed0-deterministic,
+    // prose-only. Default ON:false → resolve skipped → fully inert → byte-identical (owner flips ON to go live, like intakePolicy).
+    STANDING: {
+      ON: false, // master flag — false skips resolveStanding entirely → byte-identical
+      POOL: { KY_SU: [0.50, 0.34, 0.16], FOUNDER: [0.45, 0.40, 0.15], STEVE: [0.50, 0.30, 0.20] }, // [retain,extract,drain] base by realized state; LUONG_ON ABSENT (cram-settle ≠ national capacity → no cram-farming free retention)
+      BASE_OFFSHORE: 0.10, // era-INDEPENDENT macro extraction pressure (bites the >50% everyman too, not just the gifted)
+      ERA_PULL: 0.14, DRAIN_PULL: 0.10, RETAIN_SCARCE: 0.10, // structural ERA force (heavy — the player cannot beat it at the extremes)
+      ARCH: { que_ngheo: { retain: 0.10, extract: -0.04, drain: -0.06 }, lo_thanhpho: { retain: -0.08, extract: 0.05, drain: 0.03 }, tinh_le: { retain: 0, extract: 0, drain: 0 }, _: { retain: 0, extract: 0, drain: 0 } }, // geography gravity (anti-correlated with apex: cram-city leaks, poor-rural retains)
+      ORIGIN_NGHEO: 0.08, ORIGIN_KHA: 0.07, XN_DRAIN: 0.45, // origin circumstance (#4, not character) + reconcile with the existing brain-drain flag (flags.xn)
+      MENTOR_RETAIN: 0.08, REN_PHUNGSU: 0.06, REN_VILOI: 0.10, // PLAYER levers (light)
+      PLAYER_CAP: 0.16, FLOOR_SHARE: 0.06 // HARD CLAMP on summed player+origin retain delta (< max era swing → non-dominant) + POST-normalization floor (every pole ≥ this → symmetry)
+    },
     // v0 entry-state mapping for not-yet-shipped states
     ENTRY_MAP: { CA_MAP_COIN: "CA_MAP_COIN", QUAN_VAN_MAU: "QUAN_VAN_MAU", FOUNDER: "FOUNDER", KY_SU: "KY_SU", XUAT_NGOAI: "KY_SU", KOL: "LUONG_ON", LUONG_ON: "LUONG_ON", THAT_NGHIEP: "THAT_NGHIEP" },
     ENTRY_FLAGS: { XUAT_NGOAI: "xn", KOL: "kol" },

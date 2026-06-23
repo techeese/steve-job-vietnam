@@ -85,6 +85,7 @@ function sanitize() {
   if (!S.struct || typeof S.struct !== "object") S.struct = { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT };
   ["n1", "n2", "n3", "n4"].forEach(function (k) { if (["low", "mid", "high"].indexOf(S.struct[k]) < 0) S.struct[k] = CONFIG.STRUCT_DEFAULT; });
   if (["native", "open"].indexOf(S.intakePolicy) < 0) S.intakePolicy = CONFIG.INTAKE_DEFAULT; // iter-265 (Phase-2c CP1): old saves lack S.intakePolicy → default "native" → byte-identical. New field, no migrator.
+  if (["phung_su", "can_bang", "vi_loi"].indexOf(S.renDial) < 0) S.renDial = CONFIG.REN_DEFAULT; // iter-271 (Phase-3 CP1): old saves lack S.renDial → default can_bang (neutral) → byte-identical. New field, no migrator.
   S.students = (S.students || []).map(function (s) {
     if (!s) return null;
     if (bad(s.kt) || bad(s.tn) || bad(s.st) || bad(s.cm) || bad(s.vet)) return null;
@@ -127,6 +128,7 @@ function sanitize() {
     if (a.fs.real == null) a.fs.real = Math.round(realFrac(a.state, a.fs.seed) * 100); else a.fs.real = clamp(Math.round(a.fs.real), 0, 200); // E4: backfill carried realization on pre-E4 saves
     a.grat = clamp(a.grat || 0, 0, 100); a.gifts = Math.max(0, a.gifts || 0);
     if (!a.flags) a.flags = { vt: [] };
+    if (["RETAINED", "EXTRACTED", "DRAINED"].indexOf(a.standing) < 0) a.standing = null; // iter-271 (Phase-3 CP1): national-layer value tag; old saves / corrupt → null (unresolved) → byte-identical. Frozen once set; never recomputed on load.
     return a;
   });
   S.seed0 = (S.seed0 || 0) >>> 0;

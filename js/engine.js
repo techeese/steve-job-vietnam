@@ -277,6 +277,7 @@ function freshState(seed, archKey) {
     utYearNet: 0, pierceDefense: false, pierceKeynote: false,
     presets: { n1: _A.presets.n1, n2: _A.presets.n2, n3: _A.presets.n3, n4: _A.presets.n4 }, // the archetype's default TEACHING CULTURE (player can change it); tinh_le = canbang/luyện-đề baseline (inaction WASTES — the realize/waste spread comes from per-child attention)
     struct: { n1: CONFIG.STRUCT_DEFAULT, n2: CONFIG.STRUCT_DEFAULT, n3: CONFIG.STRUCT_DEFAULT, n4: CONFIG.STRUCT_DEFAULT }, // iter-244 (EDUCATION epic Phase 1a) — Axis B of the teaching dial, per grade. All 'mid' (neutral, STRUCT_FIT=1.0) at boot → byte-identical to pre-Phase-1; the player moves it via the dial (Phase 1b). Archetype-specific defaults are a deliberate later recapture, not now.
+    renDial: CONFIG.REN_DEFAULT, // iter-271 (Phase-3 CP1) — school philosophy dial for the national-layer value axis; default can_bang = neutral → byte-identical (effect only when STANDING.ON, wired at CP4)
     intakePolicy: CONFIG.INTAKE_DEFAULT, // iter-265 (Phase-2c CP1) — major INTAKE rule: "native" (fit-priority: a grain always to its own khoa = current behavior) | "open" (open-door: a full native khoa overflows a grain into another khoa → off-native, MAJOR_FIT bites). Default "native" → byte-identical; the off-native resolver activates in CP2.
     rooms: [],
     students: [],

@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-23 — Phase 3 "Giá trị ở lại": the NATIONAL-LAYER value axis (CP1–CP3, byte-identical foundation, OFF)
+**Lessons from the policy-plan sibling (`../steve_vietnam_plan/PLAN.md`, a rigorous multi-agent answer to the same đề-Văn)
+surfaced the one layer the game lacked: the NATIONAL value-chain that wastes a REALIZED kid *after* graduation.** Built via
+a 10-agent design workflow (parallel design → adversarial stress-test against every invariant → buildable spec); the owner
+chose "build the byte-identical foundation." A fourth ORTHOGONAL alumni tag `a.standing` — **RETAINED** (value circulates
+here) / **EXTRACTED** (the assembly trap — built here, profit/decisions offshore) / **DRAINED** (brain drain) — set ONCE for
+a realized life (flourish≥4) from a SEPARATE seed0-salted generator that never advances the FSM stream → the apex draw +
+every metric byte-identical (GATE_STANDING firewall: ON===OFF on cash/endow/TT/UT + the whole alumni FSM). STRUCTURAL pulls
+(era/archetype/origin + the existing brain-drain flag) are heavy; PLAYER levers (mentorship + a new school `renDial`
+philosophy) are light + HARD-CLAMPED below the era swing (non-dominant); a post-normalization FLOOR keeps all three poles
+reachable (symmetry). The capstone gains a prose-KEY "Giá trị ở lại?" reading (question-shaped, NEVER crowns a pole —
+"staying" is not the win) + per-cast value tails (🍎+drained mourns only the LOCATION, in prose — the apex is untouched).
+NON-APEX, all 4 invariants hold, default `STANDING.ON=false` → fully inert → byte-identical; the owner flips ON to go live
+after the taste calls. **CP4** (in-play beats + the REN dial UI + its costed trade) + the **ON-flip** stay owner-gated.
+Verified: ALL GATES + BASELINE GREEN; 3 new sweep sensors pass (firewall; bounded 54% max-retain vs 11% max-leak,
+anti-correlated; symmetry — all poles for every realized state); GATE_STANDING (firewall + freeze-on-reload); bot
+essay=3380 (byte-identical); real-Chrome ON=true render correct (tails only on still-realized lives). Lessons folded into
+MODEL.md (the national-layer factor + additive-floor/multiplicative-ceiling + value-for-the-dân + honesty-ledger≈sweep-sensors).
+
 ## 2026-06-22 — DETACH the drifted real-art layer (Kenney + Jephed) into a swappable slot (owner ask)
 **The borrowed real-pixel-art (Kenney *Tiny Town* tiles + 40 Jephed chibi characters) had drifted from the evolved
 person-sim and read as a tonal orphan — detached so graphics become a clean, curated, re-addable layer.** A 6-agent

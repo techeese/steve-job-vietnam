@@ -197,6 +197,23 @@ try {
   try { localStorage.setItem(CONFIG.LEGACY_KEY, ''); } catch(e){}
 } catch(e){ FAILS.push('GATE_LEGACY threw: '+e.message+'\\n'+e.stack); }
 
+/* GATE_STANDING — iter-271 Phase-3 "Giá trị ở lại": the national-layer value axis is NON-APEX (firewall: ON===OFF on every
+   tracked metric + the alumni FSM) and DETERMINISTic (a resolved standing is frozen — survives save→reload unchanged) */
+try {
+  var _STc = CONFIG.ALUM.STANDING, _by = function(){ var o={}; S.alumni.forEach(function(a){ o[a.state]=(o[a.state]||0)+1; }); return JSON.stringify(o); };
+  var _run = function(on){ _STc.ON=on; __test.fresh(7); S.presets={n1:'canbang',n2:'canbang',n3:'canbang',n4:'canbang'}; __test.place('phonghoc',1,1); __test.days(11*360); }; // canbang realizes enough flourishing lives to carry a standing (tinh_le default is cram-heavy → too few)
+  _run(false);
+  var offC=S.cash, offE=S.endow.bal, offT=S.tiengTam, offU=S.uyTin, offB=_by();
+  _run(true);
+  ok(S.cash===offC && S.endow.bal===offE && S.tiengTam===offT && S.uyTin===offU && _by()===offB, 'GATE_STANDING firewall: ON===OFF cash/endow/TT/UT + alumni FSM — the value tag is NON-APEX (changes no metric or state)');
+  var _live = S.alumni.filter(function(a){ return a.standing; });
+  var _snap = _live.map(function(a){ return a.id+':'+a.standing; }).sort().join('|');
+  localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(serialize())); loadGame();
+  var _snap2 = S.alumni.filter(function(a){ return a.standing; }).map(function(a){ return a.id+':'+a.standing; }).sort().join('|');
+  ok(_live.length>0 && _snap===_snap2 && S.renDial==='can_bang', 'GATE_STANDING freeze: '+_live.length+' resolved standings survive save→reload unchanged + renDial heals (frozen, never recomputed)');
+  _STc.ON = false;
+} catch(e){ FAILS.push('GATE_STANDING threw: '+e.message+'\\n'+e.stack); _STc&&(_STc.ON=false); }
+
 OUT.push('');
 if (FAILS.length){ OUT.push('=== '+FAILS.length+' FAILURES ==='); OUT = OUT.concat(FAILS); }
 else OUT.push('=== ALL GATES GREEN ===');

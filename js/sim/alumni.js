@@ -55,6 +55,36 @@ function alumniTickOne(a) {
   // fresh per alum each tick); items touch no tracked metric → bot/sweep cash byte-identical.
   var d5 = r();
   maybeItemGift(a, d5);
+  // DRAW 6 — iter-271 (Phase-3 "Giá trị ở lại" CP2): the NATIONAL-LAYER value standing (RETAINED/EXTRACTED/DRAINED), set
+  // ONCE for a realized life (flourish≥4). resolveStanding uses a SEPARATE seed0-salted generator — NOT r — so it does not
+  // advance the FSM stream → DRAWs 1-5 + the apex draw byte-identical → GATE_ALUM untouched. STANDING.ON=false → skipped → byte-identical.
+  if (CONFIG.ALUM.STANDING.ON && a.standing == null && S.year > a.gradYear && flourishOf(a.state) >= 4) a.standing = resolveStanding(a);
+}
+// iter-271 (Phase-3 CP2) — WHERE a realized life's value lands for the dân. Deterministic from seed0 ^ id ^ gradYear (NO
+// S.year → independent of which year the guard fires → replay-safe). STRUCTURAL pulls (era/archetype/origin/the existing
+// brain-drain flag) are heavy; PLAYER levers (mentored, renDial) are light + HARD-CLAMPED below the max era swing (non-dominant);
+// a post-normalization FLOOR keeps all 3 poles reachable (symmetry). NON-APEX: reads a settled state, touches no gift/cash/TT/UT.
+function resolveStanding(a) {
+  var C = CONFIG.ALUM.STANDING;
+  var idN = (a.id | 0) || hashStr("a" + a.id); // defensive: a migrated/non-numeric id never collapses the salt to 0
+  var rr = mulberry32((S.seed0 ^ Math.imul(idN, 0x9E3779B1) ^ Math.imul(a.gradYear | 0, 40507)) >>> 0);
+  var d = rr();
+  var base = C.POOL[a.state] || C.POOL.KY_SU, pR = base[0], pE = base[1], pD = base[2];
+  if (a.flags && a.flags.xn) { pD += C.XN_DRAIN; pR -= C.XN_DRAIN * 0.6; pE -= C.XN_DRAIN * 0.4; } // compose with the existing brain-drain seed, don't contradict it
+  pE += C.BASE_OFFSHORE; pR -= C.BASE_OFFSHORE; // macro offshore pressure (era-independent → bites the >50% everyman too)
+  var fav = eraFav(a.fs && a.fs.tell);
+  if (fav > 1) { pE += C.ERA_PULL * (fav - 1); pD += C.DRAIN_PULL * (fav - 1); pR -= (C.ERA_PULL + C.DRAIN_PULL) * (fav - 1); }
+  else if (fav < 1) { pR += C.RETAIN_SCARCE * (1 - fav); pE -= C.RETAIN_SCARCE * (1 - fav); }
+  var arch = C.ARCH[S.archetype] || C.ARCH._; pR += arch.retain; pE += arch.extract; pD += arch.drain;
+  var org = a.fs && a.fs.origin, oR = org === "ngheo" ? C.ORIGIN_NGHEO : org === "kha" ? -C.ORIGIN_KHA : 0;
+  var pl = 0; if (a.flags && a.flags.mentored) pl += C.MENTOR_RETAIN;
+  var ren = S.renDial || "can_bang"; if (ren === "phung_su") pl += C.REN_PHUNGSU; else if (ren === "vi_loi") pl -= C.REN_VILOI;
+  var retainDelta = clamp(oR + pl, -C.PLAYER_CAP, C.PLAYER_CAP); // the firewall: player+origin retain delta stays below the era swing
+  pR += retainDelta; if (retainDelta > 0) pE -= retainDelta; else pD -= retainDelta;
+  pR = Math.max(0, pR); pE = Math.max(0, pE); pD = Math.max(0, pD);
+  var sm = pR + pE + pD || 1; pR /= sm; pE /= sm; pD /= sm;
+  var f = C.FLOOR_SHARE, k = 1 - 3 * f; pR = k * pR + f; pE = k * pE + f; pD = k * pD + f; // every pole ≥ f (symmetry)
+  return d < pR ? "RETAINED" : d < pR + pE ? "EXTRACTED" : "DRAINED";
 }
 // iter-182 (owner: "successful alumni might donate… non-monetary items… for extension functions later"). A grat-scaled
 // small chance for a successful alum to gift the school a tangible thing — collected in S.giftItems (the kho lưu niệm),
