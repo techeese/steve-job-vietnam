@@ -18,6 +18,14 @@ Verified: ALL GATES + BASELINE GREEN; 3 new sweep sensors pass (firewall; bounde
 anti-correlated; symmetry — all poles for every realized state); GATE_STANDING (firewall + freeze-on-reload); bot
 essay=3380 (byte-identical); real-Chrome ON=true render correct (tails only on still-realized lives). Lessons folded into
 MODEL.md (the national-layer factor + additive-floor/multiplicative-ceiling + value-for-the-dân + honesty-ledger≈sweep-sensors).
+**Validation pass (4-lens adversarial workflow → ready-with-tweaks, all 4 invariants hold at the LIVE distribution):** applied
+the one quality fix — the capstone reading switched from a >50% MAJORITY gate (which rendered "mixed" ~85–90% of cohorts,
+leaving 3 of 4 authored readings dead) to **PLURALITY-with-margin** (the leader must clear the runner-up by ≥10% of resolved
+lives). Now each cohort earns a fitting reading without crowning a pole: que_ngheo/phụng-sự reads RETAINED (24/30 cohorts),
+lo_thanhpho/vị-lợi reads EXTRACTED (22–27/30), tinh_le splits mixed/extracted — the player's archetype+philosophy shapes the
+value-verdict. Ratified as owner-tunable (not bugs): retain ceiling 53% (intentional anti-correlation-vs-apex — don't chase
+the old 62–68% intent, which risks "staying=win"); era subtlety (signal lives per-tell/per-cast/apex, not the aggregate);
+mentor's light clamped lever. `STANDING.ON=false` default still byte-identical.
 
 ## 2026-06-22 — DETACH the drifted real-art layer (Kenney + Jephed) into a swappable slot (owner ask)
 **The borrowed real-pixel-art (Kenney *Tiny Town* tiles + 40 Jephed chibi characters) had drifted from the evolved

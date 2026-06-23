@@ -188,7 +188,12 @@ function buildEssay(s, cb, capstone) {
       s.alumni.forEach(function (a) { if (a.standing && cen[a.standing] != null && flourishOf(a.state) >= 4) { cen[a.standing]++; cenN++; } }); // only STILL-realized lives (a fallen alum's frozen tag is moot — matches the sweep's L.real gate)
       if (cenN >= 3) {
         var topK = (cen.RETAINED >= cen.EXTRACTED && cen.RETAINED >= cen.DRAINED) ? "RETAINED" : (cen.EXTRACTED >= cen.DRAINED ? "EXTRACTED" : "DRAINED");
-        var skey = cen[topK] > cenN * 0.5 ? topK.toLowerCase() + "-majority" : "mixed";
+        // iter-271 CP3 (validation fix): PLURALITY-with-margin, not >50% majority. The live distribution hovers ~40/40/20, so a
+        // >50% gate fired "mixed" in ~85-90% of cohorts → 3 of the 4 authored readings were dead content. The leader must clear
+        // the runner-up by ≥10% of resolved lives (min 1) to earn its pointed reading; a near-tie still reads "mixed". NEVER
+        // crowns a pole (every reading ends on the open question — invariant #1 intact). The 0.10 margin is the owner-tunable knob.
+        var _sorted = [cen.RETAINED, cen.EXTRACTED, cen.DRAINED].sort(function (a, b) { return b - a; });
+        var skey = (_sorted[0] - _sorted[1]) >= Math.max(1, cenN * 0.10) ? topK.toLowerCase() + "-majority" : "mixed";
         P("lead", CONTENT.essay.standing.cap[skey], true);
       }
     }
